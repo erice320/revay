@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revay ⚡ — Working Documents</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e2e8f0; min-height: 100vh; }
+  .header { padding: 48px 40px 32px; border-bottom: 1px solid #2d3748; }
+  .header h1 { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .header p { color: #718096; font-size: 15px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px; }
+  .section-label { font-size: 11px; font-weight: 700; color: #4a5568; text-transform: uppercase; letter-spacing: 1px; margin: 32px 0 12px; }
+  .doc-card { display: flex; align-items: center; justify-content: space-between; background: #1a1f2e; border: 1px solid #2d3748; border-radius: 10px; padding: 18px 20px; margin-bottom: 10px; text-decoration: none; transition: border-color 0.15s, background 0.15s; }
+  .doc-card:hover { border-color: #4a5568; background: #1e2436; }
+  .doc-card .left { display: flex; align-items: center; gap: 14px; }
+  .doc-card .icon { font-size: 22px; width: 40px; text-align: center; }
+  .doc-card .title { font-size: 15px; font-weight: 600; color: #e2e8f0; margin-bottom: 3px; }
+  .doc-card .desc { font-size: 13px; color: #718096; }
+  .doc-card .arrow { color: #4a5568; font-size: 18px; }
+  .doc-card:hover .arrow { color: #a0aec0; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+  .tag.new { background: rgba(72,187,120,0.15); color: #68d391; }
+  .tag.it { background: rgba(66,153,225,0.15); color: #63b3ed; }
+  .footer { text-align: center; padding: 48px 40px; color: #4a5568; font-size: 12px; border-top: 1px solid #1a1f2e; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="max-width:800px;margin:0 auto;">
+    <h1>⚡ Revay</h1>
+    <p>AI Chief of Staff to Evan Rice, Rev.io &nbsp;·&nbsp; Working Documents</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">Infrastructure</div>
+
+  <a class="doc-card" href="revay-migration.html">
+    <div class="left">
+      <div class="icon">🔷</div>
+      <div>
+        <div class="title">Azure Migration Guide <span class="tag it">FOR IT</span></div>
+        <div class="desc">Cloudflare → Azure container migration — full technical spec, checklist, API keys reference</div>
+      </div>
+    </div>
+    <div class="arrow">›</div>
+  </a>
+
+  <div class="section-label">Coming Soon</div>
+
+  <div class="doc-card" style="opacity:0.4;cursor:default;">
+    <div class="left">
+      <div class="icon">📋</div>
+      <div>
+        <div class="title">More documents will appear here</div>
+        <div class="desc">New working documents, briefs, and specs published here going forward</div>
+      </div>
+    </div>
+    <div class="arrow">›</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  ⚡ Revay &nbsp;·&nbsp; AI Chief of Staff to Evan Rice, Rev.io
+</div>
+
+</body>
+</html>
