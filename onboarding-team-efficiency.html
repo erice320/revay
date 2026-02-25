@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Onboarding Team Efficiency Analysis — Feb 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#1e293b;line-height:1.5}
+.header{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);color:#fff;padding:36px 24px 30px;text-align:center}
+.header h1{font-size:28px;font-weight:800;margin-bottom:6px}
+.header p{color:#94a3b8;font-size:14px}
+.header .sub{display:flex;justify-content:center;gap:16px;margin-top:14px;flex-wrap:wrap}
+.header .chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 14px;border-radius:20px;font-size:13px}
+.container{max-width:960px;margin:0 auto;padding:28px 16px}
+.section{background:#fff;border-radius:12px;padding:26px;margin-bottom:24px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.section h2{font-size:19px;font-weight:800;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;margin-bottom:20px}
+.section h3{font-size:13px;font-weight:700;color:#475569;margin:20px 0 10px;text-transform:uppercase;letter-spacing:.5px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:#f8fafc;border-radius:10px;padding:18px;text-align:center;border:1px solid #e2e8f0}
+.stat-val{font-size:28px;font-weight:800;line-height:1.1}
+.stat-label{font-size:11px;color:#64748b;margin-top:4px;line-height:1.3}
+.stat.red .stat-val{color:#dc2626}.stat.amber .stat-val{color:#d97706}.stat.green .stat-val{color:#16a34a}.stat.blue .stat-val{color:#2563eb}.stat.navy .stat-val{color:#0f172a}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#f1f5f9;padding:9px 10px;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:#475569;border-bottom:2px solid #e2e8f0}
+td{padding:9px 10px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8fafc}
+.bar-wrap{background:#e2e8f0;border-radius:4px;height:10px;width:120px;display:inline-block;vertical-align:middle;margin-left:6px}
+.bar-fill{height:10px;border-radius:4px}
+.note{background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:10px 14px;font-size:12px;color:#0369a1;margin-top:14px}
+.warn{background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:10px 14px;font-size:12px;color:#92400e;margin-top:14px}
+.flag{display:flex;gap:10px;padding:12px 14px;border-radius:8px;margin-bottom:10px;border-left:4px solid}
+.flag.red{background:#fef2f2;border-color:#dc2626}.flag.amber{background:#fffbeb;border-color:#d97706}.flag.green{background:#f0fdf4;border-color:#16a34a}
+.flag-icon{font-size:18px;line-height:1}.flag-text{font-size:13px}
+.flag-text strong{display:block;margin-bottom:2px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.scenario{border:1px solid #e2e8f0;border-radius:10px;padding:18px;background:#f8fafc}
+.scenario h4{font-size:15px;font-weight:700;margin-bottom:12px}
+.scenario.warn-box{background:#fffbeb;border-color:#fcd34d}
+.scenario.danger{background:#fef2f2;border-color:#fca5a5}
+.scenario.ok{background:#f0fdf4;border-color:#bbf7d0}
+canvas{max-width:100%;margin-top:12px}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="header">
+  <h1>⚡ Onboarding Team — Efficiency & Capacity Analysis</h1>
+  <p>Prepared for discussion with Fran · Rev.io Internal · Feb 2026</p>
+  <div class="sub">
+    <span class="chip">📅 Aug 2025 – Jan 2026 (6 months)</span>
+    <span class="chip">👥 18 Team Members</span>
+    <span class="chip">🕐 14,475 Time Log Entries</span>
+    <span class="chip">📦 212 Client Projects</span>
+  </div>
+</div>
+<div class="container">
+
+<!-- KEY FINDINGS -->
+<div class="section">
+  <h2>Key Findings for Leadership Discussion</h2>
+
+  <div class="flag red">
+    <div class="flag-icon">🔴</div>
+    <div class="flag-text"><strong>Project Control consumes 34% of all client-facing hours</strong>
+    2,671 of 7,862 project hours are logged as "Project Control" — coordination, status updates, project management overhead. This is the single largest task category, exceeding Data Load, Training, and Kickoffs combined. If even half of this is waste, recovering it would increase effective delivery capacity by 17%.</div>
+  </div>
+
+  <div class="flag red">
+    <div class="flag-icon">🔴</div>
+    <div class="flag-text"><strong>Two full-time ICs log 21% and 26% utilization as measured</strong>
+    Alexander Hills and Derrick James are full-time ICs on the legacy Billing team. Even adjusting for "DE Client Calls" being miscategorized as Admin Time, true utilization is ~37–39%. Both log significant Internal Meetings (171h, 230h). This is recoverable capacity — potentially 300–400 billable project hours per 6-month period per person.</div>
+  </div>
+
+  <div class="flag amber">
+    <div class="flag-icon">🟡</div>
+    <div class="flag-text"><strong>The PSA Web team is running near capacity with just 2 active SAs</strong>
+    Nicole and Kegan average 165 combined project hours/month. At ~3.5h/month per active client, this supports approximately 47 concurrent clients. They currently have 95 active/on-hold/off-track accounts — indicating they are over their true delivery capacity, which explains the engagement drop-off on on-hold accounts.</div>
+  </div>
+
+  <div class="flag amber">
+    <div class="flag-icon">🟡</div>
+    <div class="flag-text"><strong>Lunch is logged as Admin Time across the team — inflating overhead metrics</strong>
+    Alexander Hills and Derrick James alone logged 220h as "Lunch." Across the full team this likely adds 400–500h to "Admin Time" totals over 6 months, artificially depressing utilization rates. This is a time tracking hygiene issue that makes the data misleading for management.</div>
+  </div>
+
+  <div class="flag amber">
+    <div class="flag-icon">🟡</div>
+    <div class="flag-text"><strong>"DE Client Calls" (275h) is categorized as Admin Time, not Project Work</strong>
+    Client-facing calls logged under this bucket are invisible in utilization metrics. For Alexander Hills (149h) and Derrick James (127h) this meaningfully changes their apparent performance. Reclassification would add ~6% to team-wide utilization.</div>
+  </div>
+
+  <div class="flag green">
+    <div class="flag-icon">🟢</div>
+    <div class="flag-text"><strong>JD Caulkins, Marshall Harris, and Stephanie Okada are the delivery engine</strong>
+    These three combined log 2,396 project hours (76–84% utilization) across the 6-month period — 30% of all project work from 17% of headcount. They are the team's highest-leverage contributors on the legacy Billing side.</div>
+  </div>
+
+  <div class="flag green">
+    <div class="flag-icon">🟢</div>
+    <div class="flag-text"><strong>PSA Web can double its graduation rate before needing another SA hire — IF product unblocks clients</strong>
+    20 clients are on hold for functionality. If Apollo 1 deliveries unlock even half, Nicole and Kegan can absorb the re-activation without new headcount in the short term. The constraint is product, not people.</div>
+  </div>
+</div>
+
+<!-- TEAM OVERVIEW -->
+<div class="section">
+  <h2>Team Overview — 6 Month Summary</h2>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">18</div><div class="stat-label">Team Members</div></div>
+    <div class="stat navy"><div class="stat-val">14,069</div><div class="stat-label">Total Hours Logged</div></div>
+    <div class="stat green"><div class="stat-val">7,862</div><div class="stat-label">Project Work Hours</div></div>
+    <div class="stat amber"><div class="stat-val">6,207</div><div class="stat-label">Admin Time Hours</div></div>
+    <div class="stat blue"><div class="stat-val">56%</div><div class="stat-label">Overall Utilization</div></div>
+    <div class="stat blue"><div class="stat-val">212</div><div class="stat-label">Unique Client Projects</div></div>
+  </div>
+
+  <h3>Utilization — Logged vs True (adding DE Client Calls)</h3>
+  <div class="note">True utilization adds back "DE Client Calls" which is logged as Admin Time but represents client-facing work. Lunch (~400h across team) is excluded from both metrics for accuracy.</div>
+
+  <h3>Weekly Project vs Admin Hours — Full Team</h3>
+  <canvas id="weeklyChart" height="80"></canvas>
+</div>
+
+<!-- INDIVIDUAL PERFORMANCE -->
+<div class="section">
+  <h2>Individual Performance Scorecard</h2>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Role / Line</th><th>Total Hrs</th><th>Proj Hrs</th><th>Util %</th><th>True Util</th><th>Mtg %</th><th>PTO %</th><th>Clients</th><th>Avg Hrs/Client</th><th>Proj Hrs/Mo</th></tr>
+    </thead>
+    <tbody>
+<tr>
+    <td><strong>JD Caulkins</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>991h</td>
+    <td>829h</td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">84%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">84%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">6%</span></td>
+    <td><span style="font-size:12px;color:#64748b">7%</span></td>
+    <td>15</td>
+    <td>55.2</td>
+    <td>138h</td>
+  </tr><tr>
+    <td><strong>Marshall Harris</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>1031h</td>
+    <td>782h</td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">76%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">76%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">11%</span></td>
+    <td><span style="font-size:12px;color:#64748b">13%</span></td>
+    <td>26</td>
+    <td>30.1</td>
+    <td>130h</td>
+  </tr><tr>
+    <td><strong>Stephanie Okada</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>1040h</td>
+    <td>785h</td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">76%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">76%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">10%</span></td>
+    <td><span style="font-size:12px;color:#64748b">13%</span></td>
+    <td>59</td>
+    <td>13.3</td>
+    <td>131h</td>
+  </tr><tr>
+    <td><strong>Andrew Millington</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>696h</td>
+    <td>495h</td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">71%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">71%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">15%</span></td>
+    <td><span style="font-size:12px;color:#64748b">8%</span></td>
+    <td>20</td>
+    <td>24.7</td>
+    <td>82h</td>
+  </tr><tr>
+    <td><strong>Alexis Ligon</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>959h</td>
+    <td>659h</td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">69%</span></td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">69%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">11%</span></td>
+    <td><span style="font-size:12px;color:#64748b">15%</span></td>
+    <td>35</td>
+    <td>18.8</td>
+    <td>110h</td>
+  </tr><tr>
+    <td><strong>Francesca Thayer</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>502h</td>
+    <td>297h</td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">59%</span></td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">59%</span></td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">20%</span></td>
+    <td><span style="font-size:12px;color:#64748b">19%</span></td>
+    <td>11</td>
+    <td>27.0</td>
+    <td>49h</td>
+  </tr><tr>
+    <td><strong>Heavenly Burdette</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>1068h</td>
+    <td>621h</td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">58%</span></td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">58%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">10%</span></td>
+    <td><span style="font-size:12px;color:#64748b">12%</span></td>
+    <td>16</td>
+    <td>38.8</td>
+    <td>103h</td>
+  </tr><tr>
+    <td><strong>Kegan Ehlers</strong></td>
+    <td><span style="background:#dbeafe;color:#1d4ed8;padding:1px 6px;border-radius:3px;font-size:10px">PSA Web</span> Solutions Analyst</td>
+    <td>840h</td>
+    <td>461h</td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">55%</span></td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">55%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">11%</span></td>
+    <td><span style="font-size:12px;color:#64748b">26%</span></td>
+    <td>60</td>
+    <td>7.7</td>
+    <td>77h</td>
+  </tr><tr>
+    <td><strong>Christina Owen</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>1054h</td>
+    <td>566h</td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">54%</span></td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">54%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">12%</span></td>
+    <td><span style="font-size:12px;color:#64748b">15%</span></td>
+    <td>10</td>
+    <td>56.6</td>
+    <td>94h</td>
+  </tr><tr>
+    <td><strong>Jen Stout</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>636h</td>
+    <td>325h</td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">51%</span></td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">51%</span></td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">35%</span></td>
+    <td><span style="font-size:12px;color:#64748b">7%</span></td>
+    <td>31</td>
+    <td>10.5</td>
+    <td>54h</td>
+  </tr><tr>
+    <td><strong>Tim Smith</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>897h</td>
+    <td>460h</td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">51%</span></td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">51%</span></td>
+    <td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">13%</span></td>
+    <td><span style="font-size:12px;color:#64748b">11%</span></td>
+    <td>21</td>
+    <td>21.9</td>
+    <td>77h</td>
+  </tr><tr>
+    <td><strong>Nicole Hills</strong></td>
+    <td><span style="background:#dbeafe;color:#1d4ed8;padding:1px 6px;border-radius:3px;font-size:10px">PSA Web</span> Solutions Analyst</td>
+    <td>1083h</td>
+    <td>525h</td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">48%</span></td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">48%</span></td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">17%</span></td>
+    <td><span style="font-size:12px;color:#64748b">16%</span></td>
+    <td>54</td>
+    <td>9.7</td>
+    <td>88h</td>
+  </tr><tr>
+    <td><strong>Jessica Cochran</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>499h</td>
+    <td>238h</td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">48%</span></td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">48%</span></td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">18%</span></td>
+    <td><span style="font-size:12px;color:#64748b">17%</span></td>
+    <td>16</td>
+    <td>14.8</td>
+    <td>40h</td>
+  </tr><tr>
+    <td><strong>Conner Sharp</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Project Manager</td>
+    <td>676h</td>
+    <td>299h</td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">44%</span></td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">44%</span></td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">22%</span></td>
+    <td><span style="font-size:12px;color:#64748b">11%</span></td>
+    <td>22</td>
+    <td>13.6</td>
+    <td>50h</td>
+  </tr><tr>
+    <td><strong>Derrick James</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Individual Contributor</td>
+    <td>1017h</td>
+    <td>265h</td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">26%</span></td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">38%</span></td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">23%</span></td>
+    <td><span style="font-size:12px;color:#64748b">14%</span></td>
+    <td>11</td>
+    <td>24.1</td>
+    <td>44h</td>
+  </tr><tr>
+    <td><strong>Alexander Hills</strong></td>
+    <td><span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px">Legacy</span> Individual Contributor</td>
+    <td>989h</td>
+    <td>212h</td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">21%</span></td>
+    <td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">36%</span></td>
+    <td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">17%</span></td>
+    <td><span style="font-size:12px;color:#64748b">20%</span></td>
+    <td>14</td>
+    <td>15.1</td>
+    <td>35h</td>
+  </tr>
+    </tbody>
+  </table>
+  <div class="note">Utilization = Project Work hours ÷ Total hours. True Utilization adds "DE Client Calls" (currently logged as Admin). Color thresholds: 🟢 ≥70% · 🟡 55–70% · 🔴 &lt;55%.</div>
+</div>
+
+<!-- TOP PERFORMERS -->
+<div class="section">
+  <h2>Top Performers & Outliers</h2>
+  <div class="two-col">
+    <div>
+      <h3>🏆 Highest Delivery Efficiency</h3>
+      <table>
+        <thead><tr><th>Name</th><th>True Util</th><th>Proj Hrs/Mo</th><th>Clients</th></tr></thead>
+        <tbody>
+<tr><td><strong>JD Caulkins</strong></td><td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">84%</span></td><td>138h</td><td>15</td></tr><tr><td><strong>Stephanie Okada</strong></td><td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">76%</span></td><td>131h</td><td>59</td></tr><tr><td><strong>Marshall Harris</strong></td><td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">76%</span></td><td>130h</td><td>26</td></tr><tr><td><strong>Alexis Ligon</strong></td><td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">69%</span></td><td>110h</td><td>35</td></tr><tr><td><strong>Andrew Millington</strong></td><td><span style="background:#16a34a;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">71%</span></td><td>82h</td><td>20</td></tr><tr><td><strong>Heavenly Burdette</strong></td><td><span style="background:#d97706;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">58%</span></td><td>103h</td><td>16</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>⚠️ Low Utilization — Needs Review</h3>
+      <table>
+        <thead><tr><th>Name</th><th>True Util</th><th>Top Admin Driver</th><th>Proj Hrs/Mo</th></tr></thead>
+        <tbody>
+<tr><td><strong>Alexander Hills</strong></td><td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">36%</span></td><td style="font-size:12px;color:#64748b">PTO (20%)</td><td>35h</td></tr><tr><td><strong>Derrick James</strong></td><td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">38%</span></td><td style="font-size:12px;color:#64748b">Meetings (23%)</td><td>44h</td></tr><tr><td><strong>Conner Sharp</strong></td><td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">44%</span></td><td style="font-size:12px;color:#64748b">Meetings (22%)</td><td>50h</td></tr><tr><td><strong>Nicole Hills</strong></td><td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">48%</span></td><td style="font-size:12px;color:#64748b">PTO (16%)</td><td>88h</td></tr><tr><td><strong>Jessica Cochran</strong></td><td><span style="background:#dc2626;color:#fff;padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">48%</span></td><td style="font-size:12px;color:#64748b">PTO (17%)</td><td>40h</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TASK EFFICIENCY -->
+<div class="section">
+  <h2>Where Hours Are Going — Task Type Analysis</h2>
+  <div class="two-col">
+    <div>
+      <canvas id="taskChart" height="200"></canvas>
+    </div>
+    <div>
+      <table>
+        <thead><tr><th>Task Category</th><th>Hours</th><th>% of Project Work</th><th>Signal</th></tr></thead>
+        <tbody>
+<tr><td>Project Control</td><td>2671h</td><td>34%</td><td style="font-size:11px">🔴 High overhead</td></tr><tr><td>Other</td><td>1822h</td><td>23%</td><td style="font-size:11px">⚪ Unclassified</td></tr><tr><td>Data Load</td><td>766h</td><td>10%</td><td style="font-size:11px">🟢 Core delivery</td></tr><tr><td>Bill Out Support</td><td>590h</td><td>8%</td><td style="font-size:11px">🟡 Post-live support cost</td></tr><tr><td>Comparative</td><td>565h</td><td>7%</td><td style="font-size:11px">⚪</td></tr><tr><td>Training</td><td>508h</td><td>6%</td><td style="font-size:11px">🟢 Core delivery</td></tr><tr><td>Integrations</td><td>190h</td><td>2%</td><td style="font-size:11px">⚪</td></tr><tr><td>Kickoff</td><td>182h</td><td>2%</td><td style="font-size:11px">🟢 Core delivery</td></tr><tr><td>QBO Integration</td><td>172h</td><td>2%</td><td style="font-size:11px">⚪</td></tr><tr><td>Administration</td><td>147h</td><td>2%</td><td style="font-size:11px">⚪</td></tr><tr><td>Graduation</td><td>139h</td><td>2%</td><td style="font-size:11px">🟢 Outcome</td></tr><tr><td>Activation</td><td>110h</td><td>1%</td><td style="font-size:11px">⚪</td></tr>
+        </tbody>
+      </table>
+      <div class="warn">Project Control (34%) + Other (23%) = 57% of all project hours are overhead or unclassified. Only 43% maps to clear delivery activities. Improving task classification alone would unlock significant management visibility.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CAPACITY MODEL -->
+<div class="section">
+  <h2>Capacity Model — What Happens at 2× and 3× Volume</h2>
+
+  <h3>PSA Web (Solutions Analyst Team)</h3>
+  <div class="note" style="margin-bottom:16px">
+    Assumptions: Avg 9h invested per client over onboarding lifecycle · Median 11-week onboarding duration · Current active SA team = Nicole + Kegan (165 combined project hrs/mo) · Halle ramps over next 90 days.
+  </div>
+  <div class="stat-grid" style="margin-bottom:20px">
+    <div class="stat blue"><div class="stat-val">165h</div><div class="stat-label">Combined SA project hrs/mo (current)</div></div>
+    <div class="stat blue"><div class="stat-val">~3.5h</div><div class="stat-label">Avg hours/month per active client</div></div>
+    <div class="stat amber"><div class="stat-val">95</div><div class="stat-label">Active/on-hold clients today</div></div>
+    <div class="stat red"><div class="stat-val">202%</div><div class="stat-label">SA capacity consumed today</div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px">
+<div class="scenario ok">
+    <h4>Current State</h4>
+    <div style="font-size:13px;color:#475569;margin-bottom:8px">95 active clients · 2 SAs</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Hours needed/mo:</strong> 333h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Hours available:</strong> 165h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Status:</strong> 🔴 168h/mo shortfall</div>
+    <div style="margin:8px 0 0;font-size:12px;color:#64748b">Requires 3 additional SA hires</div>
+  </div><div class="scenario warn-box">
+    <h4>2× Growth</h4>
+    <div style="font-size:13px;color:#475569;margin-bottom:8px">190 active clients</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Hours needed/mo:</strong> 665h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Hours available:</strong> 165h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Status:</strong> 🔴 500h/mo shortfall</div>
+    <div style="margin:8px 0 0;font-size:12px;color:#64748b">Requires 7 additional SA hires</div>
+  </div><div class="scenario danger">
+    <h4>3× Growth</h4>
+    <div style="font-size:13px;color:#475569;margin-bottom:8px">285 active clients</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Hours needed/mo:</strong> 998h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Hours available:</strong> 165h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Status:</strong> 🔴 833h/mo shortfall</div>
+    <div style="margin:8px 0 0;font-size:12px;color:#64748b">Requires 11 additional SA hires</div>
+  </div>
+  </div>
+
+  <div class="warn">⚠ Important caveat: 20 of 95 active clients are On Hold - Functionality. These consume minimal SA hours while blocked. If product unblocks them, effective demand on SA time increases immediately. This makes the "current state" capacity tighter than it appears.</div>
+
+  <h3 style="margin-top:28px">Legacy Billing Team</h3>
+  <div class="note" style="margin-bottom:16px">
+    Assumptions: Avg 43h per client over full engagement · 12-person delivery team · 1,142 project hrs/mo available.
+  </div>
+  <div class="stat-grid" style="margin-bottom:20px">
+    <div class="stat blue"><div class="stat-val">1,142h</div><div class="stat-label">Team project hrs/mo</div></div>
+    <div class="stat blue"><div class="stat-val">43h</div><div class="stat-label">Avg hours per client engagement</div></div>
+    <div class="stat blue"><div class="stat-val">158</div><div class="stat-label">Unique clients (6-mo period)</div></div>
+    <div class="stat amber"><div class="stat-val">~95h</div><div class="stat-label">Avg project hrs/mo per PM</div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+<div class="scenario ok">
+    <h4>Current State</h4>
+    <div style="margin:4px 0;font-size:13px"><strong>Approx hrs needed/mo:</strong> 377h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Hours available:</strong> 1,142h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Gap:</strong> ✅ 765h headroom</div>
+    <div style="margin:8px 0 0;font-size:12px;color:#64748b">No new hires needed</div>
+  </div><div class="scenario warn-box">
+    <h4>2× Volume</h4>
+    <div style="margin:4px 0;font-size:13px"><strong>Approx hrs needed/mo:</strong> 754h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Hours available:</strong> 1,142h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Gap:</strong> ✅ 388h headroom</div>
+    <div style="margin:8px 0 0;font-size:12px;color:#64748b">No new hires needed</div>
+  </div><div class="scenario danger">
+    <h4>3× Volume</h4>
+    <div style="margin:4px 0;font-size:13px"><strong>Approx hrs needed/mo:</strong> 1131h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Hours available:</strong> 1,142h</div>
+    <div style="margin:4px 0;font-size:13px"><strong>Gap:</strong> ✅ 11h headroom</div>
+    <div style="margin:8px 0 0;font-size:12px;color:#64748b">No new hires needed</div>
+  </div>
+  </div>
+</div>
+
+<!-- WHAT TO FIX -->
+<div class="section">
+  <h2>Highest-Leverage Improvement Opportunities</h2>
+
+  <table>
+    <thead><tr><th>#</th><th>Opportunity</th><th>Estimated Impact</th><th>Effort</th><th>Who Owns It</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Reclassify "DE Client Calls" as Project Work</strong> — 275h of client-facing work hidden in admin</td><td>+6% team utilization; accurate metrics</td><td style="color:#16a34a">Low</td><td>Fran / Team</td></tr>
+      <tr><td>2</td><td><strong>Remove Lunch from time logging</strong> — adds 400–500h of fake Admin overhead every 6 months</td><td>Cleaner utilization; removes misleading data</td><td style="color:#16a34a">Low</td><td>Fran / Lauren</td></tr>
+      <tr><td>3</td><td><strong>Reduce "Project Control" from 34% → target 20%</strong> — templates, standup cadence, client portal</td><td>+1,100h released for delivery per 6 months</td><td style="color:#d97706">Medium</td><td>Fran / PMs</td></tr>
+      <tr><td>4</td><td><strong>Investigate Alex Hills and Derrick James utilization</strong> — 37–39% true utilization; 230h meetings/period for Derrick</td><td>+300–400h project hours per 6 months if resolved</td><td style="color:#d97706">Medium</td><td>Fran</td></tr>
+      <tr><td>5</td><td><strong>Halle Taylor ramp plan</strong> — 30 PSA Web clients with 0 graduations; 3.5 weeks logged</td><td>Full SA capacity online in 60–90 days</td><td style="color:#16a34a">Low (time)</td><td>Nicole / Fran</td></tr>
+      <tr><td>6</td><td><strong>Milestone tracker adoption</strong> — All 486 milestones show "Not Started"; no completion data</td><td>Real-time health visibility per client</td><td style="color:#d97706">Medium</td><td>All SAs</td></tr>
+      <tr><td>7</td><td><strong>Improve task classification in time logs</strong> — 23% of project hours in "Other" bucket</td><td>Management visibility; identify further waste</td><td style="color:#16a34a">Low</td><td>Fran / Team</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- DISCUSSION GUIDE -->
+<div class="section">
+  <h2>Suggested Discussion Topics with Fran</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div style="background:#f8fafc;border-radius:8px;padding:16px;border:1px solid #e2e8f0">
+      <div style="font-weight:700;margin-bottom:8px;color:#0f172a">📊 Data & Metrics</div>
+      <ul style="padding-left:18px;font-size:13px;line-height:2">
+        <li>What does "Project Control" actually encompass day-to-day?</li>
+        <li>Why is "DE Client Calls" in Admin Time? What does DE stand for?</li>
+        <li>Why are milestones not being updated in Notion?</li>
+        <li>What's the right utilization target for the team — 70%? 75%?</li>
+      </ul>
+    </div>
+    <div style="background:#f8fafc;border-radius:8px;padding:16px;border:1px solid #e2e8f0">
+      <div style="font-weight:700;margin-bottom:8px;color:#0f172a">👥 People & Capacity</div>
+      <ul style="padding-left:18px;font-size:13px;line-height:2">
+        <li>What is Alex Hills and Derrick James's day-to-day scope?</li>
+        <li>What's Halle's ramp plan — how long until she's fully independent?</li>
+        <li>Where does Jeremy (SA) appear in the time data — is he logging?</li>
+        <li>At what new-client volume do we need to hire the next SA?</li>
+      </ul>
+    </div>
+    <div style="background:#f8fafc;border-radius:8px;padding:16px;border:1px solid #e2e8f0">
+      <div style="font-weight:700;margin-bottom:8px;color:#0f172a">🚀 Growth Readiness</div>
+      <ul style="padding-left:18px;font-size:13px;line-height:2">
+        <li>Can PSA Web absorb 2× intake if Apollo 1 unblocks on-hold clients?</li>
+        <li>What's the hiring trigger — intake rate, not backlog size?</li>
+        <li>Does legacy Billing team have headroom, or are they at ceiling?</li>
+        <li>What would a "self-serve graduation" path look like to reduce SA load?</li>
+      </ul>
+    </div>
+    <div style="background:#f8fafc;border-radius:8px;padding:16px;border:1px solid #e2e8f0">
+      <div style="font-weight:700;margin-bottom:8px;color:#0f172a">🔧 Process & Product</div>
+      <ul style="padding-left:18px;font-size:13px;line-height:2">
+        <li>What's the plan for the 20 On Hold - Functionality accounts?</li>
+        <li>Who owns the Apollo feature-to-client mapping?</li>
+        <li>Is Bill Out Support (590h) a process problem or client complexity?</li>
+        <li>What would cut "Project Control" from 34% to 20%?</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px">
+  Generated by Revay ⚡ · Rev.io Internal · Feb 25, 2026 · Based on Wrike time logs (Aug 2025–Jan 2026) + Notion PSA Onboarding data
+</div>
+</div>
+
+<script>
+// Weekly chart
+new Chart(document.getElementById('weeklyChart'), {
+  type:'bar',
+  data:{
+    labels:['08-03','08-10','08-17','08-24','08-31','09-07','09-14','09-21','09-28','10-05','10-12','10-19','10-26','11-02','11-09','11-16','11-23','11-30','12-07','12-14','12-21','12-29','01-05','01-12','01-19','01-26'],
+    datasets:[
+      {label:'Project Work',data:[275,307,258,266,227,269,324,332,358,359,312,292,280,332,331,324,164,355,332,363,159,204,399,384,319,337],backgroundColor:'#2563eb',stack:'s'},
+      {label:'Admin Time',data:[247,213,238,255,275,251,194,217,196,187,203,211,224,253,264,233,334,215,246,212,358,303,217,173,236,227],backgroundColor:'#e2e8f0',stack:'s'}
+    ]
+  },
+  options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{x:{ticks:{maxTicksLimit:13,font:{size:10}}},y:{stacked:true}}}
+});
+
+// Task donut
+new Chart(document.getElementById('taskChart'), {
+  type:'doughnut',
+  data:{
+    labels:["Project Control","Other","Data Load","Bill Out Support","Comparative","Training","Integrations","Kickoff","QBO Integration","Administration","Graduation","Activation"],
+    datasets:[{data:[2671,1822,766,590,565,508,190,182,172,147,139,110],backgroundColor:['#dc2626','#94a3b8','#2563eb','#d97706','#7c3aed','#16a34a','#0891b2','#ea580c','#db2777','#65a30d','#4f46e5','#0d9488']}]
+  },
+  options:{responsive:true,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}}}}
+});
+</script>
+</body>
+</html>
