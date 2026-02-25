@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revay AI — Cloudflare to Azure Migration Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e2e8f0; line-height: 1.6; }
+  .header { background: linear-gradient(135deg, #1a1f2e 0%, #0f1117 100%); border-bottom: 1px solid #2d3748; padding: 40px; }
+  .header h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .header .sub { color: #718096; font-size: 14px; }
+  .header .badge { display: inline-block; background: #e53e3e; color: white; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; margin-left: 12px; vertical-align: middle; letter-spacing: 0.5px; }
+  .container { max-width: 960px; margin: 0 auto; padding: 40px; }
+  .section { background: #1a1f2e; border: 1px solid #2d3748; border-radius: 12px; padding: 28px; margin-bottom: 24px; }
+  .section h2 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section h2 .icon { font-size: 18px; }
+  .section h3 { font-size: 14px; font-weight: 600; color: #a0aec0; margin: 16px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  p { color: #a0aec0; font-size: 14px; margin-bottom: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { background: #0f1117; border: 1px solid #2d3748; border-radius: 8px; padding: 16px; }
+  .card .label { font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .card .value { font-size: 14px; color: #e2e8f0; font-family: monospace; }
+  .card .value.small { font-size: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 10px 12px; background: #0f1117; color: #718096; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #2d3748; }
+  td { padding: 10px 12px; border-bottom: 1px solid #1a1f2e; color: #a0aec0; vertical-align: top; }
+  td:first-child { color: #e2e8f0; font-weight: 500; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+  .tag.red { background: rgba(229,62,62,0.15); color: #fc8181; }
+  .tag.yellow { background: rgba(237,137,54,0.15); color: #f6ad55; }
+  .tag.green { background: rgba(72,187,120,0.15); color: #68d391; }
+  .tag.blue { background: rgba(66,153,225,0.15); color: #63b3ed; }
+  .step { display: flex; gap: 12px; margin-bottom: 12px; }
+  .step .num { flex-shrink: 0; width: 24px; height: 24px; background: #2d3748; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #a0aec0; }
+  .step .content { font-size: 13px; color: #a0aec0; padding-top: 3px; }
+  .step .content strong { color: #e2e8f0; }
+  code { background: #0f1117; border: 1px solid #2d3748; border-radius: 4px; padding: 2px 6px; font-size: 12px; color: #68d391; font-family: monospace; }
+  pre { background: #0f1117; border: 1px solid #2d3748; border-radius: 8px; padding: 16px; font-size: 12px; color: #68d391; font-family: monospace; overflow-x: auto; margin: 8px 0; white-space: pre-wrap; word-break: break-word; }
+  .alert { background: rgba(229,62,62,0.08); border: 1px solid rgba(229,62,62,0.3); border-radius: 8px; padding: 14px 16px; font-size: 13px; color: #fc8181; margin-bottom: 16px; }
+  .info { background: rgba(66,153,225,0.08); border: 1px solid rgba(66,153,225,0.3); border-radius: 8px; padding: 14px 16px; font-size: 13px; color: #63b3ed; margin-bottom: 16px; }
+  .checklist { list-style: none; }
+  .checklist li { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; font-size: 13px; color: #a0aec0; border-bottom: 1px solid #0f1117; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: "☐"; color: #4a5568; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .footer { text-align: center; padding: 40px; color: #4a5568; font-size: 12px; }
+  @media (max-width: 640px) { .grid2, .grid3 { grid-template-columns: 1fr; } .container { padding: 20px; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="max-width:960px;margin:0 auto;">
+    <h1>⚡ Revay AI — Migration Guide <span class="badge">FOR IT</span></h1>
+    <div class="sub">Cloudflare Container → Azure Container &nbsp;|&nbsp; Prepared: Feb 25, 2026 &nbsp;|&nbsp; Owner: Evan Rice (evanr@rev.io)</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- What is Revay -->
+  <div class="section">
+    <h2><span class="icon">🤖</span> What Is Revay?</h2>
+    <p>Revay is an AI Chief of Staff running on <strong>OpenClaw</strong> — an open-source Node.js AI gateway. It runs as a persistent background process in a container, connects to Telegram and Discord for messaging, executes scheduled tasks (cron jobs), and maintains persistent memory on disk. It is personal to Evan Rice and operates exclusively on his behalf.</p>
+    <p>This document covers everything IT needs to migrate the Revay container from Cloudflare to Azure with zero data loss.</p>
+  </div>
+
+  <!-- Current Environment -->
+  <div class="section">
+    <h2><span class="icon">☁️</span> Current Environment (Cloudflare)</h2>
+    <div class="grid3">
+      <div class="card"><div class="label">Runtime</div><div class="value">Node.js v22.13.1</div></div>
+      <div class="card"><div class="label">Package Manager</div><div class="value">npm v10.9.2</div></div>
+      <div class="card"><div class="label">OS</div><div class="value small">Linux 6.12 (x64)</div></div>
+      <div class="card"><div class="label">Process</div><div class="value small">openclaw gateway</div></div>
+      <div class="card"><div class="label">Gateway Port</div><div class="value">18789</div></div>
+      <div class="card"><div class="label">Container User</div><div class="value">root</div></div>
+    </div>
+    <h3>Key Paths</h3>
+    <div class="grid2" style="margin-top:8px;">
+      <div class="card"><div class="label">Config File</div><div class="value small">/root/.openclaw/openclaw.json</div></div>
+      <div class="card"><div class="label">Workspace (Memory + Scripts)</div><div class="value small">/root/.openclaw/workspace/</div></div>
+      <div class="card"><div class="label">Agent Auth Profiles</div><div class="value small">/root/.openclaw/agents/main/agent/auth-profiles.json</div></div>
+      <div class="card"><div class="label">OpenClaw Binary</div><div class="value small">/usr/local/bin/openclaw</div></div>
+    </div>
+  </div>
+
+  <!-- Azure Target Requirements -->
+  <div class="section">
+    <h2><span class="icon">🔷</span> Azure Target — Container Requirements</h2>
+    <div class="alert">The new container must meet these specs or Revay will not function correctly.</div>
+    <table>
+      <thead><tr><th>Requirement</th><th>Spec</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Runtime</td><td>Node.js v22.x LTS</td><td>Must be v22+ — older versions unsupported</td></tr>
+        <tr><td>OS</td><td>Linux x64</td><td>Debian/Ubuntu preferred</td></tr>
+        <tr><td>Persistent Storage</td><td>Mounted volume at <code>/root/.openclaw/</code></td><td><strong>Critical</strong> — all memory lives here. Must survive restarts.</td></tr>
+        <tr><td>Outbound HTTPS</td><td>Port 443 unrestricted</td><td>Needed for Anthropic API, Telegram, Discord, GitHub, Brave Search, ElevenLabs, Vapi, Notion, Salesforce, OpenAI</td></tr>
+        <tr><td>Inbound Port</td><td>18789 (internal only)</td><td>Gateway API — no public exposure needed</td></tr>
+        <tr><td>RAM</td><td>≥ 1GB</td><td>2GB recommended</td></tr>
+        <tr><td>Always-on process</td><td>Process restart on crash</td><td>Use systemd, Docker restart policy, or Azure Container Apps always-on</td></tr>
+        <tr><td>npm global install</td><td>npm install -g openclaw</td><td>Or preserve existing node_modules from /usr/local/lib/node_modules/openclaw</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- What Must Be Migrated -->
+  <div class="section">
+    <h2><span class="icon">📦</span> What Must Be Migrated</h2>
+    <p>Priority tiers — items marked <span class="tag red">CRITICAL</span> will cause permanent data or functionality loss if missed.</p>
+
+    <h3>Files &amp; Directories</h3>
+    <table>
+      <thead><tr><th>Item</th><th>Path</th><th>Priority</th><th>What it Contains</th></tr></thead>
+      <tbody>
+        <tr><td>Workspace Directory</td><td><code>/root/.openclaw/workspace/</code></td><td><span class="tag red">CRITICAL</span></td><td>All memory files, scripts, daily logs, project files, Salesforce OAuth tokens, contacts — Revay's entire persistent brain (~60+ files)</td></tr>
+        <tr><td>OpenClaw Config</td><td><code>/root/.openclaw/openclaw.json</code></td><td><span class="tag red">CRITICAL</span></td><td>All runtime config: API keys (Telegram bot, Discord bot, ElevenLabs TTS, Anthropic AI, Azure AI), channel settings, agent settings, cron state</td></tr>
+        <tr><td>Agent Auth Profiles</td><td><code>/root/.openclaw/agents/main/agent/auth-profiles.json</code></td><td><span class="tag red">CRITICAL</span></td><td>Anthropic + OpenAI API keys for AI inference and memory search embeddings. Not in openclaw.json.</td></tr>
+        <tr><td>OpenClaw State DB</td><td><code>/root/.openclaw/</code> (all files)</td><td><span class="tag red">CRITICAL</span></td><td>Session history, cron job definitions and state (including one-shot timed reminders), agent data</td></tr>
+        <tr><td>Global node_modules</td><td><code>/usr/local/lib/node_modules/openclaw/</code></td><td><span class="tag yellow">IMPORTANT</span></td><td>OpenClaw installation. Can reinstall via npm if version is known: <code>npm install -g openclaw@2026.2.21-2</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:20px;">What Lives in the Cloud (No Action Needed)</h3>
+    <table>
+      <thead><tr><th>Service</th><th>Why It Survives</th></tr></thead>
+      <tbody>
+        <tr><td>Telegram Bot</td><td>Bot registration is cloud-hosted at Telegram. Just needs same bot token in config.</td></tr>
+        <tr><td>Discord Bot</td><td>Bot registration is cloud-hosted at Discord. Just needs same bot token in config.</td></tr>
+        <tr><td>Salesforce Connected App</td><td>App registration is in Salesforce. OAuth tokens are in workspace files.</td></tr>
+        <tr><td>Notion Integration</td><td>Token stored in workspace TOOLS.md. Integration is cloud-side.</td></tr>
+        <tr><td>Vapi Phone Assistant</td><td>Assistant + phone number are cloud-hosted. Config in TOOLS.md.</td></tr>
+        <tr><td>GitHub Repos</td><td>erice320/revay-workspace + erice320/revay-legal — fully cloud hosted.</td></tr>
+        <tr><td>GitHub Pages (public URLs)</td><td>All published dashboards and docs remain live during migration.</td></tr>
+        <tr><td>ElevenLabs Voice</td><td>Cloud service. Only needs API key in config.</td></tr>
+        <tr><td>Azure AI (Kimi-K2.5)</td><td>Cloud service. Config entry preserved in openclaw.json migration.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Step-by-Step Migration -->
+  <div class="section">
+    <h2><span class="icon">🔧</span> Step-by-Step Migration Procedure</h2>
+
+    <h3>Phase 1 — Pre-Migration (on old Cloudflare container)</h3>
+    <div class="step"><div class="num">1</div><div class="content"><strong>Push workspace to GitHub (backup)</strong><br>
+    <pre>cd /root/.openclaw/workspace
+git add -A
+git commit -m "pre-migration backup $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+git push origin master</pre>
+    This creates a cloud backup of all memory files, scripts, and Salesforce tokens.</div></div>
+
+    <div class="step"><div class="num">2</div><div class="content"><strong>Export full gateway config</strong><br>
+    <pre>openclaw gateway call config.get --json > /tmp/openclaw-config-export.json
+cat /tmp/openclaw-config-export.json</pre>
+    Save this output — it contains all settings needed to restore runtime configuration.</div></div>
+
+    <div class="step"><div class="num">3</div><div class="content"><strong>Export cron job definitions</strong><br>
+    <pre>openclaw cron list --json > /tmp/cron-backup.json
+cat /tmp/cron-backup.json</pre>
+    Cron jobs (10 active, including one time-sensitive one-shot alert) are stored in gateway state. Save this file.</div></div>
+
+    <div class="step"><div class="num">4</div><div class="content"><strong>Save auth-profiles.json</strong><br>
+    <pre>cat /root/.openclaw/agents/main/agent/auth-profiles.json</pre>
+    Save this output — contains Anthropic + OpenAI API keys not stored in openclaw.json.</div></div>
+
+    <div class="step"><div class="num">5</div><div class="content"><strong>Tar the full .openclaw directory</strong><br>
+    <pre>tar -czf /tmp/openclaw-full-backup.tar.gz /root/.openclaw/
+ls -lh /tmp/openclaw-full-backup.tar.gz</pre>
+    Transfer this tar file to a secure location (Azure Blob Storage or Evan's local machine).</div></div>
+
+    <h3 style="margin-top:24px;">Phase 2 — Azure Container Setup (on new container)</h3>
+    <div class="step"><div class="num">1</div><div class="content"><strong>Install Node.js v22 LTS</strong><br>
+    <pre>curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+apt-get install -y nodejs
+node --version  # must show v22.x</pre></div></div>
+
+    <div class="step"><div class="num">2</div><div class="content"><strong>Install OpenClaw (same version)</strong><br>
+    <pre>npm install -g openclaw@2026.2.21-2</pre>
+    Or restore from the tar backup (preserves exact binary version).</div></div>
+
+    <div class="step"><div class="num">3</div><div class="content"><strong>Restore .openclaw directory from backup</strong><br>
+    <pre>tar -xzf openclaw-full-backup.tar.gz -C /</pre>
+    This restores config, workspace, session history, cron state, and auth profiles in one step.</div></div>
+
+    <div class="step"><div class="num">4</div><div class="content"><strong>Set git credentials (for workspace GitHub sync)</strong><br>
+    <pre>echo "https://erice320:[GITHUB_TOKEN]@github.com" > ~/.git-credentials
+git config --global credential.helper store
+git config --global user.email "revayr23@gmail.com"
+git config --global user.name "Revay"</pre>
+    GitHub token is in workspace TOOLS.md.</div></div>
+
+    <div class="step"><div class="num">5</div><div class="content"><strong>Install workspace npm dependencies</strong><br>
+    <pre>cd /root/.openclaw/workspace && npm install</pre></div></div>
+
+    <div class="step"><div class="num">6</div><div class="content"><strong>Start OpenClaw gateway</strong><br>
+    <pre>openclaw gateway start
+openclaw gateway status</pre></div></div>
+
+    <div class="step"><div class="num">7</div><div class="content"><strong>Rebuild memory search index</strong><br>
+    <pre>openclaw memory index</pre>
+    Must be run after workspace is restored. Indexes ~60 files / ~329 chunks for semantic memory search.</div></div>
+
+    <div class="step"><div class="num">8</div><div class="content"><strong>Configure process supervisor (keep-alive)</strong><br>
+    Using systemd:
+    <pre>[Unit]
+Description=Revay OpenClaw Gateway
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/openclaw gateway start --foreground
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target</pre>
+    <code>systemctl enable revay && systemctl start revay</code></div></div>
+  </div>
+
+  <!-- Post-Migration Verification -->
+  <div class="section">
+    <h2><span class="icon">✅</span> Post-Migration Verification Checklist</h2>
+    <div class="alert">Do not close the old container until ALL items below pass.</div>
+    <ul class="checklist">
+      <li>Send a test message via Discord → confirm Revay responds</li>
+      <li>Send a test message via Telegram → confirm Revay responds</li>
+      <li>Run: <code>openclaw cron list</code> → confirm all 10 cron jobs appear (especially Vision CTS one-shot alert)</li>
+      <li>Run a web search from Revay → confirm Brave Search returns results</li>
+      <li>Query Salesforce from Revay → confirm OAuth tokens still valid</li>
+      <li>Run: <code>openclaw memory index</code> → confirm 300+ chunks indexed</li>
+      <li>Ask Revay to recall something from memory → confirm memory_search returns results</li>
+      <li>Check: <code>openclaw gateway status</code> → all channels show "ok"</li>
+      <li>Verify TTS works → send a voice message test via Telegram</li>
+      <li>Confirm daily industry brief fires at 8AM CST next business day</li>
+    </ul>
+  </div>
+
+  <!-- API Keys Reference -->
+  <div class="section">
+    <h2><span class="icon">🔑</span> Secrets &amp; API Keys Reference</h2>
+    <div class="info">Sensitive values are held by Evan Rice. This table shows where each key lives in the system — do not store key values in this document.</div>
+    <table>
+      <thead><tr><th>Service</th><th>Config Location</th><th>Purpose</th><th>Who Has the Value</th></tr></thead>
+      <tbody>
+        <tr><td>Anthropic (Claude)</td><td><code>auth-profiles.json → anthropic:default.key</code></td><td>Primary AI inference (all conversations)</td><td>Evan / backed up in auth-profiles.json</td></tr>
+        <tr><td>OpenAI</td><td><code>auth-profiles.json → openai:default.key</code></td><td>Memory search embeddings</td><td>Evan / backed up in auth-profiles.json</td></tr>
+        <tr><td>Telegram Bot Token</td><td><code>openclaw.json → channels.telegram.botToken</code></td><td>Telegram messaging</td><td>In openclaw.json export</td></tr>
+        <tr><td>Discord Bot Token</td><td><code>openclaw.json → channels.discord.token</code></td><td>Discord messaging</td><td>In openclaw.json export</td></tr>
+        <tr><td>ElevenLabs TTS</td><td><code>openclaw.json → messages.tts.elevenlabs.apiKey</code></td><td>Voice synthesis for Telegram</td><td>In openclaw.json export</td></tr>
+        <tr><td>Azure AI (Kimi-K2.5)</td><td><code>openclaw.json → models.providers.azure-ai.apiKey</code></td><td>Supplemental AI model</td><td>In openclaw.json export</td></tr>
+        <tr><td>Brave Search</td><td><code>openclaw.json → tools.web.search.apiKey</code> (may be absent — see notes)</td><td>Web search for all research tasks</td><td>Evan — key: [CONTACT EVAN FOR VALUE]</td></tr>
+        <tr><td>OpenClaw Gateway Token</td><td><code>openclaw.json → gateway.auth.token</code></td><td>Internal API auth</td><td>In openclaw.json export</td></tr>
+        <tr><td>Cloudflare Browser CDP</td><td><code>openclaw.json → browser.profiles.cloudflare.cdpUrl</code></td><td>Headless browser automation</td><td>In openclaw.json export — <strong>URL will change on Azure</strong></td></tr>
+        <tr><td>Salesforce OAuth Tokens</td><td><code>workspace/memory/salesforce-creds.json</code></td><td>CRM data access</td><td>In workspace files (auto-refreshing)</td></tr>
+        <tr><td>GitHub PAT</td><td><code>~/.git-credentials</code> + workspace TOOLS.md</td><td>Workspace backup to GitHub</td><td>In TOOLS.md: [CONTACT EVAN FOR VALUE]</td></tr>
+      </tbody>
+    </table>
+    <div class="info" style="margin-top:16px;"><strong>Note on Brave Search:</strong> This key frequently drops from the runtime config (known bug, root cause investigation planned post-migration). If web search fails post-migration, re-apply via: <code>openclaw gateway call config.patch</code> with <code>tools.web.search.provider=brave</code> and the key above.</div>
+    <div class="info"><strong>Note on Browser CDP URL:</strong> The current Cloudflare CDP URL (<code>revay.revbots.net</code>) is environment-specific. IT will need to provision a new CDP endpoint on Azure and update <code>openclaw.json → browser.profiles.cloudflare.cdpUrl</code> accordingly.</div>
+  </div>
+
+  <!-- Active Cron Jobs -->
+  <div class="section">
+    <h2><span class="icon">⏰</span> Active Cron Jobs (Must Be Preserved)</h2>
+    <div class="alert">Cron jobs are stored in gateway state, not in workspace files. If the .openclaw directory is fully restored from tar backup, they survive automatically. If starting fresh, they must be re-created from cron-backup.json.</div>
+    <table>
+      <thead><tr><th>Job Name</th><th>Schedule</th><th>Delivers To</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td>Vapi Call Transcript Monitor</td><td>Every 10 minutes</td><td>Telegram</td><td><span class="tag yellow">HIGH</span></td></tr>
+        <tr><td>Morning Improvement Approval Check</td><td>7:45 AM CST daily</td><td>Discord #revay-evolution</td><td><span class="tag blue">NORMAL</span></td></tr>
+        <tr><td>Daily MSP/Telecom Industry Brief</td><td>8:00 AM CST Mon–Fri</td><td>Discord #msp + Email</td><td><span class="tag yellow">HIGH</span></td></tr>
+        <tr><td>Health &amp; Longevity Breakthrough Scanner</td><td>9AM / 2PM / 6PM CST daily</td><td>Discord #health (if alert)</td><td><span class="tag blue">NORMAL</span></td></tr>
+        <tr><td>Nightly Self-Reflection</td><td>11:00 PM CST daily</td><td>Files + Discord #revay-evolution</td><td><span class="tag blue">NORMAL</span></td></tr>
+        <tr><td>Castle Hills Weekly Real Estate Digest</td><td>Sunday 8:00 AM CST</td><td>Discord #real-estate</td><td><span class="tag blue">NORMAL</span></td></tr>
+        <tr><td>Weekly Health &amp; Longevity Digest</td><td>Monday 7:15 AM CST</td><td>Discord #health + Email</td><td><span class="tag blue">NORMAL</span></td></tr>
+        <tr><td>Weekly Self-Improvement Digest</td><td>Monday 7:45 AM CST</td><td>Discord #revay-evolution + Email</td><td><span class="tag blue">NORMAL</span></td></tr>
+        <tr><td>Weekly Roadmap Status Check</td><td>Monday 9:00 AM CST</td><td>Discord #gtm (if changes)</td><td><span class="tag blue">NORMAL</span></td></tr>
+        <tr><td>Vision CTS Deadline Alert ⚠️</td><td>Mar 16, 2026 1:00 PM UTC (ONE-SHOT)</td><td>Telegram</td><td><span class="tag red">TIME-SENSITIVE</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Contact & Escalation -->
+  <div class="section">
+    <h2><span class="icon">📞</span> Contact &amp; Escalation</h2>
+    <div class="grid2">
+      <div class="card"><div class="label">Owner / Decision Maker</div><div class="value">Evan Rice</div><div class="value small" style="color:#718096;margin-top:4px;">evanr@rev.io | President &amp; COO, Rev.io</div></div>
+      <div class="card"><div class="label">Migration Questions</div><div class="value">Discuss in Discord #revay-evolution</div><div class="value small" style="color:#718096;margin-top:4px;">Revay monitors this channel and can assist in real-time</div></div>
+      <div class="card"><div class="label">OpenClaw Docs</div><div class="value small">https://docs.openclaw.ai</div></div>
+      <div class="card"><div class="label">OpenClaw Source</div><div class="value small">https://github.com/openclaw/openclaw</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Generated by Revay ⚡ | AI Chief of Staff to Evan Rice, Rev.io<br>
+    For internal IT use only — contains infrastructure details
+  </div>
+
+</div>
+</body>
+</html>
