@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rev.io PSA Onboarding — Web-Only Cohort Analysis · Feb 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;color:#1e293b;line-height:1.5}
+.header{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);color:#fff;padding:32px 24px 28px;text-align:center}
+.header h1{font-size:26px;font-weight:700;margin-bottom:6px}
+.header p{color:#94a3b8;font-size:14px}
+.cohort-badge{display:inline-block;background:#2563eb;color:#fff;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:700;margin-top:8px}
+.container{max-width:920px;margin:0 auto;padding:24px 16px}
+.section{background:#fff;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.section h2{font-size:18px;font-weight:700;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;margin-bottom:18px}
+.section h3{font-size:13px;font-weight:700;color:#475569;margin:18px 0 10px;text-transform:uppercase;letter-spacing:.5px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:#f8fafc;border-radius:8px;padding:16px;text-align:center;border:1px solid #e2e8f0}
+.stat-val{font-size:26px;font-weight:800;line-height:1.1}
+.stat-label{font-size:11px;color:#64748b;margin-top:4px}
+.stat.red .stat-val{color:#dc2626}.stat.amber .stat-val{color:#d97706}.stat.green .stat-val{color:#16a34a}.stat.blue .stat-val{color:#2563eb}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#f1f5f9;padding:9px 10px;text-align:left;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:#475569;border-bottom:2px solid #e2e8f0}
+td{padding:9px 10px;border-bottom:1px solid #f1f5f9}
+tr:hover td{background:#f8fafc}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.tag-red{background:#fee2e2;color:#dc2626}.tag-amber{background:#fef3c7;color:#d97706}.tag-green{background:#dcfce7;color:#16a34a}.tag-blue{background:#dbeafe;color:#2563eb}.tag-gray{background:#f1f5f9;color:#475569}
+.finding{display:flex;gap:12px;padding:12px;border-radius:8px;margin-bottom:10px;border-left:4px solid}
+.finding.red{background:#fef2f2;border-color:#dc2626}.finding.amber{background:#fffbeb;border-color:#d97706}.finding.green{background:#f0fdf4;border-color:#16a34a}
+.finding-num{font-size:22px;font-weight:800;min-width:36px;text-align:center;line-height:1.1}
+.finding.red .finding-num{color:#dc2626}.finding.amber .finding-num{color:#d97706}.finding.green .finding-num{color:#16a34a}
+.finding-text{font-size:13px}.finding-text strong{display:block;margin-bottom:2px;font-size:14px}
+.note{background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:10px 14px;font-size:12px;color:#0369a1;margin-top:12px}
+.compare-box{background:#fafafa;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-top:12px;font-size:12px;color:#64748b}
+.compare-box strong{color:#334155}
+@media(max-width:600px){.stat-val{font-size:20px}.stat-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>⚡ Rev.io PSA Onboarding — Web-Only Cohort</h1>
+  <p>Excludes Tigerpaw migration projects (24 clients) · Phases 1–6 · Data as of Feb 25, 2026</p>
+  <div class="cohort-badge">128 Web-Only Clients · $80,655 MRR</div>
+</div>
+<div class="container">
+
+<!-- COHORT COMPARISON -->
+<div class="section">
+  <h2>Cohort Comparison: Web-Only vs Tigerpaw Migration</h2>
+  <table>
+    <thead><tr><th>Cohort</th><th>Clients</th><th>Graduated</th><th>Canceled</th><th>Active</th><th>On Hold/Off Track</th><th>Total MRR</th><th>MRR Lost</th></tr></thead>
+    <tbody>
+      
+<tr>
+  <td><strong>Web-Only</strong></td>
+  <td>128</td>
+  <td>8 <span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:700;display:inline-block">6%</span></td>
+  <td>26 <span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:700;display:inline-block">20%</span></td>
+  <td>57</td>
+  <td>37</td>
+  <td>$80,655</td>
+  <td>$16,736</td>
+</tr>
+      
+<tr>
+  <td><strong>Tigerpaw Migration</strong></td>
+  <td>24</td>
+  <td>2 <span style="background:#d97706;color:#fff;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:700;display:inline-block">8%</span></td>
+  <td>8 <span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:700;display:inline-block">33%</span></td>
+  <td>10</td>
+  <td>4</td>
+  <td>$25,663</td>
+  <td>$7,620</td>
+</tr>
+      
+<tr>
+  <td><strong>All</strong></td>
+  <td>152</td>
+  <td>10 <span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:700;display:inline-block">7%</span></td>
+  <td>34 <span style="background:#dc2626;color:#fff;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:700;display:inline-block">22%</span></td>
+  <td>67</td>
+  <td>41</td>
+  <td>$106,318</td>
+  <td>$24,356</td>
+</tr>
+    </tbody>
+  </table>
+  <div class="compare-box">
+    <strong>Key differences:</strong> Tigerpaw cohort cancels at 33% vs Web-only 20% — migration projects fail at 1.6× the rate of net new onboarding. Tigerpaw represents 24% of total MRR ($25,663) but 24% of all cancellations. The rest of this report focuses exclusively on the 128-client Web cohort.
+  </div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="section">
+  <h2>Executive Summary — Web-Only Cohort</h2>
+  <div class="finding red">
+    <div class="finding-num">1</div>
+    <div class="finding-text"><strong>6.3% graduation rate, 20% cancellation rate across 128 web-only clients</strong>
+    8 clients have graduated ($3,884 MRR live). 26 have canceled ($16,736 MRR lost). $20,789 MRR is stuck in On Hold or Off Track status. The funnel is not flowing.</div>
+  </div>
+  <div class="finding red">
+    <div class="finding-num">2</div>
+    <div class="finding-text"><strong>Product gaps account for 73% of web-only cancellations</strong>
+    19 web clients canceled for functionality ($11,677 MRR lost), 19 more on hold waiting for features ($11,578 frozen). Total product-blocked MRR: $23,255. Apollo 2 features represent the largest block of open need ($41,358).</div>
+  </div>
+  <div class="finding red">
+    <div class="finding-num">3</div>
+    <div class="finding-text"><strong>23 active web clients ($12,727 MRR) have had no contact in 30+ days</strong>
+    Several functionality-blocked accounts have been sitting silent for 3–4 months. Without proactive outreach these convert to churn.</div>
+  </div>
+  <div class="finding amber">
+    <div class="finding-num">4</div>
+    <div class="finding-text"><strong>Self-Serve cancels at 26% vs SA Led at 16%</strong>
+    In the web-only cohort the divergence becomes clearer. SA Led graduation rate: 9% vs Self-Serve: 5%. Self-Serve is a higher-risk model for this ICP at this product maturity stage.</div>
+  </div>
+  <div class="finding green">
+    <div class="finding-num">5</div>
+    <div class="finding-text"><strong>Billing cross-sell graduates at 13% vs net new 5%</strong>
+    Within the web-only cohort, existing Billing customers continue to perform meaningfully better. 23 cross-sell accounts, 105 net new.</div>
+  </div>
+</div>
+
+<!-- PHASE 1 -->
+<div class="section">
+  <h2>Phase 1 — Baseline (Web-Only)</h2>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">128</div><div class="stat-label">Web-Only Clients</div></div>
+    <div class="stat green"><div class="stat-val">8</div><div class="stat-label">Graduated (6.3%)</div></div>
+    <div class="stat red"><div class="stat-val">26</div><div class="stat-label">Canceled (20%)</div></div>
+    <div class="stat amber"><div class="stat-val">30</div><div class="stat-label">On Hold (23%)</div></div>
+    <div class="stat blue"><div class="stat-val">56</div><div class="stat-label">Active (44%)</div></div>
+    <div class="stat amber"><div class="stat-val">7</div><div class="stat-label">Off Track (5.5%)</div></div>
+  </div>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">$80,655</div><div class="stat-label">Total MRR</div></div>
+    <div class="stat blue"><div class="stat-val">$39,246</div><div class="stat-label">Active MRR</div></div>
+    <div class="stat green"><div class="stat-val">$3,884</div><div class="stat-label">Graduated MRR</div></div>
+    <div class="stat red"><div class="stat-val">$16,736</div><div class="stat-label">MRR Lost</div></div>
+    <div class="stat amber"><div class="stat-val">$20,789</div><div class="stat-label">Blocked MRR</div></div>
+  </div>
+  <h3>Cancellation Breakdown</h3>
+  <table>
+    <thead><tr><th>Cancel Reason</th><th>Clients</th><th>% of Web Canceled</th><th>MRR Lost</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-red">Canceled - Functionality</span></td><td>19</td><td>73%</td><td>$11,677</td></tr>
+      <tr><td><span class="tag tag-amber">Canceled - Other</span></td><td>6</td><td>23%</td><td>$3,349</td></tr>
+      <tr><td><span class="tag tag-gray">Canceled - FTL</span></td><td>1</td><td>4%</td><td>$1,710</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PHASE 2 -->
+<div class="section">
+  <h2>Phase 2 — Timing (Web-Only)</h2>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">17d</div><div class="stat-label">Avg Days Sold→KO</div></div>
+    <div class="stat green"><div class="stat-val">10d</div><div class="stat-label">Median Days Sold→KO</div></div>
+    <div class="stat blue"><div class="stat-val">92d</div><div class="stat-label">Avg Days KO→Grad</div></div>
+    <div class="stat green"><div class="stat-val">77d</div><div class="stat-label">Median Days KO→Grad</div></div>
+  </div>
+  <h3>Overdue Milestones (Web Clients)</h3>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">415</div><div class="stat-label">Total Milestones</div></div>
+    <div class="stat red"><div class="stat-val">353</div><div class="stat-label">Overdue</div></div>
+    <div class="stat amber"><div class="stat-val">99d</div><div class="stat-label">Avg Days Overdue</div></div>
+    <div class="stat red"><div class="stat-val">85%</div><div class="stat-label">% Milestones Overdue</div></div>
+  </div>
+  <h3>Most Overdue Milestone Types (Web)</h3>
+  <table>
+    <thead><tr><th>Milestone Name</th><th>Overdue Count</th></tr></thead>
+    <tbody><tr><td>Integrations</td><td><span class="tag tag-red">61</span></td></tr><tr><td>Data Import</td><td><span class="tag tag-red">56</span></td></tr><tr><td>Processes</td><td><span class="tag tag-red">56</span></td></tr><tr><td>Admin</td><td><span class="tag tag-red">56</span></td></tr><tr><td>Finalize/QA</td><td><span class="tag tag-red">55</span></td></tr><tr><td>Week 1: Product & Assets</td><td><span class="tag tag-red">13</span></td></tr><tr><td>Week 1: Inventory Management</td><td><span class="tag tag-red">13</span></td></tr><tr><td>Week 1: Company Info</td><td><span class="tag tag-red">13</span></td></tr><tr><td>Data Import Staging</td><td><span class="tag tag-red">6</span></td></tr><tr><td>Week 3: Quote Templates</td><td><span class="tag tag-red">6</span></td></tr></tbody>
+  </table>
+  <div class="note">⚠ Milestone tracking system not being updated — all show "Not Started". Overdue count computed from planned dates vs today. Once SAs start logging completions, this becomes a live operations dashboard.</div>
+</div>
+
+<!-- PHASE 3 -->
+<div class="section">
+  <h2>Phase 3 — SA Performance (Web-Only)</h2>
+  <table>
+    <thead><tr><th>SA</th><th>Clients</th><th>Grad</th><th>Grad%</th><th>Cancel</th><th>Cancel%</th><th>Func Hold</th><th>Func Cancel</th><th>On Hold</th><th>Off Track</th><th>30d+ Silent</th><th>MRR</th></tr></thead>
+    <tbody>
+<tr>
+    <td><strong>Nicole</strong></td><td>38</td><td>7</td>
+    <td><span class="tag tag-green">18%</span></td>
+    <td>6</td>
+    <td><span class="tag tag-amber">16%</span></td>
+    <td><span class="tag tag-amber">5</span></td>
+    <td><span class="tag tag-amber">5</span></td>
+    <td>7</td><td>1</td>
+    <td><span class="tag tag-red">6</span></td>
+    <td>$24,019</td>
+  </tr><tr>
+    <td><strong>Kegan</strong></td><td>31</td><td>1</td>
+    <td><span class="tag tag-red">3%</span></td>
+    <td>7</td>
+    <td><span class="tag tag-amber">23%</span></td>
+    <td><span class="tag tag-red">8</span></td>
+    <td><span class="tag tag-red">7</span></td>
+    <td>12</td><td>2</td>
+    <td><span class="tag tag-red">9</span></td>
+    <td>$20,159</td>
+  </tr><tr>
+    <td><strong>Halle</strong></td><td>28</td><td>0</td>
+    <td><span class="tag tag-red">0%</span></td>
+    <td>3</td>
+    <td><span class="tag tag-green">11%</span></td>
+    <td><span class="tag tag-gray">2</span></td>
+    <td><span class="tag tag-gray">1</span></td>
+    <td>2</td><td>2</td>
+    <td><span class="tag tag-amber">4</span></td>
+    <td>$17,063</td>
+  </tr><tr>
+    <td><strong>Jeremy</strong></td><td>13</td><td>0</td>
+    <td><span class="tag tag-red">0%</span></td>
+    <td>4</td>
+    <td><span class="tag tag-red">31%</span></td>
+    <td><span class="tag tag-gray">2</span></td>
+    <td><span class="tag tag-amber">3</span></td>
+    <td>4</td><td>1</td>
+    <td><span class="tag tag-amber">3</span></td>
+    <td>$6,804</td>
+  </tr><tr>
+    <td><strong>Heidi</strong></td><td>4</td><td>0</td>
+    <td><span class="tag tag-red">0%</span></td>
+    <td>2</td>
+    <td><span class="tag tag-red">50%</span></td>
+    <td><span class="tag tag-gray">2</span></td>
+    <td><span class="tag tag-gray">2</span></td>
+    <td>2</td><td>0</td>
+    <td><span class="tag tag-gray">1</span></td>
+    <td>$2,215</td>
+  </tr><tr>
+    <td><strong>Fran</strong></td><td>1</td><td>0</td>
+    <td><span class="tag tag-red">0%</span></td>
+    <td>0</td>
+    <td><span class="tag tag-green">0%</span></td>
+    <td><span class="tag tag-gray">0</span></td>
+    <td><span class="tag tag-gray">0</span></td>
+    <td>0</td><td>0</td>
+    <td><span class="tag tag-gray">0</span></td>
+    <td>$2,800</td>
+  </tr>
+    </tbody>
+  </table>
+  <div class="note">Nicole holds the only meaningful graduation rate on the team (18%). Kegan's book is 40% product-blocked. Halle has 0 graduations across 28 web clients — cross-referencing with Wrike time data will reveal whether this is workload, complexity, or cadence-related.</div>
+</div>
+
+<!-- PHASE 4 -->
+<div class="section">
+  <h2>Phase 4 — Product Gap Analysis (Web-Only)</h2>
+  <div class="stat-grid">
+    <div class="stat red"><div class="stat-val">19</div><div class="stat-label">Canceled - Functionality</div></div>
+    <div class="stat red"><div class="stat-val">$11,677</div><div class="stat-label">MRR Lost to Product</div></div>
+    <div class="stat amber"><div class="stat-val">19</div><div class="stat-label">On Hold - Functionality</div></div>
+    <div class="stat amber"><div class="stat-val">$11,578</div><div class="stat-label">MRR Frozen by Product</div></div>
+    <div class="stat red"><div class="stat-val">$23,255</div><div class="stat-label">Total Product-Blocked MRR</div></div>
+  </div>
+  <h3>Feature Needs by Release (Web Clients Only)</h3>
+  <table>
+    <thead><tr><th>Release</th><th>Requests</th><th>MRR Impact</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-amber">Apollo 2</span></td><td>69</td><td>$41,358</td><td>🟡 Near-term</td></tr><tr><td><span class="tag tag-red">Apollo 1</span></td><td>48</td><td>$29,349</td><td>🔴 Immediate</td></tr><tr><td><span class="tag tag-gray">Need More Details</span></td><td>17</td><td>$7,685</td><td>⚪ Needs Review</td></tr><tr><td><span class="tag tag-gray">Untagged</span></td><td>6</td><td>$3,037</td><td>⚪ Needs Review</td></tr><tr><td><span class="tag tag-blue">Apollo 3</span></td><td>4</td><td>$2,957</td><td>🔵 Roadmap</td></tr>
+    </tbody>
+  </table>
+  <h3>Top Feature Requests by MRR Impact (Web)</h3>
+  <table>
+    <thead><tr><th>Feature Request</th><th>Release</th><th>MRR</th></tr></thead>
+    <tbody><tr><td>Sales Pipeline</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$2,320</td></tr><tr><td>PM</td><td><span class="tag tag-red">Apollo 1</span></td><td>$2,320</td></tr><tr><td>Project Management </td><td><span class="tag tag-red">Apollo 1</span></td><td>$1,580</td></tr><tr><td>Quoting</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$1,580</td></tr><tr><td>Orders</td><td><span class="tag tag-gray">Apollo 3</span></td><td>$1,580</td></tr><tr><td>Email Sending from a Custom Email Address</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$1,560</td></tr><tr><td>Account ID Ability to store customized Account IDs via custom fields</td><td><span class="tag tag-red">Apollo 1</span></td><td>$1,560</td></tr><tr><td>Addresses (Billing & Shipping addresses visible on Service Order invoi</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$1,560</td></tr><tr><td>PO Numbers (PO Field on the Ticket that displays on Invoice)-Must have</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$1,560</td></tr><tr><td>Enhanced Ticket Lists (Visibility into tickets needing billing before </td><td><span class="tag tag-red">Apollo 1</span></td><td>$1,560</td></tr><tr><td>Service Ticket Invoicing (Direct invoicing from tickets with notes vis</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$1,560</td></tr><tr><td>Ticketing more mature no details</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$1,160</td></tr></tbody>
+  </table>
+</div>
+
+<!-- PHASE 5 -->
+<div class="section">
+  <h2>Phase 5 — Sales Feed Quality (Web-Only)</h2>
+  <h3>Onboarding Type Outcomes</h3>
+  <table>
+    <thead><tr><th>Type</th><th>Clients</th><th>Graduated</th><th>Grad%</th><th>Canceled</th><th>Cancel%</th></tr></thead>
+    <tbody><tr><td>Self-Serve</td><td>66</td><td>3</td><td><span class="tag tag-amber">5%</span></td><td>17</td><td><span class="tag tag-red">26%</span></td></tr><tr><td>SA Led</td><td>57</td><td>5</td><td><span class="tag tag-amber">9%</span></td><td>9</td><td><span class="tag tag-amber">16%</span></td></tr><tr><td>Hybrid</td><td>3</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td></tr><tr><td>Unknown</td><td>2</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td></tr>
+    </tbody>
+  </table>
+  <h3>Client Background</h3>
+  <table>
+    <thead><tr><th>Segment</th><th>Clients</th><th>Graduated</th><th>Grad%</th><th>Canceled</th><th>Cancel%</th><th>MRR</th></tr></thead>
+    <tbody>
+      <tr><td>Billing Cross-Sell</td><td>23</td><td>3</td><td><span class="tag tag-green">13%</span></td><td>3</td><td><span class="tag tag-green">13%</span></td><td>$18,126</td></tr><tr><td>Net New (no Billing/TP)</td><td>105</td><td>5</td><td><span class="tag tag-red">5%</span></td><td>23</td><td><span class="tag tag-amber">22%</span></td><td>$62,529</td></tr>
+    </tbody>
+  </table>
+  <h3>Sales Rep → Onboarding Outcomes (3+ clients, web-only)</h3>
+  <table>
+    <thead><tr><th>Sales Rep</th><th>Clients</th><th>Graduated</th><th>Grad%</th><th>Canceled</th><th>Cancel%</th><th>MRR Fed</th></tr></thead>
+    <tbody><tr><td>Joe Abarno</td><td>22</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>6</td><td><span class="tag tag-red">27%</span></td><td>$12,506</td></tr><tr><td>Jake Mitchell</td><td>15</td><td>3</td><td><span class="tag tag-green">20%</span></td><td>6</td><td><span class="tag tag-red">40%</span></td><td>$8,629</td></tr><tr><td>Jake Borah</td><td>13</td><td>1</td><td><span class="tag tag-amber">8%</span></td><td>2</td><td><span class="tag tag-green">15%</span></td><td>$9,225</td></tr><tr><td>Connor Flynn</td><td>12</td><td>2</td><td><span class="tag tag-green">17%</span></td><td>3</td><td><span class="tag tag-amber">25%</span></td><td>$6,290</td></tr><tr><td>Patrick Davies</td><td>12</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>1</td><td><span class="tag tag-green">8%</span></td><td>$6,296</td></tr><tr><td>Andy Whisenant</td><td>12</td><td>1</td><td><span class="tag tag-amber">8%</span></td><td>2</td><td><span class="tag tag-amber">17%</span></td><td>$9,864</td></tr><tr><td>Matt Salin</td><td>7</td><td>1</td><td><span class="tag tag-amber">14%</span></td><td>2</td><td><span class="tag tag-red">29%</span></td><td>$3,648</td></tr><tr><td>Jaylin Bender</td><td>6</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td><td>$3,700</td></tr><tr><td>Husam Zalmiyar</td><td>6</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>1</td><td><span class="tag tag-amber">17%</span></td><td>$3,692</td></tr><tr><td>Reese Middleton</td><td>6</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>1</td><td><span class="tag tag-amber">17%</span></td><td>$3,973</td></tr><tr><td>Patrick Dahlstrom</td><td>4</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>2</td><td><span class="tag tag-red">50%</span></td><td>$3,210</td></tr><tr><td>Davis Herndon</td><td>4</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td><td>$4,477</td></tr><tr><td>Jamie Butler</td><td>3</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td><td>$1,270</td></tr><tr><td>Luke Yntema</td><td>3</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td><td>$1,260</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PHASE 6 -->
+<div class="section">
+  <h2>Phase 6 — Engagement (Web-Only)</h2>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">281</div><div class="stat-label">Total Interactions</div></div>
+    <div class="stat red"><div class="stat-val">23</div><div class="stat-label">30+ Day Silent</div></div>
+    <div class="stat red"><div class="stat-val">$12,727</div><div class="stat-label">Disengaged MRR</div></div>
+  </div>
+  <h3>Disengaged Web Clients (30+ Days No Contact)</h3>
+  <table>
+    <thead><tr><th>Client</th><th>Days Silent</th><th>Status</th><th>SA</th><th>MRR</th></tr></thead>
+    <tbody><tr>
+      <td>Intec Security Solutions</td>
+      <td><span class="tag tag-red">131d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Nicole</td><td>$550</td>
+    </tr><tr>
+      <td>Mr. PC Office</td>
+      <td><span class="tag tag-red">118d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Nicole</td><td>$400</td>
+    </tr><tr>
+      <td>Guardian Advanced Solutions</td>
+      <td><span class="tag tag-red">117d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Kegan</td><td>$315</td>
+    </tr><tr>
+      <td>TCG Tech</td>
+      <td><span class="tag tag-red">112d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">RTS - Client</span></td>
+      <td>Nicole</td><td>$520</td>
+    </tr><tr>
+      <td>Canitan LLC</td>
+      <td><span class="tag tag-red">112d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Heidi</td><td>$345</td>
+    </tr><tr>
+      <td>Yeti Networks</td>
+      <td><span class="tag tag-red">107d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Kegan</td><td>$270</td>
+    </tr><tr>
+      <td>Nevada Security Company</td>
+      <td><span class="tag tag-red">97d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Client</span></td>
+      <td>Kegan</td><td>$500</td>
+    </tr><tr>
+      <td>CyberNet</td>
+      <td><span class="tag tag-red">96d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Nicole</td><td>$315</td>
+    </tr><tr>
+      <td>Grahek Technology</td>
+      <td><span class="tag tag-amber">84d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Kegan</td><td>$315</td>
+    </tr><tr>
+      <td>ARS Technical Services</td>
+      <td><span class="tag tag-amber">65d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Halle</td><td>$500</td>
+    </tr><tr>
+      <td>Xera</td>
+      <td><span class="tag tag-amber">64d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Kegan</td><td>$500</td>
+    </tr><tr>
+      <td>E-Alarm and Surveillance</td>
+      <td><span class="tag tag-gray">58d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Kegan</td><td>$500</td>
+    </tr><tr>
+      <td>CompuCarolina</td>
+      <td><span class="tag tag-gray">57d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Client</span></td>
+      <td>Jeremy</td><td>$400</td>
+    </tr><tr>
+      <td>Dialog Telecommunications, Inc.</td>
+      <td><span class="tag tag-gray">56d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Kegan</td><td>$400</td>
+    </tr><tr>
+      <td>Lubbock Sight Sound and Security</td>
+      <td><span class="tag tag-gray">51d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Kegan</td><td>$710</td>
+    </tr><tr>
+      <td>MAPS Security</td>
+      <td><span class="tag tag-gray">50d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Kegan</td><td>$1,560</td>
+    </tr><tr>
+      <td>SAIA Electric</td>
+      <td><span class="tag tag-gray">50d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">RTS - Client</span></td>
+      <td>Halle</td><td>$800</td>
+    </tr><tr>
+      <td>Digital Market POS</td>
+      <td><span class="tag tag-gray">41d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Halle</td><td>$990</td>
+    </tr><tr>
+      <td>Security Measures</td>
+      <td><span class="tag tag-gray">40d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">RTS</span></td>
+      <td>Jeremy</td><td>$500</td>
+    </tr><tr>
+      <td>Morgan Alarm Systems</td>
+      <td><span class="tag tag-gray">40d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">RTS</span></td>
+      <td>Nicole</td><td>$427</td>
+    </tr><tr>
+      <td>Particle Communications</td>
+      <td><span class="tag tag-gray">40d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">RTS</span></td>
+      <td>Jeremy</td><td>$800</td>
+    </tr><tr>
+      <td>Aviation Communications LTD</td>
+      <td><span class="tag tag-gray">35d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td>
+      <td>Nicole</td><td>$610</td>
+    </tr><tr>
+      <td>Rapid Broadband</td>
+      <td><span class="tag tag-gray">34d</span></td>
+      <td><span class="tag tag-gray" style="font-size:10px">RTS - Client</span></td>
+      <td>Halle</td><td>$500</td>
+    </tr></tbody>
+  </table>
+</div>
+
+<div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px">
+  Generated by Revay ⚡ · Rev.io Internal · Feb 25, 2026 · Web-Only Cohort (excludes 24 Tigerpaw migration clients)
+</div>
+</div></body></html>
