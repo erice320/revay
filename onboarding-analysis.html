@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rev.io PSA Onboarding Analysis — Feb 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;color:#1e293b;line-height:1.5}
+.header{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);color:#fff;padding:32px 24px 28px;text-align:center}
+.header h1{font-size:26px;font-weight:700;margin-bottom:6px}
+.header p{color:#94a3b8;font-size:14px}
+.container{max-width:920px;margin:0 auto;padding:24px 16px}
+.section{background:#fff;border-radius:10px;padding:24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.section h2{font-size:18px;font-weight:700;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;margin-bottom:18px}
+.section h3{font-size:14px;font-weight:700;color:#475569;margin:18px 0 10px;text-transform:uppercase;letter-spacing:.5px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:#f8fafc;border-radius:8px;padding:16px;text-align:center;border:1px solid #e2e8f0}
+.stat-val{font-size:28px;font-weight:800;line-height:1.1}
+.stat-label{font-size:12px;color:#64748b;margin-top:4px}
+.stat.red .stat-val{color:#dc2626}
+.stat.amber .stat-val{color:#d97706}
+.stat.green .stat-val{color:#16a34a}
+.stat.blue .stat-val{color:#2563eb}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#f1f5f9;padding:9px 10px;text-align:left;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:#475569;border-bottom:2px solid #e2e8f0}
+td{padding:9px 10px;border-bottom:1px solid #f1f5f9}
+tr:hover td{background:#f8fafc}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.tag-red{background:#fee2e2;color:#dc2626}
+.tag-amber{background:#fef3c7;color:#d97706}
+.tag-green{background:#dcfce7;color:#16a34a}
+.tag-blue{background:#dbeafe;color:#2563eb}
+.tag-gray{background:#f1f5f9;color:#475569}
+.finding{display:flex;gap:12px;padding:12px;border-radius:8px;margin-bottom:10px;border-left:4px solid}
+.finding.red{background:#fef2f2;border-color:#dc2626}
+.finding.amber{background:#fffbeb;border-color:#d97706}
+.finding.green{background:#f0fdf4;border-color:#16a34a}
+.finding-num{font-size:22px;font-weight:800;min-width:36px;text-align:center;line-height:1.1}
+.finding.red .finding-num{color:#dc2626}
+.finding.amber .finding-num{color:#d97706}
+.finding.green .finding-num{color:#16a34a}
+.finding-text{font-size:13px}
+.finding-text strong{display:block;margin-bottom:2px;font-size:14px}
+.blind-spot{background:#fff8e1;border:1px solid #fcd34d;border-radius:8px;padding:14px;margin-bottom:10px}
+.blind-spot strong{color:#92400e;display:block;margin-bottom:4px}
+.blind-spot p{font-size:13px;color:#78350f}
+.note{background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:10px 14px;font-size:12px;color:#0369a1;margin-top:12px}
+@media(max-width:600px){.stat-val{font-size:22px}.stat-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>⚡ Rev.io PSA Onboarding Analysis</h1>
+  <p>Phases 1–6 · 152 Clients · 486 Milestones · 362 Interactions · Data as of Feb 25, 2026 · Prepared by Revay</p>
+</div>
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="section">
+  <h2>Executive Summary</h2>
+  
+  <div class="finding red">
+    <div class="finding-num">1</div>
+    <div class="finding-text"><strong>Only 6.6% of onboarded clients have graduated (10 of 152)</strong>
+    22% (34 clients) have already canceled, erasing $24,356 in contracted MRR. The active funnel holds $53,489 in progress, with significant further risk in the On Hold and Off Track buckets.</div>
+  </div>
+  
+  <div class="finding red">
+    <div class="finding-num">2</div>
+    <div class="finding-text"><strong>Product gaps have directly destroyed or frozen $26,015 in MRR</strong>
+    21 clients canceled due to functionality gaps ($13,937 MRR lost) and 20 more are on hold waiting for features ($12,078 MRR frozen). Apollo 2 feature requests represent $66,458 in blocked client needs — the single largest release bucket.</div>
+  </div>
+  
+  <div class="finding red">
+    <div class="finding-num">3</div>
+    <div class="finding-text"><strong>25 active clients ($16,267 MRR) have had zero contact in 30+ days</strong>
+    Several have been on hold for 100+ days. Hiscall ($3,000/mo) is RTS for 112 days. MAPS Security ($1,560/mo) on hold 50 days. These accounts are churning silently without intervention.</div>
+  </div>
+  
+  <div class="finding amber">
+    <div class="finding-num">4</div>
+    <div class="finding-text"><strong>Self-Serve onboarding cancels at nearly 2× the rate of SA Led (24% vs 16%)</strong>
+    SA Led achieves 9% graduation vs Self-Serve 4.2%. Given that Self-Serve is 47% of the mix, this is a structural risk. The model may be mismatched to the ICP maturity level of current buyers.</div>
+  </div>
+  
+  <div class="finding amber">
+    <div class="finding-num">5</div>
+    <div class="finding-text"><strong>Kegan carries the highest product-blocked load on the team</strong>
+    17 of his 43 accounts are either Canceled-Functionality (8) or On Hold-Functionality (9) — 40% of his book is stuck on product. His 4.7% graduation rate reflects this, but it's a product problem compounding a capacity problem, not just performance.</div>
+  </div>
+  
+  <div class="finding amber">
+    <div class="finding-num">6</div>
+    <div class="finding-text"><strong>Milestone tracking is not being used — 486 milestones all show "Not Started"</strong>
+    Despite milestones being 63–77+ days past their planned due dates, no completions are logged. This means the team has no operational visibility into where clients actually are in the process. Fix this before running further milestone analysis.</div>
+  </div>
+  
+  <div class="finding green">
+    <div class="finding-num">7</div>
+    <div class="finding-text"><strong>Billing cross-sell clients graduate at 2.6× the rate of net new (12.5% vs 4.8%)</strong>
+    Exactly mirrors the GTM finding — existing Billing customers are faster, stickier, and lower-risk in onboarding. Prioritizing cross-sell in onboarding sequencing could materially improve graduation rates.</div>
+  </div>
+</div>
+
+<!-- PHASE 1 -->
+<div class="section">
+  <h2>Phase 1 — Baseline Funnel</h2>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">152</div><div class="stat-label">Total Clients</div></div>
+    <div class="stat green"><div class="stat-val">10</div><div class="stat-label">Graduated (6.6%)</div></div>
+    <div class="stat red"><div class="stat-val">34</div><div class="stat-label">Canceled (22%)</div></div>
+    <div class="stat amber"><div class="stat-val">32</div><div class="stat-label">On Hold (21%)</div></div>
+    <div class="stat blue"><div class="stat-val">67</div><div class="stat-label">Active (44%)</div></div>
+    <div class="stat amber"><div class="stat-val">9</div><div class="stat-label">Off Track (6%)</div></div>
+  </div>
+  
+  <h3>MRR by Funnel Bucket</h3>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">$106,318</div><div class="stat-label">Total Contracted MRR</div></div>
+    <div class="stat blue"><div class="stat-val">$53,489</div><div class="stat-label">Active MRR</div></div>
+    <div class="stat green"><div class="stat-val">$5,084</div><div class="stat-label">Graduated MRR</div></div>
+    <div class="stat red"><div class="stat-val">$24,356</div><div class="stat-label">Canceled MRR Lost</div></div>
+    <div class="stat amber"><div class="stat-val">$18,509</div><div class="stat-label">On Hold MRR</div></div>
+    <div class="stat amber"><div class="stat-val">$4,880</div><div class="stat-label">Off Track MRR</div></div>
+  </div>
+  
+  <h3>Cancellation Breakdown</h3>
+  <table>
+    <thead><tr><th>Cancel Reason</th><th>Clients</th><th>% of All</th><th>MRR Lost</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-red">Canceled - Functionality</span></td><td>21</td><td>14%</td><td>$13,937</td></tr>
+      <tr><td><span class="tag tag-amber">Canceled - Other</span></td><td>9</td><td>6%</td><td>$6,669</td></tr>
+      <tr><td><span class="tag tag-gray">Canceled - FTL</span></td><td>4</td><td>3%</td><td>$3,750</td></tr>
+      <tr style="font-weight:700"><td>Total</td><td>34</td><td>22%</td><td>$24,356</td></tr>
+    </tbody>
+  </table>
+  <div class="note">⚠ 61.8% of all cancellations are attributed to functionality gaps — this is primarily a product problem, not a CS execution problem. However, some "Canceled - Other" clients may also be product-related but miscategorized.</div>
+</div>
+
+<!-- PHASE 2 -->
+<div class="section">
+  <h2>Phase 2 — Funnel Timing</h2>
+  
+  <h3>Time to Kickoff (Date Sold → KO Date)</h3>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">30d</div><div class="stat-label">Avg Time to KO</div></div>
+    <div class="stat green"><div class="stat-val">11d</div><div class="stat-label">Median Time to KO</div></div>
+    <div class="stat blue"><div class="stat-val">120</div><div class="stat-label">Clients w/ Both Dates</div></div>
+    <div class="stat amber"><div class="stat-val">19</div><div class="stat-label">Missing KO or Sold Date</div></div>
+  </div>
+  <table>
+    <thead><tr><th>Days to Kickoff</th><th>Clients</th><th>% of Tracked</th></tr></thead>
+    <tbody>
+      <tr><td>&lt;7 days</td><td>26</td><td>22%</td></tr>
+      <tr><td>7–14 days</td><td>55</td><td>46%</td></tr>
+      <tr><td>14–30 days</td><td>22</td><td>18%</td></tr>
+      <tr><td>30–60 days</td><td>4</td><td>3%</td></tr>
+      <tr><td>60+ days</td><td>13</td><td>11% ⚠</td></tr>
+    </tbody>
+  </table>
+  <div class="note">Median of 11 days is healthy. However, 13 clients (11%) took 60+ days to kick off — likely NKO accounts sitting unworked. The average of 30 days is skewed by these outliers.</div>
+  
+  <h3>Time to Graduation (KO Date → Grad Date)</h3>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">96d</div><div class="stat-label">Avg Days KO→Grad</div></div>
+    <div class="stat green"><div class="stat-val">77d</div><div class="stat-label">Median Days KO→Grad</div></div>
+    <div class="stat blue"><div class="stat-val">9</div><div class="stat-label">Graduated w/ Both Dates</div></div>
+  </div>
+  <div class="note">Only 9 graduated clients have both KO and Grad dates populated — too small a sample for strong conclusions. Baseline: median 77 days (~11 weeks) from kickoff to graduation.</div>
+  
+  <h3>Milestone Overdue Analysis</h3>
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">486</div><div class="stat-label">Total Milestones</div></div>
+    <div class="stat red"><div class="stat-val">409</div><div class="stat-label">Overdue (past planned date)</div></div>
+    <div class="stat amber"><div class="stat-val">93d</div><div class="stat-label">Avg Days Overdue</div></div>
+    <div class="stat red"><div class="stat-val">84%</div><div class="stat-label">% of All Milestones Overdue</div></div>
+  </div>
+  <h3>Most Overdue Milestone Types</h3>
+  <table>
+    <thead><tr><th>Milestone Name</th><th>Overdue Count</th></tr></thead>
+    <tbody>
+      <tr><td>Integrations</td><td><span class="tag tag-red">70</span></td></tr><tr><td>Processes</td><td><span class="tag tag-red">63</span></td></tr><tr><td>Admin</td><td><span class="tag tag-red">63</span></td></tr><tr><td>Data Import</td><td><span class="tag tag-red">63</span></td></tr><tr><td>Finalize/QA</td><td><span class="tag tag-red">62</span></td></tr><tr><td>Week 1: Product & Assets</td><td><span class="tag tag-red">16</span></td></tr><tr><td>Week 1: Inventory Management</td><td><span class="tag tag-red">16</span></td></tr><tr><td>Week 1: Company Info</td><td><span class="tag tag-red">16</span></td></tr><tr><td>Data Import Staging</td><td><span class="tag tag-red">8</span></td></tr><tr><td>Week 3: Quote Templates</td><td><span class="tag tag-red">8</span></td></tr>
+    </tbody>
+  </table>
+  <div class="note">⚠ Critical data quality issue: All 486 milestones show "Not Started" status in Notion despite having planned due dates 63–77+ days in the past. The milestone tracker is not being actively maintained by the team. This severely limits operational visibility. See Data Blind Spots section.</div>
+</div>
+
+<!-- PHASE 3 -->
+<div class="section">
+  <h2>Phase 3 — Solutions Analyst Performance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>SA</th><th>Clients</th><th>Graduated</th><th>Grad %</th><th>Canceled</th><th>Cancel %</th><th>Func Hold</th><th>Func Cancel</th><th>On Hold</th><th>Off Track</th><th>Disengaged</th><th>MRR Mgd</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr>
+    <td><strong>Nicole</strong></td>
+    <td>47</td>
+    <td>8</td>
+    <td><span class="tag tag-green">17%</span></td>
+    <td>9</td>
+    <td><span class="tag tag-amber">19%</span></td>
+    <td><span class="tag tag-amber">5</span></td>
+    <td><span class="tag tag-red">6</span></td>
+    <td>7</td>
+    <td>1</td>
+    <td><span class="tag tag-red">7</span></td>
+    <td>$32,904</td>
+  </tr><tr>
+    <td><strong>Kegan</strong></td>
+    <td>43</td>
+    <td>2</td>
+    <td><span class="tag tag-red">5%</span></td>
+    <td>10</td>
+    <td><span class="tag tag-amber">23%</span></td>
+    <td><span class="tag tag-red">9</span></td>
+    <td><span class="tag tag-red">8</span></td>
+    <td>14</td>
+    <td>4</td>
+    <td><span class="tag tag-red">10</span></td>
+    <td>$34,702</td>
+  </tr><tr>
+    <td><strong>Halle</strong></td>
+    <td>30</td>
+    <td>0</td>
+    <td><span class="tag tag-red">0%</span></td>
+    <td>4</td>
+    <td><span class="tag tag-green">13%</span></td>
+    <td><span class="tag tag-gray">2</span></td>
+    <td><span class="tag tag-gray">1</span></td>
+    <td>2</td>
+    <td>2</td>
+    <td><span class="tag tag-amber">4</span></td>
+    <td>$18,668</td>
+  </tr><tr>
+    <td><strong>Jeremy</strong></td>
+    <td>13</td>
+    <td>0</td>
+    <td><span class="tag tag-red">0%</span></td>
+    <td>4</td>
+    <td><span class="tag tag-red">31%</span></td>
+    <td><span class="tag tag-gray">2</span></td>
+    <td><span class="tag tag-amber">3</span></td>
+    <td>4</td>
+    <td>1</td>
+    <td><span class="tag tag-amber">3</span></td>
+    <td>$6,804</td>
+  </tr><tr>
+    <td><strong>Heidi</strong></td>
+    <td>5</td>
+    <td>0</td>
+    <td><span class="tag tag-red">0%</span></td>
+    <td>3</td>
+    <td><span class="tag tag-red">60%</span></td>
+    <td><span class="tag tag-gray">2</span></td>
+    <td><span class="tag tag-gray">2</span></td>
+    <td>2</td>
+    <td>0</td>
+    <td><span class="tag tag-gray">1</span></td>
+    <td>$2,845</td>
+  </tr><tr>
+    <td><strong>Fran</strong></td>
+    <td>1</td>
+    <td>0</td>
+    <td><span class="tag tag-red">0%</span></td>
+    <td>0</td>
+    <td><span class="tag tag-green">0%</span></td>
+    <td><span class="tag tag-gray">0</span></td>
+    <td><span class="tag tag-gray">0</span></td>
+    <td>0</td>
+    <td>0</td>
+    <td><span class="tag tag-gray">0</span></td>
+    <td>$2,800</td>
+  </tr>
+    </tbody>
+  </table>
+  
+  <h3>SA Observations</h3>
+  <ul style="padding-left:20px;font-size:13px;line-height:2">
+    <li><strong>Nicole</strong> — Highest graduation rate (17%) and largest book (47 clients). 5 on hold + 6 canceled due to functionality; meaningful product exposure but managing through it.</li>
+    <li><strong>Kegan</strong> — Largest MRR book ($34,702) but only 4.7% graduation. 40% of his accounts are stuck on product gaps (9 on hold + 8 canceled for functionality). His book needs product unlocks, not just coaching.</li>
+    <li><strong>Halle</strong> — 0 graduations across 30 clients. Newest or most complex mix? Cross-reference with date-sold would clarify. 5 disengaged accounts need review.</li>
+    <li><strong>Jeremy</strong> — 0 graduations from 13 clients; 4 canceled. Smaller book, likely newer SA.</li>
+    <li><strong>Heidi</strong> — 5 clients, 3 canceled (60% cancel rate). Small sample but worth examining — all 3 may be functionality-related.</li>
+  </ul>
+  <div class="note">Sentiment data shows minimal differentiation across SAs — nearly all interactions scored 3/5 (neutral default). This metric is not currently actionable. See blind spots.</div>
+</div>
+
+<!-- PHASE 4 -->
+<div class="section">
+  <h2>Phase 4 — Product Gap Analysis</h2>
+  <div class="stat-grid">
+    <div class="stat red"><div class="stat-val">21</div><div class="stat-label">Canceled - Functionality</div></div>
+    <div class="stat red"><div class="stat-val">$13,937</div><div class="stat-label">MRR Lost to Product</div></div>
+    <div class="stat amber"><div class="stat-val">20</div><div class="stat-label">On Hold - Functionality</div></div>
+    <div class="stat amber"><div class="stat-val">$12,078</div><div class="stat-label">MRR Frozen by Product</div></div>
+    <div class="stat red"><div class="stat-val">$26,015</div><div class="stat-label">Total Product-Blocked MRR</div></div>
+    <div class="stat blue"><div class="stat-val">173</div><div class="stat-label">Feature Requests Logged</div></div>
+  </div>
+  
+  <h3>Feature Needs by Apollo Release</h3>
+  <table>
+    <thead><tr><th>Release</th><th>Feature Requests</th><th>MRR Impact</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-amber">Apollo 2</span></td><td>80</td><td>$66,458</td><td>🟡 Near-term</td></tr><tr><td><span class="tag tag-red">Apollo 1</span></td><td>57</td><td>$50,429</td><td>🔴 Immediate</td></tr><tr><td><span class="tag tag-gray">Untagged</span></td><td>11</td><td>$16,677</td><td>⚪ Needs Review</td></tr><tr><td><span class="tag tag-blue">Apollo 3</span></td><td>7</td><td>$11,957</td><td>🔵 Roadmap</td></tr><tr><td><span class="tag tag-gray">Need More Details</span></td><td>18</td><td>$10,685</td><td>⚪ Needs Review</td></tr>
+    </tbody>
+  </table>
+  
+  <h3>Top Feature Requests by MRR Impact</h3>
+  <table>
+    <thead><tr><th>Feature Request</th><th>Release</th><th>MRR</th></tr></thead>
+    <tbody>
+      <tr><td>No way to filter tickets by department</td><td><span class="tag tag-gray">Need More Details</span></td><td>$3,000</td></tr><tr><td>No where for pipeline for sales</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$3,000</td></tr><tr><td>Drag and drop capability -email files, excel , words</td><td><span class="tag tag-gray">Untagged</span></td><td>$3,000</td></tr><tr><td>No place to store documents for quotes</td><td><span class="tag tag-red">Apollo 1</span></td><td>$3,000</td></tr><tr><td>Need the abilty to filter by products and input the type of system</td><td><span class="tag tag-gray">Apollo 3</span></td><td>$3,000</td></tr><tr><td>No RMA process in the system</td><td><span class="tag tag-gray">Apollo 3</span></td><td>$3,000</td></tr><tr><td>No place to add configurations</td><td><span class="tag tag-gray">Apollo 3</span></td><td>$3,000</td></tr><tr><td>No hot notes -*</td><td><span class="tag tag-red">Apollo 1</span></td><td>$3,000</td></tr><tr><td>No where to assign a sales rep to an account</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$3,000</td></tr><tr><td>No expense entry</td><td><span class="tag tag-gray">Untagged</span></td><td>$3,000</td></tr><tr><td>No timesheet entry other than a ticket</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$3,000</td></tr><tr><td>Opportunites are for quote creation</td><td><span class="tag tag-amber">Apollo 2</span></td><td>$3,000</td></tr>
+    </tbody>
+  </table>
+  <div class="note">Apollo 1 deliverables represent $50,429 in client MRR tied to feature needs. Delivery of Apollo 1 features could directly unlock stalled accounts and reduce On Hold - Functionality count. Cross-referencing specific On Hold clients against their logged feature needs is the next recommended step.</div>
+</div>
+
+<!-- PHASE 5 -->
+<div class="section">
+  <h2>Phase 5 — Sales Feed Quality</h2>
+  
+  <h3>Onboarding Type Outcomes</h3>
+  <table>
+    <thead><tr><th>Onboarding Type</th><th>Clients</th><th>Graduated</th><th>Grad %</th><th>Canceled</th><th>Cancel %</th></tr></thead>
+    <tbody>
+      <tr><td>Self-Serve</td><td>71</td><td>3</td><td><span class="tag tag-red">4%</span></td><td>17</td><td><span class="tag tag-amber">24%</span></td></tr><tr><td>SA Led</td><td>67</td><td>6</td><td><span class="tag tag-amber">9%</span></td><td>11</td><td><span class="tag tag-amber">16%</span></td></tr><tr><td>Self-Serve - TP</td><td>5</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>4</td><td><span class="tag tag-red">80%</span></td></tr><tr><td>Hybrid</td><td>4</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>1</td><td><span class="tag tag-amber">25%</span></td></tr><tr><td>Unknown</td><td>2</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td></tr><tr><td>Hybrid - Tiger Paw</td><td>1</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>1</td><td><span class="tag tag-red">100%</span></td></tr><tr><td>Web - TP</td><td>1</td><td>1</td><td><span class="tag tag-green">100%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td></tr><tr><td>SA Led - TP</td><td>1</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td></tr>
+    </tbody>
+  </table>
+  
+  <h3>Client Background: Cross-Sell vs Net New vs Tigerpaw</h3>
+  <table>
+    <thead><tr><th>Segment</th><th>Clients</th><th>Graduated</th><th>Grad %</th><th>Canceled</th><th>Cancel %</th><th>MRR</th></tr></thead>
+    <tbody>
+      <tr><td>Billing Cross-Sell</td><td>24</td><td>3</td><td><span class="tag tag-green">13%</span></td><td>3</td><td><span class="tag tag-green">13%</span></td><td>$21,126</td></tr><tr><td>Net New</td><td>105</td><td>5</td><td><span class="tag tag-red">5%</span></td><td>23</td><td><span class="tag tag-amber">22%</span></td><td>$62,529</td></tr><tr><td>Tigerpaw Migration</td><td>24</td><td>2</td><td><span class="tag tag-amber">8%</span></td><td>8</td><td><span class="tag tag-red">33%</span></td><td>$25,663</td></tr>
+    </tbody>
+  </table>
+  
+  <h3>Sales Rep → Onboarding Outcomes (reps with 3+ clients)</h3>
+  <table>
+    <thead><tr><th>Sales Rep</th><th>Clients</th><th>Graduated</th><th>Grad %</th><th>Canceled</th><th>Cancel %</th><th>MRR Fed</th></tr></thead>
+    <tbody>
+      <tr><td>Joe Abarno</td><td>23</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>6</td><td><span class="tag tag-red">26%</span></td><td>$13,611</td></tr><tr><td>Andy Whisenant</td><td>19</td><td>1</td><td><span class="tag tag-red">5%</span></td><td>6</td><td><span class="tag tag-red">32%</span></td><td>$16,334</td></tr><tr><td>Connor Flynn</td><td>15</td><td>2</td><td><span class="tag tag-amber">13%</span></td><td>3</td><td><span class="tag tag-amber">20%</span></td><td>$8,020</td></tr><tr><td>Jake Mitchell</td><td>15</td><td>3</td><td><span class="tag tag-green">20%</span></td><td>6</td><td><span class="tag tag-red">40%</span></td><td>$8,629</td></tr><tr><td>Jake Borah</td><td>14</td><td>1</td><td><span class="tag tag-red">7%</span></td><td>2</td><td><span class="tag tag-green">14%</span></td><td>$9,825</td></tr><tr><td>Patrick Davies</td><td>13</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>2</td><td><span class="tag tag-green">15%</span></td><td>$7,996</td></tr><tr><td>Matt Salin</td><td>9</td><td>3</td><td><span class="tag tag-green">33%</span></td><td>2</td><td><span class="tag tag-amber">22%</span></td><td>$4,848</td></tr><tr><td>Jaylin Bender</td><td>6</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td><td>$3,700</td></tr><tr><td>Husam Zalmiyar</td><td>6</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>1</td><td><span class="tag tag-amber">17%</span></td><td>$3,692</td></tr><tr><td>Reese Middleton</td><td>6</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>1</td><td><span class="tag tag-amber">17%</span></td><td>$3,973</td></tr><tr><td>Patrick Dahlstrom</td><td>4</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>2</td><td><span class="tag tag-red">50%</span></td><td>$3,210</td></tr><tr><td>Davis Herndon</td><td>4</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td><td>$4,477</td></tr><tr><td>Olivia Sandefur</td><td>3</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td><td>$1,363</td></tr><tr><td>Jamie Butler</td><td>3</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td><td>$1,270</td></tr><tr><td>Luke Yntema</td><td>3</td><td>0</td><td><span class="tag tag-red">0%</span></td><td>0</td><td><span class="tag tag-green">0%</span></td><td>$1,260</td></tr>
+    </tbody>
+  </table>
+  <div class="note">Rep-level onboarding outcomes are an early signal — low graduation rates from specific reps may reflect deal quality (wrong ICP, oversold capability, mismatched complexity vs. onboarding type). Cross-reference with GTM win rates to identify reps whose wins are turning into onboarding cancels.</div>
+</div>
+
+<!-- PHASE 6 -->
+<div class="section">
+  <h2>Phase 6 — Interaction Quality & Engagement</h2>
+  
+  <div class="stat-grid">
+    <div class="stat blue"><div class="stat-val">362</div><div class="stat-label">Total Interactions Logged</div></div>
+    <div class="stat blue"><div class="stat-val">19</div><div class="stat-label">Kickoffs Logged</div></div>
+    <div class="stat green"><div class="stat-val">0%</div><div class="stat-label">Kickoff No-Show Rate</div></div>
+    <div class="stat red"><div class="stat-val">25</div><div class="stat-label">Clients 30+ Days No Contact</div></div>
+    <div class="stat red"><div class="stat-val">$16,267</div><div class="stat-label">Disengaged MRR at Risk</div></div>
+  </div>
+  
+  <h3>Interaction Type Breakdown</h3>
+  <table>
+    <thead><tr><th>Type</th><th>Count</th><th>% of Total</th></tr></thead>
+    <tbody>
+      <tr><td>Meeting</td><td>153</td><td>42%</td></tr><tr><td>Email</td><td>76</td><td>21%</td></tr><tr><td>Kickoff</td><td>19</td><td>5%</td></tr><tr><td>Zendesk</td><td>19</td><td>5%</td></tr><tr><td>Call</td><td>9</td><td>2%</td></tr><tr><td>Graduation</td><td>2</td><td>1%</td></tr>
+    </tbody>
+  </table>
+  
+  <h3>Interaction Outcomes</h3>
+  <table>
+    <thead><tr><th>Outcome</th><th>Count</th><th>% of Logged</th></tr></thead>
+    <tbody>
+      <tr><td>Connected</td><td>52</td><td>98%</td></tr><tr><td>Left VM</td><td>1</td><td>2%</td></tr>
+    </tbody>
+  </table>
+  <div class="note">Only 53 of 362 interactions have an outcome logged (14.6%). No-show data exists in the schema but is not being captured. Compare to sales where 34.8% of discovery calls were no-shows — onboarding kickoff no-show rate is likely undercounted here.</div>
+  
+  <h3>Disengaged Clients (30+ Days No Contact)</h3>
+  <table>
+    <thead><tr><th>Client</th><th>Days Silent</th><th>Status</th><th>SA</th><th>MRR</th></tr></thead>
+    <tbody>
+      <tr><td>Intec Security Solutions</td><td><span class="tag tag-red">131d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Nicole</td><td>$550</td></tr><tr><td>Mr. PC Office</td><td><span class="tag tag-red">118d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Nicole</td><td>$400</td></tr><tr><td>Guardian Advanced Solutions</td><td><span class="tag tag-red">117d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Kegan</td><td>$315</td></tr><tr><td>TCG Tech</td><td><span class="tag tag-red">112d</span></td><td><span class="tag tag-gray" style="font-size:10px">RTS - Client</span></td><td>Nicole</td><td>$520</td></tr><tr><td>Hiscall</td><td><span class="tag tag-red">112d</span></td><td><span class="tag tag-gray" style="font-size:10px">RTS</span></td><td>Nicole</td><td>$3,000</td></tr><tr><td>Canitan LLC</td><td><span class="tag tag-red">112d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Heidi</td><td>$345</td></tr><tr><td>Yeti Networks</td><td><span class="tag tag-red">107d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Kegan</td><td>$270</td></tr><tr><td>Nevada Security Company</td><td><span class="tag tag-red">97d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Client</span></td><td>Kegan</td><td>$500</td></tr><tr><td>CyberNet</td><td><span class="tag tag-red">96d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Nicole</td><td>$315</td></tr><tr><td>Grahek Technology</td><td><span class="tag tag-amber">84d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Kegan</td><td>$315</td></tr><tr><td>ARS Technical Services</td><td><span class="tag tag-amber">65d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Halle</td><td>$500</td></tr><tr><td>Xera</td><td><span class="tag tag-amber">64d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Kegan</td><td>$500</td></tr><tr><td>E-Alarm and Surveillance</td><td><span class="tag tag-gray">58d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Kegan</td><td>$500</td></tr><tr><td>CompuCarolina</td><td><span class="tag tag-gray">57d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Client</span></td><td>Jeremy</td><td>$400</td></tr><tr><td>Dialog Telecommunications, Inc.</td><td><span class="tag tag-gray">56d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Kegan</td><td>$400</td></tr><tr><td>Lubbock Sight Sound and Security</td><td><span class="tag tag-gray">51d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Kegan</td><td>$710</td></tr><tr><td>MAPS Security</td><td><span class="tag tag-gray">50d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Kegan</td><td>$1,560</td></tr><tr><td>SAIA Electric</td><td><span class="tag tag-gray">50d</span></td><td><span class="tag tag-gray" style="font-size:10px">RTS - Client</span></td><td>Halle</td><td>$800</td></tr><tr><td>Digital Market POS</td><td><span class="tag tag-gray">41d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Halle</td><td>$990</td></tr><tr><td>Security Measures</td><td><span class="tag tag-gray">40d</span></td><td><span class="tag tag-gray" style="font-size:10px">RTS</span></td><td>Jeremy</td><td>$500</td></tr><tr><td>Morgan Alarm Systems</td><td><span class="tag tag-gray">40d</span></td><td><span class="tag tag-gray" style="font-size:10px">RTS</span></td><td>Nicole</td><td>$427</td></tr><tr><td>Particle Communications</td><td><span class="tag tag-gray">40d</span></td><td><span class="tag tag-gray" style="font-size:10px">RTS</span></td><td>Jeremy</td><td>$800</td></tr><tr><td>Aviation Communications LTD</td><td><span class="tag tag-gray">35d</span></td><td><span class="tag tag-gray" style="font-size:10px">On Hold - Functionality</span></td><td>Nicole</td><td>$610</td></tr><tr><td>Rapid Broadband</td><td><span class="tag tag-gray">34d</span></td><td><span class="tag tag-gray" style="font-size:10px">RTS - Client</span></td><td>Halle</td><td>$500</td></tr><tr><td>HTI Systems</td><td><span class="tag tag-gray">33d</span></td><td><span class="tag tag-gray" style="font-size:10px">In Progress</span></td><td>Kegan</td><td>$540</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- DATA BLIND SPOTS -->
+<div class="section">
+  <h2>Data Blind Spots &amp; Recommendations</h2>
+  
+  <div class="blind-spot">
+    <strong>🔴 CRITICAL: Milestone tracker is not being used</strong>
+    <p>All 486 milestones show "Not Started" status despite having planned due dates that are 60–80+ days in the past. No completions are logged. The team cannot see where any client actually is in the process. Recommendation: Make milestone status updates a required weekly discipline — or investigate if a different system (spreadsheet, Asana, etc.) is being used instead.</p>
+  </div>
+  
+  <div class="blind-spot">
+    <strong>🔴 CRITICAL: Outcome field is not being used on interactions</strong>
+    <p>Only 53 of 362 interactions (14.6%) have an outcome logged. No-show data is completely unmeasured. Recommendation: Make Outcome a required field on all interaction records, especially Kickoffs and Meetings.</p>
+  </div>
+  
+  <div class="blind-spot">
+    <strong>🟡 Sentiment scoring is defaulting to 3 (neutral)</strong>
+    <p>255 of 262 scored interactions are 3/5. Only 7 records show anything different (range: 2.67–3.5). This field is effectively unused. Recommendation: Define a clear 1–5 rubric for SAs and make it required for every call/meeting.</p>
+  </div>
+  
+  <div class="blind-spot">
+    <strong>🟡 Grad Duration fields stored as text, not numbers</strong>
+    <p>"# Days RTS/On Hold" and "Grad Duration (Minus RTS/Hold)" are rich_text fields — they cannot be aggregated or analyzed programmatically. Recommendation: Convert to number fields or use date arithmetic formulas.</p>
+  </div>
+  
+  <div class="blind-spot">
+    <strong>🟡 KO Date and Grad Date split between Manual and System</strong>
+    <p>Both dates have Manual and System versions. It's unclear which is canonical, and inconsistent population means timing analysis is based on a subset of records. Recommendation: Establish one canonical date field per event and enforce it.</p>
+  </div>
+  
+  <div class="blind-spot">
+    <strong>🟡 Milestone % Complete rollup shows 0 for all clients</strong>
+    <p>Related to milestone tracking issue above — since no milestones are marked complete, the % complete rollup is 0 across all 152 clients. Once milestones are tracked, this becomes a powerful health metric.</p>
+  </div>
+  
+  <div class="blind-spot">
+    <strong>⚪ Account ID field may enable Salesforce cross-reference</strong>
+    <p>The Account ID field exists on PSA Clients. If this is the Salesforce Account ID, it would enable joining onboarding outcomes directly to deal data (size, product, close date, rep). Recommend confirming the ID format and enabling the join.</p>
+  </div>
+  
+  <div class="blind-spot">
+    <strong>⚪ No complexity or deal context at intake</strong>
+    <p>Nothing flags whether a client was sold as simple vs. complex at time of sale. SA Led vs. Self-Serve partially captures this, but a "estimated complexity" or "product bundle" field at intake would enable better SA capacity planning and expectation-setting.</p>
+  </div>
+  
+  <div class="blind-spot">
+    <strong>⚪ No training or enablement tracking</strong>
+    <p>No field for whether the client completed training, attended sessions, or self-served through docs. Training completion is likely a leading indicator of graduation speed — worth adding.</p>
+  </div>
+</div>
+
+<div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px">
+  Generated by Revay ⚡ · Rev.io Internal · Feb 25, 2026 · Data from Notion PSA Onboarding workspace
+</div>
+
+</div>
+</body>
+</html>
