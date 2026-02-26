@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSA Web Onboarding — Process Analysis | Rev.io</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --primary: #1a56db;
+    --primary-light: #e8f0fe;
+    --danger: #e02424;
+    --danger-light: #fde8e8;
+    --success: #057a55;
+    --success-light: #def7ec;
+    --warning: #c27803;
+    --warning-light: #fdf6b2;
+    --neutral: #6b7280;
+    --dark: #111928;
+    --card-bg: #ffffff;
+    --page-bg: #f3f4f6;
+    --border: #e5e7eb;
+    --text: #111928;
+    --text-muted: #6b7280;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--page-bg); color: var(--text); line-height: 1.6; }
+
+  /* HEADER */
+  .header { background: var(--dark); color: white; padding: 48px 0 40px; }
+  .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .header-meta { font-size: 13px; color: #9ca3af; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+  .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; }
+  .header p { font-size: 16px; color: #d1d5db; max-width: 680px; }
+  .header-links { margin-top: 20px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .header-links a { color: #93c5fd; font-size: 13px; text-decoration: none; }
+  .header-links a:hover { text-decoration: underline; }
+
+  /* LAYOUT */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 48px 0 0; }
+  .section:last-child { padding-bottom: 64px; }
+  .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--primary); font-weight: 600; margin-bottom: 8px; }
+  .section h2 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .section-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 28px; max-width: 700px; }
+
+  /* STAT CARDS */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .stat-card { background: var(--card-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--border); }
+  .stat-card.danger { background: var(--danger-light); border-color: #fca5a5; }
+  .stat-card.success { background: var(--success-light); border-color: #6ee7b7; }
+  .stat-card.warning { background: var(--warning-light); border-color: #fcd34d; }
+  .stat-card.primary { background: var(--primary-light); border-color: #93c5fd; }
+  .stat-card .stat-num { font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+  .stat-card.danger .stat-num { color: var(--danger); }
+  .stat-card.success .stat-num { color: var(--success); }
+  .stat-card.warning .stat-num { color: var(--warning); }
+  .stat-card.primary .stat-num { color: var(--primary); }
+  .stat-card .stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+  .stat-card .stat-note { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  /* CARDS */
+  .card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 28px; margin-bottom: 20px; }
+  .card h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .card-grid { grid-template-columns: 1fr; } }
+
+  /* CHART CONTAINERS */
+  .chart-wrap { position: relative; height: 280px; }
+  .chart-wrap-tall { position: relative; height: 340px; }
+
+  /* MILESTONE TABLE / HEATMAP */
+  .heatmap-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .heatmap-table th { text-align: left; padding: 10px 12px; background: #f9fafb; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); border-bottom: 2px solid var(--border); }
+  .heatmap-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  .heatmap-table tr:last-child td { border-bottom: none; }
+  .heatmap-table tr:hover td { background: #f9fafb; }
+  .cell-pct { display: inline-block; padding: 3px 10px; border-radius: 20px; font-weight: 700; font-size: 13px; min-width: 52px; text-align: center; }
+  .pct-high { background: #def7ec; color: #057a55; }
+  .pct-mid { background: #fdf6b2; color: #92400e; }
+  .pct-low { background: #fde8e8; color: #e02424; }
+  .pct-zero { background: #f3f4f6; color: #9ca3af; }
+
+  /* SA TABLE */
+  .sa-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .sa-table th { text-align: left; padding: 10px 14px; background: #f9fafb; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); border-bottom: 2px solid var(--border); }
+  .sa-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .sa-table tr:last-child td { border-bottom: none; }
+  .sa-table tr:hover td { background: #f9fafb; }
+  .sa-name { font-weight: 700; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+  .badge-gold { background: #fef3c7; color: #92400e; }
+  .badge-green { background: var(--success-light); color: var(--success); }
+  .badge-red { background: var(--danger-light); color: var(--danger); }
+  .badge-gray { background: #f3f4f6; color: #6b7280; }
+  .bar-rate { display: flex; align-items: center; gap: 8px; }
+  .bar-bg { flex: 1; background: #e5e7eb; border-radius: 4px; height: 8px; max-width: 120px; }
+  .bar-fill { height: 8px; border-radius: 4px; background: var(--primary); }
+  .bar-fill.gold { background: #f59e0b; }
+  .bar-fill.zero { background: #e5e7eb; }
+
+  /* TIMELINE / CRITICAL PATH */
+  .timeline { display: flex; align-items: flex-start; gap: 0; margin: 20px 0; overflow-x: auto; padding-bottom: 8px; }
+  .timeline-step { flex: 1; min-width: 120px; position: relative; }
+  .timeline-step:not(:last-child)::after { content: ''; position: absolute; top: 20px; right: -1px; width: 50%; height: 2px; background: #d1d5db; z-index: 0; }
+  .timeline-step:not(:first-child)::before { content: ''; position: absolute; top: 20px; left: -1px; width: 50%; height: 2px; background: #d1d5db; z-index: 0; }
+  .step-dot { width: 42px; height: 42px; border-radius: 50%; background: var(--primary); color: white; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; position: relative; z-index: 1; border: 3px solid white; box-shadow: 0 0 0 2px var(--primary); }
+  .step-dot.fast { background: var(--success); box-shadow: 0 0 0 2px var(--success); }
+  .step-dot.gate { background: #7c3aed; box-shadow: 0 0 0 2px #7c3aed; }
+  .step-name { text-align: center; font-size: 12px; font-weight: 600; color: var(--dark); margin-bottom: 4px; }
+  .step-time { text-align: center; font-size: 11px; color: var(--text-muted); }
+  .step-time strong { color: var(--primary); }
+
+  /* AT-RISK TABLE */
+  .risk-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .risk-table th { text-align: left; padding: 10px 14px; background: #f9fafb; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); border-bottom: 2px solid var(--border); }
+  .risk-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+  .risk-table tr:last-child td { border-bottom: none; }
+  .risk-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+  .risk-critical { background: #fde8e8; color: #b91c1c; }
+  .risk-high { background: #fef3c7; color: #92400e; }
+  .risk-medium { background: #ede9fe; color: #6d28d9; }
+  .days-bar { display: flex; align-items: center; gap: 8px; }
+  .days-num { font-weight: 700; min-width: 36px; }
+
+  /* RECOMMENDATION CARDS */
+  .rec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 800px) { .rec-grid { grid-template-columns: 1fr; } }
+  .rec-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 24px; }
+  .rec-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; font-weight: 800; font-size: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+  .rec-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .rec-body { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .rec-impact { margin-top: 12px; padding: 8px 12px; background: var(--primary-light); border-radius: 8px; font-size: 12px; color: var(--primary); font-weight: 600; }
+
+  /* TONY SPOTLIGHT */
+  .tony-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .tony-grid { grid-template-columns: 1fr; } }
+  .tony-card { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 12px; padding: 20px; }
+  .tony-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #92400e; }
+  .tony-project { padding: 8px 0; border-bottom: 1px solid #fde68a; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+  .tony-project:last-child { border-bottom: none; }
+  .tony-project .proj-name { font-weight: 600; }
+  .tony-project .proj-days { color: var(--text-muted); font-size: 12px; }
+  .tony-step { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid #fde68a; font-size: 13px; }
+  .tony-step:last-child { border-bottom: none; }
+  .tony-step-num { width: 24px; height: 24px; border-radius: 50%; background: #f59e0b; color: white; font-weight: 700; font-size: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .tony-step-text strong { display: block; font-weight: 600; }
+  .tony-step-text span { color: var(--text-muted); font-size: 12px; }
+
+  /* ALERT BOX */
+  .alert { padding: 16px 20px; border-radius: 10px; margin-bottom: 20px; display: flex; gap: 14px; align-items: flex-start; }
+  .alert-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .alert-content strong { display: block; font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+  .alert-content span { font-size: 14px; }
+  .alert-red { background: var(--danger-light); border: 1px solid #fca5a5; }
+  .alert-amber { background: var(--warning-light); border: 1px solid #fcd34d; }
+
+  /* FOOTER */
+  .footer { background: var(--dark); color: #9ca3af; padding: 28px 0; margin-top: 64px; font-size: 13px; text-align: center; }
+  .footer a { color: #93c5fd; text-decoration: none; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* PILL */
+  .pill { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin: 2px; }
+  .pill-blue { background: var(--primary-light); color: var(--primary); }
+  .pill-green { background: var(--success-light); color: var(--success); }
+  .pill-red { background: var(--danger-light); color: var(--danger); }
+  .pill-amber { background: var(--warning-light); color: var(--warning); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-meta">Rev.io · Onboarding Intelligence · Phase 3</div>
+    <h1>PSA Web Onboarding — Process Analysis</h1>
+    <p>Milestone-level analysis of 144 PSA Web onboarding projects from Wrike. Where clients stall, who graduates them, and what the fastest path to go-live looks like.</p>
+    <div class="header-links">
+      <a href="https://erice320.github.io/revay/onboarding-analysis.html">← Phase 1: Full Cohort Analysis</a>
+      <a href="https://erice320.github.io/revay/onboarding-webonly.html">← Phase 2: Web-Only Cohort</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1: THE UNIVERSE -->
+  <div class="section">
+    <div class="section-label">The Landscape</div>
+    <h2>144 Projects. Wildly Different Outcomes.</h2>
+    <p class="section-sub">Pulled across PSA Web active, completed, canceled, and on-hold folders. Every project, every milestone, mapped against outcome.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card success">
+        <div class="stat-num">35</div>
+        <div class="stat-label">Graduated</div>
+        <div class="stat-note">24% of total</div>
+      </div>
+      <div class="stat-card primary">
+        <div class="stat-num">50</div>
+        <div class="stat-label">Active / On Track</div>
+        <div class="stat-note">35% of total</div>
+      </div>
+      <div class="stat-card warning">
+        <div class="stat-num">17</div>
+        <div class="stat-label">On Hold</div>
+        <div class="stat-note">12% — stuck</div>
+      </div>
+      <div class="stat-card warning">
+        <div class="stat-num">25</div>
+        <div class="stat-label">Not Started</div>
+        <div class="stat-note">No milestones yet</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8</div>
+        <div class="stat-label">RTS</div>
+        <div class="stat-note">Ready, not moving</div>
+      </div>
+      <div class="stat-card danger">
+        <div class="stat-num">12</div>
+        <div class="stat-label">Canceled</div>
+        <div class="stat-note">8% of total</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Project Distribution</h3>
+      <div class="chart-wrap">
+        <canvas id="outcomeChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: DURATION -->
+  <div class="section">
+    <div class="section-label">Duration Reality</div>
+    <h2>Median 109 Days. Max 326. Zero Predictability.</h2>
+    <p class="section-sub">Based on 30 graduated projects with real durations (excluding 5 legacy same-day completions). The spread is the problem.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num">22d</div>
+        <div class="stat-label">Fastest Graduate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">76d</div>
+        <div class="stat-label">25th Percentile</div>
+      </div>
+      <div class="stat-card warning">
+        <div class="stat-num">109d</div>
+        <div class="stat-label">Median</div>
+        <div class="stat-note">~3.5 months</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">117d</div>
+        <div class="stat-label">Average</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">133d</div>
+        <div class="stat-label">75th Percentile</div>
+      </div>
+      <div class="stat-card danger">
+        <div class="stat-num">326d</div>
+        <div class="stat-label">Longest Graduate</div>
+        <div class="stat-note">10+ months</div>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Duration Distribution (Graduated Projects)</h3>
+        <div class="chart-wrap">
+          <canvas id="durationChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Fast vs. Slow Graduates</h3>
+        <div style="display:flex; flex-direction:column; gap:14px; margin-top:8px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+              <span style="font-size:14px; font-weight:600;">Under 60 days</span>
+              <span style="font-size:14px; color:var(--success); font-weight:700;">4 clients (13%)</span>
+            </div>
+            <div style="background:#e5e7eb; border-radius:6px; height:12px;"><div style="width:13%; background:var(--success); height:12px; border-radius:6px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+              <span style="font-size:14px; font-weight:600;">60–120 days</span>
+              <span style="font-size:14px; color:var(--primary); font-weight:700;">14 clients (47%)</span>
+            </div>
+            <div style="background:#e5e7eb; border-radius:6px; height:12px;"><div style="width:47%; background:var(--primary); height:12px; border-radius:6px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+              <span style="font-size:14px; font-weight:600;">Over 120 days</span>
+              <span style="font-size:14px; color:var(--warning); font-weight:700;">12 clients (40%)</span>
+            </div>
+            <div style="background:#e5e7eb; border-radius:6px; height:12px;"><div style="width:40%; background:#f59e0b; height:12px; border-radius:6px;"></div></div>
+          </div>
+          <hr class="divider" style="margin:4px 0;">
+          <div style="font-size:13px; color:var(--text-muted); padding: 12px; background:#f9fafb; border-radius:8px;">
+            <strong style="color:var(--text); display:block; margin-bottom:4px;">The 7× Problem</strong>
+            The fastest graduation takes 22 days. The slowest took 326 days. That's the same process producing wildly different outcomes. Clients can't plan around this, and neither can the team.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: CRITICAL PATH -->
+  <div class="section">
+    <div class="section-label">The Critical Path</div>
+    <h2>Six Stages. One Graduation Gate.</h2>
+    <p class="section-sub">Median days from project start to each milestone completion, based on graduated clients. Stages 4 & 5 only apply to ~26% of clients — most graduate via the 1→2→3→6 path.</p>
+
+    <div class="card">
+      <div class="timeline">
+        <div class="timeline-step">
+          <div class="step-dot fast">1</div>
+          <div class="step-name">Kick Off Call</div>
+          <div class="step-time">Median <strong>Day 6</strong></div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-dot gate">2</div>
+          <div class="step-name">Fundamentals</div>
+          <div class="step-time">Median <strong>Day 28</strong></div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-dot">3</div>
+          <div class="step-name">Process Dev</div>
+          <div class="step-time">Median <strong>Day 41</strong></div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-dot" style="background:#9ca3af; box-shadow:0 0 0 2px #9ca3af;">4</div>
+          <div class="step-name">Integrations</div>
+          <div class="step-time">Median <strong>Day 50</strong></div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-dot" style="background:#9ca3af; box-shadow:0 0 0 2px #9ca3af;">5</div>
+          <div class="step-name">Billing Procs</div>
+          <div class="step-time">Median <strong>Day 79</strong></div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-dot fast">6</div>
+          <div class="step-name">Graduation</div>
+          <div class="step-time">Median <strong>Day 84</strong></div>
+        </div>
+      </div>
+      <div style="margin-top:16px; padding:14px 16px; background:#ede9fe; border-radius:8px; font-size:13px;">
+        <strong style="color:#6d28d9;">🔑 The Gate:</strong> Stage 2 (Fundamentals) is the graduation gate. 83% of graduated clients completed it. Only 42% of canceled clients finished it — and only 32% of currently active clients. <strong>This is where the funnel breaks.</strong>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Days Between Stages (Graduated Clients)</h3>
+      <div class="chart-wrap">
+        <canvas id="milestoneChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: MILESTONE HEATMAP -->
+  <div class="section">
+    <div class="section-label">Milestone Completion Rates</div>
+    <h2>Where Active Clients Are Stuck</h2>
+    <p class="section-sub">Percentage of clients in each cohort who have completed each milestone stage. The gap between Graduated and Active at Stages 2–3 tells the whole story.</p>
+
+    <div class="card">
+      <table class="heatmap-table">
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>✅ Graduated (35)</th>
+            <th>🔴 Canceled (12)</th>
+            <th>⏸️ On Hold (17)</th>
+            <th>🔄 Active (50)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Kick Off Call</strong></td>
+            <td><span class="cell-pct pct-mid">29%</span></td>
+            <td><span class="cell-pct pct-high">67%</span></td>
+            <td><span class="cell-pct pct-mid">59%</span></td>
+            <td><span class="cell-pct pct-mid">64%</span></td>
+          </tr>
+          <tr>
+            <td style="color:#6d28d9;"><strong>2. Fundamentals ⭐</strong></td>
+            <td><span class="cell-pct pct-high">83%</span></td>
+            <td><span class="cell-pct pct-mid">42%</span></td>
+            <td><span class="cell-pct pct-mid">47%</span></td>
+            <td><span class="cell-pct pct-low">32%</span></td>
+          </tr>
+          <tr>
+            <td><strong>3. Process Dev</strong></td>
+            <td><span class="cell-pct pct-high">83%</span></td>
+            <td><span class="cell-pct pct-low">33%</span></td>
+            <td><span class="cell-pct pct-low">29%</span></td>
+            <td><span class="cell-pct pct-low">16%</span></td>
+          </tr>
+          <tr>
+            <td><strong>4. Integrations</strong> <span style="font-size:11px;color:#9ca3af;">(optional)</span></td>
+            <td><span class="cell-pct pct-low">26%</span></td>
+            <td><span class="cell-pct pct-low">25%</span></td>
+            <td><span class="cell-pct pct-low">12%</span></td>
+            <td><span class="cell-pct pct-zero">6%</span></td>
+          </tr>
+          <tr>
+            <td><strong>5. Billing Procs</strong> <span style="font-size:11px;color:#9ca3af;">(optional)</span></td>
+            <td><span class="cell-pct pct-low">26%</span></td>
+            <td><span class="cell-pct pct-low">25%</span></td>
+            <td><span class="cell-pct pct-low">12%</span></td>
+            <td><span class="cell-pct pct-zero">6%</span></td>
+          </tr>
+          <tr>
+            <td><strong>6. Graduation</strong></td>
+            <td><span class="cell-pct pct-high">83%</span></td>
+            <td><span class="cell-pct pct-zero">8%</span></td>
+            <td><span class="cell-pct pct-low">12%</span></td>
+            <td><span class="cell-pct pct-zero">4%</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap; font-size:12px;">
+        <span>Color guide:</span>
+        <span class="cell-pct pct-high" style="font-size:11px;">≥ 60%</span>
+        <span class="cell-pct pct-mid" style="font-size:11px;">30–59%</span>
+        <span class="cell-pct pct-low" style="font-size:11px;">10–29%</span>
+        <span class="cell-pct pct-zero" style="font-size:11px;">&lt; 10%</span>
+      </div>
+    </div>
+
+    <div class="alert alert-amber">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-content">
+        <strong>Late-Stage Churn</strong>
+        <span>3 clients canceled <em>after</em> completing Stage 5 (Billing Procedures). They went through the full process and still left. That's a product-fit problem at the worst possible moment — worth understanding each case individually.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: SA PERFORMANCE -->
+  <div class="section">
+    <div class="section-label">SA Performance</div>
+    <h2>One SA Has a 75% Graduation Rate. Most Have Zero.</h2>
+    <p class="section-sub">This is not a minor performance variation — it's a structural gap. Tony Mehner has a different playbook, and it's working at 3–5× the team average.</p>
+
+    <div class="card">
+      <table class="sa-table">
+        <thead>
+          <tr>
+            <th>SA</th>
+            <th>Book Size</th>
+            <th>Graduated</th>
+            <th>On Hold</th>
+            <th>Grad Rate</th>
+            <th>Avg Duration</th>
+            <th>Avg Milestones / Client</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#fffbeb;">
+            <td><span class="sa-name">Tony Mehner</span> <span class="badge badge-gold">🏆 Benchmark</span></td>
+            <td>8</td>
+            <td style="color:var(--success); font-weight:700;">6</td>
+            <td>0</td>
+            <td>
+              <div class="bar-rate">
+                <div class="bar-bg"><div class="bar-fill gold" style="width:75%;"></div></div>
+                <strong style="color:#92400e;">75%</strong>
+              </div>
+            </td>
+            <td>133 days</td>
+            <td><strong>4.1</strong></td>
+          </tr>
+          <tr>
+            <td><span class="sa-name">Nicole Hills</span></td>
+            <td>30</td>
+            <td>6</td>
+            <td>1</td>
+            <td>
+              <div class="bar-rate">
+                <div class="bar-bg"><div class="bar-fill" style="width:20%;"></div></div>
+                <span>20%</span>
+              </div>
+            </td>
+            <td>149d med / 202d avg</td>
+            <td>2.1</td>
+          </tr>
+          <tr>
+            <td><span class="sa-name">Kegan Ehlers</span></td>
+            <td>43</td>
+            <td>6</td>
+            <td style="color:var(--danger); font-weight:700;">9</td>
+            <td>
+              <div class="bar-rate">
+                <div class="bar-bg"><div class="bar-fill" style="width:14%;"></div></div>
+                <span>14%</span>
+              </div>
+            </td>
+            <td>109 days</td>
+            <td>1.7</td>
+          </tr>
+          <tr style="background:#fff5f5;">
+            <td><span class="sa-name">Halle Taylor</span> <span class="badge badge-red">0 Grads</span></td>
+            <td>20</td>
+            <td style="color:var(--danger); font-weight:700;">0</td>
+            <td>1</td>
+            <td>
+              <div class="bar-rate">
+                <div class="bar-bg"><div class="bar-fill zero" style="width:0%;"></div></div>
+                <span style="color:var(--danger); font-weight:700;">0%</span>
+              </div>
+            </td>
+            <td>—</td>
+            <td>0.9</td>
+          </tr>
+          <tr style="background:#fff5f5;">
+            <td><span class="sa-name">Jeremy Adams</span> <span class="badge badge-red">0 Grads</span></td>
+            <td>16</td>
+            <td style="color:var(--danger); font-weight:700;">0</td>
+            <td style="color:var(--danger); font-weight:700;">6</td>
+            <td>
+              <div class="bar-rate">
+                <div class="bar-bg"><div class="bar-fill zero" style="width:0%;"></div></div>
+                <span style="color:var(--danger); font-weight:700;">0%</span>
+              </div>
+            </td>
+            <td>—</td>
+            <td>0.6</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Grad Rate by SA</h3>
+        <div class="chart-wrap">
+          <canvas id="saChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Avg Milestones Completed per Client</h3>
+        <div class="chart-wrap">
+          <canvas id="msChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: TONY SPOTLIGHT -->
+  <div class="section">
+    <div class="section-label">The Benchmark Playbook</div>
+    <h2>What Tony Does Differently</h2>
+    <p class="section-sub">Tony isn't following the same template as the rest of the team. He runs a distinct 5-stage methodology — and it's producing dramatically better outcomes.</p>
+
+    <div class="alert alert-amber">
+      <div class="alert-icon">💡</div>
+      <div class="alert-content">
+        <strong>Different Template, Different Results</strong>
+        <span>Tony uses: Installation Phase → Fundamentals Phase → Process Training Phase → Invoicing & Accounting Phase → Graduation. He also adds a "Project Control" task as an active management checkpoint in every project. These aren't cosmetic differences — they represent a different client engagement model.</span>
+      </div>
+    </div>
+
+    <div class="tony-grid">
+      <div class="tony-card">
+        <h4>Tony's Project Results</h4>
+        <div class="tony-project">
+          <span class="proj-name">Secure Property Solutions</span>
+          <span style="display:flex; gap:8px; align-items:center;"><span class="pill pill-green">63 days</span><span class="pill pill-green">All 6 stages</span></span>
+        </div>
+        <div class="tony-project">
+          <span class="proj-name">Tolleson Inc</span>
+          <span style="display:flex; gap:8px; align-items:center;"><span class="pill pill-blue">125 days</span><span class="pill pill-green">All 6 stages</span></span>
+        </div>
+        <div class="tony-project">
+          <span class="proj-name">Bard Locksmith & Security</span>
+          <span style="display:flex; gap:8px; align-items:center;"><span class="pill pill-amber">207 days</span><span class="pill pill-green">5 stages</span></span>
+        </div>
+        <div class="tony-project">
+          <span class="proj-name">A1 Image</span>
+          <span style="display:flex; gap:8px; align-items:center;"><span class="pill pill-green">62 days</span><span class="pill pill-green">All stages</span></span>
+        </div>
+        <div class="tony-project">
+          <span class="proj-name">Ahelio Tech <em style="font-size:11px;">(active)</em></span>
+          <span style="display:flex; gap:8px; align-items:center;"><span class="pill pill-amber">232 days</span><span>3 stages</span></span>
+        </div>
+        <div class="tony-project">
+          <span class="proj-name">Legion Technology <em style="font-size:11px;">(stalled)</em></span>
+          <span style="display:flex; gap:8px; align-items:center;"><span class="pill pill-red">213 days</span><span class="pill pill-red">0 stages</span></span>
+        </div>
+      </div>
+
+      <div class="tony-card">
+        <h4>Tony's Template (5 Stages)</h4>
+        <div class="tony-step">
+          <div class="tony-step-num">1</div>
+          <div class="tony-step-text">
+            <strong>Installation Phase</strong>
+            <span>Kickoff equivalent. Consistently completed within 3 days of project creation.</span>
+          </div>
+        </div>
+        <div class="tony-step">
+          <div class="tony-step-num">2</div>
+          <div class="tony-step-text">
+            <strong>Fundamentals Phase</strong>
+            <span>Core setup. Completed at Day 26–37 in his best projects.</span>
+          </div>
+        </div>
+        <div class="tony-step">
+          <div class="tony-step-num">3</div>
+          <div class="tony-step-text">
+            <strong>Process Training Phase</strong>
+            <span>Client workflow alignment. Rapid succession after Fundamentals in fast projects.</span>
+          </div>
+        </div>
+        <div class="tony-step">
+          <div class="tony-step-num">4</div>
+          <div class="tony-step-text">
+            <strong>Invoicing & Accounting Phase</strong>
+            <span>Combined Integrations + Billing. He doesn't split these — one unified milestone.</span>
+          </div>
+        </div>
+        <div class="tony-step">
+          <div class="tony-step-num">5</div>
+          <div class="tony-step-text">
+            <strong>Graduation + Project Control</strong>
+            <span>Graduation is a task he actively manages. "Project Control" = deliberate sign-off checkpoint.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px; padding:16px 20px; background:var(--primary-light); border-radius:10px; font-size:14px;">
+      <strong style="color:var(--primary);">Recommended Action:</strong> Interview Tony on his onboarding methodology and cadence. What does his Week 1 look like? How does he drive the Fundamentals stage? What does "Project Control" mean in practice? Extract this into a standardized playbook for the rest of the team.
+    </div>
+  </div>
+
+  <!-- SECTION 7: AT-RISK ACCOUNTS -->
+  <div class="section">
+    <div class="section-label">Ticking Clock</div>
+    <h2>Longest-Running Active Projects</h2>
+    <p class="section-sub">Active projects sorted by age. Projects over 120 days with fewer than 3 milestones completed are at material churn risk.</p>
+
+    <div class="card">
+      <table class="risk-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>SA</th>
+            <th>Days Active</th>
+            <th>Milestones Done</th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Newport Network Solutions</strong></td>
+            <td>Halle Taylor</td>
+            <td><div class="days-bar"><div class="days-num">265</div></div></td>
+            <td>2 of 6</td>
+            <td><span class="risk-badge risk-critical">🔴 Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>Legion Technology</strong></td>
+            <td>Tony Mehner</td>
+            <td><div class="days-bar"><div class="days-num">213</div></div></td>
+            <td>0 of 6</td>
+            <td><span class="risk-badge risk-critical">🔴 Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>Ataraxis Solutions</strong></td>
+            <td>Nicole Hills</td>
+            <td><div class="days-bar"><div class="days-num">224</div></div></td>
+            <td>2 of 6</td>
+            <td><span class="risk-badge risk-critical">🔴 Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>Blueline</strong></td>
+            <td>Jeremy Adams</td>
+            <td><div class="days-bar"><div class="days-num">222</div></div></td>
+            <td>1 of 6</td>
+            <td><span class="risk-badge risk-critical">🔴 Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>Particle Communications</strong></td>
+            <td>Jeremy Adams</td>
+            <td><div class="days-bar"><div class="days-num">163</div></div></td>
+            <td>0 of 6</td>
+            <td><span class="risk-badge risk-critical">🔴 Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>Atron Solutions</strong></td>
+            <td>Jeremy Adams</td>
+            <td><div class="days-bar"><div class="days-num">206</div></div></td>
+            <td>2 of 6</td>
+            <td><span class="risk-badge risk-critical">🔴 Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>Command Corporation</strong></td>
+            <td>Kegan Ehlers</td>
+            <td><div class="days-bar"><div class="days-num">183</div></div></td>
+            <td>2 of 6</td>
+            <td><span class="risk-badge risk-high">🟡 High</span></td>
+          </tr>
+          <tr>
+            <td><strong>iNet Communications</strong></td>
+            <td>Jeremy Adams</td>
+            <td><div class="days-bar"><div class="days-num">206</div></div></td>
+            <td>2 of 6</td>
+            <td><span class="risk-badge risk-critical">🔴 Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>Morgan Alarm Systems</strong></td>
+            <td>Nicole Hills</td>
+            <td><div class="days-bar"><div class="days-num">205</div></div></td>
+            <td>5 of 6</td>
+            <td><span class="risk-badge risk-medium">🟣 Near Grad</span></td>
+          </tr>
+          <tr>
+            <td><strong>Soundworks & Security</strong></td>
+            <td>Nicole Hills</td>
+            <td><div class="days-bar"><div class="days-num">160</div></div></td>
+            <td>1 of 6</td>
+            <td><span class="risk-badge risk-high">🟡 High</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px; padding:12px 16px; background:#fde8e8; border-radius:8px; font-size:13px; color:#7f1d1d;">
+        <strong>Jeremy Adams has 4 projects in this list</strong> — Blueline (222d, 1 milestone), Particle Comm (163d, 0 milestones), Atron Solutions (206d, 2 milestones), iNet Comm (206d, 2 milestones). Combined MRR at risk is material. These accounts need leadership visibility today.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: RECOMMENDATIONS -->
+  <div class="section">
+    <div class="section-label">What To Do About It</div>
+    <h2>Three Concrete Actions</h2>
+    <p class="section-sub">Prioritized by expected impact on graduation rate and time-to-go-live.</p>
+
+    <div class="rec-grid">
+      <div class="rec-card">
+        <div class="rec-num">1</div>
+        <div class="rec-title">Standardize on Tony's Playbook</div>
+        <div class="rec-body">Interview Tony on his methodology, extract his template, and make it the standard for all PSA Web onboarding. His Installation → Fundamentals → Process Training → Invoicing → Graduation sequence consistently produces results. The team's varied naming conventions and inconsistent milestone populations are masking whether real work is happening.</div>
+        <div class="rec-impact">Expected impact: Lift team grad rate from ~15% toward 40%+</div>
+      </div>
+      <div class="rec-card">
+        <div class="rec-num">2</div>
+        <div class="rec-title">Fundamentals-by-Day-45 Tripwire</div>
+        <div class="rec-body">83% of graduates completed Fundamentals (Stage 2). Only 32% of currently active clients have. If a client hasn't completed Fundamentals by Day 45, the SA's manager should be automatically flagged. This single metric is the best leading indicator of whether a client will graduate or churn. Build this into the weekly ops review.</div>
+        <div class="rec-impact">Expected impact: Cut &gt;120-day completions by 30–40%</div>
+      </div>
+      <div class="rec-card">
+        <div class="rec-num">3</div>
+        <div class="rec-title">Immediate Book Audit: Jeremy & Halle</div>
+        <div class="rec-body">Combined: 36 projects, 0 graduations, 7 accounts on hold. Jeremy averages 0.6 milestones per client — barely past kickoff. These aren't coaching opportunities, they're active churn risks. Conduct a client-by-client review, determine which accounts need to be reassigned, and establish a 30-day recovery plan for each at-risk account identified in the table above.</div>
+        <div class="rec-impact">Expected impact: Recover 5–8 at-risk accounts before they cancel</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <div class="container">
+    Powered by Revay ⚡ · Data source: Wrike Onboarding Space · Analysis date: March 2026<br>
+    <a href="https://erice320.github.io/revay/onboarding-analysis.html">Phase 1: Full Cohort</a> &nbsp;·&nbsp;
+    <a href="https://erice320.github.io/revay/onboarding-webonly.html">Phase 2: Web-Only Cohort</a>
+  </div>
+</div>
+
+<script>
+// Outcome donut
+new Chart(document.getElementById('outcomeChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Active / On Track', 'Graduated', 'Not Started', 'On Hold', 'RTS', 'Canceled'],
+    datasets: [{
+      data: [50, 35, 25, 17, 8, 12],
+      backgroundColor: ['#1a56db','#057a55','#9ca3af','#c27803','#7c3aed','#e02424'],
+      borderWidth: 2, borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'right', labels: { font: { size: 13 }, padding: 14 } } }
+  }
+});
+
+// Duration histogram
+new Chart(document.getElementById('durationChart'), {
+  type: 'bar',
+  data: {
+    labels: ['<30d','30-59d','60-89d','90-119d','120-149d','150-179d','180-239d','240+d'],
+    datasets: [{
+      label: 'Graduated Clients',
+      data: [2, 4, 7, 7, 5, 2, 2, 1],
+      backgroundColor: ['#057a55','#057a55','#1a56db','#1a56db','#c27803','#c27803','#e02424','#e02424'],
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { title: { display: true, text: 'Clients', font: { size: 12 } }, beginAtZero: true, ticks: { stepSize: 1 } },
+      x: { title: { display: true, text: 'Days to Graduation', font: { size: 12 } } }
+    }
+  }
+});
+
+// Milestone timing
+new Chart(document.getElementById('milestoneChart'), {
+  type: 'bar',
+  data: {
+    labels: ['1. Kick Off','2. Fundamentals','3. Process Dev','4. Integrations','5. Billing','6. Graduation'],
+    datasets: [
+      {
+        label: 'Median Days from Start',
+        data: [6, 28, 41, 50, 79, 84],
+        backgroundColor: ['#6ee7b7','#7c3aed','#1a56db','#9ca3af','#9ca3af','#057a55'],
+        borderRadius: 6,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { title: { display: true, text: 'Median Days from Project Start', font: { size: 12 } }, beginAtZero: true },
+    }
+  }
+});
+
+// SA Grad rate
+new Chart(document.getElementById('saChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Tony Mehner','Nicole Hills','Kegan Ehlers','Halle Taylor','Jeremy Adams'],
+    datasets: [{
+      label: 'Graduation Rate %',
+      data: [75, 20, 14, 0, 0],
+      backgroundColor: ['#f59e0b','#1a56db','#6366f1','#e02424','#e02424'],
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { max: 100, title: { display: true, text: 'Grad Rate %' }, beginAtZero: true }
+    }
+  }
+});
+
+// SA milestones
+new Chart(document.getElementById('msChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Tony Mehner','Francesca Thayer','Nicole Hills','Kegan Ehlers','Halle Taylor','Jeremy Adams'],
+    datasets: [{
+      label: 'Avg Milestones Completed',
+      data: [4.1, 2.3, 2.1, 1.7, 0.9, 0.6],
+      backgroundColor: ['#f59e0b','#6366f1','#1a56db','#6366f1','#e02424','#e02424'],
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { max: 6, title: { display: true, text: 'Avg Milestones / Client' }, beginAtZero: true }
+    }
+  }
+});
+</script>
+</body>
+</html>
