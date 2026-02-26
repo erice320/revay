@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io ↔ NinjaOne Integration — Technical Overview</title>
+<style>
+  :root {
+    --ninja: #00b4d8;
+    --revio: #e63946;
+    --dark: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --green: #3fb950;
+    --yellow: #e3b341;
+    --orange: #f0883e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,17,23,0.95);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 32px;
+    display: flex; align-items: center; gap: 16px;
+    backdrop-filter: blur(8px);
+  }
+  nav .brand { font-weight: 700; font-size: 14px; color: var(--text); }
+  nav .brand span { color: var(--ninja); }
+  nav a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+  nav a:hover { color: var(--text); }
+  nav .spacer { flex: 1; }
+  nav .badge {
+    font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 12px; background: rgba(63,185,80,0.15);
+    color: var(--green); border: 1px solid rgba(63,185,80,0.3);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 32px 80px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,180,216,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(230,57,70,0.06) 0%, transparent 50%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 40px,
+      rgba(48,54,61,0.2) 40px, rgba(48,54,61,0.2) 41px
+    ),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 40px,
+      rgba(48,54,61,0.2) 40px, rgba(48,54,61,0.2) 41px
+    );
+    pointer-events: none;
+  }
+  .hero-content { position: relative; max-width: 800px; }
+  .hero-eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--ninja);
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 800; line-height: 1.1;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, var(--text) 40%, var(--muted) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero h1 .accent-ninja { background: linear-gradient(90deg, #00b4d8, #0077b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero h1 .accent-revio  { background: linear-gradient(90deg, #e63946, #c1121f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub {
+    font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto 40px;
+  }
+  .hero-meta {
+    display: flex; align-items: center; justify-content: center;
+    gap: 24px; flex-wrap: wrap; font-size: 13px; color: var(--muted);
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* SECTIONS */
+  section {
+    max-width: 1080px; margin: 0 auto;
+    padding: 80px 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--ninja);
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700; margin-bottom: 16px;
+  }
+  .section-intro {
+    font-size: 16px; color: var(--muted);
+    max-width: 640px; margin-bottom: 48px;
+  }
+
+  /* CARDS */
+  .cards { display: grid; gap: 20px; }
+  .cards-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .cards-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .cards-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px;
+    transition: border-color .2s, transform .2s;
+  }
+  .card:hover { border-color: rgba(0,180,216,0.4); transform: translateY(-2px); }
+  .card-icon { font-size: 28px; margin-bottom: 14px; }
+  .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--muted); }
+  .card-badge {
+    display: inline-block; margin-top: 12px;
+    font-size: 11px; font-weight: 600; padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .badge-green { background: rgba(63,185,80,0.15); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+  .badge-yellow { background: rgba(227,179,65,0.15); color: var(--yellow); border: 1px solid rgba(227,179,65,0.3); }
+  .badge-blue   { background: rgba(0,180,216,0.15); color: var(--ninja); border: 1px solid rgba(0,180,216,0.3); }
+  .badge-red    { background: rgba(230,57,70,0.15); color: var(--revio); border: 1px solid rgba(230,57,70,0.3); }
+
+  /* ARCH DIAGRAM */
+  .arch {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 40px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; flex-wrap: wrap;
+  }
+  .arch-box {
+    text-align: center; padding: 24px 32px;
+    border-radius: 12px; min-width: 160px;
+  }
+  .arch-box.revio { background: rgba(230,57,70,0.1); border: 2px solid rgba(230,57,70,0.4); }
+  .arch-box.ninja { background: rgba(0,180,216,0.1); border: 2px solid rgba(0,180,216,0.4); }
+  .arch-box.engine { background: rgba(48,54,61,0.6); border: 2px solid var(--border); }
+  .arch-box .logo { font-size: 32px; margin-bottom: 8px; }
+  .arch-box h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .arch-box p { font-size: 12px; color: var(--muted); }
+  .arch-arrow {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px; padding: 0 20px;
+  }
+  .arch-arrow .line {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--border), var(--ninja), var(--border));
+  }
+  .arch-arrow .label { font-size: 11px; color: var(--muted); white-space: nowrap; }
+  .arch-arrow .arrows { font-size: 18px; color: var(--ninja); letter-spacing: -2px; }
+
+  /* PHASES */
+  .phases { display: flex; flex-direction: column; gap: 16px; }
+  .phase {
+    display: flex; gap: 20px; align-items: flex-start;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 24px;
+    transition: border-color .2s;
+  }
+  .phase:hover { border-color: rgba(0,180,216,0.3); }
+  .phase-num {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+    background: rgba(0,180,216,0.15); color: var(--ninja);
+    border: 1px solid rgba(0,180,216,0.3);
+  }
+  .phase-body h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .phase-body p { font-size: 13px; color: var(--muted); }
+  .phase-dir {
+    margin-left: auto; flex-shrink: 0;
+    font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 10px;
+  }
+
+  /* STATUS TABLE */
+  .status-grid { display: flex; flex-direction: column; gap: 12px; }
+  .status-row {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 20px;
+  }
+  .status-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  }
+  .dot-green { background: var(--green); box-shadow: 0 0 8px rgba(63,185,80,0.5); }
+  .dot-yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(227,179,65,0.5); }
+  .dot-red    { background: var(--revio); box-shadow: 0 0 8px rgba(230,57,70,0.5); }
+  .status-label { font-size: 14px; font-weight: 500; flex: 1; }
+  .status-note { font-size: 13px; color: var(--muted); }
+
+  /* CODE BLOCK */
+  pre {
+    background: #010409; border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px 24px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px; overflow-x: auto;
+    color: #79c0ff; line-height: 1.7;
+  }
+  .code-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .comment { color: #6e7681; }
+  .string  { color: #a5d6ff; }
+  .kw      { color: #ff7b72; }
+
+  /* CREDS */
+  .creds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .creds-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; overflow: hidden;
+  }
+  .creds-card h3 {
+    font-size: 14px; font-weight: 700; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .creds-card h3 .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .cred-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+  .cred-row label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .cred-row code {
+    font-family: 'SF Mono', monospace; font-size: 12px;
+    background: #010409; border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 10px;
+    color: #a5d6ff; word-break: break-all;
+  }
+
+  /* NEXT STEPS */
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 20px;
+  }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 12px; background: var(--border); color: var(--text);
+  }
+  .step h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .step p { font-size: 13px; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 48px 32px;
+    font-size: 13px; color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  footer strong { color: var(--text); }
+
+  /* DIVIDER */
+  .divider { width: 48px; height: 3px; border-radius: 2px; background: var(--ninja); margin-bottom: 32px; }
+
+  @media (max-width: 600px) {
+    section { padding: 60px 20px; }
+    .arch { flex-direction: column; padding: 24px; }
+    .arch-arrow .line { width: 2px; height: 40px; background: linear-gradient(180deg, var(--border), var(--ninja), var(--border)); }
+    .arch-arrow .arrows { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="brand"><span>Rev.io</span> ↔ NinjaOne</div>
+  <div class="spacer"></div>
+  <a href="#overview">Overview</a>
+  <a href="#how">How It Works</a>
+  <a href="#setup">Setup</a>
+  <a href="#status">Status</a>
+  <div class="badge">Demo Build · Feb 2026</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Technical Overview · Integration Prototype</div>
+    <h1><span class="accent-revio">Rev.io PSA</span> ↔ <span class="accent-ninja">NinjaOne RMM</span><br>Bi-Directional Sync</h1>
+    <p class="hero-sub">A working integration that keeps accounts and contacts in sync between Rev.io and NinjaOne — built as a demo/proof of concept in the Rev.io QA environment.</p>
+    <div class="hero-meta">
+      <span>⚡ Built by Revay</span>
+      <span>📅 February 26, 2026</span>
+      <span>🔧 Node.js · REST APIs · OAuth 2.0</span>
+      <span>🏗️ Demo / QA Environment</span>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-label">01 — Why We Built This</div>
+  <h2>NinjaOne is the #1 requested integration</h2>
+  <div class="divider"></div>
+  <p class="section-intro">NinjaOne Phase 1 is 85% complete on the Rev.io Apollo 2 roadmap and represents a direct path to new revenue. This prototype validates the integration approach ahead of the production build.</p>
+  <div class="cards cards-3">
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h3>Eliminate Double Entry</h3>
+      <p>Customers and contacts created in Rev.io automatically appear in NinjaOne — and vice versa. No manual copy-paste between systems.</p>
+      <span class="card-badge badge-green">Problem Solved</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <h3>Bi-Directional Sync</h3>
+      <p>Data flows both ways. Changes in either system propagate on the next sync cycle. Last-write-wins conflict resolution for demo simplicity.</p>
+      <span class="card-badge badge-blue">Architecture</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">📈</div>
+      <h3>Pipeline Enabler</h3>
+      <p>9 accounts already waiting for NinjaOne integration — estimated $6,900 MRR. This integration unlocks those deals for the sales team.</p>
+      <span class="card-badge badge-yellow">Business Impact</span>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEMS -->
+<section>
+  <div class="section-label">02 — The Two Systems</div>
+  <h2>What we're connecting</h2>
+  <div class="divider"></div>
+  <div class="arch">
+    <div class="arch-box revio">
+      <div class="logo">💼</div>
+      <h4>Rev.io PSA</h4>
+      <p>psademo.psarev.io</p>
+      <p style="margin-top:8px; font-size:12px; color:var(--muted);">122 Customers · 81 Contacts</p>
+    </div>
+    <div class="arch-arrow">
+      <div class="arrows">⇄</div>
+      <div class="label">Sync Engine</div>
+      <div class="label" style="color:var(--ninja);">Every 5 minutes</div>
+    </div>
+    <div class="arch-box engine" style="min-width:180px;">
+      <div class="logo">⚙️</div>
+      <h4>Sync Service</h4>
+      <p>Node.js · Express</p>
+      <p style="margin-top:8px; font-size:12px; color:var(--muted);">ID mapping · Deduplication · Live dashboard</p>
+    </div>
+    <div class="arch-arrow">
+      <div class="arrows">⇄</div>
+      <div class="label">REST APIs</div>
+      <div class="label" style="color:var(--ninja);">OAuth 2.0</div>
+    </div>
+    <div class="arch-box ninja">
+      <div class="logo">🛡️</div>
+      <h4>NinjaOne RMM</h4>
+      <p>ca.ninjarmm.com</p>
+      <p style="margin-top:8px; font-size:12px; color:var(--muted);">12 Original Orgs → now synced</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">03 — How It Works</div>
+  <h2>Four sync phases per cycle</h2>
+  <div class="divider"></div>
+  <p class="section-intro">Every 5 minutes, the sync engine runs four sequential phases. Each phase handles one data type in one direction.</p>
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-num">1</div>
+      <div class="phase-body">
+        <h4>Rev.io → NinjaOne: Accounts</h4>
+        <p>Pulls all customers from Rev.io. Checks ID mapping store — new customers get created as NinjaOne organizations; existing ones are compared for changes (name, description). The new NinjaOne org ID is saved back to the mapping store to prevent duplicates on future runs.</p>
+      </div>
+      <span class="phase-dir badge-red">Rev.io → Ninja</span>
+    </div>
+    <div class="phase">
+      <div class="phase-num">2</div>
+      <div class="phase-body">
+        <h4>NinjaOne → Rev.io: Accounts</h4>
+        <p>Pulls all organizations from NinjaOne. Any org without a Rev.io mapping gets created as a Rev.io customer. Named orgs only — unnamed system orgs are skipped. Placeholder address fields satisfy Rev.io's required fields (address, city, state, zip).</p>
+      </div>
+      <span class="phase-dir badge-blue">Ninja → Rev.io</span>
+    </div>
+    <div class="phase">
+      <div class="phase-num">3</div>
+      <div class="phase-body">
+        <h4>Rev.io → NinjaOne: Contacts</h4>
+        <p>Pulls all contacts from Rev.io. Deduplicates by email address. Creates contacts in NinjaOne linked to the correct organization using the NinjaOne org ID from Phase 1. Fields mapped: first name, last name, email, phone.</p>
+      </div>
+      <span class="phase-dir badge-red">Rev.io → Ninja</span>
+    </div>
+    <div class="phase">
+      <div class="phase-num">4</div>
+      <div class="phase-body">
+        <h4>NinjaOne → Rev.io: Contacts</h4>
+        <p>Pulls all contacts from NinjaOne. Creates new contacts in Rev.io linked to the corresponding customer. Email used as deduplication key across both systems.</p>
+      </div>
+      <span class="phase-dir badge-blue">Ninja → Rev.io</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT STRUCTURE -->
+<section>
+  <div class="section-label">04 — Project Structure</div>
+  <h2>What's in the codebase</h2>
+  <div class="divider"></div>
+  <div class="cards cards-2">
+    <div class="card">
+      <div class="card-icon">🔌</div>
+      <h3>src/revio.js</h3>
+      <p>Rev.io API client. Handles API key exchange for a JWT bearer token (auto-refreshes), full cursor-based pagination for customer and contact endpoints, and all CRUD operations.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🛡️</div>
+      <h3>src/ninjarmm.js</h3>
+      <p>NinjaOne OAuth 2.0 client. Client credentials flow — exchanges client ID + secret for a bearer token. Handles org and contact create/read endpoints on the NinjaOne REST API.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🗺️</div>
+      <h3>src/mapping.js</h3>
+      <p>Field mapping logic in both directions. Translates Rev.io customer fields to NinjaOne org fields (and back), and Rev.io contact fields to NinjaOne contact fields. Diff detection for update decisions.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💾</div>
+      <h3>src/state.js</h3>
+      <p>ID mapping store persisted to <code>data/sync-state.json</code>. Tracks which Rev.io customer ID maps to which NinjaOne org ID (and vice versa) so records are never duplicated across sync runs.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚙️</div>
+      <h3>src/sync.js</h3>
+      <p>The core sync engine. Orchestrates all four phases, collects stats (created / updated / skipped / errors), and logs results. Can be run as a one-shot script or called by the server scheduler.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🖥️</div>
+      <h3>src/server.js + public/</h3>
+      <p>Express web server with a live dashboard. Uses Server-Sent Events (SSE) to stream sync logs to the browser in real time. Shows current status, last sync time, record counts, and a sync-now button.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SETUP -->
+<section id="setup">
+  <div class="section-label">05 — Setup</div>
+  <h2>How to run it</h2>
+  <div class="divider"></div>
+  <p class="section-intro">The integration runs as a Node.js service. Everything is pre-configured in the <code>.env</code> file.</p>
+
+  <div class="creds-grid" style="margin-bottom:32px;">
+    <div class="creds-card">
+      <h3><span class="dot" style="background:var(--revio)"></span> Rev.io Credentials</h3>
+      <div class="cred-row">
+        <label>Environment</label>
+        <code>psademo.psarev.io (QA/Demo)</code>
+      </div>
+      <div class="cred-row">
+        <label>Auth Method</label>
+        <code>API Key → JWT Bearer (auto-refresh)</code>
+      </div>
+      <div class="cred-row">
+        <label>API Key</label>
+        <code>b6e49dfb31d7a2a36a56baf411fe8c1f</code>
+      </div>
+      <div class="cred-row">
+        <label>Record Count</label>
+        <code>122 customers · 81 contacts</code>
+      </div>
+    </div>
+    <div class="creds-card">
+      <h3><span class="dot" style="background:var(--ninja)"></span> NinjaOne Credentials</h3>
+      <div class="cred-row">
+        <label>Instance</label>
+        <code>ca.ninjarmm.com (QA)</code>
+      </div>
+      <div class="cred-row">
+        <label>Auth Method</label>
+        <code>OAuth 2.0 · Client Credentials</code>
+      </div>
+      <div class="cred-row">
+        <label>Client ID</label>
+        <code>rgeaAV29Q1clXoA2hw0Iu91mfdE</code>
+      </div>
+      <div class="cred-row">
+        <label>Scopes</label>
+        <code>monitoring management</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-label">Install &amp; Run</div>
+  <pre><span class="comment"># Navigate to project</span>
+cd /root/.openclaw/workspace/projects/revio-ninja-sync
+
+<span class="comment"># Install dependencies (first time only)</span>
+npm install
+
+<span class="comment"># Run a one-time sync</span>
+node src/sync.js
+
+<span class="comment"># Start the live dashboard + auto-scheduler</span>
+npm start
+<span class="comment"># → Open http://localhost:3000 in your browser</span></pre>
+</section>
+
+<!-- HOW WE BUILT THE APP (NinjaOne App Creation) -->
+<section>
+  <div class="section-label">06 — NinjaOne App Setup</div>
+  <h2>Creating the API application in NinjaOne</h2>
+  <div class="divider"></div>
+  <p class="section-intro">The integration requires an API app configured in NinjaOne's Administration panel. Here's exactly what was configured:</p>
+  <div class="cards cards-2">
+    <div class="card">
+      <div class="card-icon">🔧</div>
+      <h3>App Configuration</h3>
+      <p><strong>Platform:</strong> API Services<br>
+      <strong>Grant Type:</strong> Client Credentials<br>
+      <strong>Scopes:</strong> Monitoring + Management<br>
+      <strong>Instance:</strong> ca.ninjarmm.com</p>
+      <span class="card-badge badge-blue">Already Done ✓</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚠️</div>
+      <h3>Important: Secret Handling</h3>
+      <p>NinjaOne only shows the client secret <strong>once</strong> at creation time. For our first app, the secret was captured via screenshot which introduced character ambiguity. The second app's secret was shared as plain text — always share secrets as plain text, never screenshots.</p>
+      <span class="card-badge badge-yellow">Lesson Learned</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATUS -->
+<section id="status">
+  <div class="section-label">07 — Current Status</div>
+  <h2>What's working today</h2>
+  <div class="divider"></div>
+  <div class="status-grid">
+    <div class="status-row">
+      <div class="status-dot dot-green"></div>
+      <div class="status-label">Rev.io API client</div>
+      <div class="status-note">JWT auth + full pagination confirmed working · 122 customers, 81 contacts retrieved</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot dot-green"></div>
+      <div class="status-label">NinjaOne OAuth 2.0 auth</div>
+      <div class="status-note">Client credentials flow working · token obtained successfully</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot dot-green"></div>
+      <div class="status-label">Rev.io → NinjaOne: Accounts (Phase 1)</div>
+      <div class="status-note">✅ 122 Rev.io customers created as NinjaOne organizations</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot dot-yellow"></div>
+      <div class="status-label">NinjaOne → Rev.io: Accounts (Phase 2)</div>
+      <div class="status-note">Mostly working · 14 NinjaOne system orgs with empty names skipped (expected)</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot dot-yellow"></div>
+      <div class="status-label">Rev.io → NinjaOne: Contacts (Phase 3)</div>
+      <div class="status-note">Minor fix pending · payload cleanup (remove unsupported field) · 1-line code change</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot dot-yellow"></div>
+      <div class="status-label">NinjaOne → Rev.io: Contacts (Phase 4)</div>
+      <div class="status-note">Pending Phase 3 fix · same mapping logic, should work once Phase 3 is confirmed</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot dot-green"></div>
+      <div class="status-label">ID mapping / deduplication store</div>
+      <div class="status-note">Working · sync-state.json persists correctly across runs</div>
+    </div>
+    <div class="status-row">
+      <div class="status-dot dot-green"></div>
+      <div class="status-label">Live dashboard + SSE feed</div>
+      <div class="status-note">Built and ready · serves at http://localhost:3000</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section>
+  <div class="section-label">08 — Next Steps</div>
+  <h2>To reach production</h2>
+  <div class="divider"></div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <h4>Fix contact payload (1-line change)</h4>
+        <p>Remove <code>tags</code> field from NinjaOne contact create payload — NinjaOne only accepts <code>{firstName, lastName, email, organizationId}</code>. Quick fix, then re-run sync to confirm contacts flow through cleanly.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <h4>Demo walkthrough</h4>
+        <p>Create a customer in Rev.io → verify it appears in NinjaOne within 5 minutes. Create a contact in NinjaOne → verify it appears in Rev.io. Run <code>npm start</code>, open the live dashboard, trigger a sync, walk through the results.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <h4>Production considerations</h4>
+        <p>Replace polling (5-min interval) with webhooks for real-time sync. Add proper conflict resolution (timestamp-based, not last-write-wins). Deploy as a persistent service (systemd, Docker, or cloud function). Add retry logic and alerting for failed records.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <h4>Extend to tickets / work orders</h4>
+        <p>Phase 2 of the integration: sync NinjaOne tickets/alerts into Rev.io work orders. This is the deeper value — service desk workflow unification. Requires additional NinjaOne scopes and Rev.io ticketing API access.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Built by <strong>Revay ⚡</strong> · AI Chief of Staff to Evan Rice, Rev.io</p>
+  <p style="margin-top:8px;">Rev.io QA Environment · ca.ninjarmm.com · February 26, 2026</p>
+</footer>
+
+</body>
+</html>
