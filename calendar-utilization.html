@@ -1,491 +1,552 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rev.io Calendar Utilization — 6 Month Analysis</title>
-<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f1117;color:#e2e8f0;line-height:1.6}table{border-collapse:collapse;width:100%}th{text-align:left;padding:10px 12px;background:#0f1117;color:#718096;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #2d3748}</style>
-</head><body>
-<div style="background:linear-gradient(135deg,#1a1f2e,#0f1117);border-bottom:1px solid #2d3748;padding:40px">
-  <div style="max-width:920px;margin:0 auto">
-    <div style="font-size:13px;color:#718096;margin-bottom:8px">Rev.io · Confidential</div>
-    <h1 style="font-size:28px;color:#fff;font-weight:700">⚡ Calendar Utilization Analysis</h1>
-    <div style="color:#718096;margin-top:6px">Aug 26, 2025 – Feb 26, 2026 &nbsp;·&nbsp; 26 weeks &nbsp;·&nbsp; 5 people &nbsp;·&nbsp; 2,900+ meeting events analyzed</div>
-  </div>
-</div>
-<div style="max-width:920px;margin:0 auto;padding:40px">
-
-  <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:28px;margin-bottom:32px">
-    <h2 style="color:#fff;margin-bottom:16px;font-weight:700;font-size:18px">🔍 Executive Summary</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-      <div style="background:rgba(252,129,129,0.08);border:1px solid rgba(252,129,129,0.3);border-radius:8px;padding:16px">
-        <div style="font-size:13px;font-weight:700;color:#fc8181;margin-bottom:8px">⚠️ Everyone Is Over-Scheduled</div>
-        <div style="font-size:13px;color:#a0aec0">All 5 people spend 40–50% of their working hours in meetings — 2–2.5× the healthy benchmark of 20–25%. Megan tops the group at <strong style="color:#fff">50%</strong>. Collectively this team loses ~2,300 hours of focus time per year to meetings.</div>
-      </div>
-      <div style="background:rgba(252,129,129,0.08);border:1px solid rgba(252,129,129,0.3);border-radius:8px;padding:16px">
-        <div style="font-size:13px;font-weight:700;color:#fc8181;margin-bottom:8px">⚠️ Back-to-Back Crisis</div>
-        <div style="font-size:13px;color:#a0aec0">Megan (190), Billy (148), Christina (78), Ardit (106) all have severe back-to-back meeting patterns. No transition time = no processing, no prep, chronic cognitive fatigue. Jennifer is the only one under 120.</div>
-      </div>
-      <div style="background:rgba(104,211,145,0.08);border:1px solid rgba(104,211,145,0.3);border-radius:8px;padding:16px">
-        <div style="font-size:13px;font-weight:700;color:#68d391;margin-bottom:8px">✅ High Ownership Signals</div>
-        <div style="font-size:13px;color:#a0aec0">Megan organizes <strong style="color:#fff">70%</strong> of her own meetings, Christina <strong style="color:#fff">60%</strong>, Ardit <strong style="color:#fff">45%</strong>. These people are driving the calendar — not just reacting to it. Suggests high operational ownership.</div>
-      </div>
-      <div style="background:rgba(246,173,85,0.08);border:1px solid rgba(246,173,85,0.3);border-radius:8px;padding:16px">
-        <div style="font-size:13px;font-weight:700;color:#f6ad55;margin-bottom:8px">🤔 Cancellation Gap</div>
-        <div style="font-size:13px;color:#a0aec0">Ardit cancels <strong style="color:#fff">22%</strong> of invited meetings (109), Jennifer cancels <strong style="color:#fff">14%</strong> (75). Billy, Megan, and Christina cancel almost nothing (&lt;1%). Signals very different planning/commitment styles at the top vs. execution layer.</div>
-      </div>
-    </div>
-    <div style="font-size:13px;color:#718096;font-style:italic">Analysis based on calendar data only (Aug 26 2025 – Feb 26 2026). Focus time = 8h/day × 130 workdays minus meeting hours. Does not include async work.</div>
-  </div>
-
-  <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:28px;margin-bottom:32px;overflow-x:auto">
-    <h2 style="color:#fff;margin-bottom:16px;font-weight:700;font-size:18px">📊 Side-by-Side Comparison</h2>
-    <table>
-      <thead><tr>
-        <th>Person</th><th style="text-align:center">Meetings</th><th style="text-align:center">Time in Mtgs</th>
-        <th style="text-align:center">Avg hrs/wk</th><th style="text-align:center">Back-to-Back</th>
-        <th style="text-align:center">Organizer %</th><th style="text-align:center">Cancelled</th><th style="text-align:center">Est. Focus</th>
-      </tr></thead>
-      <tbody style="color:#a0aec0"><tr style="border-bottom:1px solid #2d3748">
-    <td style="padding:12px;color:#e2e8f0;font-weight:600">Jennifer Hopkins</td>
-    <td style="padding:12px;text-align:center">457</td>
-    <td style="padding:12px;text-align:center;color:#f6ad55;font-weight:700">40%</td>
-    <td style="padding:12px;text-align:center">16.1h</td>
-    <td style="padding:12px;text-align:center;color:#f6ad55">112</td>
-    <td style="padding:12px;text-align:center">47%</td>
-    <td style="padding:12px;text-align:center;color:#fc8181">75 (7500%)</td>
-    <td style="padding:12px;text-align:center;color:#68d391">622h</td>
-  </tr><tr style="border-bottom:1px solid #2d3748">
-    <td style="padding:12px;color:#e2e8f0;font-weight:600">Billy Boydston</td>
-    <td style="padding:12px;text-align:center">532</td>
-    <td style="padding:12px;text-align:center;color:#f6ad55;font-weight:700">44%</td>
-    <td style="padding:12px;text-align:center">17.8h</td>
-    <td style="padding:12px;text-align:center;color:#f6ad55">148</td>
-    <td style="padding:12px;text-align:center">44%</td>
-    <td style="padding:12px;text-align:center;color:#a0aec0">5 (500%)</td>
-    <td style="padding:12px;text-align:center;color:#68d391">578h</td>
-  </tr><tr style="border-bottom:1px solid #2d3748">
-    <td style="padding:12px;color:#e2e8f0;font-weight:600">Megan Evitts</td>
-    <td style="padding:12px;text-align:center">636</td>
-    <td style="padding:12px;text-align:center;color:#fc8181;font-weight:700">50%</td>
-    <td style="padding:12px;text-align:center">19.9h</td>
-    <td style="padding:12px;text-align:center;color:#fc8181">190</td>
-    <td style="padding:12px;text-align:center">70%</td>
-    <td style="padding:12px;text-align:center;color:#a0aec0">0 (0%)</td>
-    <td style="padding:12px;text-align:center;color:#68d391">524h</td>
-  </tr><tr style="border-bottom:1px solid #2d3748">
-    <td style="padding:12px;color:#e2e8f0;font-weight:600">Christina Oudin</td>
-    <td style="padding:12px;text-align:center">599</td>
-    <td style="padding:12px;text-align:center;color:#f6ad55;font-weight:700">48%</td>
-    <td style="padding:12px;text-align:center">19.4h</td>
-    <td style="padding:12px;text-align:center;color:#68d391">78</td>
-    <td style="padding:12px;text-align:center">60%</td>
-    <td style="padding:12px;text-align:center;color:#a0aec0">5 (500%)</td>
-    <td style="padding:12px;text-align:center;color:#68d391">536h</td>
-  </tr><tr style="border-bottom:1px solid #2d3748">
-    <td style="padding:12px;color:#e2e8f0;font-weight:600">Ardit Berdyna</td>
-    <td style="padding:12px;text-align:center">505</td>
-    <td style="padding:12px;text-align:center;color:#f6ad55;font-weight:700">43%</td>
-    <td style="padding:12px;text-align:center">17.1h</td>
-    <td style="padding:12px;text-align:center;color:#f6ad55">106</td>
-    <td style="padding:12px;text-align:center">45%</td>
-    <td style="padding:12px;text-align:center;color:#fc8181">109 (18%)</td>
-    <td style="padding:12px;text-align:center;color:#68d391">594h</td>
-  </tr></tbody>
-    </table>
-  </div>
-
-  <h2 style="color:#fff;margin-bottom:20px;font-weight:700;font-size:18px">👤 Individual Profiles</h2>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar Coverage Analysis — Jennifer Hopkins' Team</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.5; }
+  .header { background: linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%); padding: 40px; border-bottom: 1px solid #334155; }
+  .header h1 { font-size: 28px; font-weight: 700; color: white; margin-bottom: 8px; }
+  .header p { color: #94a3b8; font-size: 15px; }
+  .badge { display: inline-block; background: #0ea5e9; color: white; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; margin-left: 10px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+  .meta { color: #64748b; font-size: 13px; margin-top: 8px; }
   
-  <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:28px;margin-bottom:20px">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+  /* Summary grid */
+  .summary-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin: 32px 0; }
+  .summary-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px 16px; text-align: center; }
+  .summary-card .name { font-size: 13px; font-weight: 600; color: #94a3b8; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .summary-card .big-num { font-size: 32px; font-weight: 800; margin: 8px 0 4px; }
+  .summary-card .sub { font-size: 12px; color: #64748b; }
+  .summary-card .hrs { font-size: 14px; color: #94a3b8; margin-top: 6px; }
+  .red { color: #ef4444; }
+  .yellow { color: #f59e0b; }
+  .green { color: #10b981; }
+
+  /* Context box */
+  .context-box { background: #1e293b; border: 1px solid #334155; border-left: 4px solid #0ea5e9; border-radius: 8px; padding: 20px 24px; margin: 0 0 32px; }
+  .context-box h3 { font-size: 14px; font-weight: 700; color: #0ea5e9; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .context-box p { font-size: 14px; color: #94a3b8; }
+  .context-box strong { color: #e2e8f0; }
+
+  /* Key findings */
+  .findings { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 32px; }
+  .findings h2 { font-size: 16px; font-weight: 700; color: white; margin-bottom: 16px; }
+  .finding-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #334155; }
+  .finding-item:last-child { border-bottom: none; }
+  .finding-icon { font-size: 18px; flex-shrink: 0; }
+  .finding-text { font-size: 14px; color: #cbd5e1; }
+  .finding-text strong { color: white; }
+
+  /* Person cards */
+  .person-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+  .person-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .person-name { font-size: 18px; font-weight: 700; color: white; }
+  .person-title { font-size: 13px; color: #64748b; margin-top: 2px; }
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
+  .stat-box { background: #0f172a; border-radius: 8px; padding: 12px; text-align: center; }
+  .stat-box .val { font-size: 22px; font-weight: 700; color: white; }
+  .stat-box .lbl { font-size: 11px; color: #64748b; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .detail-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .detail-box { background: #0f172a; border-radius: 8px; padding: 14px; }
+  .detail-box h4 { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .detail-box ul { list-style: none; }
+  .detail-box ul li { font-size: 13px; color: #94a3b8; padding: 3px 0; }
+  .detail-box ul li span { color: #e2e8f0; font-weight: 600; }
+  .comp-bar { display: flex; gap: 4px; align-items: center; margin: 4px 0; font-size: 12px; }
+  .comp-bar .label { width: 80px; color: #64748b; }
+  .comp-bar .bar-wrap { flex: 1; background: #1e293b; border-radius: 3px; height: 14px; }
+  .comp-bar .fill { height: 100%; border-radius: 3px; }
+  .comp-bar .count { width: 30px; text-align: right; color: #94a3b8; }
+  .flag { display: inline-block; background: #7f1d1d; color: #fca5a5; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; margin-left: 6px; }
+  .flag-ok { background: #064e3b; color: #6ee7b7; }
+  
+  /* Coverage comparison table */
+  .table-wrap { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; margin-bottom: 32px; }
+  .table-wrap table { width: 100%; border-collapse: collapse; }
+  .table-wrap th { background: #0f172a; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; padding: 12px 16px; text-align: left; }
+  .table-wrap td { padding: 12px 16px; font-size: 14px; border-top: 1px solid #334155; }
+  .table-wrap tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .footer { text-align: center; color: #475569; font-size: 12px; padding: 24px; margin-top: 24px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Calendar Coverage Analysis <span class="badge">Updated</span></h1>
+  <p>Jennifer Hopkins' Marketing Team — Aug 26, 2025 – Feb 26, 2026 (6 months)</p>
+  <p class="meta">5 team members · All calendared activities (meetings, focus blocks, admin, travel) · Generated by Revay ⚡</p>
+</div>
+
+<div class="container">
+
+  <div class="context-box">
+    <h3>📋 Analysis Context</h3>
+    <p>The expectation is that team members <strong>calendar all work activities</strong> — not just meetings, but focus blocks, admin time, and project work. <strong>Full utilization target = 80% of a 40-hour work week (32 hrs/week)</strong>. Coverage below 80% indicates either unblocked work time or genuine underutilization.</p>
+  </div>
+
+  <!-- Summary Grid -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="name">Jennifer</div>
+      <div class="big-num red">49.4%</div>
+      <div class="sub">of 80% target</div>
+      <div class="hrs">15.8h/wk vs 32h target</div>
+    </div>
+    <div class="summary-card">
+      <div class="name">Billy</div>
+      <div class="big-num red">55.0%</div>
+      <div class="sub">of 80% target</div>
+      <div class="hrs">17.6h/wk vs 32h target</div>
+    </div>
+    <div class="summary-card">
+      <div class="name">Megan</div>
+      <div class="big-num red">61.1%</div>
+      <div class="sub">of 80% target</div>
+      <div class="hrs">19.6h/wk vs 32h target</div>
+    </div>
+    <div class="summary-card">
+      <div class="name">Christina</div>
+      <div class="big-num red">59.7%</div>
+      <div class="sub">of 80% target</div>
+      <div class="hrs">19.1h/wk vs 32h target</div>
+    </div>
+    <div class="summary-card">
+      <div class="name">Ardit</div>
+      <div class="big-num red">52.8%</div>
+      <div class="sub">of 80% target</div>
+      <div class="hrs">16.9h/wk vs 32h target</div>
+    </div>
+  </div>
+
+  <!-- Coverage table -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Calendar Coverage</th>
+          <th>vs. 80% Target</th>
+          <th>Hrs/Week</th>
+          <th>Gap (hrs/wk)</th>
+          <th>Cancelled</th>
+          <th>B2B Pairs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Jennifer Hopkins</strong></td>
+          <td>39.5%</td>
+          <td><strong class="red">49.4%</strong></td>
+          <td>15.8h</td>
+          <td class="red">▼ 16.2h/wk</td>
+          <td class="red">75 (14.3%)</td>
+          <td>144</td>
+        </tr>
+        <tr>
+          <td><strong>Billy Boydston</strong></td>
+          <td>44.0%</td>
+          <td><strong class="red">55.0%</strong></td>
+          <td>17.6h</td>
+          <td class="red">▼ 14.4h/wk</td>
+          <td class="">5 (0.9%)</td>
+          <td>180</td>
+        </tr>
+        <tr>
+          <td><strong>Megan Evitts</strong></td>
+          <td>48.9%</td>
+          <td><strong class="red">61.1%</strong></td>
+          <td>19.6h</td>
+          <td class="red">▼ 12.4h/wk</td>
+          <td class="">0 (0.0%)</td>
+          <td>260</td>
+        </tr>
+        <tr>
+          <td><strong>Christina Oudin</strong></td>
+          <td>47.7%</td>
+          <td><strong class="red">59.7%</strong></td>
+          <td>19.1h</td>
+          <td class="red">▼ 12.9h/wk</td>
+          <td class="">5 (0.8%)</td>
+          <td>125</td>
+        </tr>
+        <tr>
+          <td><strong>Ardit Berdyna</strong></td>
+          <td>42.3%</td>
+          <td><strong class="red">52.8%</strong></td>
+          <td>16.9h</td>
+          <td class="red">▼ 15.1h/wk</td>
+          <td class="red">107 (17.7%)</td>
+          <td>106*</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="padding:8px 16px;font-size:11px;color:#475569;">*Ardit B2B from prior run. Target: 32h/week (80% of 40h). All metrics exclude cancelled and all-day events.</div>
+  </div>
+
+  <!-- Key Findings -->
+  <div class="findings">
+    <h2>🔍 Key Findings</h2>
+    <div class="finding-item">
+      <span class="finding-icon">🚨</span>
+      <div class="finding-text"><strong>Everyone is significantly below the 80% target.</strong> The highest coverage on the team (Megan Evitts) is only at 61% of target. On average the team is covering ~11–16 fewer hours per week than expected — representing 35–55% of the "missing" calendar the business expects.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-icon">📅</span>
+      <div class="finding-text"><strong>Jennifer Hopkins has the lowest coverage and highest cancel rate.</strong> At 49.4% of target (15.8h/wk), she's furthest from the standard. 75 cancelled events (16.7% cancel rate) adds another data point — a lot of scheduled work is not happening. This is the highest cancel rate on the team.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-icon">🔴</span>
+      <div class="finding-text"><strong>Ardit Berdyna: 107 cancelled events (17.8% of total).</strong> Nearly 1 in 5 events was cancelled — highest raw cancel volume on the team. Suggests meetings are being booked and then not held, or schedule volatility is high.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-icon">📊</span>
+      <div class="finding-text"><strong>Megan Evitts is the most actively self-managed.</strong> 412 solo/focus blocks (65% of her events), 70% organizer rate, 260 back-to-back pairs — she IS calendaring non-meeting time more than anyone. Yet she's still only at 61% of target, suggesting the 80% bar requires significant intentional effort.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-icon">⚡</span>
+      <div class="finding-text"><strong>Back-to-back compression is a Megan and Billy problem.</strong> Megan (260) and Billy (180) have the most consecutive bookings with no buffer — cognitive load risk. Fewer, better-spaced blocks might actually help coverage quality even if it reduces raw hour count.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-icon">💡</span>
+      <div class="finding-text"><strong>The gap is largely unblocked work time.</strong> The average team member has ~16h/week of work time that isn't on the calendar. Whether that's deep work, email, admin, or genuine downtime — it's invisible to anyone reviewing capacity or workload.</div>
+    </div>
+  </div>
+
+  <!-- Individual cards -->
+  <div class="person-card">
+    <div class="person-header">
       <div>
-        <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0">Jennifer Hopkins</h2>
-        <div style="color:#718096;font-size:13px;margin-top:4px">jennifer.hopkins@rev.io · CMO</div>
+        <div class="person-name">Jennifer Hopkins</div>
+        <div class="person-title">CMO</div>
       </div>
-      <div style="background:rgba(246,173,85,0.15);color:#f6ad55;border-radius:8px;padding:8px 16px;font-size:22px;font-weight:700">40% in meetings</div>
-    </div>
-    <div style="margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;margin-bottom:4px"><span>Meeting time vs. focus time</span><span>417.8h meetings · 622h est. focus</span></div>
-      <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:40%"></div></div>
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Total Meetings</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">457</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">6 months</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Avg/Week</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">16.1h</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">meeting hours</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Back-to-Back</div>
-    <div style="font-size:22px;font-weight:700;color:#f6ad55">112</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">consecutive pairs</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Cancelled</div>
-    <div style="font-size:22px;font-weight:700;color:#fc8181">75</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">7500% of invites</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Organizer</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">47%</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">216 of 457</div>
-  </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px">
-        <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Meeting Type</div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px"><span style="color:#a0aec0">1:1 / Small</span><span style="color:#e2e8f0;font-weight:600">126 (28%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#63b3ed;height:8px;border-radius:4px;width:28%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span style="color:#a0aec0">Group (3+)</span><span style="color:#e2e8f0;font-weight:600">243 (53%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#b794f4;height:8px;border-radius:4px;width:53%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span style="color:#a0aec0">External</span><span style="color:#e2e8f0;font-weight:600">96 (21%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:21%"></div></div>
-      </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px">
-        <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Duration Breakdown</div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>≤15 min</span><span style="color:#e2e8f0">8 (2%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#63b3ed;height:8px;border-radius:4px;width:2%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>16-30 min</span><span style="color:#e2e8f0">184 (40%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#63b3ed;height:8px;border-radius:4px;width:40%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>31-60 min</span><span style="color:#e2e8f0">225 (49%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#63b3ed;height:8px;border-radius:4px;width:49%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>61-90 min</span><span style="color:#e2e8f0">19 (4%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#63b3ed;height:8px;border-radius:4px;width:4%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>90+ min</span><span style="color:#e2e8f0">20 (4%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#63b3ed;height:8px;border-radius:4px;width:4%"></div></div>
-        
+      <div style="text-align:right">
+        <div style="font-size:28px;font-weight:800;color:#ef4444">49.4%<span style="font-size:14px;color:#64748b;font-weight:400;"> of target</span></div>
+        <div style="font-size:13px;color:#64748b;">15.8h/wk · gap ▼16.2h</div>
       </div>
     </div>
-    <div style="margin-top:16px;background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:14px">
-      <div style="display:flex;flex-wrap:wrap;gap:20px;font-size:13px;color:#a0aec0">
-        <span>📅 Busiest day: <strong style="color:#e2e8f0">Mon</strong></span>
-        <span>👥 Avg attendees: <strong style="color:#e2e8f0">8.5</strong></span>
-        <span>🗓️ Days with meetings: <strong style="color:#e2e8f0">126/130</strong></span>
-        <span>🔗 Meetings w/ externals: <strong style="color:#e2e8f0">96</strong></span>
+    
+    <div style="position:relative;background:#1e293b;border-radius:6px;height:28px;margin:8px 0;">
+      <div style="position:absolute;left:0;top:0;height:100%;width:49.4%;background:#ef4444;border-radius:6px;transition:width 0.3s;"></div>
+      <!-- 80% target line -->
+      <div style="position:absolute;left:80%;top:-4px;bottom:-4px;width:2px;background:#f1f5f9;opacity:0.8;"></div>
+      <div style="position:absolute;left:81%;top:6px;font-size:10px;color:#94a3b8;">80% target</div>
+      <div style="position:absolute;left:4px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:white;">49.4% of target</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="val">449</div><div class="lbl">Events</div></div>
+      <div class="stat-box"><div class="val red">14.3%</div><div class="lbl">Cancel Rate</div></div>
+      <div class="stat-box"><div class="val">144</div><div class="lbl">B2B Pairs</div></div>
+      <div class="stat-box"><div class="val">47%</div><div class="lbl">Organizer</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-box">
+        <h4>Calendar Composition</h4>
+        
+        <div class="comp-bar">
+          <span class="label">Solo/Focus</span>
+          <div class="bar-wrap"><div class="fill" style="width:32%;background:#6366f1"></div></div>
+          <span class="count">144</span>
+        </div>
+        <div class="comp-bar">
+          <span class="label">Internal Mtgs</span>
+          <div class="bar-wrap"><div class="fill" style="width:47%;background:#0ea5e9"></div></div>
+          <span class="count">209</span>
+        </div>
+        <div class="comp-bar">
+          <span class="label">External Mtgs</span>
+          <div class="bar-wrap"><div class="fill" style="width:21%;background:#10b981"></div></div>
+          <span class="count">95</span>
+        </div>
+        <div style="font-size:12px;color:#64748b;margin-top:8px;">Avg 55min · 8.5 attendees avg</div>
+      </div>
+      <div class="detail-box">
+        <h4>Top Collaborators</h4>
+        <ul>
+          <li>• Billy Boydston (209)</li>
+          <li>• Evan Rice (98)</li>
+          <li>• Ryan Koontz (95)</li>
+          <li>• Megan Evitts (90)</li>
+          <li>• Ardit Berdyna (84)</li>
+        </ul>
       </div>
     </div>
-  </div>
-  <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:28px;margin-bottom:20px">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-      <div>
-        <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0">Billy Boydston</h2>
-        <div style="color:#718096;font-size:13px;margin-top:4px">billy.boydston@rev.io</div>
-      </div>
-      <div style="background:rgba(246,173,85,0.15);color:#f6ad55;border-radius:8px;padding:8px 16px;font-size:22px;font-weight:700">44% in meetings</div>
-    </div>
-    <div style="margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;margin-bottom:4px"><span>Meeting time vs. focus time</span><span>462.5h meetings · 578h est. focus</span></div>
-      <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:44%"></div></div>
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Total Meetings</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">532</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">6 months</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Avg/Week</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">17.8h</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">meeting hours</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Back-to-Back</div>
-    <div style="font-size:22px;font-weight:700;color:#f6ad55">148</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">consecutive pairs</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Cancelled</div>
-    <div style="font-size:22px;font-weight:700;color:#68d391">5</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">500% of invites</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Organizer</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">44%</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">235 of 532</div>
-  </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px">
-        <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Meeting Type</div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px"><span style="color:#a0aec0">1:1 / Small</span><span style="color:#e2e8f0;font-weight:600">129 (24%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#63b3ed;height:8px;border-radius:4px;width:24%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span style="color:#a0aec0">Group (3+)</span><span style="color:#e2e8f0;font-weight:600">248 (47%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#b794f4;height:8px;border-radius:4px;width:47%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span style="color:#a0aec0">External</span><span style="color:#e2e8f0;font-weight:600">102 (19%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:19%"></div></div>
-      </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px">
-        <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Duration Breakdown</div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>≤15 min</span><span style="color:#e2e8f0">7 (1%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#68d391;height:8px;border-radius:4px;width:1%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>16-30 min</span><span style="color:#e2e8f0">186 (35%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#68d391;height:8px;border-radius:4px;width:35%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>31-60 min</span><span style="color:#e2e8f0">307 (58%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#68d391;height:8px;border-radius:4px;width:58%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>61-90 min</span><span style="color:#e2e8f0">16 (3%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#68d391;height:8px;border-radius:4px;width:3%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>90+ min</span><span style="color:#e2e8f0">14 (3%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#68d391;height:8px;border-radius:4px;width:3%"></div></div>
-        
-      </div>
-    </div>
-    <div style="margin-top:16px;background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:14px">
-      <div style="display:flex;flex-wrap:wrap;gap:20px;font-size:13px;color:#a0aec0">
-        <span>📅 Busiest day: <strong style="color:#e2e8f0">Thu</strong></span>
-        <span>👥 Avg attendees: <strong style="color:#e2e8f0">7.6</strong></span>
-        <span>🗓️ Days with meetings: <strong style="color:#e2e8f0">123/130</strong></span>
-        <span>🔗 Meetings w/ externals: <strong style="color:#e2e8f0">102</strong></span>
-      </div>
-    </div>
-  </div>
-  <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:28px;margin-bottom:20px">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-      <div>
-        <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0">Megan Evitts</h2>
-        <div style="color:#718096;font-size:13px;margin-top:4px">megan.evitts@rev.io</div>
-      </div>
-      <div style="background:rgba(252,129,129,0.15);color:#fc8181;border-radius:8px;padding:8px 16px;font-size:22px;font-weight:700">50% in meetings</div>
-    </div>
-    <div style="margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;margin-bottom:4px"><span>Meeting time vs. focus time</span><span>516.3h meetings · 524h est. focus</span></div>
-      <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#fc8181;height:8px;border-radius:4px;width:50%"></div></div>
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Total Meetings</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">636</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">6 months</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Avg/Week</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">19.9h</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">meeting hours</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Back-to-Back</div>
-    <div style="font-size:22px;font-weight:700;color:#fc8181">190</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">consecutive pairs</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Cancelled</div>
-    <div style="font-size:22px;font-weight:700;color:#68d391">0</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">0% of invites</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Organizer</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">70%</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">446 of 636</div>
-  </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px">
-        <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Meeting Type</div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px"><span style="color:#a0aec0">1:1 / Small</span><span style="color:#e2e8f0;font-weight:600">112 (18%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#63b3ed;height:8px;border-radius:4px;width:18%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span style="color:#a0aec0">Group (3+)</span><span style="color:#e2e8f0;font-weight:600">163 (26%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#b794f4;height:8px;border-radius:4px;width:26%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span style="color:#a0aec0">External</span><span style="color:#e2e8f0;font-weight:600">76 (12%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:12%"></div></div>
-      </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px">
-        <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Duration Breakdown</div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>≤15 min</span><span style="color:#e2e8f0">20 (3%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:3%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>16-30 min</span><span style="color:#e2e8f0">302 (47%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:47%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>31-60 min</span><span style="color:#e2e8f0">258 (41%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:41%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>61-90 min</span><span style="color:#e2e8f0">21 (3%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:3%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>90+ min</span><span style="color:#e2e8f0">34 (5%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:5%"></div></div>
-        
-      </div>
-    </div>
-    <div style="margin-top:16px;background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:14px">
-      <div style="display:flex;flex-wrap:wrap;gap:20px;font-size:13px;color:#a0aec0">
-        <span>📅 Busiest day: <strong style="color:#e2e8f0">Wed</strong></span>
-        <span>👥 Avg attendees: <strong style="color:#e2e8f0">5</strong></span>
-        <span>🗓️ Days with meetings: <strong style="color:#e2e8f0">122/130</strong></span>
-        <span>🔗 Meetings w/ externals: <strong style="color:#e2e8f0">76</strong></span>
-      </div>
-    </div>
-  </div>
-  <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:28px;margin-bottom:20px">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-      <div>
-        <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0">Christina Oudin</h2>
-        <div style="color:#718096;font-size:13px;margin-top:4px">christina.oudin@rev.io</div>
-      </div>
-      <div style="background:rgba(246,173,85,0.15);color:#f6ad55;border-radius:8px;padding:8px 16px;font-size:22px;font-weight:700">48% in meetings</div>
-    </div>
-    <div style="margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;margin-bottom:4px"><span>Meeting time vs. focus time</span><span>504h meetings · 536h est. focus</span></div>
-      <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:48%"></div></div>
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Total Meetings</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">599</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">6 months</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Avg/Week</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">19.4h</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">meeting hours</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Back-to-Back</div>
-    <div style="font-size:22px;font-weight:700;color:#68d391">78</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">consecutive pairs</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Cancelled</div>
-    <div style="font-size:22px;font-weight:700;color:#68d391">5</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">500% of invites</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Organizer</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">60%</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">362 of 599</div>
-  </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px">
-        <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Meeting Type</div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px"><span style="color:#a0aec0">1:1 / Small</span><span style="color:#e2e8f0;font-weight:600">106 (18%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#63b3ed;height:8px;border-radius:4px;width:18%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span style="color:#a0aec0">Group (3+)</span><span style="color:#e2e8f0;font-weight:600">189 (32%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#b794f4;height:8px;border-radius:4px;width:32%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span style="color:#a0aec0">External</span><span style="color:#e2e8f0;font-weight:600">76 (13%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:13%"></div></div>
-      </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px">
-        <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Duration Breakdown</div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>≤15 min</span><span style="color:#e2e8f0">16 (3%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#fc8181;height:8px;border-radius:4px;width:3%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>16-30 min</span><span style="color:#e2e8f0">190 (32%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#fc8181;height:8px;border-radius:4px;width:32%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>31-60 min</span><span style="color:#e2e8f0">344 (57%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#fc8181;height:8px;border-radius:4px;width:57%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>61-90 min</span><span style="color:#e2e8f0">13 (2%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#fc8181;height:8px;border-radius:4px;width:2%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>90+ min</span><span style="color:#e2e8f0">35 (6%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#fc8181;height:8px;border-radius:4px;width:6%"></div></div>
-        
-      </div>
-    </div>
-    <div style="margin-top:16px;background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:14px">
-      <div style="display:flex;flex-wrap:wrap;gap:20px;font-size:13px;color:#a0aec0">
-        <span>📅 Busiest day: <strong style="color:#e2e8f0">Thu</strong></span>
-        <span>👥 Avg attendees: <strong style="color:#e2e8f0">5.7</strong></span>
-        <span>🗓️ Days with meetings: <strong style="color:#e2e8f0">180/130</strong></span>
-        <span>🔗 Meetings w/ externals: <strong style="color:#e2e8f0">76</strong></span>
-      </div>
-    </div>
-  </div>
-  <div style="background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:28px;margin-bottom:20px">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-      <div>
-        <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0">Ardit Berdyna</h2>
-        <div style="color:#718096;font-size:13px;margin-top:4px">arditb@rev.io</div>
-      </div>
-      <div style="background:rgba(246,173,85,0.15);color:#f6ad55;border-radius:8px;padding:8px 16px;font-size:22px;font-weight:700">43% in meetings</div>
-    </div>
-    <div style="margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:#718096;margin-bottom:4px"><span>Meeting time vs. focus time</span><span>445.8h meetings · 594h est. focus</span></div>
-      <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:43%"></div></div>
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Total Meetings</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">505</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">6 months</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Avg/Week</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">17.1h</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">meeting hours</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Back-to-Back</div>
-    <div style="font-size:22px;font-weight:700;color:#f6ad55">106</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">consecutive pairs</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Cancelled</div>
-    <div style="font-size:22px;font-weight:700;color:#fc8181">109</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">18% of invites</div>
-  </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px;flex:1;min-width:110px">
-    <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Organizer</div>
-    <div style="font-size:22px;font-weight:700;color:#e2e8f0">45%</div>
-    <div style="font-size:12px;color:#718096;margin-top:3px">227 of 505</div>
-  </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px">
-        <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Meeting Type</div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px"><span style="color:#a0aec0">1:1 / Small</span><span style="color:#e2e8f0;font-weight:600">275 (54%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#63b3ed;height:8px;border-radius:4px;width:54%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span style="color:#a0aec0">Group (3+)</span><span style="color:#e2e8f0;font-weight:600">227 (45%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#b794f4;height:8px;border-radius:4px;width:45%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span style="color:#a0aec0">External</span><span style="color:#e2e8f0;font-weight:600">106 (21%)</span></div>
-        <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#f6ad55;height:8px;border-radius:4px;width:21%"></div></div>
-      </div>
-      <div style="background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:16px">
-        <div style="font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Duration Breakdown</div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>≤15 min</span><span style="color:#e2e8f0">8 (2%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#b794f4;height:8px;border-radius:4px;width:2%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>16-30 min</span><span style="color:#e2e8f0">177 (35%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#b794f4;height:8px;border-radius:4px;width:35%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>31-60 min</span><span style="color:#e2e8f0">288 (57%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#b794f4;height:8px;border-radius:4px;width:57%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>61-90 min</span><span style="color:#e2e8f0">4 (1%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#b794f4;height:8px;border-radius:4px;width:1%"></div></div>
-        
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#a0aec0;margin-bottom:4px"><span>90+ min</span><span style="color:#e2e8f0">25 (5%)</span></div>
-          <div style="background:#2d3748;border-radius:4px;height:8px;width:100%"><div style="background:#b794f4;height:8px;border-radius:4px;width:5%"></div></div>
-        
-      </div>
-    </div>
-    <div style="margin-top:16px;background:#0f1117;border:1px solid #2d3748;border-radius:8px;padding:14px">
-      <div style="display:flex;flex-wrap:wrap;gap:20px;font-size:13px;color:#a0aec0">
-        <span>📅 Busiest day: <strong style="color:#e2e8f0">Tue</strong></span>
-        <span>👥 Avg attendees: <strong style="color:#e2e8f0">8.8</strong></span>
-        <span>🗓️ Days with meetings: <strong style="color:#e2e8f0">134/130</strong></span>
-        <span>🔗 Meetings w/ externals: <strong style="color:#e2e8f0">106</strong></span>
+    <div style="margin-top:12px;">
+      <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Meeting Lengths</div>
+      <div style="display:flex;gap:8px;">
+        <div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">188</div><div style="font-size:10px;color:#64748b">15-30m</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">222</div><div style="font-size:10px;color:#64748b">30-60m</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">27</div><div style="font-size:10px;color:#64748b">1-2h</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">11</div><div style="font-size:10px;color:#64748b">>2h</div></div>
       </div>
     </div>
   </div>
 
-  <div style="text-align:center;padding:40px;color:#4a5568;font-size:12px;border-top:1px solid #1a1f2e;margin-top:20px">
-    ⚡ Generated by Revay · AI Chief of Staff to Evan Rice, Rev.io · Feb 26, 2026
+  <div class="person-card">
+    <div class="person-header">
+      <div>
+        <div class="person-name">Billy Boydston</div>
+        <div class="person-title">Marketing</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:28px;font-weight:800;color:#ef4444">55.0%<span style="font-size:14px;color:#64748b;font-weight:400;"> of target</span></div>
+        <div style="font-size:13px;color:#64748b;">17.6h/wk · gap ▼14.4h</div>
+      </div>
+    </div>
+    
+    <div style="position:relative;background:#1e293b;border-radius:6px;height:28px;margin:8px 0;">
+      <div style="position:absolute;left:0;top:0;height:100%;width:55%;background:#ef4444;border-radius:6px;transition:width 0.3s;"></div>
+      <!-- 80% target line -->
+      <div style="position:absolute;left:80%;top:-4px;bottom:-4px;width:2px;background:#f1f5f9;opacity:0.8;"></div>
+      <div style="position:absolute;left:81%;top:6px;font-size:10px;color:#94a3b8;">80% target</div>
+      <div style="position:absolute;left:4px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:white;">55.0% of target</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="val">527</div><div class="lbl">Events</div></div>
+      <div class="stat-box"><div class="val ">0.9%</div><div class="lbl">Cancel Rate</div></div>
+      <div class="stat-box"><div class="val">180</div><div class="lbl">B2B Pairs</div></div>
+      <div class="stat-box"><div class="val">44%</div><div class="lbl">Organizer</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-box">
+        <h4>Calendar Composition</h4>
+        
+        <div class="comp-bar">
+          <span class="label">Solo/Focus</span>
+          <div class="bar-wrap"><div class="fill" style="width:38%;background:#6366f1"></div></div>
+          <span class="count">201</span>
+        </div>
+        <div class="comp-bar">
+          <span class="label">Internal Mtgs</span>
+          <div class="bar-wrap"><div class="fill" style="width:42%;background:#0ea5e9"></div></div>
+          <span class="count">223</span>
+        </div>
+        <div class="comp-bar">
+          <span class="label">External Mtgs</span>
+          <div class="bar-wrap"><div class="fill" style="width:19%;background:#10b981"></div></div>
+          <span class="count">101</span>
+        </div>
+        <div style="font-size:12px;color:#64748b;margin-top:8px;">Avg 52min · 7.6 attendees avg</div>
+      </div>
+      <div class="detail-box">
+        <h4>Top Collaborators</h4>
+        <ul>
+          <li>• Jennifer Hopkins (174)</li>
+          <li>• Ardit Berdyna (121)</li>
+          <li>• Megan Evitts (106)</li>
+          <li>• Usman Zahoor (98)</li>
+          <li>• Ryan Koontz (92)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:12px;">
+      <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Meeting Lengths</div>
+      <div style="display:flex;gap:8px;">
+        <div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">192</div><div style="font-size:10px;color:#64748b">15-30m</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">304</div><div style="font-size:10px;color:#64748b">30-60m</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">23</div><div style="font-size:10px;color:#64748b">1-2h</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">6</div><div style="font-size:10px;color:#64748b">>2h</div></div>
+      </div>
+    </div>
   </div>
-</div></body></html>
+
+  <div class="person-card">
+    <div class="person-header">
+      <div>
+        <div class="person-name">Megan Evitts</div>
+        <div class="person-title">Marketing</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:28px;font-weight:800;color:#ef4444">61.1%<span style="font-size:14px;color:#64748b;font-weight:400;"> of target</span></div>
+        <div style="font-size:13px;color:#64748b;">19.6h/wk · gap ▼12.4h</div>
+      </div>
+    </div>
+    
+    <div style="position:relative;background:#1e293b;border-radius:6px;height:28px;margin:8px 0;">
+      <div style="position:absolute;left:0;top:0;height:100%;width:61.1%;background:#ef4444;border-radius:6px;transition:width 0.3s;"></div>
+      <!-- 80% target line -->
+      <div style="position:absolute;left:80%;top:-4px;bottom:-4px;width:2px;background:#f1f5f9;opacity:0.8;"></div>
+      <div style="position:absolute;left:81%;top:6px;font-size:10px;color:#94a3b8;">80% target</div>
+      <div style="position:absolute;left:4px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:white;">61.1% of target</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="val">631</div><div class="lbl">Events</div></div>
+      <div class="stat-box"><div class="val ">0.0%</div><div class="lbl">Cancel Rate</div></div>
+      <div class="stat-box"><div class="val">260</div><div class="lbl">B2B Pairs</div></div>
+      <div class="stat-box"><div class="val">70%</div><div class="lbl">Organizer</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-box">
+        <h4>Calendar Composition</h4>
+        
+        <div class="comp-bar">
+          <span class="label">Solo/Focus</span>
+          <div class="bar-wrap"><div class="fill" style="width:65%;background:#6366f1"></div></div>
+          <span class="count">412</span>
+        </div>
+        <div class="comp-bar">
+          <span class="label">Internal Mtgs</span>
+          <div class="bar-wrap"><div class="fill" style="width:23%;background:#0ea5e9"></div></div>
+          <span class="count">143</span>
+        </div>
+        <div class="comp-bar">
+          <span class="label">External Mtgs</span>
+          <div class="bar-wrap"><div class="fill" style="width:12%;background:#10b981"></div></div>
+          <span class="count">75</span>
+        </div>
+        <div style="font-size:12px;color:#64748b;margin-top:8px;">Avg 48min · 5 attendees avg</div>
+      </div>
+      <div class="detail-box">
+        <h4>Top Collaborators</h4>
+        <ul>
+          <li>• Christina Oudin (198)</li>
+          <li>• Billy Boydston (103)</li>
+          <li>• Jennifer Hopkins (67)</li>
+          <li>• Ardit Berdyna (54)</li>
+          <li>• Usman Zahoor (46)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:12px;">
+      <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Meeting Lengths</div>
+      <div style="display:flex;gap:8px;">
+        <div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">319</div><div style="font-size:10px;color:#64748b">15-30m</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">258</div><div style="font-size:10px;color:#64748b">30-60m</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">42</div><div style="font-size:10px;color:#64748b">1-2h</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">11</div><div style="font-size:10px;color:#64748b">>2h</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-header">
+      <div>
+        <div class="person-name">Christina Oudin</div>
+        <div class="person-title">Marketing</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:28px;font-weight:800;color:#ef4444">59.7%<span style="font-size:14px;color:#64748b;font-weight:400;"> of target</span></div>
+        <div style="font-size:13px;color:#64748b;">19.1h/wk · gap ▼12.9h</div>
+      </div>
+    </div>
+    
+    <div style="position:relative;background:#1e293b;border-radius:6px;height:28px;margin:8px 0;">
+      <div style="position:absolute;left:0;top:0;height:100%;width:59.7%;background:#ef4444;border-radius:6px;transition:width 0.3s;"></div>
+      <!-- 80% target line -->
+      <div style="position:absolute;left:80%;top:-4px;bottom:-4px;width:2px;background:#f1f5f9;opacity:0.8;"></div>
+      <div style="position:absolute;left:81%;top:6px;font-size:10px;color:#94a3b8;">80% target</div>
+      <div style="position:absolute;left:4px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:white;">59.7% of target</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="val">594</div><div class="lbl">Events</div></div>
+      <div class="stat-box"><div class="val ">0.8%</div><div class="lbl">Cancel Rate</div></div>
+      <div class="stat-box"><div class="val">125</div><div class="lbl">B2B Pairs</div></div>
+      <div class="stat-box"><div class="val">61%</div><div class="lbl">Organizer</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-box">
+        <h4>Calendar Composition</h4>
+        
+        <div class="comp-bar">
+          <span class="label">Solo/Focus</span>
+          <div class="bar-wrap"><div class="fill" style="width:56%;background:#6366f1"></div></div>
+          <span class="count">330</span>
+        </div>
+        <div class="comp-bar">
+          <span class="label">Internal Mtgs</span>
+          <div class="bar-wrap"><div class="fill" style="width:32%;background:#0ea5e9"></div></div>
+          <span class="count">188</span>
+        </div>
+        <div class="comp-bar">
+          <span class="label">External Mtgs</span>
+          <div class="bar-wrap"><div class="fill" style="width:13%;background:#10b981"></div></div>
+          <span class="count">75</span>
+        </div>
+        <div style="font-size:12px;color:#64748b;margin-top:8px;">Avg 50min · 5.6 attendees avg</div>
+      </div>
+      <div class="detail-box">
+        <h4>Top Collaborators</h4>
+        <ul>
+          <li>• Megan Evitts (214)</li>
+          <li>• Billy Boydston (91)</li>
+          <li>• Ardit Berdyna (68)</li>
+          <li>• Jennifer Hopkins (55)</li>
+          <li>• Usman Zahoor (50)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:12px;">
+      <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Meeting Lengths</div>
+      <div style="display:flex;gap:8px;">
+        <div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">202</div><div style="font-size:10px;color:#64748b">15-30m</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">344</div><div style="font-size:10px;color:#64748b">30-60m</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">33</div><div style="font-size:10px;color:#64748b">1-2h</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">13</div><div style="font-size:10px;color:#64748b">>2h</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-header">
+      <div>
+        <div class="person-name">Ardit Berdyna</div>
+        <div class="person-title">Marketing</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:28px;font-weight:800;color:#ef4444">52.8%<span style="font-size:14px;color:#64748b;font-weight:400;"> of target</span></div>
+        <div style="font-size:13px;color:#64748b;">16.9h/wk · gap ▼15.1h</div>
+      </div>
+    </div>
+    
+    <div style="position:relative;background:#1e293b;border-radius:6px;height:28px;margin:8px 0;">
+      <div style="position:absolute;left:0;top:0;height:100%;width:52.8%;background:#ef4444;border-radius:6px;transition:width 0.3s;"></div>
+      <!-- 80% target line -->
+      <div style="position:absolute;left:80%;top:-4px;bottom:-4px;width:2px;background:#f1f5f9;opacity:0.8;"></div>
+      <div style="position:absolute;left:81%;top:6px;font-size:10px;color:#94a3b8;">80% target</div>
+      <div style="position:absolute;left:4px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:white;">52.8% of target</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="val">499</div><div class="lbl">Events</div></div>
+      <div class="stat-box"><div class="val red">17.7%</div><div class="lbl">Cancel Rate</div></div>
+      <div class="stat-box"><div class="val">106*</div><div class="lbl">B2B Pairs</div></div>
+      <div class="stat-box"><div class="val">45%</div><div class="lbl">Organizer</div></div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-box">
+        <h4>Calendar Composition</h4>
+        
+        <div class="comp-bar">
+          <span class="label">Solo/Focus</span>
+          <div class="bar-wrap"><div class="fill" style="width:37%;background:#6366f1"></div></div>
+          <span class="count">187</span>
+        </div>
+        <div class="comp-bar">
+          <span class="label">Internal Mtgs</span>
+          <div class="bar-wrap"><div class="fill" style="width:41%;background:#0ea5e9"></div></div>
+          <span class="count">206</span>
+        </div>
+        <div class="comp-bar">
+          <span class="label">External Mtgs</span>
+          <div class="bar-wrap"><div class="fill" style="width:21%;background:#10b981"></div></div>
+          <span class="count">103</span>
+        </div>
+        <div style="font-size:12px;color:#64748b;margin-top:8px;">Avg 53min · 8.8 attendees avg</div>
+      </div>
+      <div class="detail-box">
+        <h4>Top Collaborators</h4>
+        <ul>
+          <li>• Billy Boydston (145)</li>
+          <li>• Megan Evitts (88)</li>
+          <li>• Jennifer Hopkins (86)</li>
+          <li>• Ryan Koontz (79)</li>
+          <li>• Christina Oudin (77)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:12px;">
+      <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Meeting Lengths</div>
+      <div style="display:flex;gap:8px;">
+        <div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">184</div><div style="font-size:10px;color:#64748b">15-30m</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">284</div><div style="font-size:10px;color:#64748b">30-60m</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">17</div><div style="font-size:10px;color:#64748b">1-2h</div></div><div style="background:#0f172a;border-radius:6px;padding:6px 10px;text-align:center;flex:1"><div style="font-size:16px;font-weight:700;color:white">11</div><div style="font-size:10px;color:#64748b">>2h</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#1e293b;border:1px solid #334155;border-radius:12px;padding:24px;margin-bottom:32px;">
+    <h2 style="font-size:16px;font-weight:700;color:white;margin-bottom:16px;">📐 Methodology</h2>
+    <p style="font-size:14px;color:#94a3b8;line-height:1.7;">Data pulled via Microsoft Graph API (application permissions). Includes <strong>all calendar entries</strong> — meetings, focus blocks, solo work time, and recurring commitments. Excludes cancelled events, all-day events (OOO, holidays), and events marked as "free". <strong>Target baseline: 80% of a 40-hour work week = 32 hours per week of calendared activity.</strong> Period: Aug 26, 2025 – Feb 26, 2026 (26 weeks / ~130 working days).</p>
+  </div>
+
+</div>
+<div class="footer">Generated by Revay ⚡ · AI Chief of Staff · February 26, 2026</div>
+</body>
+</html>
