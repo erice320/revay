@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io CS & Account Management Analysis</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e2e8f0; line-height: 1.6; }
+  .header { background: linear-gradient(135deg, #1a1f2e 0%, #161b27 100%); border-bottom: 1px solid #2d3748; padding: 40px 48px 32px; }
+  .header h1 { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+  .header .subtitle { color: #94a3b8; font-size: 14px; margin-top: 6px; }
+  .header .meta { display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap; }
+  .header .meta span { font-size: 12px; color: #64748b; background: #1e2535; padding: 4px 10px; border-radius: 4px; border: 1px solid #2d3748; }
+  .alert-banner { background: #7c2d12; border-left: 4px solid #f97316; padding: 12px 48px; font-size: 13px; color: #fed7aa; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 32px 48px; }
+  section { margin-bottom: 48px; }
+  h2 { font-size: 18px; font-weight: 600; color: #f1f5f9; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid #1e2535; display: flex; align-items: center; gap: 8px; }
+  h2 .badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 12px; }
+  h2 .badge.red { background: #7f1d1d; color: #fca5a5; }
+  h2 .badge.yellow { background: #713f12; color: #fde68a; }
+  h2 .badge.green { background: #14532d; color: #86efac; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+  .kpi { background: #1a1f2e; border: 1px solid #2d3748; border-radius: 10px; padding: 20px; }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 500; }
+  .kpi .value { font-size: 32px; font-weight: 700; margin-top: 6px; }
+  .kpi .sub { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .kpi.green .value { color: #34d399; }
+  .kpi.red .value { color: #f87171; }
+  .kpi.yellow .value { color: #fbbf24; }
+  .kpi.blue .value { color: #60a5fa; }
+  .kpi.white .value { color: #f1f5f9; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { background: #1a1f2e; color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; text-align: left; border-bottom: 1px solid #2d3748; }
+  tbody tr { border-bottom: 1px solid #1e2535; }
+  tbody tr:hover { background: #1a1f2e; }
+  tbody td { padding: 10px 14px; color: #cbd5e1; }
+  tbody td.name { color: #f1f5f9; font-weight: 500; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .pill.green { background: #14532d; color: #86efac; }
+  .pill.red { background: #7f1d1d; color: #fca5a5; }
+  .pill.yellow { background: #713f12; color: #fde68a; }
+  .pill.blue { background: #1e3a5f; color: #93c5fd; }
+  .pill.gray { background: #1e2535; color: #94a3b8; }
+  .pill.psa { background: #1e3a5f; color: #93c5fd; }
+  .pill.billing { background: #1a2a1a; color: #86efac; }
+  .table-wrap { background: #13171f; border: 1px solid #1e2535; border-radius: 10px; overflow: hidden; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .card { background: #1a1f2e; border: 1px solid #2d3748; border-radius: 10px; padding: 20px; }
+  .card h3 { font-size: 14px; font-weight: 600; color: #f1f5f9; margin-bottom: 16px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 12px; }
+  .bar-label { width: 180px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
+  .bar-track { flex: 1; background: #0f1117; border-radius: 3px; height: 12px; }
+  .bar-fill { height: 12px; border-radius: 3px; }
+  .bar-fill.blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .bar-fill.green { background: linear-gradient(90deg, #10b981, #34d399); }
+  .bar-fill.orange { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .bar-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
+  .bar-val { width: 48px; text-align: right; color: #f1f5f9; font-weight: 500; }
+  .trend-row { display: flex; gap: 4px; margin-top: 8px; align-items: flex-end; }
+  .trend-bar { flex: 1; background: #3b82f6; border-radius: 2px 2px 0 0; min-height: 4px; }
+  .trend-label { font-size: 10px; color: #475569; margin-top: 4px; display: flex; gap: 4px; }
+  .trend-label span { flex: 1; text-align: center; }
+  .insight { background: #1a1f2e; border-left: 3px solid #3b82f6; border-radius: 0 6px 6px 0; padding: 12px 16px; margin-bottom: 10px; font-size: 13px; color: #cbd5e1; }
+  .insight.red { border-left-color: #ef4444; }
+  .insight.green { border-left-color: #10b981; }
+  .insight.yellow { border-left-color: #f59e0b; }
+  .insight strong { color: #f1f5f9; }
+  .flag { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .flag.red { background: #ef4444; }
+  .flag.green { background: #10b981; }
+  .flag.yellow { background: #f59e0b; }
+  .csat-score { font-size: 28px; font-weight: 700; }
+  .csat-score.excellent { color: #34d399; }
+  .csat-score.good { color: #86efac; }
+  .csat-score.warning { color: #fbbf24; }
+  .csat-score.poor { color: #f87171; }
+  .section-note { font-size: 12px; color: #475569; margin-bottom: 16px; font-style: italic; }
+  .two-col { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .grid-2, .grid-3, .two-col { grid-template-columns: 1fr; } .container { padding: 24px 20px; } .header { padding: 24px 20px; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⚡ Rev.io CS & Account Management Analysis</h1>
+  <div class="subtitle">Support performance, agent effectiveness, and account health — Zendesk + Salesforce</div>
+  <div class="meta">
+    <span>📅 Data Period: Oct 2025 – Feb 2026 (5 months)</span>
+    <span>🎫 10,000 tickets analyzed</span>
+    <span>👥 6 Account Managers across 601 accounts</span>
+    <span>🔄 Generated Feb 2026</span>
+  </div>
+</div>
+
+<div class="alert-banner">
+  ⚠️ <strong>API Note:</strong> Zendesk offset pagination caps at 10,000 results — data covers the most recent 5 months. Cursor-based pagination required for full 24-month analysis. Findings below reflect Oct 2025–Feb 2026.
+</div>
+
+<div class="container">
+
+<!-- SECTION 1: EXECUTIVE SUMMARY -->
+<section>
+  <h2>📊 Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi green">
+      <div class="label">Overall CSAT</div>
+      <div class="value">94%</div>
+      <div class="sub">881 good / 56 bad</div>
+    </div>
+    <div class="kpi white">
+      <div class="label">Total Tickets (5mo)</div>
+      <div class="value">10,000</div>
+      <div class="sub">~2,000/month avg</div>
+    </div>
+    <div class="kpi blue">
+      <div class="label">PSA Tickets</div>
+      <div class="value">2,300</div>
+      <div class="sub">23% of volume</div>
+    </div>
+    <div class="kpi green">
+      <div class="label">Billing Tickets</div>
+      <div class="value">4,228</div>
+      <div class="sub">42% of volume</div>
+    </div>
+    <div class="kpi yellow">
+      <div class="label">Onboarding (Open)</div>
+      <div class="value">56%</div>
+      <div class="sub">unsolved rate — 2,368 tickets</div>
+    </div>
+    <div class="kpi red">
+      <div class="label">PSA AM CSAT</div>
+      <div class="value">67%</div>
+      <div class="sub">vs 100% Billing AM</div>
+    </div>
+    <div class="kpi red">
+      <div class="label">Avg Billing AM Res.</div>
+      <div class="value">890h</div>
+      <div class="sub">~37 days per ticket</div>
+    </div>
+    <div class="kpi yellow">
+      <div class="label">Sentiment Coverage</div>
+      <div class="value">22%</div>
+      <div class="sub">78% of tickets unscored</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 24px;">
+    <div class="insight red"><strong>🚨 Onboarding queue crisis:</strong> 2,368 tickets with only 44% solve rate and 1,346 average hours (56 days) resolution time. This is a structural capacity problem, not a performance issue.</div>
+    <div class="insight red"><strong>🚨 PSA AM quality gap:</strong> PSA Account Management has 67% CSAT and 69% solve rate — significantly behind Billing AM (100% CSAT, 81% solve rate). With 459 PSA accounts vs 142 Billing accounts, this is a scale problem.</div>
+    <div class="insight yellow"><strong>⚠️ SKYSWITCH support load:</strong> 222 tickets in 5 months — nearly 45/month from a single client. At 271 avg resolution hours, this account is consuming disproportionate CS resources.</div>
+    <div class="insight yellow"><strong>⚠️ Rev.io Payments backlog:</strong> 356 tickets with 0% solve rate — this group appears to be holding unresolved work.</div>
+    <div class="insight green"><strong>✅ Top-tier support agents:</strong> Lawrence Martin (718 tickets, 91% CSAT), Carly Rollins (576 tickets, 99% CSAT), Cameron Resuta (519 tickets, 100% CSAT) are leading contributors.</div>
+  </div>
+</section>
+
+<!-- SECTION 2: VOLUME & TRENDS -->
+<section>
+  <h2>📈 Volume & Trends</h2>
+  <p class="section-note">Monthly ticket counts Oct 2025 – Feb 2026. PSA volume is growing as product matures.</p>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Monthly Ticket Volume</h3>
+      <div class="bar-row"><div class="bar-label">Oct 2025</div><div class="bar-track"><div class="bar-fill blue" style="width:45%"></div></div><div class="bar-val">1,141</div></div>
+      <div class="bar-row"><div class="bar-label">Nov 2025</div><div class="bar-track"><div class="bar-fill blue" style="width:75%"></div></div><div class="bar-val">1,882</div></div>
+      <div class="bar-row"><div class="bar-label">Dec 2025</div><div class="bar-track"><div class="bar-fill blue" style="width:100%"></div></div><div class="bar-val">2,541</div></div>
+      <div class="bar-row"><div class="bar-label">Jan 2026</div><div class="bar-track"><div class="bar-fill blue" style="width:93%"></div></div><div class="bar-val">2,360</div></div>
+      <div class="bar-row"><div class="bar-label">Feb 2026</div><div class="bar-track"><div class="bar-fill blue" style="width:82%"></div></div><div class="bar-val">2,076</div></div>
+    </div>
+    <div class="card">
+      <h3>PSA vs Billing Volume Trend</h3>
+      <div class="bar-row"><div class="bar-label">Oct — PSA</div><div class="bar-track"><div class="bar-fill blue" style="width:46%"></div></div><div class="bar-val">317</div></div>
+      <div class="bar-row"><div class="bar-label">Oct — Billing</div><div class="bar-track"><div class="bar-fill green" style="width:52%"></div></div><div class="bar-val">500</div></div>
+      <div class="bar-row"><div class="bar-label">Dec — PSA</div><div class="bar-track"><div class="bar-fill blue" style="width:100%"></div></div><div class="bar-val">690</div></div>
+      <div class="bar-row"><div class="bar-label">Dec — Billing</div><div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div><div class="bar-val">954</div></div>
+      <div class="bar-row"><div class="bar-label">Feb — PSA</div><div class="bar-track"><div class="bar-fill blue" style="width:57%"></div></div><div class="bar-val">390</div></div>
+      <div class="bar-row"><div class="bar-label">Feb — Billing</div><div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div><div class="bar-val">961</div></div>
+      <div style="margin-top: 12px; font-size: 12px; color: #64748b;">PSA grew 2.2x from Oct→Dec, moderating slightly in Jan–Feb as onboarding velocity normalizes post-launch.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: GROUP PERFORMANCE -->
+<section>
+  <h2>👥 Group Performance</h2>
+  <p class="section-note">Ticket groups ranked by volume. "Solve Rate" = % of tickets in solved/closed status.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Group</th>
+          <th>Tickets</th>
+          <th>Solve Rate</th>
+          <th>Avg Resolution</th>
+          <th>CSAT</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Billing - Client Success</td><td>3,025</td><td><span class="pill green">91%</span></td><td>135h (5.6d)</td><td><span class="pill green">97%</span></td><td><span class="pill green">Healthy</span></td></tr>
+        <tr><td class="name">Onboarding (Billing)</td><td>2,368</td><td><span class="pill red">44%</span></td><td>1,346h (56d)</td><td><span class="pill green">95%</span></td><td><span class="pill red">⚠️ Capacity Crisis</span></td></tr>
+        <tr><td class="name">PSA - Tier 1</td><td>2,058</td><td><span class="pill green">95%</span></td><td>298h (12.4d)</td><td><span class="pill green">90%</span></td><td><span class="pill green">Healthy</span></td></tr>
+        <tr><td class="name">Precision (PTT)</td><td>387</td><td><span class="pill green">94%</span></td><td>84h (3.5d)</td><td><span class="pill green">100%</span></td><td><span class="pill green">Best in Class</span></td></tr>
+        <tr><td class="name">Rev.io Payments</td><td>356</td><td><span class="pill red">0%</span></td><td>—</td><td>—</td><td><span class="pill red">⚠️ Unresolved Backlog</span></td></tr>
+        <tr><td class="name">Billing - Data/Reporting (Reports)</td><td>239</td><td><span class="pill green">89%</span></td><td>562h (23.4d)</td><td><span class="pill green">96%</span></td><td><span class="pill yellow">Slow Resolution</span></td></tr>
+        <tr><td class="name">Billing - Account Management</td><td>210</td><td><span class="pill yellow">81%</span></td><td>890h (37.1d)</td><td><span class="pill green">100%</span></td><td><span class="pill yellow">Slow but Satisfied</span></td></tr>
+        <tr><td class="name">Billing - Data/Reporting (DCR)</td><td>205</td><td><span class="pill yellow">58%</span></td><td>364h (15.2d)</td><td><span class="pill green">97%</span></td><td><span class="pill yellow">Backlog Building</span></td></tr>
+        <tr><td class="name">Rev.io Helpdesk</td><td>181</td><td><span class="pill green">89%</span></td><td>174h (7.3d)</td><td><span class="pill green">100%</span></td><td><span class="pill green">Healthy</span></td></tr>
+        <tr><td class="name">Billing/Finance - Core</td><td>166</td><td><span class="pill yellow">83%</span></td><td>136h (5.7d)</td><td><span class="pill yellow">67%</span></td><td><span class="pill yellow">CSAT Watch</span></td></tr>
+        <tr><td class="name">PSA - Account Management</td><td>155</td><td><span class="pill yellow">69%</span></td><td>354h (14.8d)</td><td><span class="pill red">67%</span></td><td><span class="pill red">⚠️ Quality Gap</span></td></tr>
+        <tr><td class="name">Client Churn</td><td>0</td><td>—</td><td>—</td><td>—</td><td><span class="pill gray">Not Used</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <div class="insight red"><strong>Onboarding (Billing):</strong> 56-day average resolution time with 56% of tickets still open. High CSAT (95%) suggests clients are patient but this is unsustainable as the Billing customer base grows. SA team is clearly overloaded.</div>
+    <div class="insight red"><strong>Rev.io Payments (0% solve rate):</strong> 356 tickets all sitting unsolved — this may be an internal routing issue, orphaned queue, or tickets being resolved outside of Zendesk. Needs immediate investigation.</div>
+    <div class="insight yellow"><strong>Client Churn group unused:</strong> 0 tickets in the data window. Either churn conversations are happening via phone/email outside Zendesk, or the team isn't routing at-risk clients through this queue. This eliminates a key early-warning signal.</div>
+  </div>
+</section>
+
+<!-- SECTION 4: CSAT ANALYSIS -->
+<section>
+  <h2>⭐ CSAT Analysis</h2>
+  <div class="grid-3">
+    <div class="card" style="text-align: center;">
+      <h3>Overall CSAT Score</h3>
+      <div class="csat-score excellent" style="font-size: 56px; margin: 16px 0;">94%</div>
+      <div style="font-size: 13px; color: #64748b;">881 satisfied · 56 dissatisfied<br>of 937 total rated</div>
+      <div style="font-size: 12px; color: #475569; margin-top: 8px;">Industry benchmark: ~85%</div>
+    </div>
+    <div class="card">
+      <h3>CSAT by Group (top rated)</h3>
+      <div class="bar-row"><div class="bar-label">Precision (PTT)</div><div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div><div class="bar-val">100%</div></div>
+      <div class="bar-row"><div class="bar-label">Billing AM</div><div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div><div class="bar-val">100%</div></div>
+      <div class="bar-row"><div class="bar-label">Rev.io Helpdesk</div><div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div><div class="bar-val">100%</div></div>
+      <div class="bar-row"><div class="bar-label">Billing - Client Success</div><div class="bar-track"><div class="bar-fill green" style="width:97%"></div></div><div class="bar-val">97%</div></div>
+      <div class="bar-row"><div class="bar-label">Onboarding</div><div class="bar-track"><div class="bar-fill green" style="width:95%"></div></div><div class="bar-val">95%</div></div>
+      <div class="bar-row"><div class="bar-label">PSA - Tier 1</div><div class="bar-track"><div class="bar-fill green" style="width:90%"></div></div><div class="bar-val">90%</div></div>
+    </div>
+    <div class="card">
+      <h3>CSAT Watch List</h3>
+      <div class="bar-row"><div class="bar-label">PSA AM</div><div class="bar-track"><div class="bar-fill red" style="width:67%"></div></div><div class="bar-val" style="color:#f87171">67%</div></div>
+      <div class="bar-row"><div class="bar-label">Billing/Finance Core</div><div class="bar-track"><div class="bar-fill orange" style="width:67%"></div></div><div class="bar-val" style="color:#fbbf24">67%</div></div>
+      <div style="margin-top: 16px; font-size: 12px; color: #64748b;">
+        <div>⚠️ PSA AM: 4 good / 2 bad — small sample but notable gap</div>
+        <div style="margin-top: 6px;">⚠️ Only 937 of 10,000 tickets (9.4%) have CSAT scores — very low coverage. Most customers are not responding to surveys.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: AGENT PERFORMANCE -->
+<section>
+  <h2>🎯 Agent Performance</h2>
+
+  <h3 style="font-size: 14px; color: #94a3b8; margin-bottom: 12px; margin-top: 8px;">Account Managers</h3>
+  <p class="section-note">AM ticket counts are lower because AMs primarily work through Zendesk for structured requests. Many AM interactions happen via phone/email outside the ticketing system.</p>
+  <div class="table-wrap" style="margin-bottom: 24px;">
+    <table>
+      <thead>
+        <tr><th>AM</th><th>Team</th><th>SF Accounts</th><th>ZD Tickets</th><th>Avg Res (hrs)</th><th>CSAT</th><th>Flag</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Olivia Sandefur</td><td><span class="pill psa">PSA</span></td><td>158</td><td>56</td><td>216h (9d)</td><td><span class="pill green">100%</span></td><td><span class="pill green">Strong</span></td></tr>
+        <tr><td class="name">Anna Belcastro</td><td><span class="pill psa">PSA</span></td><td>176</td><td>50</td><td>398h (16.6d)</td><td><span class="pill yellow">67%</span></td><td><span class="pill yellow">Watch CSAT</span></td></tr>
+        <tr><td class="name">Ryan Burton</td><td><span class="pill billing">Billing</span></td><td>52</td><td>10</td><td>980h (40.8d)</td><td><span class="pill green">100%</span></td><td><span class="pill yellow">Slow Resolution</span></td></tr>
+        <tr><td class="name">Rachael Buchtan</td><td><span class="pill billing">Billing</span></td><td>50</td><td>8</td><td>—</td><td>—</td><td><span class="pill gray">Low ZD Presence</span></td></tr>
+        <tr><td class="name">Blaine Villafuerte</td><td><span class="pill psa">PSA</span></td><td>125</td><td>—</td><td>—</td><td>—</td><td><span class="pill gray">Not in ZD</span></td></tr>
+        <tr><td class="name">Tonie Watson</td><td><span class="pill billing">Billing</span></td><td>40</td><td>—</td><td>—</td><td>—</td><td><span class="pill gray">Not in ZD</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight yellow"><strong>AM Zendesk presence is low across the board.</strong> Most AMs have very few tickets assigned directly to them — the AM group queues (Billing AM: 210, PSA AM: 155) have far more activity than individual AM assignments suggest. Blaine and Tonie don't appear as Zendesk agents at all. This means AM activity is largely invisible in support data — a gap to close when Rev.io in-house tooling comes online.</div>
+
+  <h3 style="font-size: 14px; color: #94a3b8; margin-bottom: 12px; margin-top: 24px;">Top Support Agents (by volume)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Agent</th><th>Tickets</th><th>Avg Resolution (hrs)</th><th>CSAT</th><th>Assessment</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Lawrence Martin</td><td>718</td><td>106h (4.4d)</td><td><span class="pill yellow">91%</span></td><td><span class="pill yellow">High volume, below avg CSAT</span></td></tr>
+        <tr><td class="name">Sean Kuta</td><td>614</td><td>396h (16.5d)</td><td><span class="pill yellow">90%</span></td><td><span class="pill red">Slow resolution</span></td></tr>
+        <tr><td class="name">Carly Rollins</td><td>576</td><td>194h (8.1d)</td><td><span class="pill green">99%</span></td><td><span class="pill green">★ Outstanding</span></td></tr>
+        <tr><td class="name">Cameron Resuta</td><td>519</td><td>90h (3.8d)</td><td><span class="pill green">100%</span></td><td><span class="pill green">★ Best in class</span></td></tr>
+        <tr><td class="name">JB Hendrix</td><td>504</td><td>96h (4d)</td><td><span class="pill green">100%</span></td><td><span class="pill green">★ Best in class</span></td></tr>
+        <tr><td class="name">Xavier Brittian</td><td>489</td><td>237h (9.9d)</td><td><span class="pill green">95%</span></td><td><span class="pill green">Strong</span></td></tr>
+        <tr><td class="name">Ryan Berthelsen</td><td>455</td><td>135h (5.6d)</td><td><span class="pill green">94%</span></td><td><span class="pill green">Strong</span></td></tr>
+        <tr><td class="name">Darren Znamenacek</td><td>432</td><td>194h (8.1d)</td><td><span class="pill green">96%</span></td><td><span class="pill green">Strong</span></td></tr>
+        <tr><td class="name">Joshua Nugent</td><td>263</td><td>364h (15.2d)</td><td><span class="pill green">97%</span></td><td><span class="pill yellow">Slow but quality</span></td></tr>
+        <tr><td class="name">Halle Taylor</td><td>201</td><td>—</td><td><span class="pill red">0%</span></td><td><span class="pill red">⚠️ No CSAT responses</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <div class="insight green"><strong>Cameron Resuta + JB Hendrix</strong> are the benchmark: 100% CSAT with sub-4-day resolution times at high volume. Use their workflows as coaching baseline.</div>
+    <div class="insight yellow"><strong>Sean Kuta</strong> handles high volume (614 tickets) but averages 16.5 days per ticket — longest resolution time of any high-volume agent. Worth investigating whether he's handling more complex tickets or has a prioritization issue.</div>
+  </div>
+</section>
+
+<!-- SECTION 6: ACCOUNT LOAD & CHURN RISK -->
+<section>
+  <h2>🏢 Account Load & Churn Risk <span class="badge red">Attention</span></h2>
+  <p class="section-note">Top 15 accounts by ticket volume. High ticket volume + slow resolution = elevated churn risk signal.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Account</th><th>Product</th><th>Tickets</th><th>Avg Res (hrs)</th><th>Primary Group</th><th>Risk</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">SKYSWITCH</td><td><span class="pill billing">Billing</span></td><td>222</td><td>271h (11.3d)</td><td>Billing CS</td><td><span class="pill red">⚠️ High Load</span></td></tr>
+        <tr><td class="name">TOUCHTONE</td><td><span class="pill billing">Billing</span></td><td>146</td><td>19h (0.8d)</td><td>Billing CS</td><td><span class="pill green">Fast Resolution</span></td></tr>
+        <tr><td class="name">Rev.io (internal)</td><td><span class="pill gray">Internal</span></td><td>140</td><td>11h</td><td>Billing CS</td><td><span class="pill gray">Internal</span></td></tr>
+        <tr><td class="name">CLOUDLI</td><td><span class="pill gray">Mixed</span></td><td>133</td><td>470h (19.6d)</td><td>Billing CS</td><td><span class="pill red">⚠️ Slow + High Volume</span></td></tr>
+        <tr><td class="name">BCN Telecom</td><td><span class="pill gray">Mixed</span></td><td>129</td><td>88h (3.7d)</td><td>Billing CS</td><td><span class="pill green">Manageable</span></td></tr>
+        <tr><td class="name">Telesystem</td><td><span class="pill gray">Mixed</span></td><td>110</td><td>114h (4.8d)</td><td>Mixed</td><td><span class="pill green">Manageable</span></td></tr>
+        <tr><td class="name">CALLTOWER (EA)</td><td><span class="pill billing">Billing</span></td><td>105</td><td>140h (5.8d)</td><td>Billing CS</td><td><span class="pill yellow">Monitor</span></td></tr>
+        <tr><td class="name">AHELIOTECH (EA)</td><td><span class="pill psa">PSA</span></td><td>103</td><td>194h (8.1d)</td><td>PSA CS</td><td><span class="pill yellow">Monitor</span></td></tr>
+        <tr><td class="name">SoundLine Comm.</td><td><span class="pill gray">Mixed</span></td><td>87</td><td>—</td><td>Mixed</td><td><span class="pill gray">Data Gap</span></td></tr>
+        <tr><td class="name">ALTAWORX</td><td><span class="pill billing">Billing</span></td><td>83</td><td>205h (8.5d)</td><td>Billing CS</td><td><span class="pill yellow">Monitor</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <div class="insight red"><strong>SKYSWITCH (222 tickets):</strong> Generating 45 tickets/month — nearly 10x the average client rate. At 11-day average resolution, this account likely has a dedicated CS relationship. Cross-ref with Salesforce AM assignment and current MRR for ROI assessment.</div>
+    <div class="insight red"><strong>CLOUDLI (133 tickets, 470h avg):</strong> High volume AND slow resolution (20 days avg). This combination is a churn signal — clients who can't get issues resolved generate more tickets until they leave. Needs AM escalation review.</div>
+    <div class="insight yellow"><strong>Note:</strong> Once NetSuite MRR data is connected, this table will show revenue at risk alongside ticket volume — the key metric for prioritizing CS resources.</div>
+  </div>
+</section>
+
+<!-- SECTION 7: CATEGORY BREAKDOWN -->
+<section>
+  <h2>🗂️ Support Category Breakdown</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Top Ticket Categories (by volume)</h3>
+      <div class="bar-row"><div class="bar-label">PSA Support</div><div class="bar-track"><div class="bar-fill blue" style="width:100%"></div></div><div class="bar-val">1,826</div></div>
+      <div class="bar-row"><div class="bar-label">Onboarding</div><div class="bar-track"><div class="bar-fill blue" style="width:37%"></div></div><div class="bar-val">672</div></div>
+      <div class="bar-row"><div class="bar-label">Rev.io Payments</div><div class="bar-track"><div class="bar-fill orange" style="width:21%"></div></div><div class="bar-val">383</div></div>
+      <div class="bar-row"><div class="bar-label">Tier 2</div><div class="bar-track"><div class="bar-fill blue" style="width:20%"></div></div><div class="bar-val">374</div></div>
+      <div class="bar-row"><div class="bar-label">Tier 1</div><div class="bar-track"><div class="bar-fill blue" style="width:16%"></div></div><div class="bar-val">285</div></div>
+      <div class="bar-row"><div class="bar-label">Customer Mgmt</div><div class="bar-track"><div class="bar-fill blue" style="width:15%"></div></div><div class="bar-val">274</div></div>
+      <div class="bar-row"><div class="bar-label">Activity</div><div class="bar-track"><div class="bar-fill blue" style="width:15%"></div></div><div class="bar-val">270</div></div>
+      <div class="bar-row"><div class="bar-label">Custom Reporting</div><div class="bar-track"><div class="bar-fill blue" style="width:10%"></div></div><div class="bar-val">175</div></div>
+      <div class="bar-row"><div class="bar-label">Helpdesk</div><div class="bar-track"><div class="bar-fill blue" style="width:9%"></div></div><div class="bar-val">170</div></div>
+      <div class="bar-row"><div class="bar-label">Billing Bill</div><div class="bar-track"><div class="bar-fill blue" style="width:8%"></div></div><div class="bar-val">151</div></div>
+    </div>
+    <div class="card">
+      <h3>PSA AM Request Types (Zendesk)</h3>
+      <div style="font-size: 13px; color: #94a3b8; margin-bottom: 12px;">PSA AM tickets are tagged with structured request types:</div>
+      <div style="font-size: 13px; color: #cbd5e1; line-height: 2;">
+        <div>📋 <strong>Account Updates</strong></div>
+        <div>❌ <strong>Cancellations</strong></div>
+        <div>📄 <strong>Contract Reviews</strong></div>
+        <div>⬆️ <strong>License Increases / Decreases</strong></div>
+        <div>📅 <strong>Meeting Requests</strong></div>
+        <div>🎓 <strong>Training Requests</strong></div>
+        <div>💳 <strong>Credits / Refunds</strong></div>
+      </div>
+      <div style="margin-top: 12px; font-size: 12px; color: #64748b;">Distribution by sub-type requires a deeper Zendesk pull on the PSA AM queue specifically. Worth tracking Cancellations as a leading indicator.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: CSM SENTIMENT -->
+<section>
+  <h2>💭 CSM Sentiment Data <span class="badge yellow">Data Quality Issue</span></h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Sentiment Field Coverage</h3>
+      <div class="bar-row"><div class="bar-label">Not Scored</div><div class="bar-track"><div class="bar-fill red" style="width:100%"></div></div><div class="bar-val">7,818</div></div>
+      <div class="bar-row"><div class="bar-label">Score 5 (Excellent)</div><div class="bar-track"><div class="bar-fill green" style="width:23%"></div></div><div class="bar-val">1,823</div></div>
+      <div class="bar-row"><div class="bar-label">Score 4 (Good)</div><div class="bar-track"><div class="bar-fill green" style="width:1%"></div></div><div class="bar-val">83</div></div>
+      <div class="bar-row"><div class="bar-label">Score 3 (Average)</div><div class="bar-track"><div class="bar-fill orange" style="width:1%"></div></div><div class="bar-val">74</div></div>
+      <div class="bar-row"><div class="bar-label">N/A (Solved 1st reply)</div><div class="bar-track"><div class="bar-fill blue" style="width:3%"></div></div><div class="bar-val">201</div></div>
+      <div class="bar-row"><div class="bar-label">Score 2 (Weak)</div><div class="bar-track"><div class="bar-fill red" style="width:0%"></div></div><div class="bar-val">1</div></div>
+      <div class="bar-row"><div class="bar-label">Score 1 (Poor)</div><div class="bar-track"><div class="bar-fill red" style="width:0%"></div></div><div class="bar-val">0</div></div>
+    </div>
+    <div class="card">
+      <h3>Interpretation</h3>
+      <div class="insight red" style="margin-bottom: 10px;"><strong>78% of tickets have no sentiment score.</strong> The CSM Sentiment field is not being used consistently — either agents aren't filling it in, or it's only required on certain ticket forms.</div>
+      <div class="insight yellow"><strong>Of scores that exist, 91% are 5/Excellent.</strong> This distribution is not realistic — it suggests agents default to the highest score when they do fill it in, rather than using it as a true health signal.</div>
+      <div style="margin-top: 12px; font-size: 12px; color: #64748b;">
+        <strong>Recommendation:</strong> For sentiment to be a useful account health signal:<br>
+        1. Make the field required on AM ticket forms<br>
+        2. Calibrate the scoring rubric with the CS team<br>
+        3. Tie it to account-level health scoring in Rev.io/NetSuite once integrated
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: RECOMMENDATIONS -->
+<section>
+  <h2>🚀 Recommendations</h2>
+  <div class="grid-2">
+    <div>
+      <div class="insight red">
+        <strong>1. Address Onboarding capacity crisis</strong><br>
+        2,368 open tickets with 56-day avg resolution is unsustainable. Options: add onboarding capacity, create a triage/escalation path for tickets >30 days old, or implement self-serve resources for common onboarding categories. This will also impact Notion data quality (milestone tracking).
+      </div>
+      <div class="insight red">
+        <strong>2. Investigate Rev.io Payments backlog</strong><br>
+        356 tickets at 0% solve rate needs immediate explanation — are these being resolved outside Zendesk? Is the queue unmanned? Is it an integration/routing issue? Should be answerable in a 15-minute conversation with whoever owns Payments CS.
+      </div>
+      <div class="insight yellow">
+        <strong>3. Diagnose PSA AM quality gap</strong><br>
+        67% CSAT and 31% unsolved rate in PSA AM is the biggest account risk signal in this data. With 459 PSA accounts to manage across 3 AMs (one not even in Zendesk), coverage is thin. Worth a structured review of what types of PSA AM tickets are going unresolved.
+      </div>
+      <div class="insight yellow">
+        <strong>4. Activate Client Churn group</strong><br>
+        The group exists but has 0 tickets. Define a clear routing rule: any ticket from an account flagged as at-risk, any cancellation request, or any AM-escalated account should auto-route here. This creates a trackable, measurable churn prevention queue.
+      </div>
+    </div>
+    <div>
+      <div class="insight yellow">
+        <strong>5. SKYSWITCH + CLOUDLI account reviews</strong><br>
+        These two accounts alone represent 355 tickets in 5 months. Cross-referencing with NetSuite MRR (when available) will tell us whether the support cost is justified by revenue. SKYSWITCH's 11-day avg resolution also suggests complexity worth understanding.
+      </div>
+      <div class="insight green">
+        <strong>6. Coach to Cameron Resuta / JB Hendrix standard</strong><br>
+        100% CSAT at 90-96h resolution time and 500+ ticket volume is the benchmark. Document their ticket handling approach and use it for coaching Sean Kuta (396h avg) and agents with sub-90% CSAT.
+      </div>
+      <div class="insight">
+        <strong>7. Fix CSM Sentiment data quality</strong><br>
+        Make the field required on AM and strategic support ticket forms. Add a 60-second scoring calibration guide. Once reliable, it becomes the key account health leading indicator — especially important for identifying at-risk accounts before they hit the Client Churn queue.
+      </div>
+      <div class="insight">
+        <strong>8. Connect NetSuite MRR</strong><br>
+        All account-level analysis here lacks revenue context. Once NetSuite is connected, the priority matrix becomes: high ticket volume + slow resolution + high MRR = immediate intervention. Low MRR accounts with high support costs get a different conversation.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div style="border-top: 1px solid #1e2535; padding-top: 24px; margin-top: 48px; font-size: 12px; color: #475569; text-align: center;">
+  Generated by Revay · Data sources: Zendesk (rev-io.zendesk.com) + Salesforce (rev-io.my.salesforce.com) · Period: Oct 2025 – Feb 2026 (API offset limit: 10,000 tickets) · Full 24-month analysis pending cursor pagination implementation
+</div>
+
+</div>
+</body>
+</html>
