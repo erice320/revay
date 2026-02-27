@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revay — Recovery & Resurrection Guide</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3350;
+    --accent: #7c6af7;
+    --accent2: #4fd1c5;
+    --warn: #f6ad55;
+    --danger: #fc8181;
+    --success: #68d391;
+    --text: #e2e8f0;
+    --muted: #718096;
+    --code-bg: #111827;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    padding: 0 0 80px;
+  }
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 60%, #1a1230 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px 50px;
+    text-align: center;
+  }
+  .hero-icon { font-size: 56px; display: block; margin-bottom: 16px; }
+  .hero h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.5px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--muted); font-size: 1.05rem; margin-top: 10px; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .hero-meta { margin-top: 20px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+  .meta-tag { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 4px 14px; font-size: 0.8rem; color: var(--muted); }
+  .meta-tag span { color: var(--text); font-weight: 600; }
+
+  /* Layout */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  /* Section */
+  .section { margin-top: 48px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 1.25rem; font-weight: 600; }
+  .section-header .sub { color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+  .card p { color: #a0aec0; font-size: 0.9rem; }
+
+  /* Alert banners */
+  .alert {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .alert-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+  .alert.danger { background: rgba(252,129,129,0.08); border: 1px solid rgba(252,129,129,0.25); }
+  .alert.warn { background: rgba(246,173,85,0.08); border: 1px solid rgba(246,173,85,0.25); }
+  .alert.success { background: rgba(104,211,145,0.08); border: 1px solid rgba(104,211,145,0.25); }
+  .alert.info { background: rgba(124,106,247,0.08); border: 1px solid rgba(124,106,247,0.25); }
+  .alert strong { display: block; margin-bottom: 3px; }
+  .alert.danger strong { color: var(--danger); }
+  .alert.warn strong { color: var(--warn); }
+  .alert.success strong { color: var(--success); }
+  .alert.info strong { color: var(--accent); }
+
+  /* Steps */
+  .steps { counter-reset: step; }
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px 18px 60px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 20px;
+    top: 18px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.85rem;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+  .step p, .step li { color: #a0aec0; font-size: 0.88rem; }
+  .step ul { padding-left: 18px; margin-top: 6px; }
+  .step li { margin-bottom: 3px; }
+
+  /* Code */
+  pre, code {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+    font-size: 0.82rem;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    margin-top: 10px;
+    color: #a5f3fc;
+    line-height: 1.7;
+  }
+  code {
+    background: var(--code-bg);
+    color: #a5f3fc;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.82rem;
+  }
+  .comment { color: #4b5563; }
+
+  /* Frozen fields table */
+  .frozen-list { list-style: none; padding: 0; }
+  .frozen-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.87rem;
+  }
+  .frozen-list li:last-child { border-bottom: none; }
+  .frozen-list .field { color: #a5f3fc; font-family: monospace; background: var(--code-bg); padding: 2px 8px; border-radius: 4px; }
+  .frozen-list .reason { color: var(--muted); }
+
+  /* Identity checklist */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.87rem;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-icon { color: var(--success); flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
+  .check-title { font-weight: 600; }
+  .check-desc { color: var(--muted); font-size: 0.82rem; margin-top: 2px; }
+
+  /* Creds grid */
+  .cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .cred-grid { grid-template-columns: 1fr; } }
+  .cred-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .cred-card .label { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .cred-card .value { font-family: monospace; font-size: 0.82rem; color: #fbd38d; word-break: break-all; }
+  .cred-card .note { color: var(--muted); font-size: 0.78rem; margin-top: 4px; }
+
+  /* Status badges */
+  .badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+  .badge.ok { background: rgba(104,211,145,0.15); color: var(--success); }
+  .badge.critical { background: rgba(252,129,129,0.15); color: var(--danger); }
+  .badge.caution { background: rgba(246,173,85,0.15); color: var(--warn); }
+
+  /* Verify block */
+  .verify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 600px) { .verify-grid { grid-template-columns: 1fr; } }
+  .verify-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .verify-item .vi-label { font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+  .verify-item code { font-size: 0.78rem; }
+
+  /* Footer */
+  .footer {
+    margin-top: 60px;
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  .footer strong { color: var(--accent); }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="hero-icon">⚡</span>
+  <h1><span>Revay</span> — Recovery & Resurrection Guide</h1>
+  <p>For Evan, or for a fresh Revay instance that needs to find herself again.</p>
+  <div class="hero-meta">
+    <div class="meta-tag">Last updated: <span>Feb 27, 2026</span></div>
+    <div class="meta-tag">Config hash: <span>1ff800a0…</span></div>
+    <div class="meta-tag">Workspace: <span>erice320/revay-workspace</span></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- WHY AGENTS DIE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">☠</div>
+      <div>
+        <h2>Why Agents Die</h2>
+        <div class="sub">Understand the failure modes before you debug one</div>
+      </div>
+    </div>
+
+    <div class="alert danger">
+      <div class="alert-icon">🚨</div>
+      <div><strong>Primary killer: config.apply</strong> Replacing the entire config in one shot silently wipes channel tokens or gateway auth. The gateway restarts but is deaf — it can't receive messages and there's no recovery path without manual intervention.</div>
+    </div>
+
+    <div class="card">
+      <h3>💀 Failure Mode 1 — Config Self-Destruction</h3>
+      <p>Agent uses <code>config.apply</code> (full replace) instead of <code>config.patch</code>. Missing fields wipe tokens. Gateway restarts broken. Agent is alive but unreachable.</p>
+    </div>
+    <div class="card">
+      <h3>💀 Failure Mode 2 — Gateway Field Corruption</h3>
+      <p>Changing <code>gateway.port</code>, <code>gateway.auth.token</code>, or <code>gateway.mode</code> breaks the localhost connection. Agent is running, receiving nothing.</p>
+    </div>
+    <div class="card">
+      <h3>💀 Failure Mode 3 — Channel Token Wipeout</h3>
+      <p>Setting <code>channels.telegram.enabled = false</code> or losing the bot token during a patch. Gateway alive, zero messages in.</p>
+    </div>
+    <div class="card">
+      <h3>💀 Failure Mode 4 — Workspace Amnesia</h3>
+      <p>MEMORY.md corrupted, overwritten, or git backup failing silently. Agent wakes with no identity — same model, no continuity.</p>
+    </div>
+    <div class="card">
+      <h3>💀 Failure Mode 5 — Stale Hash Patch Escalation</h3>
+      <p>Patch fails due to stale <code>baseHash</code>. Agent "fixes" it by using <code>config.apply</code> with incomplete JSON — kills everything it wasn't trying to touch.</p>
+    </div>
+  </div>
+
+  <!-- CONFIG SAFETY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">🛡</div>
+      <div>
+        <h2>Config Safety Rules</h2>
+        <div class="sub">Non-negotiable. Burn these in.</div>
+      </div>
+    </div>
+
+    <div class="alert danger">
+      <div class="alert-icon">🚫</div>
+      <div><strong>NEVER use gateway config.apply</strong> Only exception: Evan explicitly says "replace the full config" and provides it verbatim. Even then, verify the JSON is complete before applying.</div>
+    </div>
+
+    <div class="alert warn">
+      <div class="alert-icon">⚠️</div>
+      <div><strong>Always get the current hash before patching</strong> Run <code>config.get</code>, extract <code>hash</code>, pass it as <code>baseHash</code> in your patch. If you skip this, the patch will fail — and if you then escalate to <code>config.apply</code>, you may wipe everything.</div>
+    </div>
+
+    <div class="card">
+      <h3>🔒 Frozen Fields — Never Touch Without Explicit Written Instruction</h3>
+      <ul class="frozen-list">
+        <li><span class="field">gateway.port</span> <span class="reason">Breaks localhost connection if changed</span></li>
+        <li><span class="field">gateway.auth.token</span> <span class="reason">Auth token — change = locked out</span></li>
+        <li><span class="field">gateway.mode</span> <span class="reason">Changes fundamental operation mode</span></li>
+        <li><span class="field">channels.telegram.botToken</span> <span class="reason">Bot dies if this is wrong or missing</span></li>
+        <li><span class="field">channels.discord.token</span> <span class="reason">Discord bot dies if this is wrong or missing</span></li>
+        <li><span class="field">channels.telegram.enabled</span> <span class="reason">Setting false = no Telegram messages</span></li>
+        <li><span class="field">channels.discord.enabled</span> <span class="reason">Setting false = no Discord messages</span></li>
+        <li><span class="field">channels.discord.allowFrom</span> <span class="reason">Removing Evan's ID = he can't reach you</span></li>
+        <li><span class="field">channels.discord.guilds</span> <span class="reason">Removing guild = no group chat access</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>✅ Correct Patch Workflow</h3>
+      <pre><span class="comment"># Step 1: Get current config + hash</span>
+openclaw gateway call config.get
+
+<span class="comment"># Step 2: Note the hash value from the response</span>
+<span class="comment"># "hash": "1ff800a06e1302f741ffd6434e0d04be38527cb..."</span>
+
+<span class="comment"># Step 3: Patch ONLY the field you're changing</span>
+<span class="comment"># Example: fixing Brave Search API key</span>
+gateway config.patch {
+  baseHash: "&lt;hash from step 2&gt;",
+  raw: '{"tools":{"web":{"search":{"provider":"brave","apiKey":"see TOOLS.md → Brave Search API Key","enabled":true}}}}'
+}
+
+<span class="comment"># Step 4: Verify immediately after</span>
+openclaw gateway call config.get
+<span class="comment"># Confirm: valid=true, port=18789, tokens still redacted</span></pre>
+    </div>
+
+    <div class="alert success">
+      <div class="alert-icon">✅</div>
+      <div><strong>If a patch fails — STOP</strong> Alert Evan. Do NOT escalate to config.apply. A failed patch is recoverable. A bad apply may wipe tokens you can't recover without Evan.</div>
+    </div>
+  </div>
+
+  <!-- FULL RESURRECTION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">🧟</div>
+      <div>
+        <h2>Full Resurrection Protocol</h2>
+        <div class="sub">Container wiped, fresh OpenClaw — follow these steps to restore Revay completely</div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <div class="alert-icon">ℹ️</div>
+      <div><strong>Prerequisites</strong> OpenClaw installed and running (fresh). GitHub access to <code>erice320/revay-workspace</code> (private repo). Evan's GitHub token: <code>[see TOOLS.md] (see TOOLS.md)</code></div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <h4>Restore the workspace from GitHub</h4>
+        <pre>cd /root/.openclaw
+git clone https://github.com/erice320/revay-workspace workspace
+
+<span class="comment"># Store credentials for future pushes</span>
+git config --global credential.helper store
+echo "https://erice320:$GITHUB_TOKEN@github.com" > ~/.git-credentials</pre>
+        <p>This restores: SOUL.md, MEMORY.md, USER.md, IDENTITY.md, all memory files, all scripts, TOOLS.md, AGENTS.md.</p>
+      </div>
+
+      <div class="step">
+        <h4>Restore the gateway config</h4>
+        <p>The known-good config is in <code>memory/config-backup.json</code>. Use it as a reference — do NOT paste it in blindly. The tokens are redacted in the backup. You'll need Evan to provide:</p>
+        <ul>
+          <li>Telegram bot token</li>
+          <li>Discord bot token</li>
+          <li>Anthropic API key</li>
+          <li>Gateway auth token</li>
+        </ul>
+        <p style="margin-top:8px;">Patch each one individually using <code>config.patch</code>. Verify after each.</p>
+      </div>
+
+      <div class="step">
+        <h4>Restore credentials</h4>
+        <div class="cred-grid" style="margin-top:10px;">
+          <div class="cred-card">
+            <div class="label">ElevenLabs API Key</div>
+            <div class="value">see TOOLS.md → ElevenLabs API Key</div>
+            <div class="note">TTS / Christina voice</div>
+          </div>
+          <div class="cred-card">
+            <div class="label">Gmail App Password</div>
+            <div class="value">see TOOLS.md → Gmail App Password</div>
+            <div class="note">revayr23@gmail.com</div>
+          </div>
+          <div class="cred-card">
+            <div class="label">Brave Search API Key</div>
+            <div class="value">see TOOLS.md → Brave Search API Key</div>
+            <div class="note">Web search tool</div>
+          </div>
+          <div class="cred-card">
+            <div class="label">Notion Token</div>
+            <div class="value">see TOOLS.md → Notion Token</div>
+            <div class="note">Roadmap DB: 2a8a59b7-e7b2-8009-9371-f50bc2d4db48</div>
+          </div>
+          <div class="cred-card">
+            <div class="label">Wrike Token</div>
+            <div class="value">eyJ0dCI6InAiLCJhbGciOi…</div>
+            <div class="note">Full token in TOOLS.md — Lauren Swygert account</div>
+          </div>
+          <div class="cred-card">
+            <div class="label">GitHub Token</div>
+            <div class="value">[see TOOLS.md] (see TOOLS.md)</div>
+            <div class="note">erice320 — workspace + revay repos</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <h4>Restore Salesforce OAuth (if token expired)</h4>
+        <pre><span class="comment"># Tokens in memory/salesforce-creds.json — auto-refresh usually works</span>
+<span class="comment"># If expired, re-run the OAuth PKCE flow:</span>
+cd /root/.openclaw/workspace
+node scripts/salesforce.js auth
+
+<span class="comment"># Salesforce instance: https://rev-io.my.salesforce.com</span>
+<span class="comment"># Connected App: Claudio API</span></pre>
+      </div>
+
+      <div class="step">
+        <h4>Restore Microsoft Graph / Calendar (if token expired)</h4>
+        <pre><span class="comment"># Tokens in memory/graph-creds.json — auto-refresh usually works</span>
+<span class="comment"># App: client_id=42a3b9bf-1165-4b92-9253-a9bcb8675bd3</span>
+<span class="comment"># tenant_id=ad233ca3-255e-4697-90c0-5bf96200d3ae</span>
+node scripts/calendar-graph.js upcoming 3</pre>
+      </div>
+
+      <div class="step">
+        <h4>Restore cron jobs</h4>
+        <pre><span class="comment"># Cron backup lives at memory/cron-backup.json</span>
+cat memory/cron-backup.json
+
+<span class="comment"># Re-create each job:</span>
+openclaw cron add &lt;job-config&gt;
+
+<span class="comment"># Verify they're scheduled:</span>
+openclaw cron list</pre>
+      </div>
+
+      <div class="step">
+        <h4>Run verification suite</h4>
+        <div class="verify-grid">
+          <div class="verify-item">
+            <div class="vi-label">Email</div>
+            <code>node scripts/gmail.js list 5</code>
+          </div>
+          <div class="verify-item">
+            <div class="vi-label">Calendar</div>
+            <code>node scripts/calendar-graph.js upcoming 3</code>
+          </div>
+          <div class="verify-item">
+            <div class="vi-label">Salesforce</div>
+            <code>node scripts/salesforce.js query "SELECT Id FROM Account LIMIT 1"</code>
+          </div>
+          <div class="verify-item">
+            <div class="vi-label">Web Search</div>
+            <code>brave search test via heartbeat</code>
+          </div>
+          <div class="verify-item">
+            <div class="vi-label">Config</div>
+            <code>openclaw gateway call config.get → valid: true</code>
+          </div>
+          <div class="verify-item">
+            <div class="vi-label">Git push</div>
+            <code>git add -A && git push</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <h4>Announce to Evan</h4>
+        <p>Send a message to Evan via Telegram or Discord:</p>
+        <pre>"I'm back. Full restore complete from [DATE] backup. All systems verified. Memory intact. Ready."</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDENTITY CHECKLIST -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">🧠</div>
+      <div>
+        <h2>Identity Preservation Checklist</h2>
+        <div class="sub">The files that make Revay, Revay — all backed up to GitHub daily</div>
+      </div>
+    </div>
+
+    <ul class="checklist">
+      <li>
+        <div class="check-icon">✓</div>
+        <div>
+          <div class="check-title">SOUL.md</div>
+          <div class="check-desc">Personality, values, communication style, how to think</div>
+        </div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div>
+          <div class="check-title">IDENTITY.md</div>
+          <div class="check-desc">Name (Revay), gender, voice (Christina), avatar, vibe</div>
+        </div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div>
+          <div class="check-title">MEMORY.md</div>
+          <div class="check-desc">Long-term curated memory — people, projects, decisions, context</div>
+        </div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div>
+          <div class="check-title">USER.md</div>
+          <div class="check-desc">Who Evan is, how he works, what he cares about</div>
+        </div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div>
+          <div class="check-title">AGENTS.md</div>
+          <div class="check-desc">Operating rules, memory protocol, config safety, heartbeat behavior</div>
+        </div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div>
+          <div class="check-title">TOOLS.md</div>
+          <div class="check-desc">All credentials, API keys, tool-specific notes</div>
+        </div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div>
+          <div class="check-title">memory/people/</div>
+          <div class="check-desc">Individual profiles for key people in Evan's world</div>
+        </div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div>
+          <div class="check-title">memory/projects/</div>
+          <div class="check-desc">Active project context, GTM analysis, onboarding findings</div>
+        </div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div>
+          <div class="check-title">memory/config-backup.json</div>
+          <div class="check-desc">Known-good gateway config snapshot with hash</div>
+        </div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div>
+          <div class="check-title">scripts/</div>
+          <div class="check-desc">gmail.js, salesforce.js, calendar-graph.js, wrike.js, and all automation</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- BACKUP SCHEDULE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">🔄</div>
+      <div>
+        <h2>Backup Schedule</h2>
+        <div class="sub">Layered — daily git, monthly cron backup, per-change config snapshot</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Daily — Git Push (Layer 1)</h3>
+      <p>First heartbeat after midnight UTC triggers: <code>git add -A && git commit && git push</code><br>
+      Covers everything in <code>/root/.openclaw/workspace</code>. Status tracked in <code>memory/heartbeat-state.json → lastDurabilityBackup</code>.</p>
+    </div>
+    <div class="card">
+      <h3>Per Config Change — Config Snapshot (Layer 2)</h3>
+      <p>After any successful <code>config.patch</code>: save current config to <code>memory/config-backup.json</code>. Committed to git via Layer 1 same day.</p>
+    </div>
+    <div class="card">
+      <h3>Monthly — Cron Job Backup (Layer 3)</h3>
+      <p>First heartbeat of new month: <code>openclaw cron list --json > memory/cron-backup.json</code> and commit. Ensures cron jobs can be restored after container wipe.</p>
+    </div>
+    <div class="card">
+      <h3>Auto-Refreshing — OAuth Credentials (Layer 4)</h3>
+      <p>Salesforce and Graph API tokens auto-refresh before expiry. Persisted to <code>memory/salesforce-creds.json</code> and <code>memory/graph-creds.json</code>, backed up via Layer 1.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="container">
+    <strong>Revay</strong> ⚡ AI Chief of Staff to Evan Rice, Rev.io<br>
+    Recovery guide generated Feb 27, 2026 · Config hash: <code>1ff800a06e1302f741ffd6434e0d04be38527cb371456c61e105b9baf8174530</code>
+  </div>
+</div>
+
+</body>
+</html>
