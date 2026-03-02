@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaia Conversation Intelligence Pipeline — Rev.io</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f1117; color: #e8eaf6; }
+
+  .slide {
+    min-height: 100vh;
+    padding: 60px 80px;
+    border-bottom: 1px solid #1e2130;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .slide-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #5c6bc0;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  h1 { font-size: 48px; font-weight: 700; line-height: 1.15; color: #fff; }
+  h2 { font-size: 36px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  h3 { font-size: 20px; font-weight: 600; color: #9fa8da; margin-bottom: 12px; }
+
+  .subtitle { font-size: 20px; color: #9fa8da; margin-top: 16px; line-height: 1.6; }
+  .meta { font-size: 14px; color: #5c6bc0; margin-top: 32px; }
+
+  .divider { width: 60px; height: 3px; background: #5c6bc0; margin: 24px 0; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+  .card-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 32px; }
+
+  .card {
+    background: #1a1d2e;
+    border: 1px solid #2a2d3e;
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .card.highlight { border-color: #5c6bc0; }
+  .card.warn { border-color: #ef5350; }
+  .card.success { border-color: #66bb6a; }
+
+  .card-icon { font-size: 28px; margin-bottom: 12px; }
+  .card p { font-size: 14px; color: #9fa8da; line-height: 1.6; margin-top: 8px; }
+  .card ul { font-size: 14px; color: #9fa8da; line-height: 1.8; margin-top: 8px; padding-left: 16px; }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .tag-blue { background: #1a237e; color: #9fa8da; }
+  .tag-green { background: #1b5e20; color: #a5d6a7; }
+  .tag-orange { background: #e65100; color: #ffe0b2; }
+  .tag-red { background: #b71c1c; color: #ffcdd2; }
+  .tag-purple { background: #4a148c; color: #e1bee7; }
+
+  /* Architecture diagram */
+  .arch {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .arch-box {
+    background: #1a1d2e;
+    border: 1.5px solid #2a2d3e;
+    border-radius: 10px;
+    padding: 20px 24px;
+    text-align: center;
+    min-width: 140px;
+  }
+  .arch-box.active { border-color: #5c6bc0; }
+  .arch-box .icon { font-size: 28px; margin-bottom: 8px; }
+  .arch-box .label { font-size: 13px; font-weight: 600; color: #fff; }
+  .arch-box .sublabel { font-size: 11px; color: #9fa8da; margin-top: 4px; }
+  .arch-arrow { font-size: 24px; color: #5c6bc0; flex-shrink: 0; }
+
+  .spec-table { width: 100%; border-collapse: collapse; margin-top: 28px; }
+  .spec-table th {
+    text-align: left; padding: 14px 16px;
+    background: #1a1d2e; color: #9fa8da;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+    border-bottom: 1px solid #2a2d3e;
+  }
+  .spec-table td {
+    padding: 14px 16px; font-size: 14px; color: #e8eaf6;
+    border-bottom: 1px solid #1a1d2e; vertical-align: top;
+    line-height: 1.5;
+  }
+  .spec-table tr:hover td { background: #1a1d2e; }
+  .spec-table td.owner { color: #9fa8da; font-size: 13px; }
+  .spec-table td code { background: #0d0f1a; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #80cbc4; }
+
+  .timeline { margin-top: 32px; }
+  .phase {
+    display: flex; gap: 24px; margin-bottom: 32px;
+    padding-bottom: 32px; border-bottom: 1px solid #1a1d2e;
+  }
+  .phase:last-child { border-bottom: none; }
+  .phase-num {
+    font-size: 48px; font-weight: 800; color: #1e2130;
+    line-height: 1; flex-shrink: 0; width: 60px; text-align: center;
+  }
+  .phase-content h3 { color: #fff; font-size: 18px; margin-bottom: 8px; }
+  .phase-content p { font-size: 14px; color: #9fa8da; line-height: 1.6; }
+  .phase-content ul { font-size: 14px; color: #9fa8da; line-height: 1.8; margin-top: 8px; padding-left: 18px; }
+  .phase-duration {
+    font-size: 12px; font-weight: 600; color: #5c6bc0;
+    text-transform: uppercase; letter-spacing: 1px; margin-top: 8px;
+  }
+
+  .use-case { 
+    background: #1a1d2e; border-radius: 10px; padding: 20px 24px;
+    margin-bottom: 16px; border-left: 3px solid #5c6bc0;
+  }
+  .use-case h4 { font-size: 15px; color: #fff; margin-bottom: 6px; }
+  .use-case p { font-size: 13px; color: #9fa8da; line-height: 1.6; }
+  .use-case .example { 
+    font-size: 12px; color: #80cbc4; margin-top: 8px; 
+    font-style: italic; background: #0d0f1a; padding: 8px 12px; border-radius: 6px;
+  }
+
+  .blocker-list { margin-top: 24px; }
+  .blocker {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 16px; background: #1a1d2e; border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .blocker-num {
+    background: #5c6bc0; color: #fff; font-size: 13px; font-weight: 700;
+    width: 28px; height: 28px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .blocker-text h4 { font-size: 15px; color: #fff; margin-bottom: 4px; }
+  .blocker-text p { font-size: 13px; color: #9fa8da; }
+  .blocker-text .who { font-size: 12px; color: #5c6bc0; margin-top: 4px; font-weight: 600; }
+
+  .footer { padding: 32px 80px; border-top: 1px solid #1e2130; display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-size: 18px; font-weight: 700; color: #5c6bc0; }
+  .footer-meta { font-size: 12px; color: #3d4166; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<div class="slide" style="background: linear-gradient(135deg, #0f1117 0%, #1a1d2e 100%); justify-content: center; min-height: 100vh;">
+  <div class="slide-title">Rev.io · GTM Intelligence</div>
+  <h1>Kaia Conversation<br>Intelligence Pipeline</h1>
+  <div class="divider"></div>
+  <p class="subtitle">A plan to automatically ingest, process, and analyze<br>every sales call transcript at scale — across all reps, all deals.</p>
+  <p class="meta">Prepared March 2026 · Revay AI</p>
+</div>
+
+<!-- SLIDE 2: Problem Statement -->
+<div class="slide">
+  <div class="slide-title">The Problem</div>
+  <h2>We're flying blind on<br>what's actually being said</h2>
+  <div class="divider"></div>
+  <div class="card-grid">
+    <div class="card warn">
+      <div class="card-icon">📝</div>
+      <h3>Rep Notes Are Unreliable</h3>
+      <p>Loss reasons in Salesforce like "a lot of functionality ConnectWise has that we don't" tell us nothing actionable. What <em>specifically</em> did the prospect say?</p>
+    </div>
+    <div class="card warn">
+      <div class="card-icon">🔍</div>
+      <h3>Patterns Are Invisible</h3>
+      <p>We can see that 10 deals were lost to "Software Missing Capabilities" — but we can't see that QuickBooks Desktop, geofencing, and contract billing keep appearing in the transcripts.</p>
+    </div>
+    <div class="card warn">
+      <div class="card-icon">⏱️</div>
+      <h3>Re-engagement Is Manual</h3>
+      <p>Deals like Millennium Communications sit as closed-lost with no alert when the blocking feature ships. Nobody is watching the re-engagement triggers.</p>
+    </div>
+  </div>
+  <div style="margin-top: 32px; background: #1a1d2e; border-radius: 10px; padding: 24px 28px; border-left: 3px solid #5c6bc0;">
+    <p style="font-size: 16px; color: #e8eaf6; line-height: 1.7;"><strong>Today's analysis of 10 deals</strong> took hours of manual work — pulling Salesforce data, matching to Outreach, requesting transcripts, reading them. <strong>This pipeline makes that instant and continuous, across every call that happens.</strong></p>
+  </div>
+</div>
+
+<!-- SLIDE 3: Architecture Overview -->
+<div class="slide">
+  <div class="slide-title">Architecture</div>
+  <h2>How the Pipeline Works</h2>
+  <div class="divider"></div>
+  <div class="arch">
+    <div class="arch-box active">
+      <div class="icon">🎙️</div>
+      <div class="label">Kaia</div>
+      <div class="sublabel">Records &amp; transcribes<br>all sales calls</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box active">
+      <div class="icon">📦</div>
+      <div class="label">Daily Export</div>
+      <div class="sublabel">Outreach drops<br>files to S3 nightly</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box active">
+      <div class="icon">⚙️</div>
+      <div class="label">Pipeline</div>
+      <div class="sublabel">Revay parses,<br>enriches, stores</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box active">
+      <div class="icon">🔗</div>
+      <div class="label">Salesforce</div>
+      <div class="sublabel">Links calls to<br>opps, accounts, reps</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box active">
+      <div class="icon">🧠</div>
+      <div class="label">Analysis Layer</div>
+      <div class="sublabel">Query, alerts,<br>reports on demand</div>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-top: 40px;">
+    <div class="card">
+      <div class="tag tag-blue">Step 1</div>
+      <h3>Outreach → S3</h3>
+      <p>Outreach Kaia's Daily Export feature writes all transcripts and call metadata as structured files to an AWS S3 bucket every 24 hours. Covers every call across all reps automatically.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-purple">Step 2</div>
+      <h3>Process + Enrich</h3>
+      <p>A nightly job reads new S3 files, parses transcripts, links Outreach opportunity IDs to Salesforce records, and stores structured data in a local database.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-green">Step 3</div>
+      <h3>Analyze + Alert</h3>
+      <p>Query transcripts by keyword, topic, rep, or deal. Run pattern analysis. Generate reports. Trigger alerts when specific language appears — competitor mentions, pricing objections, missing features.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: Data Model -->
+<div class="slide">
+  <div class="slide-title">Data</div>
+  <h2>What We Capture Per Call</h2>
+  <div class="divider"></div>
+  <div class="card-grid-2">
+    <div class="card">
+      <div class="tag tag-blue">From Kaia / Outreach</div>
+      <h3>Call Intelligence</h3>
+      <ul>
+        <li>Full transcript (speaker-labeled, timestamped)</li>
+        <li>Meeting date, duration, format (call/meeting)</li>
+        <li>Participants: reps + prospects (names, roles)</li>
+        <li>Outreach Opportunity ID (native link)</li>
+        <li>Outreach Account ID</li>
+        <li>Kaia AI topics (aggregated topics discussed)</li>
+        <li>Call state (completed, dropped, etc.)</li>
+        <li>Provider (Zoom, Teams, Twilio, etc.)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="tag tag-purple">From Salesforce (via API)</div>
+      <h3>Deal Context</h3>
+      <ul>
+        <li>Opportunity stage &amp; stage at time of call</li>
+        <li>Loss reason + detail notes</li>
+        <li>Product type (PSA 2.0, Billing, etc.)</li>
+        <li>Total MRR / ARR value</li>
+        <li>Close date (actual or projected)</li>
+        <li>Account name, industry, size</li>
+        <li>Assigned rep + manager</li>
+        <li>Competitor (if "Lost to Competitor")</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top: 24px; background: #1a1d2e; border-radius: 10px; padding: 20px 28px;">
+    <p style="font-size: 14px; color: #9fa8da; line-height: 1.7;"><strong style="color:#fff;">Key linkage:</strong> Outreach natively stores the <code style="background:#0d0f1a; padding: 2px 6px; border-radius: 4px; color: #80cbc4;">opportunity_id</code> on every Kaia recording. This is the bridge — no fuzzy name-matching needed. Every transcript links cleanly to a Salesforce opportunity and inherits all its deal metadata.</p>
+  </div>
+</div>
+
+<!-- SLIDE 5: Use Cases -->
+<div class="slide">
+  <div class="slide-title">Use Cases</div>
+  <h2>What Becomes Possible</h2>
+  <div class="divider"></div>
+
+  <div class="use-case">
+    <h4>🔍 Feature Gap Intelligence</h4>
+    <p>Scan all lost-deal transcripts for what prospects <em>actually said</em> about missing features. Surface patterns product can act on — ranked by MRR impact.</p>
+    <div class="example">"Show me every call in the last 90 days where a prospect mentioned QuickBooks, ranked by deal size"</div>
+  </div>
+
+  <div class="use-case">
+    <h4>🔁 Re-engagement Triggers</h4>
+    <p>When a feature ships in a new release, automatically identify all past closed-lost deals where that feature was mentioned in a transcript. Alert the rep to re-engage.</p>
+    <div class="example">"Prepaid Support Hour Billing just shipped → flag all deals where block hours or prepaid contracts came up"</div>
+  </div>
+
+  <div class="use-case">
+    <h4>📊 Rep Coaching &amp; QA</h4>
+    <p>Analyze talk ratios, topic coverage, objection handling patterns by rep. Identify which reps consistently surface capabilities early vs. letting blockers surface late.</p>
+    <div class="example">"Which reps ask about accounting software in the first call vs. discovery call 3+"</div>
+  </div>
+
+  <div class="use-case">
+    <h4>⚠️ Competitive Intelligence</h4>
+    <p>Flag every call where ConnectWise, Autotask, Simpro, or other competitors are mentioned. Track which competitors are showing up most in active pipeline vs. lost deals.</p>
+    <div class="example">"Show me all open PSA deals where ConnectWise was mentioned in the last 30 days"</div>
+  </div>
+
+  <div class="use-case">
+    <h4>📈 Deal Health Signals</h4>
+    <p>Detect language patterns that correlate with deals going dark — "we need to check internally," "let me bring this back to leadership," long gaps with no follow-up calls.</p>
+    <div class="example">"Show open opps where the last call included stall language and no call has been scheduled"</div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Technical Requirements -->
+<div class="slide">
+  <div class="slide-title">Technical Specifications</div>
+  <h2>What Needs to Be Configured</h2>
+  <div class="divider"></div>
+
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Requirement</th>
+        <th>Details</th>
+        <th>Owner</th>
+        <th>Complexity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Enable Kaia Daily Export</strong></td>
+        <td>In Outreach admin: Settings → Kaia → Daily Export. Enable export for all users/teams. Confirm export includes: metadata JSON + transcript TXT per call.</td>
+        <td class="owner">Outreach Admin<br>(Ryan or Jordan)</td>
+        <td><span class="tag tag-green" style="margin:0;">Low</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>AWS S3 Bucket</strong></td>
+        <td>Create a dedicated S3 bucket for Kaia exports (e.g., <code>revio-kaia-transcripts</code>). Region: us-east-1 or us-west-2. Lifecycle policy: retain 2 years, archive to Glacier after 90 days.</td>
+        <td class="owner">IT / DevOps<br>(Darin or AWS admin)</td>
+        <td><span class="tag tag-green" style="margin:0;">Low</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>S3 Bucket Policy for Outreach</strong></td>
+        <td>Grant Outreach write access to the S3 bucket. Outreach will provide their AWS account ID or IAM role ARN to add to the bucket policy. Standard cross-account S3 write permission.</td>
+        <td class="owner">IT / DevOps +<br>Outreach (Jordan)</td>
+        <td><span class="tag tag-orange" style="margin:0;">Medium</span></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Read Credentials for Pipeline</strong></td>
+        <td>IAM user or role with <code>s3:GetObject</code> and <code>s3:ListBucket</code> on the Kaia bucket. Access key ID + secret to be stored securely in Revay's credentials store.</td>
+        <td class="owner">IT / DevOps</td>
+        <td><span class="tag tag-green" style="margin:0;">Low</span></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong>Confirm Export Coverage</strong></td>
+        <td>Confirm the export covers all Kaia-recorded calls — not just a subset. Verify it includes both voice calls (via Outreach Dialer/Twilio) and meeting recordings (Zoom, Teams). Confirm format: JSON metadata + TXT transcript per session.</td>
+        <td class="owner">Outreach (Jordan)</td>
+        <td><span class="tag tag-green" style="margin:0;">Low</span></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><strong>Salesforce Connection</strong></td>
+        <td>Already active. Revay has OAuth access to Salesforce. No new setup needed — pipeline will use existing connection to enrich call data with opportunity/account context.</td>
+        <td class="owner">Already done ✅</td>
+        <td><span class="tag tag-green" style="margin:0;">None</span></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><strong>Outreach API Connection</strong></td>
+        <td>Already active (calls, accounts, prospects, opportunities). Will be used to supplement S3 data with rep IDs, account names, and any metadata not included in the export files.</td>
+        <td class="owner">Already done ✅</td>
+        <td><span class="tag tag-green" style="margin:0;">None</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SLIDE 7: Implementation Phases -->
+<div class="slide">
+  <div class="slide-title">Implementation Plan</div>
+  <h2>Phases &amp; Timeline</h2>
+  <div class="divider"></div>
+
+  <div class="timeline">
+    <div class="phase">
+      <div class="phase-num">01</div>
+      <div class="phase-content">
+        <h3>Infrastructure Setup</h3>
+        <p>Get the plumbing in place. No code written yet.</p>
+        <ul>
+          <li>Create S3 bucket (<code>revio-kaia-transcripts</code>)</li>
+          <li>Enable Kaia Daily Export in Outreach admin</li>
+          <li>Configure bucket policy for Outreach write access</li>
+          <li>Create IAM read credentials for pipeline</li>
+          <li>Validate first export lands correctly</li>
+        </ul>
+        <div class="phase-duration">Estimated: 1–2 days · Owners: Outreach AM + IT/DevOps</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">02</div>
+      <div class="phase-content">
+        <h3>Pipeline Build</h3>
+        <p>Revay builds the ingestion and enrichment pipeline.</p>
+        <ul>
+          <li>S3 file reader — detect new exports, parse metadata JSON + transcript TXT</li>
+          <li>Transcript parser — extract speaker turns, timestamps, utterances</li>
+          <li>Salesforce enrichment — link Outreach opportunity ID → SF opportunity, pull deal metadata</li>
+          <li>Structured storage — local database with full-text search on transcripts</li>
+          <li>Daily cron job to run automatically</li>
+        </ul>
+        <div class="phase-duration">Estimated: 2–3 days · Owner: Revay AI (no human effort required)</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">03</div>
+      <div class="phase-content">
+        <h3>Analysis Layer + Backfill</h3>
+        <p>Build the query interface and ingest historical data.</p>
+        <ul>
+          <li>Keyword + topic search across all transcripts</li>
+          <li>Lost deal feature gap report (at-scale version of today's manual analysis)</li>
+          <li>Competitive mention tracker</li>
+          <li>Rep activity &amp; talk time summary</li>
+          <li>Backfill: process all available historical Kaia data (not just new calls)</li>
+        </ul>
+        <div class="phase-duration">Estimated: 2–3 days · Owner: Revay AI (no human effort required)</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">04</div>
+      <div class="phase-content">
+        <h3>Alerts &amp; Automation</h3>
+        <p>Make the system proactively surface insights.</p>
+        <ul>
+          <li>Re-engagement alerts: feature ships → match to past lost-deal transcripts → notify rep</li>
+          <li>Competitive alert: prospect mentions competitor → flag to manager in Slack/Discord</li>
+          <li>Weekly digest: top feature requests heard across all calls this week</li>
+          <li>Deal health: stall language detection on open pipeline</li>
+        </ul>
+        <div class="phase-duration">Estimated: 1–2 days · Owner: Revay AI (no human effort required)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: What We Need from Outreach -->
+<div class="slide">
+  <div class="slide-title">Action Required</div>
+  <h2>3 Things We Need<br>from Jordan / Outreach</h2>
+  <div class="divider"></div>
+
+  <div class="blocker-list">
+    <div class="blocker">
+      <div class="blocker-num">1</div>
+      <div class="blocker-text">
+        <h4>Confirm Kaia Daily Export is available on Rev.io's tier</h4>
+        <p>We need to verify this feature is included in the current Outreach contract before IT spins up infrastructure. If it requires an add-on or tier upgrade, that needs to be evaluated first.</p>
+        <div class="who">→ Ask: Jordan Lenard (jordan.lenard@outreach.io)</div>
+      </div>
+    </div>
+
+    <div class="blocker">
+      <div class="blocker-num">2</div>
+      <div class="blocker-text">
+        <h4>Outreach AWS Account ID (for bucket policy)</h4>
+        <p>To grant Outreach write access to the S3 bucket, IT needs Outreach's AWS account ID or the specific IAM role ARN they use for Daily Export deliveries. Outreach should have this documented.</p>
+        <div class="who">→ Ask: Jordan Lenard or Outreach technical support</div>
+      </div>
+    </div>
+
+    <div class="blocker">
+      <div class="blocker-num">3</div>
+      <div class="blocker-text">
+        <h4>Confirm export format and coverage</h4>
+        <p>Confirm: (a) export includes all Kaia-recorded calls and meetings, not just a subset; (b) format is metadata JSON + transcript TXT per session; (c) historical data is available for backfill (not just forward-looking).</p>
+        <div class="who">→ Ask: Jordan Lenard or reference Outreach support article #28005562346395</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 32px; background: #1a1d2e; border-radius: 10px; padding: 20px 28px; border-left: 3px solid #66bb6a;">
+    <p style="font-size: 14px; color: #a5d6a7; line-height: 1.7;">Once these three questions are answered: IT creates the S3 bucket, Jordan configures the export destination, and Revay takes it from there. <strong>Total human effort estimated at 2–4 hours.</strong> Everything after infrastructure setup is automated.</p>
+  </div>
+</div>
+
+<!-- SLIDE 9: Summary -->
+<div class="slide" style="background: linear-gradient(135deg, #0f1117 0%, #1a1d2e 100%);">
+  <div class="slide-title">Summary</div>
+  <h2>From Manual Analysis<br>to Continuous Intelligence</h2>
+  <div class="divider"></div>
+  <div class="card-grid">
+    <div class="card highlight">
+      <div class="card-icon">📅</div>
+      <h3>Today</h3>
+      <p>Hours of manual work to analyze 10 deals. Rep notes are incomplete. No way to search across calls. Re-engagement happens by accident, if at all.</p>
+    </div>
+    <div class="card highlight">
+      <div class="card-icon">⚡</div>
+      <h3>With This Pipeline</h3>
+      <p>Every call automatically indexed, enriched, and searchable. Feature gaps ranked by MRR impact. Re-engagement alerts fire automatically when roadmap items ship.</p>
+    </div>
+    <div class="card highlight">
+      <div class="card-icon">📈</div>
+      <h3>The Business Case</h3>
+      <p>Today's 10-deal sample showed $41K/mo in MRR lost to identifiable, addressable gaps. This pipeline scales that analysis to every deal, every day — continuously.</p>
+    </div>
+  </div>
+
+  <div style="margin-top: 48px; display: flex; gap: 16px; flex-wrap: wrap;">
+    <div style="background: #1a1d2e; border-radius: 8px; padding: 16px 20px; text-align: center; flex: 1; min-width: 180px;">
+      <div style="font-size: 32px; font-weight: 800; color: #5c6bc0;">2–4 hrs</div>
+      <div style="font-size: 13px; color: #9fa8da; margin-top: 4px;">Human setup effort</div>
+    </div>
+    <div style="background: #1a1d2e; border-radius: 8px; padding: 16px 20px; text-align: center; flex: 1; min-width: 180px;">
+      <div style="font-size: 32px; font-weight: 800; color: #5c6bc0;">~1 week</div>
+      <div style="font-size: 13px; color: #9fa8da; margin-top: 4px;">Full pipeline live</div>
+    </div>
+    <div style="background: #1a1d2e; border-radius: 8px; padding: 16px 20px; text-align: center; flex: 1; min-width: 180px;">
+      <div style="font-size: 32px; font-weight: 800; color: #5c6bc0;">100%</div>
+      <div style="font-size: 13px; color: #9fa8da; margin-top: 4px;">Call coverage (all reps)</div>
+    </div>
+    <div style="background: #1a1d2e; border-radius: 8px; padding: 16px 20px; text-align: center; flex: 1; min-width: 180px;">
+      <div style="font-size: 32px; font-weight: 800; color: #5c6bc0;">24 hr</div>
+      <div style="font-size: 13px; color: #9fa8da; margin-top: 4px;">Max data lag</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-logo">Rev.io · Revay AI</div>
+  <div class="footer-meta">Kaia Conversation Intelligence Pipeline · March 2026 · Confidential</div>
+</div>
+
+</body>
+</html>
