@@ -57,6 +57,27 @@ canvas{max-width:100%;margin-top:12px}
 </div>
 <div class="container">
 
+<!-- DATA QUALITY NOTICE -->
+<div class="section" style="border-left:4px solid #d97706;background:#fffbeb">
+  <h2 style="color:#92400e">⚠️ Data Quality Notice — Read Before Drawing Conclusions</h2>
+  <p style="font-size:13px;color:#78350f;margin-bottom:12px">This analysis is based on Wrike time log data (Aug 2025–Jan 2026). The categorization system works by mapping each timelog to a task, then tracing the task's parent folder to a client project. <strong>Three known structural gaps inflate Admin Time and suppress utilization metrics:</strong></p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+    <div style="background:#fef3c7;border-radius:8px;padding:14px;border:1px solid #fcd34d">
+      <div style="font-weight:700;font-size:12px;color:#92400e;margin-bottom:6px">1. Orphaned Tasks → Admin Time</div>
+      <div style="font-size:12px;color:#78350f">Any task logged outside a Wrike project folder (e.g. "DE Client Calls") silently falls into Admin Time. Client-facing work becomes invisible in utilization. Estimate: 275h+ affected.</div>
+    </div>
+    <div style="background:#fef3c7;border-radius:8px;padding:14px;border:1px solid #fcd34d">
+      <div style="font-weight:700;font-size:12px;color:#92400e;margin-bottom:6px">2. "Other" (23%) = Likely Structure Issues</div>
+      <div style="font-size:12px;color:#78350f">The 1,822h "Other" bucket likely represents tasks in deep subtask hierarchies where the project folder walk failed — not truly unclassifiable work. Some of these hours may be misattributed to the wrong project entirely.</div>
+    </div>
+    <div style="background:#fef3c7;border-radius:8px;padding:14px;border:1px solid #fcd34d">
+      <div style="font-weight:700;font-size:12px;color:#92400e;margin-bottom:6px">3. Capacity Model Has Uncertainty Range</div>
+      <div style="font-size:12px;color:#78350f">Per-client hour averages (9h PSA Web, 43h Legacy) are derived from the same data with the above gaps. Hire counts should be treated as estimates with ±15–20% uncertainty until data quality is improved.</div>
+    </div>
+  </div>
+  <div style="font-size:12px;color:#92400e;background:#fde68a;border-radius:6px;padding:10px 14px"><strong>Prerequisite action:</strong> Before making headcount or performance decisions from this data, audit Admin Time at the task level to identify productive work currently hidden there. See Opportunity #0 in the improvement table below.</div>
+</div>
+
 <!-- KEY FINDINGS -->
 <div class="section">
   <h2>Key Findings for Leadership Discussion</h2>
@@ -87,8 +108,8 @@ canvas{max-width:100%;margin-top:12px}
 
   <div class="flag amber">
     <div class="flag-icon">🟡</div>
-    <div class="flag-text"><strong>"DE Client Calls" (275h) is categorized as Admin Time, not Project Work</strong>
-    Client-facing calls logged under this bucket are invisible in utilization metrics. For Alexander Hills (149h) and Derrick James (127h) this meaningfully changes their apparent performance. Reclassification would add ~6% to team-wide utilization.</div>
+    <div class="flag-text"><strong>"DE Client Calls" (275h) lands in Admin Time due to a Wrike folder structure issue — not a labeling error</strong>
+    Client-facing calls are logged on tasks that live outside any project folder in Wrike, so the categorization engine routes them to Admin Time. The fix is structural: move "DE Client Calls" tasks into client project folders in Wrike so they're picked up automatically. A surface-level reclassification in reporting will recur every period without fixing the root cause. For Alexander Hills (149h) and Derrick James (127h) this meaningfully understates their apparent performance — and there may be additional productive hours in Admin Time beyond this category if other tasks are also orphaned from project folders.</div>
   </div>
 
   <div class="flag green">
@@ -365,7 +386,7 @@ canvas{max-width:100%;margin-top:12px}
       <table>
         <thead><tr><th>Task Category</th><th>Hours</th><th>% of Project Work</th><th>Signal</th></tr></thead>
         <tbody>
-<tr><td>Project Control</td><td>2671h</td><td>34%</td><td style="font-size:11px">🔴 High overhead</td></tr><tr><td>Other</td><td>1822h</td><td>23%</td><td style="font-size:11px">⚪ Unclassified</td></tr><tr><td>Data Load</td><td>766h</td><td>10%</td><td style="font-size:11px">🟢 Core delivery</td></tr><tr><td>Bill Out Support</td><td>590h</td><td>8%</td><td style="font-size:11px">🟡 Post-live support cost</td></tr><tr><td>Comparative</td><td>565h</td><td>7%</td><td style="font-size:11px">⚪</td></tr><tr><td>Training</td><td>508h</td><td>6%</td><td style="font-size:11px">🟢 Core delivery</td></tr><tr><td>Integrations</td><td>190h</td><td>2%</td><td style="font-size:11px">⚪</td></tr><tr><td>Kickoff</td><td>182h</td><td>2%</td><td style="font-size:11px">🟢 Core delivery</td></tr><tr><td>QBO Integration</td><td>172h</td><td>2%</td><td style="font-size:11px">⚪</td></tr><tr><td>Administration</td><td>147h</td><td>2%</td><td style="font-size:11px">⚪</td></tr><tr><td>Graduation</td><td>139h</td><td>2%</td><td style="font-size:11px">🟢 Outcome</td></tr><tr><td>Activation</td><td>110h</td><td>1%</td><td style="font-size:11px">⚪</td></tr>
+<tr><td>Project Control</td><td>2671h</td><td>34%</td><td style="font-size:11px">🔴 High overhead</td></tr><tr><td>Other</td><td>1822h</td><td>23%</td><td style="font-size:11px">🟡 Likely Wrike structure issue, not truly unclassified</td></tr><tr><td>Data Load</td><td>766h</td><td>10%</td><td style="font-size:11px">🟢 Core delivery</td></tr><tr><td>Bill Out Support</td><td>590h</td><td>8%</td><td style="font-size:11px">🟡 Post-live support cost</td></tr><tr><td>Comparative</td><td>565h</td><td>7%</td><td style="font-size:11px">⚪</td></tr><tr><td>Training</td><td>508h</td><td>6%</td><td style="font-size:11px">🟢 Core delivery</td></tr><tr><td>Integrations</td><td>190h</td><td>2%</td><td style="font-size:11px">⚪</td></tr><tr><td>Kickoff</td><td>182h</td><td>2%</td><td style="font-size:11px">🟢 Core delivery</td></tr><tr><td>QBO Integration</td><td>172h</td><td>2%</td><td style="font-size:11px">⚪</td></tr><tr><td>Administration</td><td>147h</td><td>2%</td><td style="font-size:11px">⚪</td></tr><tr><td>Graduation</td><td>139h</td><td>2%</td><td style="font-size:11px">🟢 Outcome</td></tr><tr><td>Activation</td><td>110h</td><td>1%</td><td style="font-size:11px">⚪</td></tr>
         </tbody>
       </table>
       <div class="warn">Project Control (34%) + Other (23%) = 57% of all project hours are overhead or unclassified. Only 43% maps to clear delivery activities. Improving task classification alone would unlock significant management visibility.</div>
@@ -379,7 +400,7 @@ canvas{max-width:100%;margin-top:12px}
 
   <h3>PSA Web (Solutions Analyst Team)</h3>
   <div class="note" style="margin-bottom:16px">
-    Assumptions: Avg 9h invested per client over onboarding lifecycle · Median 11-week onboarding duration · Current active SA team = Nicole + Kegan (165 combined project hrs/mo) · Halle ramps over next 90 days.
+    Assumptions: Avg 9h invested per client over onboarding lifecycle · Median 11-week onboarding duration · Current active SA team = Nicole + Kegan (165 combined project hrs/mo) · Halle ramps over next 90 days.<br><strong>⚠️ Data caveat:</strong> The 9h/client average is derived from time log data with known categorization gaps (see Data Quality Notice). Hire projections should be treated as estimates with ±15–20% uncertainty. Hire counts shown reflect current data; true need may be 1–2 fewer if Admin Time audit recovers hidden project hours.
   </div>
   <div class="stat-grid" style="margin-bottom:20px">
     <div class="stat blue"><div class="stat-val">165h</div><div class="stat-label">Combined SA project hrs/mo (current)</div></div>
@@ -417,7 +438,7 @@ canvas{max-width:100%;margin-top:12px}
 
   <h3 style="margin-top:28px">Legacy Billing Team</h3>
   <div class="note" style="margin-bottom:16px">
-    Assumptions: Avg 43h per client over full engagement · 12-person delivery team · 1,142 project hrs/mo available.
+    Assumptions: Avg 43h per client over full engagement · 12-person delivery team · 1,142 project hrs/mo available.<br><strong>⚠️ Data caveat:</strong> The 43h/client average includes the same categorization noise as the PSA Web model. Legacy team has substantial headroom, so this uncertainty doesn't change the "no new hires" conclusion — but per-PM capacity planning should be revisited after the Admin Time audit.
   </div>
   <div class="stat-grid" style="margin-bottom:20px">
     <div class="stat blue"><div class="stat-val">1,142h</div><div class="stat-label">Team project hrs/mo</div></div>
@@ -456,13 +477,14 @@ canvas{max-width:100%;margin-top:12px}
   <table>
     <thead><tr><th>#</th><th>Opportunity</th><th>Estimated Impact</th><th>Effort</th><th>Who Owns It</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td><strong>Reclassify "DE Client Calls" as Project Work</strong> — 275h of client-facing work hidden in admin</td><td>+6% team utilization; accurate metrics</td><td style="color:#16a34a">Low</td><td>Fran / Team</td></tr>
+      <tr style="background:#fffbeb"><td><strong>0</strong></td><td><strong>Audit Admin Time at the task level</strong> — identify productive work hidden in Admin due to Wrike folder structure gaps (orphaned tasks, misconfigured subtask hierarchies). Do this before drawing headcount or performance conclusions.</td><td>Accurate baseline for all downstream decisions</td><td style="color:#d97706">Medium</td><td>DE Director / Fran</td></tr>
+      <tr><td>1</td><td><strong>Move "DE Client Calls" tasks into client project folders in Wrike</strong> — 275h of client-facing work is invisible because these tasks live outside project folders, falling through to Admin Time. A surface-level reclassification in reporting will recur; the fix must be structural.</td><td>+6% team utilization (floor); may recover more once orphaned tasks are audited</td><td style="color:#16a34a">Low</td><td>DE Director / Lauren</td></tr>
       <tr><td>2</td><td><strong>Remove Lunch from time logging</strong> — adds 400–500h of fake Admin overhead every 6 months</td><td>Cleaner utilization; removes misleading data</td><td style="color:#16a34a">Low</td><td>Fran / Lauren</td></tr>
       <tr><td>3</td><td><strong>Reduce "Project Control" from 34% → target 20%</strong> — templates, standup cadence, client portal</td><td>+1,100h released for delivery per 6 months</td><td style="color:#d97706">Medium</td><td>Fran / PMs</td></tr>
-      <tr><td>4</td><td><strong>Investigate Alex Hills and Derrick James utilization</strong> — 37–39% true utilization; 230h meetings/period for Derrick</td><td>+300–400h project hours per 6 months if resolved</td><td style="color:#d97706">Medium</td><td>Fran</td></tr>
+      <tr><td>4</td><td><strong>Investigate Alex Hills and Derrick James utilization</strong> — 37–39% true utilization after DE Client Calls addback, but additional productive hours may be hiding in Admin Time from orphaned tasks. Audit task-level Admin Time before making role changes.</td><td>+300–400h project hours per 6 months if resolved (potentially higher)</td><td style="color:#d97706">Medium</td><td>Fran / DE Director</td></tr>
       <tr><td>5</td><td><strong>Halle Taylor ramp plan</strong> — 30 PSA Web clients with 0 graduations; 3.5 weeks logged</td><td>Full SA capacity online in 60–90 days</td><td style="color:#16a34a">Low (time)</td><td>Nicole / Fran</td></tr>
       <tr><td>6</td><td><strong>Milestone tracker adoption</strong> — All 486 milestones show "Not Started"; no completion data</td><td>Real-time health visibility per client</td><td style="color:#d97706">Medium</td><td>All SAs</td></tr>
-      <tr><td>7</td><td><strong>Improve task classification in time logs</strong> — 23% of project hours in "Other" bucket</td><td>Management visibility; identify further waste</td><td style="color:#16a34a">Low</td><td>Fran / Team</td></tr>
+      <tr><td>7</td><td><strong>Fix "Other" task classification in Wrike folder structure</strong> — 23% of project hours (1,822h) land in "Other," likely because subtasks aren't properly nested under project folders. This isn't just a labeling issue — some hours may be attributed to the wrong project.</td><td>Management visibility; accurate per-client cost model; improved capacity projections</td><td style="color:#d97706">Medium</td><td>DE Director / Lauren</td></tr>
     </tbody>
   </table>
 </div>
@@ -475,7 +497,8 @@ canvas{max-width:100%;margin-top:12px}
       <div style="font-weight:700;margin-bottom:8px;color:#0f172a">📊 Data & Metrics</div>
       <ul style="padding-left:18px;font-size:13px;line-height:2">
         <li>What does "Project Control" actually encompass day-to-day?</li>
-        <li>Why is "DE Client Calls" in Admin Time? What does DE stand for?</li>
+        <li>"DE Client Calls" lands in Admin Time because those tasks live outside project folders in Wrike — can we move them into client project folders so they count toward utilization automatically?</li>
+        <li>Can the DE team run a task-level audit of Admin Time to surface other productive work that's being miscategorized?</li>
         <li>Why are milestones not being updated in Notion?</li>
         <li>What's the right utilization target for the team — 70%? 75%?</li>
       </ul>
@@ -511,7 +534,7 @@ canvas{max-width:100%;margin-top:12px}
 </div>
 
 <div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px">
-  Generated by Revay ⚡ · Rev.io Internal · Feb 25, 2026 · Based on Wrike time logs (Aug 2025–Jan 2026) + Notion PSA Onboarding data
+  Generated by Revay ⚡ · Rev.io Internal · Updated Mar 2, 2026 · Based on Wrike time logs (Aug 2025–Jan 2026) + Notion PSA Onboarding data · v2: DE Director time-tracking context incorporated
 </div>
 </div>
 
