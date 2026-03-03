@@ -3,32 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rev.io PSA Web — GTM Alignment Deck</title>
-  <!-- v2: Jennifer feedback applied 2026-03-03 -->
+  <title>Rev.io PSA Web — GTM Alignment</title>
+  <!-- v4: condensed — Exec Summary + Strategic Direction + Execution Plan -->
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --blue:        #1a4fa0;
-      --blue-mid:    #2563eb;
-      --blue-light:  #eff6ff;
-      --blue-pale:   #dbeafe;
-      --accent:      #f59e0b;
-      --accent-lt:   #fef3c7;
-      --green:       #059669;
-      --green-lt:    #d1fae5;
-      --red:         #dc2626;
-      --red-lt:      #fee2e2;
-      --orange:      #ea580c;
-      --orange-lt:   #ffedd5;
-      --purple:      #7c3aed;
-      --purple-lt:   #ede9fe;
-      --gray:        #64748b;
-      --gray-lt:     #f1f5f9;
-      --text:        #1e293b;
-      --white:       #ffffff;
-      --dark:        #0f172a;
-      --dark2:       #1e293b;
+      --blue:       #1a4fa0;
+      --blue-mid:   #2563eb;
+      --blue-pale:  #dbeafe;
+      --blue-light: #eff6ff;
+      --green:      #059669;
+      --green-lt:   #d1fae5;
+      --red:        #dc2626;
+      --red-lt:     #fee2e2;
+      --amber:      #f59e0b;
+      --amber-lt:   #fef3c7;
+      --orange:     #ea580c;
+      --orange-lt:  #ffedd5;
+      --gray:       #64748b;
+      --gray-lt:    #f1f5f9;
+      --text:       #1e293b;
+      --dark:       #0f172a;
+      --dark2:      #1e293b;
     }
 
     html { scroll-behavior: smooth; }
@@ -39,7 +36,7 @@
       color: var(--text);
     }
 
-    /* ── NAV ── */
+    /* NAV */
     .nav {
       position: fixed; top: 0; left: 0; right: 0;
       background: rgba(15,23,42,0.96);
@@ -49,224 +46,120 @@
       z-index: 200;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .nav-brand { color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 600; letter-spacing: 0.4px; }
+    .nav-brand { color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 600; }
     .nav-title { color: white; font-size: 13px; font-weight: 700; }
-    .nav-date { color: rgba(255,255,255,0.45); font-size: 12px; }
+    .nav-date  { color: rgba(255,255,255,0.4); font-size: 12px; }
 
-    /* ── SECTIONS ── */
-    .section { padding: 80px 0 0 0; }
-    .section:first-of-type { padding-top: 52px; }
-
-    /* ── COVER ── */
+    /* COVER */
     .cover {
       min-height: 100vh;
-      background: linear-gradient(135deg, #0f172a 0%, #1a2d5a 50%, #0f172a 100%);
+      background: linear-gradient(135deg, #0f172a 0%, #1a2d5a 55%, #0f172a 100%);
       display: flex; align-items: center; justify-content: center;
       text-align: center; padding: 80px 32px 60px;
     }
-    .cover-inner { max-width: 760px; }
+    .cover-inner { max-width: 720px; }
     .cover-badge {
       display: inline-block;
-      background: rgba(37,99,235,0.25);
-      border: 1px solid rgba(37,99,235,0.5);
-      color: #93c5fd;
-      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      background: rgba(37,99,235,0.2); border: 1px solid rgba(37,99,235,0.45);
+      color: #93c5fd; font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
       padding: 5px 14px; border-radius: 20px; text-transform: uppercase;
       margin-bottom: 24px;
     }
     .cover h1 {
-      font-size: clamp(32px, 5vw, 52px);
-      font-weight: 800; color: white; line-height: 1.15;
-      margin-bottom: 16px;
+      font-size: clamp(30px, 5vw, 50px); font-weight: 800; color: white;
+      line-height: 1.2; margin-bottom: 16px;
     }
     .cover h1 span { color: #60a5fa; }
-    .cover-sub {
-      font-size: 18px; color: rgba(255,255,255,0.55);
-      margin-bottom: 40px; line-height: 1.6;
-    }
-    .cover-meta {
-      display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
-    }
-    .cover-meta-item {
-      text-align: center;
-    }
-    .cover-meta-item .label { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
-    .cover-meta-item .val { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: 600; }
+    .cover-sub { font-size: 17px; color: rgba(255,255,255,0.5); margin-bottom: 40px; line-height: 1.6; }
+    .cover-meta { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+    .cover-meta-item .label { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .cover-meta-item .val   { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: 600; }
 
-    /* ── SLIDE WRAPPER ── */
+    /* DIVIDER */
+    .divider { height: 4px; background: linear-gradient(90deg, var(--blue) 0%, var(--blue-mid) 50%, #60a5fa 100%); }
+
+    /* SLIDE */
     .slide {
-      background: white;
-      margin: 0;
-      padding: 64px max(32px, calc((100vw - 900px)/2));
+      padding: 64px max(32px, calc((100vw - 920px)/2));
       border-bottom: 1px solid #e2e8f0;
+      background: white;
     }
-    .slide.alt { background: var(--gray-lt); }
-    .slide.dark { background: var(--dark2); color: white; }
-    .slide.blue { background: var(--blue-light); }
+    .slide.alt  { background: var(--gray-lt); }
+    .slide.dark { background: var(--dark2); color: white; border-bottom: 1px solid rgba(255,255,255,0.06); }
 
-    /* ── SLIDE HEADER ── */
-    .slide-num {
-      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--gray); margin-bottom: 8px;
-    }
-    .slide.dark .slide-num { color: rgba(255,255,255,0.4); }
+    .slide-num { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); margin-bottom: 8px; }
+    .slide.dark .slide-num { color: rgba(255,255,255,0.35); }
+
     .slide-tag {
-      display: inline-block;
-      font-size: 11px; font-weight: 700; letter-spacing: 1px;
-      text-transform: uppercase; padding: 4px 12px; border-radius: 20px;
-      margin-bottom: 12px;
+      display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px;
     }
-    .tag-red    { background: var(--red-lt);    color: var(--red); }
-    .tag-green  { background: var(--green-lt);  color: var(--green); }
-    .tag-blue   { background: var(--blue-pale); color: var(--blue-mid); }
-    .tag-orange { background: var(--orange-lt); color: var(--orange); }
-    .tag-purple { background: var(--purple-lt); color: var(--purple); }
-    .tag-amber  { background: var(--accent-lt); color: #92400e; }
+    .tag-blue   { background: var(--blue-pale);  color: var(--blue-mid); }
+    .tag-green  { background: var(--green-lt);   color: var(--green); }
+    .tag-amber  { background: var(--amber-lt);   color: #92400e; }
 
-    .slide h2 {
-      font-size: clamp(22px, 3vw, 30px);
-      font-weight: 800; color: var(--text); line-height: 1.25;
-      margin-bottom: 8px;
-    }
+    .slide h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; color: var(--text); line-height: 1.25; margin-bottom: 8px; }
     .slide.dark h2 { color: white; }
-    .slide-deck {
-      font-size: 15px; color: var(--gray); margin-bottom: 32px; line-height: 1.5;
-    }
-    .slide.dark .slide-deck { color: rgba(255,255,255,0.5); }
+    .slide-sub { font-size: 15px; color: var(--gray); margin-bottom: 32px; line-height: 1.5; }
+    .slide.dark .slide-sub { color: rgba(255,255,255,0.45); }
 
-    /* ── HERO STAT ── */
-    .hero-stat {
-      display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 32px;
-    }
+    /* STAT ROW */
+    .stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
     .stat-box {
-      flex: 1; min-width: 140px;
-      background: white; border: 1px solid #e2e8f0;
-      border-radius: 12px; padding: 20px 24px;
-      text-align: center;
+      flex: 1; min-width: 120px;
+      background: white; border: 1px solid #e2e8f0; border-radius: 12px;
+      padding: 18px 20px; text-align: center;
     }
-    .stat-box.accent { border-top: 3px solid var(--accent); }
-    .stat-box.red    { border-top: 3px solid var(--red); }
-    .stat-box.green  { border-top: 3px solid var(--green); }
     .stat-box.blue   { border-top: 3px solid var(--blue-mid); }
-    .stat-box.orange { border-top: 3px solid var(--orange); }
-    .stat-box .num {
-      font-size: 32px; font-weight: 900; line-height: 1;
-      margin-bottom: 6px;
-    }
-    .stat-box.accent .num { color: var(--accent); }
-    .stat-box.red    .num { color: var(--red); }
-    .stat-box.green  .num { color: var(--green); }
-    .stat-box.blue   .num { color: var(--blue-mid); }
-    .stat-box.orange .num { color: var(--orange); }
+    .stat-box.green  { border-top: 3px solid var(--green); }
+    .stat-box.red    { border-top: 3px solid var(--red); }
+    .stat-box.amber  { border-top: 3px solid var(--amber); }
+    .stat-box .num { font-size: 28px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+    .stat-box.blue  .num { color: var(--blue-mid); }
+    .stat-box.green .num { color: var(--green); }
+    .stat-box.red   .num { color: var(--red); }
+    .stat-box.amber .num { color: var(--amber); }
     .stat-box .lbl { font-size: 12px; color: var(--gray); font-weight: 600; line-height: 1.3; }
     .stat-box .sub { font-size: 11px; color: #94a3b8; margin-top: 4px; }
-
     .slide.alt .stat-box { background: white; }
 
-    /* ── CALLOUT ── */
+    /* CALLOUT */
     .callout {
-      border-radius: 10px; padding: 18px 22px;
-      margin-bottom: 24px; display: flex; gap: 14px; align-items: flex-start;
+      border-radius: 10px; padding: 16px 20px;
+      margin-bottom: 20px; display: flex; gap: 12px; align-items: flex-start;
     }
-    .callout-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
     .callout-body { font-size: 14px; line-height: 1.6; }
-    .callout-body strong { display: block; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-    .callout.warn   { background: var(--accent-lt); border-left: 3px solid var(--accent); }
-    .callout.danger { background: var(--red-lt);    border-left: 3px solid var(--red); }
-    .callout.success{ background: var(--green-lt);  border-left: 3px solid var(--green); }
-    .callout.info   { background: var(--blue-pale); border-left: 3px solid var(--blue-mid); }
+    .callout-body strong { display: block; font-weight: 700; margin-bottom: 3px; }
+    .callout.info    { background: var(--blue-light); border-left: 3px solid var(--blue-mid); }
+    .callout.success { background: var(--green-lt);   border-left: 3px solid var(--green); }
+    .callout.warn    { background: var(--amber-lt);   border-left: 3px solid var(--amber); }
 
-    /* ── BULLET LIST ── */
-    .bullet-list { list-style: none; margin-bottom: 24px; }
-    .bullet-list li {
-      padding: 10px 0 10px 22px;
-      position: relative; font-size: 15px; line-height: 1.5;
-      border-bottom: 1px solid #f1f5f9; color: var(--text);
-    }
-    .bullet-list li:last-child { border-bottom: none; }
-    .bullet-list li::before {
-      content: '→'; position: absolute; left: 0;
-      color: var(--blue-mid); font-weight: 700;
-    }
-    .slide.alt .bullet-list li { border-bottom: 1px solid #e2e8f0; }
-
-    /* ── TWO-COL ── */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
-    @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
-
-    /* ── CARD ── */
-    .card {
-      background: white; border: 1px solid #e2e8f0; border-radius: 12px;
-      padding: 22px 24px;
-    }
-    .card.red    { border-top: 3px solid var(--red); }
-    .card.green  { border-top: 3px solid var(--green); }
-    .card.blue   { border-top: 3px solid var(--blue-mid); }
-    .card.orange { border-top: 3px solid var(--orange); }
-    .card.amber  { border-top: 3px solid var(--accent); }
-    .card.purple { border-top: 3px solid var(--purple); }
-    .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-    .card .card-stat { font-size: 26px; font-weight: 900; margin-bottom: 6px; }
-    .card.red    .card-stat { color: var(--red); }
-    .card.green  .card-stat { color: var(--green); }
-    .card.blue   .card-stat { color: var(--blue-mid); }
-    .card.orange .card-stat { color: var(--orange); }
-    .card.amber  .card-stat { color: var(--accent); }
-    .card.purple .card-stat { color: var(--purple); }
-    .card p { font-size: 13px; color: var(--gray); line-height: 1.55; }
-    .card .card-action {
-      margin-top: 14px; padding-top: 14px; border-top: 1px solid #f1f5f9;
-      font-size: 12px; color: var(--text); font-weight: 600;
-    }
-    .card .owner { font-size: 11px; color: var(--gray); margin-top: 4px; }
-
-    .slide.alt .card { background: white; }
-
-    /* ── REP TABLE ── */
-    .rep-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-    .rep-row {
-      background: white; border: 1px solid #e2e8f0; border-radius: 10px;
-      display: flex; align-items: center; gap: 16px; padding: 14px 18px;
-      flex-wrap: wrap;
-    }
-    .rep-name { font-size: 14px; font-weight: 700; color: var(--text); min-width: 140px; }
-    .rep-stat { font-size: 12px; color: var(--gray); }
-    .rep-stat strong { font-weight: 700; }
-    .rep-badge {
-      margin-left: auto; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-      padding: 4px 10px; border-radius: 20px;
-    }
-    .badge-model  { background: var(--green-lt);  color: var(--green); }
-    .badge-target { background: var(--blue-pale);  color: var(--blue-mid); }
-    .badge-watch  { background: var(--red-lt);    color: var(--red); }
-    .badge-invalid{ background: #f1f5f9; color: var(--gray); }
-
-    /* ── SHIFT TABLE ── */
-    .shift-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+    /* SHIFT GRID */
+    .shift-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
     .shift-row {
-      display: grid; grid-template-columns: 140px 1fr 32px 1fr;
+      display: grid; grid-template-columns: 130px 1fr 28px 1fr;
       align-items: center; gap: 12px;
       background: white; border: 1px solid #e2e8f0; border-radius: 10px;
       padding: 14px 18px;
     }
-    @media (max-width: 680px) { .shift-row { grid-template-columns: 1fr; } }
-    .shift-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray); }
-    .shift-from { font-size: 13px; color: var(--red); background: var(--red-lt); border-radius: 6px; padding: 6px 10px; line-height: 1.4; }
-    .shift-arrow { text-align: center; font-size: 18px; color: var(--gray); }
-    .shift-to   { font-size: 13px; color: var(--green); background: var(--green-lt); border-radius: 6px; padding: 6px 10px; line-height: 1.4; }
+    @media (max-width: 640px) { .shift-row { grid-template-columns: 1fr; } }
+    .shift-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray); }
+    .shift-from { font-size: 13px; color: var(--red);   background: var(--red-lt);   border-radius: 6px; padding: 7px 10px; line-height: 1.4; }
+    .shift-arrow{ text-align: center; font-size: 16px; color: var(--gray); }
+    .shift-to   { font-size: 13px; color: var(--green); background: var(--green-lt); border-radius: 6px; padding: 7px 10px; line-height: 1.4; }
+    .shift-note { font-size: 11px; opacity: 0.75; display: block; margin-top: 3px; }
 
-    /* ── ACTION ITEMS ── */
-    .action-group { margin-bottom: 28px; }
-    .action-group-title {
+    /* ACTION ITEMS */
+    .priority-header {
       font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--gray); margin-bottom: 12px;
+      color: var(--gray); margin: 28px 0 12px;
       display: flex; align-items: center; gap: 8px;
     }
-    .priority-dot {
-      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
-    }
+    .priority-header:first-of-type { margin-top: 0; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
     .dot-red    { background: var(--red); }
-    .dot-yellow { background: var(--accent); }
+    .dot-yellow { background: var(--amber); }
     .dot-green  { background: var(--green); }
 
     .action-item {
@@ -280,68 +173,26 @@
       font-size: 12px; font-weight: 800; color: white;
     }
     .num-red    { background: var(--red); }
-    .num-yellow { background: var(--accent); }
+    .num-yellow { background: var(--amber); }
     .num-green  { background: var(--green); }
     .action-body { flex: 1; }
     .action-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
-    .action-desc { font-size: 13px; color: var(--gray); line-height: 1.5; }
-    .action-meta { margin-top: 8px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .action-desc  { font-size: 13px; color: var(--gray); line-height: 1.5; }
+    .action-meta  { margin-top: 8px; display: flex; gap: 16px; flex-wrap: wrap; }
     .action-meta span { font-size: 11px; font-weight: 700; color: var(--gray); }
     .action-meta span strong { color: var(--text); }
-    .action-impact { font-size: 11px; font-weight: 700; color: var(--green); }
+    .action-impact { font-size: 11px; font-weight: 700; color: var(--green) !important; }
 
-    /* ── OPEN QS ── */
-    .q-list { list-style: none; }
-    .q-item {
-      display: flex; gap: 14px; align-items: flex-start;
-      padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .q-item:last-child { border-bottom: none; }
-    .q-num {
-      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-      background: rgba(37,99,235,0.2); border: 1px solid rgba(37,99,235,0.4);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 800; color: #93c5fd;
-    }
-    .q-body { flex: 1; }
-    .q-title { font-size: 15px; font-weight: 700; color: white; margin-bottom: 4px; }
-    .q-sub { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
-
-    /* ── RESOLVED Q ── */
-    .q-item.resolved { opacity: 1; }
-    .q-item.resolved .q-num {
-      background: rgba(5,150,105,0.2); border-color: rgba(5,150,105,0.5); color: #6ee7b7;
-    }
-    .q-item.resolved .q-num::after { content: '✓'; }
-    .q-resolved-badge {
-      display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 1px;
-      text-transform: uppercase; padding: 3px 9px; border-radius: 20px; margin-bottom: 6px;
-      background: rgba(5,150,105,0.2); border: 1px solid rgba(5,150,105,0.4); color: #6ee7b7;
-    }
-    .q-resolved-answer {
-      font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6;
-      background: rgba(5,150,105,0.08); border-left: 2px solid rgba(5,150,105,0.4);
-      padding: 8px 12px; border-radius: 0 6px 6px 0; margin-top: 8px;
-    }
-    .q-resolved-answer strong { color: #6ee7b7; }
-
-    /* ── FOOTER ── */
+    /* FOOTER */
     footer {
       background: var(--dark); text-align: center;
-      padding: 40px 32px; border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 36px 32px; border-top: 1px solid rgba(255,255,255,0.06);
     }
-    footer p { font-size: 12px; color: rgba(255,255,255,0.3); margin-bottom: 6px; }
-
-    /* ── DIVIDER ── */
-    .divider {
-      height: 4px;
-      background: linear-gradient(90deg, var(--blue) 0%, var(--blue-mid) 50%, #60a5fa 100%);
-    }
+    footer p { font-size: 12px; color: rgba(255,255,255,0.25); margin-bottom: 4px; }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
   <span class="nav-brand">Rev.io PSA Web</span>
   <span class="nav-title">GTM Alignment</span>
@@ -353,10 +204,10 @@
   <div class="cover-inner">
     <div class="cover-badge">Rev.io PSA Web · Internal Alignment</div>
     <h1>GTM Alignment:<br/><span>Findings, Decisions<br/>&amp; Action Items</span></h1>
-    <p class="cover-sub">A cross-reference of the GTM performance analysis with strategic direction.<br/>For confirmation and execution alignment.</p>
+    <p class="cover-sub">Strategic direction and execution plan for leadership alignment.</p>
     <div class="cover-meta">
       <div class="cover-meta-item">
-        <div class="label">Prepared for</div>
+        <div class="label">For</div>
         <div class="val">Brent · Ryan · Jennifer</div>
       </div>
       <div class="cover-meta-item">
@@ -365,7 +216,7 @@
       </div>
       <div class="cover-meta-item">
         <div class="label">Status</div>
-        <div class="val">v2 — Jennifer Confirmed ✓</div>
+        <div class="val">Confirmed — Ready to Execute</div>
       </div>
     </div>
   </div>
@@ -375,24 +226,24 @@
 <!-- EXECUTIVE SUMMARY -->
 <section class="slide">
   <div class="slide-num">Executive Summary</div>
-  <h2>The 5× Story</h2>
-  <p class="slide-deck">Where we are, why, and what it takes to get to the next level.</p>
+  <h2>67% of Our Losses Are Fixable</h2>
+  <p class="slide-sub">The market is untapped. The problem is execution against the wrong ICP.</p>
 
-  <div class="hero-stat">
+  <div class="stat-row">
     <div class="stat-box blue">
       <div class="num">115</div>
       <div class="lbl">Total PSA Web Wins</div>
-      <div class="sub">Current state</div>
+      <div class="sub">Current baseline</div>
     </div>
     <div class="stat-box green">
       <div class="num">$75K</div>
       <div class="lbl">MRR Today</div>
-      <div class="sub">Phase 1 baseline</div>
+      <div class="sub">February rebound</div>
     </div>
-    <div class="stat-box accent">
+    <div class="stat-box amber">
       <div class="num">67%</div>
       <div class="lbl">Losses Are Fixable</div>
-      <div class="sub">Execution problem</div>
+      <div class="sub">Execution, not product</div>
     </div>
     <div class="stat-box red">
       <div class="num">35%</div>
@@ -404,579 +255,235 @@
   <div class="callout info">
     <div class="callout-icon">⚡</div>
     <div class="callout-body">
-      <strong>The 5× Thesis</strong>
-      PSA Web launched into a "bridge market" — security integrators and AV companies who would buy an early-stage product. That got us to 115 wins and $75K MRR. The next 5× requires three things: <strong>fix the execution machine</strong> (show rates, rep coaching, SDR quality, paid media ROI), <strong>monetize near-term pipeline</strong> (billing cross-sell, Apollo 2 re-engagements), and <strong>build the IT MSP competitive displacement motion</strong> that is the long-term growth engine. The product is ready. It requires changing how — and to whom — we sell it.
+      <strong>The 5× Path</strong>
+      PSA Web launched into a bridge market — security integrators and AV companies who would buy an early-stage product. That got us to 115 wins and $75K MRR. The next 5× requires three things: <strong>fix the execution machine</strong> (show rates, SDR quality, paid media ROI), <strong>monetize near-term pipeline</strong> (billing cross-sell, Apollo 2 re-engagements, Tigerpaw migration), and <strong>build the IT MSP competitive displacement motion</strong> as the long-term growth engine. The product is ready. It requires changing how — and to whom — we sell it.
     </div>
   </div>
 
-  <div class="callout warn">
-    <div class="callout-icon">⚠️</div>
-    <div class="callout-body">
-      <strong>Tigerpaw Base = Retention Priority, Not New Bookings</strong>
-      80–100 accounts with confirmed migration intent must be migrated before they churn to a competitor. Do not count these as new MRR — they are existing revenue to protect.
-    </div>
-  </div>
-</section>
-
-<!-- FINDING 1 -->
-<section class="slide alt">
-  <div class="slide-num">Finding 1 · ICP</div>
-  <div class="slide-tag tag-red">Root Cause</div>
-  <h2>We've Been Targeting the Wrong Segment</h2>
-  <p class="slide-deck">Security/Commercial AV was a bridge market. The real ICP is IT MSP.</p>
-
-  <div class="hero-stat">
-    <div class="stat-box red">
-      <div class="num">3.3%</div>
-      <div class="lbl">Paid Media Win Rate</div>
-      <div class="sub">120 opps → 4 wins, $1,770 MRR</div>
-    </div>
-    <div class="stat-box green">
-      <div class="num">32%</div>
-      <div class="lbl">Inbound Win Rate</div>
-      <div class="sub">10× paid media performance</div>
-    </div>
-    <div class="stat-box orange">
-      <div class="num">11</div>
-      <div class="lbl">IT MSP Wins (All-time)</div>
-      <div class="sub">Should be dramatically higher</div>
-    </div>
-    <div class="stat-box red">
-      <div class="num">0</div>
-      <div class="lbl">Competitive Displacement Wins</div>
-      <div class="sub">CW / Kaseya / Halo recorded in SF</div>
-    </div>
-  </div>
-
-  <ul class="bullet-list">
-    <li>Nearly all paid spend (Meta) was focused on commercial security/AV — a small, blue-collar, field-based buyer who is chronically unavailable and the first meeting to get bumped</li>
-    <li>IT MSPs running ConnectWise, Kaseya, Halo, or NinjaOne are the true ICP — higher ACV, better retention, product-market fit exists</li>
-    <li>Feature gaps have cost us more than the data shows — many IT MSP prospects drop out during prospecting, <em>before</em> ever reaching CRM or a meeting</li>
-  </ul>
-
-  <div class="two-col">
-    <div class="card blue">
-      <h3>✅ Decision: Media Shift — In Progress</h3>
-      <p>Shift <strong>80%+ of paid media</strong> from Meta → LinkedIn (majority), X, and Reddit — IT MSP focused. <strong>Already started as of March 2.</strong> Team is rebuilding the account and campaigns now; first ad goes live within the week. Will take time to ramp and optimize.</p>
-      <p style="margin-top:8px;font-size:12px;color:#059669;font-weight:600;">Note: Existing site content naturally indexing for Integrators stays — no cost to maintain. No new work or ad spend will be funded to that audience going forward.</p>
-      <div class="card-action">⚠️ Expect a short-term pipeline dip as transition resets top-of-funnel. This is expected and acceptable.</div>
-      <div class="owner">Owner: Jennifer Hopkins · Live now — ramping</div>
-    </div>
-    <div class="card green">
-      <h3>Decision: Build the Displacement Motion</h3>
-      <p>IT MSP competitive displacement requires: battlecards, reference cases from IT MSP wins, targeted outreach to dissatisfied CW/Kaseya accounts via channel and events. New SDR scripts: softer approach, awareness-first — the IT MSP buyer cannot be aggressively overcome.</p>
-      <div class="card-action">Build from scratch — zero recorded wins in this motion today.</div>
-      <div class="owner">Owner: Marketing + Sales · Q2–Q3 2026</div>
-    </div>
-  </div>
-</section>
-
-<!-- FINDING 2 -->
-<section class="slide">
-  <div class="slide-num">Finding 2 · Show Rates</div>
-  <div class="slide-tag tag-orange">Execution Gap</div>
-  <h2>35% No-Show Rate — Qualification Problem, Not Volume</h2>
-  <p class="slide-deck">Stop optimizing for meetings set. Optimize for meetings run.</p>
-
-  <div class="rep-grid">
-    <div class="rep-row">
-      <div class="rep-name">Joe Abarno</div>
-      <div class="rep-stat">No-show: <strong>36%</strong></div>
-      <div class="rep-stat">Win rate (run meetings): <strong>33%</strong></div>
-      <div class="rep-stat">Win rate (all engaged): <strong>20%</strong></div>
-      <div class="rep-badge badge-model">Closing Model</div>
-    </div>
-    <div class="rep-row">
-      <div class="rep-name">Jamie Butler</div>
-      <div class="rep-stat">No-show: <strong>14.6%</strong> (41 opps)</div>
-      <div class="rep-stat">Win rate (completed): <strong>14.3%</strong></div>
-      <div class="rep-stat">Best show rate on active team</div>
-      <div class="rep-badge badge-target">Show-Rate Model</div>
-    </div>
-    <div class="rep-row" style="opacity:0.6;">
-      <div class="rep-name">Dahlstrom</div>
-      <div class="rep-stat">Stats: <strong>invalid</strong> (38 opps)</div>
-      <div class="rep-stat">Management ran deals; recently departed</div>
-      <div class="rep-badge badge-invalid">Exclude from Benchmarking</div>
-    </div>
-  </div>
-
-  <div class="two-col">
-    <div class="card amber">
-      <h3>Extract Jamie Butler's Playbook</h3>
-      <p>Document his pre-meeting qualification sequence, confirmation process, and reminder cadence. Roll out team-wide. This is the fastest path to show-rate improvement across all reps.</p>
-      <div class="card-action">Impact: +$3–5K/mo immediately</div>
-      <div class="owner">Owner: Sales Mgmt · This week</div>
-    </div>
-    <div class="card blue">
-      <h3>SDR Comp Already Restructured</h3>
-      <p>No comp on meetings set. Comp only on <strong>meetings complete</strong>. SDRs must confirm final decision-maker attendance and prospect skin in the game before booking any meeting.</p>
-      <div class="card-action">Joe Abarno leads additional team training on closing + AI practices.</div>
-      <div class="owner">Training cadence: TBD</div>
-    </div>
-  </div>
-</section>
-
-<!-- FINDING 3 -->
-<section class="slide alt">
-  <div class="slide-num">Finding 3 · Reps</div>
-  <div class="slide-tag tag-red">Coaching Priorities</div>
-  <h2>Rep Coaching: Two Priorities, Two Opportunities</h2>
-  <p class="slide-deck">Most pipeline, worst efficiency. Highest deal value, needs to be codified.</p>
-
-  <div class="two-col">
-    <div class="card red">
-      <h3>Patrick Davies — Most Pipeline, Worst Efficiency</h3>
-      <div class="card-stat">6.3%</div>
-      <p>Win rate on <strong>$11,630 in open pipeline</strong> — most of any rep on the team. At team median (10%), his pipeline generates $5,000+ additional MRR near-term.</p>
-      <div class="card-action">Action: Manager sits on every active Davies deal immediately.</div>
-      <div class="owner">Owner: Sales Mgmt · Immediate</div>
-    </div>
-    <div class="card green">
-      <h3>Davis Herndon — Study the $1K+ Deal Profile</h3>
-      <div class="card-stat">$1,153</div>
-      <p>Average MRR per deal — <strong>2× the team average</strong>. His won accounts are the template for the higher-value ICP. What industry, what size, what use case?</p>
-      <div class="card-action">Action: Analyze Herndon's accounts → codify the $1K+ deal profile as the emerging ICP standard.</div>
-      <div class="owner">Owner: Sales Ops / Revay · Q1 2026</div>
-    </div>
-  </div>
-</section>
-
-<!-- FINDING 4 -->
-<section class="slide">
-  <div class="slide-num">Finding 4 · SDRs</div>
-  <div class="slide-tag tag-red">Lead Quality Crisis</div>
-  <h2>SDR Lead Quality Overhaul Required</h2>
-  <p class="slide-deck">SDR-influenced pipeline closes at less than half the rate of non-SDR opportunities.</p>
-
-  <div class="hero-stat">
-    <div class="stat-box red">
-      <div class="num">~5%</div>
-      <div class="lbl">SDR-Influenced Win Rate</div>
-      <div class="sub">Current state</div>
-    </div>
-    <div class="stat-box green">
-      <div class="num">11.5%</div>
-      <div class="lbl">Non-SDR Win Rate</div>
-      <div class="sub">2.3× higher than SDR pipeline</div>
-    </div>
-    <div class="stat-box red">
-      <div class="num">0</div>
-      <div class="lbl">Wins (Combined)</div>
-      <div class="sub">Firi (41) · Marchese (25) · Petraglia (12) · Johnson (8)</div>
-    </div>
-  </div>
-
-  <div class="callout danger">
-    <div class="callout-icon">🚨</div>
-    <div class="callout-body">
-      <strong>This is an ICP qualification problem — not a show-rate problem</strong>
-      Prosper Firi (41 opps), Abigail Marchese (25 opps), Emily Petraglia (12 opps), and Jailyn Johnson (8 opps) have zero wins combined. SDRs are booking meetings with the wrong prospects. 50 qualified meetings are worth more than 150 unqualified ones.
-    </div>
-  </div>
-
-  <ul class="bullet-list">
-    <li>Implement ICP scoring before any meeting is booked — no booking without qualification checkpoint</li>
-    <li>SDRs shift focus exclusively to IT MSP segment with new outreach scripts (awareness-first, softer approach)</li>
-    <li>Review total SDR headcount against the new quality-over-volume model</li>
-  </ul>
-  <p style="font-size:12px;color:var(--gray);">Owner: Sales Mgmt · Timeline: Q1 2026</p>
-</section>
-
-<!-- FINDING 5 -->
-<section class="slide alt">
-  <div class="slide-num">Finding 5 · Quick Wins</div>
-  <div class="slide-tag tag-green">Near-Term Revenue</div>
-  <h2>Close What We Already Have — Billing Cross-Sell</h2>
-  <p class="slide-deck">11 open deals with existing Rev.io customers. Easiest closes in the pipeline.</p>
-
-  <div class="hero-stat">
-    <div class="stat-box green">
-      <div class="num">$9,089</div>
-      <div class="lbl">Open Billing Cross-Sell MRR</div>
-      <div class="sub">11 open deals</div>
-    </div>
-    <div class="stat-box blue">
-      <div class="num">30%</div>
-      <div class="lbl">Expected Win Rate</div>
-      <div class="sub">3–4 deals should close</div>
-    </div>
-    <div class="stat-box green">
-      <div class="num">~$3K+</div>
-      <div class="lbl">Projected MRR Capture</div>
-      <div class="sub">Near-term</div>
-    </div>
-  </div>
-
-  <div class="two-col">
-    <div class="card green">
-      <h3>🎯 Losh Network — Stage 5</h3>
-      <p>Ready to close. Put a manager on this deal immediately. This should not be sitting at Stage 5 without active management oversight.</p>
-      <div class="card-action">Action: Ryan assigns manager oversight today.</div>
-      <div class="owner">Owner: Ryan Koontz · This week</div>
-    </div>
-    <div class="card amber">
-      <h3>⏰ Vision CTS — Closing Window</h3>
-      <p>ConnectWise renewal in <strong>April 2026</strong> = active closing window right now. Miss this window and the deal resets.</p>
-      <div class="card-action">Action: Immediate outreach + manager oversight.</div>
-      <div class="owner">Owner: Ryan Koontz · This week</div>
-    </div>
-  </div>
-</section>
-
-<!-- FINDING 6 -->
-<section class="slide">
-  <div class="slide-num">Finding 6 · Apollo 2</div>
-  <div class="slide-tag tag-blue">$101K MRR Opportunity</div>
-  <h2>Feature Gap Re-Engagement — The Biggest Near-Term Opportunity</h2>
-  <p class="slide-deck">133 documented feature-gap losses. 98 deals unlock in April. The campaign goes in March.</p>
-
-  <div class="hero-stat">
-    <div class="stat-box blue">
-      <div class="num">133</div>
-      <div class="lbl">Documented Feature-Gap Losses</div>
-      <div class="sub">Mapped to Apollo 1/2 roadmap</div>
-    </div>
-    <div class="stat-box green">
-      <div class="num">98</div>
-      <div class="lbl">Deals Fully Unlocked by April</div>
-      <div class="sub">Apollo 2 delivery</div>
-    </div>
-    <div class="stat-box green">
-      <div class="num">$101,759</div>
-      <div class="lbl">MRR — These 98 Deals</div>
-      <div class="sub">Re-engageable this quarter</div>
-    </div>
-  </div>
-
-  <div class="callout info">
-    <div class="callout-icon">📬</div>
-    <div class="callout-body">
-      <strong>The Campaign Message</strong>
-      "The feature you needed is shipping next month. Want to see it early?" — Reach out in late March, before Apollo 2 ships, to pre-book demos. Work from the top of the list by MRR. Billing cross-sell re-engagement bundled into the same window.
-    </div>
-  </div>
-
-  <ul class="bullet-list">
-    <li><strong>✅ RMM-NinjaOne Phase 1 is In Progress in Apollo 2</strong> — Account Sync scope, PRD 90% complete, On Track. RMM-N-able Phase 1 also in Apollo 2. These are the unlocks for the IT MSP buyer.</li>
-    <li>Kaia transcript analysis underway — surfacing feature objections from prospecting calls that never hit CRM (lost appointments, not just lost deals) → feeds automated Outreach re-targeting sequences as features release</li>
-    <li>Feature data underestimates the real gap — many IT MSP prospects dropped out before ever reaching a meeting or being logged in Salesforce</li>
-  </ul>
-  <div class="callout success" style="margin-top:16px;">
+  <div class="callout success">
     <div class="callout-icon">✅</div>
     <div class="callout-body">
-      <strong>RMM-NinjaOne Phase 1 — Confirmed In Progress (Apollo 2)</strong>
-      Account Sync · PRD 90% complete · On Track · Pod: Integrations. Also in Apollo 2: RMM-N-able Phase 1. The March re-engagement campaign timeline is confirmed viable.
+      <strong>Near-Term Revenue on the Table</strong>
+      98 feature-gap deals worth $101,759 MRR unlock with Apollo 2 (April). 11 billing cross-sell deals at $9,089 MRR ready to close now. 80–100 Tigerpaw accounts to migrate (churn prevention). RMM-NinjaOne Phase 1 is In Progress in Apollo 2, on track.
     </div>
   </div>
-  <p style="font-size:12px;color:var(--gray);">Owner: Sales + Marketing · Timeline: March 2026 · Impact: $10–25K MRR over 90 days</p>
 </section>
 
-<!-- FINDING 7 -->
-<section class="slide alt">
-  <div class="slide-num">Finding 7 · Retention</div>
-  <div class="slide-tag tag-purple">Churn Prevention</div>
-  <h2>Tigerpaw Migration — Protect What We Have</h2>
-  <p class="slide-deck">80–100 existing customers with migration intent. This is a retention play, not new ARR.</p>
-
-  <div class="hero-stat">
-    <div class="stat-box blue">
-      <div class="num">80–100</div>
-      <div class="lbl">Accounts With Migration Intent</div>
-      <div class="sub">Confirmed Tigerpaw → PSA Web</div>
-    </div>
-    <div class="stat-box orange">
-      <div class="num">~540</div>
-      <div class="lbl">Remaining Tigerpaw Base</div>
-      <div class="sub">At risk as legacy support sunsets</div>
-    </div>
-  </div>
-
-  <div class="callout warn">
-    <div class="callout-icon">⚠️</div>
-    <div class="callout-body">
-      <strong>Do not count these as new bookings</strong>
-      These are existing paying customers. Migrating them is churn prevention. Failing to migrate them is a churn event. Long-term benefit: price lift on PSA Web vs. legacy Tigerpaw rates.
-    </div>
-  </div>
-
-  <ul class="bullet-list">
-    <li>Migrate ahead of competitor outreach — as Rev.io sunsets legacy Tigerpaw support, competitors will target this list aggressively</li>
-    <li>Price lift opportunity: PSA Web pricing vs. legacy Tigerpaw rates improves long-term ARPU</li>
-    <li>Evan + Ryan personally assigned — this requires executive-level relationship management</li>
-  </ul>
-  <p style="font-size:12px;color:var(--gray);">Owner: Evan + Ryan · Timeline: Q1–Q2 2026 · Priority: High</p>
-</section>
-
-<!-- FINDING 8 -->
-<section class="slide">
-  <div class="slide-num">Finding 8 · Trend</div>
-  <div class="slide-tag tag-red">Urgent Investigation</div>
-  <h2>The November Collapse — What Changed?</h2>
-  <p class="slide-deck">Same pipeline volume, half the win rate. Something broke in November. Find it.</p>
-
-  <div class="hero-stat">
-    <div class="stat-box green">
-      <div class="num">12.2%</div>
-      <div class="lbl">September Win Rate</div>
-      <div class="sub">147 pipeline closures</div>
-    </div>
-    <div class="stat-box red">
-      <div class="num">6.1%</div>
-      <div class="lbl">November Win Rate</div>
-      <div class="sub">Same pipeline volume</div>
-    </div>
-    <div class="stat-box red">
-      <div class="num">4.7%</div>
-      <div class="lbl">January 2026 Win Rate</div>
-      <div class="sub">Near historic low</div>
-    </div>
-  </div>
-
-  <div class="callout danger">
-    <div class="callout-icon">🔍</div>
-    <div class="callout-body">
-      <strong>This needs a diagnosis, not assumptions</strong>
-      Theories: rep change, ICP drift, deal quality deterioration, pricing change. Answering this question is the key to preventing January 2026 (4.7%) from becoming the new normal. If we shift ICP and show rates improve but win rate stays suppressed, something structural is broken.
-    </div>
-  </div>
-
-  <p style="font-size:12px;color:var(--gray);">Owner: Sales Ops · Timeline: Q1 2026</p>
-</section>
-
-<!-- THE FOUR SHIFTS -->
+<!-- STRATEGIC DIRECTION -->
 <section class="slide alt">
   <div class="slide-num">Strategic Direction</div>
   <div class="slide-tag tag-blue">Confirmed Decisions</div>
   <h2>The Four Strategic Shifts</h2>
-  <p class="slide-deck">These are the pivots. Confirm alignment below.</p>
+  <p class="slide-sub">All confirmed. Execution in motion.</p>
 
   <div class="shift-grid">
     <div class="shift-row">
       <div class="shift-label">Target Segment</div>
-      <div class="shift-from">Security / Commercial AV<br/><span style="font-size:11px;opacity:0.7;">Bridge market, early stage</span></div>
+      <div class="shift-from">Security / Commercial AV
+        <span class="shift-note">Bridge market — deprioritized. Existing site content stays (no cost); zero new investment to this audience.</span>
+      </div>
       <div class="shift-arrow">→</div>
-      <div class="shift-to">IT MSP — ConnectWise, Kaseya, Halo, NinjaOne<br/><span style="font-size:11px;opacity:0.7;">True ICP, higher ACV, better retention</span></div>
+      <div class="shift-to">IT MSP — ConnectWise, Kaseya, Halo, NinjaOne
+        <span class="shift-note">True ICP. Higher ACV, better retention, product-market fit confirmed.</span>
+      </div>
     </div>
     <div class="shift-row">
       <div class="shift-label">Paid Media</div>
-      <div class="shift-from">Meta · 80%+ of spend · 3.3% win rate<br/><span style="font-size:11px;opacity:0.7;">Almost certainly negative ROI</span></div>
+      <div class="shift-from">Meta · 80%+ of spend · 3.3% win rate
+        <span class="shift-note">Confirmed negative ROI. Security/AV focused.</span>
+      </div>
       <div class="shift-arrow">→</div>
-      <div class="shift-to">LinkedIn / X / Reddit + SEO/Content<br/><span style="font-size:11px;opacity:0.7;">ITMSP focused · 32% inbound close rate</span></div>
+      <div class="shift-to">LinkedIn / X / Reddit + SEO &amp; Content
+        <span class="shift-note">Already started as of March 2. First ad live within the week. Inbound closes at 32% — invest here.</span>
+      </div>
     </div>
     <div class="shift-row">
       <div class="shift-label">Meeting Strategy</div>
-      <div class="shift-from">Volume of meetings set<br/><span style="font-size:11px;opacity:0.7;">SDRs comped on sets</span></div>
+      <div class="shift-from">Volume of meetings set
+        <span class="shift-note">SDRs previously comped on sets regardless of quality.</span>
+      </div>
       <div class="shift-arrow">→</div>
-      <div class="shift-to">Quality of meetings run<br/><span style="font-size:11px;opacity:0.7;">SDRs comped on meetings complete only</span></div>
+      <div class="shift-to">Quality of meetings run
+        <span class="shift-note">SDRs comped only on meetings complete. Final decision-maker + prospect skin in the game required before booking.</span>
+      </div>
     </div>
     <div class="shift-row">
-      <div class="shift-label">SDR Approach</div>
-      <div class="shift-from">Aggressive objection overcoming<br/><span style="font-size:11px;opacity:0.7;">Force meetings with security/AV buyers</span></div>
+      <div class="shift-label">SDR Model</div>
+      <div class="shift-from">4 Integrator SDRs · aggressive cold outreach
+        <span class="shift-note">Forcing meetings that don't show. Wrong buyer profile.</span>
+      </div>
       <div class="shift-arrow">→</div>
-      <div class="shift-to">ICP scoring + awareness campaigns<br/><span style="font-size:11px;opacity:0.7;">Schedule people with genuine expressed interest</span></div>
+      <div class="shift-to">2 MSP SDRs (AI-assisted, no-voice) + 4 Integrator SDRs (cold call)
+        <span class="shift-note">Split aligns with media shift. AI automation for MSP prospecting; cold calls continue for Integrators and Telecom.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout success">
+    <div class="callout-icon">🤖</div>
+    <div class="callout-body">
+      <strong>AI Training in Motion — Joe Abarno</strong>
+      Joe has been conducting bi-weekly AI best practices trainings with the team (focused on Notion automation). Evan is working with Patrick (CFO) to establish a dedicated budget to adopt new AI tools for Joe to test and roll out with the group. Frequency can increase as capacity allows.
     </div>
   </div>
 </section>
 
-<!-- ACTION ITEMS -->
+<!-- EXECUTION PLAN -->
 <section class="slide">
   <div class="slide-num">Execution Plan</div>
-  <div class="slide-tag tag-green">Action Items by Priority</div>
-  <h2>What Happens Next — Prioritized</h2>
-  <p class="slide-deck">Sorted by urgency. Red = this week. Yellow = this month. Green = this quarter.</p>
+  <div class="slide-tag tag-green">Prioritized Action Items</div>
+  <h2>What Happens Next</h2>
+  <p class="slide-sub">Sorted by urgency. Owners assigned. Timelines confirmed.</p>
 
-  <div class="action-group">
-    <div class="action-group-title"><span class="priority-dot dot-red"></span>This Week — Immediate</div>
+  <!-- THIS WEEK -->
+  <div class="priority-header"><span class="dot dot-red"></span>This Week — Immediate</div>
 
-    <div class="action-item">
-      <div class="action-num num-red">1</div>
-      <div class="action-body">
-        <div class="action-title">Extract Jamie Butler's Show-Rate Playbook</div>
-        <div class="action-desc">Document his pre-meeting qualification, confirmation, and reminder sequence. Roll out to all reps.</div>
-        <div class="action-meta"><span>Owner: <strong>Sales Mgmt</strong></span><span class="action-impact">Impact: +$3–5K/mo immediately</span></div>
-      </div>
-    </div>
-
-    <div class="action-item">
-      <div class="action-num num-red">2</div>
-      <div class="action-body">
-        <div class="action-title">Manager on Every Patrick Davies Deal</div>
-        <div class="action-desc">$11,630 open pipeline at 6.3% win rate. At team median, this is $5K+ MRR near-term. Immediate oversight required.</div>
-        <div class="action-meta"><span>Owner: <strong>Sales Mgmt</strong></span><span class="action-impact">Impact: +$3–5K MRR near-term</span></div>
-      </div>
-    </div>
-
-    <div class="action-item">
-      <div class="action-num num-red">3</div>
-      <div class="action-body">
-        <div class="action-title">Close Losh Network (Stage 5) + Vision CTS (April CW Renewal)</div>
-        <div class="action-desc">Existing Rev.io customers. Easiest closes in the pipeline. Vision CTS closing window closes when CW renews in April.</div>
-        <div class="action-meta"><span>Owner: <strong>Ryan Koontz</strong></span><span class="action-impact">Impact: ~$3K+ MRR</span></div>
-      </div>
-    </div>
-
-    <div class="action-item">
-      <div class="action-num num-red">4</div>
-      <div class="action-body">
-        <div class="action-title">Initiate Paid Media Channel Shift to LinkedIn</div>
-        <div class="action-desc">Begin transitioning 80%+ of spend from Meta to LinkedIn (IT MSP focused). Accept short-term pipeline dip.</div>
-        <div class="action-meta"><span>Owner: <strong>Jennifer Hopkins</strong></span><span>Timeline: <strong>Q1 2026</strong></span></div>
+  <div class="action-item">
+    <div class="action-num num-red">1</div>
+    <div class="action-body">
+      <div class="action-title">Extract Jamie Butler's Show-Rate Playbook</div>
+      <div class="action-desc">Jamie has the best show rate on the active team (14.6% no-show, 41 opps). Document his pre-meeting qualification, confirmation, and reminder sequence and roll out team-wide.</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Sales Mgmt</strong></span>
+        <span class="action-impact">Impact: +$3–5K/mo immediately</span>
       </div>
     </div>
   </div>
 
-  <div class="action-group">
-    <div class="action-group-title"><span class="priority-dot dot-yellow"></span>March 2026</div>
-
-    <div class="action-item" style="border-left:3px solid var(--green);">
-      <div class="action-num num-yellow">5</div>
-      <div class="action-body">
-        <div class="action-title">✅ Launch Apollo 2 Re-Engagement Campaign — In Motion</div>
-        <div class="action-desc">98 fully unlocked deals ($101,759 MRR). Ryan's team owns the calls; Jennifer owns broad marketing email coverage. Plan being outlined in detail now. Message: <em>"The feature you needed is shipping next month. Want to see it early?"</em> Work from top of list by MRR.</div>
-        <div class="action-meta"><span>Owner: <strong>Ryan Koontz + Jennifer Hopkins</strong></span><span class="action-impact">Impact: $10–25K MRR over 90 days</span></div>
-      </div>
-    </div>
-
-    <div class="action-item">
-      <div class="action-num num-yellow">6</div>
-      <div class="action-body">
-        <div class="action-title">Joe Abarno Team Training — Closing Process + AI Practices</div>
-        <div class="action-desc">Joe leads formal training on his closing methodology and the AI automation practices he's developed for efficiency. Share across the team.</div>
-        <div class="action-meta"><span>Owner: <strong>Sales Mgmt</strong></span><span>Timeline: <strong>TBD — confirm date</strong></span></div>
+  <div class="action-item">
+    <div class="action-num num-red">2</div>
+    <div class="action-body">
+      <div class="action-title">Manager Oversight on Patrick Davies Pipeline</div>
+      <div class="action-desc">$11,630 open pipeline at 6.3% win rate — most of any rep. At team median (10%), this pipeline yields $5K+ MRR. Manager on every active deal immediately.</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Sales Mgmt</strong></span>
+        <span class="action-impact">Impact: +$3–5K MRR near-term</span>
       </div>
     </div>
   </div>
 
-  <div class="action-group">
-    <div class="action-group-title"><span class="priority-dot dot-yellow"></span>Q1 2026</div>
-
-    <div class="action-item">
-      <div class="action-num num-yellow">7</div>
-      <div class="action-body">
-        <div class="action-title">SDR ICP Scoring + Qualification Overhaul</div>
-        <div class="action-desc">Implement ICP scoring before any meeting is booked. Review SDR headcount. Target: SDR-influenced win rate 5% → 10%+.</div>
-        <div class="action-meta"><span>Owner: <strong>Sales Mgmt</strong></span></div>
-      </div>
-    </div>
-
-    <div class="action-item">
-      <div class="action-num num-yellow">8</div>
-      <div class="action-body">
-        <div class="action-title">Diagnose the November Win Rate Collapse</div>
-        <div class="action-desc">September: 12.2% win rate. November: 6.1% (same pipeline volume). January: 4.7%. Find the root cause before it becomes permanent.</div>
-        <div class="action-meta"><span>Owner: <strong>Sales Ops</strong></span></div>
-      </div>
-    </div>
-
-    <div class="action-item">
-      <div class="action-num num-yellow">9</div>
-      <div class="action-body">
-        <div class="action-title">Davis Herndon Buyer Analysis — Codify the $1K+ Deal Profile</div>
-        <div class="action-desc">Herndon averages $1,153 MRR/deal (2× team avg). Analyze his won accounts and build the higher-value ICP template.</div>
-        <div class="action-meta"><span>Owner: <strong>Sales Ops / Revay</strong></span></div>
+  <div class="action-item">
+    <div class="action-num num-red">3</div>
+    <div class="action-body">
+      <div class="action-title">Close Losh Network + Vision CTS — Billing Cross-Sell</div>
+      <div class="action-desc">11 open billing cross-sell deals at $9,089 MRR — existing Rev.io customers, easiest closes in the pipeline. Priority: Losh Network (Stage 5, ready to close) and Vision CTS (ConnectWise renewal window = April 2026).</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Ryan Koontz</strong></span>
+        <span class="action-impact">Impact: ~$3K+ MRR at 30% close rate</span>
       </div>
     </div>
   </div>
 
-  <div class="action-group">
-    <div class="action-group-title"><span class="priority-dot dot-green"></span>Q1–Q2 2026</div>
+  <!-- MARCH -->
+  <div class="priority-header"><span class="dot dot-yellow"></span>March 2026</div>
 
-    <div class="action-item">
-      <div class="action-num num-green">10</div>
-      <div class="action-body">
-        <div class="action-title">Tigerpaw Migration — 80–100 Accounts</div>
-        <div class="action-desc">Migrate existing Tigerpaw customers to PSA Web before they churn to a competitor. Long-term ARPU lift as PSA Web pricing > legacy Tigerpaw.</div>
-        <div class="action-meta"><span>Owner: <strong>Evan + Ryan</strong></span></div>
-      </div>
-    </div>
-
-    <div class="action-item">
-      <div class="action-num num-green">11</div>
-      <div class="action-body">
-        <div class="action-title">Build IT MSP Competitive Displacement Motion</div>
-        <div class="action-desc">Battlecards, reference cases, targeted outreach to dissatisfied CW/Kaseya accounts via channel + events. The long-term growth engine.</div>
-        <div class="action-meta"><span>Owner: <strong>Marketing + Sales</strong></span><span>Timeline: <strong>Q2–Q3 2026</strong></span></div>
+  <div class="action-item">
+    <div class="action-num num-yellow">4</div>
+    <div class="action-body">
+      <div class="action-title">Launch Apollo 2 Re-Engagement Campaign — In Motion</div>
+      <div class="action-desc">98 fully unlocked deals worth $101,759 MRR. Reach out before April ship to pre-book demos. Ryan's team owns outbound calls; Jennifer owns broad marketing email coverage. Plan being detailed now. Message: <em>"The feature you needed is shipping next month. Want to see it early?"</em> Work from top of list by MRR.</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Ryan Koontz + Jennifer Hopkins</strong></span>
+        <span class="action-impact">Impact: $10–25K MRR over 90 days</span>
       </div>
     </div>
   </div>
+
+  <div class="action-item">
+    <div class="action-num num-yellow">5</div>
+    <div class="action-body">
+      <div class="action-title">Paid Media Channel Shift to LinkedIn — In Progress</div>
+      <div class="action-desc">Already started as of March 2. Account and campaigns being rebuilt. First ad live within the week. Short-term pipeline dip is expected and accepted as transition resets top-of-funnel. SEO/content investment to run in parallel (inbound closes at 32%).</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Jennifer Hopkins</strong></span>
+        <span>Timeline: <strong>Ramping now</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-num num-yellow">6</div>
+    <div class="action-body">
+      <div class="action-title">SDR ICP Qualification Standards</div>
+      <div class="action-desc">Implement ICP scoring before any meeting is booked. MSP SDRs shift to AI-assisted no-voice prospecting; Integrator/Telecom SDRs continue cold calls. Target: SDR-influenced win rate from ~5% toward 10%+.</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Sales Mgmt</strong></span>
+        <span>Timeline: <strong>Q1 2026</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="priority-header"><span class="dot dot-yellow"></span>Q1 2026</div>
+
+  <div class="action-item">
+    <div class="action-num num-yellow">7</div>
+    <div class="action-body">
+      <div class="action-title">Diagnose the November Win Rate Collapse</div>
+      <div class="action-desc">September: 12.2% win rate. November: 6.1% (same pipeline volume). January 2026: 4.7%. Something changed. Rep change? ICP drift? Deal quality? Root cause analysis required to prevent continued deceleration.</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Sales Ops</strong></span>
+        <span>Timeline: <strong>Q1 2026</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-num num-yellow">8</div>
+    <div class="action-body">
+      <div class="action-title">Codify the $1K+ Deal Profile (Davis Herndon Buyer Analysis)</div>
+      <div class="action-desc">Herndon averages $1,153 MRR/deal — 2× the team average. Analyze his won accounts to build the higher-value ICP template and inform SDR targeting for the MSP motion.</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Sales Ops / Revay</strong></span>
+        <span>Timeline: <strong>Q1 2026</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-num num-yellow">9</div>
+    <div class="action-body">
+      <div class="action-title">AI Tools Budget — Adopt and Deploy with Team</div>
+      <div class="action-desc">Evan working with Patrick (CFO) to establish a dedicated budget for AI tooling. Joe Abarno will test and roll out new tools with the team, building on existing bi-weekly AI training cadence. Goal: increase automation across SDR prospecting and rep efficiency.</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Evan + Patrick (CFO)</strong></span>
+        <span>Timeline: <strong>Q1 2026</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q1-Q2 -->
+  <div class="priority-header"><span class="dot dot-green"></span>Q1–Q2 2026</div>
+
+  <div class="action-item">
+    <div class="action-num num-green">10</div>
+    <div class="action-body">
+      <div class="action-title">Tigerpaw Migration — 80–100 Accounts (Retention Priority)</div>
+      <div class="action-desc">Existing customers with confirmed migration intent. Migrate before they churn to a competitor. Do not count as new bookings — this is churn prevention. Long-term benefit: price lift on PSA Web vs. legacy Tigerpaw rates.</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Evan + Ryan</strong></span>
+        <span>Timeline: <strong>Q1–Q2 2026</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-num num-green">11</div>
+    <div class="action-body">
+      <div class="action-title">Build the IT MSP Competitive Displacement Motion</div>
+      <div class="action-desc">Zero recorded displacement wins in Salesforce today. Build from scratch: battlecards, reference cases, targeted outreach to dissatisfied ConnectWise/Kaseya accounts via channel and events. This is the long-term growth engine.</div>
+      <div class="action-meta">
+        <span>Owner: <strong>Marketing + Sales</strong></span>
+        <span>Timeline: <strong>Q2–Q3 2026</strong></span>
+      </div>
+    </div>
+  </div>
+
 </section>
 
-<!-- OPEN QUESTIONS -->
-<section class="slide dark">
-  <div class="slide-num" style="color:rgba(255,255,255,0.4);">Next Steps</div>
-  <div class="slide-tag" style="background:rgba(37,99,235,0.2);border:1px solid rgba(37,99,235,0.4);color:#93c5fd;">Confirm Before Execution</div>
-  <h2>Open Questions</h2>
-  <p class="slide-deck">Please respond with decisions on each of these before we execute.</p>
-
-  <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:24px;">4 of 7 confirmed · March 3, 2026 · 3 remaining open</p>
-
-  <ul class="q-list">
-    <li class="q-item resolved">
-      <div class="q-num">✓</div>
-      <div class="q-body">
-        <div class="q-resolved-badge">Confirmed — Jennifer</div>
-        <div class="q-title">ICP Pivot is Locked</div>
-        <div class="q-resolved-answer">✅ Confirmed. IT MSP is the primary target; Security/AV is deprioritized. <strong>Nuance:</strong> existing site content naturally indexing for Integrators stays (no cost, already running). No new work or ad spend will be funded to that audience going forward.</div>
-      </div>
-    </li>
-    <li class="q-item resolved">
-      <div class="q-num">✓</div>
-      <div class="q-body">
-        <div class="q-resolved-badge">Confirmed — Jennifer</div>
-        <div class="q-title">Paid Media Shift Timeline</div>
-        <div class="q-resolved-answer">✅ <strong>Already started as of March 2.</strong> Team is rebuilding the LinkedIn account and campaigns now. First ad goes live within the week. Will take time to ramp and optimize — short-term pipeline dip is expected and accepted.</div>
-      </div>
-    </li>
-    <li class="q-item">
-      <div class="q-num">3</div>
-      <div class="q-body">
-        <div class="q-title">SDR Headcount — Right-Sized for Quality-Over-Volume?</div>
-        <div class="q-sub">With SDRs comped on meetings complete and focused on a harder-to-reach but higher-quality IT MSP buyer, are we staffed correctly? Or do we need to right-size?</div>
-      </div>
-    </li>
-    <li class="q-item resolved">
-      <div class="q-num">✓</div>
-      <div class="q-body">
-        <div class="q-resolved-badge">Confirmed — Notion Roadmap</div>
-        <div class="q-title">NinjaOne + RMM Integrations — In Progress, On Track</div>
-        <div class="q-resolved-answer">
-          ✅ <strong>RMM-NinjaOne Phase 1 is active in Apollo 2.</strong><br/>
-          Phase 1 scope: Account Sync · PRD: 90% complete · Status: <strong>In Progress</strong> · Track: <strong>On Track</strong> · Pod: Integrations<br/>
-          This is confirmed as a top priority and actively being worked. The March re-engagement campaign timeline is viable.
-        </div>
-      </div>
-    </li>
-    <li class="q-item resolved">
-      <div class="q-num">✓</div>
-      <div class="q-body">
-        <div class="q-resolved-badge">Confirmed — Jennifer</div>
-        <div class="q-title">Apollo 2 Re-Engagement Campaign — Ownership Confirmed</div>
-        <div class="q-resolved-answer">✅ <strong>In motion — mentioned on today's call.</strong> Ryan's team owns the outbound calls; Jennifer owns broad marketing email coverage. Plan being outlined in detail now. March launch confirmed.</div>
-      </div>
-    </li>
-    <li class="q-item">
-      <div class="q-num">6</div>
-      <div class="q-body">
-        <div class="q-title">Joe Abarno Training — When Is the First Session?</div>
-        <div class="q-sub">He's available and capable. The team needs this. Set the date.</div>
-      </div>
-    </li>
-    <li class="q-item">
-      <div class="q-num">7</div>
-      <div class="q-body">
-        <div class="q-title">Tigerpaw Migration — Additional Point Person Beyond Evan + Ryan?</div>
-        <div class="q-sub">80–100 accounts is significant migration work. Is there a project lead or customer success owner who should be running point alongside Evan and Ryan?</div>
-      </div>
-    </li>
-  </ul>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <p>Rev.io PSA Web — GTM Alignment Deck · v3 · March 3, 2026</p>
-  <p>Prepared from Evan Rice's deck walkthrough + cross-referenced against gtm-analysis.html</p>
-  <p style="margin-top:12px;">Questions → Evan Rice</p>
+  <p>Rev.io PSA Web — GTM Alignment · v4 · March 3, 2026</p>
+  <p>Brent Maropis · Ryan Koontz · Jennifer Hopkins</p>
 </footer>
 
 </body>
