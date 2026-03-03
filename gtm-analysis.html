@@ -198,6 +198,64 @@
     font-size: 12px; text-align: center; border-top: 1px solid var(--border);
   }
   footer strong { color: var(--primary); }
+
+  /* ═══════════════════════════════════════════ */
+  /* MOBILE RESPONSIVE                          */
+  /* ═══════════════════════════════════════════ */
+
+  /* Tables must scroll horizontally on small screens */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  @media (max-width: 640px) {
+    /* Cover */
+    .cover { padding: 40px 20px; min-height: auto; }
+    .cover h1 { font-size: 24px; }
+    .cover .sub { font-size: 14px; margin-bottom: 20px; }
+    .cover .meta { gap: 20px; }
+    .cover .meta-item .val { font-size: 22px; }
+
+    /* Nav */
+    .toc { padding: 0; }
+    .toc a { padding: 12px 14px; font-size: 11px; letter-spacing: 0.4px; }
+
+    /* Sections */
+    .section { padding: 36px 16px; }
+    .insight-box { padding: 20px 16px; }
+    footer { padding: 24px 20px; }
+
+    /* Typography */
+    h2 { font-size: 22px; }
+    h3 { font-size: 16px; }
+    .section-intro { font-size: 14px; }
+
+    /* KPI grid — 2 columns on mobile */
+    .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .kpi .val { font-size: 22px; }
+
+    /* Bar charts — stack label above bar */
+    .bar-row { flex-wrap: wrap; gap: 6px; }
+    .bar-label { min-width: unset; width: 100%; text-align: left; font-size: 11px; }
+    .bar-track { width: 100%; flex: none; }
+    .bar-meta { display: none; }
+
+    /* Scenario grid — single column */
+    .scenario-grid { grid-template-columns: 1fr; }
+    .scenario-val { font-size: 28px; }
+
+    /* Rec grid — single column */
+    .rec-grid { grid-template-columns: 1fr; }
+
+    /* Tables — shrink font */
+    table { font-size: 12px; }
+    thead th { font-size: 10px; padding: 8px 10px; }
+    td { padding: 8px 10px; }
+  }
+
+  @media (max-width: 400px) {
+    .cover h1 { font-size: 20px; }
+    .kpi-grid { grid-template-columns: 1fr; }
+  }
+
 </style>
 </head>
 <body>
