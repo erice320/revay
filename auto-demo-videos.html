@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automated Feature Demo Videos — Rev.io</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #1a4fa0;
+      --blue-light: #2563eb;
+      --blue-pale: #eff6ff;
+      --accent: #f59e0b;
+      --accent-light: #fef3c7;
+      --green: #059669;
+      --green-light: #d1fae5;
+      --red: #dc2626;
+      --red-light: #fee2e2;
+      --gray: #64748b;
+      --gray-light: #f1f5f9;
+      --text: #1e293b;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0f172a;
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(15,23,42,0.95);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 32px;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-brand {
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      opacity: 0.8;
+    }
+    .nav-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .nav-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .nav-dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+    .nav-arrows {
+      display: flex;
+      gap: 8px;
+    }
+    .nav-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* SLIDES */
+    .slides-container {
+      padding-top: 56px;
+    }
+
+    .slide {
+      display: none;
+      min-height: 100vh;
+      padding: 60px 80px;
+      animation: fadeIn 0.4s ease;
+    }
+    .slide.active { display: flex; flex-direction: column; justify-content: center; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SLIDE TYPES */
+
+    /* COVER */
+    .slide-cover {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a6e 50%, #0f172a 100%);
+      align-items: center;
+      text-align: center;
+    }
+    .slide-cover .tag {
+      display: inline-block;
+      background: rgba(245,158,11,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(245,158,11,0.3);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .slide-cover h1 {
+      font-size: 52px;
+      font-weight: 800;
+      color: white;
+      line-height: 1.15;
+      max-width: 800px;
+      margin-bottom: 20px;
+    }
+    .slide-cover h1 span { color: var(--accent); }
+    .slide-cover p {
+      font-size: 20px;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    .cover-meta {
+      display: flex;
+      gap: 40px;
+      color: rgba(255,255,255,0.4);
+      font-size: 13px;
+    }
+    .cover-meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* STANDARD */
+    .slide-standard { background: var(--white); }
+    .slide-dark { background: #0f172a; }
+
+    .slide-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      margin-bottom: 12px;
+    }
+    .slide-dark .slide-label { color: var(--accent); }
+
+    .slide-title {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .slide-dark .slide-title { color: white; }
+
+    .slide-subtitle {
+      font-size: 18px;
+      color: var(--gray);
+      margin-bottom: 44px;
+      line-height: 1.5;
+    }
+    .slide-dark .slide-subtitle { color: rgba(255,255,255,0.5); }
+
+    /* PROBLEM SLIDE */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .problem-card {
+      background: var(--gray-light);
+      border-radius: 12px;
+      padding: 24px 28px;
+      border-left: 4px solid var(--red);
+    }
+    .problem-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .problem-card p {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .problem-stat {
+      background: var(--red-light);
+      border-radius: 12px;
+      padding: 24px 28px;
+      text-align: center;
+      grid-column: span 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--red);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--gray);
+      margin-top: 6px;
+    }
+
+    /* VISION SLIDE */
+    .vision-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 36px;
+    }
+    .flow-step {
+      flex: 1;
+      background: var(--blue-pale);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+    }
+    .flow-step .icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    .flow-step h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+    .flow-step p {
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.4;
+    }
+    .flow-arrow {
+      color: var(--blue-light);
+      font-size: 22px;
+      padding: 0 8px;
+      flex-shrink: 0;
+    }
+    .vision-note {
+      background: var(--green-light);
+      border-radius: 10px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .vision-note span { font-size: 24px; }
+    .vision-note p { font-size: 14px; color: #065f46; line-height: 1.5; }
+
+    /* ARCHITECTURE SLIDE */
+    .arch-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .arch-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 18px 22px;
+    }
+    .arch-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0f172a;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .arch-content h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+    }
+    .arch-content p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+    .arch-content .tech-pills {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .tech-pill {
+      background: rgba(37,99,235,0.2);
+      color: #93c5fd;
+      border: 1px solid rgba(37,99,235,0.3);
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* OPTIONS SLIDE */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .option-card {
+      background: var(--gray-light);
+      border-radius: 14px;
+      padding: 24px;
+      border: 2px solid transparent;
+      position: relative;
+    }
+    .option-card.recommended {
+      border-color: var(--blue-light);
+      background: var(--blue-pale);
+    }
+    .option-card.secondary { border-color: var(--accent); background: var(--accent-light); }
+    .rec-badge {
+      position: absolute;
+      top: -10px; right: 16px;
+      background: var(--blue-light);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .sec-badge {
+      position: absolute;
+      top: -10px; right: 16px;
+      background: var(--accent);
+      color: #0f172a;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .option-card h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .option-card .option-sub {
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 14px;
+      font-style: italic;
+    }
+    .pro-con { display: flex; flex-direction: column; gap: 6px; }
+    .pro, .con {
+      font-size: 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.4;
+    }
+    .pro::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .con::before { content: '✗'; color: var(--red); font-weight: 700; flex-shrink: 0; }
+
+    /* PHASED PLAN */
+    .phases {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .phase-card {
+      border-radius: 14px;
+      padding: 28px 22px;
+      position: relative;
+    }
+    .phase-1 { background: var(--accent-light); border: 2px solid var(--accent); }
+    .phase-2 { background: var(--blue-pale); border: 2px solid var(--blue-light); }
+    .phase-3 { background: var(--green-light); border: 2px solid var(--green); }
+    .phase-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .phase-1 .phase-tag { color: #92400e; }
+    .phase-2 .phase-tag { color: var(--blue); }
+    .phase-3 .phase-tag { color: #065f46; }
+    .phase-timeline {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: var(--gray);
+    }
+    .phase-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .phase-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .phase-items li {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.4;
+      padding-left: 16px;
+      position: relative;
+    }
+    .phase-items li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--gray);
+    }
+
+    /* REQUIREMENTS SLIDE */
+    .req-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+    }
+    .req-card {
+      background: var(--gray-light);
+      border-radius: 12px;
+      padding: 22px;
+      border-top: 4px solid var(--blue-light);
+    }
+    .req-card.marketing { border-color: var(--accent); }
+    .req-card.infra { border-color: var(--green); }
+    .req-card h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .req-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .req-list li {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.5;
+      padding-left: 14px;
+      position: relative;
+    }
+    .req-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--blue-light);
+      font-weight: 700;
+    }
+    .req-card.marketing .req-list li::before { color: var(--accent); }
+    .req-card.infra .req-list li::before { color: var(--green); }
+
+    /* QUESTIONS SLIDE */
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .question-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 18px 22px;
+    }
+    .q-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(245,158,11,0.15);
+      border: 1px solid rgba(245,158,11,0.3);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .question-item p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+    }
+    .question-item p strong { color: white; }
+
+    /* CLOSE SLIDE */
+    .slide-close {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a6e 50%, #0f172a 100%);
+      align-items: center;
+      text-align: center;
+    }
+    .slide-close h1 {
+      font-size: 46px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 16px;
+    }
+    .slide-close h1 span { color: var(--accent); }
+    .slide-close p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.5);
+      max-width: 540px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    .outcome-pills {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .outcome-pill {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* SLIDE COUNTER */
+    .slide-counter {
+      position: fixed;
+      bottom: 20px;
+      right: 32px;
+      color: rgba(255,255,255,0.3);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue-light), transparent);
+      margin: 24px 0;
+      width: 60px;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .slide { padding: 40px 24px; }
+      .slide-title { font-size: 28px; }
+      .slide-cover h1 { font-size: 34px; }
+      .options-grid, .phases, .req-grid { grid-template-columns: 1fr; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .problem-stat { grid-column: span 1; flex-direction: column; gap: 24px; }
+      .vision-flow { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">Rev.io — Automated Demo Videos</div>
+  <div class="nav-dots" id="navDots"></div>
+  <div class="nav-arrows">
+    <button class="nav-btn" onclick="prevSlide()">← Prev</button>
+    <button class="nav-btn" onclick="nextSlide()">Next →</button>
+  </div>
+</nav>
+
+<div class="slides-container">
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide slide-cover active" id="slide-1">
+    <div class="tag">Product × Marketing Initiative</div>
+    <h1>Automated Feature<br/><span>Demo Videos</span></h1>
+    <p>How Rev.io can automatically generate polished video demos for every feature we ship — without a human touching a camera.</p>
+    <div class="cover-meta">
+      <span>📅 March 2026</span>
+      <span>👥 Product + Marketing</span>
+      <span>🎯 Planning Discussion</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: THE PROBLEM -->
+  <div class="slide slide-standard" id="slide-2">
+    <div class="slide-label">The Problem</div>
+    <div class="slide-title">Marketing can't keep up<br/>with our release pace</div>
+    <div class="slide-subtitle">Every feature we ship deserves a demo video. Right now, almost none get one.</div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <h3>🚀 We're shipping fast</h3>
+        <p>Product teams are releasing granular features continuously across Apollo 2 and beyond — often multiple per sprint across multiple teams.</p>
+      </div>
+      <div class="problem-card">
+        <h3>🎥 Video production is a bottleneck</h3>
+        <p>Creating a polished 60–90 second feature demo requires screen recording, scripting, voiceover, and editing — hours of work per video.</p>
+      </div>
+      <div class="problem-card">
+        <h3>📣 Marketing is under-equipped</h3>
+        <p>The marketing team can't scale video production linearly with our release cadence. Features ship undocumented and unsold.</p>
+      </div>
+      <div class="problem-card">
+        <h3>💸 Revenue impact</h3>
+        <p>Customers and prospects don't know what we built. Features that could accelerate deals or reduce churn go unnoticed.</p>
+      </div>
+      <div class="problem-stat">
+        <div class="stat-item">
+          <div class="stat-num">0</div>
+          <div class="stat-label">automated demo videos today</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">hrs</div>
+          <div class="stat-label">manual effort per video</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">features awaiting coverage</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: THE VISION -->
+  <div class="slide slide-standard" id="slide-3">
+    <div class="slide-label">The Vision</div>
+    <div class="slide-title">Feature ships → video ready.<br/>Automatically.</div>
+    <div class="slide-subtitle">Every new Rev.io feature gets a polished, voiced demo video — generated without human recording effort.</div>
+    <div class="vision-flow">
+      <div class="flow-step">
+        <div class="icon">📄</div>
+        <h4>Feature ships</h4>
+        <p>Release is tagged or Notion status changes</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">🤖</div>
+        <h4>AI reads the PRD</h4>
+        <p>Extracts user flow, key actions, value prop</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">🖥️</div>
+        <h4>Browser automation records</h4>
+        <p>Real UI, humanized cursor, real interactions</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">🎙️</div>
+        <h4>AI voices the script</h4>
+        <p>ElevenLabs reads the narration in sync</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">✅</div>
+        <h4>Video delivered</h4>
+        <p>MP4 drops into marketing for review & publish</p>
+      </div>
+    </div>
+    <div class="vision-note">
+      <span>💡</span>
+      <p><strong>Key insight:</strong> The PRDs and product briefs already fed to dev agents contain everything needed — user flows, feature descriptions, value props. The same input that builds the feature can generate its demo video.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: HOW UI RECORDING WORKS -->
+  <div class="slide slide-dark" id="slide-4">
+    <div class="slide-label">How It Works</div>
+    <div class="slide-title">Making a robot look<br/>like a human on screen</div>
+    <div class="slide-subtitle">The hardest part isn't automation — it's making the automation look natural and polished.</div>
+    <div class="arch-steps">
+      <div class="arch-step">
+        <div class="arch-num">1</div>
+        <div class="arch-content">
+          <h4>Browser Automation</h4>
+          <p>A script controls a real browser — clicks, types, navigates — against the live Rev.io demo environment with clean, realistic data.</p>
+          <div class="tech-pills"><span class="tech-pill">Playwright</span><span class="tech-pill">Chromium</span></div>
+        </div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-num">2</div>
+        <div class="arch-content">
+          <h4>Humanization Layer</h4>
+          <p>Cursor moves in natural arcs (not straight lines), typing has slight random delays, scrolling has momentum, the cursor pauses on key elements. Looks like a real person.</p>
+          <div class="tech-pills"><span class="tech-pill">Custom cursor overlay</span><span class="tech-pill">Easing functions</span><span class="tech-pill">Randomized timing</span></div>
+        </div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-num">3</div>
+        <div class="arch-content">
+          <h4>Screen Capture</h4>
+          <p>High-quality video recorded while the browser runs. Click animations, zoom effects on key UI moments, and callout annotations added.</p>
+          <div class="tech-pills"><span class="tech-pill">FFmpeg</span><span class="tech-pill">Playwright video</span></div>
+        </div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-num">4</div>
+        <div class="arch-content">
+          <h4>AI Voiceover + Post-Production</h4>
+          <p>LLM generates the narration script from the PRD. ElevenLabs voices it. FFmpeg merges audio + video, adds branded intro/outro and captions.</p>
+          <div class="tech-pills"><span class="tech-pill">ElevenLabs</span><span class="tech-pill">Claude/GPT</span><span class="tech-pill">FFmpeg</span><span class="tech-pill">Whisper captions</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: OPTIONS -->
+  <div class="slide slide-standard" id="slide-5">
+    <div class="slide-label">Options</div>
+    <div class="slide-title">Build vs. buy vs. hybrid</div>
+    <div class="slide-subtitle">Four approaches — each with different speed, cost, and control tradeoffs.</div>
+    <div class="options-grid">
+      <div class="option-card recommended">
+        <div class="rec-badge">Recommended — Phase 2</div>
+        <h3>🔨 Build: Playwright Pipeline</h3>
+        <div class="option-sub">Full custom pipeline on our stack</div>
+        <div class="pro-con">
+          <div class="pro">Full control over output quality</div>
+          <div class="pro">Integrates with our release pipeline</div>
+          <div class="pro">Uses PRDs we already have</div>
+          <div class="pro">No vendor dependency or per-video cost</div>
+          <div class="con">Requires engineering investment (8–12 weeks)</div>
+          <div class="con">Playwright scripts need generation per feature</div>
+        </div>
+      </div>
+      <div class="option-card secondary">
+        <div class="sec-badge">Quick Win — Phase 1</div>
+        <h3>🎬 Buy: Guidde</h3>
+        <div class="option-sub">AI-powered demo video platform</div>
+        <div class="pro-con">
+          <div class="pro">Fastest path to production quality</div>
+          <div class="pro">AI generates voiceover + callouts automatically</div>
+          <div class="pro">PM/QA records once, AI handles the rest</div>
+          <div class="con">Still needs a human to do the initial recording</div>
+          <div class="con">SaaS cost; less end-to-end automation</div>
+        </div>
+      </div>
+      <div class="option-card">
+        <h3>🗺️ Interactive Tours: Storylane / Arcade</h3>
+        <div class="option-sub">Guided walkthrough platforms</div>
+        <div class="pro-con">
+          <div class="pro">Very polished output</div>
+          <div class="pro">Interactive (users can click through)</div>
+          <div class="con">Not video — not embeddable in email/social</div>
+          <div class="con">Requires human recording flow</div>
+        </div>
+      </div>
+      <div class="option-card">
+        <h3>🎞️ Programmatic: Remotion</h3>
+        <div class="option-sub">React-based video composition</div>
+        <div class="pro-con">
+          <div class="pro">Extremely high production quality</div>
+          <div class="pro">Fully automatable and brandable</div>
+          <div class="con">Higher engineering lift</div>
+          <div class="con">Better for animated explainers than live UI demos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: PHASED PLAN -->
+  <div class="slide slide-standard" id="slide-6">
+    <div class="slide-label">Phased Plan</div>
+    <div class="slide-title">Ship value fast,<br/>automate over time</div>
+    <div class="slide-subtitle">A three-phase approach that delivers immediate marketing relief while building toward full automation.</div>
+    <div class="phases">
+      <div class="phase-card phase-1">
+        <div class="phase-tag">Phase 1</div>
+        <div class="phase-timeline">Weeks 1–6 · Quick Win</div>
+        <h3>Guidde + Human Trigger</h3>
+        <ul class="phase-items">
+          <li>Deploy Guidde for the marketing team</li>
+          <li>PM or QA records a 2-min screen pass per new feature</li>
+          <li>AI generates voiceover script and callout annotations</li>
+          <li>Marketing reviews and publishes</li>
+          <li>Cuts manual effort by ~80% immediately</li>
+        </ul>
+      </div>
+      <div class="phase-card phase-2">
+        <div class="phase-tag">Phase 2</div>
+        <div class="phase-timeline">Weeks 6–18 · Automated Pipeline</div>
+        <h3>Full Playwright Automation</h3>
+        <ul class="phase-items">
+          <li>Agent reads PRD → generates UI script + narration</li>
+          <li>Playwright runs on demo environment with humanized cursor</li>
+          <li>ElevenLabs voices the narration in sync</li>
+          <li>FFmpeg assembles with intro/outro + captions</li>
+          <li>MP4 delivered to marketing Notion/Slack for review</li>
+        </ul>
+      </div>
+      <div class="phase-card phase-3">
+        <div class="phase-tag">Phase 3</div>
+        <div class="phase-timeline">Ongoing · Full Automation</div>
+        <h3>Release-Triggered Pipeline</h3>
+        <ul class="phase-items">
+          <li>Feature ships → webhook fires automatically</li>
+          <li>No human trigger needed — end-to-end pipeline</li>
+          <li>A/B test script tones (technical vs. benefit-led)</li>
+          <li>Auto-publish approved videos to YouTube, Wistia, docs</li>
+          <li>Marketing approves, not creates</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: WHAT WE NEED -->
+  <div class="slide slide-standard" id="slide-7">
+    <div class="slide-label">Requirements</div>
+    <div class="slide-title">What we need from<br/>each team to make this work</div>
+    <div class="slide-subtitle">This pipeline is only as good as its inputs. Three dependencies need to be locked down.</div>
+    <div class="req-grid">
+      <div class="req-card">
+        <h3>📄 Product</h3>
+        <ul class="req-list">
+          <li>Structured PRDs with consistent fields: feature name, user role, step-by-step user flow, value prop (1 sentence), URL path in app</li>
+          <li>A clear "feature shipped" signal — Notion status change, GitHub release tag, or equivalent</li>
+          <li>Agreement on target video length (60s? 90s?) to guide script generation</li>
+          <li>Phase 1: A PM or QA willing to do a 2-min recording pass per feature</li>
+        </ul>
+      </div>
+      <div class="req-card marketing">
+        <h3>📣 Marketing</h3>
+        <ul class="req-list">
+          <li>Define where videos live: YouTube channel, Wistia library, product docs site</li>
+          <li>Provide branded intro/outro template (15 sec each)</li>
+          <li>Decide: human review before publish, or auto-publish for minor features?</li>
+          <li>Define voiceover tone and persona — technical, benefit-led, conversational?</li>
+          <li>Establish a Notion/Slack intake for video delivery</li>
+        </ul>
+      </div>
+      <div class="req-card infra">
+        <h3>⚙️ Engineering / Infra</h3>
+        <ul class="req-list">
+          <li>Stable demo environment always accessible — not wiped by dev deploys</li>
+          <li>Seeded with realistic, visually appealing test data (not empty screens)</li>
+          <li>Headless server with GPU or display capability for Playwright video recording</li>
+          <li>ElevenLabs API integration (already in place for Rev.io)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: OPEN QUESTIONS -->
+  <div class="slide slide-dark" id="slide-8">
+    <div class="slide-label">Discussion</div>
+    <div class="slide-title">Open questions<br/>for this room</div>
+    <div class="slide-subtitle">Before we scope this for Product, let's align on these five things.</div>
+    <div class="questions-list">
+      <div class="question-item">
+        <div class="q-num">1</div>
+        <p><strong>Where do PRDs live today</strong> — Notion, Confluence, Google Docs? Are they structured consistently enough to parse automatically, or do they vary by team?</p>
+      </div>
+      <div class="question-item">
+        <div class="q-num">2</div>
+        <p><strong>Do we have a stable demo environment</strong> with realistic data that isn't touched by dev deploys? If not, what would it take to create one?</p>
+      </div>
+      <div class="question-item">
+        <div class="q-num">3</div>
+        <p><strong>What's the "feature shipped" signal today?</strong> When something goes live, how does anyone know? Is there a consistent process we can hook into?</p>
+      </div>
+      <div class="question-item">
+        <div class="q-num">4</div>
+        <p><strong>What's the target format?</strong> 60-second social clips? 2-minute feature walkthrough? One format for all, or different lengths by feature complexity?</p>
+      </div>
+      <div class="question-item">
+        <div class="q-num">5</div>
+        <p><strong>Who approves before publish?</strong> Does every video need a marketing sign-off, or can minor feature updates auto-publish once the pipeline is trusted?</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: CLOSE -->
+  <div class="slide slide-close" id="slide-9">
+    <h1>The goal: <span>marketing keeps up</span><br/>without more headcount</h1>
+    <p>Every feature we ship should have a video the day it goes live. This is how we get there.</p>
+    <div class="outcome-pills">
+      <div class="outcome-pill">⚡ Faster time-to-market</div>
+      <div class="outcome-pill">🎬 Videos for every feature</div>
+      <div class="outcome-pill">🤖 Zero manual recording</div>
+      <div class="outcome-pill">📈 More pipeline from content</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="slide-counter" id="slideCounter">1 / 9</div>
+
+<script>
+  let current = 1;
+  const total = 9;
+
+  function buildDots() {
+    const container = document.getElementById('navDots');
+    for (let i = 1; i <= total; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'nav-dot' + (i === 1 ? ' active' : '');
+      btn.onclick = () => goTo(i);
+      btn.title = 'Slide ' + i;
+      container.appendChild(btn);
+    }
+  }
+
+  function goTo(n) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    document.querySelectorAll('.nav-dot')[current - 1].classList.remove('active');
+    current = Math.max(1, Math.min(total, n));
+    document.getElementById('slide-' + current).classList.add('active');
+    document.querySelectorAll('.nav-dot')[current - 1].classList.add('active');
+    document.getElementById('slideCounter').textContent = current + ' / ' + total;
+  }
+
+  function nextSlide() { goTo(current + 1); }
+  function prevSlide() { goTo(current - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prevSlide();
+  });
+
+  buildDots();
+</script>
+</body>
+</html>
