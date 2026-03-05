@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io Intelligence Report — March 2026</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --warn: #f5a623;
+    --danger: #e74c3c;
+    --success: #2ecc71;
+    --text: #e8eaf6;
+    --muted: #8892b0;
+    --border: #2e3352;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* SLIDE SYSTEM */
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    padding: 48px 64px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .slide.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 100;
+    background: rgba(26,29,39,0.9);
+    backdrop-filter: blur(12px);
+    padding: 10px 20px;
+    border-radius: 32px;
+    border: 1px solid var(--border);
+  }
+
+  .nav button {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+
+  .nav button:hover { background: var(--accent); border-color: var(--accent); }
+  .nav button:disabled { opacity: 0.3; cursor: default; }
+
+  .slide-counter {
+    font-size: 13px;
+    color: var(--muted);
+    min-width: 60px;
+    text-align: center;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.3s ease;
+    z-index: 100;
+  }
+
+  /* SLIDE HEADER */
+  .slide-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .slide-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(108,99,255,0.12);
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+
+  .slide-tag.gtm { color: var(--accent2); background: rgba(0,212,170,0.12); }
+  .slide-tag.product { color: #f093fb; background: rgba(240,147,251,0.12); }
+  .slide-tag.action { color: var(--warn); background: rgba(245,166,35,0.12); }
+
+  h1.title {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 0%, var(--accent2) 60%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; flex: 1; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card.accent-border { border-color: var(--accent); }
+  .card.success-border { border-color: var(--success); }
+  .card.danger-border { border-color: var(--danger); }
+  .card.warn-border { border-color: var(--warn); }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .card-value {
+    font-size: 36px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .card-value.accent { color: var(--accent2); }
+  .card-value.warn { color: var(--warn); }
+  .card-value.success { color: var(--success); }
+  .card-value.danger { color: var(--danger); }
+
+  .card-sub {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* QUOTE BLOCK */
+  .quote {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .quote.success-left { border-left-color: var(--success); }
+  .quote.warn-left { border-left-color: var(--warn); }
+  .quote.danger-left { border-left-color: var(--danger); }
+
+  .quote p {
+    font-size: 15px;
+    font-style: italic;
+    color: #ccd6f6;
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+
+  .quote .attribution {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  /* LIST */
+  .ranked-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+  .ranked-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .rank-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    min-width: 22px;
+  }
+
+  .rank-name { flex: 1; color: var(--text); font-weight: 500; }
+  
+  .rank-bar-wrap {
+    width: 100px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .rank-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 3px;
+  }
+
+  .rank-count {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent2);
+    min-width: 38px;
+    text-align: right;
+  }
+
+  .badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .badge.at-risk { background: rgba(231,76,60,0.2); color: var(--danger); }
+  .badge.in-progress { background: rgba(245,166,35,0.2); color: var(--warn); }
+  .badge.not-started { background: rgba(136,146,176,0.2); color: var(--muted); }
+
+  /* STAT ROW */
+  .stat-row {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .stat-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 18px;
+    text-align: center;
+  }
+
+  .stat-pill .num {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-pill .lbl {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* SIGNAL ITEM */
+  .signal-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    align-items: flex-start;
+  }
+
+  .signal-item:last-child { border-bottom: none; }
+
+  .signal-icon { font-size: 16px; margin-top: 1px; }
+  
+  .signal-body { flex: 1; }
+  .signal-body strong { color: #fff; }
+  .signal-body p { color: var(--muted); font-size: 13px; margin-top: 2px; line-height: 1.4; }
+
+  /* TITLE SLIDE EXTRAS */
+  .title-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .title-meta-item {
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent2);
+    display: inline-block;
+  }
+
+  .dot.accent { background: var(--accent); }
+  .dot.warn { background: var(--warn); }
+
+  /* SECTION DIVIDER SLIDE */
+  .divider-slide {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(ellipse at center, rgba(108,99,255,0.08) 0%, transparent 70%);
+  }
+
+  .divider-slide h2 {
+    font-size: 44px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .divider-slide .sub {
+    font-size: 18px;
+    color: var(--muted);
+  }
+
+  .icon-large { font-size: 64px; margin-bottom: 20px; }
+
+  /* COMPETITOR ROW */
+  .comp-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .comp-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .comp-chip .count { color: var(--accent2); font-size: 16px; font-weight: 800; }
+
+  /* SCROLL in card */
+  .scroll { overflow-y: auto; flex: 1; }
+  .scroll::-webkit-scrollbar { width: 4px; }
+  .scroll::-webkit-scrollbar-track { background: transparent; }
+  .scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* FOOTER */
+  .slide-footer {
+    margin-top: auto;
+    padding-top: 12px;
+    font-size: 11px;
+    color: var(--border);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  p { line-height: 1.6; }
+
+  .text-muted { color: var(--muted); font-size: 13px; }
+  .text-success { color: var(--success); }
+  .text-danger { color: var(--danger); }
+  .text-warn { color: var(--warn); }
+
+  .full-height { flex: 1; display: flex; flex-direction: column; }
+
+  /* keyboard hint */
+  .kbd-hint {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    font-size: 11px;
+    color: var(--border);
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="kbd-hint">← → or click buttons to navigate</div>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide active">
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+      <div class="slide-header">
+        <span class="slide-tag">Confidential</span>
+        <span class="slide-tag gtm">Kaia Intelligence</span>
+      </div>
+      <h1 class="title">Rev.io<br>Intelligence<br>Report</h1>
+      <h3>Market Signals · Product Feedback · Competitive Landscape</h3>
+      <div class="title-meta">
+        <div class="title-meta-item"><span class="dot"></span> 583 Tier 1 Calls Analyzed</div>
+        <div class="title-meta-item"><span class="dot accent"></span> Oct 2025 – Mar 2026</div>
+        <div class="title-meta-item"><span class="dot warn"></span> Generated March 5, 2026</div>
+      </div>
+      <div class="grid-4" style="margin-top: 48px;">
+        <div class="card accent-border">
+          <div class="card-label">Total Calls</div>
+          <div class="card-value accent">583</div>
+          <div class="card-sub">Tier 1 analyzed (≥20 min external)</div>
+        </div>
+        <div class="card success-border">
+          <div class="card-label">Win Signals</div>
+          <div class="card-value success">343</div>
+          <div class="card-sub">59% of calls had positive buying signals</div>
+        </div>
+        <div class="card danger-border">
+          <div class="card-label">Loss Risks</div>
+          <div class="card-value danger">156</div>
+          <div class="card-sub">27% of calls had detectable loss language</div>
+        </div>
+        <div class="card warn-border">
+          <div class="card-label">Competitor Mentions</div>
+          <div class="card-value warn">617+</div>
+          <div class="card-sub">QuickBooks, ConnectWise & more</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>March 2026</span></div>
+  </div>
+
+  <!-- SLIDE 2: SECTION DIVIDER — GTM -->
+  <div class="slide divider-slide">
+    <div class="icon-large">📊</div>
+    <h2>GTM Intelligence</h2>
+    <p class="sub">Voice of the customer · Win/loss signals · Competitive displacement</p>
+    <p class="text-muted" style="margin-top:12px;">Oct 2025 – Mar 2026 · 583 Calls</p>
+  </div>
+
+  <!-- SLIDE 3: VOICE OF THE CUSTOMER -->
+  <div class="slide">
+    <div class="slide-header"><span class="slide-tag gtm">GTM</span></div>
+    <h2>Voice of the Customer</h2>
+    <h3>Real quotes from March 3, 2026 demos</h3>
+    <div class="full-height" style="gap: 14px;">
+      <div class="quote success-left">
+        <p>"I've gotten to the point where I just need to make a switch."</p>
+        <div class="attribution">— Carlos, CMP Consulting · Switching from Syncro · Rep: Connor Flynn</div>
+      </div>
+      <div class="quote warn-left">
+        <p>"Those frustrations have been amplified even a little bit more... the same issues continuing to happen."</p>
+        <div class="attribution">— Kevin, Kazar Security · Switching from iPoint · Rep: Jake Borah</div>
+      </div>
+      <div class="quote success-left">
+        <p>"I want to get my hands off of every single part of the business."</p>
+        <div class="attribution">— Owner, Lubbock Audio Visual · 20 employees, growth mode · PSA as delegation platform</div>
+      </div>
+      <div class="quote">
+        <p>"When a tech launches a remote session from Ninja, auto-create a ticket in Rev.io — we need that."</p>
+        <div class="attribution">— Carlos, CMP Consulting · NinjaOne integration ask · Make-or-break for this deal</div>
+      </div>
+      <div class="quote">
+        <p>"She thinks the leak is coming from inventory... I know she'd be more curious about your inventory system."</p>
+        <div class="attribution">— Leo Reynolds (rep) on Kazar Security's accountant stakeholder · Inventory is the eval criterion</div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>GTM 1/5</span></div>
+  </div>
+
+  <!-- SLIDE 4: TOP PAIN POINTS -->
+  <div class="slide">
+    <div class="slide-header"><span class="slide-tag gtm">GTM</span></div>
+    <h2>Top Pain Points — March 2026</h2>
+    <h3>What prospects are saying right now</h3>
+    <div class="grid-2" style="flex:1; gap:14px;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card danger-border">
+          <div class="card-label">🔴 Critical — Field Tech Disconnection</div>
+          <p style="font-size:14px; color: var(--text);">Techs can't clock in/out, calendar inaccessible in the field, guessing hours. iPoint crashes weekly. <strong>Kazar Security.</strong></p>
+          <div class="card-sub">Affects: service delivery, billing accuracy, technician adoption</div>
+        </div>
+        <div class="card danger-border">
+          <div class="card-label">🔴 Critical — Inventory Leakage</div>
+          <p style="font-size:14px; color: var(--text);">Accountant suspects significant revenue loss from untracked parts. No barcode scanning in current PSA. <strong>Kazar Security.</strong></p>
+          <div class="card-sub">This is the accountant's #1 eval criterion — must address</div>
+        </div>
+        <div class="card warn-border">
+          <div class="card-label">🟡 High — NinjaOne Integration Depth</div>
+          <p style="font-size:14px; color: var(--text);">CMP just signed Ninja 1 week ago. Auto-ticket creation from remote sessions is the make-or-break requirement.</p>
+          <div class="card-sub">Brenda Harvey call Thursday 4:30pm ET is the decision point</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card warn-border">
+          <div class="card-label">🟡 High — International Billing Gap</div>
+          <p style="font-size:14px; color: var(--text);">Xinix Pro (UK telecom) hit a wall: no GDPR compliance, data only in Azure East US, payments USD/CAD only.</p>
+          <div class="card-sub">Recurring objection for international prospects — product flag</div>
+        </div>
+        <div class="card">
+          <div class="card-label">⚪ Moderate — Multi-Email Identity</div>
+          <p style="font-size:14px; color: var(--text);">Billing platform that only sends from one email address is a blocker for multi-department MSPs. <strong>CMP Consulting.</strong></p>
+          <div class="card-sub">Accounting, support, billing each want their own outbound identity</div>
+        </div>
+        <div class="card">
+          <div class="card-label">⚪ Moderate — Owner Delegation Play</div>
+          <p style="font-size:14px; color: var(--text);">Owner-led deals (Lubbock, Kazar) where owner wants to exit day-to-day ops. PSA as an automation/delegation platform resonates.</p>
+          <div class="card-sub">Frame Rev.io as "the OS that lets you step back"</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>GTM 2/5</span></div>
+  </div>
+
+  <!-- SLIDE 5: WIN/LOSS SIGNALS (RECENT) -->
+  <div class="slide">
+    <div class="slide-header"><span class="slide-tag gtm">GTM</span></div>
+    <h2>Win / Loss Signals — March 2026</h2>
+    <h3>Active deals in motion right now</h3>
+    <div class="grid-2" style="flex:1;">
+      <div class="card success-border" style="gap:0;">
+        <div class="card-label" style="margin-bottom:16px;">✅ Win Signals</div>
+        <div class="signal-item">
+          <span class="signal-icon">💰</span>
+          <div class="signal-body">
+            <strong>CMP Consulting — Live Pricing Agreed</strong>
+            <p>$400/mo locked in-call (4+1 users) · Ryan Koontz confirmed. Pending NinjaOne integration validation Thursday.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">🚪</span>
+          <div class="signal-body">
+            <strong>iPoint Customers Actively Escaping</strong>
+            <p>Kazar Security isn't evaluating — they're escaping. Weekly crashes, field tech failure. High urgency.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">🔁</span>
+          <div class="signal-body">
+            <strong>Syncro → Rev.io Intent Confirmed</strong>
+            <p>"I just need to make a switch." CMP on Syncro is psychologically done — decision is made in spirit.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">👤</span>
+          <div class="signal-body">
+            <strong>Owner-Led Deals Moving Fast</strong>
+            <p>Lubbock AV + Kazar are owner-led. Owners can close without committee. Delegation narrative resonates.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card danger-border" style="gap:0;">
+        <div class="card-label" style="margin-bottom:16px;">⚠️ Loss Risks</div>
+        <div class="signal-item">
+          <span class="signal-icon">🔌</span>
+          <div class="signal-body">
+            <strong>CMP — NinjaOne Integration Untested</strong>
+            <p>1-week-old integration. If auto-ticket creation doesn't work, they stay on Syncro. Thursday call is critical.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">🌍</span>
+          <div class="signal-body">
+            <strong>Xinix Pro — GDPR Hard Block</strong>
+            <p>UK telecom can't use US-only data hosting. Likely a no-go without product architecture change.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">👥</span>
+          <div class="signal-body">
+            <strong>Kazar — 2 Unstaged Stakeholders</strong>
+            <p>Owner Kevin + accountant haven't seen the demo. Demo recording shared for internal review. Multi-stakeholder risk.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>GTM 3/5</span></div>
+  </div>
+
+  <!-- SLIDE 6: HISTORICAL WIN/LOSS -->
+  <div class="slide">
+    <div class="slide-header"><span class="slide-tag gtm">GTM</span></div>
+    <h2>Win / Loss Signals — 5-Month View</h2>
+    <h3>583 Tier 1 calls · Oct 2025 – Feb 2026</h3>
+    <div class="stat-row">
+      <div class="stat-pill">
+        <span class="num" style="color: var(--success)">343</span>
+        <span class="lbl">Win signals (59%)</span>
+      </div>
+      <div class="stat-pill">
+        <span class="num" style="color: var(--danger)">156</span>
+        <span class="lbl">Loss risks (27%)</span>
+      </div>
+      <div class="stat-pill">
+        <span class="num">583</span>
+        <span class="lbl">Total analyzed</span>
+      </div>
+    </div>
+    <div class="grid-2" style="flex:1; gap:16px;">
+      <div>
+        <div class="card-label" style="margin-bottom:12px;">WIN SIGNAL HIGHLIGHTS</div>
+        <div class="quote success-left">
+          <p>"Love it" — Mr. Security Camera (Discovery, Feb 2026)</p>
+        </div>
+        <div class="quote success-left">
+          <p>"Sign up" — Shinntek Solutions (Discovery, Feb 2026) ✅ Closed</p>
+        </div>
+        <div class="quote success-left">
+          <p>"Move forward" — Reliable PBX (Prospect, Dec 2025)</p>
+        </div>
+        <div class="quote success-left">
+          <p>"Next steps" — Open Road Systems (Discovery, Jan 2026)</p>
+        </div>
+        <div class="quote success-left">
+          <p>"Love it" — NRM Communications (CBR, Feb 2026)</p>
+        </div>
+      </div>
+      <div>
+        <div class="card-label" style="margin-bottom:12px;">LOSS PATTERN ANALYSIS</div>
+        <ul class="ranked-list">
+          <li>
+            <span class="rank-num">#1</span>
+            <span class="rank-name">No-show / Didn't attend</span>
+            <span class="badge at-risk">Most common</span>
+          </li>
+          <li>
+            <span class="rank-num">#2</span>
+            <span class="rank-name">"Not right now" — timing objection</span>
+            <span class="badge in-progress">Recurring</span>
+          </li>
+          <li>
+            <span class="rank-num">#3</span>
+            <span class="rank-name">"Locked in" — active competitor contract</span>
+            <span class="badge not-started">CW / AT</span>
+          </li>
+          <li>
+            <span class="rank-num">#4</span>
+            <span class="rank-name">Missing capabilities cited</span>
+            <span class="badge at-risk">13.2%</span>
+          </li>
+          <li>
+            <span class="rank-num">#5</span>
+            <span class="rank-name">Price objection</span>
+            <span class="badge not-started">6.7%</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>GTM 4/5</span></div>
+  </div>
+
+  <!-- SLIDE 7: COMPETITIVE LANDSCAPE -->
+  <div class="slide">
+    <div class="slide-header"><span class="slide-tag gtm">GTM</span></div>
+    <h2>Competitive Landscape</h2>
+    <h3>Who we're replacing — and who we're fighting</h3>
+    <div style="margin-bottom: 24px;">
+      <div class="card-label" style="margin-bottom:12px;">COMPETITOR MENTIONS IN 583 CALLS</div>
+      <div class="comp-row">
+        <div class="comp-chip"><span class="count">408</span> QuickBooks</div>
+        <div class="comp-chip"><span class="count">129</span> ConnectWise</div>
+        <div class="comp-chip"><span class="count">45</span> Autotask/Kaseya</div>
+        <div class="comp-chip"><span class="count">21</span> Syncro</div>
+        <div class="comp-chip"><span class="count">14</span> NinjaOne (RMM)</div>
+        <div class="comp-chip"><span class="count">~</span> iPoint</div>
+      </div>
+    </div>
+    <div class="grid-3" style="flex:1; gap:14px;">
+      <div class="card">
+        <div class="card-label">🏆 QuickBooks (408)</div>
+        <p style="font-size:14px; margin-top:8px; color:var(--text);">Most common system in prospect conversations. Not a PSA — we win by showing what QuickBooks can't do.</p>
+        <div class="card-sub" style="margin-top:8px;"><strong class="text-success">Campaign angle:</strong> "When QuickBooks stops scaling with your MSP."</div>
+      </div>
+      <div class="card">
+        <div class="card-label">⚔️ ConnectWise (129)</div>
+        <p style="font-size:14px; margin-top:8px; color:var(--text);">Main structured PSA competitor. 8 confirmed displacement wins, $6,682 MRR recovered. Price and complexity are the wedge.</p>
+        <div class="card-sub" style="margin-top:8px;"><strong class="text-success">Campaign angle:</strong> "The ConnectWise switcher" series — let customers tell it.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">⚔️ Autotask/Kaseya (45)</div>
+        <p style="font-size:14px; margin-top:8px; color:var(--text);">Often paired with Datto RMM. 3 displacement wins, $1,611 MRR. Similar CW wedge plays apply.</p>
+        <div class="card-sub" style="margin-top:8px;">Watch for Kaseya bundle-pricing pressure as they consolidate stack.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">⚔️ Syncro (21)</div>
+        <p style="font-size:14px; margin-top:8px; color:var(--text);">Lighter PSA, often paired with NinjaOne. Customers frustrated but need RMM integration continuity to switch.</p>
+        <div class="card-sub" style="margin-top:8px;">NinjaOne integration quality is the unlock for this segment.</div>
+      </div>
+      <div class="card warn-border">
+        <div class="card-label">📈 Competitive Displacement Trend</div>
+        <div class="card-value warn" style="font-size:28px; margin-top:8px;">↑ $866</div>
+        <div class="card-sub">Jul 2025 $2,148 → Feb 2026 $3,014 MRR/mo from displacement wins. Trend accelerating.</div>
+      </div>
+      <div class="card success-border">
+        <div class="card-label">🏁 All-Time Displacement Wins</div>
+        <div class="card-value success" style="font-size:28px; margin-top:8px;">17 wins</div>
+        <div class="card-sub">$11,683 MRR total · ConnectWise 8 · SuperOps 3 · Autotask 3 · Halo 3</div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>GTM 5/5</span></div>
+  </div>
+
+  <!-- SLIDE 8: SECTION DIVIDER — PRODUCT -->
+  <div class="slide divider-slide">
+    <div class="icon-large">🔧</div>
+    <h2>Product Intelligence</h2>
+    <p class="sub">Feature demand · Roadmap gaps · At-risk Apollo 2 items</p>
+    <p class="text-muted" style="margin-top:12px;">Oct 2025 – Mar 2026 · 583 Calls</p>
+  </div>
+
+  <!-- SLIDE 9: TOP FEATURE REQUESTS -->
+  <div class="slide">
+    <div class="slide-header"><span class="slide-tag product">Product</span></div>
+    <h2>Top Feature Requests</h2>
+    <h3>Ranked by frequency — 583 Tier 1 calls, Oct 2025–Feb 2026</h3>
+    <div class="grid-2" style="flex:1; gap:20px;">
+      <ul class="ranked-list scroll">
+        <li>
+          <span class="rank-num">#1</span>
+          <span class="rank-name">Enhanced Customer Portal</span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:100%"></div></div>
+          <span class="rank-count">402</span>
+        </li>
+        <li>
+          <span class="rank-num">#2</span>
+          <span class="rank-name">QuickBooks Online Integration</span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:99%"></div></div>
+          <span class="rank-count">399</span>
+        </li>
+        <li>
+          <span class="rank-num">#3</span>
+          <span class="rank-name">Serialized Inventory Mgmt</span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:94%"></div></div>
+          <span class="rank-count">378</span>
+        </li>
+        <li>
+          <span class="rank-num">#4</span>
+          <span class="rank-name">User Management / Auth <span class="badge at-risk">At Risk A2</span></span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:88%"></div></div>
+          <span class="rank-count">355</span>
+        </li>
+        <li>
+          <span class="rank-num">#5</span>
+          <span class="rank-name">GPS Tracking / Dispatch Map</span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:71%"></div></div>
+          <span class="rank-count">285</span>
+        </li>
+        <li>
+          <span class="rank-num">#6</span>
+          <span class="rank-name">Dispatch Board</span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:67%"></div></div>
+          <span class="rank-count">270</span>
+        </li>
+        <li>
+          <span class="rank-num">#7</span>
+          <span class="rank-name">Time Tracking on Tickets</span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:63%"></div></div>
+          <span class="rank-count">253</span>
+        </li>
+        <li>
+          <span class="rank-num">#8</span>
+          <span class="rank-name">SLA Management <span class="badge not-started">Not Started</span></span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:58%"></div></div>
+          <span class="rank-count">234</span>
+        </li>
+      </ul>
+      <ul class="ranked-list scroll">
+        <li>
+          <span class="rank-num">#9</span>
+          <span class="rank-name">PSA Mobile App</span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:47%"></div></div>
+          <span class="rank-count">189</span>
+        </li>
+        <li>
+          <span class="rank-num">#10</span>
+          <span class="rank-name">Agents & Commissions <span class="badge not-started">Not Started</span></span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:33%"></div></div>
+          <span class="rank-count">131</span>
+        </li>
+        <li>
+          <span class="rank-num">#11</span>
+          <span class="rank-name">Internationalization (GDPR/EU)</span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:33%"></div></div>
+          <span class="rank-count">131</span>
+        </li>
+        <li>
+          <span class="rank-num">#12</span>
+          <span class="rank-name">Bulk Import / Export <span class="badge at-risk">At Risk A2</span></span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:27%"></div></div>
+          <span class="rank-count">109</span>
+        </li>
+        <li>
+          <span class="rank-num">#13</span>
+          <span class="rank-name">Google Calendar Integration</span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:22%"></div></div>
+          <span class="rank-count">90</span>
+        </li>
+        <li>
+          <span class="rank-num">#14</span>
+          <span class="rank-name">PAX8 Integration</span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:20%"></div></div>
+          <span class="rank-count">82</span>
+        </li>
+        <li>
+          <span class="rank-num">#15</span>
+          <span class="rank-name">D-Tools Integration <span class="badge not-started">Not Started</span></span>
+          <div class="rank-bar-wrap"><div class="rank-bar" style="width:14%"></div></div>
+          <span class="rank-count">55</span>
+        </li>
+      </ul>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>Product 1/3</span></div>
+  </div>
+
+  <!-- SLIDE 10: AT-RISK FEATURES -->
+  <div class="slide">
+    <div class="slide-header"><span class="slide-tag product">Product</span></div>
+    <h2>⚠️ At-Risk Apollo 2 Features</h2>
+    <h3>High market demand · Delays visible to prospects</h3>
+    <div class="grid-3" style="flex:1; gap:14px;">
+      <div class="card danger-border">
+        <div class="card-label">🔴 At Risk — Apollo 2</div>
+        <div style="font-size: 20px; font-weight: 700; color: #fff; margin: 8px 0;">User Management / Auth</div>
+        <div class="card-value danger" style="font-size:32px;">355</div>
+        <div class="card-sub">mentions across 583 calls</div>
+        <p style="font-size:13px; color: var(--text); margin-top:10px;">4th most requested feature overall. Delays here are directly visible to prospects evaluating security posture and IT compliance requirements.</p>
+      </div>
+      <div class="card danger-border">
+        <div class="card-label">🔴 Not Started — Apollo 2</div>
+        <div style="font-size: 20px; font-weight: 700; color: #fff; margin: 8px 0;">SLA Management</div>
+        <div class="card-value danger" style="font-size:32px;">234</div>
+        <div class="card-sub">mentions across 583 calls</div>
+        <p style="font-size:13px; color: var(--text); margin-top:10px;">8th most requested. MSPs selling managed services need SLA enforcement to satisfy their own customers — this is a commercial capability gap.</p>
+      </div>
+      <div class="card warn-border">
+        <div class="card-label">🟡 At Risk — Apollo 2</div>
+        <div style="font-size: 20px; font-weight: 700; color: #fff; margin: 8px 0;">Bulk Import / Export</div>
+        <div class="card-value warn" style="font-size:32px;">109</div>
+        <div class="card-sub">mentions across 583 calls</div>
+        <p style="font-size:13px; color: var(--text); margin-top:10px;">12th most requested. Migration friction — if prospects can't bring their data in, they hesitate. Also blocks win-back of churned customers.</p>
+      </div>
+      <div class="card warn-border">
+        <div class="card-label">🟡 Not Started — Apollo 2</div>
+        <div style="font-size: 20px; font-weight: 700; color: #fff; margin: 8px 0;">Agents & Commissions</div>
+        <div class="card-value warn" style="font-size:32px;">131</div>
+        <div class="card-sub">mentions across 583 calls</div>
+        <p style="font-size:13px; color: var(--text); margin-top:10px;">10th most requested. Channel-heavy MSPs compensating on resale need this to close books accurately. Current workaround: manual spreadsheets.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">⚪ Not Started</div>
+        <div style="font-size: 20px; font-weight: 700; color: #fff; margin: 8px 0;">D-Tools Integration</div>
+        <div class="card-value" style="font-size:32px; color: var(--muted);">55</div>
+        <div class="card-sub">mentions across 583 calls</div>
+        <p style="font-size:13px; color: var(--text); margin-top:10px;">Low-tech AV/security integrators use D-Tools for proposals. Without integration, they maintain two systems manually.</p>
+      </div>
+      <div class="card" style="justify-content: center; align-items: center; background: var(--surface2); border-style: dashed;">
+        <div style="text-align:center; padding: 16px;">
+          <div style="font-size:32px; margin-bottom:12px;">📌</div>
+          <div style="font-weight:700; color:#fff; margin-bottom:8px;">Combined At-Risk Exposure</div>
+          <div style="font-size:13px; color:var(--muted); line-height:1.6;">User Mgmt (355) + SLA (234) + Bulk I/E (109) = <strong class="text-danger">698 call mentions</strong> tied to features currently at risk or not started in Apollo 2.</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>Product 2/3</span></div>
+  </div>
+
+  <!-- SLIDE 11: FIELD-DRIVEN PRODUCT PRIORITIES -->
+  <div class="slide">
+    <div class="slide-header"><span class="slide-tag product">Product</span></div>
+    <h2>Field-Driven Product Priorities</h2>
+    <h3>What the sales floor says matters most — from March 2026 demos</h3>
+    <div class="grid-2" style="flex:1; gap:16px;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card danger-border">
+          <div class="card-label">🔴 Make-or-Break — NinjaOne Auto-Ticket</div>
+          <p style="font-size:14px; color:var(--text); margin-top:6px;"><em>"When a tech launches a remote session from Ninja, auto-create a ticket in Rev.io."</em> — CMP Consulting</p>
+          <div class="card-sub" style="margin-top:8px;">Rep escalated to Brenda Harvey (integrations). This is the single feature determining whether CMP closes or stays on Syncro. Brenda call: Thursday 4:30pm ET.</div>
+        </div>
+        <div class="card warn-border">
+          <div class="card-label">🟡 Revenue Leak — Barcode Inventory</div>
+          <p style="font-size:14px; color:var(--text); margin-top:6px;">Kazar Security accountant suspects significant revenue loss from untracked parts. Barcode scanning is the explicit ask.</p>
+          <div class="card-sub" style="margin-top:8px;">Ties to #3 overall feature request: Serialized Inventory (378 calls). Strong validation from field.</div>
+        </div>
+        <div class="card warn-border">
+          <div class="card-label">🟡 Field Tech — Clock In/Out Mobile</div>
+          <p style="font-size:14px; color:var(--text); margin-top:6px;">Techs are guessing hours logged. Calendar not accessible in field. Core PSA Mobile App requirement.</p>
+          <div class="card-sub" style="margin-top:8px;">Ties to #9 overall: PSA Mobile App (189 calls). iPoint displacement depends on this.</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card">
+          <div class="card-label">⚪ Platform — Multi-Email Identity</div>
+          <p style="font-size:14px; color:var(--text); margin-top:6px;">MSPs want each department (billing, support, accounting) to have its own outbound "from" address.</p>
+          <div class="card-sub" style="margin-top:8px;">Currently only one outgoing email identity. Explicit gap called out in CMP demo.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">⚪ Customer Portal — Payment Visibility</div>
+          <p style="font-size:14px; color:var(--text); margin-top:6px;">Xinix Pro asked for payment history visibility in the customer portal. Aligns with #1 overall: Enhanced Customer Portal (402 calls).</p>
+          <div class="card-sub" style="margin-top:8px;">Portal is the highest-demand feature in the entire dataset. Prioritize self-serve payment history.</div>
+        </div>
+        <div class="card danger-border">
+          <div class="card-label">🔴 Blocker — International / GDPR</div>
+          <p style="font-size:14px; color:var(--text); margin-top:6px;">Xinix Pro (UK telecom) confirmed hard block: no EU data residency, USD/CAD payments only.</p>
+          <div class="card-sub" style="margin-top:8px;">131 call mentions of Internationalization. Not just one deal — a structural market access gap.</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>Product 3/3</span></div>
+  </div>
+
+  <!-- SLIDE 12: SECTION DIVIDER — GTM STRATEGY -->
+  <div class="slide divider-slide">
+    <div class="icon-large">🚀</div>
+    <h2>GTM Content Strategy</h2>
+    <p class="sub">Campaign angles surfaced by 5 months of call data</p>
+  </div>
+
+  <!-- SLIDE 13: GTM CONTENT ANGLES -->
+  <div class="slide">
+    <div class="slide-header"><span class="slide-tag gtm">GTM</span></div>
+    <h2>Campaign Angles from the Data</h2>
+    <h3>What the call corpus tells us to build</h3>
+    <div class="grid-3" style="flex:1; gap:14px;">
+      <div class="card accent-border">
+        <div style="font-size:28px; margin-bottom:10px;">📦</div>
+        <div class="card-label" style="margin-bottom:8px;">Campaign #1</div>
+        <div style="font-size:18px; font-weight:700; color:#fff; margin-bottom:10px;">"When QuickBooks Stops Scaling"</div>
+        <p style="font-size:14px; color:var(--text);">70% of prospects still on QuickBooks. They know they've outgrown it — they just need permission to leave.</p>
+        <div class="card-sub" style="margin-top:12px;"><strong>Data:</strong> 408 QB mentions · 399 QB integration asks · Most common system in prospect convos</div>
+        <div class="card-sub" style="margin-top:6px;"><strong>Assets needed:</strong> Before/after story, ROI calculator, migration guide</div>
+      </div>
+      <div class="card accent-border">
+        <div style="font-size:28px; margin-bottom:10px;">🔁</div>
+        <div class="card-label" style="margin-bottom:8px;">Campaign #2</div>
+        <div style="font-size:18px; font-weight:700; color:#fff; margin-bottom:10px;">"The ConnectWise Switcher"</div>
+        <p style="font-size:14px; color:var(--text);">129 CW mentions. 8 confirmed displacement wins. Social proof exists — use it. Price and complexity are the wedge.</p>
+        <div class="card-sub" style="margin-top:12px;"><strong>Data:</strong> $6,682 MRR from CW displacements · Trend accelerating Jul→Feb</div>
+        <div class="card-sub" style="margin-top:6px;"><strong>Assets needed:</strong> Customer video, comparison page, "escape hatch" offer</div>
+      </div>
+      <div class="card accent-border">
+        <div style="font-size:28px; margin-bottom:10px;">🔧</div>
+        <div class="card-label" style="margin-bottom:8px;">Campaign #3</div>
+        <div style="font-size:18px; font-weight:700; color:#fff; margin-bottom:10px;">Security Integrator Vertical</div>
+        <p style="font-size:14px; color:var(--text);">Inventory (378) + GPS (285) + Mobile App (189) cluster together. Security integrators are a distinct buyer with a specific feature set.</p>
+        <div class="card-sub" style="margin-top:12px;"><strong>Data:</strong> Kazar Security is the archetype — field techs, inventory leakage, iPoint displacement</div>
+        <div class="card-sub" style="margin-top:6px;"><strong>Assets needed:</strong> Vertical landing page, field tech persona, inventory ROI story</div>
+      </div>
+      <div class="card">
+        <div style="font-size:28px; margin-bottom:10px;">👤</div>
+        <div class="card-label" style="margin-bottom:8px;">Campaign #4</div>
+        <div style="font-size:18px; font-weight:700; color:#fff; margin-bottom:10px;">"The Owner Exit Play"</div>
+        <p style="font-size:14px; color:var(--text);">Owner-led deals where the owner wants to step back from day-to-day ops. PSA as the automation layer that buys their time back.</p>
+        <div class="card-sub" style="margin-top:12px;"><strong>Signal:</strong> Lubbock AV, Kazar Security — owners cite delegation as primary motivation</div>
+      </div>
+      <div class="card">
+        <div style="font-size:28px; margin-bottom:10px;">🔌</div>
+        <div class="card-label" style="margin-bottom:8px;">Campaign #5</div>
+        <div style="font-size:18px; font-weight:700; color:#fff; margin-bottom:10px;">NinjaOne Partner Play</div>
+        <p style="font-size:14px; color:var(--text);">14 NinjaOne mentions. Syncro + Ninja combo is common — NinjaOne integration quality determines whether CMP-style deals close.</p>
+        <div class="card-sub" style="margin-top:12px;"><strong>Opportunity:</strong> Partner co-marketing with NinjaOne targeting Syncro users</div>
+      </div>
+      <div class="card">
+        <div style="font-size:28px; margin-bottom:10px;">🌍</div>
+        <div class="card-label" style="margin-bottom:8px;">Blocked Market</div>
+        <div style="font-size:18px; font-weight:700; color:#fff; margin-bottom:10px;">International / EU</div>
+        <p style="font-size:14px; color:var(--text);">131 internationalization mentions. GDPR + data residency + multi-currency are blocking an addressable market segment.</p>
+        <div class="card-sub" style="margin-top:12px;"><strong>Action needed:</strong> Product roadmap decision on EU data hosting before GTM can address this</div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>Strategy 1/1</span></div>
+  </div>
+
+  <!-- SLIDE 14: ACTION ITEMS -->
+  <div class="slide">
+    <div class="slide-header"><span class="slide-tag action">Action Items</span></div>
+    <h2>Immediate Actions</h2>
+    <h3>What needs to happen this week</h3>
+    <div class="grid-2" style="flex:1; gap:16px;">
+      <div>
+        <div class="card-label" style="margin-bottom:12px;">🔥 THIS WEEK — SALES</div>
+        <div class="signal-item">
+          <span class="signal-icon">📞</span>
+          <div class="signal-body">
+            <strong>Thursday 4:30pm ET — CMP Consulting / Brenda Harvey</strong>
+            <p>NinjaOne auto-ticket integration call. This determines CMP close. Connor Flynn must be prepped. Have a definitive answer ready.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">🎥</span>
+          <div class="signal-body">
+            <strong>Kazar Security — Demo recording to accountant</strong>
+            <p>Kevin (owner) said he'd share internally. Ensure the recording highlights inventory management + barcode scanning clearly.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">💰</span>
+          <div class="signal-body">
+            <strong>CMP Consulting — Lock the $400/mo pricing in writing</strong>
+            <p>Verbal agreement confirmed with Ryan Koontz. Get it papered before Thursday's call changes the dynamic.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">🌍</span>
+          <div class="signal-body">
+            <strong>Xinix Pro — Honest follow-up on international roadmap</strong>
+            <p>Cam was transparent in the call. Either share EU roadmap timeline or close the loop so they can evaluate alternatives.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card-label" style="margin-bottom:12px;">⚙️ THIS WEEK — PRODUCT</div>
+        <div class="signal-item">
+          <span class="signal-icon">🔌</span>
+          <div class="signal-body">
+            <strong>NinjaOne Integration — Validate auto-ticket creation depth</strong>
+            <p>Is it on the roadmap? Can it ship? Brenda Harvey needs an answer before Thursday. This is a live deal dependency.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">⚠️</span>
+          <div class="signal-body">
+            <strong>Apollo 2 At-Risk Triage</strong>
+            <p>User Mgmt/Auth (355 mentions) + SLA Mgmt (234) + Bulk I/E (109) = 698 mentions of at-risk features. Worth a PM review.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">🌍</span>
+          <div class="signal-body">
+            <strong>International / GDPR — Make a decision</strong>
+            <p>131 calls mention internationalization. Either put it on the roadmap with a date or define which markets we're not serving.</p>
+          </div>
+        </div>
+        <div class="signal-item">
+          <span class="signal-icon">📊</span>
+          <div class="signal-body">
+            <strong>kaia-analyzer.js — Fix feature extraction bug</strong>
+            <p>k.feature → k.featureName bug caused 0 feature matches this run. Fix + re-run on checkpoint will populate the feature demand data correctly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>Rev.io Revay Intelligence System</span><span>Actions</span></div>
+  </div>
+
+  <!-- SLIDE 15: CLOSING -->
+  <div class="slide divider-slide">
+    <div class="icon-large">⚡</div>
+    <h2>Rev.io Intelligence Report</h2>
+    <p class="sub">March 2026 · Powered by Revay + Kaia</p>
+    <div class="stat-row" style="justify-content:center; margin-top:40px; flex-wrap:wrap;">
+      <div class="stat-pill">
+        <span class="num" style="color:var(--accent2)">583</span>
+        <span class="lbl">Tier 1 calls analyzed</span>
+      </div>
+      <div class="stat-pill">
+        <span class="num" style="color:var(--success)">59%</span>
+        <span class="lbl">Win signal rate</span>
+      </div>
+      <div class="stat-pill">
+        <span class="num" style="color:var(--warn)">15</span>
+        <span class="lbl">Feature priorities ranked</span>
+      </div>
+      <div class="stat-pill">
+        <span class="num" style="color:var(--danger)">698</span>
+        <span class="lbl">At-risk feature mentions</span>
+      </div>
+      <div class="stat-pill">
+        <span class="num" style="color:#f093fb">5</span>
+        <span class="lbl">GTM campaign angles</span>
+      </div>
+    </div>
+    <p class="text-muted" style="margin-top:40px;">Questions? Message Revay · <a href="https://www.notion.so/319a59b7e7b2814f98ceed22d752d815" style="color:var(--accent)">Intelligence Hub →</a></p>
+  </div>
+
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button>
+  <span class="slide-counter" id="slideCounter">1 / 15</span>
+  <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function updateSlide() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === current));
+    document.getElementById('slideCounter').textContent = `${current + 1} / ${slides.length}`;
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === slides.length - 1;
+    const pct = ((current + 1) / slides.length) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  function changeSlide(dir) {
+    const next = current + dir;
+    if (next >= 0 && next < slides.length) {
+      current = next;
+      updateSlide();
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  });
+
+  updateSlide();
+</script>
+</body>
+</html>
