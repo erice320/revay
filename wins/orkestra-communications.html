@@ -17,10 +17,13 @@
   .logo-header{margin-left:16px;margin-top:2px;flex-shrink:0;}
   .logo-header img{height:28px;width:auto;filter:brightness(0) invert(1);opacity:.9;}
   .card-body{padding:24px 32px;}
-  .row{margin-bottom:20px;}
+  .row{margin-bottom:18px;}
   .row-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#8A9BB2;margin-bottom:8px;}
-  .competitor-tag{display:inline-block;background:#FFF3F3;border:1px solid #FFD0D0;color:#C0392B;font-size:13px;font-weight:600;padding:4px 12px;border-radius:20px;margin-right:6px;margin-bottom:4px;}
-  .competitor-tag.psa{background:#FFF8E8;border-color:#E8C060;color:#7A5000;}
+  /* Switching From — authoritative, bold tags */
+  .switch-tag{display:inline-block;background:#FFF3F3;border:1px solid #FFD0D0;color:#C0392B;font-size:13px;font-weight:700;padding:4px 12px;border-radius:20px;margin-right:6px;margin-bottom:4px;}
+  .switch-tag.psa{background:#FFF8E8;border-color:#E8C060;color:#7A5000;}
+  /* Also Evaluated — softer treatment */
+  .eval-tag{display:inline-block;background:#F5F7FA;border:1px solid #D8DDE8;color:#6B7A94;font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px;margin-right:5px;margin-bottom:4px;}
   .feature-list{list-style:none;}
   .feature-list li{font-size:14px;color:#1a2a3a;padding:6px 0;border-bottom:1px solid #F0F4F8;display:flex;align-items:flex-start;gap:8px;line-height:1.4;}
   .feature-list li:last-child{border-bottom:none;}
@@ -46,9 +49,19 @@
     <div class="logo-header"><img src="revio-logo.svg" alt="Rev.io"></div>
   </div>
   <div class="card-body">
-    <div class="row"><div class="row-label">Switching From</div><span class="competitor-tag">QuickBooks</span></div>
-    <div class="row"><div class="row-label">Rev.io Solutions</div><ul class="feature-list"><li>Internationalization</li><li>Enhanced Customer Portal</li><li>Agents &amp; Commissions</li><li>QuickBooks Online Integration</li></ul></div>
-    <div class="row"><div class="row-label">Client Value</div><ul class="value-list"><li>Rev.io Billing gives Orkestra is a single source of truth for invoicing their customers and the platform to grow into white label billing for data and communications</li></ul></div>
+    
+    <div class="row">
+      <div class="row-label">Also Evaluated</div>
+      <span class="eval-tag">QuickBooks</span>
+    </div>
+    <div class="row">
+      <div class="row-label">Rev.io Solutions</div>
+      <ul class="feature-list"><li>Internationalization</li><li>Enhanced Customer Portal</li><li>Agents &amp; Commissions</li><li>QuickBooks Online Integration</li></ul>
+    </div>
+    <div class="row">
+      <div class="row-label">Client Value</div>
+      <ul class="value-list"><li>Rev.io Billing gives Orkestra is a single source of truth for invoicing their customers and the platform to grow into white label billing for data and communications</li></ul>
+    </div>
   </div>
   <div class="card-footer">
     <div class="logo-footer"><img src="revio-logo.svg" alt="Rev.io"></div>
