@@ -14,6 +14,12 @@
   .stat-pill{font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;}
   .stat-pill.total{background:rgba(27,110,243,.2);border:1px solid rgba(27,110,243,.4);color:#7BB8FF;}
   .stat-pill.comp{background:rgba(200,150,44,.2);border:1px solid rgba(200,150,44,.4);color:#F0C040;}
+  .comp-nav{background:#0A1628;border-bottom:1px solid #1B3A6B;padding:0 40px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+  .comp-nav::-webkit-scrollbar{display:none;}
+  .comp-nav-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#3A5A7A;padding:14px 16px 14px 0;white-space:nowrap;align-self:center;}
+  .comp-nav-link{display:flex;align-items:center;gap:6px;padding:13px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8AABC8;text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:.2s;}
+  .comp-nav-link:hover{color:#F0C040;border-bottom-color:#C8962C;}
+  .nav-count{background:rgba(200,150,44,.2);color:#F0C040;font-size:10px;padding:1px 6px;border-radius:10px;}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;padding:32px 40px;max-width:1200px;margin:0 auto;}
   .card-link{text-decoration:none;}
   .mini-card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.07);transition:transform .15s,box-shadow .15s;height:100%;display:flex;flex-direction:column;}
@@ -40,12 +46,13 @@
     <div class="stat-pill comp">🏆 12 competitive takeaways</div>
   </div>
 </header>
+<nav class="comp-nav">
+  <span class="comp-nav-label">By Competitor:</span>
+  <a href="connectwise/" class="comp-nav-link">ConnectWise <span class="nav-count">10</span></a><a href="autotask/" class="comp-nav-link">Autotask / Kaseya <span class="nav-count">5</span></a><a href="syncro/" class="comp-nav-link">Syncro <span class="nav-count">2</span></a><a href="halopsa/" class="comp-nav-link">HaloPSA <span class="nav-count">1</span></a><a href="superops/" class="comp-nav-link">SuperOps <span class="nav-count">1</span></a>
+</nav>
 <div class="grid"><a href="tcg-tech-ar-payments.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">Payments AR</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">Payments AR</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">TCG Tech - AR Payments</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -53,10 +60,7 @@
     </a>
 <a href="xmission.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">XMission</div>
         <div class="mc-comp">&nbsp;</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -64,10 +68,7 @@
     </a>
 <a href="class-5-technologies.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">Class 5 Technologies</div>
         <div class="mc-comp">from ConnectWise</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -75,10 +76,7 @@
     </a>
 <a href="cicada-systems.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">Cicada Systems</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -86,10 +84,7 @@
     </a>
 <a href="northwest-it-services.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">Billing</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">Billing</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">Northwest IT Services</div>
         <div class="mc-comp">from ConnectWise</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -97,10 +92,7 @@
     </a>
 <a href="east-kentucky-telecom.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">Billing</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">Billing</span></div>
         <div class="mc-company">East Kentucky Telecom</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -108,10 +100,7 @@
     </a>
 <a href="georgia-technology-systems.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">Georgia Technology Systems</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -119,10 +108,7 @@
     </a>
 <a href="integration-engineers.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">Integration Engineers</div>
         <div class="mc-comp">from ConnectWise</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -130,10 +116,7 @@
     </a>
 <a href="troy-security-systems.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">Troy Security Systems</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -141,10 +124,7 @@
     </a>
 <a href="geritech.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">Geritech</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -152,10 +132,7 @@
     </a>
 <a href="louisville-tech.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">Billing</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">Billing</span></div>
         <div class="mc-company">Louisville Tech</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -163,10 +140,7 @@
     </a>
 <a href="summitone.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">Billing</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">Billing</span></div>
         <div class="mc-company">SummitOne</div>
         <div class="mc-comp">&nbsp;</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -174,10 +148,7 @@
     </a>
 <a href="abs-of-utah-ar-payments.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">Payments AR</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">Payments AR</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">ABS of Utah AR Payments</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -185,10 +156,7 @@
     </a>
 <a href="phoenix-security-web.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">Phoenix Security - Web</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -196,10 +164,7 @@
     </a>
 <a href="intek-technology-solutions-psa-i.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">Intek Technology Solutions PSA I</div>
         <div class="mc-comp">from SuperOps</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Dec 2025</span></div>
@@ -207,10 +172,7 @@
     </a>
 <a href="orkestra-communications.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">Billing</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">Billing</span></div>
         <div class="mc-company">Orkestra Communications</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Jan 2026</span></div>
@@ -218,10 +180,7 @@
     </a>
 <a href="csi-video-security-sound-theater.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">CSI Video Security Sound &amp; Theater</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Jan 2026</span></div>
@@ -229,10 +188,7 @@
     </a>
 <a href="alarm-security-inc.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">Alarm Security Inc</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Jan 2026</span></div>
@@ -240,10 +196,7 @@
     </a>
 <a href="preeminent-technology.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">Payments AR</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">Payments AR</span></div>
         <div class="mc-company">Preeminent Technology</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Jan 2026</span></div>
@@ -251,10 +204,7 @@
     </a>
 <a href="global-data-systems.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">Billing</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">Billing</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">Global Data Systems</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Jan 2026</span></div>
@@ -262,10 +212,7 @@
     </a>
 <a href="atlantic-companies-psa.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">Atlantic Companies PSA</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Feb 2026</span></div>
@@ -273,10 +220,7 @@
     </a>
 <a href="castle-security-psa.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">Castle Security PSA</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Feb 2026</span></div>
@@ -284,10 +228,7 @@
     </a>
 <a href="exabar-telecom.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">Billing</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">Billing</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">Exabar Telecom</div>
         <div class="mc-comp">from ConnectWise</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Feb 2026</span></div>
@@ -295,10 +236,7 @@
     </a>
 <a href="cinemascape.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">Cinemascape</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Feb 2026</span></div>
@@ -306,10 +244,7 @@
     </a>
 <a href="shinntek-solutions.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">Shinntek Solutions</div>
         <div class="mc-comp">from ConnectWise</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Feb 2026</span></div>
@@ -317,10 +252,7 @@
     </a>
 <a href="remote-technologies.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">Remote Technologies</div>
         <div class="mc-comp">from ConnectWise</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Feb 2026</span></div>
@@ -328,10 +260,7 @@
     </a>
 <a href="ravguard-psa.html" class="card-link">
       <div class="mini-card competitive">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          <div class="mc-comp-badge">🏆 Competitive Takeaway</div>
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span><div class="mc-comp-badge">🏆 Competitive Takeaway</div></div>
         <div class="mc-company">Ravguard PSA</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Feb 2026</span></div>
@@ -339,10 +268,7 @@
     </a>
 <a href="sydewire-technologies-inc.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">Sydewire Technologies Inc,</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Feb 2026</span></div>
@@ -350,10 +276,7 @@
     </a>
 <a href="pos-innovation.html" class="card-link">
       <div class="mini-card">
-        <div class="mc-header">
-          <span class="mc-badge">PSA 2.0</span>
-          
-        </div>
+        <div class="mc-header"><span class="mc-badge">PSA 2.0</span></div>
         <div class="mc-company">POS Innovation</div>
         <div class="mc-comp">from QuickBooks</div><div class="mc-quotes">4 quotes from the call</div>
         <div class="mc-footer"><span class="mc-date">Feb 2026</span></div>
