@@ -57,9 +57,14 @@
     font-size: 10px; font-weight: 700; text-transform: uppercase;
     letter-spacing: 2px; color: #8A9BB2; margin-bottom: 6px;
   }
-  .competitor-tag {
+  .competitor-tag, .switch-tag {
     display: inline-block; background: #FFF3F3; border: 1px solid #FFD0D0;
     color: #C0392B; font-size: 13px; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
+  }
+  .eval-tag {
+    display: inline-block; background: #FFF8F0; border: 1px solid #FFDDB3;
+    color: #C07000; font-size: 13px; font-weight: 600;
     padding: 4px 12px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
   }
   .feature-list { list-style: none; }
@@ -72,15 +77,18 @@
   .feature-list li::before {
     content: '✓'; color: #1B6EF3; font-weight: 700; font-size: 13px;
   }
+  .value-list { list-style: none; }
+  .value-list li {
+    font-size: 14px; color: #1a2a3a; padding: 6px 0;
+    border-bottom: 1px solid #F0F4F8; line-height: 1.5;
+  }
+  .value-list li:last-child { border-bottom: none; }
+  .value-list li::before { content: '→'; color: #1B6EF3; font-weight: 700; margin-right: 8px; }
   .quote-box {
     background: #F7F9FF; border-left: 3px solid #1B6EF3;
-    border-radius: 0 8px 8px 0;
-    padding: 14px 16px;
+    border-radius: 0 8px 8px 0; padding: 14px 16px;
   }
-  .quote-box .qtext {
-    font-size: 14px; color: #1a2a3a; line-height: 1.6;
-    font-style: italic;
-  }
+  .quote-box .qtext { font-size: 14px; color: #1a2a3a; line-height: 1.6; font-style: italic; }
 
   .card-footer {
     background: #F7F9FF; border-top: 1px solid #E8EDF5;
@@ -112,12 +120,18 @@
     
     <div class="row">
       <div class="row-label">Switching From</div>
-      <span class="competitor-tag">ConnectWise</span><span class="competitor-tag">HaloPSA</span><span class="competitor-tag">Syncro</span>
+      <span class="switch-tag">HaloPSA</span>
     </div>
 
     
     <div class="row">
-      <div class="row-label">What They Wanted</div>
+      <div class="row-label">Also Evaluated</div>
+      <span class="eval-tag">ConnectWise</span><span class="eval-tag">Syncro</span>
+    </div>
+
+    
+    <div class="row">
+      <div class="row-label">Rev.io Solutions</div>
       <ul class="feature-list">
         <li>Enhanced Customer Portal</li><li>QuickBooks Online</li><li>Serialized Inventory Management</li><li>User Management/Authentication</li>
       </ul>
@@ -125,10 +139,10 @@
 
     
     <div class="row">
-      <div class="row-label">From the Call</div>
-      <div class="quote-box">
-        <div class="qtext">"this is exactly"</div>
-      </div>
+      <div class="row-label">Client Value</div>
+      <ul class="value-list">
+        <li>Saving time eliminating swivel chairing between different platforms and consolidating ticketing/billing processes into one platform</li><li>Saving money cleaning up inventory processes with the ability to properly order and track parts</li>
+      </ul>
     </div>
   </div>
 
