@@ -46,12 +46,9 @@
     white-space: nowrap; margin-top: 4px;
     text-transform: uppercase; letter-spacing: 1px;
   }
-  .revio-logo {
-    font-size: 18px; font-weight: 900; color: #fff;
-    letter-spacing: -0.5px; opacity: 0.9; white-space: nowrap;
-    margin-left: 16px; margin-top: 4px;
-  }
-  .revio-logo span { color: #1B6EF3; }
+  .logo-header { margin-left: 16px; margin-top: 2px; flex-shrink: 0; }
+  .logo-header img { height: 28px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+  .logo-footer img { height: 22px; width: auto; }
 
   .card-body { padding: 24px 32px; }
 
@@ -60,9 +57,14 @@
     font-size: 10px; font-weight: 700; text-transform: uppercase;
     letter-spacing: 2px; color: #8A9BB2; margin-bottom: 6px;
   }
-  .competitor-tag {
+  .competitor-tag, .switch-tag {
     display: inline-block; background: #FFF3F3; border: 1px solid #FFD0D0;
     color: #C0392B; font-size: 13px; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
+  }
+  .eval-tag {
+    display: inline-block; background: #FFF8F0; border: 1px solid #FFDDB3;
+    color: #C07000; font-size: 13px; font-weight: 600;
     padding: 4px 12px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
   }
   .feature-list { list-style: none; }
@@ -75,15 +77,18 @@
   .feature-list li::before {
     content: '✓'; color: #1B6EF3; font-weight: 700; font-size: 13px;
   }
+  .value-list { list-style: none; }
+  .value-list li {
+    font-size: 14px; color: #1a2a3a; padding: 6px 0;
+    border-bottom: 1px solid #F0F4F8; line-height: 1.5;
+  }
+  .value-list li:last-child { border-bottom: none; }
+  .value-list li::before { content: '→'; color: #1B6EF3; font-weight: 700; margin-right: 8px; }
   .quote-box {
     background: #F7F9FF; border-left: 3px solid #1B6EF3;
-    border-radius: 0 8px 8px 0;
-    padding: 14px 16px;
+    border-radius: 0 8px 8px 0; padding: 14px 16px;
   }
-  .quote-box .qtext {
-    font-size: 14px; color: #1a2a3a; line-height: 1.6;
-    font-style: italic;
-  }
+  .quote-box .qtext { font-size: 14px; color: #1a2a3a; line-height: 1.6; font-style: italic; }
 
   .card-footer {
     background: #F7F9FF; border-top: 1px solid #E8EDF5;
@@ -108,29 +113,43 @@
       <div class="company">Losh Network Services</div>
       <div class="product-badge">PSA 2.0</div>
     </div>
-    <div class="revio-logo">rev<span>.</span>io</div>
+    <div class="logo-header"><img src="revio-logo.svg" alt="Rev.io"></div>
   </div>
 
   <div class="card-body">
     
+
+    
     <div class="row">
       <div class="row-label">Switching From</div>
-      <span class="competitor-tag">ConnectWise</span><span class="competitor-tag">QuickBooks</span>
+      <span class="switch-tag">ConnectWise</span>
     </div>
 
     
     <div class="row">
-      <div class="row-label">What They Wanted</div>
+      <div class="row-label">Also Evaluated</div>
+      <span class="eval-tag">QuickBooks</span>
+    </div>
+
+    
+    <div class="row">
+      <div class="row-label">Rev.io Solutions</div>
       <ul class="feature-list">
-        <li>Enhanced Customer Portal</li><li>Bulk Import / Export Engine</li><li>QuickBooks Online</li><li>Dispatch Board</li>
+        <li>RMM Integration (N-able)</li><li>Ticketing &amp; Service Desk</li><li>PSA-Billing Native Sync</li><li>Asset Management</li>
       </ul>
     </div>
 
     
+    <div class="row">
+      <div class="row-label">Client Value</div>
+      <ul class="value-list">
+        <li>Expanding an Existing Platform Relationship: Losh has been on Rev.io billing since 2021 — PSA deepens platform adoption and unifies service and billing in a single system</li><li>ConnectWise Displacement: 25-person UCaaS/VoIP team migrating core service desk operations from ConnectWise to Rev.io PSA</li><li>N-able RMM Integration Opportunity: Active N-able environment creates immediate value — RMM alerts auto-generate tickets, managed endpoints sync as assets, eliminating manual handoff</li><li>Springfield, MO UCaaS/VoIP Provider: Regional MSP with 25 staff consolidating tooling to reduce overhead and improve operational consistency</li>
+      </ul>
+    </div>
   </div>
 
   <div class="card-footer">
-    <div class="footer-brand">rev<span style="color:#1B6EF3">.</span>io PSA</div>
+    <div class="logo-footer"><img src="revio-logo.svg" alt="Rev.io"></div>
     <div class="footer-date">February 2026</div>
   </div>
 </div>
