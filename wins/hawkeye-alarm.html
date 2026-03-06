@@ -57,9 +57,14 @@
     font-size: 10px; font-weight: 700; text-transform: uppercase;
     letter-spacing: 2px; color: #8A9BB2; margin-bottom: 6px;
   }
-  .competitor-tag {
+  .competitor-tag, .switch-tag {
     display: inline-block; background: #FFF3F3; border: 1px solid #FFD0D0;
     color: #C0392B; font-size: 13px; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
+  }
+  .eval-tag {
+    display: inline-block; background: #FFF8F0; border: 1px solid #FFDDB3;
+    color: #C07000; font-size: 13px; font-weight: 600;
     padding: 4px 12px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
   }
   .feature-list { list-style: none; }
@@ -72,15 +77,18 @@
   .feature-list li::before {
     content: '✓'; color: #1B6EF3; font-weight: 700; font-size: 13px;
   }
+  .value-list { list-style: none; }
+  .value-list li {
+    font-size: 14px; color: #1a2a3a; padding: 6px 0;
+    border-bottom: 1px solid #F0F4F8; line-height: 1.5;
+  }
+  .value-list li:last-child { border-bottom: none; }
+  .value-list li::before { content: '→'; color: #1B6EF3; font-weight: 700; margin-right: 8px; }
   .quote-box {
     background: #F7F9FF; border-left: 3px solid #1B6EF3;
-    border-radius: 0 8px 8px 0;
-    padding: 14px 16px;
+    border-radius: 0 8px 8px 0; padding: 14px 16px;
   }
-  .quote-box .qtext {
-    font-size: 14px; color: #1a2a3a; line-height: 1.6;
-    font-style: italic;
-  }
+  .quote-box .qtext { font-size: 14px; color: #1a2a3a; line-height: 1.6; font-style: italic; }
 
   .card-footer {
     background: #F7F9FF; border-top: 1px solid #E8EDF5;
@@ -112,18 +120,30 @@
     
     <div class="row">
       <div class="row-label">Switching From</div>
-      <span class="competitor-tag">QuickBooks</span>
+      <span class="switch-tag">TSheets</span>
     </div>
 
     
     <div class="row">
-      <div class="row-label">What They Wanted</div>
+      <div class="row-label">Also Evaluated</div>
+      <span class="eval-tag">QuickBooks</span>
+    </div>
+
+    
+    <div class="row">
+      <div class="row-label">Rev.io Solutions</div>
       <ul class="feature-list">
         <li>Clock-in/Clock-out</li><li>PSA Mobile App (Foundation)</li><li>Enhanced Customer Portal</li><li>SLA Management</li>
       </ul>
     </div>
 
     
+    <div class="row">
+      <div class="row-label">Client Value</div>
+      <ul class="value-list">
+        <li>Eliminating manual processes by introducing a single platform for almost all aspects of business</li><li>Saving time and money by streamlining operations and allowing for things to not slip through the cracks</li>
+      </ul>
+    </div>
   </div>
 
   <div class="card-footer">
