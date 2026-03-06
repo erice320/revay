@@ -3,607 +3,597 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rev.io Intelligence Report — March 5, 2026</title>
+<title>Rev.io Intelligence Report — Friday, March 6, 2026</title>
 <style>
   :root {
-    --green: #00ff88; --cyan: #00e5ff; --purple: #bf5af2;
-    --red: #ff4444; --yellow: #ffd700;
-    --bg: #020408; --surface: #060d14; --border: #0a2a1a; --border2: #0d1f2d;
-    --text: #c8f0dc; --muted: #5a8a6a; --muted-dark: #2a5a3a;
+    --green:#00ff88;--cyan:#00e5ff;--purple:#bf5af2;
+    --red:#ff4444;--yellow:#ffd700;
+    --bg:#020408;--surface:#060d14;--border:#0a2a1a;--border2:#0d1f2d;
+    --text:#c8f0dc;--muted:#5a8a6a;--muted-dark:#2a5a3a;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', system-ui, monospace; background: var(--bg); color: var(--text); }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background-image: linear-gradient(rgba(0,255,136,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.025) 1px,transparent 1px);
-    background-size: 40px 40px; pointer-events: none; z-index: 0;
-  }
-
-  /* COVER */
-  .cover { background: linear-gradient(135deg,#010204 0%,#020408 60%,#030a06 100%); padding: 80px 60px 64px; border-bottom: 1px solid var(--border); position: relative; z-index:1; }
-  .cover .label { font-size:10px; text-transform:uppercase; letter-spacing:3px; color:var(--muted-dark); margin-bottom:16px; font-weight:700; }
-  .cover h1 { font-size:42px; font-weight:900; line-height:1.1; margin-bottom:12px; color:#fff; letter-spacing:-1px; }
-  .cover h1 span { color:var(--green); text-shadow:0 0 30px rgba(0,255,136,.6); }
-  .cover .sub { font-size:15px; color:var(--muted); margin-bottom:40px; line-height:1.6; }
-  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; max-width:780px; }
-  .kpi { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:18px 16px; }
-  .kpi .val { font-size:28px; font-weight:900; color:var(--green); text-shadow:0 0 16px rgba(0,255,136,.3); line-height:1; }
-  .kpi .val.cyan { color:var(--cyan); text-shadow:0 0 16px rgba(0,229,255,.3); }
-  .kpi .val.red { color:var(--red); text-shadow:0 0 16px rgba(255,68,68,.3); }
-  .kpi .val.warn { color:var(--yellow); }
-  .kpi .lbl { font-size:10px; color:var(--muted-dark); text-transform:uppercase; letter-spacing:1px; margin-top:6px; }
-  .cover .date { margin-top:36px; font-size:11px; color:var(--muted-dark); letter-spacing:1px; }
-
-  /* NAV */
-  .toc { background:#010204; border-bottom:1px solid var(--border); padding:0 60px; display:flex; gap:0; overflow-x:auto; position:sticky; top:0; z-index:100; scrollbar-width:none; }
-  .toc::-webkit-scrollbar { display:none; }
-  .toc a { display:block; padding:13px 16px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted-dark); text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent; transition:.2s; }
-  .toc a:hover { color:var(--green); border-bottom-color:var(--green); }
-
-  /* SECTIONS */
-  .section { padding:64px 60px; border-bottom:1px solid var(--border2); position:relative; z-index:1; }
-  .section-label { font-size:10px; text-transform:uppercase; letter-spacing:3px; color:var(--muted-dark); font-weight:700; margin-bottom:8px; }
-  .section h2 { font-size:30px; font-weight:900; color:#fff; letter-spacing:-0.5px; margin-bottom:12px; }
-  .section h2 span { color:var(--green); }
-  .section-intro { color:var(--muted); font-size:14px; line-height:1.7; margin-bottom:36px; max-width:700px; }
-
-  /* FEATURE TABLE */
-  .feat-table { width:100%; border-collapse:collapse; }
-  .feat-table td { padding:10px 8px; border-bottom:1px solid var(--border2); }
-  .feat-table .rank { width:36px; font-weight:900; font-size:13px; }
-  .feat-table .fname { font-size:14px; color:#fff; }
-  .feat-table .fbar { width:40%; padding:10px 16px; }
-  .feat-table .fcount { width:60px; text-align:right; font-weight:700; color:var(--cyan); font-size:13px; }
-  .bar-track { height:6px; background:var(--surface); border-radius:3px; overflow:hidden; }
-  .bar-fill { height:100%; border-radius:3px; transition:width .3s; }
-  .badge-risk { display:inline-block; background:rgba(255,215,0,.1); border:1px solid rgba(255,215,0,.3); color:var(--yellow); font-size:9px; padding:1px 6px; border-radius:3px; margin-left:8px; vertical-align:middle; }
-
-  /* COMPETITOR CHIPS */
-  .comp-grid { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; }
-  .comp-chip { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:10px 16px; font-size:13px; font-weight:600; display:flex; align-items:center; gap:10px; }
-  .comp-chip .cnt { font-size:18px; font-weight:900; color:var(--green); }
-
-  /* WIN/LOSS CARDS */
-  .quote-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-  @media(max-width:700px) { .quote-grid { grid-template-columns:1fr; } }
-  .quote-card { background:var(--surface); border-radius:8px; padding:18px 20px; }
-  .quote-card.green { border-left:3px solid var(--green); }
-  .quote-card.red { border-left:3px solid var(--red); }
-  .quote-card .qtext { font-size:14px; color:#fff; line-height:1.5; margin-bottom:8px; }
-  .quote-card .qmeta { font-size:11px; color:var(--muted); }
-
-  /* TWO-COL */
-  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
-  @media(max-width:800px) { .two-col { grid-template-columns:1fr; } }
-
-  /* SIGNAL BOXES */
-  .signal-box { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:24px; }
-  .signal-box h4 { font-size:12px; text-transform:uppercase; letter-spacing:2px; margin-bottom:16px; }
-  .signal-box.win h4 { color:var(--green); }
-  .signal-box.loss h4 { color:var(--red); }
-  .signal-item { padding:10px 0; border-bottom:1px solid var(--border2); font-size:13px; line-height:1.5; }
-  .signal-item:last-child { border-bottom:none; }
-  .signal-item .company { color:var(--cyan); font-size:11px; margin-top:3px; }
-
-  /* FOOTER */
-  .footer { padding:40px 60px; text-align:center; color:var(--muted-dark); font-size:11px; letter-spacing:1px; }
-  .footer a { color:var(--muted); text-decoration:none; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,monospace;background:var(--bg);color:var(--text);}
+  body::before{content:'';position:fixed;inset:0;
+    background-image:linear-gradient(rgba(0,255,136,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.025) 1px,transparent 1px);
+    background-size:40px 40px;pointer-events:none;z-index:0;}
+  .cover{background:linear-gradient(135deg,#010204 0%,#020408 60%,#030a06 100%);padding:80px 60px 64px;border-bottom:1px solid var(--border);position:relative;z-index:1;}
+  .cover .label{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--muted-dark);margin-bottom:16px;font-weight:700;}
+  .cover h1{font-size:42px;font-weight:900;line-height:1.1;margin-bottom:12px;color:#fff;letter-spacing:-1px;}
+  .cover h1 span{color:var(--green);text-shadow:0 0 30px rgba(0,255,136,.6);}
+  .cover .sub{font-size:15px;color:var(--muted);margin-bottom:40px;line-height:1.6;}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:860px;}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 16px;}
+  .kpi .val{font-size:28px;font-weight:900;color:var(--green);text-shadow:0 0 16px rgba(0,255,136,.3);line-height:1;}
+  .kpi .val.cyan{color:var(--cyan);text-shadow:0 0 16px rgba(0,229,255,.3);}
+  .kpi .val.red{color:var(--red);text-shadow:0 0 16px rgba(255,68,68,.3);}
+  .kpi .val.warn{color:var(--yellow);}
+  .kpi .val.purple{color:var(--purple);}
+  .kpi .lbl{font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;margin-top:6px;}
+  .cover .date{margin-top:36px;font-size:11px;color:var(--muted-dark);letter-spacing:1px;}
+  .toc{background:#010204;border-bottom:1px solid var(--border);padding:0 60px;display:flex;gap:0;overflow-x:auto;position:sticky;top:0;z-index:100;scrollbar-width:none;}
+  .toc::-webkit-scrollbar{display:none;}
+  .toc a{display:block;padding:13px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted-dark);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:.2s;}
+  .toc a:hover{color:var(--green);border-bottom-color:var(--green);}
+  .section{padding:64px 60px;border-bottom:1px solid var(--border2);position:relative;z-index:1;}
+  .section-label{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--muted-dark);font-weight:700;margin-bottom:8px;}
+  .section h2{font-size:30px;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:12px;}
+  .section h2 span{color:var(--green);}
+  .section-intro{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:36px;max-width:700px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  @media(max-width:900px){.two-col{grid-template-columns:1fr;}}
+  .signal-box{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:24px;}
+  .signal-box h4{font-size:14px;font-weight:700;margin-bottom:14px;}
+  table.feature-table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border2);border-radius:10px;overflow:hidden;}
+  table.feature-table th{padding:10px 14px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted-dark);text-align:left;background:#03080f;border-bottom:1px solid var(--border2);}
+  table.feature-table tr:not(:last-child) td{border-bottom:1px solid #060f18;}
+  .footer{padding:40px 60px;background:#010204;border-top:1px solid var(--border);text-align:center;position:relative;z-index:1;}
+  .footer p{font-size:11px;color:var(--muted-dark);letter-spacing:.5px;}
+  .footer a{color:var(--green);text-decoration:none;}
+  .empty-state{color:var(--muted-dark);font-size:13px;font-style:italic;padding:20px 0;}
 </style>
 </head>
 <body>
 
 <!-- COVER -->
-<div class="cover" id="top">
-  <div class="label">Rev.io · Kaia Intelligence Report</div>
-  <h1>Market Intelligence<br><span>from the Field</span></h1>
-  <p class="sub">Market signals · Product demand · Competitive landscape · GTM strategy<br>
-    Synthesized from 587 Tier 1 Kaia recordings — Nov 2025 – Mar 2026</p>
+<header class="cover">
+  <div class="label">Rev.io · Intelligence Hub</div>
+  <h1>Market <span>Intelligence</span> Report</h1>
+  <p class="sub">Cumulative signal from Kaia meeting analysis and prospecting call intelligence.<br>All data aggregated from Notion — rebuilt fresh on every run.</p>
   <div class="kpi-grid">
     <div class="kpi"><div class="val">18</div><div class="lbl">Meetings Analyzed</div></div>
-    <div class="kpi"><div class="val">388</div><div class="lbl">Prospecting Calls</div></div>
-    <div class="kpi"><div class="val cyan">21</div><div class="lbl">Meetings Booked (5.4%)</div></div>
-    <div class="kpi"><div class="val red">68</div><div class="lbl">Platform-Satisfied Objections</div></div>
-    <div class="kpi"><div class="val warn">10</div><div class="lbl">Competitors Tracked</div></div>
+    <div class="kpi"><div class="val cyan">388</div><div class="lbl">Prospecting Calls</div></div>
+    <div class="kpi"><div class="val">21</div><div class="lbl">Meetings Booked from Prospecting</div></div>
+    <div class="kpi"><div class="val warn">5.4%</div><div class="lbl">First-Touch Conversion Rate</div></div>
+    <div class="kpi"><div class="val purple">8</div><div class="lbl">Competitors Tracked</div></div>
+    <div class="kpi"><div class="val red">120</div><div class="lbl">Hard Objections (Prospecting)</div></div>
   </div>
-  <div class="date">Auto-generated March 5, 2026 · Updated daily after Kaia analysis</div>
-</div>
+  <div class="date">Generated Friday, March 6, 2026 · Data source: Notion Intelligence Hub</div>
+</header>
 
 <!-- NAV -->
 <nav class="toc">
   <a href="#features">Feature Demand</a>
   <a href="#competitors">Competitive Intel</a>
-  <a href="#signals">Win/Loss Signals</a>
-  <a href="#gtm">GTM Angles</a>
+  <a href="#signals">Win / Loss Signals</a>
   <a href="#prospecting">Prospecting Pulse</a>
   <a href="#correlation">Signal Correlation</a>
 </nav>
 
 <!-- FEATURE DEMAND -->
 <section class="section" id="features">
-  <div class="section-label">Product Intelligence</div>
+  <div class="section-label">Meeting Intelligence</div>
   <h2>Feature <span>Demand</span></h2>
-  <p class="section-intro">Ranked by frequency across all 587 Tier 1 calls. This is the product backlog as your market sees it.</p>
-  <table class="feat-table">
+  <p class="section-intro">Features requested across all analyzed meetings, ranked by frequency. Derived from rep-tagged Notion rows — every meeting adds to this cumulative ranking.</p>
+  
+  <table class="feature-table">
+    <thead><tr><th>Feature</th><th>Mentions</th></tr></thead>
     <tbody>
-      
-      <tr>
-        <td class="rank" style="color:var(--green)">1</td>
-        <td class="fname">Enhanced Customer Portal</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--green)"></div></div>
-        </td>
-        <td class="fcount">402</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--green)">2</td>
-        <td class="fname">QuickBooks Online</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--green)"></div></div>
-        </td>
-        <td class="fcount">400</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--green)">3</td>
-        <td class="fname">Serialized Inventory Management</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:94%;background:var(--green)"></div></div>
-        </td>
-        <td class="fcount">379</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--cyan)">4</td>
-        <td class="fname">User Management/Authentication <span class="badge-risk">⚠ At Risk A2</span></td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:88%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">355</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--cyan)">5</td>
-        <td class="fname">GPS Tracking in PSA/Map in dispatch board</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:71%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">285</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--cyan)">6</td>
-        <td class="fname">Dispatch Board</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:67%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">271</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--cyan)">7</td>
-        <td class="fname">Time Tracking on Tickets</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:63%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">253</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--cyan)">8</td>
-        <td class="fname">SLA Management <span class="badge-risk">⚠ At Risk A2</span></td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:58%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">234</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--muted)">9</td>
-        <td class="fname">PSA Mobile App (Foundation)</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:48%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">191</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--muted)">10</td>
-        <td class="fname">Internationalization</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:33%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">132</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--muted)">11</td>
-        <td class="fname">Agents &amp; Commissions <span class="badge-risk">⚠ At Risk A2</span></td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:33%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">131</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--muted)">12</td>
-        <td class="fname">Bulk Import / Export Engine <span class="badge-risk">⚠ At Risk A2</span></td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:27%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">109</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--muted)">13</td>
-        <td class="fname">Google Calendar Integration</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:22%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">90</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--muted)">14</td>
-        <td class="fname">PAX8 Integration</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">82</td>
-      </tr>
-      <tr>
-        <td class="rank" style="color:var(--muted)">15</td>
-        <td class="fname">D-Tools Integration- Phase I</td>
-        <td class="fbar">
-          <div class="bar-track"><div class="bar-fill" style="width:14%;background:var(--cyan)"></div></div>
-        </td>
-        <td class="fcount">55</td>
-      </tr>
-    </tbody>
+    <tr>
+      <td style="padding:10px 14px;color:var(--text);font-size:13px;">PSA Mobile App (Foundation)</td>
+      <td style="padding:10px 14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="flex:1;height:6px;background:#0a1a0a;border-radius:3px;">
+            <div style="width:100%;height:100%;background:var(--green);border-radius:3px;opacity:.8;"></div>
+          </div>
+          <span style="color:var(--green);font-weight:700;min-width:20px;text-align:right;font-size:13px;">2</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px 14px;color:var(--text);font-size:13px;">RMM-NinjaOne - Phase 1</td>
+      <td style="padding:10px 14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="flex:1;height:6px;background:#0a1a0a;border-radius:3px;">
+            <div style="width:50%;height:100%;background:var(--green);border-radius:3px;opacity:.8;"></div>
+          </div>
+          <span style="color:var(--green);font-weight:700;min-width:20px;text-align:right;font-size:13px;">1</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px 14px;color:var(--text);font-size:13px;">Multi-POP3 Email Management</td>
+      <td style="padding:10px 14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="flex:1;height:6px;background:#0a1a0a;border-radius:3px;">
+            <div style="width:50%;height:100%;background:var(--green);border-radius:3px;opacity:.8;"></div>
+          </div>
+          <span style="color:var(--green);font-weight:700;min-width:20px;text-align:right;font-size:13px;">1</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px 14px;color:var(--text);font-size:13px;">Dispatch Board</td>
+      <td style="padding:10px 14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="flex:1;height:6px;background:#0a1a0a;border-radius:3px;">
+            <div style="width:50%;height:100%;background:var(--green);border-radius:3px;opacity:.8;"></div>
+          </div>
+          <span style="color:var(--green);font-weight:700;min-width:20px;text-align:right;font-size:13px;">1</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px 14px;color:var(--text);font-size:13px;">Internationalization</td>
+      <td style="padding:10px 14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="flex:1;height:6px;background:#0a1a0a;border-radius:3px;">
+            <div style="width:50%;height:100%;background:var(--green);border-radius:3px;opacity:.8;"></div>
+          </div>
+          <span style="color:var(--green);font-weight:700;min-width:20px;text-align:right;font-size:13px;">1</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px 14px;color:var(--text);font-size:13px;">Serialized Inventory Management</td>
+      <td style="padding:10px 14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="flex:1;height:6px;background:#0a1a0a;border-radius:3px;">
+            <div style="width:50%;height:100%;background:var(--green);border-radius:3px;opacity:.8;"></div>
+          </div>
+          <span style="color:var(--green);font-weight:700;min-width:20px;text-align:right;font-size:13px;">1</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px 14px;color:var(--text);font-size:13px;">Clock-in/Clock-out</td>
+      <td style="padding:10px 14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="flex:1;height:6px;background:#0a1a0a;border-radius:3px;">
+            <div style="width:50%;height:100%;background:var(--green);border-radius:3px;opacity:.8;"></div>
+          </div>
+          <span style="color:var(--green);font-weight:700;min-width:20px;text-align:right;font-size:13px;">1</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px 14px;color:var(--text);font-size:13px;">QuickBooks Online</td>
+      <td style="padding:10px 14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="flex:1;height:6px;background:#0a1a0a;border-radius:3px;">
+            <div style="width:50%;height:100%;background:var(--green);border-radius:3px;opacity:.8;"></div>
+          </div>
+          <span style="color:var(--green);font-weight:700;min-width:20px;text-align:right;font-size:13px;">1</span>
+        </div>
+      </td>
+    </tr></tbody>
   </table>
 </section>
 
 <!-- COMPETITIVE INTEL -->
 <section class="section" id="competitors">
-  <div class="section-label">Competitive Intelligence</div>
-  <h2>Competitor <span>Landscape</span></h2>
-  <p class="section-intro">Competitor mentions across all 587 Tier 1 calls — who we're replacing and who we're competing against.</p>
-  <div class="comp-grid">
-    <div class="comp-chip"><span class="cnt">409</span> QuickBooks</div>
-      <div class="comp-chip"><span class="cnt">130</span> ConnectWise</div>
-      <div class="comp-chip"><span class="cnt">45</span> Autotask/Kaseya</div>
-      <div class="comp-chip"><span class="cnt">22</span> Syncro</div>
-      <div class="comp-chip"><span class="cnt">15</span> NinjaOne</div>
-      <div class="comp-chip"><span class="cnt">9</span> SuperOps</div>
-      <div class="comp-chip"><span class="cnt">7</span> HaloPSA</div>
-      <div class="comp-chip"><span class="cnt">5</span> iPoint</div>
-      <div class="comp-chip"><span class="cnt">1</span> ServiceTrade</div>
-      <div class="comp-chip"><span class="cnt">1</span> BuildOPS</div>
-  </div>
+  <div class="section-label">Meeting Intelligence</div>
+  <h2>Competitive <span>Intel</span></h2>
+  <p class="section-intro">Competitors surfacing in meeting transcripts — named by prospects during demos, discovery calls, and CBRs. These are the platforms actively in play during evaluation.</p>
   <div class="two-col">
     <div class="signal-box">
-      <h4 style="color:var(--cyan)">🏆 QuickBooks (409 mentions)</h4>
-      <p class="signal-item">Most common system prospects are replacing. 399 QB integration requests alongside 408 competitor mentions — these are the same conversations. The feature gap is real, and QB's complexity ceiling is the wedge.</p>
+      <h4 style="color:var(--red);">🏁 Competitors Named in Meetings</h4>
+      
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">ConnectWise</span>
+        <span style="color:var(--red);font-weight:700;min-width:28px;text-align:right;">4</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:100%;height:100%;background:var(--red);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">NinjaOne</span>
+        <span style="color:var(--red);font-weight:700;min-width:28px;text-align:right;">2</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:50%;height:100%;background:var(--red);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">Syncro</span>
+        <span style="color:var(--red);font-weight:700;min-width:28px;text-align:right;">1</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:25%;height:100%;background:var(--red);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">QuickBooks</span>
+        <span style="color:var(--red);font-weight:700;min-width:28px;text-align:right;">1</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:25%;height:100%;background:var(--red);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">iPoint</span>
+        <span style="color:var(--red);font-weight:700;min-width:28px;text-align:right;">1</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:25%;height:100%;background:var(--red);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">Autotask/Kaseya</span>
+        <span style="color:var(--red);font-weight:700;min-width:28px;text-align:right;">1</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:25%;height:100%;background:var(--red);border-radius:2px;opacity:.7;"></div>
+      </div>
     </div>
     <div class="signal-box">
-      <h4 style="color:var(--purple)">⚔️ ConnectWise (130 mentions)</h4>
-      <p class="signal-item">Primary structured PSA competitor. Price and complexity are the wedge. 8+ confirmed displacement wins create social proof for a campaign. Build the comparison page and customer escape-hatch offer.</p>
+      <h4 style="color:var(--yellow);">📋 Key Findings from Meetings</h4>
+      
+          <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;margin-bottom:8px;">
+            <div style="font-size:12px;color:var(--text);line-height:1.5;">Pricing agreed live ($400/mo, 4+1 users). NinjaOne integration depth is the make-or-break — follow-up with Brenda Harvey Thursday 4:30pm ET.</div>
+            <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">CMP Consulting</div>
+          </div>
+          <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;margin-bottom:8px;">
+            <div style="font-size:12px;color:var(--text);line-height:1.5;">Owner Brian wants to delegate and exit day-to-day. 20 employees, growing. PSA as an owner-exit motion resonates strongly.</div>
+            <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Lubbock Audio Visual</div>
+          </div>
+          <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;margin-bottom:8px;">
+            <div style="font-size:12px;color:var(--text);line-height:1.5;">CRITICAL GAP: No GDPR compliance, data only in Azure Virginia, payments only settle in USD/CAD. UK billing team needs a single platform for both markets. Likely a no-go without product changes.</div>
+            <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Xinix Pro</div>
+          </div>
+          <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;margin-bottom:8px;">
+            <div style="font-size:12px;color:var(--text);line-height:1.5;">iPoint crashing weekly, techs cannot clock in/out in field. Accountant suspects revenue leakage from untracked inventory — inventory management is #1 eval criterion for this deal.</div>
+            <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Kazar Security</div>
+          </div>
+          <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;margin-bottom:8px;">
+            <div style="font-size:12px;color:var(--text);line-height:1.5;">Microsoft Dynamics integration (PSA/CRM sync to Dynamics)</div>
+            <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Claris</div>
+          </div>
     </div>
   </div>
 </section>
 
-<!-- WIN/LOSS SIGNALS -->
+<!-- WIN / LOSS SIGNALS -->
 <section class="section" id="signals">
-  <div class="section-label">Deal Intelligence</div>
+  <div class="section-label">Meeting Intelligence</div>
   <h2>Win / Loss <span>Signals</span></h2>
-  <p class="section-intro">347 of 587 calls (59%) had a positive buying signal. 160 (27%) showed risk language.</p>
-  <div class="two-col" style="margin-bottom:32px;">
-    <div class="signal-box win">
-      <h4>✅ Win Signal Examples</h4>
-      
-      <div class="signal-item">
-        "Love it"
-        <div class="company">(Discovery Call) Mr. Security Camera, Inc. &amp; Rev.io · Discovery · 2026-02-20</div>
-      </div>
-      <div class="signal-item">
-        "love it"
-        <div class="company">(Discovery Call) Edgeworth Security &amp; Rev.io · Discovery · 2025-12-05</div>
-      </div>
-      <div class="signal-item">
-        "next steps"
-        <div class="company">(Discovery Call) Open Road Systems Inc. &amp; Rev.io · Discovery · 2026-01-20</div>
-      </div>
-      <div class="signal-item">
-        "sign up"
-        <div class="company">(Discovery Call) Shinntek Solutions &amp; Rev.io PSA · Discovery · 2026-02-10</div>
-      </div>
-      <div class="signal-item">
-        "Move forward"
-        <div class="company">(Pricing Call) Reliable PBX / Rev.io · Prospect · 2025-12-29</div>
-      </div>
-    </div>
-    <div class="signal-box loss">
-      <h4>❌ Loss Risk Patterns</h4>
-      
-      <div class="signal-item">
-        no show
-        <div class="company">(Follow-up Discussion/Special Pricing Review) Integrated Technologies / Rev.io PSA · Customer · 2026-02-27</div>
-      </div>
-      <div class="signal-item">
-        locked in
-        <div class="company">(Discovery Call) Mr. Security Camera, Inc. &amp; Rev.io · Discovery · 2026-02-20</div>
-      </div>
-      <div class="signal-item">
-        didn't show
-        <div class="company">(Product Demo) Telpeer / Rev.io · Demo · 2026-02-26</div>
-      </div>
-      <div class="signal-item">
-        not right now
-        <div class="company">(Discovery Call) Gemini Electronic Systems &amp; Rev.io · Discovery · 2026-02-23</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- GTM ANGLES -->
-<section class="section" id="gtm">
-  <div class="section-label">Go-to-Market</div>
-  <h2>GTM <span>Content Angles</span></h2>
-  <p class="section-intro">Three high-signal content angles derived directly from call volume and competitor patterns.</p>
+  <p class="section-intro">What's driving deals forward and what's putting them at risk, surfaced directly from meeting transcripts across all analyzed calls.</p>
   <div class="two-col">
     <div class="signal-box">
-      <h4 style="color:var(--green)">🔄 "Replacing QuickBooks" Campaign</h4>
-      <p class="signal-item">409 QB mentions · 400 QuickBooks integration asks. 70% of prospects still on QuickBooks. Angle: <em>"When QuickBooks stops scaling with your MSP."</em></p>
+      <h4 style="color:var(--green);">✅ Win Signals</h4>
+      
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Pricing confirmed on-call by Ryan Koontz. Existing Billing customer expansion. Carlos confirmed pricing worked for him.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Connor Flynn · CMP Consulting</div>
+    </div>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Owner-led deal. Brian explicitly motivated to get out of day-to-day. Came back after January intro call.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Jake Borah · Lubbock Audio Visual</div>
+    </div>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Expanding to US — need a billing platform for net-new US rollout. Moving away from QuickBooks. Timing is right for the US side.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Connor Flynn · Xinix Pro</div>
+    </div>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">iPoint frustrations actively worsening since last call. Leo is a strong internal champion. Owner Kevin delegates and trusts the team.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Jake Borah · Kazar Security</div>
+    </div>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Clear and urgent RMM pain - Connectwise Automate frustration is primary driver | Open to evaluating PSA if price/value is compelling enough | Offered to potentially build Microsoft Dynamics integration as a partner</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Cam Sharpe · Claris</div>
+    </div>
     </div>
     <div class="signal-box">
-      <h4 style="color:var(--cyan)">⚔️ The ConnectWise Switcher</h4>
-      <p class="signal-item">130 ConnectWise mentions. Social proof from confirmed displacement wins is the hook. Build the comparison page + "escape hatch" offer.</p>
+      <h4 style="color:var(--red);">⚠️ Loss Risks</h4>
+      
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--red);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">NinjaOne integration is only 1 week old and not battle-tested. If auto-ticket creation from Ninja remote sessions cannot be shown, deal likely stays on Syncro.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Connor Flynn · CMP Consulting</div>
     </div>
-    <div class="signal-box">
-      <h4 style="color:var(--purple)">🔧 Field Ops / Security Integrator Vertical</h4>
-      <p class="signal-item">Inventory, GPS tracking, and Mobile App features cluster together — security integrators are a distinct buyer persona with a specific feature set. Build a vertical-specific landing page.</p>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--red);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Owner has not confirmed next steps. Jake to follow up with Brian on pricing and close path.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Jake Borah · Lubbock Audio Visual</div>
     </div>
-    <div class="signal-box">
-      <h4 style="color:var(--yellow)">⚠️ At-Risk Apollo 2 Features</h4>
-      <p class="signal-item">User Mgmt/Auth, SLA Management, Bulk Import/Export are all At Risk in Apollo 2 — and all show high market demand. Delays are visible to prospects in active deals.</p>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--red);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">GDPR non-compliance and inability to settle GBP/EUR are likely deal-breakers. International billing is a fundamental architecture gap. Cam disclosed proactively.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Connor Flynn · Xinix Pro</div>
+    </div>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--red);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Owner Kevin and accountant have not seen the demo. Accountant will evaluate inventory specifically. Two key stakeholders still need to be converted.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Jake Borah · Kazar Security</div>
+    </div>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--red);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">RMM standalone without PSA is 98% certain NOT available - core deal blocker | ScreenConnect equivalent not available yet - 'need a tool for that immediately' | Microsoft Dynamics PSA is custom-built over 10+ years - massive migration barrier</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Cam Sharpe · Claris</div>
+    </div>
     </div>
   </div>
 </section>
 
-<!-- ── PROSPECTING PULSE ─────────────────────────────────────────── -->
+<!-- PROSPECTING PULSE -->
 <section class="section" id="prospecting">
   <div class="section-label">Top-of-Funnel Signal</div>
   <h2>Prospecting <span>Call Pulse</span></h2>
-  <p class="section-intro">388 short prospecting calls (45s–2min, Contact dispositions) from the past 2 weeks — what the market says in the first 90 seconds before they've decided to care. Higher volume, lower depth than meetings; different signal entirely.</p>
+  <p class="section-intro">388 short prospecting calls (45s–2min, Contact dispositions) — what the market says in the first 90 seconds before they've decided to care. Cumulative across all processed calls.</p>
 
-  <div class="two-col" style="margin-bottom:36px;">
+  <div class="two-col" style="margin-bottom:24px;">
     <div class="signal-box">
-      <h4 style="color:var(--cyan);margin-bottom:14px;">📊 Call Outcomes Breakdown</h4>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="color:var(--muted);font-size:13px;">Satisfied w/ Current Platform</span>
-          <span style="color:var(--red);font-weight:700;">68</span>
-        </div>
-        <div style="height:4px;background:#0a1a0a;border-radius:2px;"><div style="width:100%;height:100%;background:var(--red);border-radius:2px;opacity:.6;"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="color:var(--muted);font-size:13px;">Not the Right Time</span>
-          <span style="color:var(--yellow);font-weight:700;">60</span>
-        </div>
-        <div style="height:4px;background:#0a1a0a;border-radius:2px;"><div style="width:88%;height:100%;background:var(--yellow);border-radius:2px;opacity:.6;"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="color:var(--muted);font-size:13px;">Not Interested – No Reason</span>
-          <span style="color:var(--yellow);font-weight:700;">52</span>
-        </div>
-        <div style="height:4px;background:#0a1a0a;border-radius:2px;"><div style="width:76%;height:100%;background:var(--yellow);border-radius:2px;opacity:.5;"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="color:var(--muted);font-size:13px;">Referred to Another Contact</span>
-          <span style="color:var(--cyan);font-weight:700;">41</span>
-        </div>
-        <div style="height:4px;background:#0a1a0a;border-radius:2px;"><div style="width:60%;height:100%;background:var(--cyan);border-radius:2px;opacity:.5;"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="color:var(--muted);font-size:13px;">Send Information</span>
-          <span style="color:var(--cyan);font-weight:700;">32</span>
-        </div>
-        <div style="height:4px;background:#0a1a0a;border-radius:2px;"><div style="width:47%;height:100%;background:var(--cyan);border-radius:2px;opacity:.5;"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="color:var(--muted);font-size:13px;">Discovery Meeting Set 🗓️</span>
-          <span style="color:var(--green);font-weight:700;">21</span>
-        </div>
-        <div style="height:4px;background:#0a1a0a;border-radius:2px;"><div style="width:31%;height:100%;background:var(--green);border-radius:2px;"></div></div>
+      <h4 style="color:var(--cyan);">📊 Call Outcomes</h4>
+      
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">Satisfied with Current Platform</span>
+        <span style="color:var(--cyan);font-weight:700;min-width:28px;text-align:right;">68</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:100%;height:100%;background:var(--cyan);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">Not the Right Time</span>
+        <span style="color:var(--cyan);font-weight:700;min-width:28px;text-align:right;">60</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:88%;height:100%;background:var(--cyan);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">Not Interested - No Reason Given</span>
+        <span style="color:var(--cyan);font-weight:700;min-width:28px;text-align:right;">52</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:76%;height:100%;background:var(--cyan);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">Referred to Another Contact</span>
+        <span style="color:var(--cyan);font-weight:700;min-width:28px;text-align:right;">41</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:60%;height:100%;background:var(--cyan);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">Send Information</span>
+        <span style="color:var(--cyan);font-weight:700;min-width:28px;text-align:right;">32</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:47%;height:100%;background:var(--cyan);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">Too Small</span>
+        <span style="color:var(--cyan);font-weight:700;min-width:28px;text-align:right;">28</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:41%;height:100%;background:var(--cyan);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">Client</span>
+        <span style="color:var(--cyan);font-weight:700;min-width:28px;text-align:right;">23</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:34%;height:100%;background:var(--cyan);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="color:var(--muted);font-size:13px;flex:1;padding-right:10px;">Current Opportunity</span>
+        <span style="color:var(--cyan);font-weight:700;min-width:28px;text-align:right;">22</span>
+      </div>
+      <div style="height:4px;background:#0a1a0a;border-radius:2px;margin-bottom:10px;">
+        <div style="width:32%;height:100%;background:var(--cyan);border-radius:2px;opacity:.7;"></div>
+      </div>
+      <div style="margin-top:16px;padding:12px 14px;background:#000d06;border:1px solid var(--border);border-radius:6px;text-align:center;">
+        <span style="font-size:26px;font-weight:900;color:var(--green);">21</span>
+        <span style="font-size:12px;color:var(--muted);margin-left:8px;">meetings booked from 388 contact calls</span>
+        <div style="font-size:10px;color:var(--muted-dark);margin-top:2px;">5.4% first-touch conversion</div>
       </div>
     </div>
-
     <div class="signal-box">
-      <h4 style="color:var(--purple);margin-bottom:14px;">🏁 Competitors Named at First Touch</h4>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#0a0514;border:1px solid #1a0a2a;border-radius:6px;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">QuickBooks</span>
-          <span style="color:var(--purple);font-weight:700;">×13</span>
+      <h4 style="color:var(--purple);">🏁 Competitors Named at First Touch</h4>
+      
+        <div style="border:1px solid #1a0a2a;border-radius:8px;overflow:hidden;">
+          
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #0d0520;">
+              <span style="color:#fff;font-size:13px;font-weight:600;">QuickBooks</span>
+              <span style="color:var(--purple);font-weight:700;">×13</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #0d0520;">
+              <span style="color:#fff;font-size:13px;font-weight:600;">Simpro</span>
+              <span style="color:var(--purple);font-weight:700;">×5</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #0d0520;">
+              <span style="color:#fff;font-size:13px;font-weight:600;">Sedona</span>
+              <span style="color:var(--purple);font-weight:700;">×4</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #0d0520;">
+              <span style="color:#fff;font-size:13px;font-weight:600;">ConnectWise</span>
+              <span style="color:var(--purple);font-weight:700;">×4</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #0d0520;">
+              <span style="color:#fff;font-size:13px;font-weight:600;">Autotask</span>
+              <span style="color:var(--purple);font-weight:700;">×3</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #0d0520;">
+              <span style="color:#fff;font-size:13px;font-weight:600;">Halo</span>
+              <span style="color:var(--purple);font-weight:700;">×2</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #0d0520;">
+              <span style="color:#fff;font-size:13px;font-weight:600;">Central Station</span>
+              <span style="color:var(--purple);font-weight:700;">×2</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid #0d0520;">
+              <span style="color:#fff;font-size:13px;font-weight:600;">Salesforce</span>
+              <span style="color:var(--purple);font-weight:700;">×2</span>
+            </div>
         </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#0a0514;border:1px solid #1a0a2a;border-radius:6px;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">Simpro</span>
-          <span style="color:var(--purple);font-weight:700;">×5</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#0a0514;border:1px solid #1a0a2a;border-radius:6px;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">ConnectWise</span>
-          <span style="color:var(--purple);font-weight:700;">×4</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#0a0514;border:1px solid #1a0a2a;border-radius:6px;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">Sedona</span>
-          <span style="color:var(--purple);font-weight:700;">×4</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#0a0514;border:1px solid #1a0a2a;border-radius:6px;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">Autotask</span>
-          <span style="color:var(--purple);font-weight:700;">×3</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#0a0514;border:1px solid #1a0a2a;border-radius:6px;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">HaloPSA</span>
-          <span style="color:var(--purple);font-weight:700;">×2</span>
-        </div>
-      </div>
-      <p style="font-size:11px;color:var(--muted-dark);margin-top:12px;">Most prospects don't name a platform unprompted — these are the ones who self-identified in the first 90 seconds.</p>
+        <p style="font-size:11px;color:var(--muted-dark);margin-top:10px;">Prospects who self-identified their current platform in the first 90 seconds.</p>
     </div>
   </div>
 
-  <div class="two-col" style="margin-bottom:0;">
+  <div class="two-col">
     <div class="signal-box">
-      <h4 style="color:var(--green);margin-bottom:14px;">🔧 Product Areas Surfacing at First Touch</h4>
+      <h4 style="color:var(--green);">🔧 Product Areas at First Touch</h4>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <div style="text-align:center;padding:16px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
-          <div style="font-size:28px;font-weight:900;color:var(--green);">274</div>
-          <div style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">PSA</div>
-        </div>
-        <div style="text-align:center;padding:16px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
-          <div style="font-size:28px;font-weight:900;color:var(--cyan);">186</div>
-          <div style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Billing</div>
-        </div>
-        <div style="text-align:center;padding:16px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
-          <div style="font-size:28px;font-weight:900;color:var(--yellow);">70</div>
-          <div style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Payments</div>
-        </div>
-        <div style="text-align:center;padding:16px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
-          <div style="font-size:28px;font-weight:900;color:var(--muted);">87</div>
-          <div style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">General Platform</div>
-        </div>
+        
+          <div style="text-align:center;padding:14px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
+            <div style="font-size:24px;font-weight:900;color:var(--green);">274</div>
+            <div style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">PSA</div>
+          </div>
+          <div style="text-align:center;padding:14px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
+            <div style="font-size:24px;font-weight:900;color:var(--green);">186</div>
+            <div style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Billing</div>
+          </div>
+          <div style="text-align:center;padding:14px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
+            <div style="font-size:24px;font-weight:900;color:var(--green);">87</div>
+            <div style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">General Platform</div>
+          </div>
+          <div style="text-align:center;padding:14px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
+            <div style="font-size:24px;font-weight:900;color:var(--green);">70</div>
+            <div style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Payments</div>
+          </div>
       </div>
-      <p style="font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6;">PSA leads at 2:1 over Billing in first-touch conversations — market is leading with the PSA need even when they may need both.</p>
     </div>
-
     <div class="signal-box">
-      <h4 style="color:var(--yellow);margin-bottom:14px;">⚡ Buying Signals at First Touch</h4>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;">
-          <div style="font-size:12px;color:var(--text);line-height:1.5;">Prospect acknowledged back-office automation needs; referred rep to decision-maker Chris</div>
-          <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">A. Marchese · Send Information</div>
-        </div>
-        <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;">
-          <div style="font-size:12px;color:var(--text);line-height:1.5;">Prospect expressed genuine interest in Rev.io as standalone offering; agreed to reconnect after evaluating competing solution</div>
-          <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">A. McIntosh · Interested – Follow Up Later</div>
-        </div>
-        <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;">
-          <div style="font-size:12px;color:var(--text);line-height:1.5;">President attending ISC West — created in-person meeting opportunity for the team</div>
-          <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">E. Petraglia · Referred</div>
-        </div>
-        <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--cyan);border-radius:0 6px 6px 0;">
-          <div style="font-size:12px;color:var(--text);line-height:1.5;">Discovery demo booked for Tuesday 11am ET — warm LinkedIn signal referenced on call</div>
-          <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">D. Herndon · Discovery Meeting Set</div>
-        </div>
-      </div>
-      <div style="margin-top:14px;padding:10px 14px;background:#000d06;border:1px solid var(--border);border-radius:6px;text-align:center;">
-        <span style="font-size:22px;font-weight:900;color:var(--green);">21</span>
-        <span style="font-size:12px;color:var(--muted);margin-left:8px;">meetings booked from 388 contact calls</span>
-        <div style="font-size:10px;color:var(--muted-dark);margin-top:2px;">5.4% first-touch conversion rate</div>
-      </div>
+      <h4 style="color:var(--yellow);">⚡ Buying Signals at First Touch</h4>
+      
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Prospect agreed to reschedule the meeting to Monday at 11 AM, indicating willingness to engage.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Abbey McIntosh</div>
+    </div>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Prospect agreed to put a meeting on the calendar.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Ingrid Beard</div>
+    </div>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Ben expressed genuine appreciation for the outreach, confirmed willingness to see a demo of Rev.io's approach, and agreed to reconnect in 2-3 weeks after resolving current platform issues.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Ingrid Beard</div>
+    </div>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Prospect asked for main point of contact and indicated willingness to pass information along to Tim and follow up if needed.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Reid Doster</div>
+    </div>
+    <div style="padding:10px 12px;background:#0a0d00;border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;">
+      <div style="font-size:12px;color:var(--text);line-height:1.5;">Prospect confirmed existing meeting scheduled and agreed to receive confirmation email resend.</div>
+      <div style="font-size:10px;color:var(--muted-dark);margin-top:4px;">Emily Petraglia</div>
+    </div>
     </div>
   </div>
 </section>
 
-<!-- ── SIGNAL CORRELATION ────────────────────────────────────────── -->
+<!-- SIGNAL CORRELATION -->
 <section class="section" id="correlation">
   <div class="section-label">Cross-Layer Intelligence</div>
   <h2>Where the <span>Signals Connect</span></h2>
-  <p class="section-intro">What the market says at first touch vs. what engaged prospects say during evaluation. Agreement = high-confidence signal. Divergence = where assumptions break down.</p>
+  <p class="section-intro">What the market says at first touch vs. what engaged prospects say during evaluation. Agreement = high-confidence signal. Divergence = where assumptions need testing.</p>
 
-  <div class="two-col" style="margin-bottom:36px;">
+  <div class="two-col" style="margin-bottom:24px;">
     <div class="signal-box">
       <h4 style="color:var(--purple);margin-bottom:16px;">⚔️ Competitive Footprint — Both Layers</h4>
-      <div style="display:flex;flex-direction:column;gap:0;border:1px solid #1a0a2a;border-radius:8px;overflow:hidden;">
-        <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:8px 14px;background:#0a0514;border-bottom:1px solid #1a0a2a;">
-          <span style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;">Competitor</span>
-          <span style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;text-align:center;">Prospecting</span>
-          <span style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;text-align:center;">Meetings</span>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">ConnectWise</span>
-          <span style="color:var(--purple);font-weight:700;text-align:center;">×4</span>
-          <span style="color:var(--green);font-weight:700;text-align:center;">×4</span>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">QuickBooks</span>
-          <span style="color:var(--purple);font-weight:700;text-align:center;">×13</span>
-          <span style="color:var(--green);font-weight:700;text-align:center;">×1</span>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">NinjaOne</span>
-          <span style="color:var(--purple);font-weight:700;text-align:center;">×0</span>
-          <span style="color:var(--green);font-weight:700;text-align:center;">×2</span>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">Simpro</span>
-          <span style="color:var(--purple);font-weight:700;text-align:center;">×5</span>
-          <span style="color:var(--green);font-weight:700;text-align:center;">×0</span>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;">
-          <span style="color:#fff;font-size:13px;font-weight:600;">Autotask</span>
-          <span style="color:var(--purple);font-weight:700;text-align:center;">×3</span>
-          <span style="color:var(--green);font-weight:700;text-align:center;">×0</span>
-        </div>
-      </div>
-      <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px;">
-        <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--green);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
-          <strong style="color:var(--green);">✅ ConnectWise</strong> — equal signal at both layers. High-confidence displacement target. Already winning 8 deals.
-        </div>
-        <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
-          <strong style="color:var(--yellow);">⚠️ QuickBooks</strong> — heavy at first touch (×13), nearly absent in meetings (×1). Market names it as current tool, not a competitor we're displacing. Confirm pitch is positioning Rev.io <em>alongside</em> or <em>beyond</em> QB — not against it.
-        </div>
-        <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--cyan);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
-          <strong style="color:var(--cyan);">🔍 NinjaOne</strong> — only surfaces in deep meetings, not first touch. Integration need (not a switcher scenario) — emerges as a feature request, not a head-to-head.
-        </div>
-        <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--red);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
-          <strong style="color:var(--red);">🆕 Simpro + Sedona</strong> — appearing at first touch only. Field ops / trades verticals we're not yet seeing in demos. Worth tracking whether these convert.
-        </div>
-      </div>
+      
+        <div style="border:1px solid #1a0a2a;border-radius:8px;overflow:hidden;">
+          <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:8px 14px;background:#0a0514;border-bottom:1px solid #1a0a2a;">
+            <span style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;">Competitor</span>
+            <span style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;text-align:center;">Prospecting</span>
+            <span style="font-size:10px;color:var(--muted-dark);text-transform:uppercase;letter-spacing:1px;text-align:center;">Meetings</span>
+          </div>
+          
+    <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;align-items:center;">
+      <span style="color:#fff;font-size:13px;font-weight:600;">QuickBooks<span style="font-size:9px;background:#003a1a;color:var(--green);padding:2px 6px;border-radius:3px;margin-left:6px;">BOTH LAYERS</span></span>
+      <span style="color:var(--purple);font-weight:700;text-align:center;">×13</span>
+      <span style="color:var(--green);font-weight:700;text-align:center;">×1</span>
     </div>
-
+    <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;align-items:center;">
+      <span style="color:#fff;font-size:13px;font-weight:600;">ConnectWise<span style="font-size:9px;background:#003a1a;color:var(--green);padding:2px 6px;border-radius:3px;margin-left:6px;">BOTH LAYERS</span></span>
+      <span style="color:var(--purple);font-weight:700;text-align:center;">×4</span>
+      <span style="color:var(--green);font-weight:700;text-align:center;">×4</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;align-items:center;">
+      <span style="color:#fff;font-size:13px;font-weight:600;">Simpro</span>
+      <span style="color:var(--purple);font-weight:700;text-align:center;">×5</span>
+      <span style="color:var(--green);font-weight:700;text-align:center;">—</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;align-items:center;">
+      <span style="color:#fff;font-size:13px;font-weight:600;">Sedona</span>
+      <span style="color:var(--purple);font-weight:700;text-align:center;">×4</span>
+      <span style="color:var(--green);font-weight:700;text-align:center;">—</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;align-items:center;">
+      <span style="color:#fff;font-size:13px;font-weight:600;">Autotask</span>
+      <span style="color:var(--purple);font-weight:700;text-align:center;">×3</span>
+      <span style="color:var(--green);font-weight:700;text-align:center;">—</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;align-items:center;">
+      <span style="color:#fff;font-size:13px;font-weight:600;">NinjaOne</span>
+      <span style="color:var(--purple);font-weight:700;text-align:center;">—</span>
+      <span style="color:var(--green);font-weight:700;text-align:center;">×2</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;align-items:center;">
+      <span style="color:#fff;font-size:13px;font-weight:600;">iPoint<span style="font-size:9px;background:#003a1a;color:var(--green);padding:2px 6px;border-radius:3px;margin-left:6px;">BOTH LAYERS</span></span>
+      <span style="color:var(--purple);font-weight:700;text-align:center;">×1</span>
+      <span style="color:var(--green);font-weight:700;text-align:center;">×1</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 80px 80px;padding:10px 14px;border-bottom:1px solid #0d0520;align-items:center;">
+      <span style="color:#fff;font-size:13px;font-weight:600;">Halo</span>
+      <span style="color:var(--purple);font-weight:700;text-align:center;">×2</span>
+      <span style="color:var(--green);font-weight:700;text-align:center;">—</span>
+    </div>
+        </div>
+    </div>
     <div class="signal-box">
-      <h4 style="color:var(--cyan);margin-bottom:16px;">🎯 Pain Themes Across Both Layers</h4>
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <div style="padding:14px;background:#000d12;border:1px solid #0a2030;border-radius:8px;">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-            <span style="font-size:12px;font-weight:700;color:var(--green);">Platform inertia / "happy enough"</span>
-            <span style="font-size:10px;color:var(--muted-dark);">BOTH LAYERS</span>
+      <h4 style="color:var(--cyan);margin-bottom:16px;">🎯 Correlation Insights</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        
+          <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--green);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
+            <strong style="color:var(--green);">✅ QuickBooks</strong> — Appearing in both prospecting (×13) and meetings (×1) — high-confidence displacement target.
           </div>
-          <p style="font-size:12px;color:var(--muted);line-height:1.5;">68 "Satisfied with current platform" at first touch; meetings reveal hidden frustrations once reps get past the surface. The objection at the door isn't the real story.</p>
-        </div>
-        <div style="padding:14px;background:#000d12;border:1px solid #0a2030;border-radius:8px;">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-            <span style="font-size:12px;font-weight:700;color:var(--cyan);">PSA + Billing disconnect</span>
-            <span style="font-size:10px;color:var(--muted-dark);">BOTH LAYERS</span>
+          <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--green);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
+            <strong style="color:var(--green);">✅ ConnectWise</strong> — Appearing in both prospecting (×4) and meetings (×4) — high-confidence displacement target.
           </div>
-          <p style="font-size:12px;color:var(--muted);line-height:1.5;">Prospecting: PSA (274) and Billing (186) both appear in 90-second calls. Meetings: billing-to-PSA sync gap surfaced as a critical adoption blocker. Consistent signal top to bottom.</p>
-        </div>
-        <div style="padding:14px;background:#000d12;border:1px solid #0a2030;border-radius:8px;">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-            <span style="font-size:12px;font-weight:700;color:var(--yellow);">Field ops / mobile tech needs</span>
-            <span style="font-size:10px;color:var(--muted-dark);">MEETINGS ONLY (so far)</span>
+          <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--green);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
+            <strong style="color:var(--green);">✅ iPoint</strong> — Appearing in both prospecting (×1) and meetings (×1) — high-confidence displacement target.
           </div>
-          <p style="font-size:12px;color:var(--muted);line-height:1.5;">Clock-in/out, GPS, mobile app — strong in meeting transcripts (security integrator cluster), but not yet surfacing in prospecting data. Either we're not calling this vertical, or they don't open with it.</p>
-        </div>
-        <div style="padding:14px;background:#000d12;border:1px solid #0a2030;border-radius:8px;">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-            <span style="font-size:12px;font-weight:700;color:var(--red);">Timing / migration lock-in</span>
-            <span style="font-size:10px;color:var(--muted-dark);">PROSPECTING ONLY</span>
+          <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
+            <strong style="color:var(--yellow);">🔍 Simpro</strong> — Only surfacing at first touch (×5) — not yet showing in meetings. Potential emerging vertical or early-stage interest.
           </div>
-          <p style="font-size:12px;color:var(--muted);line-height:1.5;">60 "Not the Right Time" calls — many mid-migration to a competitor or mid-contract. These are future pipeline. Cadence: tag and re-engage in 90 days.</p>
-        </div>
+          <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
+            <strong style="color:var(--yellow);">🔍 Sedona</strong> — Only surfacing at first touch (×4) — not yet showing in meetings. Potential emerging vertical or early-stage interest.
+          </div>
+          <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--cyan);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
+            <strong style="color:var(--cyan);">🎯 NinjaOne</strong> — Surfaces in meetings (×2) but not first touch — integration/feature need, not a displacement scenario.
+          </div>
+          <div style="padding:10px 12px;background:#0a0514;border-left:3px solid var(--cyan);border-radius:0 6px 6px 0;font-size:12px;line-height:1.5;color:var(--text);">
+            <strong style="color:var(--cyan);">🎯 Syncro</strong> — Surfaces in meetings (×1) but not first touch — integration/feature need, not a displacement scenario.
+          </div>
       </div>
     </div>
   </div>
 
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px;">
-    <h4 style="color:#fff;margin-bottom:16px;font-size:15px;">🧠 Intelligence Summary — What Both Data Sources Agree On</h4>
+    <h4 style="color:#fff;margin-bottom:16px;font-size:15px;">🧠 Intelligence Summary</h4>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
       <div style="padding:14px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
-        <div style="font-size:11px;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Highest Confidence Signal</div>
-        <p style="font-size:13px;color:var(--text);line-height:1.5;">ConnectWise is the primary displacement opportunity — named at first touch AND in demos. 8 wins already. Full sales motion warranted.</p>
+        <div style="font-size:11px;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Total Signal Volume</div>
+        <p style="font-size:13px;color:var(--text);line-height:1.5;">18 meetings + 388 prospecting calls = 406 analyzed interactions. Data compounds daily.</p>
       </div>
       <div style="padding:14px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
-        <div style="font-size:11px;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Most Interesting Divergence</div>
-        <p style="font-size:13px;color:var(--text);line-height:1.5;">QuickBooks is everywhere at first touch but disappears in meetings — it's context, not competition. Revise how reps handle the QB mention: bridge to Rev.io's billing depth, don't fight QB directly.</p>
+        <div style="font-size:11px;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Top First-Touch Objection</div>
+        <p style="font-size:13px;color:var(--text);line-height:1.5;">"Satisfied with Current Platform" — 68 times (18% of contact calls). The door we have to get past.</p>
       </div>
       <div style="padding:14px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
-        <div style="font-size:11px;color:var(--yellow);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Emerging Vertical Signal</div>
-        <p style="font-size:13px;color:var(--text);line-height:1.5;">Simpro + Sedona appearing at first touch signal field ops and trades verticals engaging. Neither shows up in current wins or demos — early indicator of a new ICP segment worth testing.</p>
+        <div style="font-size:11px;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Most-Tracked Competitor</div>
+        <p style="font-size:13px;color:var(--text);line-height:1.5;">QuickBooks — ×13 prospecting + ×1 meetings = ×14 total mentions.</p>
       </div>
       <div style="padding:14px;background:#000d06;border:1px solid var(--border);border-radius:8px;">
-        <div style="font-size:11px;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Re-Engagement Pipeline</div>
-        <p style="font-size:13px;color:var(--text);line-height:1.5;">60 "Not Right Time" calls in 2 weeks = future pipeline. Build a 90-day re-engagement sequence specifically for migration-locked prospects.</p>
+        <div style="font-size:11px;color:var(--yellow);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Top Feature Request</div>
+        <p style="font-size:13px;color:var(--text);line-height:1.5;">"PSA Mobile App (Foundation)" — mentioned in 2 meetings. Runner-up: "RMM-NinjaOne - Phase 1" (×1).</p>
       </div>
     </div>
   </div>
 </section>
 
 <div class="footer">
-  <p>Rev.io Intelligence Hub · Kaia Analysis Pipeline · Prospecting Call Intelligence · Auto-updated daily</p>
-  <p style="margin-top:6px;">Source: 18 Kaia Tier 1 Meetings · 388 Prospecting Calls · Salesforce · <a href="https://www.notion.so/319a59b7e7b2814f98ceed22d752d815">Notion Intelligence Hub →</a></p>
-  <p style="margin-top:6px;color:#1a3a2a;">Updated March 5, 2026</p>
+  <p>Rev.io Intelligence Hub · Kaia Meeting Pipeline · Prospecting Call Intelligence · Rebuilt daily from Notion</p>
+  <p style="margin-top:6px;">Source: 18 Kaia Meetings · 388 Prospecting Calls · <a href="https://www.notion.so/319a59b7e7b2814f98ceed22d752d815">Notion Intelligence Hub →</a></p>
+  <p style="margin-top:6px;color:#1a3a2a;">Generated Thursday, March 5, 2026 at 06:49 PM CST</p>
 </div>
 
 </body>
