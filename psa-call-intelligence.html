@@ -80,6 +80,7 @@
   /* CHART CONTAINERS */
   .chart-wrap { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; }
   .chart-wrap h4 { font-size: 0.9rem; font-weight: 600; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .chart-wrap canvas { height: 220px !important; }
   .chart-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
   .chart-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
   @media(max-width:900px) { .chart-grid-2, .chart-grid-3 { grid-template-columns: 1fr; } }
@@ -181,11 +182,11 @@
   <div class="chart-grid-2">
     <div class="chart-wrap">
       <h4>Call Volume by SA (Monthly)</h4>
-      <canvas id="chartVolume" height="220"></canvas>
+      <canvas id="chartVolume" style="height:220px"></canvas>
     </div>
     <div class="chart-wrap">
       <h4>Talk Time: SA vs Client (Average %)</h4>
-      <canvas id="chartTalkTime" height="220"></canvas>
+      <canvas id="chartTalkTime" style="height:220px"></canvas>
     </div>
   </div>
   
@@ -363,11 +364,11 @@
   <div style="margin-top:1.5rem;" class="chart-grid-2">
     <div class="chart-wrap">
       <h4>Monthly Call Volume by SA</h4>
-      <canvas id="chartMonthly" height="200"></canvas>
+      <canvas id="chartMonthly" style="height:200px"></canvas>
     </div>
     <div class="chart-wrap">
       <h4>Calls Flagged: SA Talk >70% (Potential Over-Talking)</h4>
-      <canvas id="chartFlagged" height="200"></canvas>
+      <canvas id="chartFlagged" style="height:200px"></canvas>
     </div>
   </div>
   
@@ -410,22 +411,22 @@
   <div class="chart-grid-2">
     <div class="chart-wrap">
       <h4>Avg Sentiment by SA</h4>
-      <canvas id="chartSentSA" height="220"></canvas>
+      <canvas id="chartSentSA" style="height:220px"></canvas>
     </div>
     <div class="chart-wrap">
       <h4>Sentiment Trend by Month (All PSA Calls)</h4>
-      <canvas id="chartSentMonth" height="220"></canvas>
+      <canvas id="chartSentMonth" style="height:220px"></canvas>
     </div>
   </div>
   
   <div style="margin-top:1rem;" class="chart-grid-2">
     <div class="chart-wrap">
       <h4>Sentiment by Call Type</h4>
-      <canvas id="chartSentType" height="220"></canvas>
+      <canvas id="chartSentType" style="height:220px"></canvas>
     </div>
     <div class="chart-wrap">
       <h4>Questions per Call by Type</h4>
-      <canvas id="chartQType" height="220"></canvas>
+      <canvas id="chartQType" style="height:220px"></canvas>
     </div>
   </div>
   
@@ -702,7 +703,7 @@
   </div>
     <div class="chart-wrap" style="margin-top:1rem;">
       <h4>Newport Sentiment Over Time</h4>
-      <canvas id="chartNewport" height="180"></canvas>
+      <canvas id="chartNewport" style="height:180px"></canvas>
     </div>
   </div>
   
@@ -931,7 +932,7 @@
   </div>
     <div class="chart-wrap" style="margin-top:1rem;">
       <h4>Midwest Specialists Sentiment Over Time</h4>
-      <canvas id="chartMidwest" height="180"></canvas>
+      <canvas id="chartMidwest" style="height:180px"></canvas>
     </div>
   </div>
   
@@ -978,11 +979,11 @@
   <div class="chart-grid-2" style="margin-bottom:1.5rem;">
     <div class="chart-wrap">
       <h4>Tony — Demo vs Onboarding Call Volume</h4>
-      <canvas id="chartTonyVol" height="220"></canvas>
+      <canvas id="chartTonyVol" style="height:220px"></canvas>
     </div>
     <div class="chart-wrap">
       <h4>Tony — Sentiment Comparison (Demo vs Onboarding)</h4>
-      <canvas id="chartTonySent" height="220"></canvas>
+      <canvas id="chartTonySent" style="height:220px"></canvas>
     </div>
   </div>
   
@@ -1038,11 +1039,11 @@
   <div class="chart-grid-2" style="margin-bottom:1.5rem;">
     <div class="chart-wrap">
       <h4>Graduated vs. Stalled — Key Metrics</h4>
-      <canvas id="chartGradComp" height="240"></canvas>
+      <canvas id="chartGradComp" style="height:240px"></canvas>
     </div>
     <div class="chart-wrap">
       <h4>Graduation Patterns — Avg Sentiment</h4>
-      <canvas id="chartGradSent" height="240"></canvas>
+      <canvas id="chartGradSent" style="height:240px"></canvas>
     </div>
   </div>
   
@@ -1267,6 +1268,7 @@ Chart.defaults.borderColor = '#2e3147';
 const defaultOpts = {
   responsive: true,
   maintainAspectRatio: false,
+  layout: { padding: 4 },
   plugins: { legend: { labels: { boxWidth: 12, font: { size: 11 } } } },
   scales: {
     x: { grid: { color: '#2e3147' }, ticks: { font: { size: 11 } } },
