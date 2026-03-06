@@ -977,7 +977,7 @@
         <div class="theme-card-header">
           <div>
             <h3 class="theme-name" style="color:#ff6b6b">Integration Failures</h3>
-            <p class="theme-desc">Integrations with ConnectWise, QuickBooks, Tigerpaw not working as expected</p>
+            <p class="theme-desc">Integrations with ConnectWise, QuickBooks, and other systems not working as expected</p>
           </div>
           <div class="theme-badges">
             <span class="acct-badge" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b66">67 accounts</span>
@@ -1014,7 +1014,7 @@
           </div>
         </div>
         <div class="sa-pills"><span class="sa-pill">Halle 43</span> <span class="sa-pill">Kegan 42</span> <span class="sa-pill">Nicole 25</span></div>
-        <p class="synthesis-text">52 accounts explicitly compared Rev.io unfavorably to their prior PSA (ConnectWise, Tigerpaw, or Autotask). Accounts including CSI Video Security Sound Theater, Midwest Specialists, Truline, Joint Role Play referenced specific capabilities or workflows they had before that are now absent or different. Halle Taylor is handling the most of these comparisons — a signal to proactively address expectation gaps early in discovery.</p>
+        <p class="synthesis-text">52 accounts explicitly compared Rev.io unfavorably to their prior PSA (ConnectWise, Autotask, or prior PSAs). Accounts including CSI Video Security Sound Theater, Midwest Specialists, Truline, Joint Role Play referenced specific capabilities or workflows they had before that are now absent or different. Halle Taylor is handling the most of these comparisons — a signal to proactively address expectation gaps early in discovery.</p>
         
       </div>
 
@@ -1385,11 +1385,6 @@
                   <td class="muted">Halle Taylor</td>
                   <td class="muted" style="font-style:italic;font-size:11px">"I know because I had it configured wrong and connectwise and…"</td>
                 </tr><tr>
-                  <td><strong>Tigerpaw</strong></td>
-                  <td><strong style="color:var(--warn)">336</strong></td>
-                  <td class="muted">Kegan Ehlers</td>
-                  <td class="muted" style="font-style:italic;font-size:11px">"imported a portion of our data into tigerpaw a lot."</td>
-                </tr><tr>
                   <td><strong>NinjaRMM</strong></td>
                   <td><strong style="color:var(--warn)">0</strong></td>
                   <td class="muted">—</td>
@@ -1425,7 +1420,7 @@
         </table>
       </div>
       <div class="chart-wrap">
-        <div class="chart-title">Competitor Mentions</div>
+        <div style="background:#1a1d27;border:1px solid #2e3147;border-left:3px solid #00d4aa;border-radius:6px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#7b7f9e"><strong style="color:#00d4aa">Note: Tigerpaw (336 mentions)</strong> — Tigerpaw is a legacy system that clients are <em>migrating from</em>, not a competitor. These mentions reflect migration friction, not competitive displacement. See Migration &amp; Data Loss in the Objections section.</div><div class="chart-title">PSA Competitor Mentions</div>
         <div id="chart-competitors"></div>
       </div>
     </div>
@@ -2184,8 +2179,8 @@ new ApexCharts(document.getElementById('chart-revii-sa'), {
 }).render();
 
 // Competitors
-const compLabels = ["Tigerpaw","ConnectWise","Kaseya","Autotask","ServiceNow"];
-const compCounts = [1014,243,8,6,1];
+const compLabels = ["ConnectWise","Kaseya","Autotask","ServiceNow"];
+const compCounts = [243,8,6,1];
 if (compLabels.length > 0) {
   new ApexCharts(document.getElementById('chart-competitors'), {
     ...chartDefaults,
