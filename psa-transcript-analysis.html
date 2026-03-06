@@ -301,6 +301,32 @@
     .topic-two-col { grid-template-columns: 1fr !important; }
     .topic-gap-grid { grid-template-columns: 1fr !important; }
   }
+
+  /* ── v3 Theme Cards ── */
+  .theme-grid { display: flex; flex-direction: column; gap: 20px; }
+  .theme-card { background: var(--surface); border-radius: 10px; padding: 20px 24px; }
+  .theme-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+  .theme-name { margin: 0 0 4px; font-size: 16px; font-weight: 700; }
+  .theme-desc { margin: 0; font-size: 12px; color: var(--muted); }
+  .theme-badges { flex-shrink: 0; }
+  .acct-badge { padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .sa-pills { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0 12px; }
+  .sa-pill { background: #2e314740; border: 1px solid var(--border); border-radius: 12px; padding: 2px 9px; font-size: 11px; color: var(--muted); }
+  .synthesis-text { font-size: 13px; line-height: 1.65; color: #c5c8e0; margin: 0 0 14px; }
+  .quotes-block { display: flex; flex-direction: column; gap: 10px; }
+  .pull-quote { border-left: 3px solid var(--border); margin: 0; padding: 8px 14px; background: #0f111766; border-radius: 0 6px 6px 0; }
+  .pull-quote p { margin: 0 0 5px; font-style: italic; font-size: 13px; color: #e8eaf6cc; line-height: 1.5; }
+  .pull-quote cite { font-style: normal; font-size: 11px; color: var(--muted); }
+  .signal-summary { background: #1a1d2799; border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 8px; padding: 12px 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text); line-height: 1.6; }
+  .signal-icon { font-size: 20px; flex-shrink: 0; }
+  /* ── v3 Feature Cards ── */
+  .feat-grid { display: flex; flex-direction: column; gap: 20px; }
+  .feat-card { background: var(--surface); border-radius: 10px; padding: 20px 24px; border-left: 4px solid var(--accent); }
+  .feat-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .feat-name { margin: 0; font-size: 15px; font-weight: 700; color: var(--accent); }
+  .feat-badge { background: var(--accent)22; color: var(--accent); border: 1px solid var(--accent)66; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .demand-bar-wrap { height: 6px; background: #2e3147; border-radius: 3px; margin-bottom: 10px; }
+  .demand-bar { height: 6px; background: linear-gradient(90deg, var(--accent), #00d4aa); border-radius: 3px; transition: width 0.5s; }
 </style>
 </head>
 <body>
@@ -877,275 +903,524 @@
   <div class="section">
     <div class="section-title">Client Objections &amp; Friction Map</div>
 
-    <div class="obj-grid">
-      
-        <div class="obj-card" style="border-left:3px solid var(--accent)">
-          <div class="obj-header">
-            <span style="font-size:20px">📋</span>
-            <div>
-              <div class="obj-title" style="color:var(--accent)">Feature Gap</div>
-              <div class="obj-count" style="color:var(--accent)">2,253</div>
-            </div>
+    <div class="signal-summary">
+      <span class="signal-icon">📡</span>
+      <div>
+        <strong>8 friction themes identified across 207 unique accounts.</strong>
+        Top friction point: <em>Usability &amp; Confusion</em> (145 accounts affected).
+        Most affected rep: <strong>Nicole Hills</strong>.
+      </div>
+    </div>
+    <div class="theme-grid">
+
+      <div class="theme-card" style="border-left:4px solid #ff6b6b">
+        <div class="theme-card-header">
+          <div>
+            <h3 class="theme-name" style="color:#ff6b6b">Usability &amp; Confusion</h3>
+            <p class="theme-desc">Clients struggling to navigate or understand how the product works</p>
           </div>
-          <div class="obj-sa-breakdown">
-            Most in: <strong>Nicole Hills</strong> (802)
+          <div class="theme-badges">
+            <span class="acct-badge" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b66">145 accounts</span>
           </div>
-          
-    <div class="mini-quote">
-      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
-      "You mean as far as like if we need to follow up on anything or stuff like that?"
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
-      "But it would be nice to know what I have here."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
-      "You know, it doesn't have to be a one off."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
-      "And you mentioned that there's something else we need to do in order to define whether or not they're getting taxed."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
-      "She went through all the videos again, start to finish, to make sure she wasn't missing anything."
-    </div>
-  
         </div>
-        <div class="obj-card" style="border-left:3px solid var(--danger)">
-          <div class="obj-header">
-            <span style="font-size:20px">🔧</span>
-            <div>
-              <div class="obj-title" style="color:var(--danger)">Technical</div>
-              <div class="obj-count" style="color:var(--danger)">1,642</div>
-            </div>
-          </div>
-          <div class="obj-sa-breakdown">
-            Most in: <strong>Nicole Hills</strong> (581)
-          </div>
-          
-    <div class="mini-quote">
-      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
-      "No problem."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
-      "If it doesn't work, it's gonna let me know, right?"
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
-      "Now, for the managed service people, you do know that's going to be a problem because most of the integrations expect closed."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
-      "Well, this doesn't work when the title means something different."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
-      "That's another kind of common problem that we see is like, maybe there's a leading zero in a zip code that gets dropped and the tax database can't find a zip co…"
-    </div>
-  
+        <div class="sa-pills"><span class="sa-pill">Nicole 204</span> <span class="sa-pill">Halle 147</span> <span class="sa-pill">Kegan 111</span></div>
+        <p class="synthesis-text">145 accounts reported confusion navigating the platform or understanding how key workflows function. Clients from CSI Video Security Sound Theater, Midwest Specialists, Truline, Newport Network Solutions struggled with finding features or understanding the system's logic. This pattern points to a need for stronger in-product guidance or onboarding walkthroughs, particularly for Nicole Hills's clients.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>But there are, there's 50 different processes within that quote to cash outside of just your applications processes that we have to figure out what's the scoping, how do I include people in it, you know, and all of that was really what missed during a six month onboarding was we got it, we got it spun up but then we went back and started to use it and realize, okay, the system can, the system is designed to go from one to another to another.</p>
+            <cite>Atticus Brind · CallSprout Follow Up Working</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>I thought it was going to go ahead and create an actual service order and then move it to the dispatch board to where all we had to do is monitor the dispatch board and pull each one up and either go, yeah, we need to do that and assign it to either me or another service technician or say no, and we would just delete it off the dispatch board that it was already done or it wasn't.</p>
+            <cite>13866281253 · Marcotek Check in</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>But I will say just from my point of view, I don't want to go as far to say that our experience has been the left hand doesn't know what the right hand's doing, but we're kind of close to that, right where it feels like we're getting information from one person and then when we talk to somebody else, they don't understand the conversation that we had had with this other person.</p>
+            <cite>Paul Blake · Savvy AI Client Check In</cite>
+          </blockquote>
         </div>
-        <div class="obj-card" style="border-left:3px solid var(--warn)">
-          <div class="obj-header">
-            <span style="font-size:20px">😤</span>
-            <div>
-              <div class="obj-title" style="color:var(--warn)">Sentiment</div>
-              <div class="obj-count" style="color:var(--warn)">1,079</div>
-            </div>
+      </div>
+
+      <div class="theme-card" style="border-left:4px solid #ff6b6b">
+        <div class="theme-card-header">
+          <div>
+            <h3 class="theme-name" style="color:#ff6b6b">Billing Format &amp; Invoice Issues</h3>
+            <p class="theme-desc">Clients need invoice/bill formatting to match what they had in their prior system</p>
           </div>
-          <div class="obj-sa-breakdown">
-            Most in: <strong>Nicole Hills</strong> (373)
+          <div class="theme-badges">
+            <span class="acct-badge" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b66">97 accounts</span>
           </div>
-          
-    <div class="mini-quote">
-      <span class="muted">Nicole Hills · Mar 6, 2026</span><br>
-      "There's some stock items that we have, but a lot of times with the, you know, sometimes they're just hard to find."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
-      "So that's not something I need to worry about now."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
-      "So like we don't have to worry about going through and updating anything on our end to maintain our price points and understand our margin."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
-      "Last week I'm out there looking at their website because I don't have it in the system and frustrated."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
-      "But it was so difficult to, you know, populate it and then get the stuff out knowing full well that we were going to move to the other because, you know, a coup…"
-    </div>
-  
         </div>
-        <div class="obj-card" style="border-left:3px solid var(--warn)">
-          <div class="obj-header">
-            <span style="font-size:20px">⏱️</span>
-            <div>
-              <div class="obj-title" style="color:var(--warn)">Timeline</div>
-              <div class="obj-count" style="color:var(--warn)">373</div>
-            </div>
-          </div>
-          <div class="obj-sa-breakdown">
-            Most in: <strong>Nicole Hills</strong>
-          </div>
-          
-    <div class="mini-quote">
-      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
-      "But you know some of the basic fields that were still not there."
-    </div>
-  
-    <div class="mini-quote">
-      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
-      "It's still not loading tickets, so I'm not gonna even go there."
-    </div>
-  
+        <div class="sa-pills"><span class="sa-pill">Nicole 110</span> <span class="sa-pill">Halle 66</span> <span class="sa-pill">Kegan 61</span></div>
+        <p class="synthesis-text">97 accounts expressed frustration with invoice and billing format differences from their prior system. Accounts like Midwest Specialists, Truline, Newport Network Solutions, Silent Watchman want their bills to match what their customers already expect. This recurring theme suggests invoice template flexibility is a key onboarding pain point, especially for Nicole Hills's book.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>But I would almost think that especially since what you guys are working on is tied to payments as well, I think would make sense that if we're entering in the customer data, all the products, making sure that we've got the correct cycle dates and billing dates, set up all the collection templates and all the payment types, that if we're doing that data integrity type project now, likely that when we're completed with it, that's probably the information that Nicole and her team are going to work with to make sure that's what you guys are able to work with inside Revolution again, in contrast to just bringing everything in as it is today and then trying to figure out, hey, what stays, what goes, what, you know, adjustments and edits need to be made.</p>
+            <cite>Justin Lee · (Payments Security Vision</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>And so I circled the drain trying to figure out some of the terminology and the billing cycle and whether it's a bill in the, you know, in the rears or in advance, especially when there's, you know, there was not a real good information on how the cycle, like whether it was one month or two months that that particular parameter missing.</p>
+            <cite>Scott Morin · Midwest Specialists</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>I would just like to see, you know, from start to finish and for everybody kind of like how the, like the life cycle or the workflow would look like to just send an invoice and how that will look in QuickBooks and how they can do their job because I think everybody's a little kind of like confused on how to use the billing platform.</p>
+            <cite>Britt Reeves (BR) · Tolleson QuickBooks</cite>
+          </blockquote>
         </div>
+      </div>
+
+      <div class="theme-card" style="border-left:4px solid #ff6b6b">
+        <div class="theme-card-header">
+          <div>
+            <h3 class="theme-name" style="color:#ff6b6b">Onboarding Pace &amp; Timeline</h3>
+            <p class="theme-desc">Client frustration with pace or timeline of their implementation</p>
+          </div>
+          <div class="theme-badges">
+            <span class="acct-badge" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b66">73 accounts</span>
+          </div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 45</span> <span class="sa-pill">Kegan 39</span> <span class="sa-pill">Halle 31</span></div>
+        <p class="synthesis-text">73 accounts voiced frustration with how long their implementation is taking. Clients from Midwest Specialists, Truline, Silent Watchman, Nevada Security Web Meting expressed that timelines are running longer than expected. Nicole Hills's clients dominate this theme — worth reviewing whether task handoffs or scheduling bottlenecks are causing delays.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>Are we basically holding off because of the sales stuff is not ready Because I thought the whole plan was that we would just be doing the opportunities in our Tycomo in the meantime and just getting the rev IO for the back end for the orders and all that stuff for the Farmingdale office and then we'd worry about the sales stuff come June or whenever that's ready.</p>
+            <cite>Paul Jenne · Symbrant Weekly</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>So there is, you know, different API calls for, like when we get the customers, we bring them into Rev IO and what we do initially is we actually save some like, shallow copy of the QuickBooks customer so that if, let's say you're, you're an existing Rev IO customer already and you've been using it for X amount of months or X amount of years.</p>
+            <cite>Andrew Birt · Cicada QB Integration Setup</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>I mean our biggest thing, like I said for what drew me to this originally was the, the tickets dispatching and tracking of information on tickets and like the customer portal would be big us because we're trying to build that on our own on our back end of our own website and it was taking longer than we expected.</p>
+            <cite>Andrew Suit · 30 Minute</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="theme-card" style="border-left:4px solid #ff6b6b">
+        <div class="theme-card-header">
+          <div>
+            <h3 class="theme-name" style="color:#ff6b6b">Reporting &amp; Visibility Gaps</h3>
+            <p class="theme-desc">Clients lacking visibility into data they need for business decisions</p>
+          </div>
+          <div class="theme-badges">
+            <span class="acct-badge" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b66">71 accounts</span>
+          </div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 100</span> <span class="sa-pill">Halle 35</span> <span class="sa-pill">Kegan 26</span></div>
+        <p class="synthesis-text">71 accounts indicated they lack the reporting or visibility they need to run their business in Rev.io. Clients from Truline, Newport Network Solutions, Silent Watchman, Joint Role Play mentioned specific data they can't surface or see. With Nicole Hills's book most impacted, there may be a gap between what standard reports provide and what MSPs need operationally.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>But they want to be able to track MRC and nrc so like monthly versus non recurring per contract and be able to stack that up in a report that shows like this is all of the MRC versus all of the NRC in a given date range, whether it's, you know, over the past 30 days, over the past week, you know, be able to track kind of how we're stacking those numbers up to meet our quarterly targets.</p>
+            <cite>Sonia Fisher · Obera Connect HubSpot</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>Well, if you're, if you're using AI, then you could also, I mean, we should have the ability maybe to run it on a schedule and just say, hey, you know, every, every Monday or every Friday, Friday or whatever it is, you know, click this button yourself, AI, you know, chat GPT and make this report for me and send it, you know, send it to, you know, X, Y and Z people.</p>
+            <cite>Javier Villarreal · Project Managment :: Mockup Feedback</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>It's just that something, and this is probably way more of a Kathy thing because now we've got this cloud based program that we're letting customers basically have access to their little corners of the world that I would want assurances that a, they can't see anything other than their little corner of the world, what we want them to see.</p>
+            <cite>J &amp; K · Newport Network Solutions Working</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="theme-card" style="border-left:4px solid #ff6b6b">
+        <div class="theme-card-header">
+          <div>
+            <h3 class="theme-name" style="color:#ff6b6b">Integration Failures</h3>
+            <p class="theme-desc">Integrations with ConnectWise, QuickBooks, Tigerpaw not working as expected</p>
+          </div>
+          <div class="theme-badges">
+            <span class="acct-badge" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b66">67 accounts</span>
+          </div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 46</span> <span class="sa-pill">Halle 40</span> <span class="sa-pill">Kegan 37</span></div>
+        <p class="synthesis-text">67 accounts raised concerns about integrations not syncing or connecting properly. Affected accounts include Midwest Specialists, Sandhills home, Class5 Integration, Class5. Most mentions come from Nicole Hills's clients — a potential indicator that integration setup steps need more guided documentation.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>And like I said, we're not really creating the invoicing piece out of it to tigerpaw right now because we have syncing issues with that still, you know, which is fine, but because at the end of the day, if as long as I'm tracking my money somewhere, and that's right now in QuickBooks, I think the next steps would be to try and see what kind of timeframe we would be working on if we chose to do the QuickBooks online with the like, what comes first, what comes second and make a timeline for a transition.</p>
+            <cite>Roxy Rich · Fireteam Security</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>And I'm wondering, I don't know how we could do it, like even putting an asterisk or something on the new ones, but I think you guys may have mentioned that it'll look side by side in QuickBooks because I'll have structure works in there, but if it's connected to Rev, it'll be side by side and not overlapping.</p>
+            <cite>Frankie Salyer · Cicada Systems Week Follow Up</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>Because I know like with ConnectWise, when we sync over from Rev to ConnectWise and then ConnectWise to QuickBooks, if there is an issue whether the part isn't in QuickBooks or if the guys choose the wrong name because sometimes we have customers that are also our vendors.</p>
+            <cite>Krissy · Class5 QB Integration</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="theme-card" style="border-left:4px solid #ff6b6b">
+        <div class="theme-card-header">
+          <div>
+            <h3 class="theme-name" style="color:#ff6b6b">Migration &amp; Data Loss</h3>
+            <p class="theme-desc">Issues with data not carrying over correctly during migration from prior system</p>
+          </div>
+          <div class="theme-badges">
+            <span class="acct-badge" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b66">66 accounts</span>
+          </div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 73</span> <span class="sa-pill">Kegan 28</span> <span class="sa-pill">Halle 23</span></div>
+        <p class="synthesis-text">66 accounts reported data not carrying over correctly from their prior systems. Affected accounts include Midwest Specialists, First Class Technology, Joint Role Play, Sydewire Technologies Payments Discussion. Nicole Hills's clients account for the most complaints, suggesting migration checklists may need strengthening for their client base.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>And the other, the only thing that I have with the crunch that we're in now, we essentially have, you know, three and a half working weeks until the end of the year is you getting in and not being 100% comfortable with the system or are you getting stuck on things or processing incorrect payments or token migration not being done or payments not being set up, Things that sometimes we just can't control.</p>
+            <cite>nicolehills · Security Vision</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>We're still dealing with that because we have to send a request to you all because we're migrating off our old platform to the new platform and then the provider has to change and we need you to change that because of the FTP that we get for the usage.</p>
+            <cite>Dave Boynton · Stratus Recurring</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>So that's the only thing is that like if HubSpot is our source of truth, then like are you guys doing the migration from one bill for all of the legacy data into Revio or are you guys planning on taking what's in HubSpot from like the customer records?</p>
+            <cite>Sonia Fisher · Obera Connect HubSpot Integration</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="theme-card" style="border-left:4px solid #ff6b6b">
+        <div class="theme-card-header">
+          <div>
+            <h3 class="theme-name" style="color:#ff6b6b">Prior System Comparison</h3>
+            <p class="theme-desc">Clients comparing Rev.io unfavorably to their prior PSA</p>
+          </div>
+          <div class="theme-badges">
+            <span class="acct-badge" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b66">52 accounts</span>
+          </div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Halle 43</span> <span class="sa-pill">Kegan 42</span> <span class="sa-pill">Nicole 25</span></div>
+        <p class="synthesis-text">52 accounts explicitly compared Rev.io unfavorably to their prior PSA (ConnectWise, Tigerpaw, or Autotask). Accounts including CSI Video Security Sound Theater, Midwest Specialists, Truline, Joint Role Play referenced specific capabilities or workflows they had before that are now absent or different. Halle Taylor is handling the most of these comparisons — a signal to proactively address expectation gaps early in discovery.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>Well, actually one of the things we used to do was we used to go out, we used to send out holiday cards to our customers and when the ones that came back or the ones had changes or whatever, we would note those changes in the system, change of address or something that, you know, were, whatever, we would actually clean them up that way.</p>
+            <cite>Stephen Miller · Certified Lock Access</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>You know, that's one of the things that I, I, I identified which was during the Connectwise onboarding was it gave you all of the framework but there was so much in between that that had to be done to get to those milestones that, you know, it's like a, from quote to cash.</p>
+            <cite>Atticus Brind · CallSprout Follow Up Working</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>And it, it was so hard to do automation in Connectwise after a point because it was trying to do everything and so you didn't want to go in and do the automation to set something up that would save you 10 minutes a month or a week would take you a day and a half to set up.</p>
+            <cite>Scott Morin · Weekly</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="theme-card" style="border-left:4px solid #ff6b6b">
+        <div class="theme-card-header">
+          <div>
+            <h3 class="theme-name" style="color:#ff6b6b">Missing Critical Features</h3>
+            <p class="theme-desc">Features clients consider essential that are missing or incomplete</p>
+          </div>
+          <div class="theme-badges">
+            <span class="acct-badge" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b66">49 accounts</span>
+          </div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 64</span> <span class="sa-pill">Kegan 24</span> <span class="sa-pill">Halle 15</span></div>
+        <p class="synthesis-text">49 accounts flagged specific capabilities as blocking or critical — features they cannot go live without. Accounts raising these blockers include Midwest Specialists, Truline, Joint Role Play, Class5 Integration. Nicole Hills is fielding the most of these, indicating these items may be surfacing late in the onboarding cycle.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>I can take a screenshot of the Super Ops thing and send it to you because I think, yeah, like I said, I think it's cool because it's extremely easy to see what all I have out there without me individually going into each ticket and seeing what's in it and back out into a new to another one.</p>
+            <cite>Mike Yeager · Intek Technology Solutions Client Check</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>Your technicians are being and, and things of that nature, the reporting, you don't want that to include a bunch of automated open and closed tickets because it also skews your SLA when you do get to writing those SLA reports and people want to know what your ticket response times are.</p>
+            <cite>Scott Morin · Midwest Specialists</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>A customer will open a ticket and then all of a sudden it'll become, you know, not the center of their attention, or maybe they fix it and they're just not responding, but they quit responding to it and that causes our SLA to breach unless we just close out the ticket.</p>
+            <cite>Jesse Lees · Legion Quotes Billing</cite>
+          </blockquote>
+        </div>
+      </div>
     </div>
   </div>
 
+  
   <!-- ── 4. FEATURE GAP INTELLIGENCE ── -->
   <div class="section">
     <div class="section-title">Feature Gap Intelligence <span class="sub">what clients say is missing</span></div>
 
-    <div class="two-col">
+    <div class="signal-summary">
+      <span class="signal-icon">🔍</span>
       <div>
-        
-          <div class="feature-row">
-            <div class="feature-rank">#1</div>
-            <div class="feature-info">
-              <div class="feature-name">
-                <span class="feature-area-tag">other</span>
-                <span style="margin-left:8px;font-weight:400;font-size:12px">"You mean as far as like if we need to follow up on anything or stuff like that?"</span>
-              </div>
-            </div>
-            <div class="feature-count">1912</div>
-          </div>
-        
-          <div class="feature-row">
-            <div class="feature-rank">#2</div>
-            <div class="feature-info">
-              <div class="feature-name">
-                <span class="feature-area-tag">billing</span>
-                <span style="margin-left:8px;font-weight:400;font-size:12px">"So I put those numbers in monthly, and we need to make sure that those, when we …"</span>
-              </div>
-            </div>
-            <div class="feature-count">105</div>
-          </div>
-        
-          <div class="feature-row">
-            <div class="feature-rank">#3</div>
-            <div class="feature-info">
-              <div class="feature-name">
-                <span class="feature-area-tag">integrations</span>
-                <span style="margin-left:8px;font-weight:400;font-size:12px">"it seems that we've gone full circle and we're back to looking at sell from Conn…"</span>
-              </div>
-            </div>
-            <div class="feature-count">79</div>
-          </div>
-        
-          <div class="feature-row">
-            <div class="feature-rank">#4</div>
-            <div class="feature-info">
-              <div class="feature-name">
-                <span class="feature-area-tag">ticketing</span>
-                <span style="margin-left:8px;font-weight:400;font-size:12px">"As far as like, you know, the switches and the routers added in a ticket, like w…"</span>
-              </div>
-            </div>
-            <div class="feature-count">54</div>
-          </div>
-        
-          <div class="feature-row">
-            <div class="feature-rank">#5</div>
-            <div class="feature-info">
-              <div class="feature-name">
-                <span class="feature-area-tag">contracts</span>
-                <span style="margin-left:8px;font-weight:400;font-size:12px">"Like if it doesn't have sla, like that is required."</span>
-              </div>
-            </div>
-            <div class="feature-count">26</div>
-          </div>
-        
-          <div class="feature-row">
-            <div class="feature-rank">#6</div>
-            <div class="feature-info">
-              <div class="feature-name">
-                <span class="feature-area-tag">scheduling</span>
-                <span style="margin-left:8px;font-weight:400;font-size:12px">"Do you have a second, Jose, to look at your calendar?"</span>
-              </div>
-            </div>
-            <div class="feature-count">25</div>
-          </div>
-        
-          <div class="feature-row">
-            <div class="feature-rank">#7</div>
-            <div class="feature-info">
-              <div class="feature-name">
-                <span class="feature-area-tag">reporting</span>
-                <span style="margin-left:8px;font-weight:400;font-size:12px">"Do we need anything to support the client with these reports?"</span>
-              </div>
-            </div>
-            <div class="feature-count">20</div>
-          </div>
-        
-          <div class="feature-row">
-            <div class="feature-rank">#8</div>
-            <div class="feature-info">
-              <div class="feature-name">
-                <span class="feature-area-tag">automation</span>
-                <span style="margin-left:8px;font-weight:400;font-size:12px">"Basically, if you guys say this client is sold, you move it to a certain status …"</span>
-              </div>
-            </div>
-            <div class="feature-count">17</div>
-          </div>
-        
-          <div class="feature-row">
-            <div class="feature-rank">#9</div>
-            <div class="feature-info">
-              <div class="feature-name">
-                <span class="feature-area-tag">mobile</span>
-                <span style="margin-left:8px;font-weight:400;font-size:12px">"So everything she mentioned the field, the limited mobile apps or like, if you h…"</span>
-              </div>
-            </div>
-            <div class="feature-count">10</div>
-          </div>
-        
-          <div class="feature-row">
-            <div class="feature-rank">#10</div>
-            <div class="feature-info">
-              <div class="feature-name">
-                <span class="feature-area-tag">portal</span>
-                <span style="margin-left:8px;font-weight:400;font-size:12px"></span>
-              </div>
-            </div>
-            <div class="feature-count">5</div>
-          </div>
-        
+        <strong>12 feature areas requested across 115 unique accounts.</strong>
+        Top request: <em>Quoting &amp; Proposals</em> (40 accounts).
+        46% of requests relate to integrations or prior-system capabilities.
+      </div>
+    </div>
+    <div class="feat-grid">
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">Quoting &amp; Proposals</h3>
+          <span class="feat-badge">40 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:100%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 35</span> <span class="sa-pill">Halle 21</span> <span class="sa-pill">Kegan 15</span></div>
+        <p class="synthesis-text">40 accounts asked about quoting, estimates, or proposal generation within Rev.io. Accounts including Truline, Sydewire Technologies Payments Discussion, HTI, Prestige want to manage their full sales-to-bill cycle in one platform. Nicole Hills's clients are the loudest here — a signal that quoting capability gaps are surfacing during onboarding.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>So if you've got a bunch of products listed and that opportunity that you are ultimately proposing that, you know, the customer buys so that you can service them, we want all those projects to filter over into the project, you to be able to select the right template, make it, you know, couple clicks of a button to go from quote to project, then it's all created for you.</p>
+            <cite>Kemp Tucker · Project Management :: Global Data</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>And I don't know if there's something we need to do another feature request on it, but I did mention this a couple of times and they said that's a great idea and we need to really look at that is instead of having it as an option, as a URL, but allow me to have a PDF database and allow me to attach a PDF to that quote.</p>
+            <cite>Robert Hebb · HTI Systems</cite>
+          </blockquote>
+        </div>
       </div>
 
-      <div class="chart-wrap">
-        <div class="chart-title">Feature Gaps by Area</div>
-        <div id="chart-feature-gaps"></div>
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">QuickBooks Integration</h3>
+          <span class="feat-badge">30 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:75%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 18</span> <span class="sa-pill">Kegan 15</span> <span class="sa-pill">Halle 9</span></div>
+        <p class="synthesis-text">30 accounts specifically need QuickBooks or QBO integration to work reliably. Clients from GL Codes for integrations, Class5 Integration, Shinntek Solutions, Ravguard depend on this for accounting workflows. With 42 mentions total, this is a high-frequency blocker — any friction in the QBO sync directly impacts go-live readiness.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>But like, if we need to create products, my question is, is after we get the sync up back to like, my original questions is, can I not just create Clients and Rev IO and then they'll show up into QuickBooks and then Products into Intuit and then, then, then, then I can actually.</p>
+            <cite>Michael Hamilton · Savvy AI Integrations</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>When I was talking with them about it too, I got excited thinking great, like that pulls over to QuickBooks we can have even office staff enter time because right now like office staff just emails us Excel spreadsheet and I'm like, oh, if we don't have to.</p>
+            <cite>Jenn Rice · GeriTech</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">Import / Data Migration</h3>
+          <span class="feat-badge">28 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:70%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 17</span> <span class="sa-pill">Kegan 9</span> <span class="sa-pill">Halle 6</span></div>
+        <p class="synthesis-text">28 accounts need better import or data migration tooling. Clients from Midwest Specialists, Losh Network Services, Centra IP, Obera Client Check In are trying to bring in historical data, client records, or inventory from prior systems. This directly maps to the Migration &amp; Data Loss objection theme — import quality is a recurring pain.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>I just thought it was fair to let you know that there's been a lot of fingers in the pie at different stages and I know that not all the data made it each time and that at least some of it mapped wonky especially with our price book because it didn't have part numbers when we first they imported it.</p>
+            <cite>Scott Morin · Midwest Specialists</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>We're still dealing with that because we have to send a request to you all because we're migrating off our old platform to the new platform and then the provider has to change and we need you to change that because of the FTP that we get for the usage.</p>
+            <cite>Dave Boynton · Stratus Recurring</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">Scheduling / Dispatch</h3>
+          <span class="feat-badge">27 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:68%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 24</span> <span class="sa-pill">Kegan 11</span> <span class="sa-pill">Halle 3</span></div>
+        <p class="synthesis-text">27 accounts want scheduling or dispatch features — calendaring, appointment booking, or technician availability. Clients including Acoma Lock Security, American Security Devices Web, Ataraxis Solutions Graduation, Savvy AI Transition to CS need this for field service coordination. This suggests the PSA's dispatch workflows may not fully support clients with larger field teams.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>I thought it was going to go ahead and create an actual service order and then move it to the dispatch board to where all we had to do is monitor the dispatch board and pull each one up and either go, yeah, we need to do that and assign it to either me or another service technician or say no, and we would just delete it off the dispatch board that it was already done or it wasn't.</p>
+            <cite>13866281253 · Marcotek Check in</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>So if we're not getting to it Tuesday, then the following Tuesday, or if we need to plan some of those ad hoc meetings, just bundle up some of those conversations so that we can use our available time that we already have scheduled.</p>
+            <cite>Sonia Fisher · Obera Client Check In</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">Contract Management</h3>
+          <span class="feat-badge">21 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:53%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 21</span> <span class="sa-pill">Kegan 9</span> <span class="sa-pill">Halle 3</span></div>
+        <p class="synthesis-text">21 accounts flagged contract and agreement management as a need. Clients from Stratus Recurring, CL Sams Web, Lantern Streaming, Obera Connect Sales want to track recurring contracts, terms, or renewal schedules in Rev.io. Nicole Hills's clients are asking most frequently — contract lifecycle gaps may be creating manual workarounds.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>I also like the fact that my office staff right now, since we don't have integration, if they know that we've added a user license to a client, they can just go right into the client's account, add the user license to the agreement or to the whatever and it just ends up in the next billing cycle.</p>
+            <cite>Ray Paskey · Class5 Q&amp;A</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>I think that's what we need to do then because we just create a contract that's set for 120 hours, have it bill reoccurring monthly, and then every time we do something, we're creating a ticket anyway.</p>
+            <cite>Brandon Kunkel · Intek Technology Solutions Client Check</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">Reporting &amp; Dashboards</h3>
+          <span class="feat-badge">17 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:43%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 14</span> <span class="sa-pill">Kegan 5</span> <span class="sa-pill">Halle 5</span></div>
+        <p class="synthesis-text">17 accounts requested richer reporting, dashboards, or business visibility tools. Clients from Joint Role Play, Obera Connect HubSpot, Sandhills home, SSU Client Check In want to see their own operational data in ways the current reports don't support. Nicole Hills is handling the most of these — standard report coverage may need expanding.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>But they want to be able to track MRC and nrc so like monthly versus non recurring per contract and be able to stack that up in a report that shows like this is all of the MRC versus all of the NRC in a given date range, whether it's, you know, over the past 30 days, over the past week, you know, be able to track kind of how we're stacking those numbers up to meet our quarterly targets.</p>
+            <cite>Sonia Fisher · Obera Connect HubSpot</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>I was gonna say because I have to report by county because of the various county taxes and if it's only going to come over into QuickBooks as like a lump sum to sales tax, which is fine, but I still am going to need to have that county breakdown to be able to do my report.</p>
+            <cite>Jason &amp; Kathy · Newport Network Solutions</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">Mobile / Field Tech</h3>
+          <span class="feat-badge">17 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:43%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 8</span> <span class="sa-pill">Kegan 7</span> <span class="sa-pill">Halle 5</span></div>
+        <p class="synthesis-text">17 accounts want mobile or field technician access. Clients from Truline, Silent Watchman, Acoma Lock Security, Obera Connect Guided need their techs to use Rev.io on the road. This is a repeated ask tied to day-to-day ops, with Nicole Hills's clients raising it most often.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>So that's some scenarios that I've dealt with in the past where if it takes time to in the system just want to be able to make sure that if I know the customer and all their information that everything is going to be set up with a couple clicks of a button and not having to go through, you know.</p>
+            <cite>Brandon · Truline</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>Eventually we want to get into some more complex scenarios like percentage based billing, you know, being able to say like, okay, I want to build 20% of this project and then you know, at the next interval, 40%.</p>
+            <cite>Kemp Tucker · Silent Watchman</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">Billing Customization</h3>
+          <span class="feat-badge">10 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:25%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 6</span> <span class="sa-pill">Kegan 3</span> <span class="sa-pill">Halle 1</span></div>
+        <p class="synthesis-text">10 accounts want more control over invoice formatting and billing templates. Clients including Obera Client Check In, Midwest Specialists, Project Management Mockup (2nd invite), Obera Connect Guided need their invoices to match what their customers already receive. This aligns with the Billing Format theme in objections — template flexibility is a recurring onboarding gap.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>And so I circled the drain trying to figure out some of the terminology and the billing cycle and whether it's a bill in the, you know, in the rears or in advance, especially when there's, you know, there was not a real good information on how the cycle, like whether it was one month or two months that that particular parameter missing.</p>
+            <cite>Scott Morin · Midwest Specialists</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>I'm wondering if that was preventing it from going through because when she had generated an invoice under her fake customer, like her fake account, she didn't have the proper billing profile.</p>
+            <cite>Britt Reeves (BR) · Tolleson Client Check in</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">Customer Portal</h3>
+          <span class="feat-badge">7 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:18%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 6</span> <span class="sa-pill">Kegan 1</span> <span class="sa-pill">Halle 1</span></div>
+        <p class="synthesis-text">7 accounts want a customer-facing portal for self-service or invoice access. Clients from Remote Technology, (Client Business Certified Lock Access, Obera Connect Guided, Tolleson Payments Walk Through Including are looking to reduce inbound support by giving their customers visibility. Nicole Hills's clients are loudest here — portal availability may be a differentiator in their client conversations.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>So like I'll do a little bit more reading there but there's a divert you guys have a developer portal that I'm going to tie our developer into and so he's probably going to have some questions for you over the next month about like if we run into issues like hey, we want to be able to like what I just said, we want to be able to actually look in attacks.</p>
+            <cite>Michael Hamilton · Savvy AI Guided</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>Just because Portal IO really was like, we want this go, we don't want to wait for you guys.</p>
+            <cite>Brenda Harvey · COPS Monitoring</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">Custom Fields / Flexibility</h3>
+          <span class="feat-badge">5 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:13%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Kegan 5</span> <span class="sa-pill">Nicole 1</span> <span class="sa-pill">Halle 1</span></div>
+        <p class="synthesis-text">5 accounts want the ability to add custom fields or columns to records. Clients including Midwest Specialists, Trein Management Hubspot setup, Soundworks Security, Symbrant Weekly need flexibility to track business-specific data not in the default schema. This is a common ask in platform migrations — clients want to replicate the customization they had before.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>Can we do and timeline and timeline being to Al's point if it takes four months why go through all that labor and an exercise for but we don't know and we need to know when the failed reps going to be a field versus a custom field that's.</p>
+            <cite>Vicky Lowe · Symbrant Weekly</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>We don't have all this mandatory information and I really am struggling to understand why a billing, billing email, their address and their billing profile would be mandatory fields.</p>
+            <cite>Scott Morin · Midwest Specialists</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">SLA Management</h3>
+          <span class="feat-badge">3 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:8%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Nicole 3</span></div>
+        <p class="synthesis-text">3 accounts are asking for SLA tracking and enforcement — response and resolution time management tied to ticket workflows. Accounts like Ravguard, ACS Fire Security Guided, Legion Quotes Billing need this to deliver on their own client commitments. Roadmap status is unclear from transcript data, but it's a clear blocker for MSPs with formal service agreements.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>The ticketing system worked well, but the SLA part was the part that was missing that's obviously being built in the PSA side.</p>
+            <cite>Conner Sharp · Legion Quotes Billing</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>So we need some sort of service level for those work orders or some, some pay rate it's tied to.</p>
+            <cite>Roman Rudzik · ACS Fire Security Guided</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-card-header">
+          <h3 class="feat-name">Bulk Operations</h3>
+          <span class="feat-badge">3 accounts</span>
+        </div>
+        <div class="demand-bar-wrap">
+          <div class="demand-bar" style="width:8%"></div>
+        </div>
+        <div class="sa-pills"><span class="sa-pill">Kegan 2</span> <span class="sa-pill">Halle 1</span></div>
+        <p class="synthesis-text">3 accounts asked for bulk update, batch processing, or mass operation capabilities. Accounts like Stratus Recurring, CL Sams Web, The Launch Pad are spending manual time on tasks that could be done in bulk. Kegan Ehlers's clients surface this most — a sign that scale operations are a real need for mid-market clients.</p>
+        <div class="quotes-block">
+          <blockquote class="pull-quote">
+            <p>So that would be like if you triggered like some kind of bulk action or you triggered some kind of action, that's going to be a kind of a long running background thing and you want to move to another page or maybe some kind of automation that we want to announce to everybody that has completed like automatic bill creation.</p>
+            <cite>Alan Sellers · The Launch Pad</cite>
+          </blockquote>
+          <blockquote class="pull-quote">
+            <p>It would be nice if there was a way that I could quickly bulk set, like all of these and I could maybe build a status for the tickets that come in to where it says that they were imported.</p>
+            <cite>Clay Lovelace · CL Sams Web</cite>
+          </blockquote>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ── 5. REVII AI ADOPTION ── -->
+    <!-- ── 5. REVII AI ADOPTION ── -->
   <div class="section">
     <div class="section-title">Revii AI Adoption</div>
 
