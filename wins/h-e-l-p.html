@@ -67,28 +67,24 @@
     color: #C07000; font-size: 13px; font-weight: 600;
     padding: 4px 12px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
   }
-  .feature-list { list-style: none; }
-  .feature-list li {
-    font-size: 14px; color: #1a2a3a; padding: 5px 0;
-    border-bottom: 1px solid #F0F4F8;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .feature-list li:last-child { border-bottom: none; }
-  .feature-list li::before {
-    content: '✓'; color: #1B6EF3; font-weight: 700; font-size: 13px;
-  }
-  .value-list { list-style: none; }
-  .value-list li {
+  .solution-list { list-style: none; }
+  .solution-list li {
     font-size: 14px; color: #1a2a3a; padding: 6px 0;
     border-bottom: 1px solid #F0F4F8; line-height: 1.5;
+    display: flex; align-items: flex-start; gap: 8px;
   }
-  .value-list li:last-child { border-bottom: none; }
-  .value-list li::before { content: '→'; color: #1B6EF3; font-weight: 700; margin-right: 8px; }
-  .quote-box {
+  .solution-list li:last-child { border-bottom: none; }
+  .solution-list li::before {
+    content: '✓'; color: #1B6EF3; font-weight: 700; font-size: 13px;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .value-box {
     background: #F7F9FF; border-left: 3px solid #1B6EF3;
     border-radius: 0 8px 8px 0; padding: 14px 16px;
   }
-  .quote-box .qtext { font-size: 14px; color: #1a2a3a; line-height: 1.6; font-style: italic; }
+  .value-box .vtext {
+    font-size: 14px; color: #1a2a3a; line-height: 1.6; font-style: italic;
+  }
 
   .card-footer {
     background: #F7F9FF; border-top: 1px solid #E8EDF5;
@@ -128,14 +124,14 @@
     
 
     
-
-    
     <div class="row">
-      <div class="row-label">Client Value</div>
-      <ul class="value-list">
-        <li>Centralize billing, PSA, and operations into a single platform</li>
+      <div class="row-label">Rev.io Solutions</div>
+      <ul class="solution-list">
+        <li>Mobile App</li><li>Support</li><li>Cloud Based Platform</li>
       </ul>
     </div>
+
+    
   </div>
 
   <div class="card-footer">
