@@ -121,6 +121,7 @@ footer a { color: var(--accent); text-decoration: none; }
   <a href="#accounts">Accounts</a>
   <a href="#tags">Categories</a>
   <a href="#ai">🤖 AI Efficiency</a>
+  <a href="#staffing">📐 Staffing Model</a>
   <a href="#recs">Recommendations</a>
 </nav>
 
@@ -946,6 +947,172 @@ footer a { color: var(--accent); text-decoration: none; }
   </section>
   <div class="section-divider"></div>
 
+  <!-- ════════════════════════════════════════════════════════ 11b. STAFFING MODEL -->
+  <section id="staffing">
+    <h2>11b. 📐 Staffing Model: Current &amp; Growth Scenarios</h2>
+
+    <p style="color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:24px">
+      Using AI tier optimization, this model projects how many T1 CSMs are needed at current volume and at 2x/3x client scale.
+      Assumptions: ~1h actual work time per ticket (backed out from current headcount and volume), 160 working hours/CSM/month,
+      40h/month non-ticket work per CSM (QBRs, proactive outreach, training).
+      This is a planning model — actual figures will sharpen once Zendesk business-hours tracking is enabled.
+    </p>
+
+    <!-- HOW AI CHANGES THE MATH: 4 KPI cards -->
+    <h3>How AI Changes the Math</h3>
+    <div class="kpi-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); margin-bottom:32px">
+      <div class="kpi-card">
+        <div class="kpi-label">Ticket Hours/Mo (No AI)</div>
+        <div class="kpi-value" style="color:var(--danger)">1,376h</div>
+        <div class="kpi-sub">1h/ticket × 1,376 tickets</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Ticket Hours/Mo (With AI)</div>
+        <div class="kpi-value" style="color:var(--accent2)">478h</div>
+        <div class="kpi-sub">Weighted across all 4 tiers</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Hours Recaptured/Month</div>
+        <div class="kpi-value" style="color:var(--accent2)">898h</div>
+        <div class="kpi-sub">~5–6 FTE equivalent</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Efficiency Multiplier</div>
+        <div class="kpi-value" style="color:var(--accent2)">2.7x</div>
+        <div class="kpi-sub">AI force multiplier</div>
+      </div>
+    </div>
+
+    <!-- TIER HOURS BREAKDOWN TABLE -->
+    <h3>AI Tier Hours Breakdown (Current Volume)</h3>
+    <div class="table-wrap" style="margin-bottom:32px">
+      <table>
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Monthly Tickets</th>
+            <th>CSM Hours Needed</th>
+            <th>Hours Saved</th>
+            <th>% of Volume</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-left:4px solid var(--accent2)">
+            <td><strong style="color:var(--accent2)">T1 — Pure AI (23%)</strong></td>
+            <td>316</td>
+            <td>0h</td>
+            <td style="color:var(--accent2);font-weight:600">316h</td>
+            <td>23%</td>
+          </tr>
+          <tr style="border-left:4px solid var(--accent)">
+            <td><strong style="color:var(--accent)">T2 — AI-Drafted (37%)</strong></td>
+            <td>509</td>
+            <td>127h</td>
+            <td style="color:var(--accent2);font-weight:600">382h</td>
+            <td>37%</td>
+          </tr>
+          <tr style="border-left:4px solid var(--warning)">
+            <td><strong style="color:var(--warning)">T3 — AI-Assisted (29%)</strong></td>
+            <td>399</td>
+            <td>200h</td>
+            <td style="color:var(--accent2);font-weight:600">199h</td>
+            <td>29%</td>
+          </tr>
+          <tr style="border-left:4px solid var(--danger)">
+            <td><strong style="color:var(--danger)">T4 — Human Only (11%)</strong></td>
+            <td>151</td>
+            <td>151h</td>
+            <td>0h</td>
+            <td>11%</td>
+          </tr>
+          <tr style="background:rgba(108,99,255,.08);font-weight:600">
+            <td><strong>Total</strong></td>
+            <td><strong>1,376</strong></td>
+            <td><strong>478h</strong></td>
+            <td style="color:var(--accent2);font-weight:700">898h saved</td>
+            <td><strong>100%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- GROWTH SCENARIOS: BAR CHART -->
+    <h3>T1 CSM Headcount Required — Growth Scenarios</h3>
+    <div class="chart-container" style="margin-bottom:16px">
+      <canvas id="staffingChart" height="90"></canvas>
+    </div>
+
+    <!-- SCENARIOS TABLE -->
+    <div class="table-wrap" style="margin-bottom:32px">
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Monthly Tickets</th>
+            <th>With AI (CSMs)</th>
+            <th>Without AI (CSMs)</th>
+            <th>Headcount Avoided</th>
+            <th style="color:var(--accent2)">Savings at $80K/CSM/yr</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Current (1x)</strong></td>
+            <td>1,376</td>
+            <td style="color:var(--accent2);font-weight:600">4–5 FTE</td>
+            <td style="color:var(--danger)">12 FTE</td>
+            <td>7–8 FTE</td>
+            <td style="color:var(--accent2);font-weight:700">$600K/yr</td>
+          </tr>
+          <tr>
+            <td><strong>2x Client Count</strong></td>
+            <td>2,752</td>
+            <td style="color:var(--accent2);font-weight:600">8–9 FTE</td>
+            <td style="color:var(--danger)">23 FTE</td>
+            <td>14–15 FTE</td>
+            <td style="color:var(--accent2);font-weight:700">$1.16M/yr</td>
+          </tr>
+          <tr>
+            <td><strong>3x Client Count</strong></td>
+            <td>4,128</td>
+            <td style="color:var(--accent2);font-weight:600">12–13 FTE</td>
+            <td style="color:var(--danger)">34 FTE</td>
+            <td>21–22 FTE</td>
+            <td style="color:var(--accent2);font-weight:700">$1.72M/yr</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FREED CAPACITY -->
+    <h3>What the Freed Capacity Enables</h3>
+    <div style="background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.25);border-radius:10px;padding:20px 24px;margin-bottom:28px;font-size:13px;line-height:1.7">
+      <p style="margin-bottom:12px">
+        At current volume, AI optimization frees <strong style="color:var(--accent2)">~5–6 CSMs worth of ticket-handling capacity (~900 hrs/month)</strong>.
+        Rather than reducing headcount, this capacity can be redeployed to high-value work that's not happening today:
+      </p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;padding-left:0">
+        <li style="padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--accent2)">→</span> <strong>Proactive account health calls</strong> — the QBRs and check-ins that churn prevention actually requires</li>
+        <li style="padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--accent2)">→</span> <strong>Following up on Client Churn signals</strong> currently invisible in Zendesk</li>
+        <li style="padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--accent2)">→</span> <strong>Expanded coverage for the PSA AM team</strong> — account contract/license work</li>
+        <li style="padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--accent2)">→</span> <strong>Reduced escalation rate</strong> as CSMs have more time to go deep on complex issues</li>
+      </ul>
+    </div>
+
+    <!-- ASSUMPTIONS & CAVEATS -->
+    <div class="alert-banner" style="background:rgba(255,159,67,.1);border-color:var(--warning)">
+      <strong style="display:block;margin-bottom:8px">⚠️ Assumptions &amp; Caveats</strong>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;padding-left:0;font-size:12px">
+        <li>• <strong>1h/ticket work time is estimated</strong> — actual varies by ticket type and group. Enable Zendesk business-hours tracking to measure true work time.</li>
+        <li>• <strong>Tigerpaw/PSA T1 workload</strong> (Sean Kuta + team) is finite and declining as the platform depreciates — these roles will naturally reduce over time without any optimization.</li>
+        <li>• <strong>Model assumes linear ticket growth</strong> with client count. In practice, client quality and onboarding investment affects support density.</li>
+        <li>• <strong>Non-ticket work hours (40h/CSM/mo) are estimated</strong> — actual QBR and proactive time should be tracked separately.</li>
+      </ul>
+    </div>
+
+  </section>
+  <div class="section-divider"></div>
+
   <!-- ════════════════════════════════════════════════════════ 12. RECS -->
   <section id="recs">
     <h2>12. Recommendations</h2>
@@ -1026,7 +1193,76 @@ Chart.defaults.borderColor = 'rgba(108,99,255,0.15)';
   const billing = [1,1,1,1,0,0,1,0,3,19,557,994,804,711,857,306,1];
   const psa = [0,0,0,0,2,2,3,7,15,26,493,499,450,330,456,116,3];
   const prec = [0,0,0,0,2,0,2,3,3,11,109,149,94,85,74,27,0];
-  new Chart(document.getElementById('trendsChart'), {
+  
+  // ── Staffing Model Chart ──────────────────────────────────────────────────
+  const staffingCtx = document.getElementById('staffingChart');
+  if (staffingCtx) {
+    new Chart(staffingCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Current (1x)', '2x Clients', '3x Clients'],
+        datasets: [
+          {
+            label: 'With AI',
+            data: [4.5, 8.5, 12.5],
+            backgroundColor: 'rgba(0,212,170,0.75)',
+            borderColor: '#00d4aa',
+            borderWidth: 2,
+            borderRadius: 6,
+          },
+          {
+            label: 'Without AI',
+            data: [12, 23, 34],
+            backgroundColor: 'rgba(255,107,107,0.65)',
+            borderColor: '#ff6b6b',
+            borderWidth: 2,
+            borderRadius: 6,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'T1 CSM Headcount Required',
+            color: '#e8eaf6',
+            font: { size: 15, weight: '600' },
+            padding: { bottom: 16 }
+          },
+          legend: {
+            labels: { color: '#8892b0', font: { size: 12 } }
+          },
+          tooltip: {
+            callbacks: {
+              label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y} FTE`
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#8892b0' },
+            grid: { color: 'rgba(108,99,255,.1)' }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#8892b0',
+              callback: v => v + ' FTE'
+            },
+            grid: { color: 'rgba(108,99,255,.1)' },
+            title: {
+              display: true,
+              text: 'CSMs Required',
+              color: '#8892b0'
+            }
+          }
+        }
+      }
+    });
+  }
+
+new Chart(document.getElementById('trendsChart'), {
     type: 'bar',
     data: {
       labels: months,
