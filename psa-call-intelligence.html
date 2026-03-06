@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSA Onboarding Call Intelligence Report — Rev.io</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<title>PSA Call Intelligence — Rev.io</title>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
     --bg: #0f1117;
     --surface: #1a1d27;
-    --surface2: #232637;
     --border: #2e3147;
     --text: #e8eaf6;
     --muted: #7b7f9e;
@@ -17,1477 +18,1050 @@
     --accent2: #00d4aa;
     --warn: #ffa94d;
     --danger: #ff6b6b;
-    --pos: #00d4aa;
-    --neg: #ff6b6b;
+    --success: #51cf66;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; line-height: 1.6; }
-  
-  /* NAV */
-  nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; gap: 0; }
-  .nav-brand { font-weight: 700; font-size: 1rem; color: var(--accent); padding: 1rem 1rem 1rem 0; border-right: 1px solid var(--border); margin-right: 1rem; }
-  nav a { color: var(--muted); text-decoration: none; font-size: 0.82rem; padding: 1rem 0.75rem; display: inline-block; transition: color 0.2s; white-space: nowrap; }
-  nav a:hover { color: var(--text); }
-  
-  /* LAYOUT */
-  .container { max-width: 1280px; margin: 0 auto; padding: 2rem; }
-  .hero { padding: 3rem 2rem 2rem; text-align: center; border-bottom: 1px solid var(--border); }
-  .hero-badge { display: inline-block; background: linear-gradient(135deg, rgba(108,99,255,0.2), rgba(0,212,170,0.2)); border: 1px solid rgba(108,99,255,0.4); color: var(--accent); padding: 0.25rem 1rem; border-radius: 2rem; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
-  .hero h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #e8eaf6 0%, var(--accent) 50%, var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
-  .hero p { color: var(--muted); font-size: 1.05rem; }
-  
-  /* SECTIONS */
-  section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
-  section:last-child { border-bottom: none; }
-  .section-header { margin-bottom: 2rem; }
-  .section-header h2 { font-size: 1.6rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 0.75rem; }
-  .section-header h2 .icon { width: 2rem; height: 2rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-  .section-header p { color: var(--muted); margin-top: 0.5rem; }
-  
-  /* CARDS */
-  .cards { display: grid; gap: 1rem; }
-  .cards-4 { grid-template-columns: repeat(4, 1fr); }
-  .cards-3 { grid-template-columns: repeat(3, 1fr); }
-  .cards-2 { grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 900px) { .cards-4, .cards-3, .cards-2 { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 600px) { .cards-4, .cards-3, .cards-2 { grid-template-columns: 1fr; } }
-  
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; }
-  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-  .card h3 { font-size: 1rem; font-weight: 600; color: var(--text); }
-  .card .subtitle { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
-  .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 1rem; font-size: 0.72rem; font-weight: 600; }
-  .badge-nicole { background: rgba(108,99,255,0.2); color: #a89eff; }
-  .badge-kegan  { background: rgba(0,212,170,0.2); color: var(--accent2); }
-  .badge-halle  { background: rgba(255,107,107,0.2); color: #ff8f8f; }
-  .badge-tony   { background: rgba(255,169,77,0.2); color: #ffc26a; }
-  
-  .stat { font-size: 2.2rem; font-weight: 800; color: var(--text); line-height: 1; }
-  .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.4rem; }
-  .stat-sub { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
-  .stat.accent { color: var(--accent); }
-  .stat.accent2 { color: var(--accent2); }
-  .stat.warn { color: var(--warn); }
-  .stat.danger { color: var(--danger); }
-  
-  /* KPI ROW */
-  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
-  @media(max-width:900px) { .kpi-row { grid-template-columns: repeat(2,1fr); } }
-  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem 1.5rem; }
-  .kpi-num { font-size: 2.4rem; font-weight: 900; color: var(--accent); line-height: 1; }
-  .kpi-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.35rem; }
-  
-  /* CHART CONTAINERS */
-  .chart-wrap { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; }
-  .chart-wrap h4 { font-size: 0.9rem; font-weight: 600; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  
-  .chart-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-  .chart-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-  @media(max-width:900px) { .chart-grid-2, .chart-grid-3 { grid-template-columns: 1fr; } }
-  
-  /* TABLES */
-  .table-wrap { overflow-x: auto; border-radius: 0.75rem; border: 1px solid var(--border); }
-  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-  thead tr { background: var(--surface2); }
-  th { padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
-  td { padding: 0.65rem 1rem; border-top: 1px solid var(--border); }
-  tr:hover td { background: rgba(108,99,255,0.05); }
-  td.title-cell { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  td.pos { color: var(--pos); font-weight: 600; }
-  td.neg { color: var(--neg); font-weight: 600; }
-  td.warn { color: var(--warn); }
-  
-  /* SA PROFILE BARS */
-  .talk-bar { background: var(--surface2); border-radius: 0.5rem; height: 0.6rem; overflow: hidden; margin-top: 0.5rem; }
-  .talk-bar .sa { background: var(--accent); height: 100%; display: inline-block; }
-  .talk-bar .client { background: var(--accent2); height: 100%; display: inline-block; }
-  .talk-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
-  
-  /* AT-RISK */
-  .at-risk-card { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; }
-  .at-risk-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
-  .at-risk-meta { display: flex; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
-  .at-risk-meta span { font-size: 0.8rem; color: var(--muted); }
-  .at-risk-meta strong { color: var(--text); }
-  
-  /* INSIGHT CHIPS */
-  .insight { background: rgba(108,99,255,0.1); border: 1px solid rgba(108,99,255,0.3); border-radius: 0.5rem; padding: 0.75rem 1rem; font-size: 0.875rem; margin-bottom: 0.5rem; }
-  .insight.warn { background: rgba(255,169,77,0.1); border-color: rgba(255,169,77,0.3); }
-  .insight.success { background: rgba(0,212,170,0.1); border-color: rgba(0,212,170,0.3); }
-  .insight.danger { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.3); }
-  
-  /* GRADUATED TABLE */
-  .grad-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  @media(max-width:800px) { .grad-row { grid-template-columns: 1fr; } }
-  
-  /* RECS */
-  .rec { background: var(--surface); border-left: 3px solid var(--accent); border-radius: 0 0.75rem 0.75rem 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
-  .rec.warn { border-left-color: var(--warn); }
-  .rec.success { border-left-color: var(--accent2); }
-  .rec.danger { border-left-color: var(--danger); }
-  .rec h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
-  .rec p { font-size: 0.85rem; color: var(--muted); }
-  
-  .muted { color: var(--muted) !important; }
-  .err { color: var(--danger); }
-  ul { padding-left: 1.25rem; }
-  li { margin-bottom: 0.4rem; font-size: 0.875rem; }
-  
-  .footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--border); }
-  .divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
-  
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  @media(max-width:800px) { .two-col { grid-template-columns: 1fr; } }
-  
-  .corr-box { background: var(--surface2); border-radius: 0.75rem; padding: 1.25rem; text-align: center; }
-  .corr-box .big { font-size: 2rem; font-weight: 800; }
-  .corr-box .label { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  @media (min-width: 640px) { body { font-size: 15px; } }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  @media (min-width: 640px) { .container { padding: 24px; } }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .header h1 {
+    font-size: clamp(22px, 5vw, 34px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .chip.accent { border-color: var(--accent); color: var(--accent); }
+  .chip.accent2 { border-color: var(--accent2); color: var(--accent2); }
+
+  /* ── Nav ── */
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 32px;
+  }
+
+  .nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: color .2s, border-color .2s;
+  }
+
+  .nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── Section ── */
+  section { margin-bottom: 40px; }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── KPI Grid ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  @media (min-width: 640px) {
+    .kpi-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .kpi-value {
+    font-size: clamp(24px, 5vw, 32px);
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .kpi-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  /* ── Insight callouts ── */
+  .insights-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  @media (min-width: 640px) {
+    .insights-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .insight {
+    border-radius: 10px;
+    padding: 14px 16px;
+    border-left: 4px solid;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .insight.success { border-left-color: var(--success); }
+  .insight.warn { border-left-color: var(--warn); }
+  .insight.danger { border-left-color: var(--danger); }
+
+  .insight-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .insight.success .insight-label { color: var(--success); }
+  .insight.warn .insight-label { color: var(--warn); }
+  .insight.danger .insight-label { color: var(--danger); }
+
+  .insight p { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+  /* ── SA Profiles ── */
+  .sa-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  @media (min-width: 640px) {
+    .sa-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .sa-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .sa-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sa-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sa-stat-item { text-align: center; }
+  .sa-stat-value { font-size: 18px; font-weight: 700; }
+  .sa-stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+
+  /* talk time bar */
+  .talk-bar-wrap { margin-bottom: 12px; }
+  .talk-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .talk-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--border);
+    overflow: hidden;
+    display: flex;
+  }
+
+  .talk-bar-sa { background: var(--accent); border-radius: 999px 0 0 999px; }
+  .talk-bar-client { background: var(--accent2); flex: 1; border-radius: 0 999px 999px 0; }
+
+  /* sentiment badges */
+  .badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .badge {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  .badge.pos { background: rgba(81,207,102,.15); color: var(--success); border: 1px solid rgba(81,207,102,.3); }
+  .badge.neg { background: rgba(255,107,107,.15); color: var(--danger); border: 1px solid rgba(255,107,107,.3); }
+  .badge.grad { background: rgba(0,212,170,.15); color: var(--accent2); border: 1px solid rgba(0,212,170,.3); }
+  .badge.flag { background: rgba(255,169,77,.15); color: var(--warn); border: 1px solid rgba(255,169,77,.3); }
+
+  .sa-footer {
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    margin-top: 4px;
+  }
+
+  /* ── Charts ── */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .chart-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .chart-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── At-risk ── */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  @media (min-width: 640px) {
+    .risk-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .risk-card {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-left-width: 4px;
+  }
+
+  .risk-card.danger { border-left-color: var(--danger); }
+  .risk-card.warn { border-left-color: var(--warn); }
+
+  .risk-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .risk-name { font-size: 15px; font-weight: 700; }
+  .risk-sa { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .risk-call-count {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  .risk-card.danger .risk-call-count { background: rgba(255,107,107,.15); color: var(--danger); }
+  .risk-card.warn .risk-call-count { background: rgba(255,169,77,.15); color: var(--warn); }
+
+  .risk-body { font-size: 13px; color: var(--text); line-height: 1.6; }
+  .risk-body ul { padding-left: 16px; margin-top: 6px; }
+  .risk-body li { margin-bottom: 4px; }
+
+  /* ── Tony presales ── */
+  .tony-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  @media (min-width: 640px) {
+    .tony-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .tony-stat {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .tony-stat-value { font-size: 22px; font-weight: 800; color: var(--accent); }
+  .tony-stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ── Graduation table ── */
+  .grad-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .grad-table th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-weight: 700;
+  }
+
+  .grad-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .grad-table tr:last-child td { border-bottom: none; }
+
+  .grad-table tr:nth-child(2) td { color: var(--accent2); font-weight: 600; }
+
+  /* ── Recommendations ── */
+  .rec-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .rec-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .rec-num {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1.2;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: right;
+  }
+
+  .rec-text strong {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .rec-text span { font-size: 13px; color: var(--muted); }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 32px 0 16px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* ── Utility ── */
+  .text-accent { color: var(--accent); }
+  .text-accent2 { color: var(--accent2); }
+  .text-warn { color: var(--warn); }
+  .text-danger { color: var(--danger); }
+  .text-success { color: var(--success); }
+  .text-muted { color: var(--muted); }
+  .fw-700 { font-weight: 700; }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-brand">⚡ Revay</div>
-  <a href="#exec">Executive Summary</a>
-  <a href="#profiles">SA Profiles</a>
-  <a href="#sentiment">Sentiment</a>
-  <a href="#at-risk">At-Risk Accounts</a>
-  <a href="#tony">Tony Presales</a>
-  <a href="#graduation">Graduation Patterns</a>
-  <a href="#recs">Recommendations</a>
-</nav>
-
-<div class="hero">
-  <div class="hero-badge">PSA Call Intelligence</div>
-  <h1>Onboarding Conversation Analysis</h1>
-  <p>Rev.io PSA · Solutions Architecture Team · Nov 2025 – Mar 2026 · Generated March 6, 2026</p>
-</div>
-
 <div class="container">
 
-<!-- ── EXECUTIVE SUMMARY ─────────────────────────────────────────────────── -->
-<section id="exec">
-  <div class="section-header">
-    <h2><span class="icon">📊</span> Executive Summary</h2>
-    <p>Across 5 months of onboarding activity, the PSA Solutions Architecture team ran <strong>610 calls</strong> totaling over <strong>462 hours</strong> of client-facing time.</p>
-  </div>
-  
-  <div class="kpi-row">
-    <div class="kpi"><div class="kpi-num">610</div><div class="kpi-label">PSA Onboarding Calls</div></div>
-    <div class="kpi"><div class="kpi-num">462h</div><div class="kpi-label">Total Hours Invested</div></div>
-    <div class="kpi"><div class="kpi-num">32%</div><div class="kpi-label">Avg Positive Sentiment (Core SAs)</div></div>
-    <div class="kpi"><div class="kpi-num">62</div><div class="kpi-label">Tony Demo Calls (Tracked Separately)</div></div>
-  </div>
-  
-  <div class="chart-grid-2">
-    <div class="chart-wrap">
-      <h4>Call Volume by SA (Monthly)</h4>
-      <div style="position:relative;height:220px;width:100%;"><canvas id="chartVolume"></canvas></div>
+  <!-- ── HEADER ── -->
+  <header class="header" id="top">
+    <h1>PSA Call Intelligence</h1>
+    <p>Fireflies.ai Analysis · Rev.io Solution Architects</p>
+    <div class="chips">
+      <span class="chip">Nov 2025 – Mar 2026</span>
+      <span class="chip accent">610 Calls Analyzed</span>
+      <span class="chip accent2">449 Hours</span>
     </div>
-    <div class="chart-wrap">
-      <h4>Talk Time: SA vs Client (Average %)</h4>
-      <div style="position:relative;height:220px;width:100%;"><canvas id="chartTalkTime"></canvas></div>
-    </div>
-  </div>
-  
-  <div class="divider"></div>
-  
-  <div class="insight success">💡 <strong>Overall sentiment is stable and positive</strong> — team averages 32–36% positive, 6% negative across all SA calls. No systemic decline detected.</div>
-  <div class="insight warn">⚠️ <strong>Nicole and Kegan are talking >50% of the time</strong> on average — Halle has the best client-to-SA talk ratio (51% client), which correlates with higher engagement.</div>
-  <div class="insight">📈 <strong>Ataraxis Solutions just graduated</strong> (Feb 27 session shows completion signals) — Nicole's first confirmed graduate in this analysis window.</div>
-  <div class="insight danger">🔴 <strong>Midwest Specialists sentiment elevated negative</strong> (10% avg neg vs 6% team baseline) — Kegan's most at-risk active account.</div>
-</section>
+  </header>
 
-<!-- ── SA PROFILES ──────────────────────────────────────────────────────── -->
-<section id="profiles">
-  <div class="section-header">
-    <h2><span class="icon">👤</span> SA Profiles</h2>
-    <p>Individual performance breakdown across call volume, hours invested, talk time, and question engagement.</p>
-  </div>
-  
-  <div class="cards cards-4">
-    
+  <!-- ── ANCHOR NAV ── -->
+  <nav class="nav">
+    <a href="#summary">Summary</a>
+    <a href="#profiles">SA Profiles</a>
+    <a href="#charts">Charts</a>
+    <a href="#atrisk">At-Risk</a>
+    <a href="#tony">Tony Presales</a>
+    <a href="#graduation">Graduation</a>
+    <a href="#recs">Recommendations</a>
+  </nav>
+
+  <!-- ── EXECUTIVE SUMMARY ── -->
+  <section id="summary">
+    <h2 class="section-title">Executive Summary</h2>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-value text-accent">610</div>
+        <div class="kpi-label">Total Calls</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value text-accent2">449</div>
+        <div class="kpi-label">Total Hours</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value text-success">33%</div>
+        <div class="kpi-label">Avg Positive Sentiment</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value" style="color:var(--warn)">49%</div>
+        <div class="kpi-label">Avg Client Talk Time</div>
+      </div>
+    </div>
+
+    <div class="insights-grid">
+      <div class="insight success">
+        <div class="insight-label">✅ Success</div>
+        <p><strong>Nicole's graduation cohort outperforms.</strong> 7 graduated clients average 42% positive sentiment vs 33% for active clients — and Nicole talks 5% less than them, signalling healthier dynamics.</p>
+      </div>
+      <div class="insight warn">
+        <div class="insight-label">⚠️ Watch</div>
+        <p><strong>High SA talk ratios across the team.</strong> Nicole (57%) and Kegan (54%) dominate call airtime. Graduated clients correlate with lower SA talk% — this pattern is worth coaching toward.</p>
+      </div>
+      <div class="insight warn">
+        <div class="insight-label">⚠️ Watch</div>
+        <p><strong>Newport Network stalling under Halle.</strong> 27 calls, 4+ months, no graduation signal. Positive sentiment has dropped from ~35% to ~20% in the last 3 calls. Immediate escalation warranted.</p>
+      </div>
+      <div class="insight danger">
+        <div class="insight-label">🚨 Escalate</div>
+        <p><strong>Midwest Specialists showing elevated negative sentiment.</strong> 10% negative vs 6% team baseline across 8 calls with Kegan. Longest session was 94 minutes — complexity likely contributing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SA PROFILES ── -->
+  <section id="profiles">
+    <h2 class="section-title">SA Profiles</h2>
+    <div class="sa-grid">
+
+      <!-- Nicole -->
+      <div class="sa-card">
+        <div class="sa-name">
+          Nicole Hills
+          <span class="badge grad">7 Graduated</span>
+        </div>
+        <div class="sa-stats">
+          <div class="sa-stat-item">
+            <div class="sa-stat-value text-accent">227</div>
+            <div class="sa-stat-label">Calls</div>
+          </div>
+          <div class="sa-stat-item">
+            <div class="sa-stat-value">178h</div>
+            <div class="sa-stat-label">Hours</div>
+          </div>
+          <div class="sa-stat-item">
+            <div class="sa-stat-value">47m</div>
+            <div class="sa-stat-label">Avg Dur.</div>
+          </div>
+        </div>
+        <div class="talk-bar-wrap">
+          <div class="talk-bar-labels">
+            <span>SA 57%</span>
+            <span>Client 43%</span>
+          </div>
+          <div class="talk-bar">
+            <div class="talk-bar-sa" style="width:57%"></div>
+            <div class="talk-bar-client"></div>
+          </div>
+        </div>
+        <div class="badges">
+          <span class="badge pos">33% Positive</span>
+          <span class="badge neg">6% Negative</span>
+          <span class="badge flag">57 Flagged &gt;70%</span>
+        </div>
+        <div class="sa-footer">93 avg questions/call · Highest question volume on team</div>
+      </div>
+
+      <!-- Kegan -->
+      <div class="sa-card">
+        <div class="sa-name">Kegan Ehlers</div>
+        <div class="sa-stats">
+          <div class="sa-stat-item">
+            <div class="sa-stat-value text-accent">167</div>
+            <div class="sa-stat-label">Calls</div>
+          </div>
+          <div class="sa-stat-item">
+            <div class="sa-stat-value">103h</div>
+            <div class="sa-stat-label">Hours</div>
+          </div>
+          <div class="sa-stat-item">
+            <div class="sa-stat-value">37m</div>
+            <div class="sa-stat-label">Avg Dur.</div>
+          </div>
+        </div>
+        <div class="talk-bar-wrap">
+          <div class="talk-bar-labels">
+            <span>SA 54%</span>
+            <span>Client 46%</span>
+          </div>
+          <div class="talk-bar">
+            <div class="talk-bar-sa" style="width:54%"></div>
+            <div class="talk-bar-client"></div>
+          </div>
+        </div>
+        <div class="badges">
+          <span class="badge pos">33% Positive</span>
+          <span class="badge neg">6% Negative</span>
+          <span class="badge flag">45 Flagged &gt;70%</span>
+        </div>
+        <div class="sa-footer">37 avg questions/call · Shortest avg call duration (37min) · Midwest Specialists elevated neg</div>
+      </div>
+
+      <!-- Halle -->
+      <div class="sa-card">
+        <div class="sa-name">Halle Taylor</div>
+        <div class="sa-stats">
+          <div class="sa-stat-item">
+            <div class="sa-stat-value text-accent">134</div>
+            <div class="sa-stat-label">Calls</div>
+          </div>
+          <div class="sa-stat-item">
+            <div class="sa-stat-value">104h</div>
+            <div class="sa-stat-label">Hours</div>
+          </div>
+          <div class="sa-stat-item">
+            <div class="sa-stat-value">47m</div>
+            <div class="sa-stat-label">Avg Dur.</div>
+          </div>
+        </div>
+        <div class="talk-bar-wrap">
+          <div class="talk-bar-labels">
+            <span>SA 49%</span>
+            <span>Client 51%</span>
+          </div>
+          <div class="talk-bar">
+            <div class="talk-bar-sa" style="width:49%"></div>
+            <div class="talk-bar-client"></div>
+          </div>
+        </div>
+        <div class="badges">
+          <span class="badge pos">31% Positive</span>
+          <span class="badge neg">6% Negative</span>
+          <span class="badge flag">21 Flagged &gt;70%</span>
+        </div>
+        <div class="sa-footer">47 avg questions/call · Best client talk ratio · Newport Network at risk</div>
+      </div>
+
+      <!-- Tony -->
+      <div class="sa-card">
+        <div class="sa-name">Tony Mehner <span style="font-size:11px;color:var(--muted);font-weight:400;">non-demo</span></div>
+        <div class="sa-stats">
+          <div class="sa-stat-item">
+            <div class="sa-stat-value text-accent">82</div>
+            <div class="sa-stat-label">Calls</div>
+          </div>
+          <div class="sa-stat-item">
+            <div class="sa-stat-value">64h</div>
+            <div class="sa-stat-label">Hours</div>
+          </div>
+          <div class="sa-stat-item">
+            <div class="sa-stat-value">47m</div>
+            <div class="sa-stat-label">Avg Dur.</div>
+          </div>
+        </div>
+        <div class="talk-bar-wrap">
+          <div class="talk-bar-labels">
+            <span>SA 42%</span>
+            <span>Client 58%</span>
+          </div>
+          <div class="talk-bar">
+            <div class="talk-bar-sa" style="width:42%"></div>
+            <div class="talk-bar-client"></div>
+          </div>
+        </div>
+        <div class="badges">
+          <span class="badge pos">36% Positive</span>
+          <span class="badge neg">6% Negative</span>
+          <span class="badge flag">10 Flagged &gt;70%</span>
+        </div>
+        <div class="sa-footer">58 avg questions/call · Dual role: presales demos + onboarding · See Tony Presales section</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CHARTS ── -->
+  <section id="charts">
+    <h2 class="section-title">Charts</h2>
+    <div class="chart-grid">
+
+      <!-- Chart 1: Monthly Volume -->
+      <div class="chart-card">
+        <div class="chart-title">Monthly Call Volume by SA</div>
+        <div class="chart-sub">Nov 2025 – Mar 2026 · *Mar partial</div>
+        <div id="chart-monthly"></div>
+      </div>
+
+      <!-- Chart 2: SA Talk Time -->
+      <div class="chart-card">
+        <div class="chart-title">SA Talk Time Comparison</div>
+        <div class="chart-sub">Lower SA% = more client engagement</div>
+        <div id="chart-talk"></div>
+      </div>
+
+      <!-- Chart 3: Sentiment by Call Type -->
+      <div class="chart-card">
+        <div class="chart-title">Sentiment by Call Type</div>
+        <div class="chart-sub">Positive vs Negative % across call categories</div>
+        <div id="chart-sentiment"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── AT-RISK ACCOUNTS ── -->
+  <section id="atrisk">
+    <h2 class="section-title">At-Risk Accounts</h2>
+    <div class="risk-grid">
+
+      <div class="risk-card danger">
+        <div class="risk-header">
+          <div>
+            <div class="risk-name">Newport Network</div>
+            <div class="risk-sa">Assigned to Halle Taylor</div>
+          </div>
+          <span class="risk-call-count">27 Calls</span>
+        </div>
+        <div class="risk-body">
+          <p>Active Nov 10, 2025 – Mar 5, 2026 (4+ months). <strong class="text-danger">Sentiment declining</strong> — started at ~35% positive, now ~20% in last 3 calls. Client has never graduated.</p>
+          <ul>
+            <li>Weekly cadence: 60min working session + 30min check-in</li>
+            <li>No completion signal after 4+ months</li>
+            <li>Consistent rhythm but no forward momentum</li>
+            <li><strong>Recommended action:</strong> Escalate to manager. Reset expectations with a defined graduation milestone and timeline.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="risk-card warn">
+        <div class="risk-header">
+          <div>
+            <div class="risk-name">Midwest Specialists</div>
+            <div class="risk-sa">Assigned to Kegan Ehlers</div>
+          </div>
+          <span class="risk-call-count">8 Calls</span>
+        </div>
+        <div class="risk-body">
+          <p>Active Jan 16 – Mar 6, 2026. <strong class="text-warn">10% negative sentiment</strong> vs 6% team baseline — consistently elevated throughout engagement.</p>
+          <ul>
+            <li>Longest session: 94 minutes (Feb 11) — complexity indicator</li>
+            <li>Still active — ongoing engagement</li>
+            <li>Technical depth may be driving friction</li>
+            <li><strong>Recommended action:</strong> Review call recordings for recurring pain points. Consider co-call with senior SA or escalation path.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── TONY PRESALES ── -->
+  <section id="tony">
+    <h2 class="section-title">Tony Mehner — Presales + Onboarding</h2>
     <div class="card">
-      <div class="card-header">
+      <p style="margin-bottom:16px;line-height:1.7;">Tony operates in a <strong>dual role</strong> unique among the SA team — running presales demos alongside standard onboarding. His data above reflects <em>onboarding calls only</em>. Combined with demos, he's the most active caller on the team by raw volume.</p>
+
+      <div class="tony-grid">
+        <div class="tony-stat">
+          <div class="tony-stat-value">62</div>
+          <div class="tony-stat-label">Demo Calls</div>
+        </div>
+        <div class="tony-stat">
+          <div class="tony-stat-value">82</div>
+          <div class="tony-stat-label">Onboarding Calls</div>
+        </div>
+        <div class="tony-stat">
+          <div class="tony-stat-value">144</div>
+          <div class="tony-stat-label">Total Calls</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <div class="card-title" style="margin-bottom:12px;">Call Type Breakdown (Onboarding)</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;">
+          <div class="tony-stat"><div class="tony-stat-value" style="color:var(--accent2)">34</div><div class="tony-stat-label">Check-ins</div></div>
+          <div class="tony-stat"><div class="tony-stat-value" style="color:var(--accent2)">28</div><div class="tony-stat-label">General</div></div>
+          <div class="tony-stat"><div class="tony-stat-value" style="color:var(--accent2)">11</div><div class="tony-stat-label">Training</div></div>
+          <div class="tony-stat"><div class="tony-stat-value" style="color:var(--accent2)">7</div><div class="tony-stat-label">Internal</div></div>
+          <div class="tony-stat"><div class="tony-stat-value" style="color:var(--accent2)">2</div><div class="tony-stat-label">Other</div></div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
         <div>
-          <h3>Nicole Hills</h3>
-          <div class="subtitle">nicole.hills</div>
+          <div class="card-title" style="margin-bottom:8px;">Demo Performance</div>
+          <div class="badges">
+            <span class="badge pos">38% Positive</span>
+            <span class="badge neg">5% Negative</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);margin-top:6px;">Strong presales sentiment — highest positive rate on team</p>
         </div>
-        <span class="badge badge-nicole">Core SA</span>
-      </div>
-      
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
-        <div><div class="stat accent">227</div><div class="stat-label">Calls</div></div>
-        <div><div class="stat accent2">178.3h</div><div class="stat-label">Hours</div></div>
-        <div><div class="stat">47.1m</div><div class="stat-label">Avg Duration</div></div>
-        <div><div class="stat">92.5</div><div class="stat-label">Avg Questions</div></div>
-      </div>
-      
-      <div class="divider"></div>
-      
-      <div style="margin-bottom:0.75rem;">
-        <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--muted);margin-bottom:0.35rem;">
-          <span>Talk Time</span>
-          <span style="color:var(--text)">SA 57% / Client 43%</span>
-        </div>
-        <div class="talk-bar">
-          <span class="sa" style="width:57%"></span><span class="client" style="width:43%"></span>
-        </div>
-        <div class="talk-labels"><span style="color:var(--accent)">■ SA</span><span style="color:var(--accent2)">■ Client</span></div>
-      </div>
-      
-      <div style="display:flex;gap:0.75rem;font-size:0.8rem;">
-        <span style="color:var(--pos)">+33% pos</span>
-        <span style="color:var(--muted)">=61% neu</span>
-        <span style="color:var(--neg)">-6% neg</span>
-      </div>
-      
-      <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--warn);">⚠️ 57 calls where SA talked >70%</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--muted);">Top type: Guided Session (54)</div>
-    </div>
-    <div class="card">
-      <div class="card-header">
         <div>
-          <h3>Kegan Ehlers</h3>
-          <div class="subtitle">kegan.ehlers</div>
+          <div class="card-title" style="margin-bottom:8px;">Onboarding Performance</div>
+          <div class="badges">
+            <span class="badge pos">36% Positive</span>
+            <span class="badge neg">6% Negative</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);margin-top:6px;">Above-team average — Tony's client talk ratio (58%) is the best on team</p>
         </div>
-        <span class="badge badge-kegan">Core SA</span>
       </div>
-      
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
-        <div><div class="stat accent">167</div><div class="stat-label">Calls</div></div>
-        <div><div class="stat accent2">102.9h</div><div class="stat-label">Hours</div></div>
-        <div><div class="stat">37m</div><div class="stat-label">Avg Duration</div></div>
-        <div><div class="stat">37.4</div><div class="stat-label">Avg Questions</div></div>
-      </div>
-      
-      <div class="divider"></div>
-      
-      <div style="margin-bottom:0.75rem;">
-        <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--muted);margin-bottom:0.35rem;">
-          <span>Talk Time</span>
-          <span style="color:var(--text)">SA 54% / Client 46%</span>
-        </div>
-        <div class="talk-bar">
-          <span class="sa" style="width:54%"></span><span class="client" style="width:46%"></span>
-        </div>
-        <div class="talk-labels"><span style="color:var(--accent)">■ SA</span><span style="color:var(--accent2)">■ Client</span></div>
-      </div>
-      
-      <div style="display:flex;gap:0.75rem;font-size:0.8rem;">
-        <span style="color:var(--pos)">+33% pos</span>
-        <span style="color:var(--muted)">=61% neu</span>
-        <span style="color:var(--neg)">-6% neg</span>
-      </div>
-      
-      <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--warn);">⚠️ 45 calls where SA talked >70%</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--muted);">Top type: Internal (76)</div>
     </div>
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <h3>Halle Taylor</h3>
-          <div class="subtitle">halle.taylor</div>
-        </div>
-        <span class="badge badge-halle">Core SA</span>
-      </div>
-      
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
-        <div><div class="stat accent">134</div><div class="stat-label">Calls</div></div>
-        <div><div class="stat accent2">104.3h</div><div class="stat-label">Hours</div></div>
-        <div><div class="stat">46.7m</div><div class="stat-label">Avg Duration</div></div>
-        <div><div class="stat">56.8</div><div class="stat-label">Avg Questions</div></div>
-      </div>
-      
-      <div class="divider"></div>
-      
-      <div style="margin-bottom:0.75rem;">
-        <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--muted);margin-bottom:0.35rem;">
-          <span>Talk Time</span>
-          <span style="color:var(--text)">SA 49% / Client 51%</span>
-        </div>
-        <div class="talk-bar">
-          <span class="sa" style="width:49%"></span><span class="client" style="width:51%"></span>
-        </div>
-        <div class="talk-labels"><span style="color:var(--accent)">■ SA</span><span style="color:var(--accent2)">■ Client</span></div>
-      </div>
-      
-      <div style="display:flex;gap:0.75rem;font-size:0.8rem;">
-        <span style="color:var(--pos)">+31% pos</span>
-        <span style="color:var(--muted)">=63% neu</span>
-        <span style="color:var(--neg)">-6% neg</span>
-      </div>
-      
-      <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--warn);">⚠️ 21 calls where SA talked >70%</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--muted);">Top type: Guided Session (56)</div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <h3>Tony Mehner</h3>
-          <div class="subtitle">tony.mehner</div>
-        </div>
-        <span class="badge badge-tony">Presales + Onb</span>
-      </div>
-      
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
-        <div><div class="stat accent">82</div><div class="stat-label">Calls</div></div>
-        <div><div class="stat accent2">76.1h</div><div class="stat-label">Hours</div></div>
-        <div><div class="stat">55.7m</div><div class="stat-label">Avg Duration</div></div>
-        <div><div class="stat">59.9</div><div class="stat-label">Avg Questions</div></div>
-      </div>
-      
-      <div class="divider"></div>
-      
-      <div style="margin-bottom:0.75rem;">
-        <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--muted);margin-bottom:0.35rem;">
-          <span>Talk Time</span>
-          <span style="color:var(--text)">SA 42% / Client 58%</span>
-        </div>
-        <div class="talk-bar">
-          <span class="sa" style="width:42%"></span><span class="client" style="width:58%"></span>
-        </div>
-        <div class="talk-labels"><span style="color:var(--accent)">■ SA</span><span style="color:var(--accent2)">■ Client</span></div>
-      </div>
-      
-      <div style="display:flex;gap:0.75rem;font-size:0.8rem;">
-        <span style="color:var(--pos)">+36% pos</span>
-        <span style="color:var(--muted)">=58% neu</span>
-        <span style="color:var(--neg)">-6% neg</span>
-      </div>
-      
-      <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--warn);">⚠️ 10 calls where SA talked >70%</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--muted);">Top type: Check-in (31)</div>
-    </div>
-  </div>
+  </section>
 
-  <div style="margin-top:1.5rem;" class="chart-grid-2">
-    <div class="chart-wrap">
-      <h4>Monthly Call Volume by SA</h4>
-      <div style="position:relative;height:200px;width:100%;"><canvas id="chartMonthly"></canvas></div>
+  <!-- ── GRADUATION INSIGHTS ── -->
+  <section id="graduation">
+    <h2 class="section-title">Graduation Insights — Nicole Hills</h2>
+    <div class="card">
+      <p style="margin-bottom:16px;font-size:13px;color:var(--muted);">Analysis of Nicole's graduated clients (n=7) vs active non-graduated clients (n=100+). Graduated clients show measurably better outcomes across all indicators.</p>
+      <div style="overflow-x:auto;">
+        <table class="grad-table">
+          <thead>
+            <tr>
+              <th>Cohort</th>
+              <th>Clients</th>
+              <th>Avg Calls</th>
+              <th>Avg Positive</th>
+              <th>Avg Negative</th>
+              <th>SA Talk Dominance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong class="text-accent2">✅ Graduated</strong></td>
+              <td>7</td>
+              <td>11 calls</td>
+              <td><strong class="text-success">42%</strong></td>
+              <td>5%</td>
+              <td><strong class="text-accent2">+5% over client</strong></td>
+            </tr>
+            <tr>
+              <td><strong class="text-muted">🔄 Active (non-grad)</strong></td>
+              <td>100+</td>
+              <td>8 calls</td>
+              <td>33%</td>
+              <td>6%</td>
+              <td style="color:var(--warn)">+57% SA dominance</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);border-radius:8px;font-size:13px;">
+        <strong class="text-accent">Key Insight:</strong> Graduated clients received 3 more calls on average, had 9 points higher positive sentiment, and — critically — had Nicole talking only 5% more than them vs 57% more with active clients. <strong>Lower SA talk% may be a graduation predictor worth tracking.</strong>
+      </div>
     </div>
-    <div class="chart-wrap">
-      <h4>Calls Flagged: SA Talk >70% (Potential Over-Talking)</h4>
-      <div style="position:relative;height:200px;width:100%;"><canvas id="chartFlagged"></canvas></div>
-    </div>
-  </div>
-  
-  <div style="margin-top:1rem;" class="chart-wrap">
-    <h4>Calls Where SA Talks &gt;70% — Top Offenders by SA</h4>
-    <div class="table-wrap" style="margin-top:1rem;">
-    <table>
-      <thead><tr><th>SA</th><th>Title</th><th>Date</th><th>SA Talk%</th></tr></thead>
-      <tbody>
-      <tr><td><span class="badge badge-nicole">Nicole Hills</span></td><td class="title-cell">Pando Tech Solutions PSA Guided Session</td><td>2025-12-15</td><td class="warn">92%</td></tr><tr><td><span class="badge badge-nicole">Nicole Hills</span></td><td class="title-cell">Lantern Streaming Security PSA Guided Session</td><td>2025-12-15</td><td class="warn">92%</td></tr><tr><td><span class="badge badge-nicole">Nicole Hills</span></td><td class="title-cell">Pando Tech Check In</td><td>2026-02-05</td><td class="warn">92%</td></tr><tr><td><span class="badge badge-nicole">Nicole Hills</span></td><td class="title-cell">Pando Tech Solutions PSA Onboarding</td><td>2025-11-24</td><td class="warn">91%</td></tr><tr><td><span class="badge badge-nicole">Nicole Hills</span></td><td class="title-cell">Pando Tech QBO</td><td>2026-01-28</td><td class="warn">91%</td></tr><tr><td><span class="badge badge-kegan">Kegan Ehlers</span></td><td class="title-cell">Marcotek Check in</td><td>2025-11-05</td><td class="warn">100%</td></tr><tr><td><span class="badge badge-kegan">Kegan Ehlers</span></td><td class="title-cell">XMission - Weekly PSA Web Call</td><td>2026-02-04</td><td class="warn">96%</td></tr><tr><td><span class="badge badge-kegan">Kegan Ehlers</span></td><td class="title-cell">Raven Tech - PSA Meeting</td><td>2026-02-09</td><td class="warn">95%</td></tr><tr><td><span class="badge badge-kegan">Kegan Ehlers</span></td><td class="title-cell">Nevada Security - PSA Web Meting</td><td>2026-03-05</td><td class="warn">94%</td></tr><tr><td><span class="badge badge-kegan">Kegan Ehlers</span></td><td class="title-cell">Raven Tech - PSA Meeting</td><td>2026-03-02</td><td class="warn">94%</td></tr><tr><td><span class="badge badge-halle">Halle Taylor</span></td><td class="title-cell">Onboarding Joint Role Play</td><td>2025-11-13</td><td class="warn">95%</td></tr><tr><td><span class="badge badge-halle">Halle Taylor</span></td><td class="title-cell">Sandhills home- Configuration</td><td>2026-02-19</td><td class="warn">87%</td></tr><tr><td><span class="badge badge-halle">Halle Taylor</span></td><td class="title-cell">Stratus Recurring Configuration</td><td>2026-02-24</td><td class="warn">86%</td></tr><tr><td><span class="badge badge-halle">Halle Taylor</span></td><td class="title-cell">Command Corp- Working Session</td><td>2026-02-11</td><td class="warn">83%</td></tr><tr><td><span class="badge badge-halle">Halle Taylor</span></td><td class="title-cell">Newport Network Solutions- Working Session</td><td>2026-03-03</td><td class="warn">80%</td></tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── SENTIMENT ANALYSIS ─────────────────────────────────────────────────── -->
-<section id="sentiment">
-  <div class="section-header">
-    <h2><span class="icon">🎯</span> Sentiment Analysis</h2>
-    <p>Call-level sentiment data from Fireflies analytics — positive, neutral, and negative distribution across SAs, months, and call types.</p>
-  </div>
-  
-  <!-- Client talk time correlation -->
-  <div class="chart-grid-3" style="margin-bottom:1.5rem;">
-    <div class="corr-box">
-      <div class="big" style="color:var(--pos)">33%</div>
-      <div class="label">Avg Positive Sentiment<br>When Client Talks &gt;50%</div>
-    </div>
-    <div class="corr-box">
-      <div class="big" style="color:var(--warn)">33%</div>
-      <div class="label">Avg Positive Sentiment<br>When SA Talks &gt;50%</div>
-    </div>
-    <div class="corr-box">
-      <div class="big" style="color:var(--accent)">0%</div>
-      <div class="label">Sentiment Lift<br>When Client Leads the Conversation</div>
-    </div>
-  </div>
-  
-  <div class="chart-grid-2">
-    <div class="chart-wrap">
-      <h4>Avg Sentiment by SA</h4>
-      <div style="position:relative;height:220px;width:100%;"><canvas id="chartSentSA"></canvas></div>
-    </div>
-    <div class="chart-wrap">
-      <h4>Sentiment Trend by Month (All PSA Calls)</h4>
-      <div style="position:relative;height:220px;width:100%;"><canvas id="chartSentMonth"></canvas></div>
-    </div>
-  </div>
-  
-  <div style="margin-top:1rem;" class="chart-grid-2">
-    <div class="chart-wrap">
-      <h4>Sentiment by Call Type</h4>
-      <div style="position:relative;height:220px;width:100%;"><canvas id="chartSentType"></canvas></div>
-    </div>
-    <div class="chart-wrap">
-      <h4>Questions per Call by Type</h4>
-      <div style="position:relative;height:220px;width:100%;"><canvas id="chartQType"></canvas></div>
-    </div>
-  </div>
-  
-  <div style="margin-top:1.5rem;">
-    <h4 style="font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.75rem;">Lowest Sentiment Calls (Negative &gt; 20%)</h4>
-    <div class="table-wrap">
-    <table>
-      <thead><tr><th>SA</th><th>Call Title</th><th>Date</th><th>Negative%</th><th>Positive%</th></tr></thead>
-      <tbody>
-      
-        <tr>
-          <td><span class="badge badge-kegan">Kegan Ehlers</span></td>
-          <td class="title-cell">Marcotek Check in</td>
-          <td>2025-11-05</td>
-          <td class="neg">40%</td>
-          <td>60%</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
-</section>
+  <!-- ── KEY RECOMMENDATIONS ── -->
+  <section id="recs">
+    <h2 class="section-title">Key Recommendations</h2>
+    <ol class="rec-list">
+      <li>
+        <div class="rec-num">1</div>
+        <div class="rec-text">
+          <strong>Escalate Newport Network immediately</strong>
+          <span>Halle Taylor's client has 27 calls over 4+ months with declining sentiment (~20% positive in last 3 calls). Assign a graduation milestone date and co-call with a senior SA or manager within 2 weeks.</span>
+        </div>
+      </li>
+      <li>
+        <div class="rec-num">2</div>
+        <div class="rec-text">
+          <strong>Investigate Midwest Specialists with Kegan</strong>
+          <span>10% negative sentiment (vs 6% baseline) across 8 calls is a clear signal. Review recordings for recurring pain points — consider escalation path or additional technical resource.</span>
+        </div>
+      </li>
+      <li>
+        <div class="rec-num">3</div>
+        <div class="rec-text">
+          <strong>Coach Nicole & Kegan on talk ratio</strong>
+          <span>Nicole (57% SA talk) and Kegan (54%) both over-dominate calls. Nicole's own graduation data shows lower SA talk% correlates with better outcomes. Run targeted coaching on listening and facilitation techniques.</span>
+        </div>
+      </li>
+      <li>
+        <div class="rec-num">4</div>
+        <div class="rec-text">
+          <strong>Define graduation criteria and enforce it</strong>
+          <span>Nicole has 7 graduated clients vs 100+ active — the ratio suggests graduation isn't happening systematically. Set explicit criteria (e.g., X calls + platform milestones) and track it as a KPI.</span>
+        </div>
+      </li>
+      <li>
+        <div class="rec-num">5</div>
+        <div class="rec-text">
+          <strong>Leverage Tony's presales model for onboarding</strong>
+          <span>Tony has the best client talk ratio (58% client) and the highest positive sentiment in demos (38%). His facilitation style is worth documenting and sharing as a coaching template for the team.</span>
+        </div>
+      </li>
+      <li>
+        <div class="rec-num">6</div>
+        <div class="rec-text">
+          <strong>Track SA talk% as a leading indicator</strong>
+          <span>The graduation data suggests SA talk% predicts client outcomes. Add this to ongoing Fireflies reporting alongside sentiment. Set a team target (e.g., ≤50% SA talk) and review monthly.</span>
+        </div>
+      </li>
+    </ol>
+  </section>
 
-<!-- ── AT-RISK ACCOUNTS ─────────────────────────────────────────────────── -->
-<section id="at-risk">
-  <div class="section-header">
-    <h2><span class="icon">⚠️</span> At-Risk Account Deep Dives</h2>
-    <p>Call history, sentiment trends, and conversation intelligence for flagged accounts. Sentence-level data fetched live from Fireflies API.</p>
-  </div>
-  
-  <!-- Newport Network Solutions -->
-  <div class="at-risk-card" style="border-color:rgba(255,107,107,0.4);">
-    <h3 style="color:var(--danger);">🔴 Newport Network Solutions</h3>
-    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Halle Taylor · 27 calls · 21.1h invested</p>
-    <div class="at-risk-meta">
-      <span>First call: <strong>2025-11-10</strong></span>
-      <span>Last call: <strong>2026-03-05</strong></span>
-      <span>Avg sentiment: <strong style="color:var(--pos)">30% pos</strong> / <strong style="color:var(--neg)">6% neg</strong></span>
-      <span>Avg duration: <strong>46.8m</strong></span>
-      <span>Avg questions: <strong>66.4</strong></span>
-    </div>
-    
-    <div class="insight warn">⚠️ Newport has been in onboarding for <strong>4+ months</strong> with 27 calls — the bi-weekly cadence (working session + call) is consistent but graduation is not yet in sight. Sentence analysis shows ongoing configuration and billing discussions without completion language.</div>
-    
-    <div style="margin-bottom:1rem;">
-      <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">Sentence-Level Intelligence (3 most recent calls):</h4>
-      <ul><li><strong>Newport Network Solutions- Working Session</strong> — 🎓 graduation signals, ⚠️ friction/frustration, 💳 billing discussion, ⚙️ configuration work, 📚 training <span class="muted">(841 sentences)</span></li><li><strong>Newport Network Solutions- Call</strong> — 🎓 graduation signals, ⚠️ friction/frustration, 💳 billing discussion, ⚙️ configuration work, 📚 training <span class="muted">(513 sentences)</span></li><li><strong>Newport Network Solutions- Working Session</strong> — 🎓 graduation signals, ⚠️ friction/frustration, 💳 billing discussion, ⚙️ configuration work, 📚 training <span class="muted">(1044 sentences)</span></li></ul>
-    </div>
-    
-    
-  <div class="table-wrap">
-  <table>
-    <thead><tr><th>Date</th><th>Title</th><th>Duration</th><th>Pos%</th><th>Neg%</th><th>Questions</th></tr></thead>
-    <tbody>
-    
-      <tr>
-        <td>2025-11-10</td>
-        <td class="title-cell">Quoting with Newport Networks</td>
-        <td>38.5m</td>
-        <td class="">36%</td>
-        <td class="">5%</td>
-        <td>34</td>
-      </tr>
-      <tr>
-        <td>2025-11-13</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>30m</td>
-        <td class="">35%</td>
-        <td class="">6%</td>
-        <td>43</td>
-      </tr>
-      <tr>
-        <td>2025-11-18</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>60.4m</td>
-        <td class="">31%</td>
-        <td class="">7%</td>
-        <td>216</td>
-      </tr>
-      <tr>
-        <td>2025-11-20</td>
-        <td class="title-cell">Newport Network - 30 min check in</td>
-        <td>31m</td>
-        <td class="">28%</td>
-        <td class="">6%</td>
-        <td>60</td>
-      </tr>
-      <tr>
-        <td>2025-12-02</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>60.3m</td>
-        <td class="">37%</td>
-        <td class="">5%</td>
-        <td>83</td>
-      </tr>
-      <tr>
-        <td>2025-12-04</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>33.9m</td>
-        <td class="">27%</td>
-        <td class="">4%</td>
-        <td>46</td>
-      </tr>
-      <tr>
-        <td>2025-12-09</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>58m</td>
-        <td class="">26%</td>
-        <td class="">5%</td>
-        <td>79</td>
-      </tr>
-      <tr>
-        <td>2025-12-11</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>30.1m</td>
-        <td class="">38%</td>
-        <td class="">6%</td>
-        <td>33</td>
-      </tr>
-      <tr>
-        <td>2025-12-16</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>62.2m</td>
-        <td class="neg">23%</td>
-        <td class="">6%</td>
-        <td>62</td>
-      </tr>
-      <tr>
-        <td>2025-12-18</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>32.2m</td>
-        <td class="">37%</td>
-        <td class="">6%</td>
-        <td>58</td>
-      </tr>
-      <tr>
-        <td>2025-12-23</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>57.7m</td>
-        <td class="">33%</td>
-        <td class="">8%</td>
-        <td>44</td>
-      </tr>
-      <tr>
-        <td>2025-12-30</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>61.3m</td>
-        <td class="">36%</td>
-        <td class="">5%</td>
-        <td>65</td>
-      </tr>
-      <tr>
-        <td>2026-01-06</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>60.3m</td>
-        <td class="">29%</td>
-        <td class="">6%</td>
-        <td>74</td>
-      </tr>
-      <tr>
-        <td>2026-01-08</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>31.5m</td>
-        <td class="">33%</td>
-        <td class="">10%</td>
-        <td>30</td>
-      </tr>
-      <tr>
-        <td>2026-01-13</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>57.1m</td>
-        <td class="">27%</td>
-        <td class="">6%</td>
-        <td>103</td>
-      </tr>
-      <tr>
-        <td>2026-01-15</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>35.1m</td>
-        <td class="">30%</td>
-        <td class="">6%</td>
-        <td>57</td>
-      </tr>
-      <tr>
-        <td>2026-01-20</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>60.6m</td>
-        <td class="">27%</td>
-        <td class="">9%</td>
-        <td>80</td>
-      </tr>
-      <tr>
-        <td>2026-01-22</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>30.5m</td>
-        <td class="">34%</td>
-        <td class="">4%</td>
-        <td>27</td>
-      </tr>
-      <tr>
-        <td>2026-01-27</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>59.2m</td>
-        <td class="">30%</td>
-        <td class="">6%</td>
-        <td>79</td>
-      </tr>
-      <tr>
-        <td>2026-01-29</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>36.5m</td>
-        <td class="">31%</td>
-        <td class="">6%</td>
-        <td>43</td>
-      </tr>
-      <tr>
-        <td>2026-02-03</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>57m</td>
-        <td class="">30%</td>
-        <td class="">5%</td>
-        <td>89</td>
-      </tr>
-      <tr>
-        <td>2026-02-12</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>50.3m</td>
-        <td class="">32%</td>
-        <td class="">5%</td>
-        <td>61</td>
-      </tr>
-      <tr>
-        <td>2026-02-17</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>60.1m</td>
-        <td class="">26%</td>
-        <td class="">7%</td>
-        <td>89</td>
-      </tr>
-      <tr>
-        <td>2026-02-19</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>29.8m</td>
-        <td class="">27%</td>
-        <td class="">5%</td>
-        <td>40</td>
-      </tr>
-      <tr>
-        <td>2026-02-24</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>53.3m</td>
-        <td class="neg">19%</td>
-        <td class="">8%</td>
-        <td>81</td>
-      </tr>
-      <tr>
-        <td>2026-03-03</td>
-        <td class="title-cell">Newport Network Solutions- Working Session</td>
-        <td>59.1m</td>
-        <td class="neg">19%</td>
-        <td class="">6%</td>
-        <td>56</td>
-      </tr>
-      <tr>
-        <td>2026-03-05</td>
-        <td class="title-cell">Newport Network Solutions- Call</td>
-        <td>27.5m</td>
-        <td class="neg">23%</td>
-        <td class="">7%</td>
-        <td>62</td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-    <div class="chart-wrap" style="margin-top:1rem;">
-      <h4>Newport Sentiment Over Time</h4>
-      <div style="position:relative;height:180px;width:100%;"><canvas id="chartNewport"></canvas></div>
-    </div>
-  </div>
-  
-  <!-- Ataraxis Solutions -->
-  <div class="at-risk-card" style="border-color:rgba(0,212,170,0.4);">
-    <h3 style="color:var(--accent2);">🎓 Ataraxis Solutions — GRADUATED</h3>
-    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Nicole Hills · 13 calls · 10.7h invested</p>
-    <div class="at-risk-meta">
-      <span>First call: <strong>2025-11-13</strong></span>
-      <span>Last call (graduation): <strong>2026-02-27</strong></span>
-      <span>Avg sentiment: <strong style="color:var(--pos)">34% pos</strong> / <strong style="color:var(--neg)">6% neg</strong></span>
-    </div>
-    
-    <div class="insight success">✅ Ataraxis graduated Feb 27, 2026 — 13 calls across 3.5 months. The graduation session (title: "Ataraxis Solutions PSA Graduation") confirms completed onboarding. Consistent biweekly cadence with strong training and configuration coverage.</div>
-    
-    <div style="margin-bottom:1rem;">
-      <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">Sentence-Level Intelligence (last 3 calls including graduation):</h4>
-      <ul><li><strong>Ataraxis Solutions PSA Graduation</strong> — 🎓 graduation/completion signals, ⚠️ friction language, 💳 billing, 📚 training <span class="muted">(273 sentences)</span></li><li><strong>Ataraxis PSA Client Check In</strong> — 🎓 graduation/completion signals, ⚠️ friction language, 💳 billing, ⚙️ configuration, 📚 training <span class="muted">(551 sentences)</span></li><li><strong>Ataraxis PSA Onboarding</strong> — 🎓 graduation/completion signals, ⚠️ friction language, 💳 billing, ⚙️ configuration, 📚 training <span class="muted">(883 sentences)</span></li></ul>
-    </div>
-    
-    
-  <div class="table-wrap">
-  <table>
-    <thead><tr><th>Date</th><th>Title</th><th>Duration</th><th>Pos%</th><th>Neg%</th><th>Questions</th></tr></thead>
-    <tbody>
-    
-      <tr>
-        <td>2025-11-13</td>
-        <td class="title-cell">Ataraxis Solutions PSA Onboarding</td>
-        <td>42.4m</td>
-        <td class="">31%</td>
-        <td class="">6%</td>
-        <td>65</td>
-      </tr>
-      <tr>
-        <td>2025-11-18</td>
-        <td class="title-cell">Ataraxis PSA Onboarding</td>
-        <td>64.5m</td>
-        <td class="">35%</td>
-        <td class="">5%</td>
-        <td>72</td>
-      </tr>
-      <tr>
-        <td>2025-11-25</td>
-        <td class="title-cell">Ataraxis PSA Onboarding</td>
-        <td>57.4m</td>
-        <td class="">36%</td>
-        <td class="">6%</td>
-        <td>213</td>
-      </tr>
-      <tr>
-        <td>2025-12-03</td>
-        <td class="title-cell">Ataraxis PSA Onboarding</td>
-        <td>57.9m</td>
-        <td class="">36%</td>
-        <td class="">6%</td>
-        <td>146</td>
-      </tr>
-      <tr>
-        <td>2025-12-09</td>
-        <td class="title-cell">Ataraxis PSA Onboarding</td>
-        <td>53.2m</td>
-        <td class="">34%</td>
-        <td class="">6%</td>
-        <td>95</td>
-      </tr>
-      <tr>
-        <td>2025-12-16</td>
-        <td class="title-cell">Ataraxis PSA Onboarding</td>
-        <td>67.5m</td>
-        <td class="">33%</td>
-        <td class="">7%</td>
-        <td>131</td>
-      </tr>
-      <tr>
-        <td>2026-01-06</td>
-        <td class="title-cell">Ataraxis PSA Onboarding</td>
-        <td>57m</td>
-        <td class="">34%</td>
-        <td class="">6%</td>
-        <td>76</td>
-      </tr>
-      <tr>
-        <td>2026-01-27</td>
-        <td class="title-cell">Ataraxis PSA Onboarding</td>
-        <td>51.2m</td>
-        <td class="">35%</td>
-        <td class="">7%</td>
-        <td>84</td>
-      </tr>
-      <tr>
-        <td>2026-02-10</td>
-        <td class="title-cell">Ataraxis PSA Onboarding</td>
-        <td>49.7m</td>
-        <td class="">33%</td>
-        <td class="">8%</td>
-        <td>89</td>
-      </tr>
-      <tr>
-        <td>2026-02-17</td>
-        <td class="title-cell">Ataraxis PSA Onboarding</td>
-        <td>49.1m</td>
-        <td class="">30%</td>
-        <td class="">8%</td>
-        <td>64</td>
-      </tr>
-      <tr>
-        <td>2026-02-20</td>
-        <td class="title-cell">Ataraxis PSA Client Check In</td>
-        <td>29.9m</td>
-        <td class="">28%</td>
-        <td class="">7%</td>
-        <td>45</td>
-      </tr>
-      <tr>
-        <td>2026-02-24</td>
-        <td class="title-cell">Ataraxis PSA Onboarding</td>
-        <td>48.3m</td>
-        <td class="">34%</td>
-        <td class="">9%</td>
-        <td>77</td>
-      </tr>
-      <tr>
-        <td>2026-02-27</td>
-        <td class="title-cell">Ataraxis Solutions PSA Graduation</td>
-        <td>14.2m</td>
-        <td class="pos">49%</td>
-        <td class="">3%</td>
-        <td>18</td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-  </div>
-  
-  <!-- Midwest Specialists -->
-  <div class="at-risk-card" style="border-color:rgba(255,169,77,0.4);">
-    <h3 style="color:var(--warn);">🟡 Midwest Specialists</h3>
-    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Kegan Ehlers · 8 calls · 8.1h invested</p>
-    <div class="at-risk-meta">
-      <span>First call: <strong>2026-01-16</strong></span>
-      <span>Last call: <strong>2026-03-06</strong></span>
-      <span>Avg sentiment: <strong style="color:var(--pos)">32% pos</strong> / <strong style="color:var(--neg)">10% neg</strong></span>
-      <span>Avg questions: <strong>40.8</strong></span>
-    </div>
-    
-    <div class="insight danger">🔴 Midwest Specialists has the highest negative sentiment of the at-risk accounts at 10% avg negative — nearly double the team baseline. Weekly cadence since Jan 2026. High question volume suggests unresolved blockers.</div>
-    
-    <div style="margin-bottom:1rem;">
-      <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">Sentence-Level Intelligence (last 2 calls):</h4>
-      <ul><li><strong>Midwest Specialists - PSA Meeting</strong> — 🎓 completion signals, ⚠️ friction language, 💳 billing discussion, ⚙️ configuration work, 📚 training <span class="muted">(1080 sentences)</span></li><li><strong>Midwest Specialists - PSA Meeting</strong> — 🎓 completion signals, ⚠️ friction language, 💳 billing discussion, ⚙️ configuration work, 📚 training <span class="muted">(531 sentences)</span></li></ul>
-    </div>
-    
-    
-  <div class="table-wrap">
-  <table>
-    <thead><tr><th>Date</th><th>Title</th><th>Duration</th><th>Pos%</th><th>Neg%</th><th>Questions</th></tr></thead>
-    <tbody>
-    
-      <tr>
-        <td>2026-01-16</td>
-        <td class="title-cell">Midwest Specialists - PSA Meeting</td>
-        <td>60.2m</td>
-        <td class="">33%</td>
-        <td class="">10%</td>
-        <td>44</td>
-      </tr>
-      <tr>
-        <td>2026-01-23</td>
-        <td class="title-cell">Midwest Specialists - PSA Meeting</td>
-        <td>47.7m</td>
-        <td class="">36%</td>
-        <td class="">13%</td>
-        <td>24</td>
-      </tr>
-      <tr>
-        <td>2026-01-30</td>
-        <td class="title-cell">Midwest Specialists - PSA Meeting</td>
-        <td>63.1m</td>
-        <td class="">32%</td>
-        <td class="">7%</td>
-        <td>65</td>
-      </tr>
-      <tr>
-        <td>2026-02-06</td>
-        <td class="title-cell">Midwest Specialists - PSA Meeting</td>
-        <td>56m</td>
-        <td class="">32%</td>
-        <td class="">10%</td>
-        <td>32</td>
-      </tr>
-      <tr>
-        <td>2026-02-11</td>
-        <td class="title-cell">Midwest Specialists - PSA Meeting</td>
-        <td>93.9m</td>
-        <td class="neg">20%</td>
-        <td class="">9%</td>
-        <td>66</td>
-      </tr>
-      <tr>
-        <td>2026-02-20</td>
-        <td class="title-cell">Midwest Specialists - PSA Meeting</td>
-        <td>53.5m</td>
-        <td class="">36%</td>
-        <td class="">11%</td>
-        <td>22</td>
-      </tr>
-      <tr>
-        <td>2026-02-27</td>
-        <td class="title-cell">Midwest Specialists - PSA Meeting</td>
-        <td>35.5m</td>
-        <td class="">36%</td>
-        <td class="">10%</td>
-        <td>25</td>
-      </tr>
-      <tr>
-        <td>2026-03-06</td>
-        <td class="title-cell">Midwest Specialists - PSA Meeting</td>
-        <td>77.1m</td>
-        <td class="">30%</td>
-        <td class="">10%</td>
-        <td>48</td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-    <div class="chart-wrap" style="margin-top:1rem;">
-      <h4>Midwest Specialists Sentiment Over Time</h4>
-      <div style="position:relative;height:180px;width:100%;"><canvas id="chartMidwest"></canvas></div>
-    </div>
-  </div>
-  
-  <!-- Prestige Security -->
-  <div class="at-risk-card">
-    <h3>Prestige Security</h3>
-    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Halle Taylor · 2 calls</p>
-    <div class="insight">Only 2 calls found (Feb–Mar 2026) — "Prestige Configuration" sessions. Insufficient data for trend analysis. Monitor over next 60 days.</div>
-    
-  <div class="table-wrap">
-  <table>
-    <thead><tr><th>Date</th><th>Title</th><th>Duration</th><th>Pos%</th><th>Neg%</th><th>Questions</th></tr></thead>
-    <tbody>
-    
-      <tr>
-        <td>2026-02-26</td>
-        <td class="title-cell">Prestige Configuration</td>
-        <td>64.5m</td>
-        <td class="">25%</td>
-        <td class="">5%</td>
-        <td>103</td>
-      </tr>
-      <tr>
-        <td>2026-03-05</td>
-        <td class="title-cell">Prestige Configuration</td>
-        <td>50.7m</td>
-        <td class="neg">24%</td>
-        <td class="">4%</td>
-        <td>64</td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-  </div>
-</section>
-
-<!-- ── TONY MEHNER ─────────────────────────────────────────────────────── -->
-<section id="tony">
-  <div class="section-header">
-    <h2><span class="icon">🎯</span> Tony Mehner — Presales vs. Onboarding Profile</h2>
-    <p>Tony splits time between product demos (pre-sales) and onboarding/follow-up calls. Analysis covers both tracks separately.</p>
-  </div>
-  
-  <div class="chart-grid-2" style="margin-bottom:1.5rem;">
-    <div class="chart-wrap">
-      <h4>Tony — Demo vs Onboarding Call Volume</h4>
-      <div style="position:relative;height:220px;width:100%;"><canvas id="chartTonyVol"></canvas></div>
-    </div>
-    <div class="chart-wrap">
-      <h4>Tony — Sentiment Comparison (Demo vs Onboarding)</h4>
-      <div style="position:relative;height:220px;width:100%;"><canvas id="chartTonySent"></canvas></div>
-    </div>
-  </div>
-  
-  <div class="cards cards-3" style="margin-bottom:1.5rem;">
-    <div class="card">
-      <h3>📊 Demo Calls</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.75rem;">
-        <div><div class="stat warn">62</div><div class="stat-label">Total Demos</div></div>
-        <div><div class="stat">56.5m</div><div class="stat-label">Avg Duration</div></div>
-        <div><div class="stat" style="color:var(--pos)">36%</div><div class="stat-label">Avg Positive</div></div>
-        <div><div class="stat" style="color:var(--neg)">6%</div><div class="stat-label">Avg Negative</div></div>
-      </div>
-      <div style="margin-top:0.75rem;font-size:0.8rem;color:var(--muted);">Avg 48.5 questions/call</div>
-    </div>
-    <div class="card">
-      <h3>🚀 Onboarding/Follow-up Calls</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.75rem;">
-        <div><div class="stat accent">82</div><div class="stat-label">Total Calls</div></div>
-        <div><div class="stat">55.7m</div><div class="stat-label">Avg Duration</div></div>
-        <div><div class="stat" style="color:var(--pos)">36%</div><div class="stat-label">Avg Positive</div></div>
-        <div><div class="stat" style="color:var(--neg)">6%</div><div class="stat-label">Avg Negative</div></div>
-      </div>
-      <div style="margin-top:0.75rem;font-size:0.8rem;color:var(--muted);">Avg 59.9 questions/call</div>
-    </div>
-    <div class="card">
-      <h3>🔄 Handoff Pattern</h3>
-      <div style="margin-top:0.75rem;font-size:0.875rem;color:var(--muted);line-height:1.7;">
-        <div>1. <strong style="color:var(--text)">Product Demo</strong> → initial prospect engagement</div>
-        <div>2. <strong style="color:var(--text)">Follow-up Discussion</strong> → Q&A, objection handling</div>
-        <div>3. <strong style="color:var(--text)">Pre-sales sync</strong> (Inzo Prep, Quoting Sync) → internal handoff prep</div>
-        <div>4. <strong style="color:var(--text)">Handoff to core SA team</strong> (Kickoff Call)</div>
-      </div>
-      <div class="insight" style="margin-top:1rem;font-size:0.8rem;">Demos average <strong>56.5m</strong> vs onboarding <strong>55.7m</strong> — follow-up calls are notably shorter, suggesting quick check-ins post-demo.</div>
-    </div>
-  </div>
-  
-  <div class="insight warn">
-    📈 Tony's onboarding/follow-up calls (<strong>36%</strong> pos) outperform his demos (<strong>36%</strong> pos) — clients seem to warm up once past the sales motion.
-  </div>
-  
-  <div style="margin-top:1rem;" class="insight">
-    <strong>Client talk time:</strong> Tony has the highest client talk% at 58% client / 42% SA — consistent with a consultative pre-sales style where listening is the primary tool.
-  </div>
-</section>
-
-<!-- ── GRADUATION PATTERNS ──────────────────────────────────────────────── -->
-<section id="graduation">
-  <div class="section-header">
-    <h2><span class="icon">🎓</span> Graduation Patterns — Nicole's Cohort Analysis</h2>
-    <p>Comparing Nicole's graduated clients vs. stalled clients to identify what distinguishes a successful onboarding trajectory. Note: graduated/stalled classification estimated from call volume + sentiment (Nicole confirmed 7 graduates).</p>
-  </div>
-  
-  <div class="chart-grid-2" style="margin-bottom:1.5rem;">
-    <div class="chart-wrap">
-      <h4>Graduated vs. Stalled — Key Metrics</h4>
-      <div style="position:relative;height:240px;width:100%;"><canvas id="chartGradComp"></canvas></div>
-    </div>
-    <div class="chart-wrap">
-      <h4>Graduation Patterns — Avg Sentiment</h4>
-      <div style="position:relative;height:240px;width:100%;"><canvas id="chartGradSent"></canvas></div>
-    </div>
-  </div>
-  
-  <div class="cards cards-3" style="margin-bottom:1.5rem;">
-    <div class="card">
-      <h3 style="color:var(--accent2);">✅ Graduated Profile</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.75rem;">
-        <div><div class="stat accent2">5.1</div><div class="stat-label">Avg Calls</div></div>
-        <div><div class="stat">40.2m</div><div class="stat-label">Avg Duration</div></div>
-        <div><div class="stat" style="color:var(--pos)">38%</div><div class="stat-label">Avg Positive</div></div>
-        <div><div class="stat">80.4</div><div class="stat-label">Avg Questions</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <h3 style="color:var(--warn);">⏳ Stalled Profile</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.75rem;">
-        <div><div class="stat warn">4.4</div><div class="stat-label">Avg Calls</div></div>
-        <div><div class="stat">54.3m</div><div class="stat-label">Avg Duration</div></div>
-        <div><div class="stat" style="color:var(--pos)">28%</div><div class="stat-label">Avg Positive</div></div>
-        <div><div class="stat">123.9</div><div class="stat-label">Avg Questions</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <h3>📊 Key Differentiators</h3>
-      <div style="margin-top:0.75rem;font-size:0.875rem;line-height:1.8;">
-        <div><span style="color:var(--accent2)">+10%</span> higher positive sentiment in graduates</div>
-        <div><span style="color:var(--warn)">
-          More total calls (5.1 vs 4.4)
-        </span></div>
-        <div><span style="color:var(--muted)">Questions/call: 80.4 vs 123.9</span></div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="grad-row">
-    <div>
-      <h4 style="font-size:0.85rem;color:var(--accent2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.75rem;">✅ Graduated Clients (Est. Top 7 by Sentiment)</h4>
-      <div class="table-wrap">
-      <table>
-        <thead><tr><th>Client</th><th>Calls</th><th>Pos%</th><th>Neg%</th><th>Avg Q</th></tr></thead>
-        <tbody>
-        
-          <tr>
-            <td>Tolleson</td>
-            <td>3</td>
-            <td class="pos">42%</td>
-            <td>5%</td>
-            <td>34.3</td>
-          </tr>
-          <tr>
-            <td>Pando Tech Solutions</td>
-            <td>6</td>
-            <td class="pos">41%</td>
-            <td>4%</td>
-            <td>216.2</td>
-          </tr>
-          <tr>
-            <td>Aviation Communications</td>
-            <td>3</td>
-            <td class="pos">39%</td>
-            <td>6%</td>
-            <td>52</td>
-          </tr>
-          <tr>
-            <td>Savvy AI</td>
-            <td>9</td>
-            <td class="pos">36%</td>
-            <td>5%</td>
-            <td>65.1</td>
-          </tr>
-          <tr>
-            <td>MiSwitch</td>
-            <td>5</td>
-            <td class="pos">36%</td>
-            <td>5%</td>
-            <td>79.8</td>
-          </tr>
-          <tr>
-            <td>Lantern Streaming</td>
-            <td>4</td>
-            <td class="pos">36%</td>
-            <td>6%</td>
-            <td>31.8</td>
-          </tr>
-          <tr>
-            <td>Integrity Sound</td>
-            <td>6</td>
-            <td class="pos">35%</td>
-            <td>7%</td>
-            <td>83.3</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-    <div>
-      <h4 style="font-size:0.85rem;color:var(--warn);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.75rem;">⏳ Stalled / In-Progress Clients</h4>
-      <div class="table-wrap">
-      <table>
-        <thead><tr><th>Client</th><th>Calls</th><th>Pos%</th><th>Neg%</th><th>Avg Q</th></tr></thead>
-        <tbody>
-        
-          <tr>
-            <td>Creative Vision</td>
-            <td>3</td>
-            <td>25%</td>
-            <td class="">6%</td>
-            <td>150</td>
-          </tr>
-          <tr>
-            <td>Silent Watchman</td>
-            <td>6</td>
-            <td>27%</td>
-            <td class="">7%</td>
-            <td>76.3</td>
-          </tr>
-          <tr>
-            <td>Virtual Guardians</td>
-            <td>3</td>
-            <td>27%</td>
-            <td class="">6%</td>
-            <td>75.3</td>
-          </tr>
-          <tr>
-            <td>Creative Vision Tech</td>
-            <td>3</td>
-            <td>27%</td>
-            <td class="">5%</td>
-            <td>243.7</td>
-          </tr>
-          <tr>
-            <td>Silent Watchman Security</td>
-            <td>2</td>
-            <td>28%</td>
-            <td class="">7%</td>
-            <td>129.5</td>
-          </tr>
-          <tr>
-            <td>Knight Security</td>
-            <td>3</td>
-            <td>29%</td>
-            <td class="">6%</td>
-            <td>56</td>
-          </tr>
-          <tr>
-            <td>Soundworks & Security</td>
-            <td>11</td>
-            <td>30%</td>
-            <td class="">8%</td>
-            <td>136.4</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-  </div>
-  
-  <p style="margin-top:0.75rem;font-size:0.78rem;color:var(--muted);">⚠️ Graduated/stalled classification estimated from call volume + sentiment (Nicole confirmed 7 grads — shown as top 7 highest-sentiment multi-call clients)</p>
-</section>
-
-<!-- ── KEY RECOMMENDATIONS ─────────────────────────────────────────────── -->
-<section id="recs">
-  <div class="section-header">
-    <h2><span class="icon">💡</span> Key Recommendations</h2>
-    <p>Data-backed actions for the PSA onboarding team.</p>
-  </div>
-  
-  <div class="rec danger">
-    <h4>🔴 Escalate Midwest Specialists — Kegan</h4>
-    <p>8 consecutive weekly calls with 10% avg negative sentiment (vs 6% team baseline). High question volume suggests persistent blockers. Recommend a leadership check-in call with the client to unblock — do not let this continue on current trajectory.</p>
-  </div>
-  
-  <div class="rec warn">
-    <h4>🟡 Newport Network Solutions — Graduation Plan Needed (Halle)</h4>
-    <p>27 calls over 4 months with no graduation signal. 21.1h invested. Recommend defining explicit graduation criteria with the client and setting a target date. The current open-ended cadence is burning SA time without a clear exit.</p>
-  </div>
-  
-  <div class="rec warn">
-    <h4>🟡 Talk Time Alert — Nicole & Kegan Trending High</h4>
-    <p>Nicole averages 57% SA talk time (57 calls >70%), Kegan 54% (45 calls >70%). Calls where clients talk more correlate with 0% higher positive sentiment. Coach toward more Q&A-style delivery — Halle's 51% client talk rate is the benchmark to model.</p>
-  </div>
-  
-  <div class="rec success">
-    <h4>✅ Replicate Nicole's Ataraxis Graduation Pattern</h4>
-    <p>Ataraxis graduated in 13 calls (3.5 months) with clear biweekly cadence and explicit graduation session. This is the model: defined milestones, consistent cadence, formal completion. Document and templatize for the full SA team.</p>
-  </div>
-  
-  <div class="rec">
-    <h4>📈 Tony's Handoff Process Is Working — Formalize It</h4>
-    <p>Tony's demo→follow-up→handoff pattern is visible in the data. His demos score 36% positive sentiment and his client talk rate (58%) is the highest on the team. Create a formal handoff document template that captures demo-stage insights for the receiving SA.</p>
-  </div>
-  
-  <div class="rec">
-    <h4>📊 Add Graduation Date Tracking to Fireflies Call Titles</h4>
-    <p>Titles like "Ataraxis Solutions PSA Graduation" make post-hoc analysis easy. Enforce title conventions: [Client Name] - [Call Type] - [Date] so future analyses can auto-segment call stages. Current title inconsistency (27 variations for Newport alone) makes classification unreliable.</p>
-  </div>
-  
-  <div class="rec">
-    <h4>📅 Monthly Sentiment Review Cadence</h4>
-    <p>Sentiment is currently stable but not improving. Monthly reviews of this dashboard (updated automatically) would catch declining accounts 30–45 days before they become escalations. Recommend: first Monday of each month, 30-min SA team review of this report.</p>
-  </div>
-</section>
+  <footer class="footer">
+    <p>Rev.io PSA Call Intelligence · Data via Fireflies.ai · Nov 2025 – Mar 2026 · 610 calls analyzed</p>
+  </footer>
 
 </div><!-- /container -->
 
-<div class="footer">
-  <p>PSA Call Intelligence Report · Rev.io · Generated by Revay AI · March 6, 2026</p>
-  <p style="margin-top:0.3rem;">Data source: Fireflies.ai · 2,306 total transcripts analyzed · 610 PSA onboarding calls in scope</p>
-</div>
-
+<!-- ══════════════════════════════════════
+     APEXCHARTS — all three charts
+══════════════════════════════════════ -->
 <script>
-const MONTHS = ["Nov","Dec","Jan","Feb","Mar"];
-const COLORS = {
-  nicole: '#6c63ff',
-  kegan:  '#00d4aa',
-  halle:  '#ff6b6b',
-  tony:   '#ffa94d',
-};
-Chart.defaults.color = '#7b7f9e';
-Chart.defaults.borderColor = '#2e3147';
-
-const defaultOpts = {
-  responsive: true,
-  maintainAspectRatio: false,
-
-  plugins: { legend: { labels: { boxWidth: 12, font: { size: 11 } } } },
-  scales: {
-    x: { grid: { color: '#2e3147' }, ticks: { font: { size: 11 } } },
-    y: { grid: { color: '#2e3147' }, ticks: { font: { size: 11 } } },
-  }
+// Shared dark theme defaults
+var darkDefaults = {
+  chart: { background: 'transparent', foreColor: '#e8eaf6', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' },
+  theme: { mode: 'dark' },
+  grid: { borderColor: '#2e3147', strokeDashArray: 3 },
+  tooltip: { theme: 'dark' },
+  legend: { labels: { colors: '#e8eaf6' } }
 };
 
-// 1. Volume stacked bar
-try {
-new Chart(document.getElementById('chartVolume'), {
-  type: 'bar',
-  data: {
-    labels: MONTHS,
-    datasets: [
-      { label: 'Nicole', data: [42,39,77,60,9], backgroundColor: COLORS.nicole + 'cc' },
-      { label: 'Kegan',  data: [34,36,43,44,10], backgroundColor: COLORS.kegan + 'cc' },
-      { label: 'Halle',  data: [13,28,30,46,17], backgroundColor: COLORS.halle + 'cc' },
-      { label: 'Tony',   data: [17,16,16,30,3], backgroundColor: COLORS.tony + 'cc' },
-    ]
-  },
-  options: { ...defaultOpts, scales: { x: { stacked: true, grid:{color:'#2e3147'} }, y: { stacked: true, grid:{color:'#2e3147'} } } }
-});
-} catch(e) { console.warn("Chart chartVolume failed:", e); }
+// ── Chart 1: Monthly Call Volume (Grouped Bar) ──
+(function() {
+  var opts = Object.assign({}, darkDefaults, {
+    chart: Object.assign({}, darkDefaults.chart, {
+      type: 'bar',
+      height: 320,
+      stacked: true,
+      toolbar: { show: false }
+    }),
+    series: [
+      { name: 'Nicole Hills',  data: [42, 39, 77, 60, 9] },
+      { name: 'Kegan Ehlers',  data: [34, 36, 43, 44, 10] },
+      { name: 'Halle Taylor',  data: [13, 28, 30, 46, 17] },
+      { name: 'Tony Mehner',   data: [17, 16, 16, 30, 3] }
+    ],
+    colors: ['#6c63ff', '#00d4aa', '#ffa94d', '#ff6b6b'],
+    xaxis: {
+      categories: ['Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026*'],
+      labels: { style: { colors: '#7b7f9e', fontSize: '12px' } },
+      axisBorder: { color: '#2e3147' },
+      axisTicks: { color: '#2e3147' }
+    },
+    yaxis: { labels: { style: { colors: '#7b7f9e', fontSize: '12px' } } },
+    plotOptions: { bar: { borderRadius: 2, columnWidth: '70%' } },
+    dataLabels: { enabled: false },
+    legend: Object.assign({}, darkDefaults.legend, { position: 'top', fontSize: '12px' })
+  });
+  var chart1 = new ApexCharts(document.querySelector('#chart-monthly'), opts);
+  chart1.render();
+})();
 
-// 2. Talk time bar
-try {
-new Chart(document.getElementById('chartTalkTime'), {
-  type: 'bar',
-  data: {
-    labels: ['Nicole', 'Kegan', 'Halle', 'Tony'],
-    datasets: [
-      { label: 'SA Talk%',     data: [57,54,49,42], backgroundColor: '#6c63ffcc' },
-      { label: 'Client Talk%', data: [43,46,51,58], backgroundColor: '#00d4aacc' },
-    ]
-  },
-  options: { ...defaultOpts, scales: { x: { stacked: true, grid:{color:'#2e3147'} }, y: { stacked: true, grid:{color:'#2e3147'}, max: 100 } } }
-});
-} catch(e) { console.warn("Chart chartTalkTime failed:", e); }
+// ── Chart 2: SA Talk Time (Horizontal Grouped Bar) ──
+(function() {
+  var opts = Object.assign({}, darkDefaults, {
+    chart: Object.assign({}, darkDefaults.chart, {
+      type: 'bar',
+      height: 260,
+      toolbar: { show: false }
+    }),
+    series: [
+      { name: 'SA Talk%',     data: [57, 54, 49, 42] },
+      { name: 'Client Talk%', data: [43, 46, 51, 58] }
+    ],
+    colors: ['#6c63ff', '#00d4aa'],
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        borderRadius: 4,
+        dataLabels: { position: 'top' },
+        barHeight: '60%'
+      }
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function(val) { return val + '%'; },
+      style: { fontSize: '11px', colors: ['#e8eaf6'] },
+      offsetX: 6
+    },
+    xaxis: {
+      categories: ['Nicole Hills', 'Kegan Ehlers', 'Halle Taylor', 'Tony Mehner'],
+      labels: {
+        formatter: function(val) { return val + '%'; },
+        style: { colors: '#7b7f9e', fontSize: '12px' }
+      },
+      max: 100,
+      axisBorder: { color: '#2e3147' }
+    },
+    yaxis: { labels: { style: { colors: '#7b7f9e', fontSize: '12px' } } },
+    legend: Object.assign({}, darkDefaults.legend, { position: 'top', fontSize: '12px' }),
+    tooltip: Object.assign({}, darkDefaults.tooltip, {
+      y: { formatter: function(val) { return val + '%'; } }
+    })
+  });
+  var chart2 = new ApexCharts(document.querySelector('#chart-talk'), opts);
+  chart2.render();
+})();
 
-// 3. Monthly call volume lines
-try {
-new Chart(document.getElementById('chartMonthly'), {
-  type: 'line',
-  data: {
-    labels: MONTHS,
-    datasets: [
-      { label: 'Nicole', data: [42,39,77,60,9], borderColor: COLORS.nicole, backgroundColor: COLORS.nicole+'33', tension: 0.4, fill: false },
-      { label: 'Kegan',  data: [34,36,43,44,10], borderColor: COLORS.kegan, backgroundColor: COLORS.kegan+'33', tension: 0.4, fill: false },
-      { label: 'Halle',  data: [13,28,30,46,17], borderColor: COLORS.halle, backgroundColor: COLORS.halle+'33', tension: 0.4, fill: false },
-      { label: 'Tony',   data: [17,16,16,30,3], borderColor: COLORS.tony, backgroundColor: COLORS.tony+'33', tension: 0.4, fill: false },
-    ]
-  },
-  options: defaultOpts
-});
-} catch(e) { console.warn("Chart chartMonthly failed:", e); }
-
-// 4. Flagged calls bar
-try {
-new Chart(document.getElementById('chartFlagged'), {
-  type: 'bar',
-  data: {
-    labels: ['Nicole', 'Kegan', 'Halle', 'Tony'],
-    datasets: [{ label: 'Calls where SA >70% talk', data: [57,45,21,10], backgroundColor: ['#6c63ffcc','#00d4aacc','#ff6b6bcc','#ffa94dcc'] }]
-  },
-  options: { ...defaultOpts, plugins: { legend: { display: false } } }
-});
-} catch(e) { console.warn("Chart chartFlagged failed:", e); }
-
-// 5. Sentiment by SA
-try {
-new Chart(document.getElementById('chartSentSA'), {
-  type: 'bar',
-  data: {
-    labels: ['Nicole', 'Kegan', 'Halle', 'Tony'],
-    datasets: [
-      { label: 'Positive%', data: [33,33,31,36], backgroundColor: '#00d4aacc' },
-      { label: 'Neutral%',  data: [61,61,63,58], backgroundColor: '#7b7f9ecc' },
-      { label: 'Negative%', data: [6,6,6,6], backgroundColor: '#ff6b6bcc' },
-    ]
-  },
-  options: { ...defaultOpts, scales: { x: { stacked: true, grid:{color:'#2e3147'} }, y: { stacked: true, grid:{color:'#2e3147'}, max: 100 } } }
-});
-} catch(e) { console.warn("Chart chartSentSA failed:", e); }
-
-// 6. Sentiment by month line
-try {
-new Chart(document.getElementById('chartSentMonth'), {
-  type: 'line',
-  data: {
-    labels: MONTHS,
-    datasets: [
-      { label: 'Avg Positive%', data: [35,33,33,33,31], borderColor: '#00d4aa', tension: 0.4, fill: false },
-      { label: 'Avg Negative%', data: [6,6,6,6,6], borderColor: '#ff6b6b', tension: 0.4, fill: false },
-    ]
-  },
-  options: defaultOpts
-});
-} catch(e) { console.warn("Chart chartSentMonth failed:", e); }
-
-// 7. Sentiment by call type
-const callTypes = ["Kickoff","Training","Guided Session","Check-in","Config/Setup","Onboarding","Other"];
-try {
-new Chart(document.getElementById('chartSentType'), {
-  type: 'bar',
-  data: {
-    labels: callTypes,
-    datasets: [
-      { label: 'Positive%', data: callTypes.map(ct => {"Kickoff":{"avgPos":37,"avgNeg":6,"count":46},"Training":{"avgPos":30,"avgNeg":6,"count":48},"Guided Session":{"avgPos":31,"avgNeg":6,"count":107},"Check-in":{"avgPos":35,"avgNeg":6,"count":75},"Config/Setup":{"avgPos":31,"avgNeg":6,"count":41},"Onboarding":{"avgPos":33,"avgNeg":6,"count":58},"Other":{"avgPos":35,"avgNeg":6,"count":138}}[ct]?.avgPos || 0), backgroundColor: '#00d4aacc' },
-      { label: 'Negative%', data: callTypes.map(ct => {"Kickoff":{"avgPos":37,"avgNeg":6,"count":46},"Training":{"avgPos":30,"avgNeg":6,"count":48},"Guided Session":{"avgPos":31,"avgNeg":6,"count":107},"Check-in":{"avgPos":35,"avgNeg":6,"count":75},"Config/Setup":{"avgPos":31,"avgNeg":6,"count":41},"Onboarding":{"avgPos":33,"avgNeg":6,"count":58},"Other":{"avgPos":35,"avgNeg":6,"count":138}}[ct]?.avgNeg || 0), backgroundColor: '#ff6b6bcc' },
-    ]
-  },
-  options: defaultOpts
-});
-} catch(e) { console.warn("Chart chartSentType failed:", e); }
-
-// 8. Questions by call type
-const qTypes = ["Kickoff","Training","Guided Session","Check-in","Config/Setup","Onboarding","Other"];
-try {
-new Chart(document.getElementById('chartQType'), {
-  type: 'bar',
-  data: {
-    labels: qTypes,
-    datasets: [{ label: 'Avg Questions/Call', data: qTypes.map(ct => {"Kickoff":{"avg":47.8,"count":46},"Training":{"avg":95.2,"count":48},"Guided Session":{"avg":93.8,"count":106},"Check-in":{"avg":54.5,"count":74},"Config/Setup":{"avg":55.1,"count":41},"Onboarding":{"avg":99,"count":58},"Other":{"avg":47.6,"count":138}}[ct]?.avg || 0), backgroundColor: '#6c63ffcc' }]
-  },
-  options: { ...defaultOpts, plugins: { legend: { display: false } } }
-});
-} catch(e) { console.warn("Chart chartQType failed:", e); }
-
-// 9. Newport sentiment chart
-const newportHistory = [{"id":"01K9JG4M8DXXM5W0RK035GWCX2","title":"Quoting with Newport Networks","date":"2025-11-10","duration":38.5,"sentPos":36,"sentNeg":5,"questions":34},{"id":"01K9YY36350BM2XGSZYX468FH1","title":"Newport Network Solutions- Call","date":"2025-11-13","duration":30,"sentPos":35,"sentNeg":6,"questions":43},{"id":"01K9Z3HPRDN1D03NW41924EN8S","title":"Newport Network Solutions- Working Session","date":"2025-11-18","duration":60.4,"sentPos":31,"sentNeg":7,"questions":216},{"id":"01KACK6TR7E91X2Z5YA9JVS9S9","title":"Newport Network - 30 min check in","date":"2025-11-20","duration":31,"sentPos":28,"sentNeg":6,"questions":60},{"id":"01KAY6DPT43WD7ZBR1WNK7T92W","title":"Newport Network Solutions- Working Session","date":"2025-12-02","duration":60.3,"sentPos":37,"sentNeg":5,"questions":83},{"id":"01KBDJ49XAPYJ4ZJZZP4YB7KW3","title":"Newport Network Solutions- Call","date":"2025-12-04","duration":33.9,"sentPos":27,"sentNeg":4,"questions":46},{"id":"01KBGC3VNF8ADXXHN2YJSPVJ5X","title":"Newport Network Solutions- Working Session","date":"2025-12-09","duration":58,"sentPos":26,"sentNeg":5,"questions":79},{"id":"01KBQECBY7RY1WYT0V7FAX3JK2","title":"Newport Network Solutions- Call","date":"2025-12-11","duration":30.1,"sentPos":38,"sentNeg":6,"questions":33},{"id":"01KC2BV83YEP2V4RNS6YBYEVFJ","title":"Newport Network Solutions- Working Session","date":"2025-12-16","duration":62.2,"sentPos":23,"sentNeg":6,"questions":62},{"id":"01KC82VB9D1HVS5TZBHVWWCAMP","title":"Newport Network Solutions- Call","date":"2025-12-18","duration":32.2,"sentPos":37,"sentNeg":6,"questions":58},{"id":"01KCMD5KQE01A40T153M90MZ6Q","title":"Newport Network Solutions- Working Session","date":"2025-12-23","duration":57.7,"sentPos":33,"sentNeg":8,"questions":44},{"id":"01KD8B94NJTM2CMSSMNVP579QV","title":"Newport Network Solutions- Working Session","date":"2025-12-30","duration":61.3,"sentPos":36,"sentNeg":5,"questions":65},{"id":"01KDRJV3NEKP3915MK560S2WF1","title":"Newport Network Solutions- Working Session","date":"2026-01-06","duration":60.3,"sentPos":29,"sentNeg":6,"questions":74},{"id":"01KDZSSVYF3E974X2KAPHWRHS2","title":"Newport Network Solutions- Call","date":"2026-01-08","duration":31.5,"sentPos":33,"sentNeg":10,"questions":30},{"id":"01KEAGK7EAK1E34DX69C094D2N","title":"Newport Network Solutions- Working Session","date":"2026-01-13","duration":57.1,"sentPos":27,"sentNeg":6,"questions":103},{"id":"01KEHNECKJJNZXT6M8SD8FZDWD","title":"Newport Network Solutions- Call","date":"2026-01-15","duration":35.1,"sentPos":30,"sentNeg":6,"questions":57},{"id":"01KEWFMM5W6ARSJWWVPS2DF7WB","title":"Newport Network Solutions- Working Session","date":"2026-01-20","duration":60.6,"sentPos":27,"sentNeg":9,"questions":80},{"id":"01KFE52SNBJ1SPKE99RXTSMRS7","title":"Newport Network Solutions- Call","date":"2026-01-22","duration":30.5,"sentPos":34,"sentNeg":4,"questions":27},{"id":"01KFEGGFBY8MXJT1N4XGPENHCN","title":"Newport Network Solutions- Working Session","date":"2026-01-27","duration":59.2,"sentPos":30,"sentNeg":6,"questions":79},{"id":"01KFKTEMJTYT0B09BDQVEXVFZD","title":"Newport Network Solutions- Call","date":"2026-01-29","duration":36.5,"sentPos":31,"sentNeg":6,"questions":43},{"id":"01KG0V7SHP56491KKY4E37QEPQ","title":"Newport Network Solutions- Working Session","date":"2026-02-03","duration":57,"sentPos":30,"sentNeg":5,"questions":89},{"id":"01KGQ472FQ4XTDH1E5ZK4EJERP","title":"Newport Network Solutions- Call","date":"2026-02-12","duration":50.3,"sentPos":32,"sentNeg":5,"questions":61},{"id":"01KH484ZBRXZ7XZSAGX5VNH5SW","title":"Newport Network Solutions- Working Session","date":"2026-02-17","duration":60.1,"sentPos":26,"sentNeg":7,"questions":89},{"id":"01KH7NAY4YJBSCWXHQNJX8FN3K","title":"Newport Network Solutions- Call","date":"2026-02-19","duration":29.8,"sentPos":27,"sentNeg":5,"questions":40},{"id":"01KHP0P9EMYWVKVQFJKH60VN3W","title":"Newport Network Solutions- Working Session","date":"2026-02-24","duration":53.3,"sentPos":19,"sentNeg":8,"questions":81},{"id":"01KJ7ZVA300N9RMJD6G1REKK5W","title":"Newport Network Solutions- Working Session","date":"2026-03-03","duration":59.1,"sentPos":19,"sentNeg":6,"questions":56},{"id":"01KJDAMCF5T861BH0SDVVGKN95","title":"Newport Network Solutions- Call","date":"2026-03-05","duration":27.5,"sentPos":23,"sentNeg":7,"questions":62}];
-try {
-new Chart(document.getElementById('chartNewport'), {
-  type: 'line',
-  data: {
-    labels: newportHistory.map(h=>h.date),
-    datasets: [
-      { label: 'Positive%', data: newportHistory.map(h=>h.sentPos), borderColor: '#00d4aa', tension: 0.3, fill: false, spanGaps: true },
-      { label: 'Negative%', data: newportHistory.map(h=>h.sentNeg), borderColor: '#ff6b6b', tension: 0.3, fill: false, spanGaps: true },
-    ]
-  },
-  options: { ...defaultOpts, scales: { x: { ticks: { maxTicksLimit: 8, font:{size:10} }, grid:{color:'#2e3147'} }, y: { grid:{color:'#2e3147'}, min: 0, max: 60 } } }
-});
-} catch(e) { console.warn("Chart chartNewport failed:", e); }
-
-// 10. Midwest sentiment chart
-const midwestHistory = [{"id":"01KF1KHB7YKNFPGNGNBS5P1M3S","title":"Midwest Specialists - PSA Meeting","date":"2026-01-16","duration":60.2,"sentPos":33,"sentNeg":10,"questions":44},{"id":"01KF3TB2CRX8KS6BWQEYSEDY6J","title":"Midwest Specialists - PSA Meeting","date":"2026-01-23","duration":47.7,"sentPos":36,"sentNeg":13,"questions":24},{"id":"01KG2KFZ5FWFZNK2FMHTYTPKXQ","title":"Midwest Specialists - PSA Meeting","date":"2026-01-30","duration":63.1,"sentPos":32,"sentNeg":7,"questions":65},{"id":"01KG7V0F2WY8W1RENHT0QEYRQC","title":"Midwest Specialists - PSA Meeting","date":"2026-02-06","duration":56,"sentPos":32,"sentNeg":10,"questions":32},{"id":"01KH205VFXQMDEAAGQJKC8CZAT","title":"Midwest Specialists - PSA Meeting","date":"2026-02-11","duration":93.9,"sentPos":20,"sentNeg":9,"questions":66},{"id":"01KHS5ZCDRGDN1MDMWK8TRSFFZ","title":"Midwest Specialists - PSA Meeting","date":"2026-02-20","duration":53.5,"sentPos":36,"sentNeg":11,"questions":22},{"id":"01KJB6RBTM7AZXAZ35QK21K5S5","title":"Midwest Specialists - PSA Meeting","date":"2026-02-27","duration":35.5,"sentPos":36,"sentNeg":10,"questions":25},{"id":"01KJQPXS7QM5EH1QAD7VP9R8HN","title":"Midwest Specialists - PSA Meeting","date":"2026-03-06","duration":77.1,"sentPos":30,"sentNeg":10,"questions":48}];
-try {
-new Chart(document.getElementById('chartMidwest'), {
-  type: 'line',
-  data: {
-    labels: midwestHistory.map(h=>h.date),
-    datasets: [
-      { label: 'Positive%', data: midwestHistory.map(h=>h.sentPos), borderColor: '#00d4aa', tension: 0.3, fill: false, spanGaps: true },
-      { label: 'Negative%', data: midwestHistory.map(h=>h.sentNeg), borderColor: '#ff6b6b', tension: 0.3, fill: false, spanGaps: true },
-    ]
-  },
-  options: { ...defaultOpts, scales: { x: { ticks: { font:{size:10} }, grid:{color:'#2e3147'} }, y: { grid:{color:'#2e3147'}, min: 0, max: 60 } } }
-});
-} catch(e) { console.warn("Chart chartMidwest failed:", e); }
-
-// 11. Tony volume
-try {
-new Chart(document.getElementById('chartTonyVol'), {
-  type: 'bar',
-  data: {
-    labels: MONTHS,
-    datasets: [
-      { label: 'Demos',      data: [10,8,19,22,3], backgroundColor: '#ffa94dcc' },
-      { label: 'Onboarding', data: [17,16,16,30,3],  backgroundColor: '#6c63ffcc' },
-    ]
-  },
-  options: { ...defaultOpts, scales: { x: { stacked: true, grid:{color:'#2e3147'} }, y: { stacked: true, grid:{color:'#2e3147'} } } }
-});
-} catch(e) { console.warn("Chart chartTonyVol failed:", e); }
-
-// 12. Tony sentiment comparison
-try {
-new Chart(document.getElementById('chartTonySent'), {
-  type: 'bar',
-  data: {
-    labels: ['Positive%', 'Negative%'],
-    datasets: [
-      { label: 'Demos',      data: [36, 6], backgroundColor: '#ffa94dcc' },
-      { label: 'Onboarding', data: [36,  6],  backgroundColor: '#6c63ffcc' },
-    ]
-  },
-  options: defaultOpts
-});
-} catch(e) { console.warn("Chart chartTonySent failed:", e); }
-
-// 13. Graduation comparison
-try {
-new Chart(document.getElementById('chartGradComp'), {
-  type: 'bar',
-  data: {
-    labels: ['Avg Calls', 'Avg Duration (min)', 'Avg Questions'],
-    datasets: [
-      { label: 'Graduated', data: [5.1, 40.2, 80.4], backgroundColor: '#00d4aacc' },
-      { label: 'Stalled',   data: [4.4, 54.3, 123.9], backgroundColor: '#ffa94dcc' },
-    ]
-  },
-  options: defaultOpts
-});
-} catch(e) { console.warn("Chart chartGradComp failed:", e); }
-
-// 14. Graduation sentiment
-try {
-new Chart(document.getElementById('chartGradSent'), {
-  type: 'bar',
-  data: {
-    labels: ['Positive%', 'Negative%'],
-    datasets: [
-      { label: 'Graduated', data: [38, 5], backgroundColor: '#00d4aacc' },
-      { label: 'Stalled',   data: [28, 6], backgroundColor: '#ffa94dcc' },
-    ]
-  },
-  options: defaultOpts
-});
-} catch(e) { console.warn("Chart chartGradSent failed:", e); }
+// ── Chart 3: Sentiment by Call Type ──
+(function() {
+  var callTypes = ['Kickoff', 'Check-in', 'General Client', 'Internal', 'Training', 'Config/Project'];
+  var opts = Object.assign({}, darkDefaults, {
+    chart: Object.assign({}, darkDefaults.chart, {
+      type: 'bar',
+      height: 320,
+      toolbar: { show: false }
+    }),
+    series: [
+      { name: 'Positive%', data: [37, 35, 35, 33, 31, 31] },
+      { name: 'Negative%', data: [6,  6,  6,  5,  6,  6] }
+    ],
+    colors: ['#51cf66', '#ff6b6b'],
+    plotOptions: {
+      bar: { borderRadius: 3, columnWidth: '55%', grouped: true }
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function(val) { return val + '%'; },
+      style: { fontSize: '11px', colors: ['#0f1117'] }
+    },
+    xaxis: {
+      categories: callTypes,
+      labels: { style: { colors: '#7b7f9e', fontSize: '11px' }, rotate: -20 },
+      axisBorder: { color: '#2e3147' }
+    },
+    yaxis: {
+      max: 50,
+      labels: {
+        formatter: function(val) { return val + '%'; },
+        style: { colors: '#7b7f9e', fontSize: '12px' }
+      }
+    },
+    legend: Object.assign({}, darkDefaults.legend, { position: 'top', fontSize: '12px' }),
+    tooltip: Object.assign({}, darkDefaults.tooltip, {
+      y: { formatter: function(val) { return val + '%'; } }
+    })
+  });
+  var chart3 = new ApexCharts(document.querySelector('#chart-sentiment'), opts);
+  chart3.render();
+})();
 </script>
 
 </body>
