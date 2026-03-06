@@ -1241,11 +1241,11 @@
     <div class="two-col" style="margin-bottom:20px">
       <div class="chart-wrap">
         <div class="chart-title">Revii Mentions by Month</div>
-        
+        <div id="chart-revii-trend"></div>
       </div>
       <div class="chart-wrap">
         <div class="chart-title">Revii Mentions by SA</div>
-        
+        <div id="chart-revii-sa"></div>
       </div>
     </div>
 
@@ -1426,7 +1426,7 @@
       </div>
       <div class="chart-wrap">
         <div class="chart-title">Competitor Mentions</div>
-        
+        <div id="chart-competitors"></div>
       </div>
     </div>
   </div>
@@ -1631,7 +1631,7 @@
 
       <div class="chart-wrap">
         <div class="chart-title">Graduation Mentions by SA</div>
-        
+        <div id="chart-graduation"></div>
       </div>
     </div>
   </div>
@@ -2205,17 +2205,6 @@ if (compLabels.length > 0) {
 const fgLabels = ["other","billing","integrations","ticketing","contracts","scheduling","reporting","automation","mobile","portal"];
 const fgCounts = [1912,105,79,54,26,25,20,17,10,5];
 if (fgLabels.length > 0) {
-  new ApexCharts(document.getElementById('chart-feature-gaps'), {
-    ...chartDefaults,
-    chart: { ...chartDefaults.chart, type: 'donut', height: 260 },
-    series: fgCounts,
-    labels: fgLabels,
-    colors: ['#6c63ff','#00d4aa','#ffa94d','#ff6b6b','#a78bfa','#34d399','#f472b6','#60a5fa'],
-    legend: { labels: { colors: '#e8eaf6' } },
-    dataLabels: { style: { colors: ['#fff'] } },
-  }).render();
-} else {
-  document.getElementById('chart-feature-gaps').innerHTML = '<div style="color:#7b7f9e;padding:20px;text-align:center;font-size:12px">No feature gap data</div>';
 }
 
 // Graduation by SA
