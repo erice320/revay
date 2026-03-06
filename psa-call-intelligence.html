@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PSA Onboarding Call Intelligence Report — Rev.io</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <style>
   :root {
     --bg: #0f1117;
@@ -78,9 +78,9 @@
   .kpi-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.35rem; }
   
   /* CHART CONTAINERS */
-  .chart-wrap { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; min-height: 280px; }
+  .chart-wrap { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; }
   .chart-wrap h4 { font-size: 0.9rem; font-weight: 600; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  .chart-wrap canvas { height: 220px !important; }
+  .chart-wrap { min-height: 260px; } .chart-wrap > canvas { display: block; width: 100% !important; height: 220px !important; }
   .chart-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
   .chart-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
   @media(max-width:900px) { .chart-grid-2, .chart-grid-3 { grid-template-columns: 1fr; } }
@@ -1267,7 +1267,7 @@ Chart.defaults.borderColor = '#2e3147';
 
 const defaultOpts = {
   responsive: true,
-  maintainAspectRatio: true,
+  maintainAspectRatio: false,
 
   plugins: { legend: { labels: { boxWidth: 12, font: { size: 11 } } } },
   scales: {
