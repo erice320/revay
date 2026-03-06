@@ -1277,6 +1277,7 @@ const defaultOpts = {
 };
 
 // 1. Volume stacked bar
+try {
 new Chart(document.getElementById('chartVolume'), {
   type: 'bar',
   data: {
@@ -1290,8 +1291,10 @@ new Chart(document.getElementById('chartVolume'), {
   },
   options: { ...defaultOpts, scales: { x: { stacked: true, grid:{color:'#2e3147'} }, y: { stacked: true, grid:{color:'#2e3147'} } } }
 });
+} catch(e) { console.warn("Chart chartVolume failed:", e); }
 
 // 2. Talk time bar
+try {
 new Chart(document.getElementById('chartTalkTime'), {
   type: 'bar',
   data: {
@@ -1303,8 +1306,10 @@ new Chart(document.getElementById('chartTalkTime'), {
   },
   options: { ...defaultOpts, scales: { x: { stacked: true, grid:{color:'#2e3147'} }, y: { stacked: true, grid:{color:'#2e3147'}, max: 100 } } }
 });
+} catch(e) { console.warn("Chart chartTalkTime failed:", e); }
 
 // 3. Monthly call volume lines
+try {
 new Chart(document.getElementById('chartMonthly'), {
   type: 'line',
   data: {
@@ -1318,8 +1323,10 @@ new Chart(document.getElementById('chartMonthly'), {
   },
   options: defaultOpts
 });
+} catch(e) { console.warn("Chart chartMonthly failed:", e); }
 
 // 4. Flagged calls bar
+try {
 new Chart(document.getElementById('chartFlagged'), {
   type: 'bar',
   data: {
@@ -1328,8 +1335,10 @@ new Chart(document.getElementById('chartFlagged'), {
   },
   options: { ...defaultOpts, plugins: { legend: { display: false } } }
 });
+} catch(e) { console.warn("Chart chartFlagged failed:", e); }
 
 // 5. Sentiment by SA
+try {
 new Chart(document.getElementById('chartSentSA'), {
   type: 'bar',
   data: {
@@ -1342,8 +1351,10 @@ new Chart(document.getElementById('chartSentSA'), {
   },
   options: { ...defaultOpts, scales: { x: { stacked: true, grid:{color:'#2e3147'} }, y: { stacked: true, grid:{color:'#2e3147'}, max: 100 } } }
 });
+} catch(e) { console.warn("Chart chartSentSA failed:", e); }
 
 // 6. Sentiment by month line
+try {
 new Chart(document.getElementById('chartSentMonth'), {
   type: 'line',
   data: {
@@ -1355,9 +1366,11 @@ new Chart(document.getElementById('chartSentMonth'), {
   },
   options: defaultOpts
 });
+} catch(e) { console.warn("Chart chartSentMonth failed:", e); }
 
 // 7. Sentiment by call type
 const callTypes = ["Kickoff","Training","Guided Session","Check-in","Config/Setup","Onboarding","Other"];
+try {
 new Chart(document.getElementById('chartSentType'), {
   type: 'bar',
   data: {
@@ -1369,9 +1382,11 @@ new Chart(document.getElementById('chartSentType'), {
   },
   options: defaultOpts
 });
+} catch(e) { console.warn("Chart chartSentType failed:", e); }
 
 // 8. Questions by call type
 const qTypes = ["Kickoff","Training","Guided Session","Check-in","Config/Setup","Onboarding","Other"];
+try {
 new Chart(document.getElementById('chartQType'), {
   type: 'bar',
   data: {
@@ -1380,9 +1395,11 @@ new Chart(document.getElementById('chartQType'), {
   },
   options: { ...defaultOpts, plugins: { legend: { display: false } } }
 });
+} catch(e) { console.warn("Chart chartQType failed:", e); }
 
 // 9. Newport sentiment chart
 const newportHistory = [{"id":"01K9JG4M8DXXM5W0RK035GWCX2","title":"Quoting with Newport Networks","date":"2025-11-10","duration":38.5,"sentPos":36,"sentNeg":5,"questions":34},{"id":"01K9YY36350BM2XGSZYX468FH1","title":"Newport Network Solutions- Call","date":"2025-11-13","duration":30,"sentPos":35,"sentNeg":6,"questions":43},{"id":"01K9Z3HPRDN1D03NW41924EN8S","title":"Newport Network Solutions- Working Session","date":"2025-11-18","duration":60.4,"sentPos":31,"sentNeg":7,"questions":216},{"id":"01KACK6TR7E91X2Z5YA9JVS9S9","title":"Newport Network - 30 min check in","date":"2025-11-20","duration":31,"sentPos":28,"sentNeg":6,"questions":60},{"id":"01KAY6DPT43WD7ZBR1WNK7T92W","title":"Newport Network Solutions- Working Session","date":"2025-12-02","duration":60.3,"sentPos":37,"sentNeg":5,"questions":83},{"id":"01KBDJ49XAPYJ4ZJZZP4YB7KW3","title":"Newport Network Solutions- Call","date":"2025-12-04","duration":33.9,"sentPos":27,"sentNeg":4,"questions":46},{"id":"01KBGC3VNF8ADXXHN2YJSPVJ5X","title":"Newport Network Solutions- Working Session","date":"2025-12-09","duration":58,"sentPos":26,"sentNeg":5,"questions":79},{"id":"01KBQECBY7RY1WYT0V7FAX3JK2","title":"Newport Network Solutions- Call","date":"2025-12-11","duration":30.1,"sentPos":38,"sentNeg":6,"questions":33},{"id":"01KC2BV83YEP2V4RNS6YBYEVFJ","title":"Newport Network Solutions- Working Session","date":"2025-12-16","duration":62.2,"sentPos":23,"sentNeg":6,"questions":62},{"id":"01KC82VB9D1HVS5TZBHVWWCAMP","title":"Newport Network Solutions- Call","date":"2025-12-18","duration":32.2,"sentPos":37,"sentNeg":6,"questions":58},{"id":"01KCMD5KQE01A40T153M90MZ6Q","title":"Newport Network Solutions- Working Session","date":"2025-12-23","duration":57.7,"sentPos":33,"sentNeg":8,"questions":44},{"id":"01KD8B94NJTM2CMSSMNVP579QV","title":"Newport Network Solutions- Working Session","date":"2025-12-30","duration":61.3,"sentPos":36,"sentNeg":5,"questions":65},{"id":"01KDRJV3NEKP3915MK560S2WF1","title":"Newport Network Solutions- Working Session","date":"2026-01-06","duration":60.3,"sentPos":29,"sentNeg":6,"questions":74},{"id":"01KDZSSVYF3E974X2KAPHWRHS2","title":"Newport Network Solutions- Call","date":"2026-01-08","duration":31.5,"sentPos":33,"sentNeg":10,"questions":30},{"id":"01KEAGK7EAK1E34DX69C094D2N","title":"Newport Network Solutions- Working Session","date":"2026-01-13","duration":57.1,"sentPos":27,"sentNeg":6,"questions":103},{"id":"01KEHNECKJJNZXT6M8SD8FZDWD","title":"Newport Network Solutions- Call","date":"2026-01-15","duration":35.1,"sentPos":30,"sentNeg":6,"questions":57},{"id":"01KEWFMM5W6ARSJWWVPS2DF7WB","title":"Newport Network Solutions- Working Session","date":"2026-01-20","duration":60.6,"sentPos":27,"sentNeg":9,"questions":80},{"id":"01KFE52SNBJ1SPKE99RXTSMRS7","title":"Newport Network Solutions- Call","date":"2026-01-22","duration":30.5,"sentPos":34,"sentNeg":4,"questions":27},{"id":"01KFEGGFBY8MXJT1N4XGPENHCN","title":"Newport Network Solutions- Working Session","date":"2026-01-27","duration":59.2,"sentPos":30,"sentNeg":6,"questions":79},{"id":"01KFKTEMJTYT0B09BDQVEXVFZD","title":"Newport Network Solutions- Call","date":"2026-01-29","duration":36.5,"sentPos":31,"sentNeg":6,"questions":43},{"id":"01KG0V7SHP56491KKY4E37QEPQ","title":"Newport Network Solutions- Working Session","date":"2026-02-03","duration":57,"sentPos":30,"sentNeg":5,"questions":89},{"id":"01KGQ472FQ4XTDH1E5ZK4EJERP","title":"Newport Network Solutions- Call","date":"2026-02-12","duration":50.3,"sentPos":32,"sentNeg":5,"questions":61},{"id":"01KH484ZBRXZ7XZSAGX5VNH5SW","title":"Newport Network Solutions- Working Session","date":"2026-02-17","duration":60.1,"sentPos":26,"sentNeg":7,"questions":89},{"id":"01KH7NAY4YJBSCWXHQNJX8FN3K","title":"Newport Network Solutions- Call","date":"2026-02-19","duration":29.8,"sentPos":27,"sentNeg":5,"questions":40},{"id":"01KHP0P9EMYWVKVQFJKH60VN3W","title":"Newport Network Solutions- Working Session","date":"2026-02-24","duration":53.3,"sentPos":19,"sentNeg":8,"questions":81},{"id":"01KJ7ZVA300N9RMJD6G1REKK5W","title":"Newport Network Solutions- Working Session","date":"2026-03-03","duration":59.1,"sentPos":19,"sentNeg":6,"questions":56},{"id":"01KJDAMCF5T861BH0SDVVGKN95","title":"Newport Network Solutions- Call","date":"2026-03-05","duration":27.5,"sentPos":23,"sentNeg":7,"questions":62}];
+try {
 new Chart(document.getElementById('chartNewport'), {
   type: 'line',
   data: {
@@ -1394,9 +1411,11 @@ new Chart(document.getElementById('chartNewport'), {
   },
   options: { ...defaultOpts, scales: { x: { ticks: { maxTicksLimit: 8, font:{size:10} }, grid:{color:'#2e3147'} }, y: { grid:{color:'#2e3147'}, min: 0, max: 60 } } }
 });
+} catch(e) { console.warn("Chart chartNewport failed:", e); }
 
 // 10. Midwest sentiment chart
 const midwestHistory = [{"id":"01KF1KHB7YKNFPGNGNBS5P1M3S","title":"Midwest Specialists - PSA Meeting","date":"2026-01-16","duration":60.2,"sentPos":33,"sentNeg":10,"questions":44},{"id":"01KF3TB2CRX8KS6BWQEYSEDY6J","title":"Midwest Specialists - PSA Meeting","date":"2026-01-23","duration":47.7,"sentPos":36,"sentNeg":13,"questions":24},{"id":"01KG2KFZ5FWFZNK2FMHTYTPKXQ","title":"Midwest Specialists - PSA Meeting","date":"2026-01-30","duration":63.1,"sentPos":32,"sentNeg":7,"questions":65},{"id":"01KG7V0F2WY8W1RENHT0QEYRQC","title":"Midwest Specialists - PSA Meeting","date":"2026-02-06","duration":56,"sentPos":32,"sentNeg":10,"questions":32},{"id":"01KH205VFXQMDEAAGQJKC8CZAT","title":"Midwest Specialists - PSA Meeting","date":"2026-02-11","duration":93.9,"sentPos":20,"sentNeg":9,"questions":66},{"id":"01KHS5ZCDRGDN1MDMWK8TRSFFZ","title":"Midwest Specialists - PSA Meeting","date":"2026-02-20","duration":53.5,"sentPos":36,"sentNeg":11,"questions":22},{"id":"01KJB6RBTM7AZXAZ35QK21K5S5","title":"Midwest Specialists - PSA Meeting","date":"2026-02-27","duration":35.5,"sentPos":36,"sentNeg":10,"questions":25},{"id":"01KJQPXS7QM5EH1QAD7VP9R8HN","title":"Midwest Specialists - PSA Meeting","date":"2026-03-06","duration":77.1,"sentPos":30,"sentNeg":10,"questions":48}];
+try {
 new Chart(document.getElementById('chartMidwest'), {
   type: 'line',
   data: {
@@ -1408,8 +1427,10 @@ new Chart(document.getElementById('chartMidwest'), {
   },
   options: { ...defaultOpts, scales: { x: { ticks: { font:{size:10} }, grid:{color:'#2e3147'} }, y: { grid:{color:'#2e3147'}, min: 0, max: 60 } } }
 });
+} catch(e) { console.warn("Chart chartMidwest failed:", e); }
 
 // 11. Tony volume
+try {
 new Chart(document.getElementById('chartTonyVol'), {
   type: 'bar',
   data: {
@@ -1421,8 +1442,10 @@ new Chart(document.getElementById('chartTonyVol'), {
   },
   options: { ...defaultOpts, scales: { x: { stacked: true, grid:{color:'#2e3147'} }, y: { stacked: true, grid:{color:'#2e3147'} } } }
 });
+} catch(e) { console.warn("Chart chartTonyVol failed:", e); }
 
 // 12. Tony sentiment comparison
+try {
 new Chart(document.getElementById('chartTonySent'), {
   type: 'bar',
   data: {
@@ -1434,8 +1457,10 @@ new Chart(document.getElementById('chartTonySent'), {
   },
   options: defaultOpts
 });
+} catch(e) { console.warn("Chart chartTonySent failed:", e); }
 
 // 13. Graduation comparison
+try {
 new Chart(document.getElementById('chartGradComp'), {
   type: 'bar',
   data: {
@@ -1447,8 +1472,10 @@ new Chart(document.getElementById('chartGradComp'), {
   },
   options: defaultOpts
 });
+} catch(e) { console.warn("Chart chartGradComp failed:", e); }
 
 // 14. Graduation sentiment
+try {
 new Chart(document.getElementById('chartGradSent'), {
   type: 'bar',
   data: {
@@ -1460,6 +1487,7 @@ new Chart(document.getElementById('chartGradSent'), {
   },
   options: defaultOpts
 });
+} catch(e) { console.warn("Chart chartGradSent failed:", e); }
 </script>
 
 </body>
