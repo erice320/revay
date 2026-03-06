@@ -2,1318 +2,1801 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rev.io CS Analysis — 2024-10-01 to 2025-03-04</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rev.io CS Analysis — Support Only</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  :root {
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #22263a;
-    --text: #e8eaf6;
-    --text-muted: #8b92b8;
-    --accent: #6c63ff;
-    --accent2: #00d4aa;
-    --warning: #ff9f43;
-    --danger: #ff6b6b;
-    --border: #2d3155;
-  }
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --card: #1e2235;
+  --text: #e8eaf6; --muted: #8892b0;
+  --accent: #6c63ff; --accent2: #00d4aa;
+  --warning: #ff9f43; --danger: #ff6b6b;
+  --gold: #ffd700; --silver: #c0c0c0; --bronze: #cd7f32;
+  --border: #2a2d3e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6; }
+a { color: var(--accent2); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
-  }
+/* Nav */
+.nav { position: sticky; top: 0; z-index: 100; background: #13151f; border-bottom: 1px solid var(--border);
+  padding: 0 24px; display: flex; align-items: center; gap: 4px; overflow-x: auto; height: 48px; }
+.nav a { color: var(--muted); font-size: 12px; padding: 6px 10px; border-radius: 6px; white-space: nowrap; transition: all .2s; }
+.nav a:hover { color: var(--text); background: var(--surface); text-decoration: none; }
+.nav .logo { font-weight: 700; color: var(--accent); margin-right: 16px; font-size: 15px; white-space: nowrap; }
 
-  /* Header */
-  .header {
-    background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 2.5rem 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(10px);
-  }
-  .header-logo { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
-  .header-logo span { color: var(--accent2); }
-  .header-meta { font-size: 0.8rem; color: var(--text-muted); text-align: right; }
-  .header-meta strong { color: var(--text); }
+/* Layout */
+.container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
+.section { margin-bottom: 48px; }
+h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+h2 { font-size: 20px; font-weight: 600; margin-bottom: 16px; color: var(--accent2); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+.subtitle { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
 
-  /* Nav */
-  .nav {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 3rem;
-    display: flex;
-    gap: 0;
-    overflow-x: auto;
-  }
-  .nav a {
-    color: var(--text-muted);
-    text-decoration: none;
-    padding: 1rem 1.2rem;
-    font-size: 0.82rem;
-    font-weight: 500;
-    border-bottom: 2px solid transparent;
-    white-space: nowrap;
-    transition: all 0.2s;
-  }
-  .nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
+/* KPI Cards */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 16px; margin-bottom: 32px; }
+.kpi-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; }
+.kpi-card .value { font-size: 32px; font-weight: 700; color: var(--accent2); }
+.kpi-card .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-top: 4px; }
 
-  /* Layout */
-  .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
-  .section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
-  .section-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-    margin-left: 1rem;
-  }
+/* Cards */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+.card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 768px) { .card-row { grid-template-columns: 1fr; } }
 
-  /* KPI Cards */
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; }
-  .kpi-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, border-color 0.2s;
-  }
-  .kpi-card:hover { transform: translateY(-2px); border-color: var(--accent); }
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-  }
-  .kpi-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.5rem; }
-  .kpi-value { font-size: 2.2rem; font-weight: 800; color: var(--text); line-height: 1; }
-  .kpi-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem; }
+/* Tables */
+.table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { background: #13151f; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .5px;
+  padding: 10px 14px; text-align: left; position: sticky; top: 48px; }
+.data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: rgba(108,99,255,.06); }
 
-  /* Cards */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1.2rem;
-  }
+/* Badges */
+.badge { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.badge-green  { background: rgba(0,212,170,.15); color: #00d4aa; border: 1px solid rgba(0,212,170,.3); }
+.badge-yellow { background: rgba(255,159,67,.15); color: #ff9f43; border: 1px solid rgba(255,159,67,.3); }
+.badge-red    { background: rgba(255,107,107,.15); color: #ff6b6b; border: 1px solid rgba(255,107,107,.3); }
+.badge-muted  { background: rgba(136,146,176,.12); color: var(--muted); border: 1px solid rgba(136,146,176,.2); }
+.badge-gold   { background: rgba(255,215,0,.15); color: var(--gold); border: 1px solid rgba(255,215,0,.3); }
+.badge-silver { background: rgba(192,192,192,.15); color: var(--silver); border: 1px solid rgba(192,192,192,.3); }
+.badge-bronze { background: rgba(205,127,50,.15); color: var(--bronze); border: 1px solid rgba(205,127,50,.3); }
 
-  /* Tables */
-  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
-  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  thead tr { background: var(--surface2); }
-  th { padding: 0.85rem 1rem; text-align: left; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
-  th:hover { color: var(--text); }
-  td { padding: 0.8rem 1rem; border-top: 1px solid var(--border); vertical-align: middle; }
-  tbody tr:hover { background: rgba(108, 99, 255, 0.05); }
+.group-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1px 7px; font-size: 11px; white-space: nowrap; }
+.muted { color: var(--muted); }
+.warn-icon { font-size: 12px; }
 
-  /* Badges */
-  .badge { display: inline-block; padding: 0.2em 0.7em; border-radius: 20px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; white-space: nowrap; }
-  .badge-good { background: rgba(0, 212, 170, 0.15); color: #00d4aa; border: 1px solid rgba(0, 212, 170, 0.3); }
-  .badge-warn { background: rgba(255, 159, 67, 0.15); color: #ff9f43; border: 1px solid rgba(255, 159, 67, 0.3); }
-  .badge-danger { background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.3); }
+/* Charts */
+.chart-container { position: relative; height: 320px; }
+.chart-sm { height: 240px; }
 
-  /* Charts */
-  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .chart-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-  }
-  .chart-title { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  .chart-wrap { position: relative; height: 280px; }
+/* Findings */
+.finding { background: var(--surface); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 8px; }
 
-  /* Findings */
-  .findings-list { list-style: none; }
-  .findings-list li {
-    padding: 1rem 1.2rem;
-    margin-bottom: 0.8rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    transition: border-left-color 0.2s;
-  }
-  .findings-list li:hover { border-left-color: var(--accent2); }
-  .findings-list li.risk { border-left-color: var(--danger); }
-  .findings-list li.win { border-left-color: var(--accent2); }
-  .findings-list li.warn { border-left-color: var(--warning); }
-  .findings-list strong { color: var(--accent2); }
+/* Caveats */
+.caveats { background: rgba(255,159,67,.08); border: 1px solid rgba(255,159,67,.25); border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: var(--warning); }
+.caveats ul { margin: 4px 0 0 16px; }
+.caveats li { margin-bottom: 4px; }
 
-  /* Rank */
-  .rank { font-size: 1.1rem; }
+/* CSAT bar */
+.csat-bar-wrap { margin-bottom: 8px; }
+.csat-bar-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+.csat-bar-track { background: var(--surface); border-radius: 4px; height: 8px; overflow: hidden; }
+.csat-bar-fill { height: 100%; border-radius: 4px; }
 
-  /* CSAT Scorecard */
-  .csat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-  .csat-card { background: var(--surface2); border-radius: 10px; padding: 1.2rem; text-align: center; border: 1px solid var(--border); }
-  .csat-big { font-size: 2rem; font-weight: 800; }
-  .csat-label { font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); margin-top: 0.3rem; letter-spacing: 0.05em; }
+/* Recs */
+.rec { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.rec:last-child { border-bottom: none; }
+.rec-num { font-size: 18px; font-weight: 700; color: var(--accent); min-width: 28px; }
+.rec-owner { display: inline-block; margin-top: 4px; font-size: 11px; background: rgba(108,99,255,.15); color: var(--accent); border-radius: 10px; padding: 1px 8px; }
 
-  /* Grid helpers */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+/* Footer */
+.footer { border-top: 1px solid var(--border); padding: 16px 24px; text-align: center; color: var(--muted); font-size: 12px; margin-top: 48px; }
 
-  /* Recommendations */
-  .rec-list { list-style: none; counter-reset: rec; }
-  .rec-list li {
-    counter-increment: rec;
-    padding: 1.2rem 1.5rem 1.2rem 4rem;
-    margin-bottom: 0.8rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    position: relative;
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-  .rec-list li::before {
-    content: counter(rec);
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 2rem; height: 2rem;
-    background: var(--accent);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 0.85rem;
-    color: white;
-  }
-  .owner-tag { display: inline-block; font-size: 0.72rem; color: var(--accent2); border: 1px solid rgba(0,212,170,0.3); padding: 0.1em 0.6em; border-radius: 10px; margin-left: 0.5rem; }
+/* Header bar */
+.page-header { background: linear-gradient(135deg, #1a1d27 0%, #1e2235 100%);
+  border-bottom: 1px solid var(--border); padding: 32px 24px 24px; margin-bottom: 0; }
+.header-inner { max-width: 1400px; margin: 0 auto; }
+.header-badge { display: inline-block; background: rgba(108,99,255,.2); color: var(--accent); border-radius: 6px; padding: 2px 10px; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
 
-  /* Footer */
-  .footer {
-    text-align: center;
-    padding: 2rem;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    border-top: 1px solid var(--border);
-    margin-top: 1rem;
-  }
-
-  /* Responsive */
-  @media (max-width: 900px) {
-    .chart-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
-    .csat-grid { grid-template-columns: 1fr 1fr; }
-    .header { padding: 1.5rem; }
-    .nav { padding: 0 1rem; }
-    .container { padding: 0 1rem; }
-  }
-
-  /* Note */
-  .note { font-size: 0.78rem; color: var(--text-muted); font-style: italic; margin-top: 0.8rem; }
+/* Tabs for agent subtables */
+.tab-bar { display: flex; gap: 4px; margin-bottom: 16px; }
+.tab-btn { padding: 6px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface);
+  color: var(--muted); cursor: pointer; font-size: 13px; transition: all .2s; font-family: inherit; }
+.tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
 </style>
 </head>
 <body>
 
-<!-- Header -->
-<div class="header">
-  <div class="header-logo">Rev<span>.io</span> CS Intelligence</div>
-  <div class="header-meta">
-    <div><strong>Built by Revay ⚡</strong></div>
-    <div>Refreshed: Mar 6, 2026</div>
-    <div>Data: Oct 2024 – Mar 2025 | 9,307 tickets</div>
+<nav class="nav">
+  <span class="logo">⚡ Rev.io CS</span>
+  <a href="#summary">Summary</a>
+  <a href="#findings">Findings</a>
+  <a href="#volume">Volume</a>
+  <a href="#groups">Groups</a>
+  <a href="#csat">CSAT</a>
+  <a href="#rankings">Rankings</a>
+  <a href="#age">Backlog</a>
+  <a href="#frt">FRT</a>
+  <a href="#accounts">Accounts</a>
+  <a href="#tags">Tags</a>
+  <a href="#recs">Recs</a>
+</nav>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div class="header-badge">Support Tickets Only — Onboarding Excluded</div>
+    <h1>Customer Support Analysis</h1>
+    <p class="subtitle">2020-10-08 → 2025-03-04 &nbsp;·&nbsp; 8,956 tickets &nbsp;·&nbsp; 17 support groups &nbsp;·&nbsp; 36 ranked agents</p>
   </div>
 </div>
-
-<!-- Nav -->
-<nav class="nav">
-  <a href="#exec-summary">Executive Summary</a>
-  <a href="#key-findings">Key Findings</a>
-  <a href="#volume">Volume & Trends</a>
-  <a href="#groups">Group Performance</a>
-  <a href="#csat">CSAT Deep Dive</a>
-  <a href="#agents">Agent Performance</a>
-  <a href="#backlog">Ticket Backlog</a>
-  <a href="#frt">First Reply Time</a>
-  <a href="#accounts">Account Risk</a>
-  <a href="#categories">Support Categories</a>
-  <a href="#recommendations">Recommendations</a>
-</nav>
 
 <div class="container">
 
-<!-- 1. Executive Summary -->
-<section class="section" id="exec-summary">
-  <div class="section-title">📊 Executive Summary</div>
+<!-- 1. EXECUTIVE SUMMARY -->
+<section class="section" id="summary">
+  <h2>1. Executive Summary</h2>
   <div class="kpi-grid">
     <div class="kpi-card">
-      <div class="kpi-label">Total Tickets</div>
-      <div class="kpi-value">9,307</div>
-      <div class="kpi-sub">Oct 2024 – Mar 2025</div>
+      <div class="value">8,956</div>
+      <div class="label">Support Tickets</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Date Range</div>
-      <div class="kpi-value" style="font-size:1.2rem;padding-top:0.3rem">Oct '24<br>– Mar '25</div>
-      <div class="kpi-sub">2024-10-01 to 2025-03-04</div>
+      <div class="value">99.4%</div>
+      <div class="label">Solve Rate</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Overall CSAT</div>
-      <div class="kpi-value" style="color:#00d4aa">94.2%</div>
-      <div class="kpi-sub">1084 good / 67 bad rated</div>
+      <div class="value">93.9%</div>
+      <div class="label">Overall CSAT</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Solve Rate</div>
-      <div class="kpi-value" style="color:#00d4aa">99.5%</div>
-      <div class="kpi-sub">9,264 resolved</div>
+      <div class="value">296.5h</div>
+      <div class="label">Avg Resolution</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Avg Resolution</div>
-      <div class="kpi-value" style="font-size:1.8rem">232.0h</div>
-      <div class="kpi-sub">Calendar hours (closed tickets)</div>
+      <div class="value">13.0h</div>
+      <div class="label">Avg First Reply</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Avg First Reply</div>
-      <div class="kpi-value" style="font-size:1.8rem">28.4h</div>
-      <div class="kpi-sub">Calendar hours</div>
+      <div class="value">52</div>
+      <div class="label">Open Tickets</div>
     </div>
   </div>
 </section>
 
-<!-- 2. Key Findings -->
-<section class="section" id="key-findings">
-  <div class="section-title">🔍 Key Findings</div>
-  <ul class="findings-list">
-    <li class="win">🏆 <strong>Strong solve rate overall at 99.5%</strong> — 9,264 tickets resolved out of 9,307 in the period. The team is managing volume effectively at scale.</li>
-    <li class="warn">📈 <strong>Peak volume hit 2,470 tickets in Oct 2024</strong> — the highest single month in the data window.  March 2025 is partial and will likely undershoot prior months.</li>
-    <li class="risk">⚠️ <strong>CSAT response rate is critically low at 11.5%</strong> — only 1151 tickets rated out of 10,000 offered. 94.2% satisfaction score is meaningful but based on a thin sample. Push for higher survey completion.</li>
-    <li class="risk">🔴 <strong>PSA Known Issues has the lowest solve rate at 15.0%</strong> — 20 tickets with nearly no resolution. This signals either a routing problem or a group used for tracking rather than support — needs investigation.</li>
-    <li class="win">✅ <strong>Top group by volume: Billing - Client Success (3,673 tickets)</strong> — running at 100.0% solve rate. Solid execution.</li>
-    <li class="warn">📊 <strong>Org names unavailable in raw ticket data</strong> — organization_id is present on 88% of tickets. Account-level analysis uses org IDs as proxies. Consider enriching with Salesforce account names for deeper churn risk analysis.</li>
-    <li>🕐 <strong>33 tickets still open/pending</strong> at data cutoff. Of these, 30 are 30+ days old — potential churn signals worth triaging immediately.</li>
-  </ul>
+<!-- 2. KEY FINDINGS -->
+<section class="section" id="findings">
+  <h2>2. Key Findings</h2>
+  <div class="finding">📊 <strong>8,956 support tickets</strong> analyzed across 17 active groups (2020-10-08 – 2025-03-04), after excluding onboarding, product, and internal groups.</div><div class="finding">⭐ Overall CSAT is <strong>93.9%</strong> across 997 rated tickets (11.1% response rate). Watch list: PSA - Account Management, Billing/Finance - Core Rev.io, Billing/Finance - PSA all below 80%.</div><div class="finding">✅ <strong>99.4% solve rate</strong> overall. PSA Known Issues (14%) flagged below 50%.</div><div class="finding">🏆 Top agent: <strong>JB Hendrix</strong> (Billing - Client Success) — composite score 97.8, 778 tickets, 100% solve rate, 100% CSAT.</div><div class="finding">⏰ <strong>52 open tickets</strong> in backlog — 52 (100.0%) are older than 30 days, indicating potential capacity strain.</div><div class="finding">⚡ Average resolution time is <strong>296.5 hours</strong> (calendar). FRT averages 13.0h against a 4-hour benchmark.</div>
 </section>
 
-<!-- 3. Volume & Trends -->
+<!-- 3. VOLUME & TRENDS -->
 <section class="section" id="volume">
-  <div class="section-title">📈 Volume & Trends</div>
-  <div class="chart-grid">
-    <div class="chart-card" style="grid-column: span 2">
-      <div class="chart-title">Monthly Ticket Volume</div>
-      <div class="chart-wrap">
-        <canvas id="monthlyChart"></canvas>
-      </div>
-      <p class="note">* March 2025 is partial — data pull covers through 2025-03-04</p>
-    </div>
-  </div>
-  <div style="margin-top:1.5rem">
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Period</th><th>Ticket Count</th><th>MoM Change</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>Oct 2024</td>
-            <td>2,470</td>
-            <td>—</td>
-          </tr><tr>
-            <td>Nov 2024</td>
-            <td>2,088</td>
-            <td><span style="color:#00d4aa;font-weight:600">▼ 15.5%</span></td>
-          </tr><tr>
-            <td>Dec 2024</td>
-            <td>1,933</td>
-            <td><span style="color:#00d4aa;font-weight:600">▼ 7.4%</span></td>
-          </tr><tr>
-            <td>Jan 2025</td>
-            <td>2,110</td>
-            <td><span style="color:#ff9f43;font-weight:600">▲ 9.2%</span></td>
-          </tr><tr>
-            <td>Feb 2025</td>
-            <td>701</td>
-            <td><span style="color:#00d4aa;font-weight:600">▼ 66.8%</span></td>
-          </tr><tr>
-            <td>Mar 2025*</td>
-            <td>5</td>
-            <td><span style="color:#00d4aa;font-weight:600">▼ 99.3%</span></td>
-          </tr>
-        </tbody>
-      </table>
+  <h2>3. Volume &amp; Trends</h2>
+  
+  <div class="card">
+    <div class="chart-container">
+      <canvas id="volumeChart"></canvas>
     </div>
   </div>
 </section>
 
-<!-- 4. Group Performance -->
+<!-- 4. GROUP PERFORMANCE -->
 <section class="section" id="groups">
-  <div class="section-title">👥 Group Performance</div>
+  <h2>4. Group Performance</h2>
   <div class="table-wrap">
-    <table id="groupTable">
+    <table class="data-table">
       <thead>
         <tr>
-          <th onclick="sortTable('groupTable',0)">Group ↕</th>
-          <th onclick="sortTable('groupTable',1)">Tickets ↕</th>
-          <th onclick="sortTable('groupTable',2)">Solve Rate ↕</th>
-          <th onclick="sortTable('groupTable',3)">Avg Resolution ↕</th>
-          <th onclick="sortTable('groupTable',4)">Avg FRT ↕</th>
-          <th onclick="sortTable('groupTable',5)">CSAT ↕</th>
-          <th>Status</th>
+          <th>Group</th><th>Tickets</th><th>Solve Rate</th>
+          <th>Avg Res (hrs)</th><th>Avg FRT (hrs)</th>
+          <th>CSAT %</th><th>CSAT N</th><th>Status</th>
         </tr>
       </thead>
-      <tbody><tr>
-    <td>Billing - Client Success</td>
-    <td>3,673</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>73.5h</td>
-    <td>3.0h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>PSA - Tier 1</td>
-    <td>1,854</td>
-    <td><span class="badge badge-good">99.6%</span></td>
-    <td>132.4h</td>
-    <td>9.3h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Onboarding</td>
-    <td>1,638</td>
-    <td><span class="badge badge-good">99.8%</span></td>
-    <td>534.5h</td>
-    <td>104.4h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Precision (PTT)</td>
-    <td>429</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>129.8h</td>
-    <td>7.3h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Billing - Engineering Support</td>
-    <td>298</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>382.2h</td>
-    <td>13.1h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Billing - Data Support/Reporting - Report Request</td>
-    <td>295</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>343.8h</td>
-    <td>18.6h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Billing - Account Management</td>
-    <td>265</td>
-    <td><span class="badge badge-good">99.2%</span></td>
-    <td>675.0h</td>
-    <td>7.1h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Rev.io Helpdesk</td>
-    <td>179</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>96.2h</td>
-    <td>47.9h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Billing - Data Support/Reporting - Data Change Request</td>
-    <td>116</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>322.3h</td>
-    <td>7.1h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Odin</td>
-    <td>113</td>
-    <td><span class="badge badge-good">98.2%</span></td>
-    <td>516.2h</td>
-    <td>53.6h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>PSA - Account Management</td>
-    <td>104</td>
-    <td><span class="badge badge-good">98.1%</span></td>
-    <td>261.4h</td>
-    <td>73.1h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Billing/Finance - Core Rev.io</td>
-    <td>90</td>
-    <td><span class="badge badge-good">98.9%</span></td>
-    <td>218.8h</td>
-    <td>42.1h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Product - Focus Groups</td>
-    <td>49</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>1208.1h</td>
-    <td>24.7h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Documentation</td>
-    <td>43</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>240.0h</td>
-    <td>62.3h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Solutions Analysts</td>
-    <td>42</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>539.8h</td>
-    <td>136.4h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>PSA Known Issues</td>
-    <td>20</td>
-    <td><span class="badge badge-danger">15.0%</span></td>
-    <td>391.3h</td>
-    <td>186.1h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-warn">At Risk</span></td>
-  </tr><tr>
-    <td>Billing/Finance - PSA</td>
-    <td>18</td>
-    <td><span class="badge badge-warn">66.7%</span></td>
-    <td>462.4h</td>
-    <td>162.2h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-warn">Monitor</span></td>
-  </tr><tr>
-    <td>Project Managers</td>
-    <td>17</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>476.9h</td>
-    <td>132.1h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Product</td>
-    <td>14</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>667.1h</td>
-    <td>58.3h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr><tr>
-    <td>Precision Professional Services</td>
-    <td>9</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>1436.6h</td>
-    <td>98.6h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-    <td><span class="badge badge-good">Healthy</span></td>
-  </tr></tbody>
+      <tbody>
+        <tr>
+          <td><strong>Billing - Client Success</strong></td>
+          <td>4257</td>
+          <td>100.0%</td>
+          <td>82.1</td>
+          <td>3.2</td>
+          <td>96.8%</td>
+          <td>440</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>PSA - Tier 1</strong></td>
+          <td>2402</td>
+          <td>99.7%</td>
+          <td>158.8</td>
+          <td>12.4</td>
+          <td>89.9%</td>
+          <td>375</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>Precision (PTT)</strong></td>
+          <td>559</td>
+          <td>100.0%</td>
+          <td>211.4</td>
+          <td>10.8</td>
+          <td>100.0%</td>
+          <td>65</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>Billing - Engineering Support</strong></td>
+          <td>426</td>
+          <td>100.0%</td>
+          <td>787.7</td>
+          <td>14.4</td>
+          <td>100.0%</td>
+          <td>5</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>Billing - Account Management</strong></td>
+          <td>386</td>
+          <td>99.0%</td>
+          <td>1123.9</td>
+          <td>8.6</td>
+          <td>100.0%</td>
+          <td>18</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>Billing - Data Support/Reporting - Report Request</strong></td>
+          <td>351</td>
+          <td>100.0%</td>
+          <td>380.7</td>
+          <td>20.6</td>
+          <td>96.9%</td>
+          <td>32</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>PSA - Account Management</strong></td>
+          <td>136</td>
+          <td>97.8%</td>
+          <td>435.3</td>
+          <td>75.5</td>
+          <td>62.5%</td>
+          <td>8</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>Billing - Data Support/Reporting - Data Change Request</strong></td>
+          <td>130</td>
+          <td>100.0%</td>
+          <td>464.0</td>
+          <td>18.9</td>
+          <td>97.1%</td>
+          <td>34</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>Billing/Finance - Core Rev.io</strong></td>
+          <td>109</td>
+          <td>99.1%</td>
+          <td>365.7</td>
+          <td>61.6</td>
+          <td>70.0%</td>
+          <td>10</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>Solutions Analysts</strong></td>
+          <td>108</td>
+          <td>100.0%</td>
+          <td>5729.3</td>
+          <td>106.8</td>
+          <td>100.0%</td>
+          <td>1</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>PSA Known Issues</strong></td>
+          <td>35</td>
+          <td>14.3%</td>
+          <td>1539.7</td>
+          <td>107.2</td>
+          <td><span class="muted">N/A</span></td>
+          <td>0</td>
+          <td><span class="badge badge-red">At Risk</span></td>
+        </tr><tr>
+          <td><strong>Precision Professional Services</strong></td>
+          <td>20</td>
+          <td>100.0%</td>
+          <td>2503.3</td>
+          <td>55.3</td>
+          <td><span class="muted">N/A</span></td>
+          <td>0</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>Billing/Finance - PSA</strong></td>
+          <td>19</td>
+          <td>68.4%</td>
+          <td>465.6</td>
+          <td>162.2</td>
+          <td>75.0%</td>
+          <td>4</td>
+          <td><span class="badge badge-red">At Risk</span></td>
+        </tr><tr>
+          <td><strong>PSA Custom Reports</strong></td>
+          <td>11</td>
+          <td>100.0%</td>
+          <td>3116.6</td>
+          <td>729.1</td>
+          <td><span class="muted">N/A</span></td>
+          <td>0</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>Rev.io Payments</strong></td>
+          <td>5</td>
+          <td>100.0%</td>
+          <td>2496.4</td>
+          <td>228.3</td>
+          <td><span class="muted">N/A</span></td>
+          <td>0</td>
+          <td><span class="badge badge-green">Healthy</span></td>
+        </tr><tr>
+          <td><strong>Billing AM / DE </strong></td>
+          <td>1</td>
+          <td>100.0%</td>
+          <td>2850.8</td>
+          <td>3.5</td>
+          <td><span class="muted">N/A</span></td>
+          <td>0</td>
+          <td><span class="badge badge-muted">Low Vol</span></td>
+        </tr><tr>
+          <td><strong>Client Churn</strong></td>
+          <td>1</td>
+          <td>100.0%</td>
+          <td>4174.4</td>
+          <td><span class="muted">N/A</span></td>
+          <td><span class="muted">N/A</span></td>
+          <td>0</td>
+          <td><span class="badge badge-muted">Low Vol</span></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </section>
 
-<!-- 5. CSAT Deep Dive -->
+<!-- 5. CSAT DEEP DIVE -->
 <section class="section" id="csat">
-  <div class="section-title">⭐ CSAT Deep Dive</div>
-  <div class="csat-grid">
-    <div class="csat-card">
-      <div class="csat-big" style="color:#00d4aa">94.2%</div>
-      <div class="csat-label">Overall CSAT</div>
+  <h2>5. CSAT Deep Dive</h2>
+  <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr); max-width: 600px; margin-bottom:24px;">
+    <div class="kpi-card">
+      <div class="value">93.9%</div>
+      <div class="label">Overall CSAT</div>
     </div>
-    <div class="csat-card">
-      <div class="csat-big" style="color:#00d4aa">1,084</div>
-      <div class="csat-label">Good Ratings</div>
+    <div class="kpi-card">
+      <div class="value">997</div>
+      <div class="label">Rated Tickets (CSAT)</div>
     </div>
-    <div class="csat-card">
-      <div class="csat-big" style="color:#ff6b6b">67</div>
-      <div class="csat-label">Bad Ratings</div>
-    </div>
-    <div class="csat-card">
-      <div class="csat-big" style="color:#ff9f43">11.5%</div>
-      <div class="csat-label">Response Rate</div>
+    <div class="kpi-card">
+      <div class="value">11.1%</div>
+      <div class="label">Est. Response Rate</div>
     </div>
   </div>
-
-  <div class="grid-2">
-    <div class="chart-card">
-      <div class="chart-title">CSAT % by Group (top 10, rated)</div>
-      <div class="chart-wrap">
-        <canvas id="csatGroupChart"></canvas>
+  <div class="card">
+    <h3>CSAT by Group</h3>
+    
+      <div class="csat-bar-wrap">
+        <div class="csat-bar-label">
+          <span>Precision (PTT)</span>
+          <span>100% (n=65)</span>
+        </div>
+        <div class="csat-bar-track">
+          <div class="csat-bar-fill" style="width:100%;background:var(--accent2)"></div>
+        </div>
+      </div>
+      <div class="csat-bar-wrap">
+        <div class="csat-bar-label">
+          <span>Billing - Engineering Support</span>
+          <span>100% (n=5)</span>
+        </div>
+        <div class="csat-bar-track">
+          <div class="csat-bar-fill" style="width:100%;background:var(--accent2)"></div>
+        </div>
+      </div>
+      <div class="csat-bar-wrap">
+        <div class="csat-bar-label">
+          <span>Billing - Account Management</span>
+          <span>100% (n=18)</span>
+        </div>
+        <div class="csat-bar-track">
+          <div class="csat-bar-fill" style="width:100%;background:var(--accent2)"></div>
+        </div>
+      </div>
+      <div class="csat-bar-wrap">
+        <div class="csat-bar-label">
+          <span>Billing - Data Support/Reporting - Data Change Request</span>
+          <span>97% (n=34)</span>
+        </div>
+        <div class="csat-bar-track">
+          <div class="csat-bar-fill" style="width:97.05882352941177%;background:var(--accent2)"></div>
+        </div>
+      </div>
+      <div class="csat-bar-wrap">
+        <div class="csat-bar-label">
+          <span>Billing - Data Support/Reporting - Report Request</span>
+          <span>97% (n=32)</span>
+        </div>
+        <div class="csat-bar-track">
+          <div class="csat-bar-fill" style="width:96.875%;background:var(--accent2)"></div>
+        </div>
+      </div>
+      <div class="csat-bar-wrap">
+        <div class="csat-bar-label">
+          <span>Billing - Client Success</span>
+          <span>97% (n=440)</span>
+        </div>
+        <div class="csat-bar-track">
+          <div class="csat-bar-fill" style="width:96.81818181818181%;background:var(--accent2)"></div>
+        </div>
+      </div>
+      <div class="csat-bar-wrap">
+        <div class="csat-bar-label">
+          <span>PSA - Tier 1</span>
+          <span>90% (n=375)</span>
+        </div>
+        <div class="csat-bar-track">
+          <div class="csat-bar-fill" style="width:89.86666666666666%;background:var(--warning)"></div>
+        </div>
+      </div>
+      <div class="csat-bar-wrap">
+        <div class="csat-bar-label">
+          <span>Billing/Finance - PSA</span>
+          <span>75% (n=4)</span>
+        </div>
+        <div class="csat-bar-track">
+          <div class="csat-bar-fill" style="width:75%;background:var(--warning)"></div>
+        </div>
+      </div>
+      <div class="csat-bar-wrap">
+        <div class="csat-bar-label">
+          <span>Billing/Finance - Core Rev.io</span>
+          <span>70% (n=10)</span>
+        </div>
+        <div class="csat-bar-track">
+          <div class="csat-bar-fill" style="width:70%;background:var(--danger)"></div>
+        </div>
+      </div>
+      <div class="csat-bar-wrap">
+        <div class="csat-bar-label">
+          <span>PSA - Account Management</span>
+          <span>63% (n=8)</span>
+        </div>
+        <div class="csat-bar-track">
+          <div class="csat-bar-fill" style="width:62.5%;background:var(--danger)"></div>
+        </div>
+      </div>
+  </div>
+  <div class="card" style="border-color: var(--danger);">
+      <h3>⚠️ CSAT Watch List (&lt;80%)</h3>
+      <p class="muted" style="margin-bottom:12px">Groups requiring immediate attention:</p>
+      <div class="finding" style="border-left-color:var(--danger)">
+        <strong>PSA - Account Management</strong>: 62.5% CSAT on 8 ratings — 136 total tickets
+      </div><div class="finding" style="border-left-color:var(--danger)">
+        <strong>Billing/Finance - Core Rev.io</strong>: 70.0% CSAT on 10 ratings — 109 total tickets
+      </div><div class="finding" style="border-left-color:var(--danger)">
+        <strong>Billing/Finance - PSA</strong>: 75.0% CSAT on 4 ratings — 19 total tickets
       </div>
     </div>
-    <div class="card">
-      <div class="chart-title">⚠ Watch List — Groups Below 80% CSAT</div>
-      <ul style="margin-top:0.5rem;padding-left:1.2rem;line-height:2"><li><strong>PSA - Account Management</strong>: 62.5% CSAT (8 rated)</li><li><strong>Billing/Finance - Core Rev.io</strong>: 70.0% CSAT (10 rated)</li></ul>
-      <p class="note">⚠ Survey response rate is only 11.5%. CSAT scores may not be statistically representative. Recommend enabling automated survey follow-ups to increase sample size.</p>
-    </div>
-  </div>
 </section>
 
-<!-- 6. Agent Performance -->
-<section class="section" id="agents">
-  <div class="section-title">🏅 Agent Performance</div>
-  <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem">Benchmarks: Cameron Resuta & JB Hendrix — top performers used as internal bar.</p>
+<!-- 6. CSM STACK RANKINGS -->
+<section class="section" id="rankings">
+  <h2>6. 🏆 CSM / Agent Stack Rankings</h2>
+  
+  <div class="caveats">
+    <strong>Methodology caveats:</strong>
+    <ul>
+      <li>Rankings based on final ticket assignee — transferred tickets credit the agent who closed them</li>
+      <li>CSAT marked ⚠️ where fewer than 10 rated tickets (score may not be statistically significant)</li>
+      <li>Resolution times are calendar hours (include weekends)</li>
+      <li>Only agents with ≥20 assigned tickets are ranked. 36 agents qualify.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-bottom:8px; padding: 14px 18px;">
+    <strong>Composite Score Formula:</strong>
+    <span class="muted"> CSAT% × 0.40 + Solve Rate × 0.25 + Resolution Speed × 0.20 + FRT Speed × 0.15</span>
+    <br><span class="muted" style="font-size:12px">Speed scores: max(0, 100 − (agent_avg / peer_avg) × 50) — faster than peer avg = higher score</span>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('all')">All Agents (36)</button>
+    <button class="tab-btn" onclick="showTab('billing')">Billing CS (23)</button>
+    <button class="tab-btn" onclick="showTab('psa')">PSA (9)</button>
+  </div>
+
+  <div id="tab-all" class="tab-panel active">
+    <h3>Cross-Group Rankings</h3>
+    
   <div class="table-wrap">
-    <table id="agentTable">
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th onclick="sortTable('agentTable',1)">Agent ↕</th>
-          <th onclick="sortTable('agentTable',2)">Tickets ↕</th>
-          <th onclick="sortTable('agentTable',3)">Solve Rate ↕</th>
-          <th onclick="sortTable('agentTable',4)">Avg Resolution ↕</th>
-          <th onclick="sortTable('agentTable',5)">Avg FRT ↕</th>
-          <th onclick="sortTable('agentTable',6)">CSAT ↕</th>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Rank</th><th>Tier</th><th>Agent Name</th><th>Group</th>
+        <th>Tickets</th><th>Solve Rate</th><th>Avg Res (hrs)</th>
+        <th>Avg FRT (hrs)</th><th>CSAT</th><th>Composite</th><th>Open Backlog</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>1</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>JB Hendrix</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>778</td>
+          <td>100.0%</td>
+          <td>111.5</td>
+          <td>2.2</td>
+          <td>100%</td>
+          <td><strong>97.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>2</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Carly Rollins</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>668</td>
+          <td>100.0%</td>
+          <td>109.7</td>
+          <td>3.2</td>
+          <td>99%</td>
+          <td><strong>97.2</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>3</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Chris Cohorst</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>742</td>
+          <td>100.0%</td>
+          <td>133.6</td>
+          <td>2.3</td>
+          <td>98%</td>
+          <td><strong>96.4</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>4</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Cameron Resuta</strong></td>
+          <td><span class="group-pill">Precision (PTT)</span></td>
+          <td>441</td>
+          <td>100.0%</td>
+          <td>163.2</td>
+          <td>4.7</td>
+          <td>100%</td>
+          <td><strong>96.4</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>5</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Xavier Brittian</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>97</td>
+          <td>100.0%</td>
+          <td>79.4</td>
+          <td>2.4</td>
+          <td>94%</td>
+          <td><strong>95.9</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>6</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Jon Yntema</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>782</td>
+          <td>100.0%</td>
+          <td>166.4</td>
+          <td>3.9</td>
+          <td>95%</td>
+          <td><strong>94.5</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>7</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Brit Kimble</strong></td>
+          <td><span class="group-pill">PSA - Tier 1</span></td>
+          <td>311</td>
+          <td>100.0%</td>
+          <td>226.4</td>
+          <td>9.8</td>
+          <td>100%</td>
+          <td><strong>94.3</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>8</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Darren Znamenacek</strong></td>
+          <td><span class="group-pill">PSA - Tier 1</span></td>
+          <td>510</td>
+          <td>100.0%</td>
+          <td>140.2</td>
+          <td>9.4</td>
+          <td>96%</td>
+          <td><strong>94.0</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>9</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Lawrence Martin</strong></td>
+          <td><span class="group-pill">PSA - Tier 1</span></td>
+          <td>813</td>
+          <td>100.0%</td>
+          <td>81.1</td>
+          <td>6.8</td>
+          <td>91%</td>
+          <td><strong>93.6</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>10</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Sean Kuta</strong></td>
+          <td><span class="group-pill">PSA - Tier 1</span></td>
+          <td>633</td>
+          <td>100.0%</td>
+          <td>191.8</td>
+          <td>23.9</td>
+          <td>89%</td>
+          <td><strong>87.2</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>11</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Joshua Nugent</strong></td>
+          <td><span class="group-pill">Billing - Data Support/Reporting - Data Change Request</span></td>
+          <td>115</td>
+          <td>100.0%</td>
+          <td>499.8</td>
+          <td>18.9</td>
+          <td>97%</td>
+          <td><strong>86.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>12</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Jacob Stricherz</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>31</td>
+          <td>100.0%</td>
+          <td>15.7</td>
+          <td>0.0</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>79.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>13</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Michael Elmore</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>766</td>
+          <td>100.0%</td>
+          <td>105.3</td>
+          <td>3.1</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>77.7</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>14</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Christian Vann</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>132</td>
+          <td>100.0%</td>
+          <td>98.2</td>
+          <td>4.7</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>77.4</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>15</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Sumit Kumar</strong></td>
+          <td><span class="group-pill">Billing - Data Support/Reporting - Report Request</span></td>
+          <td>21</td>
+          <td>100.0%</td>
+          <td>368.0</td>
+          <td>5.4</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>73.1</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>16</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Deepak Kumar</strong></td>
+          <td><span class="group-pill">Billing - Data Support/Reporting - Report Request</span></td>
+          <td>24</td>
+          <td>100.0%</td>
+          <td>391.8</td>
+          <td>5.3</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>72.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>17</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Conor Brumfield</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>260</td>
+          <td>100.0%</td>
+          <td>366.3</td>
+          <td>8.8</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>72.4</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>18</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Rachael Buchtan</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>422</td>
+          <td>99.5%</td>
+          <td>421.1</td>
+          <td>9.6</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>71.2</strong></td>
+          <td>2</td>
+        </tr><tr>
+          <td>19</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Adrian Rosales</strong></td>
+          <td><span class="group-pill">Billing - Data Support/Reporting - Report Request</span></td>
+          <td>222</td>
+          <td>100.0%</td>
+          <td>384.1</td>
+          <td>14.4</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>70.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>20</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Seth Fields</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>24</td>
+          <td>100.0%</td>
+          <td>423.3</td>
+          <td>15.4</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>70.0</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>21</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Lex Scott Morrison</strong></td>
+          <td><span class="group-pill">PSA Known Issues</span></td>
+          <td>106</td>
+          <td>86.8%</td>
+          <td>269.7</td>
+          <td>31.8</td>
+          <td>62%</td>
+          <td><strong>69.7</strong></td>
+          <td>14</td>
+        </tr><tr>
+          <td>22</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Jared Keirns</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>69</td>
+          <td>100.0%</td>
+          <td>438.2</td>
+          <td>20.4</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>68.6</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>23</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Jeremy Christian</strong></td>
+          <td><span class="group-pill">Billing/Finance - Core Rev.io</span></td>
+          <td>67</td>
+          <td>100.0%</td>
+          <td>193.3</td>
+          <td>50.6</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>65.2</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>24</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Dakota Gunnels</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>66</td>
+          <td>100.0%</td>
+          <td>911.9</td>
+          <td>7.4</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>64.4</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>25</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Julie Marvelli</strong></td>
+          <td><span class="group-pill">PSA - Account Management</span></td>
+          <td>28</td>
+          <td>100.0%</td>
+          <td>460.7</td>
+          <td>37.7</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>64.1</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>26</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Vincenzo Martemucci</strong></td>
+          <td><span class="group-pill">Billing - Data Support/Reporting - Report Request</span></td>
+          <td>84</td>
+          <td>100.0%</td>
+          <td>337.5</td>
+          <td>54.9</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>62.0</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>27</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Andrew Birt</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>151</td>
+          <td>100.0%</td>
+          <td>989.0</td>
+          <td>15.5</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>61.3</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>28</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Tamika Johnson</strong></td>
+          <td><span class="group-pill">Billing/Finance - Core Rev.io</span></td>
+          <td>23</td>
+          <td>100.0%</td>
+          <td>359.9</td>
+          <td>115.4</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>59.5</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>29</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Dan Shaffer</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>63</td>
+          <td>100.0%</td>
+          <td>1163.9</td>
+          <td>14.1</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>59.0</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>30</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Tim Smith</strong></td>
+          <td><span class="group-pill">Precision (PTT)</span></td>
+          <td>39</td>
+          <td>100.0%</td>
+          <td>837.3</td>
+          <td>118.3</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>52.3</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>31</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Anna Belcastro</strong></td>
+          <td><span class="group-pill">PSA - Account Management</span></td>
+          <td>26</td>
+          <td>100.0%</td>
+          <td>373.4</td>
+          <td>60.8</td>
+          <td>60% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>52.1</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>32</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Will Steiner</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>27</td>
+          <td>100.0%</td>
+          <td>1264.3</td>
+          <td>38.1</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>51.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>33</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Blaine Villafuerte</strong></td>
+          <td><span class="group-pill">PSA - Account Management</span></td>
+          <td>79</td>
+          <td>98.7%</td>
+          <td>440.6</td>
+          <td>97.1</td>
+          <td>50% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>48.0</strong></td>
+          <td>1</td>
+        </tr><tr>
+          <td>34</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Conner Sharp</strong></td>
+          <td><span class="group-pill">Solutions Analysts</span></td>
+          <td>28</td>
+          <td>100.0%</td>
+          <td>5858.3</td>
+          <td>70.4</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>45.0</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>35</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Jen Stout</strong></td>
+          <td><span class="group-pill">Solutions Analysts</span></td>
+          <td>23</td>
+          <td>100.0%</td>
+          <td>4043.9</td>
+          <td>95.6</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>45.0</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>36</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Ryan Harter</strong></td>
+          <td><span class="group-pill">PSA Known Issues</span></td>
+          <td>68</td>
+          <td>69.1%</td>
+          <td>1270.1</td>
+          <td>167.7</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>38.0</strong></td>
+          <td>21</td>
         </tr>
-      </thead>
-      <tbody><tr>
-    <td><span class="rank">🥇</span></td>
-    <td>Michael Elmore</td>
-    <td>684</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>84.8h</td>
-    <td>3.2h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">🥈</span></td>
-    <td>Jon Yntema</td>
-    <td>666</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>133.1h</td>
-    <td>3.2h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">🥉</span></td>
-    <td>JB Hendrix</td>
-    <td>657</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>92.6h</td>
-    <td>2.4h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#4</span></td>
-    <td>Chris Cohorst</td>
-    <td>636</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>115.7h</td>
-    <td>2.2h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#5</span></td>
-    <td>Lawrence Martin</td>
-    <td>633</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>80.3h</td>
-    <td>6.7h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#6</span></td>
-    <td>Carly Rollins</td>
-    <td>584</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>99.1h</td>
-    <td>3.3h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#7</span></td>
-    <td>Sean Kuta</td>
-    <td>472</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>160.4h</td>
-    <td>10.4h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#8</span></td>
-    <td>Darren Znamenacek</td>
-    <td>421</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>119.1h</td>
-    <td>8.3h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#9</span></td>
-    <td>Cameron Resuta</td>
-    <td>334</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>126.7h</td>
-    <td>4.1h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#10</span></td>
-    <td>Rachael Buchtan</td>
-    <td>325</td>
-    <td><span class="badge badge-good">99.4%</span></td>
-    <td>232.5h</td>
-    <td>10.0h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#11</span></td>
-    <td>Brit Kimble</td>
-    <td>234</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>215.6h</td>
-    <td>10.2h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#12</span></td>
-    <td>Adrian Rosales</td>
-    <td>179</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>335.6h</td>
-    <td>8.1h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#13</span></td>
-    <td>Marcelis Cruz</td>
-    <td>178</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>96.7h</td>
-    <td>48.5h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#14</span></td>
-    <td>JD Caulkins</td>
-    <td>163</td>
-    <td><span class="badge badge-good">99.4%</span></td>
-    <td>687.1h</td>
-    <td>112.0h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#15</span></td>
-    <td>Tim Smith</td>
-    <td>159</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>367.3h</td>
-    <td>55.9h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#16</span></td>
-    <td>Conor Brumfield</td>
-    <td>159</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>162.8h</td>
-    <td>5.4h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#17</span></td>
-    <td>Sarah McGovern</td>
-    <td>138</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>383.3h</td>
-    <td>77.3h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#18</span></td>
-    <td>Stephanie Okada</td>
-    <td>134</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>237.0h</td>
-    <td>139.1h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#19</span></td>
-    <td>Christian Vann</td>
-    <td>132</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>98.2h</td>
-    <td>4.7h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#20</span></td>
-    <td>Shane Frost</td>
-    <td>114</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>844.5h</td>
-    <td>154.7h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#21</span></td>
-    <td>Joshua Nugent</td>
-    <td>110</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>363.5h</td>
-    <td>10.9h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#22</span></td>
-    <td>Marshall Harris</td>
-    <td>104</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>284.2h</td>
-    <td>78.6h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#23</span></td>
-    <td>Xavier Brittian</td>
-    <td>104</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>77.7h</td>
-    <td>2.3h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#24</span></td>
-    <td>Andrew Birt</td>
-    <td>99</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>525.8h</td>
-    <td>15.2h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr><tr>
-    <td><span class="rank">#25</span></td>
-    <td>Daniel Ke</td>
-    <td>98</td>
-    <td><span class="badge badge-good">100.0%</span></td>
-    <td>475.2h</td>
-    <td>96.8h</td>
-    <td><span class="badge badge-warn">N/A</span></td>
-  </tr></tbody>
-    </table>
+    </tbody>
+  </table>
+  </div>
+  </div>
+
+  <div id="tab-billing" class="tab-panel">
+    <h3>Billing CS Agents</h3>
+    
+  <div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Rank</th><th>Tier</th><th>Agent Name</th><th>Group</th>
+        <th>Tickets</th><th>Solve Rate</th><th>Avg Res (hrs)</th>
+        <th>Avg FRT (hrs)</th><th>CSAT</th><th>Composite</th><th>Open Backlog</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>1</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>JB Hendrix</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>778</td>
+          <td>100.0%</td>
+          <td>111.5</td>
+          <td>2.2</td>
+          <td>100%</td>
+          <td><strong>97.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>2</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Carly Rollins</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>668</td>
+          <td>100.0%</td>
+          <td>109.7</td>
+          <td>3.2</td>
+          <td>99%</td>
+          <td><strong>97.2</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>3</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Chris Cohorst</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>742</td>
+          <td>100.0%</td>
+          <td>133.6</td>
+          <td>2.3</td>
+          <td>98%</td>
+          <td><strong>96.4</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>4</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Xavier Brittian</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>97</td>
+          <td>100.0%</td>
+          <td>79.4</td>
+          <td>2.4</td>
+          <td>94%</td>
+          <td><strong>95.9</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>5</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Jon Yntema</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>782</td>
+          <td>100.0%</td>
+          <td>166.4</td>
+          <td>3.9</td>
+          <td>95%</td>
+          <td><strong>94.5</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>6</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Joshua Nugent</strong></td>
+          <td><span class="group-pill">Billing - Data Support/Reporting - Data Change Request</span></td>
+          <td>115</td>
+          <td>100.0%</td>
+          <td>499.8</td>
+          <td>18.9</td>
+          <td>97%</td>
+          <td><strong>86.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>7</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Jacob Stricherz</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>31</td>
+          <td>100.0%</td>
+          <td>15.7</td>
+          <td>0.0</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>79.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>8</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Michael Elmore</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>766</td>
+          <td>100.0%</td>
+          <td>105.3</td>
+          <td>3.1</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>77.7</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>9</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Christian Vann</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>132</td>
+          <td>100.0%</td>
+          <td>98.2</td>
+          <td>4.7</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>77.4</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>10</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Sumit Kumar</strong></td>
+          <td><span class="group-pill">Billing - Data Support/Reporting - Report Request</span></td>
+          <td>21</td>
+          <td>100.0%</td>
+          <td>368.0</td>
+          <td>5.4</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>73.1</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>11</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Deepak Kumar</strong></td>
+          <td><span class="group-pill">Billing - Data Support/Reporting - Report Request</span></td>
+          <td>24</td>
+          <td>100.0%</td>
+          <td>391.8</td>
+          <td>5.3</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>72.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>12</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Conor Brumfield</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>260</td>
+          <td>100.0%</td>
+          <td>366.3</td>
+          <td>8.8</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>72.4</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>13</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Rachael Buchtan</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>422</td>
+          <td>99.5%</td>
+          <td>421.1</td>
+          <td>9.6</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>71.2</strong></td>
+          <td>2</td>
+        </tr><tr>
+          <td>14</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Adrian Rosales</strong></td>
+          <td><span class="group-pill">Billing - Data Support/Reporting - Report Request</span></td>
+          <td>222</td>
+          <td>100.0%</td>
+          <td>384.1</td>
+          <td>14.4</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>70.8</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>15</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Seth Fields</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>24</td>
+          <td>100.0%</td>
+          <td>423.3</td>
+          <td>15.4</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>70.0</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>16</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Jared Keirns</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>69</td>
+          <td>100.0%</td>
+          <td>438.2</td>
+          <td>20.4</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>68.6</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>17</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Jeremy Christian</strong></td>
+          <td><span class="group-pill">Billing/Finance - Core Rev.io</span></td>
+          <td>67</td>
+          <td>100.0%</td>
+          <td>193.3</td>
+          <td>50.6</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>65.2</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>18</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Dakota Gunnels</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>66</td>
+          <td>100.0%</td>
+          <td>911.9</td>
+          <td>7.4</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>64.4</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>19</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Vincenzo Martemucci</strong></td>
+          <td><span class="group-pill">Billing - Data Support/Reporting - Report Request</span></td>
+          <td>84</td>
+          <td>100.0%</td>
+          <td>337.5</td>
+          <td>54.9</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>62.0</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>20</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Andrew Birt</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>151</td>
+          <td>100.0%</td>
+          <td>989.0</td>
+          <td>15.5</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>61.3</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>21</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Tamika Johnson</strong></td>
+          <td><span class="group-pill">Billing/Finance - Core Rev.io</span></td>
+          <td>23</td>
+          <td>100.0%</td>
+          <td>359.9</td>
+          <td>115.4</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>59.5</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>22</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Dan Shaffer</strong></td>
+          <td><span class="group-pill">Billing - Engineering Support</span></td>
+          <td>63</td>
+          <td>100.0%</td>
+          <td>1163.9</td>
+          <td>14.1</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>59.0</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>23</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Will Steiner</strong></td>
+          <td><span class="group-pill">Billing - Client Success</span></td>
+          <td>27</td>
+          <td>100.0%</td>
+          <td>1264.3</td>
+          <td>38.1</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>51.8</strong></td>
+          <td>0</td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
+  </div>
+
+  <div id="tab-psa" class="tab-panel">
+    <h3>PSA Agents</h3>
+    
+  <div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Rank</th><th>Tier</th><th>Agent Name</th><th>Group</th>
+        <th>Tickets</th><th>Solve Rate</th><th>Avg Res (hrs)</th>
+        <th>Avg FRT (hrs)</th><th>CSAT</th><th>Composite</th><th>Open Backlog</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>1</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Brit Kimble</strong></td>
+          <td><span class="group-pill">PSA - Tier 1</span></td>
+          <td>311</td>
+          <td>100.0%</td>
+          <td>226.4</td>
+          <td>9.8</td>
+          <td>100%</td>
+          <td><strong>94.3</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>2</td>
+          <td><span class="badge badge-gold">🏆 Gold</span></td>
+          <td><strong>Darren Znamenacek</strong></td>
+          <td><span class="group-pill">PSA - Tier 1</span></td>
+          <td>510</td>
+          <td>100.0%</td>
+          <td>140.2</td>
+          <td>9.4</td>
+          <td>96%</td>
+          <td><strong>94.0</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>3</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Lawrence Martin</strong></td>
+          <td><span class="group-pill">PSA - Tier 1</span></td>
+          <td>813</td>
+          <td>100.0%</td>
+          <td>81.1</td>
+          <td>6.8</td>
+          <td>91%</td>
+          <td><strong>93.6</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>4</td>
+          <td><span class="badge badge-silver">🥈 Silver</span></td>
+          <td><strong>Sean Kuta</strong></td>
+          <td><span class="group-pill">PSA - Tier 1</span></td>
+          <td>633</td>
+          <td>100.0%</td>
+          <td>191.8</td>
+          <td>23.9</td>
+          <td>89%</td>
+          <td><strong>87.2</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>5</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Lex Scott Morrison</strong></td>
+          <td><span class="group-pill">PSA Known Issues</span></td>
+          <td>106</td>
+          <td>86.8%</td>
+          <td>269.7</td>
+          <td>31.8</td>
+          <td>62%</td>
+          <td><strong>69.7</strong></td>
+          <td>14</td>
+        </tr><tr>
+          <td>6</td>
+          <td><span class="badge badge-bronze">🥉 Bronze</span></td>
+          <td><strong>Julie Marvelli</strong></td>
+          <td><span class="group-pill">PSA - Account Management</span></td>
+          <td>28</td>
+          <td>100.0%</td>
+          <td>460.7</td>
+          <td>37.7</td>
+          <td><span class="muted">N/A</span></td>
+          <td><strong>64.1</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>7</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Anna Belcastro</strong></td>
+          <td><span class="group-pill">PSA - Account Management</span></td>
+          <td>26</td>
+          <td>100.0%</td>
+          <td>373.4</td>
+          <td>60.8</td>
+          <td>60% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>52.1</strong></td>
+          <td>0</td>
+        </tr><tr>
+          <td>8</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Blaine Villafuerte</strong></td>
+          <td><span class="group-pill">PSA - Account Management</span></td>
+          <td>79</td>
+          <td>98.7%</td>
+          <td>440.6</td>
+          <td>97.1</td>
+          <td>50% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>48.0</strong></td>
+          <td>1</td>
+        </tr><tr>
+          <td>9</td>
+          <td><span class="badge badge-muted">—</span></td>
+          <td><strong>Ryan Harter</strong></td>
+          <td><span class="group-pill">PSA Known Issues</span></td>
+          <td>68</td>
+          <td>69.1%</td>
+          <td>1270.1</td>
+          <td>167.7</td>
+          <td>100% <span title="Fewer than 10 rated tickets" class="warn-icon">⚠️</span></td>
+          <td><strong>38.0</strong></td>
+          <td>21</td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
   </div>
 </section>
 
-<!-- 7. Ticket Age Distribution -->
-<section class="section" id="backlog">
-  <div class="section-title">🕐 Ticket Age Distribution (Open Backlog)</div>
-  <div class="grid-2">
-    <div class="chart-card">
-      <div class="chart-title">Open Tickets by Age at Data Cutoff (33 total)</div>
-      <div class="chart-wrap">
-        <canvas id="ageChart"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <div class="chart-title">Backlog Summary</div>
-      <table style="margin-top:0.5rem">
-        <thead><tr><th>Age Bucket</th><th>Count</th><th>% of Open</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>0-7d</td>
-            <td>1</td>
-            <td>3.0%</td>
-          </tr><tr>
-            <td>7-30d</td>
-            <td>2</td>
-            <td>6.1%</td>
-          </tr><tr>
-            <td>30-90d</td>
-            <td>11</td>
-            <td>33.3%</td>
-          </tr><tr>
-            <td>90d+</td>
-            <td>19</td>
-            <td>57.6%</td>
-          </tr>
-        </tbody>
-      </table>
-      <p class="note">Reference date: 2025-03-04 (data cutoff). Open + Pending tickets only.</p>
+<!-- 7. TICKET AGE DISTRIBUTION -->
+<section class="section" id="age">
+  <h2>7. Ticket Age Distribution (Open/Pending)</h2>
+  <p class="muted" style="margin-bottom:12px">52 open tickets as of 2026-03-06</p>
+  <div class="card">
+    <div class="chart-container chart-sm">
+      <canvas id="ageChart"></canvas>
     </div>
   </div>
 </section>
 
-<!-- 8. First Reply Time -->
+<!-- 8. FRT BY GROUP -->
 <section class="section" id="frt">
-  <div class="section-title">⚡ First Reply Time</div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="kpi-label">Overall Average FRT</div>
-      <div style="font-size:2.5rem;font-weight:800;color:#ff6b6b">28.4h</div>
-      <div class="note">Calendar hours. Benchmark: &lt;4h excellent, &lt;24h acceptable, &gt;24h needs improvement</div>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Group</th><th>Tickets</th><th>Avg FRT</th></tr></thead>
-        <tbody><tr>
-    <td>Professional Services</td>
-    <td>1</td>
-    <td style="color:#00d4aa;font-weight:600">0.2h</td>
-  </tr><tr>
-    <td>Onboarding Dev</td>
-    <td>3</td>
-    <td style="color:#00d4aa;font-weight:600">0.6h</td>
-  </tr><tr>
-    <td>Tier 1 Playlist Users</td>
-    <td>7</td>
-    <td style="color:#00d4aa;font-weight:600">0.7h</td>
-  </tr><tr>
-    <td>Billing - Client Success</td>
-    <td>3,673</td>
-    <td style="color:#00d4aa;font-weight:600">3.0h</td>
-  </tr><tr>
-    <td>Infrastructure</td>
-    <td>3</td>
-    <td style="color:#ff9f43;font-weight:600">5.7h</td>
-  </tr><tr>
-    <td>Billing - Account Management</td>
-    <td>265</td>
-    <td style="color:#ff9f43;font-weight:600">7.1h</td>
-  </tr><tr>
-    <td>Billing - Data Support/Reporting - Data Change Request</td>
-    <td>116</td>
-    <td style="color:#ff9f43;font-weight:600">7.1h</td>
-  </tr><tr>
-    <td>Precision (PTT)</td>
-    <td>429</td>
-    <td style="color:#ff9f43;font-weight:600">7.3h</td>
-  </tr><tr>
-    <td>Solution Advisor</td>
-    <td>3</td>
-    <td style="color:#ff9f43;font-weight:600">7.6h</td>
-  </tr><tr>
-    <td>PSA - Tier 1</td>
-    <td>1,854</td>
-    <td style="color:#ff9f43;font-weight:600">9.3h</td>
-  </tr><tr>
-    <td>Billing - Engineering Support</td>
-    <td>298</td>
-    <td style="color:#ff9f43;font-weight:600">13.1h</td>
-  </tr><tr>
-    <td>Billing - Data Support/Reporting - Report Request</td>
-    <td>295</td>
-    <td style="color:#ff9f43;font-weight:600">18.6h</td>
-  </tr><tr>
-    <td>Product - Focus Groups</td>
-    <td>49</td>
-    <td style="color:#ff6b6b;font-weight:600">24.7h</td>
-  </tr><tr>
-    <td>Billing/Finance - Core Rev.io</td>
-    <td>90</td>
-    <td style="color:#ff6b6b;font-weight:600">42.1h</td>
-  </tr><tr>
-    <td>Data Migration</td>
-    <td>8</td>
-    <td style="color:#ff6b6b;font-weight:600">43.7h</td>
-  </tr></tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- 9. Account Load & Churn Risk -->
-<section class="section" id="accounts">
-  <div class="section-title">🏢 Account Load & Churn Risk</div>
-  <p class="note" style="margin-bottom:1rem">⚠ Organization names not available in Zendesk ticket API — showing organization IDs. Enrich with Salesforce for account-level names. Data covers 88% of tickets (org_id present).</p>
+  <h2>8. First Reply Time by Group</h2>
+  <p class="muted" style="margin-bottom:12px">Benchmark: 4 hours (calendar time)</p>
   <div class="table-wrap">
-    <table>
+    <table class="data-table">
       <thead>
-        <tr>
-          <th>#</th>
-          <th>Account (Org ID)</th>
-          <th>Total Tickets</th>
-          <th>Tickets/Mo</th>
-          <th>Open</th>
-          <th>Avg Res Hrs</th>
-          <th>Risk</th>
-        </tr>
+        <tr><th>Group</th><th>Avg FRT (hrs)</th><th>vs Benchmark</th><th>Rating</th></tr>
       </thead>
-      <tbody><tr>
-    <td>1</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #29958914</td>
-    <td>454</td>
-    <td>89.0</td>
-    <td>0</td>
-    <td>0.6h</td>
-    <td><span class="badge badge-danger">High Risk</span></td>
-  </tr><tr>
-    <td>2</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #1780256768</td>
-    <td>239</td>
-    <td>46.9</td>
-    <td>0</td>
-    <td>78.6h</td>
-    <td><span class="badge badge-danger">High Risk</span></td>
-  </tr><tr>
-    <td>3</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #29378470</td>
-    <td>173</td>
-    <td>33.9</td>
-    <td>0</td>
-    <td>272.0h</td>
-    <td><span class="badge badge-danger">High Risk</span></td>
-  </tr><tr>
-    <td>4</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #10885104708</td>
-    <td>166</td>
-    <td>32.5</td>
-    <td>0</td>
-    <td>262.1h</td>
-    <td><span class="badge badge-danger">High Risk</span></td>
-  </tr><tr>
-    <td>5</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #1260853024929</td>
-    <td>164</td>
-    <td>32.2</td>
-    <td>0</td>
-    <td>211.8h</td>
-    <td><span class="badge badge-danger">High Risk</span></td>
-  </tr><tr>
-    <td>6</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #22881414204315</td>
-    <td>144</td>
-    <td>28.2</td>
-    <td>0</td>
-    <td>869.7h</td>
-    <td><span class="badge badge-danger">High Risk</span></td>
-  </tr><tr>
-    <td>7</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #24120449985947</td>
-    <td>126</td>
-    <td>24.7</td>
-    <td>0</td>
-    <td>468.6h</td>
-    <td><span class="badge badge-danger">High Risk</span></td>
-  </tr><tr>
-    <td>8</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #14317</td>
-    <td>125</td>
-    <td>24.5</td>
-    <td>0</td>
-    <td>67.9h</td>
-    <td><span class="badge badge-danger">High Risk</span></td>
-  </tr><tr>
-    <td>9</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #370526380714</td>
-    <td>125</td>
-    <td>24.5</td>
-    <td>0</td>
-    <td>266.8h</td>
-    <td><span class="badge badge-danger">High Risk</span></td>
-  </tr><tr>
-    <td>10</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #370234168794</td>
-    <td>105</td>
-    <td>20.6</td>
-    <td>0</td>
-    <td>166.8h</td>
-    <td><span class="badge badge-danger">High Risk</span></td>
-  </tr><tr>
-    <td>11</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #28275185831067</td>
-    <td>92</td>
-    <td>18.0</td>
-    <td>0</td>
-    <td>219.3h</td>
-    <td><span class="badge badge-warn">Watch</span></td>
-  </tr><tr>
-    <td>12</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #22631404</td>
-    <td>89</td>
-    <td>17.5</td>
-    <td>0</td>
-    <td>168.2h</td>
-    <td><span class="badge badge-warn">Watch</span></td>
-  </tr><tr>
-    <td>13</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #24527156654107</td>
-    <td>88</td>
-    <td>17.3</td>
-    <td>0</td>
-    <td>416.1h</td>
-    <td><span class="badge badge-warn">Watch</span></td>
-  </tr><tr>
-    <td>14</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #360068709013</td>
-    <td>83</td>
-    <td>16.3</td>
-    <td>0</td>
-    <td>34.4h</td>
-    <td><span class="badge badge-warn">Watch</span></td>
-  </tr><tr>
-    <td>15</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #1260852986330</td>
-    <td>83</td>
-    <td>16.3</td>
-    <td>0</td>
-    <td>276.2h</td>
-    <td><span class="badge badge-warn">Watch</span></td>
-  </tr><tr>
-    <td>16</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #114095626914</td>
-    <td>78</td>
-    <td>15.3</td>
-    <td>0</td>
-    <td>253.2h</td>
-    <td><span class="badge badge-warn">Watch</span></td>
-  </tr><tr>
-    <td>17</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #25769935177371</td>
-    <td>73</td>
-    <td>14.3</td>
-    <td>0</td>
-    <td>384.1h</td>
-    <td><span class="badge badge-warn">Watch</span></td>
-  </tr><tr>
-    <td>18</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #22881263023771</td>
-    <td>71</td>
-    <td>13.9</td>
-    <td>0</td>
-    <td>696.8h</td>
-    <td><span class="badge badge-warn">Watch</span></td>
-  </tr><tr>
-    <td>19</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #23621598686363</td>
-    <td>71</td>
-    <td>13.9</td>
-    <td>0</td>
-    <td>47.3h</td>
-    <td><span class="badge badge-warn">Watch</span></td>
-  </tr><tr>
-    <td>20</td>
-    <td style="font-family:monospace;font-size:0.85em">Org #22881380632731</td>
-    <td>69</td>
-    <td>13.5</td>
-    <td>0</td>
-    <td>384.0h</td>
-    <td><span class="badge badge-warn">Watch</span></td>
-  </tr></tbody>
+      <tbody>
+        <tr>
+          <td><strong>Billing - Client Success</strong></td>
+          <td>3.2</td>
+          <td>-0.8h</td>
+          <td>🟡 Good</td>
+        </tr><tr>
+          <td><strong>Billing AM / DE </strong></td>
+          <td>3.5</td>
+          <td>-0.5h</td>
+          <td>🟡 Good</td>
+        </tr><tr>
+          <td><strong>Billing - Account Management</strong></td>
+          <td>8.6</td>
+          <td>+4.6h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>Precision (PTT)</strong></td>
+          <td>10.8</td>
+          <td>+6.8h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>PSA - Tier 1</strong></td>
+          <td>12.4</td>
+          <td>+8.4h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>Billing - Engineering Support</strong></td>
+          <td>14.4</td>
+          <td>+10.4h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>Billing - Data Support/Reporting - Data Change Request</strong></td>
+          <td>18.9</td>
+          <td>+14.9h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>Billing - Data Support/Reporting - Report Request</strong></td>
+          <td>20.6</td>
+          <td>+16.6h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>Precision Professional Services</strong></td>
+          <td>55.3</td>
+          <td>+51.3h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>Billing/Finance - Core Rev.io</strong></td>
+          <td>61.6</td>
+          <td>+57.6h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>PSA - Account Management</strong></td>
+          <td>75.5</td>
+          <td>+71.5h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>Solutions Analysts</strong></td>
+          <td>106.8</td>
+          <td>+102.8h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>PSA Known Issues</strong></td>
+          <td>107.2</td>
+          <td>+103.2h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>Billing/Finance - PSA</strong></td>
+          <td>162.2</td>
+          <td>+158.2h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>Rev.io Payments</strong></td>
+          <td>228.3</td>
+          <td>+224.3h</td>
+          <td>🔴 Poor</td>
+        </tr><tr>
+          <td><strong>PSA Custom Reports</strong></td>
+          <td>729.1</td>
+          <td>+725.1h</td>
+          <td>🔴 Poor</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </section>
 
-<!-- 10. Support Categories -->
-<section class="section" id="categories">
-  <div class="section-title">🏷️ Support Categories (Top Tags)</div>
-  <div class="chart-grid">
-    <div class="chart-card">
-      <div class="chart-title">Top 15 Tags by Frequency</div>
-      <div class="chart-wrap">
-        <canvas id="tagsChart"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <div class="chart-title">Tag Breakdown</div>
-      <table style="margin-top:0.5rem">
-        <thead><tr><th>Tag</th><th>Count</th><th>% of Tickets</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">1</code></td>
-            <td>7,190</td>
-            <td>77.3%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">normal</code></td>
-            <td>6,342</td>
-            <td>68.1%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">client_information_provided</code></td>
-            <td>2,955</td>
-            <td>31.8%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">5_-_strong_engagement_and_satisfaction</code></td>
-            <td>2,561</td>
-            <td>27.5%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">psa</code></td>
-            <td>1,965</td>
-            <td>21.1%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">low</code></td>
-            <td>1,623</td>
-            <td>17.4%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">customer</code></td>
-            <td>1,536</td>
-            <td>16.5%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">email</code></td>
-            <td>1,381</td>
-            <td>14.8%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">commercial</code></td>
-            <td>1,251</td>
-            <td>13.4%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">account</code></td>
-            <td>1,239</td>
-            <td>13.3%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">all</code></td>
-            <td>1,209</td>
-            <td>13.0%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">database_update</code></td>
-            <td>1,186</td>
-            <td>12.7%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">4</code></td>
-            <td>1,040</td>
-            <td>11.2%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">helpdesk__resolved</code></td>
-            <td>850</td>
-            <td>9.1%</td>
-          </tr><tr>
-            <td><code style="background:var(--surface2);padding:0.1em 0.4em;border-radius:4px;font-size:0.8em">report</code></td>
-            <td>814</td>
-            <td>8.7%</td>
-          </tr>
-        </tbody>
-      </table>
+<!-- 9. ACCOUNT LOAD -->
+<section class="section" id="accounts">
+  <h2>9. Account Load &amp; Churn Risk</h2>
+  <p class="muted" style="margin-bottom:12px">Top 20 accounts by ticket volume. Org names unavailable — showing organization ID.</p>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Account</th><th>Tickets</th><th>Tickets/Mo</th><th>Open</th><th>Avg Res (hrs)</th><th>Risk</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Account #Unknown</td>
+          <td>806</td>
+          <td>15.0</td>
+          <td>2</td>
+          <td>516.3</td>
+          <td>🔴 High</td>
+        </tr><tr>
+          <td>Account #29958914</td>
+          <td>517</td>
+          <td>9.6</td>
+          <td>0</td>
+          <td>0.7</td>
+          <td>🟠 Medium</td>
+        </tr><tr>
+          <td>Account #1780256768</td>
+          <td>260</td>
+          <td>4.9</td>
+          <td>0</td>
+          <td>78.4</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #10885104708</td>
+          <td>208</td>
+          <td>3.9</td>
+          <td>0</td>
+          <td>384.7</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #1260853024929</td>
+          <td>197</td>
+          <td>3.7</td>
+          <td>0</td>
+          <td>277.1</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #29378470</td>
+          <td>182</td>
+          <td>3.4</td>
+          <td>0</td>
+          <td>273.7</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #370526380714</td>
+          <td>154</td>
+          <td>2.9</td>
+          <td>0</td>
+          <td>356.4</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #14317</td>
+          <td>145</td>
+          <td>2.7</td>
+          <td>0</td>
+          <td>105.2</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #370234168794</td>
+          <td>123</td>
+          <td>2.3</td>
+          <td>0</td>
+          <td>302.5</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #22631404</td>
+          <td>112</td>
+          <td>2.1</td>
+          <td>0</td>
+          <td>267.6</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #360068709013</td>
+          <td>92</td>
+          <td>1.7</td>
+          <td>0</td>
+          <td>76.2</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #39555424</td>
+          <td>88</td>
+          <td>1.6</td>
+          <td>0</td>
+          <td>212.3</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #114095626914</td>
+          <td>86</td>
+          <td>1.6</td>
+          <td>0</td>
+          <td>276.1</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #23621598686363</td>
+          <td>85</td>
+          <td>1.6</td>
+          <td>2</td>
+          <td>48.0</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #370206925634</td>
+          <td>83</td>
+          <td>1.5</td>
+          <td>0</td>
+          <td>185.8</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #116495519174</td>
+          <td>82</td>
+          <td>1.5</td>
+          <td>0</td>
+          <td>430.9</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #1260853026829</td>
+          <td>80</td>
+          <td>1.5</td>
+          <td>0</td>
+          <td>278.0</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #370248569313</td>
+          <td>69</td>
+          <td>1.3</td>
+          <td>0</td>
+          <td>92.2</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #14318</td>
+          <td>66</td>
+          <td>1.2</td>
+          <td>0</td>
+          <td>452.3</td>
+          <td>🟢 Low</td>
+        </tr><tr>
+          <td>Account #360795927734</td>
+          <td>64</td>
+          <td>1.2</td>
+          <td>0</td>
+          <td>501.7</td>
+          <td>🟢 Low</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 10. TAGS -->
+<section class="section" id="tags">
+  <h2>10. Support Categories (Tags)</h2>
+  <div class="card">
+    <div class="chart-container" style="height:380px;">
+      <canvas id="tagsChart"></canvas>
     </div>
   </div>
 </section>
 
-<!-- 11. Recommendations -->
-<section class="section" id="recommendations">
-  <div class="section-title">💡 Recommendations</div>
-  <ol class="rec-list">
-    <li>
-      <strong>Fix survey completion rate — target 25%+ response rate.</strong> Current 11.5% makes CSAT data unreliable for decisions. Enable automated follow-up emails and consider in-portal rating prompts. <span class="owner-tag">Owner: CS Ops</span>
-    </li>
-    <li>
-      <strong>Investigate and resolve the PSA Known Issues 0% solve rate.</strong> 20 tickets routed here with no closures. Either tickets are misrouted, the group is a staging queue, or there's a workflow blocker. Audit immediately. <span class="owner-tag">Owner: CS Director</span>
-    </li>
-    <li>
-      <strong>Build account-level Zendesk + Salesforce bridge.</strong> 88% of tickets have org_id but no account name. Join to Salesforce to enable churn correlation — identify accounts with high ticket volume + long resolution times as early churn signals. <span class="owner-tag">Owner: RevOps / Revay</span>
-    </li>
-    <li>
-      <strong>Set FRT SLAs by tier and enforce in Zendesk triggers.</strong> Average FRT of 28.4h is high. High-value accounts should have &lt;4h FRT SLA with escalation automation. Use Zendesk triggers to auto-escalate breaches. <span class="owner-tag">Owner: CS Ops</span>
-    </li>
-    <li>
-      <strong>Audit the top 5 high-risk accounts (20+ tickets/mo).</strong> Cross-reference with renewal dates in Salesforce. Assign dedicated CSMs to accounts with 15+ open tickets or resolution times >48h. <span class="owner-tag">Owner: CSM Team</span>
-    </li>
-    <li>
-      <strong>Standardize tagging taxonomy.</strong> Current tags are inconsistent and overlap (e.g. multiple billing-related tags). A clean taxonomy enables better routing, forecasting, and product feedback loops to Engineering/PM. <span class="owner-tag">Owner: CS Ops / Product</span>
-    </li>
-    <li>
-      <strong>Monthly CS performance review cadence.</strong> This deck auto-refreshes via Revay on demand. Recommend scheduling a 30-min monthly CS review with this data as the anchor — track solve rate, FRT, and CSAT trends against targets. <span class="owner-tag">Owner: Evan Rice / CS Director</span>
-    </li>
-  </ol>
+<!-- 11. RECOMMENDATIONS -->
+<section class="section" id="recs">
+  <h2>11. Recommendations</h2>
+  <div class="card">
+    <div class="rec">
+      <div class="rec-num">1</div>
+      <div>
+        <div>Address 1 groups with &lt;70% solve rates — assign dedicated triage leads and set weekly close-rate targets.</div>
+        <span class="rec-owner">Owner: CS Leadership</span>
+      </div>
+    </div><div class="rec">
+      <div class="rec-num">2</div>
+      <div>
+        <div>Investigate open ticket backlog — 52 tickets older than 30 days need owner reassignment or escalation paths.</div>
+        <span class="rec-owner">Owner: Team Lead</span>
+      </div>
+    </div><div class="rec">
+      <div class="rec-num">3</div>
+      <div>
+        <div>Implement CSAT survey nudge for groups below 80% — most watch-list groups show low response rates which distorts scores.</div>
+        <span class="rec-owner">Owner: Will Steiner</span>
+      </div>
+    </div><div class="rec">
+      <div class="rec-num">4</div>
+      <div>
+        <div>Review Rev.io Payments group workflow — near-zero solve rate likely indicates incorrect group assignment or missing escalation SOP.</div>
+        <span class="rec-owner">Owner: CS Leadership</span>
+      </div>
+    </div><div class="rec">
+      <div class="rec-num">5</div>
+      <div>
+        <div>Use CSM stack ranking results for Q2 coaching: schedule 1:1s with agents in bottom 40% composite; recognize top-tier performers publicly.</div>
+        <span class="rec-owner">Owner: Team Lead</span>
+      </div>
+    </div><div class="rec">
+      <div class="rec-num">6</div>
+      <div>
+        <div>Standardize ticket tagging — top tags show 15 high-frequency patterns that could drive self-service KB articles.</div>
+        <span class="rec-owner">Owner: Will Steiner</span>
+      </div>
+    </div><div class="rec">
+      <div class="rec-num">7</div>
+      <div>
+        <div>Consider capacity redistribution: high-volume accounts (&gt;10 tickets/mo) are not segmented for dedicated CSMs — proactive account ownership could reduce inbound volume 15-20%.</div>
+        <span class="rec-owner">Owner: CS Leadership</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-</div>
+</div><!-- /container -->
 
-<!-- Footer -->
 <div class="footer">
-  Last updated: Fri, 06 Mar 2026 15:28:03 GMT | Data: Oct 2024 – Mar 2025 (9,307 tickets) | Built by Revay ⚡
+  Last updated: 2026-03-06 15:38:49 UTC &nbsp;·&nbsp; Support tickets only (Onboarding excluded) &nbsp;·&nbsp; Built by Revay ⚡
 </div>
 
 <script>
-// ─── Charts ──────────────────────────────────────────────────────────────────
-const ACCENT = '#6c63ff';
-const ACCENT2 = '#00d4aa';
-const WARN = '#ff9f43';
-const DANGER = '#ff6b6b';
-const BG = '#1a1d27';
-const BORDER = '#2d3155';
-const TEXT = '#e8eaf6';
+// Tab switching
+function showTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
 
-Chart.defaults.color = '#8b92b8';
-Chart.defaults.borderColor = BORDER;
-Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif";
+// Chart defaults
+Chart.defaults.color = '#8892b0';
+Chart.defaults.borderColor = '#2a2d3e';
 
-// Monthly Volume Chart
-new Chart(document.getElementById('monthlyChart'), {
+// Volume chart
+const monthLabels = ["2020-10","2021-06","2021-11","2022-09","2022-10","2022-11","2022-12","2023-01","2023-06","2023-08","2023-09","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03"];
+const monthCounts = [1,1,1,1,1,1,1,12,2,3,2,2,10,19,8,21,13,19,31,59,151,1376,2004,1612,1380,1695,526,4];
+new Chart(document.getElementById('volumeChart'), {
   type: 'bar',
   data: {
-    labels: ["Oct 2024","Nov 2024","Dec 2024","Jan 2025","Feb 2025","Mar 2025*"],
+    labels: monthLabels,
     datasets: [{
       label: 'Tickets',
-      data: [2470,2088,1933,2110,701,5],
-      backgroundColor: [ACCENT, ACCENT, ACCENT, ACCENT, ACCENT, 'rgba(108,99,255,0.4)'],
-      borderColor: [ACCENT, ACCENT, ACCENT, ACCENT, ACCENT, 'rgba(108,99,255,0.6)'],
-      borderWidth: 1,
-      borderRadius: 6
+      data: monthCounts,
+      backgroundColor: monthLabels.map((l,i) => l === '2026-03' ? 'rgba(255,159,67,0.7)' : 'rgba(108,99,255,0.7)'),
+      borderColor: monthLabels.map((l,i) => l === '2026-03' ? '#ff9f43' : '#6c63ff'),
+      borderWidth: 1, borderRadius: 4
     }]
   },
   options: {
     responsive: true, maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
-      tooltip: { backgroundColor: BG, borderColor: BORDER, borderWidth: 1 }
+      tooltip: {
+        callbacks: {
+          afterLabel: (ctx) => {
+            const i = ctx.dataIndex;
+            if (i === 0) return '';
+            const prev = monthCounts[i-1];
+            const curr = monthCounts[i];
+            const delta = prev ? ((curr-prev)/prev*100).toFixed(1) : null;
+            return delta ? 'MoM: ' + (delta > 0 ? '+' : '') + delta + '%' : '';
+          }
+        }
+      }
     },
     scales: {
-      y: { grid: { color: BORDER }, beginAtZero: true },
-      x: { grid: { display: false } }
+      x: { grid: { color: '#2a2d3e' } },
+      y: { grid: { color: '#2a2d3e' }, beginAtZero: true }
     }
   }
 });
 
-// CSAT by Group Chart
-new Chart(document.getElementById('csatGroupChart'), {
-  type: 'bar',
-  data: {
-    labels: ["Billing - Client Success","PSA - Tier 1","Onboarding","Precision (PTT)","Billing - Data Support/Reporting - Data Change Request","Billing - Data Support/Reporting - Report Request","Odin","Product - Focus Groups","Rev.io Helpdesk","Billing - Account Management"],
-    datasets: [{
-      label: 'CSAT %',
-      data: [96.8,89.9,94,100,97.1,96.9,100,100,100,100],
-      backgroundColor: [96.8,89.9,94,100,97.1,96.9,100,100,100,100].map(v => v >= 80 ? 'rgba(0,212,170,0.7)' : v >= 60 ? 'rgba(255,159,67,0.7)' : 'rgba(255,107,107,0.7)'),
-      borderRadius: 4
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: {
-      x: { min: 0, max: 100, grid: { color: BORDER } },
-      y: { grid: { display: false }, ticks: { font: { size: 11 } } }
-    }
-  }
-});
-
-// Age Buckets Chart
+// Age chart
 new Chart(document.getElementById('ageChart'), {
   type: 'bar',
   data: {
-    labels: ["0-7d","7-30d","30-90d","90d+"],
+    labels: ['0–7 days','7–30 days','30–90 days','90+ days'],
     datasets: [{
       label: 'Open Tickets',
-      data: [1,2,11,19],
-      backgroundColor: [ACCENT2, WARN, DANGER, 'rgba(255,107,107,0.9)'],
-      borderRadius: 6
+      data: [0,0,0,52],
+      backgroundColor: ['rgba(0,212,170,0.7)','rgba(108,99,255,0.7)','rgba(255,159,67,0.7)','rgba(255,107,107,0.7)'],
+      borderColor: ['#00d4aa','#6c63ff','#ff9f43','#ff6b6b'],
+      borderWidth: 1, borderRadius: 4
     }]
   },
   options: {
     responsive: true, maintainAspectRatio: false,
     plugins: { legend: { display: false } },
     scales: {
-      y: { grid: { color: BORDER }, beginAtZero: true },
-      x: { grid: { display: false } }
+      x: { grid: { color: '#2a2d3e' } },
+      y: { grid: { color: '#2a2d3e' }, beginAtZero: true }
     }
   }
 });
 
-// Tags Chart
+// Tags chart
 new Chart(document.getElementById('tagsChart'), {
   type: 'bar',
   data: {
-    labels: ["1","normal","client_information_provided","5_-_strong_engagement_and_satisfaction","psa","low","customer","email","commercial","account","all","database_update","4","helpdesk__resolved","report"],
+    labels: ["1","normal","client_information_provided","5_-_strong_engagement_and_satisfaction","psa","customer","low","email","database_update","all","account","4","psa_summit","helpdesk__resolved","error"],
     datasets: [{
-      label: 'Count',
-      data: [7190,6342,2955,2561,1965,1623,1536,1381,1251,1239,1209,1186,1040,850,814],
-      backgroundColor: 'rgba(108,99,255,0.75)',
-      borderColor: ACCENT,
-      borderWidth: 1,
-      borderRadius: 4
+      label: 'Tickets',
+      data: [6774,6168,3404,3004,2428,1525,1470,1439,1253,1226,1127,1082,1011,904,818],
+      backgroundColor: 'rgba(0,212,170,0.65)',
+      borderColor: '#00d4aa',
+      borderWidth: 1, borderRadius: 4
     }]
   },
   options: {
@@ -1321,31 +1804,11 @@ new Chart(document.getElementById('tagsChart'), {
     responsive: true, maintainAspectRatio: false,
     plugins: { legend: { display: false } },
     scales: {
-      x: { grid: { color: BORDER }, beginAtZero: true },
-      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+      x: { grid: { color: '#2a2d3e' }, beginAtZero: true },
+      y: { grid: { color: '#2a2d3e' } }
     }
   }
 });
-
-// ─── Table Sorting ────────────────────────────────────────────────────────────
-function sortTable(tableId, colIndex) {
-  const table = document.getElementById(tableId);
-  const tbody = table.querySelector('tbody');
-  const rows = Array.from(tbody.querySelectorAll('tr'));
-  const asc = table.dataset.sortCol == colIndex && table.dataset.sortDir === 'asc';
-  table.dataset.sortCol = colIndex;
-  table.dataset.sortDir = asc ? 'desc' : 'asc';
-  
-  rows.sort((a, b) => {
-    const aText = a.cells[colIndex]?.innerText.replace(/[^0-9.-]/g,'') || '0';
-    const bText = b.cells[colIndex]?.innerText.replace(/[^0-9.-]/g,'') || '0';
-    const aVal = parseFloat(aText) || 0;
-    const bVal = parseFloat(bText) || 0;
-    return asc ? bVal - aVal : aVal - bVal;
-  });
-  
-  rows.forEach(r => tbody.appendChild(r));
-}
 </script>
 </body>
 </html>
