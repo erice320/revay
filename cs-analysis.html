@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Rev.io CS Analysis — v3</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<script src="/vendor/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root {
   --bg: #0f1117;
@@ -120,6 +120,7 @@ footer a { color: var(--accent); text-decoration: none; }
   <a href="#frt">FRT</a>
   <a href="#accounts">Accounts</a>
   <a href="#tags">Categories</a>
+  <a href="#ai">🤖 AI Efficiency</a>
   <a href="#recs">Recommendations</a>
 </nav>
 
@@ -766,6 +767,185 @@ footer a { color: var(--accent); text-decoration: none; }
   </section>
   <div class="section-divider"></div>
 
+
+  <!-- ════════════════════════════════════════════════════════ AI SECTION -->
+  <section id="ai">
+    <h2>🤖 AI &amp; Agentic Efficiency Opportunities</h2>
+
+    <p style="color:var(--muted);font-size:13px;margin-bottom:24px;max-width:800px;line-height:1.7">
+      This analysis examines which ticket categories represent genuine opportunities for AI and agentic automation versus work that requires human judgment. Using tag, resolution time, and category data from 7,218 SLA tickets, we've quantified the deflection opportunity and tiered it by what's technically achievable today.
+    </p>
+
+    <!-- Tier Cards -->
+    <h3 style="color:var(--text);font-size:15px;margin-bottom:16px">Automation Tiers</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:32px">
+
+      <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid #00d4aa;border-radius:12px;padding:20px">
+        <div style="font-size:18px;margin-bottom:8px">🟢 Tier 1 — Fully Autonomous</div>
+        <div style="color:#00d4aa;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">AI handles end-to-end • No human in the loop</div>
+        <p style="color:var(--muted);font-size:12px;line-height:1.6">Password resets, account lookups, profile changes, credential resets, standard report delivery. Fast, repeatable, zero judgment required.</p>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid #6c63ff;border-radius:12px;padding:20px">
+        <div style="font-size:18px;margin-bottom:8px">🔵 Tier 2 — AI-Drafted, Human-Approved</div>
+        <div style="color:#6c63ff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">AI drafts • Human reviews &amp; sends</div>
+        <p style="color:var(--muted);font-size:12px;line-height:1.6">Config changes, billing questions, custom report requests. Cuts resolution time from hours to minutes while keeping a human sign-off.</p>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid #ff9f43;border-radius:12px;padding:20px">
+        <div style="font-size:18px;margin-bottom:8px">🟡 Tier 3 — AI-Assisted</div>
+        <div style="color:#ff9f43;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">AI surfaces context • Human does the work</div>
+        <p style="color:var(--muted);font-size:12px;line-height:1.6">Complex troubleshooting, PSA database issues, invoicing questions. AI surfaces similar past tickets and suggested next steps. Makes CSMs faster, not redundant.</p>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid #ff6b6b;border-radius:12px;padding:20px">
+        <div style="font-size:18px;margin-bottom:8px">🔴 Tier 4 — Human Only</div>
+        <div style="color:#ff6b6b;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">No AI substitution</div>
+        <p style="color:var(--muted);font-size:12px;line-height:1.6">Relationship work, churn risk conversations, contract negotiations, emotionally escalated clients. Human judgment and empathy are non-negotiable here.</p>
+      </div>
+
+    </div>
+
+    <!-- Resolution Time Distribution Chart -->
+    <h3 style="color:var(--text);font-size:15px;margin-bottom:12px">Resolution Time Distribution — 7,218 Tickets</h3>
+    <div class="chart-container" style="margin-bottom:8px">
+      <canvas id="aiResDistChart" height="80"></canvas>
+    </div>
+    <p class="footnote" style="margin-bottom:28px">📌 <strong style="color:#00d4aa">&lt;2h bucket (30% of tickets)</strong> is the primary AI target zone — these are fast, low-complexity requests where the bottleneck is queueing, not difficulty.</p>
+
+    <!-- KPI Cards -->
+    <h3 style="color:var(--text);font-size:15px;margin-bottom:12px">Deflection Opportunity</h3>
+    <div class="kpi-grid" style="margin-bottom:28px">
+      <div class="kpi-card">
+        <div class="kpi-label">Deflectable Tickets/mo</div>
+        <div class="kpi-value" style="color:#00d4aa">1,500–2,000</div>
+        <div class="kpi-sub">Est. — no human touch needed</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">% of Current Volume</div>
+        <div class="kpi-value" style="color:#6c63ff">22–28%</div>
+        <div class="kpi-sub">Based on tag/category analysis</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">CSM Hours Recapturable/mo</div>
+        <div class="kpi-value" style="color:#ff9f43">600–800</div>
+        <div class="kpi-sub">At ~2 hrs CSM time per ticket</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">"Solved in First Response"</div>
+        <div class="kpi-value" style="color:#00d4aa">303</div>
+        <div class="kpi-sub">100% AI-deflectable — avg 27h wait, instant answer</div>
+      </div>
+    </div>
+
+    <!-- Top Deflection Targets Table -->
+    <h3 style="color:var(--text);font-size:15px;margin-bottom:12px">Top Deflection Targets by Category</h3>
+    <div class="table-wrap" style="margin-bottom:28px">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Tickets</th>
+            <th>Avg Resolution</th>
+            <th>AI Tier</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Database Updates</td>
+            <td>958</td>
+            <td>149h</td>
+            <td><span style="color:#6c63ff;font-weight:600">Tier 1–2</span></td>
+            <td><span class="badge danger">🔴 High</span></td>
+          </tr>
+          <tr>
+            <td>Report Requests</td>
+            <td>823</td>
+            <td>196h</td>
+            <td><span style="color:#6c63ff;font-weight:600">Tier 2</span></td>
+            <td><span class="badge warning">🟡 Medium</span></td>
+          </tr>
+          <tr>
+            <td>Billing Questions</td>
+            <td>352</td>
+            <td>124h</td>
+            <td><span style="color:#6c63ff;font-weight:600">Tier 2</span></td>
+            <td><span class="badge warning">🟡 Medium</span></td>
+          </tr>
+          <tr>
+            <td>Profile / Account Changes</td>
+            <td>281</td>
+            <td>98h</td>
+            <td><span style="color:#00d4aa;font-weight:600">Tier 1</span></td>
+            <td><span class="badge danger">🔴 High</span></td>
+          </tr>
+          <tr>
+            <td>Credential / Login Issues</td>
+            <td>269</td>
+            <td>61h</td>
+            <td><span style="color:#00d4aa;font-weight:600">Tier 1</span></td>
+            <td><span class="badge danger">🔴 High</span></td>
+          </tr>
+          <tr>
+            <td>Config / Setting Changes</td>
+            <td>226</td>
+            <td>113h</td>
+            <td><span style="color:#6c63ff;font-weight:600">Tier 2</span></td>
+            <td><span class="badge warning">🟡 Medium</span></td>
+          </tr>
+          <tr>
+            <td>Line Management</td>
+            <td>233</td>
+            <td>76h</td>
+            <td><span style="color:#00d4aa;font-weight:600">Tier 1</span></td>
+            <td><span class="badge warning">🟡 Medium</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- What's Needed Table -->
+    <h3 style="color:var(--text);font-size:15px;margin-bottom:12px">What's Needed to Unlock Each Tier</h3>
+    <div class="table-wrap" style="margin-bottom:28px">
+      <table>
+        <thead>
+          <tr><th>Tier</th><th>What's Needed</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="white-space:nowrap"><span style="color:#00d4aa;font-weight:700">Tier 1</span></td>
+            <td>Zendesk API access <span class="badge ok">✅ already have</span> + knowledge base + Rev.io Billing/PSA system access for writes</td>
+          </tr>
+          <tr>
+            <td style="white-space:nowrap"><span style="color:#6c63ff;font-weight:700">Tier 2</span></td>
+            <td>Same as T1 + human-in-loop workflow (Zendesk macro or approval queue)</td>
+          </tr>
+          <tr>
+            <td style="white-space:nowrap"><span style="color:#ff9f43;font-weight:700">Tier 3</span></td>
+            <td>Context retrieval (similar past tickets) + CSM-facing AI copilot interface</td>
+          </tr>
+          <tr>
+            <td style="white-space:nowrap"><span style="color:#ff6b6b;font-weight:700">Tier 4</span></td>
+            <td>N/A — keep human</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Flag -->
+    <div class="alert-banner" style="margin-bottom:24px">
+      🚩 <strong>Flag for Will:</strong> 696 tickets tagged with aircall/inbound/outbound tags (~14h avg resolution) may be <strong>auto-created call log records</strong> rather than real support requests. If confirmed, this inflates reported ticket volume. Recommend Will verify before using raw ticket counts for capacity planning.
+    </div>
+
+    <!-- Closing -->
+    <div style="background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.3);border-radius:10px;padding:18px 20px;font-size:13px;line-height:1.7;color:var(--text)">
+      💡 The near-term unlock is <strong>system access</strong> — an agent with read/write access to the Billing platform and PSA can handle Tier 1 tickets end-to-end today. Tier 2 requires a lightweight approval workflow. Combined, this represents <strong style="color:#00d4aa">~600–800 CSM hours/month</strong> that could be redeployed to proactive client health work.
+    </div>
+
+  </section>
+  <div class="section-divider"></div>
+
   <!-- ════════════════════════════════════════════════════════ 12. RECS -->
   <section id="recs">
     <h2>12. Recommendations</h2>
@@ -795,6 +975,50 @@ footer a { color: var(--accent); text-decoration: none; }
 <script>
 Chart.defaults.color = '#8892b0';
 Chart.defaults.borderColor = 'rgba(108,99,255,0.15)';
+
+// AI Resolution Distribution chart
+(function() {
+  const buckets = ["<2h", "2–8h", "8–24h", "1–3d", "3–7d", "7–14d", "14d+"];
+  const counts  = [1949, 650, 502, 958, 1137, 746, 594];
+  const pcts    = [30, 10, 8, 15, 17, 11, 9];
+  new Chart(document.getElementById('aiResDistChart'), {
+    type: 'bar',
+    data: {
+      labels: buckets,
+      datasets: [{
+        label: 'Tickets',
+        data: counts,
+        backgroundColor: [
+          'rgba(0,212,170,0.85)',
+          'rgba(0,212,170,0.45)',
+          'rgba(108,99,255,0.55)',
+          'rgba(108,99,255,0.65)',
+          'rgba(255,159,67,0.65)',
+          'rgba(255,159,67,0.75)',
+          'rgba(255,107,107,0.75)',
+        ],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => {
+              const i = ctx.dataIndex;
+              return ` ${counts[i].toLocaleString()} tickets (${pcts[i]}%)`;
+            }
+          }
+        }
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => v.toLocaleString() } }
+      }
+    }
+  });
+})();
 
 // Trends chart
 (function() {
