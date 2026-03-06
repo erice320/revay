@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSA Onboarding: Transcript Intelligence · Rev.io</title>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #21253a;
+    --border: #2e3147;
+    --text: #e8eaf6;
+    --muted: #7b7f9e;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --warn: #ffa94d;
+    --danger: #ff6b6b;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Layout */
+  .page-header {
+    background: linear-gradient(135deg, #1a1d27 0%, #12151f 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 32px 24px;
+  }
+  .page-header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .page-header h1 span { color: var(--accent); }
+  .page-header .meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .page-header .badge {
+    display: inline-block; background: var(--accent); color: #fff;
+    font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+    margin-left: 10px; vertical-align: middle;
+  }
+
+  .container { max-width: 1300px; margin: 0 auto; padding: 24px 20px 60px; }
+
+  .section { margin-bottom: 40px; }
+  .section-title {
+    font-size: 16px; font-weight: 700; color: var(--accent);
+    border-bottom: 1px solid var(--border); padding-bottom: 10px;
+    margin-bottom: 18px; letter-spacing: 0.3px;
+  }
+  .section-title .sub { color: var(--muted); font-size: 12px; font-weight: 400; margin-left: 8px; }
+
+  /* KPI Cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .kpi-value { font-size: 32px; font-weight: 800; margin: 4px 0 2px; letter-spacing: -1px; }
+  .kpi-sub { font-size: 11px; color: var(--muted); }
+
+  /* Insight boxes */
+  .insights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .insight-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .insight-box.warn { border-left-color: var(--warn); }
+  .insight-box.danger { border-left-color: var(--danger); }
+  .insight-box.success { border-left-color: var(--accent2); }
+  .insight-box strong { display: block; font-size: 13px; margin-bottom: 4px; }
+
+  /* Grid layouts */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .four-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+  @media(max-width: 800px) {
+    .two-col, .three-col, .four-col { grid-template-columns: 1fr; }
+  }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+  .muted { color: var(--muted); }
+
+  /* Phrase lists */
+  .phrase-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 0; border-bottom: 1px solid var(--border);
+  }
+  .phrase-rank { font-size: 11px; font-weight: 700; min-width: 18px; text-align: right; }
+  .phrase-text { flex: 1; font-size: 12px; }
+  .phrase-bar-wrap { width: 80px; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .phrase-bar { height: 100%; border-radius: 3px; transition: width 0.3s; }
+  .phrase-count { font-size: 11px; min-width: 28px; text-align: right; }
+
+  /* Quote cards */
+  .quote-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .quote-card.sa-quote { border-left: 3px solid var(--accent); }
+  .quote-card.client-quote { border-left: 3px solid var(--accent2); }
+  .quote-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+  .quote-badge {
+    font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .quote-badge.sa_proactive { background: #6c63ff22; color: var(--accent); }
+  .quote-badge.sa-proactive { background: #6c63ff22; color: var(--accent); }
+  .quote-badge.sa_reactive { background: #ffa94d22; color: var(--warn); }
+  .quote-badge.sa-reactive { background: #ffa94d22; color: var(--warn); }
+  .quote-badge.client_asks { background: #00d4aa22; color: var(--accent2); }
+  .quote-badge.client-asks { background: #00d4aa22; color: var(--accent2); }
+  .quote-badge.ambiguous { background: #7b7f9e22; color: var(--muted); }
+  .quote-speaker { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .quote-text { font-size: 13px; font-style: italic; line-height: 1.5; }
+  .quote-context { font-size: 11px; margin-top: 6px; font-style: normal; }
+
+  .mini-quote {
+    background: var(--surface2);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* Objection table */
+  .obj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .obj-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .obj-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  .obj-title { font-size: 13px; font-weight: 600; }
+  .obj-count { font-size: 22px; font-weight: 800; }
+  .obj-sa-breakdown { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+
+  /* Feature gap list */
+  .feature-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+  }
+  .feature-rank { font-size: 12px; font-weight: 700; min-width: 24px; color: var(--muted); }
+  .feature-info { flex: 1; }
+  .feature-name { font-size: 13px; font-weight: 600; }
+  .feature-example { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 2px; }
+  .feature-count { font-size: 18px; font-weight: 800; color: var(--warn); min-width: 40px; text-align: right; }
+  .feature-area-tag {
+    font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 4px;
+    background: var(--surface2); color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  /* Revii section */
+  .revii-breakdown { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .revii-type-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .revii-type-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .revii-type-count { font-size: 28px; font-weight: 800; margin: 4px 0; }
+  .revii-type-pct { font-size: 11px; color: var(--muted); }
+
+  /* Stall signals */
+  .stall-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+  }
+  .stall-count {
+    font-size: 18px; font-weight: 800; color: var(--danger); min-width: 42px; text-align: center;
+    padding-top: 2px;
+  }
+  .stall-account { font-size: 13px; font-weight: 600; }
+  .stall-example { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 2px; }
+
+  /* Coaching */
+  .coaching-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .coaching-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .coaching-name { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--accent); }
+  .coaching-stat {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4px 0; border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .coaching-stat:last-of-type { border-bottom: none; }
+  .coaching-bar-label { font-size: 11px; color: var(--muted); margin-top: 10px; margin-bottom: 4px; }
+  .coaching-bar-wrap { display: flex; height: 8px; border-radius: 4px; overflow: hidden; }
+  .coaching-bar { height: 100%; transition: width 0.3s; }
+  .coaching-bar-legend { display: flex; gap: 12px; font-size: 10px; margin-top: 4px; }
+
+  /* Recommendations */
+  .rec-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .rec-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .rec-icon { font-size: 20px; }
+  .rec-title { font-size: 14px; font-weight: 700; flex: 1; }
+  .rec-urgency {
+    font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .rec-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* Note box */
+  .note-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--warn);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* Charts */
+  .chart-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .chart-title { font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+
+  /* Competitor table */
+  .comp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .comp-table th {
+    text-align: left; padding: 8px 10px;
+    background: var(--surface2); color: var(--muted);
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .comp-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); }
+  .comp-table tr:last-child td { border-bottom: none; }
+
+  /* Pill */
+  .pill {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    padding: 1px 7px; border-radius: 10px; border: 1px solid;
+    text-transform: uppercase; letter-spacing: 0.4px;
+  }
+
+  /* Gradient header for sections */
+  .sa-header {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--surface2); border-radius: 8px;
+    padding: 10px 14px; margin-bottom: 14px;
+  }
+  .sa-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--accent); display: flex; align-items: center;
+    justify-content: center; font-weight: 800; font-size: 13px; color: #fff;
+  }
+  .sa-name { font-size: 14px; font-weight: 700; }
+  .sa-meta { font-size: 11px; color: var(--muted); }
+
+  footer {
+    text-align: center; color: var(--muted); font-size: 11px;
+    padding: 24px; border-top: 1px solid var(--border); margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="page-header">
+  <h1>PSA Onboarding: <span>Transcript Intelligence</span><span class="badge">DEEP DIVE</span></h1>
+  <div class="meta">
+    Nov 3, 2025 – Mar 6, 2026 &nbsp;·&nbsp; 612 transcripts analyzed &nbsp;·&nbsp;
+    470,571 total sentences &nbsp;·&nbsp;
+    Generated March 6, 2026
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ── 1. EXECUTIVE SUMMARY ── -->
+  <div class="section">
+    <div class="section-title">Executive Summary</div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Transcripts Analyzed</div>
+        <div class="kpi-value" style="color:var(--accent)">612</div>
+        <div class="kpi-sub">Nov 3, 2025 – Mar 6, 2026</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Sentences</div>
+        <div class="kpi-value" style="color:var(--accent2)">470,571</div>
+        <div class="kpi-sub">across all PSA onboarding calls</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Revii Mentions</div>
+        <div class="kpi-value" style="color:#00d4aa">321</div>
+        <div class="kpi-sub">44% proactive by SAs</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Top Friction Category</div>
+        <div class="kpi-value" style="color:var(--danger);font-size:20px;padding-top:4px">2253</div>
+        <div class="kpi-sub">feature gap signals</div>
+      </div>
+    </div>
+
+    <div class="insights-grid">
+      <div class="insight-box danger">
+        <strong>🚨 Revii adoption is sparse and reactive</strong>
+        Only 321 Revii mentions across 612 calls. SAs are proactively introducing Revii, which is a positive signal.
+      </div>
+      <div class="insight-box warn">
+        <strong>⚠️ Feature gap language is frequent</strong>
+        2253 client sentences contain gap signals ("we need", "does it support", competitor comparisons). Top area: <strong>other</strong> with 1912 mentions.
+      </div>
+      <div class="insight-box">
+        <strong>📊 Timeline friction is real</strong>
+        373 timeline-related objections detected. Clients are expressing "taking too long" and "when will" frustrations — a sign that milestone communication needs improvement.
+      </div>
+      <div class="insight-box success">
+        <strong>✅ Graduation language appearing</strong>
+        1091 graduation/go-live mentions across calls — indicates active pipeline of completions. Nicole's accounts show the most graduation-readiness language.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. SA vs CLIENT TOPICS ── -->
+  <div class="section">
+    <div class="section-title">SA vs. Client: What's Being Discussed</div>
+    <div class="note-box">
+      Top phrases extracted from all SA and client sentences per SA. Phrases are 2–3 word n-grams after stopword removal.
+      Frequency = raw occurrence count across all sentences in that SA's calls.
+    </div>
+
+    
+      <div style="margin-bottom:28px">
+        <div class="sa-header">
+          <div class="sa-avatar">NH</div>
+          <div>
+            <div class="sa-name">Nicole Hills</div>
+            <div class="sa-meta">228 calls · 203,968 sentences</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title" style="color:var(--accent)">📣 SA Top Phrases</div>
+            <div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">1</span>
+      <span class="phrase-text">i'm sorry</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:100%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">558</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">2</span>
+      <span class="phrase-text">inventory management</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:98%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">545</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">3</span>
+      <span class="phrase-text">product catalog</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:66%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">371</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">4</span>
+      <span class="phrase-text">i'm gonna</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:64%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">359</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">5</span>
+      <span class="phrase-text">real quick</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:62%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">346</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">6</span>
+      <span class="phrase-text">system settings</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:59%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">331</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">7</span>
+      <span class="phrase-text">last week</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:55%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">308</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">8</span>
+      <span class="phrase-text">ticket level</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:53%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">296</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">9</span>
+      <span class="phrase-text">anything else</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:46%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">256</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">10</span>
+      <span class="phrase-text">down road</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:43%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">242</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">11</span>
+      <span class="phrase-text">parts labor</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:42%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">234</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">12</span>
+      <span class="phrase-text">custom fields</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:41%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">229</span>
+    </div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--accent2)">👤 Client Top Phrases</div>
+            <div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">1</span>
+      <span class="phrase-text">i'm gonna</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:100%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">254</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">2</span>
+      <span class="phrase-text">i'm sorry</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:83%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">211</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">3</span>
+      <span class="phrase-text">i'm trying</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:74%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">189</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">4</span>
+      <span class="phrase-text">that's fine</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:72%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">184</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">5</span>
+      <span class="phrase-text">we're doing</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:67%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">170</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">6</span>
+      <span class="phrase-text">credit card</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:64%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">163</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">7</span>
+      <span class="phrase-text">real quick</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:58%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">148</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">8</span>
+      <span class="phrase-text">it's it's</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:56%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">142</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">9</span>
+      <span class="phrase-text">we're gonna</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:50%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">128</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">10</span>
+      <span class="phrase-text">makes sense</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:50%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">126</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">11</span>
+      <span class="phrase-text">i'm saying</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:43%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">110</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">12</span>
+      <span class="phrase-text">you're saying</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:41%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">105</span>
+    </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:28px">
+        <div class="sa-header">
+          <div class="sa-avatar">KE</div>
+          <div>
+            <div class="sa-name">Kegan Ehlers</div>
+            <div class="sa-meta">167 calls · 98,376 sentences</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title" style="color:var(--accent)">📣 SA Top Phrases</div>
+            <div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">1</span>
+      <span class="phrase-text">within system</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:100%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">851</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">2</span>
+      <span class="phrase-text">tiger paw</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:47%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">400</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">3</span>
+      <span class="phrase-text">within too</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:44%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">373</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">4</span>
+      <span class="phrase-text">service order</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:23%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">198</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">5</span>
+      <span class="phrase-text">based upon</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:23%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">195</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">6</span>
+      <span class="phrase-text">real quick</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:23%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">195</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">7</span>
+      <span class="phrase-text">perfectly fine</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:22%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">186</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">8</span>
+      <span class="phrase-text">makes sense</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:20%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">169</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">9</span>
+      <span class="phrase-text">it's pretty</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:19%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">164</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">10</span>
+      <span class="phrase-text">that's perfectly</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:18%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">157</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">11</span>
+      <span class="phrase-text">that's perfectly fine</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:18%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">154</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">12</span>
+      <span class="phrase-text">live within</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:18%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">153</span>
+    </div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--accent2)">👤 Client Top Phrases</div>
+            <div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">1</span>
+      <span class="phrase-text">tiger paw</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:100%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">231</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">2</span>
+      <span class="phrase-text">i'm gonna</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:87%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">201</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">3</span>
+      <span class="phrase-text">i'm trying</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:64%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">147</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">4</span>
+      <span class="phrase-text">real quick</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:48%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">111</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">5</span>
+      <span class="phrase-text">part number</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:38%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">87</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">6</span>
+      <span class="phrase-text">it's it's</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:37%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">86</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">7</span>
+      <span class="phrase-text">i'm sorry</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:37%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">86</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">8</span>
+      <span class="phrase-text">we're gonna</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:36%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">84</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">9</span>
+      <span class="phrase-text">serial number</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:34%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">78</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">10</span>
+      <span class="phrase-text">that's fine</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:32%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">73</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">11</span>
+      <span class="phrase-text">service ticket</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:29%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">67</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">12</span>
+      <span class="phrase-text">product catalog</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:29%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">67</span>
+    </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:28px">
+        <div class="sa-header">
+          <div class="sa-avatar">HT</div>
+          <div>
+            <div class="sa-name">Halle Taylor</div>
+            <div class="sa-meta">135 calls · 100,283 sentences</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title" style="color:var(--accent)">📣 SA Top Phrases</div>
+            <div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">1</span>
+      <span class="phrase-text">i'll send</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:100%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">284</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">2</span>
+      <span class="phrase-text">i'm gonna</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:82%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">234</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">3</span>
+      <span class="phrase-text">inventory management</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:80%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">227</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">4</span>
+      <span class="phrase-text">purchase order</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:76%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">216</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">5</span>
+      <span class="phrase-text">add product</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:62%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">176</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">6</span>
+      <span class="phrase-text">i'm wondering</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:54%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">152</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">7</span>
+      <span class="phrase-text">product catalog</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:50%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">141</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">8</span>
+      <span class="phrase-text">you'll able</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:44%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">124</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">9</span>
+      <span class="phrase-text">system settings</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:43%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">122</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">10</span>
+      <span class="phrase-text">project management</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:42%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">118</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">11</span>
+      <span class="phrase-text">customer portal</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:41%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">116</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">12</span>
+      <span class="phrase-text">you're able</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:34%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">97</span>
+    </div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--accent2)">👤 Client Top Phrases</div>
+            <div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">1</span>
+      <span class="phrase-text">i'm gonna</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:100%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">155</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">2</span>
+      <span class="phrase-text">i'm trying</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:75%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">116</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">3</span>
+      <span class="phrase-text">we're doing</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:71%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">110</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">4</span>
+      <span class="phrase-text">it's it's</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:63%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">97</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">5</span>
+      <span class="phrase-text">product catalog</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:54%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">83</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">6</span>
+      <span class="phrase-text">real quick</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:51%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">79</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">7</span>
+      <span class="phrase-text">makes sense</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:51%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">79</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">8</span>
+      <span class="phrase-text">that's fine</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:50%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">77</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">9</span>
+      <span class="phrase-text">that's that's</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:48%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">75</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">10</span>
+      <span class="phrase-text">i'm saying</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:47%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">73</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">11</span>
+      <span class="phrase-text">i'm sorry</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:45%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">70</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">12</span>
+      <span class="phrase-text">you're doing</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:43%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">66</span>
+    </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:28px">
+        <div class="sa-header">
+          <div class="sa-avatar">TM</div>
+          <div>
+            <div class="sa-name">Tony Mehner</div>
+            <div class="sa-meta">82 calls · 67,944 sentences</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title" style="color:var(--accent)">📣 SA Top Phrases</div>
+            <div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">1</span>
+      <span class="phrase-text">product catalog</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:100%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">131</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">2</span>
+      <span class="phrase-text">project management</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:85%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">112</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">3</span>
+      <span class="phrase-text">mobile app</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:66%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">87</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">4</span>
+      <span class="phrase-text">i'm ahead</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:64%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">84</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">5</span>
+      <span class="phrase-text">we're working</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:63%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">83</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">6</span>
+      <span class="phrase-text">keep track</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:62%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">81</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">7</span>
+      <span class="phrase-text">vault cube</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:57%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">75</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">8</span>
+      <span class="phrase-text">create ticket</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:56%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">74</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">9</span>
+      <span class="phrase-text">inventory management</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:55%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">72</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">10</span>
+      <span class="phrase-text">serial number</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:50%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">65</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">11</span>
+      <span class="phrase-text">dispatch board</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:50%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">65</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent)">12</span>
+      <span class="phrase-text">create quote</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:48%;background:var(--accent)"></div></div>
+      <span class="phrase-count muted">63</span>
+    </div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--accent2)">👤 Client Top Phrases</div>
+            <div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">1</span>
+      <span class="phrase-text">it's it's</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:100%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">140</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">2</span>
+      <span class="phrase-text">that's that's</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:89%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">124</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">3</span>
+      <span class="phrase-text">last week</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:88%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">123</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">4</span>
+      <span class="phrase-text">we're doing</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:82%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">115</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">5</span>
+      <span class="phrase-text">mobile app</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:71%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">100</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">6</span>
+      <span class="phrase-text">project management</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:71%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">100</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">7</span>
+      <span class="phrase-text">i'm gonna</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:61%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">86</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">8</span>
+      <span class="phrase-text">billing platform</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:61%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">85</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">9</span>
+      <span class="phrase-text">makes sense</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:59%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">83</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">10</span>
+      <span class="phrase-text">product catalog</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:56%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">79</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">11</span>
+      <span class="phrase-text">real quick</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:54%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">76</span>
+    </div><div class="phrase-row">
+      <span class="phrase-rank" style="color:var(--accent2)">12</span>
+      <span class="phrase-text">anything else</span>
+      <div class="phrase-bar-wrap"><div class="phrase-bar" style="width:53%;background:var(--accent2)"></div></div>
+      <span class="phrase-count muted">74</span>
+    </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- ── 3. OBJECTIONS & FRICTION ── -->
+  <div class="section">
+    <div class="section-title">Client Objections &amp; Friction Map</div>
+
+    <div class="obj-grid">
+      
+        <div class="obj-card" style="border-left:3px solid var(--accent)">
+          <div class="obj-header">
+            <span style="font-size:20px">📋</span>
+            <div>
+              <div class="obj-title" style="color:var(--accent)">Feature Gap</div>
+              <div class="obj-count" style="color:var(--accent)">2,253</div>
+            </div>
+          </div>
+          <div class="obj-sa-breakdown">
+            Most in: <strong>Nicole Hills</strong> (802)
+          </div>
+          
+    <div class="mini-quote">
+      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
+      "You mean as far as like if we need to follow up on anything or stuff like that?"
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
+      "But it would be nice to know what I have here."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
+      "You know, it doesn't have to be a one off."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
+      "And you mentioned that there's something else we need to do in order to define whether or not they're getting taxed."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
+      "She went through all the videos again, start to finish, to make sure she wasn't missing anything."
+    </div>
+  
+        </div>
+        <div class="obj-card" style="border-left:3px solid var(--danger)">
+          <div class="obj-header">
+            <span style="font-size:20px">🔧</span>
+            <div>
+              <div class="obj-title" style="color:var(--danger)">Technical</div>
+              <div class="obj-count" style="color:var(--danger)">1,642</div>
+            </div>
+          </div>
+          <div class="obj-sa-breakdown">
+            Most in: <strong>Nicole Hills</strong> (581)
+          </div>
+          
+    <div class="mini-quote">
+      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
+      "No problem."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
+      "If it doesn't work, it's gonna let me know, right?"
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
+      "Now, for the managed service people, you do know that's going to be a problem because most of the integrations expect closed."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
+      "Well, this doesn't work when the title means something different."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
+      "That's another kind of common problem that we see is like, maybe there's a leading zero in a zip code that gets dropped and the tax database can't find a zip co…"
+    </div>
+  
+        </div>
+        <div class="obj-card" style="border-left:3px solid var(--warn)">
+          <div class="obj-header">
+            <span style="font-size:20px">😤</span>
+            <div>
+              <div class="obj-title" style="color:var(--warn)">Sentiment</div>
+              <div class="obj-count" style="color:var(--warn)">1,079</div>
+            </div>
+          </div>
+          <div class="obj-sa-breakdown">
+            Most in: <strong>Nicole Hills</strong> (373)
+          </div>
+          
+    <div class="mini-quote">
+      <span class="muted">Nicole Hills · Mar 6, 2026</span><br>
+      "There's some stock items that we have, but a lot of times with the, you know, sometimes they're just hard to find."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
+      "So that's not something I need to worry about now."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
+      "So like we don't have to worry about going through and updating anything on our end to maintain our price points and understand our margin."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
+      "Last week I'm out there looking at their website because I don't have it in the system and frustrated."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
+      "But it was so difficult to, you know, populate it and then get the stuff out knowing full well that we were going to move to the other because, you know, a coup…"
+    </div>
+  
+        </div>
+        <div class="obj-card" style="border-left:3px solid var(--warn)">
+          <div class="obj-header">
+            <span style="font-size:20px">⏱️</span>
+            <div>
+              <div class="obj-title" style="color:var(--warn)">Timeline</div>
+              <div class="obj-count" style="color:var(--warn)">373</div>
+            </div>
+          </div>
+          <div class="obj-sa-breakdown">
+            Most in: <strong>Tony Mehner</strong> (115)
+          </div>
+          
+    <div class="mini-quote">
+      <span class="muted">Kegan Ehlers · Mar 6, 2026</span><br>
+      "But you know some of the basic fields that were still not there."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Halle Taylor · Mar 6, 2026</span><br>
+      "It's still not loading tickets, so I'm not gonna even go there."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Tony Mehner · Mar 6, 2026</span><br>
+      "So I've got formula fields in here that are counting how long it was since the last interaction."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Tony Mehner · Mar 6, 2026</span><br>
+      "All of our notes are being taken in Notion today, which is a huge step in the right direction because we weren't doing that a couple months ago."
+    </div>
+  
+    <div class="mini-quote">
+      <span class="muted">Tony Mehner · Mar 6, 2026</span><br>
+      "How long it takes."
+    </div>
+  
+        </div>
+    </div>
+  </div>
+
+  <!-- ── 4. FEATURE GAP INTELLIGENCE ── -->
+  <div class="section">
+    <div class="section-title">Feature Gap Intelligence <span class="sub">what clients say is missing</span></div>
+
+    <div class="two-col">
+      <div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">#1</div>
+            <div class="feature-info">
+              <div class="feature-name">
+                <span class="feature-area-tag">other</span>
+                <span style="margin-left:8px;font-weight:400;font-size:12px">"You mean as far as like if we need to follow up on anything or stuff like that?"</span>
+              </div>
+            </div>
+            <div class="feature-count">1912</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">#2</div>
+            <div class="feature-info">
+              <div class="feature-name">
+                <span class="feature-area-tag">billing</span>
+                <span style="margin-left:8px;font-weight:400;font-size:12px">"So I put those numbers in monthly, and we need to make sure that those, when we …"</span>
+              </div>
+            </div>
+            <div class="feature-count">105</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">#3</div>
+            <div class="feature-info">
+              <div class="feature-name">
+                <span class="feature-area-tag">integrations</span>
+                <span style="margin-left:8px;font-weight:400;font-size:12px">"it seems that we've gone full circle and we're back to looking at sell from Conn…"</span>
+              </div>
+            </div>
+            <div class="feature-count">79</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">#4</div>
+            <div class="feature-info">
+              <div class="feature-name">
+                <span class="feature-area-tag">ticketing</span>
+                <span style="margin-left:8px;font-weight:400;font-size:12px">"As far as like, you know, the switches and the routers added in a ticket, like w…"</span>
+              </div>
+            </div>
+            <div class="feature-count">54</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">#5</div>
+            <div class="feature-info">
+              <div class="feature-name">
+                <span class="feature-area-tag">contracts</span>
+                <span style="margin-left:8px;font-weight:400;font-size:12px">"Like if it doesn't have sla, like that is required."</span>
+              </div>
+            </div>
+            <div class="feature-count">26</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">#6</div>
+            <div class="feature-info">
+              <div class="feature-name">
+                <span class="feature-area-tag">scheduling</span>
+                <span style="margin-left:8px;font-weight:400;font-size:12px">"Do you have a second, Jose, to look at your calendar?"</span>
+              </div>
+            </div>
+            <div class="feature-count">25</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">#7</div>
+            <div class="feature-info">
+              <div class="feature-name">
+                <span class="feature-area-tag">reporting</span>
+                <span style="margin-left:8px;font-weight:400;font-size:12px">"Do we need anything to support the client with these reports?"</span>
+              </div>
+            </div>
+            <div class="feature-count">20</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">#8</div>
+            <div class="feature-info">
+              <div class="feature-name">
+                <span class="feature-area-tag">automation</span>
+                <span style="margin-left:8px;font-weight:400;font-size:12px">"Basically, if you guys say this client is sold, you move it to a certain status …"</span>
+              </div>
+            </div>
+            <div class="feature-count">17</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">#9</div>
+            <div class="feature-info">
+              <div class="feature-name">
+                <span class="feature-area-tag">mobile</span>
+                <span style="margin-left:8px;font-weight:400;font-size:12px">"So everything she mentioned the field, the limited mobile apps or like, if you h…"</span>
+              </div>
+            </div>
+            <div class="feature-count">10</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">#10</div>
+            <div class="feature-info">
+              <div class="feature-name">
+                <span class="feature-area-tag">portal</span>
+                <span style="margin-left:8px;font-weight:400;font-size:12px"></span>
+              </div>
+            </div>
+            <div class="feature-count">5</div>
+          </div>
+        
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Feature Gaps by Area</div>
+        <div id="chart-feature-gaps"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. REVII AI ADOPTION ── -->
+  <div class="section">
+    <div class="section-title">Revii AI Adoption</div>
+
+    <div class="note-box">
+      🔍 Fireflies' transcription of the product name "Revii" may vary — analysis searched for all likely phonetic variants:
+      <strong>revii, revi, revy, revie, revee, "rev e", "rev-e", "rev ii", "rev 2"</strong>.
+      Note: "revay" was intentionally excluded — it refers to a separate AI assistant, not the Revii product.
+    </div>
+
+    
+    <div class="revii-breakdown">
+      <div class="revii-type-card" style="border-top:3px solid var(--accent)">
+        <div class="revii-type-label">SA Proactive</div>
+        <div class="revii-type-count" style="color:var(--accent)">141</div>
+        <div class="revii-type-pct">44% of mentions</div>
+      </div>
+      <div class="revii-type-card" style="border-top:3px solid var(--warn)">
+        <div class="revii-type-label">SA Reactive</div>
+        <div class="revii-type-count" style="color:var(--warn)">37</div>
+        <div class="revii-type-pct">12% of mentions</div>
+      </div>
+      <div class="revii-type-card" style="border-top:3px solid var(--accent2)">
+        <div class="revii-type-label">Client Asks</div>
+        <div class="revii-type-count" style="color:var(--accent2)">143</div>
+        <div class="revii-type-pct">45% of mentions</div>
+      </div>
+    </div>
+    
+
+    <div class="two-col" style="margin-bottom:20px">
+      <div class="chart-wrap">
+        <div class="chart-title">Revii Mentions by Month</div>
+        <div id="chart-revii-trend"></div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">Revii Mentions by SA</div>
+        <div id="chart-revii-sa"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Top Revii Mention Examples</div>
+      
+    <div class="quote-card client-quote">
+      <div class="quote-meta">
+        <span class="quote-badge client-asks">CLIENT ASKS</span>
+        <span class="muted">Kegan Ehlers · Midwest Specialists - PSA Meeting · Mar 6, 2026</span>
+      </div>
+      <div class="quote-speaker">Jeremy Adams</div>
+      <div class="quote-text">"I know that I've copied accounts using Revi, the little AI bot before."</div>
+      <div class="quote-context muted">⬆ Yeah, without losing all their information. | And</div>
+    </div>
+  
+    <div class="quote-card client-quote">
+      <div class="quote-meta">
+        <span class="quote-badge client-asks">CLIENT ASKS</span>
+        <span class="muted">Kegan Ehlers · Midwest Specialists - PSA Meeting · Mar 6, 2026</span>
+      </div>
+      <div class="quote-speaker">Scott Morin</div>
+      <div class="quote-text">"I sent to Keegan a while back, but I could trying that because I was running into issues where I would tell Revi, hey, I want to add a calendar entry for service ticket 100036."</div>
+      <div class="quote-context muted">⬆ But I didn't like really dig in to see, like, what all it brought over. | I don't know if you saw an…</div>
+    </div>
+  
+    <div class="quote-card client-quote">
+      <div class="quote-meta">
+        <span class="quote-badge client-asks">CLIENT ASKS</span>
+        <span class="muted">Kegan Ehlers · Midwest Specialists - PSA Meeting · Mar 6, 2026</span>
+      </div>
+      <div class="quote-speaker">Scott Morin</div>
+      <div class="quote-text">"And it was because Revi was losing track of and does lose track of the client ID versus the service ticket id."</div>
+      <div class="quote-context muted">⬆ I sent to Keegan a while back, but I could trying that because I was running into issues where I wou…</div>
+    </div>
+  
+    <div class="quote-card client-quote">
+      <div class="quote-meta">
+        <span class="quote-badge client-asks">CLIENT ASKS</span>
+        <span class="muted">Kegan Ehlers · Midwest Specialists - PSA Meeting · Mar 6, 2026</span>
+      </div>
+      <div class="quote-speaker">Scott Morin</div>
+      <div class="quote-text">"But having everything start at the same number, I figure I've managed to break Revy a few times just because of that."</div>
+      <div class="quote-context muted">⬆ And invoicing, you know, will it be at a different rate. | So at some point, I figure we'll see less…</div>
+    </div>
+  
+    <div class="quote-card client-quote">
+      <div class="quote-meta">
+        <span class="quote-badge client-asks">CLIENT ASKS</span>
+        <span class="muted">Kegan Ehlers · Midwest Specialists - PSA Meeting · Mar 6, 2026</span>
+      </div>
+      <div class="quote-speaker">Scott Morin</div>
+      <div class="quote-text">"And when I asked Revy to do things by the customer name, we seem to always make good progress."</div>
+      <div class="quote-context muted">⬆ So at some point, I figure we'll see less overlap. | But having everything start at the same number,…</div>
+    </div>
+  
+    <div class="quote-card client-quote">
+      <div class="quote-meta">
+        <span class="quote-badge client-asks">CLIENT ASKS</span>
+        <span class="muted">Kegan Ehlers · Midwest Specialists - PSA Meeting · Mar 6, 2026</span>
+      </div>
+      <div class="quote-speaker">Jeremy Adams</div>
+      <div class="quote-text">"I know we're, we're trying or we've got a, like a separate team that's, that's one of their sole focuses is trying to get Revy to do as much as possible."</div>
+      <div class="quote-context muted">⬆ Yeah. | Okay, that's, that's good to know.</div>
+    </div>
+  
+    <div class="quote-card sa-quote">
+      <div class="quote-meta">
+        <span class="quote-badge sa-proactive">SA PROACTIVE</span>
+        <span class="muted">Halle Taylor · Newport Network Solutions- Call · Mar 5, 2026</span>
+      </div>
+      <div class="quote-speaker">Halle Taylor</div>
+      <div class="quote-text">"You'll have access to Revy, your little AI assistant, and customer enhancements."</div>
+      <div class="quote-context muted">⬆ I didn't either. | Gps, offline capabilities, push notifications, your whole product catalog.</div>
+    </div>
+  
+    <div class="quote-card sa-quote">
+      <div class="quote-meta">
+        <span class="quote-badge sa-proactive">SA PROACTIVE</span>
+        <span class="muted">Halle Taylor · Sandhills home- Configuration · Mar 5, 2026</span>
+      </div>
+      <div class="quote-speaker">Halle Taylor</div>
+      <div class="quote-text">"So, like, we have an analytics portion of Rev that's available now that could possibly produce a P and L. I'm wondering if Revy could do it, Mark, with like, an advanced query."</div>
+      <div class="quote-context muted">⬆ Yeah, that's true. | But now we have our reporting that's available now that wasn't available when y…</div>
+    </div>
+  
+    <div class="quote-card sa-quote">
+      <div class="quote-meta">
+        <span class="quote-badge sa-proactive">SA PROACTIVE</span>
+        <span class="muted">Nicole Hills · First Class Technology / Rev.io Onboarding Kick Of… · Mar 5, 2026</span>
+      </div>
+      <div class="quote-speaker">nicolehills</div>
+      <div class="quote-text">"And then there's a little AI chat and then our awesome friend Revy."</div>
+      <div class="quote-context muted">⬆ I'm sorry. | If you need to get help, it's the same thing.</div>
+    </div>
+  
+    <div class="quote-card sa-quote">
+      <div class="quote-meta">
+        <span class="quote-badge sa-proactive">SA PROACTIVE</span>
+        <span class="muted">Nicole Hills · First Class Technology / Rev.io Onboarding Kick Of… · Mar 5, 2026</span>
+      </div>
+      <div class="quote-speaker">nicolehills</div>
+      <div class="quote-text">"Definitely encourage you to come in here and start asking Revie questions."</div>
+      <div class="quote-context muted">⬆ This is something that Daniel, who's on this call, has been working tirelessly on. | And this is an …</div>
+    </div>
+  
+      
+    </div>
+
+    
+    <div class="insight-box warn" style="margin-top:16px">
+      <strong>Observation: SAs are proactively introducing Revii — a positive sign.</strong>
+      141 of 321 mentions are SA-initiated without a preceding client gap. Reinforce this behavior — it positions Revii as a differentiator.
+    </div>
+    
+  </div>
+
+  <!-- ── 6. COMPETITOR INTELLIGENCE ── -->
+  <div class="section">
+    <div class="section-title">Competitor Intelligence from Onboarding Calls</div>
+
+    <div class="two-col">
+      <div>
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Competitor</th>
+              <th>Mentions</th>
+              <th>Most in</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                  <td><strong>ConnectWise</strong></td>
+                  <td><strong style="color:var(--warn)">691</strong></td>
+                  <td class="muted">Tony Mehner</td>
+                  <td class="muted" style="font-style:italic;font-size:11px">"I know because I had it configured wrong and connectwise and…"</td>
+                </tr><tr>
+                  <td><strong>Tigerpaw</strong></td>
+                  <td><strong style="color:var(--warn)">336</strong></td>
+                  <td class="muted">Kegan Ehlers</td>
+                  <td class="muted" style="font-style:italic;font-size:11px">"imported a portion of our data into tigerpaw a lot."</td>
+                </tr><tr>
+                  <td><strong>NinjaRMM</strong></td>
+                  <td><strong style="color:var(--warn)">146</strong></td>
+                  <td class="muted">Tony Mehner</td>
+                  <td class="muted" style="font-style:italic;font-size:11px">"The biggest difference with other PSAs ninja this connect wi…"</td>
+                </tr><tr>
+                  <td><strong>HaloPSA</strong></td>
+                  <td><strong style="color:var(--warn)">95</strong></td>
+                  <td class="muted">Tony Mehner</td>
+                  <td class="muted" style="font-style:italic;font-size:11px">"I have a one on one relationship with, with Nicole and whoev…"</td>
+                </tr><tr>
+                  <td><strong>Kaseya</strong></td>
+                  <td><strong style="color:var(--warn)">14</strong></td>
+                  <td class="muted">Tony Mehner</td>
+                  <td class="muted" style="font-style:italic;font-size:11px">"Filling Tony in that today you're using Datto and your backu…"</td>
+                </tr><tr>
+                  <td><strong>Autotask</strong></td>
+                  <td><strong style="color:var(--warn)">12</strong></td>
+                  <td class="muted">Tony Mehner</td>
+                  <td class="muted" style="font-style:italic;font-size:11px">"going to leverage the APIs of Light, ConnectWise, AutoTask, …"</td>
+                </tr><tr>
+                  <td><strong>Datto</strong></td>
+                  <td><strong style="color:var(--warn)">2</strong></td>
+                  <td class="muted">Tony Mehner</td>
+                  <td class="muted" style="font-style:italic;font-size:11px">"Filling Tony in that today you're using Datto and your backu…"</td>
+                </tr><tr>
+                  <td><strong>ServiceNow</strong></td>
+                  <td><strong style="color:var(--warn)">1</strong></td>
+                  <td class="muted">Nicole Hills</td>
+                  <td class="muted" style="font-style:italic;font-size:11px">"Anything with, like, ServiceNow, right?"</td>
+                </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">Competitor Mentions</div>
+        <div id="chart-competitors"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 7. STALL SIGNALS ── -->
+  <div class="section">
+    <div class="section-title">Stall Signal Analysis</div>
+
+    <div class="two-col">
+      <div>
+        <div class="card-title" style="margin-bottom:12px">Top Accounts by Stall Language</div>
+        
+          <div class="stall-row">
+            <div class="stall-count">124</div>
+            <div>
+              <div class="stall-account">(Follow</div>
+              
+                <div class="stall-example">"Not yet." — Tony Mehner, Feb 27, 2026</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">107</div>
+            <div>
+              <div class="stall-account">Soundworks &amp; Security Rev.io PSA Onboarding</div>
+              
+                <div class="stall-example">"Hold on a second, let me get to it." — Nicole Hills, Feb 25, 2026</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">104</div>
+            <div>
+              <div class="stall-account">Obera Connect PSA Guided Session</div>
+              
+                <div class="stall-example">"Hold on one second." — Nicole Hills, Mar 3, 2026</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">75</div>
+            <div>
+              <div class="stall-account">Newport Network Solutions</div>
+              
+                <div class="stall-example">"Okay, hold on." — Halle Taylor, Mar 5, 2026</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">73</div>
+            <div>
+              <div class="stall-account">All Secured Security Services PSA Onboarding</div>
+              
+                <div class="stall-example">"Busy, busy, busy." — Nicole Hills, Mar 5, 2026</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">72</div>
+            <div>
+              <div class="stall-account">Ataraxis PSA Onboarding</div>
+              
+                <div class="stall-example">"Hold on." — Nicole Hills, Feb 24, 2026</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">57</div>
+            <div>
+              <div class="stall-account">PSA Web</div>
+              
+                <div class="stall-example">"I'd have to ask my team again what it's called within their life where that shows." — Kegan Ehlers, Jan 22, 2026</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">50</div>
+            <div>
+              <div class="stall-account">Creative Vision PSA Client Training</div>
+              
+                <div class="stall-example">"I don't know if your son's taking that, but hold." — Nicole Hills, Feb 4, 2026</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">48</div>
+            <div>
+              <div class="stall-account">Legion PSA Onboarding</div>
+              
+                <div class="stall-example">"Really busy." — Nicole Hills, Dec 19, 2025</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">45</div>
+            <div>
+              <div class="stall-account">Integrity Sound PSA Guided Session</div>
+              
+                <div class="stall-example">"He might be late or not show to this because he had a job that this morning he had to reschedule." — Nicole Hills, Jan 16, 2026</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">44</div>
+            <div>
+              <div class="stall-account">Digital Market</div>
+              
+                <div class="stall-example">"But I do know that they've taken it to management and they're waiting on a few things and then they'…" — Halle Taylor, Jan 15, 2026</div>
+              
+            </div>
+          </div>
+        
+          <div class="stall-row">
+            <div class="stall-count">40</div>
+            <div>
+              <div class="stall-account">Sales Training</div>
+              
+                <div class="stall-example">"With the way the ratios work out, they always hold true on that demo to deal." — Tony Mehner, Jan 28, 2026</div>
+              
+            </div>
+          </div>
+        
+      </div>
+
+      <div>
+        
+        <div class="card" style="margin-bottom:14px;border-left:3px solid var(--danger)">
+          <div class="card-title" style="color:var(--danger)">🚨 Newport Network Solutions</div>
+          <div style="font-size:22px;font-weight:800;color:var(--danger);margin-bottom:8px">75 stall signals</div>
+          
+            <div class="mini-quote">
+              <span class="muted">Halle Taylor · Mar 5, 2026</span><br>
+              "Okay, hold on."
+            </div>
+          
+            <div class="mini-quote">
+              <span class="muted">Halle Taylor · Mar 5, 2026</span><br>
+              "Hold up, let me find something more recent."
+            </div>
+          
+            <div class="mini-quote">
+              <span class="muted">Halle Taylor · Mar 5, 2026</span><br>
+              "Hold on."
+            </div>
+          
+            <div class="mini-quote">
+              <span class="muted">Halle Taylor · Mar 5, 2026</span><br>
+              "Hold on, let me look."
+            </div>
+          
+            <div class="mini-quote">
+              <span class="muted">Halle Taylor · Mar 5, 2026</span><br>
+              "They can't hold well, but these are old."
+            </div>
+          
+        </div>
+        
+
+        <div class="insight-box warn">
+          <strong>What stall language looks like</strong>
+          Phrases like "waiting for my team", "not ready yet", "we got busy", "let's reschedule" — these appear in transcripts before accounts go silent. The earlier they appear, the higher the at-risk signal.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 8. GRADUATION LANGUAGE ── -->
+  <div class="section">
+    <div class="section-title">Graduation Language Patterns</div>
+
+    <div class="two-col">
+      <div>
+        <div class="card-title" style="margin-bottom:12px">Graduation Mentions by SA</div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">Nicole</div>
+            <div class="feature-info">
+              
+                <div style="font-size:11px;font-style:italic;color:var(--muted);margin-bottom:4px">"We are on board, but we're hopefully going live third quarter of this year by July."</div>
+              
+                <div style="font-size:11px;font-style:italic;color:var(--muted);margin-bottom:4px">"You know, we want to make sure that we're, it's a smooth transition plus we're trained properly and,…"</div>
+              
+            </div>
+            <div class="feature-count" style="color:var(--accent2)">571</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">Halle</div>
+            <div class="feature-info">
+              
+                <div style="font-size:11px;font-style:italic;color:var(--muted);margin-bottom:4px">"It may be Outlook, but either way, since it says reconfigure, I would start here and then once you'v…"</div>
+              
+                <div style="font-size:11px;font-style:italic;color:var(--muted);margin-bottom:4px">"Or when you're say the ticket's been completed and you click send a billing."</div>
+              
+            </div>
+            <div class="feature-count" style="color:var(--accent2)">197</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">Kegan</div>
+            <div class="feature-info">
+              
+                <div style="font-size:11px;font-style:italic;color:var(--muted);margin-bottom:4px">"I can't mark a person's anniversary, their, their birth date, any special, you know, their kids grad…"</div>
+              
+                <div style="font-size:11px;font-style:italic;color:var(--muted);margin-bottom:4px">"They really, I mean you saw some of that at the launch pad, if you did the launch pad."</div>
+              
+            </div>
+            <div class="feature-count" style="color:var(--accent2)">170</div>
+          </div>
+        
+          <div class="feature-row">
+            <div class="feature-rank">Tony</div>
+            <div class="feature-info">
+              
+                <div style="font-size:11px;font-style:italic;color:var(--muted);margin-bottom:4px">"You guys have graduated."</div>
+              
+                <div style="font-size:11px;font-style:italic;color:var(--muted);margin-bottom:4px">"Just to put potential value associated to that deal for tracking whenever a proposal is completed."</div>
+              
+            </div>
+            <div class="feature-count" style="color:var(--accent2)">153</div>
+          </div>
+        
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-title">Graduation Mentions by SA</div>
+        <div id="chart-graduation"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 9. COACHING OPPORTUNITIES ── -->
+  <div class="section">
+    <div class="section-title">Coaching Opportunities <span class="sub">framed as growth signals, not criticism</span></div>
+
+    <div class="coaching-grid">
+      
+    <div class="coaching-card">
+      <div class="coaching-name">Nicole Hills</div>
+      <div class="coaching-stat">
+        <span>Calls analyzed</span><strong>228</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Question rate</span><strong style="color:#ffa94d">8.6%</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Avg words/turn</span><strong>9.3</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Discovery openers</span><strong>510</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Directive openers</span><strong>2988</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>SA sentences</span><strong>125487</strong>
+      </div>
+      <div class="coaching-bar-label">Talk balance (discovery vs. directive)</div>
+      <div class="coaching-bar-wrap">
+        <div class="coaching-bar" style="width:15%;background:#6c63ff"></div>
+        <div class="coaching-bar" style="width:85%;background:#ffa94d"></div>
+      </div>
+      <div class="coaching-bar-legend">
+        <span style="color:#6c63ff">■ Discovery</span>
+        <span style="color:#ffa94d">■ Directive</span>
+      </div>
+    </div>
+  
+    <div class="coaching-card">
+      <div class="coaching-name">Kegan Ehlers</div>
+      <div class="coaching-stat">
+        <span>Calls analyzed</span><strong>167</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Question rate</span><strong style="color:#ff6b6b">4.3%</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Avg words/turn</span><strong>8.9</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Discovery openers</span><strong>109</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Directive openers</span><strong>1208</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>SA sentences</span><strong>49731</strong>
+      </div>
+      <div class="coaching-bar-label">Talk balance (discovery vs. directive)</div>
+      <div class="coaching-bar-wrap">
+        <div class="coaching-bar" style="width:8%;background:#6c63ff"></div>
+        <div class="coaching-bar" style="width:92%;background:#ffa94d"></div>
+      </div>
+      <div class="coaching-bar-legend">
+        <span style="color:#6c63ff">■ Discovery</span>
+        <span style="color:#ffa94d">■ Directive</span>
+      </div>
+    </div>
+  
+    <div class="coaching-card">
+      <div class="coaching-name">Halle Taylor</div>
+      <div class="coaching-stat">
+        <span>Calls analyzed</span><strong>135</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Question rate</span><strong style="color:#ff6b6b">6.2%</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Avg words/turn</span><strong>8.3</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Discovery openers</span><strong>173</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Directive openers</span><strong>1522</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>SA sentences</span><strong>48881</strong>
+      </div>
+      <div class="coaching-bar-label">Talk balance (discovery vs. directive)</div>
+      <div class="coaching-bar-wrap">
+        <div class="coaching-bar" style="width:10%;background:#6c63ff"></div>
+        <div class="coaching-bar" style="width:90%;background:#ffa94d"></div>
+      </div>
+      <div class="coaching-bar-legend">
+        <span style="color:#6c63ff">■ Discovery</span>
+        <span style="color:#ffa94d">■ Directive</span>
+      </div>
+    </div>
+  
+    <div class="coaching-card">
+      <div class="coaching-name">Tony Mehner</div>
+      <div class="coaching-stat">
+        <span>Calls analyzed</span><strong>82</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Question rate</span><strong style="color:#ff6b6b">3.2%</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Avg words/turn</span><strong>12.5</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Discovery openers</span><strong>36</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>Directive openers</span><strong>258</strong>
+      </div>
+      <div class="coaching-stat">
+        <span>SA sentences</span><strong>22241</strong>
+      </div>
+      <div class="coaching-bar-label">Talk balance (discovery vs. directive)</div>
+      <div class="coaching-bar-wrap">
+        <div class="coaching-bar" style="width:12%;background:#6c63ff"></div>
+        <div class="coaching-bar" style="width:88%;background:#ffa94d"></div>
+      </div>
+      <div class="coaching-bar-legend">
+        <span style="color:#6c63ff">■ Discovery</span>
+        <span style="color:#ffa94d">■ Directive</span>
+      </div>
+    </div>
+  
+    </div>
+
+    <div class="insights-grid" style="margin-top:16px">
+      <div class="insight-box">
+        <strong>Question Rate</strong>
+        Higher question rates correlate with better discovery and client engagement. Target: &gt;15% of SA sentences contain a question.
+      </div>
+      <div class="insight-box">
+        <strong>Avg Words/Turn</strong>
+        Longer average turns = SA is dominating the conversation. Ideal onboarding is conversational — aim for shorter SA turns with more client talk time.
+      </div>
+      <div class="insight-box">
+        <strong>Discovery vs. Directive</strong>
+        Discovery openers ("Can you tell me…", "How does your team…") build rapport. Directive openers ("You should…", "Let's do…") are necessary but should be balanced.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 10. RECOMMENDATIONS ── -->
+  <div class="section">
+    <div class="section-title">Recommendations</div>
+    
+    <div class="rec-card">
+      <div class="rec-header">
+        <span class="rec-icon">🤖</span>
+        <span class="rec-title">Make Revii a standard agenda item</span>
+        <span class="rec-urgency" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b44">high</span>
+      </div>
+      <div class="rec-body">With only 321 Revii mentions across 612 calls, adoption is inconsistent. SAs should demonstrate Revii in every onboarding call — not just when a client raises a gap. Create a "Revii moment" template for each call phase.</div>
+    </div>
+  
+    <div class="rec-card">
+      <div class="rec-header">
+        <span class="rec-icon">📋</span>
+        <span class="rec-title">Standardize feature gap capture</span>
+        <span class="rec-urgency" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b44">high</span>
+      </div>
+      <div class="rec-body">Client requests for other are recurring across calls. Build a structured gap-capture form SAs complete after each session and route to Product weekly — currently these insights are lost in call recordings.</div>
+    </div>
+  
+    <div class="rec-card">
+      <div class="rec-header">
+        <span class="rec-icon">🏁</span>
+        <span class="rec-title">Define a graduation checklist</span>
+        <span class="rec-urgency" style="background:#ffa94d22;color:#ffa94d;border:1px solid #ffa94d44">medium</span>
+      </div>
+      <div class="rec-body">Graduation language varies significantly across SAs. Standardize the graduation criteria with a clear checklist clients can see — this reduces ambiguity about when "onboarding is done" and cuts stall patterns.</div>
+    </div>
+  
+    <div class="rec-card">
+      <div class="rec-header">
+        <span class="rec-icon">⏱️</span>
+        <span class="rec-title">Address timeline friction proactively</span>
+        <span class="rec-urgency" style="background:#ffa94d22;color:#ffa94d;border:1px solid #ffa94d44">medium</span>
+      </div>
+      <div class="rec-body">"Taking too long" and similar timeline objections appear 373. Set explicit milestones in the kickoff call and send weekly progress emails so clients always know where they are.</div>
+    </div>
+  
+    <div class="rec-card">
+      <div class="rec-header">
+        <span class="rec-icon">🔍</span>
+        <span class="rec-title">Use competitor mentions as teaching moments</span>
+        <span class="rec-urgency" style="background:#ffa94d22;color:#ffa94d;border:1px solid #ffa94d44">medium</span>
+      </div>
+      <div class="rec-body">ConnectWise and Autotask are referenced frequently in onboarding calls. Train SAs to acknowledge prior-system workflows and bridge to PSA equivalents — don't just say "we do it differently."</div>
+    </div>
+  
+    <div class="rec-card">
+      <div class="rec-header">
+        <span class="rec-icon">💬</span>
+        <span class="rec-title">Improve SA question rate</span>
+        <span class="rec-urgency" style="background:#00d4aa22;color:#00d4aa;border:1px solid #00d4aa44">low</span>
+      </div>
+      <div class="rec-body">Discovery questioning (open-ended "Can you tell me…" patterns) builds rapport and surfaces hidden requirements. SAs with lower question rates should be coached to ask more before prescribing solutions.</div>
+    </div>
+  
+    <div class="rec-card">
+      <div class="rec-header">
+        <span class="rec-icon">🚨</span>
+        <span class="rec-title">Flag stall signals in real time</span>
+        <span class="rec-urgency" style="background:#ff6b6b22;color:#ff6b6b;border:1px solid #ff6b6b44">high</span>
+      </div>
+      <div class="rec-body">Accounts showing stall language ("waiting", "not ready", "check with my team") in call transcripts correlate with at-risk onboardings. Trigger an automated alert to the SA manager when 3+ stall signals appear in a 30-day window.</div>
+    </div>
+  
+    <div class="rec-card">
+      <div class="rec-header">
+        <span class="rec-icon">📈</span>
+        <span class="rec-title">Track Revii adoption as a success metric</span>
+        <span class="rec-urgency" style="background:#ffa94d22;color:#ffa94d;border:1px solid #ffa94d44">medium</span>
+      </div>
+      <div class="rec-body">Add "Revii demonstrated: Y/N" and "client reaction" to post-call notes in the CRM. This creates an adoption funnel you can optimize — right now there's no visibility into whether Revii is moving the needle for customers.</div>
+    </div>
+  
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  PSA Transcript Intelligence Report · Rev.io · Generated by Revay AI · March 6, 2026
+</footer>
+
+<script>
+// ── ApexCharts ─────────────────────────────────────────────────────────────
+const chartDefaults = {
+  chart: { background: 'transparent', toolbar: { show: false }, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif' },
+  theme: { mode: 'dark' },
+  grid: { borderColor: '#2e3147' },
+  tooltip: { theme: 'dark' },
+};
+
+// Revii Trend
+const reviiMonths = ["Nov 2025","Dec 2025","Jan 2026","Feb 2026","Mar 2026"];
+const reviiData = [31,60,78,126,26];
+if (reviiMonths.length > 0) {
+  new ApexCharts(document.getElementById('chart-revii-trend'), {
+    ...chartDefaults,
+    chart: { ...chartDefaults.chart, type: 'area', height: 200 },
+    series: [{ name: 'Revii Mentions', data: reviiData }],
+    xaxis: { categories: reviiMonths, labels: { style: { colors: '#7b7f9e', fontSize: '11px' } } },
+    yaxis: { labels: { style: { colors: '#7b7f9e' } } },
+    colors: ['#6c63ff'],
+    fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.5, opacityTo: 0.05 } },
+    stroke: { curve: 'smooth', width: 2 },
+    dataLabels: { enabled: false },
+  }).render();
+} else {
+  document.getElementById('chart-revii-trend').innerHTML = '<div style="color:#7b7f9e;padding:20px;text-align:center;font-size:12px">No monthly data available</div>';
+}
+
+// Revii by SA
+const saNames = ["Nicole","Kegan","Halle","Tony"];
+const saRevii = [61,91,56,113];
+new ApexCharts(document.getElementById('chart-revii-sa'), {
+  ...chartDefaults,
+  chart: { ...chartDefaults.chart, type: 'bar', height: 200 },
+  series: [{ name: 'Mentions', data: saRevii }],
+  xaxis: { categories: saNames, labels: { style: { colors: '#7b7f9e', fontSize: '11px' } } },
+  yaxis: { labels: { style: { colors: '#7b7f9e' } } },
+  colors: ['#00d4aa'],
+  plotOptions: { bar: { borderRadius: 4 } },
+  dataLabels: { enabled: true, style: { colors: ['#e8eaf6'], fontSize: '11px' } },
+}).render();
+
+// Competitors
+const compLabels = ["ConnectWise","Tigerpaw","NinjaRMM","HaloPSA","Kaseya","Autotask","Datto","ServiceNow"];
+const compCounts = [691,336,146,95,14,12,2,1];
+if (compLabels.length > 0) {
+  new ApexCharts(document.getElementById('chart-competitors'), {
+    ...chartDefaults,
+    chart: { ...chartDefaults.chart, type: 'bar', height: 260 },
+    series: [{ name: 'Mentions', data: compCounts }],
+    xaxis: { categories: compLabels, labels: { style: { colors: '#7b7f9e', fontSize: '11px' } } },
+    yaxis: { labels: { style: { colors: '#7b7f9e' } } },
+    colors: ['#ffa94d'],
+    plotOptions: { bar: { horizontal: true, borderRadius: 4 } },
+    dataLabels: { enabled: true, style: { colors: ['#e8eaf6'], fontSize: '11px' } },
+  }).render();
+} else {
+  document.getElementById('chart-competitors').innerHTML = '<div style="color:#7b7f9e;padding:20px;text-align:center;font-size:12px">No competitor mentions detected</div>';
+}
+
+// Feature Gaps
+const fgLabels = ["other","billing","integrations","ticketing","contracts","scheduling","reporting","automation","mobile","portal"];
+const fgCounts = [1912,105,79,54,26,25,20,17,10,5];
+if (fgLabels.length > 0) {
+  new ApexCharts(document.getElementById('chart-feature-gaps'), {
+    ...chartDefaults,
+    chart: { ...chartDefaults.chart, type: 'donut', height: 260 },
+    series: fgCounts,
+    labels: fgLabels,
+    colors: ['#6c63ff','#00d4aa','#ffa94d','#ff6b6b','#a78bfa','#34d399','#f472b6','#60a5fa'],
+    legend: { labels: { colors: '#e8eaf6' } },
+    dataLabels: { style: { colors: ['#fff'] } },
+  }).render();
+} else {
+  document.getElementById('chart-feature-gaps').innerHTML = '<div style="color:#7b7f9e;padding:20px;text-align:center;font-size:12px">No feature gap data</div>';
+}
+
+// Graduation by SA
+const gradLabels = ["Kegan Ehlers","Halle Taylor","Tony Mehner","Nicole Hills"];
+const gradCounts = [170,197,153,571];
+if (gradLabels.length > 0) {
+  new ApexCharts(document.getElementById('chart-graduation'), {
+    ...chartDefaults,
+    chart: { ...chartDefaults.chart, type: 'bar', height: 200 },
+    series: [{ name: 'Mentions', data: gradCounts }],
+    xaxis: { categories: gradLabels.map(n => n.split(' ')[0]), labels: { style: { colors: '#7b7f9e', fontSize: '11px' } } },
+    yaxis: { labels: { style: { colors: '#7b7f9e' } } },
+    colors: ['#00d4aa'],
+    plotOptions: { bar: { borderRadius: 4 } },
+    dataLabels: { enabled: true, style: { colors: ['#e8eaf6'] } },
+  }).render();
+} else {
+  document.getElementById('chart-graduation').innerHTML = '<div style="color:#7b7f9e;padding:20px;text-align:center;font-size:12px">No graduation data</div>';
+}
+</script>
+</body>
+</html>
