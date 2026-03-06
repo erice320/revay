@@ -80,7 +80,7 @@
   /* CHART CONTAINERS */
   .chart-wrap { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; }
   .chart-wrap h4 { font-size: 0.9rem; font-weight: 600; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  .chart-wrap { height: 280px; }
+  
   .chart-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
   .chart-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
   @media(max-width:900px) { .chart-grid-2, .chart-grid-3 { grid-template-columns: 1fr; } }
@@ -182,11 +182,11 @@
   <div class="chart-grid-2">
     <div class="chart-wrap">
       <h4>Call Volume by SA (Monthly)</h4>
-      <canvas id="chartVolume" width="800" height="220"></canvas>
+      <div style="position:relative;height:220px;width:100%;"><canvas id="chartVolume"></canvas></div>
     </div>
     <div class="chart-wrap">
       <h4>Talk Time: SA vs Client (Average %)</h4>
-      <canvas id="chartTalkTime" width="800" height="220"></canvas>
+      <div style="position:relative;height:220px;width:100%;"><canvas id="chartTalkTime"></canvas></div>
     </div>
   </div>
   
@@ -364,11 +364,11 @@
   <div style="margin-top:1.5rem;" class="chart-grid-2">
     <div class="chart-wrap">
       <h4>Monthly Call Volume by SA</h4>
-      <canvas id="chartMonthly" width="800" height="200"></canvas>
+      <div style="position:relative;height:200px;width:100%;"><canvas id="chartMonthly"></canvas></div>
     </div>
     <div class="chart-wrap">
       <h4>Calls Flagged: SA Talk >70% (Potential Over-Talking)</h4>
-      <canvas id="chartFlagged" width="800" height="200"></canvas>
+      <div style="position:relative;height:200px;width:100%;"><canvas id="chartFlagged"></canvas></div>
     </div>
   </div>
   
@@ -411,22 +411,22 @@
   <div class="chart-grid-2">
     <div class="chart-wrap">
       <h4>Avg Sentiment by SA</h4>
-      <canvas id="chartSentSA" width="800" height="220"></canvas>
+      <div style="position:relative;height:220px;width:100%;"><canvas id="chartSentSA"></canvas></div>
     </div>
     <div class="chart-wrap">
       <h4>Sentiment Trend by Month (All PSA Calls)</h4>
-      <canvas id="chartSentMonth" width="800" height="220"></canvas>
+      <div style="position:relative;height:220px;width:100%;"><canvas id="chartSentMonth"></canvas></div>
     </div>
   </div>
   
   <div style="margin-top:1rem;" class="chart-grid-2">
     <div class="chart-wrap">
       <h4>Sentiment by Call Type</h4>
-      <canvas id="chartSentType" width="800" height="220"></canvas>
+      <div style="position:relative;height:220px;width:100%;"><canvas id="chartSentType"></canvas></div>
     </div>
     <div class="chart-wrap">
       <h4>Questions per Call by Type</h4>
-      <canvas id="chartQType" width="800" height="220"></canvas>
+      <div style="position:relative;height:220px;width:100%;"><canvas id="chartQType"></canvas></div>
     </div>
   </div>
   
@@ -703,7 +703,7 @@
   </div>
     <div class="chart-wrap" style="margin-top:1rem;">
       <h4>Newport Sentiment Over Time</h4>
-      <canvas id="chartNewport" width="800" height="180"></canvas>
+      <div style="position:relative;height:180px;width:100%;"><canvas id="chartNewport"></canvas></div>
     </div>
   </div>
   
@@ -932,7 +932,7 @@
   </div>
     <div class="chart-wrap" style="margin-top:1rem;">
       <h4>Midwest Specialists Sentiment Over Time</h4>
-      <canvas id="chartMidwest" width="800" height="180"></canvas>
+      <div style="position:relative;height:180px;width:100%;"><canvas id="chartMidwest"></canvas></div>
     </div>
   </div>
   
@@ -979,11 +979,11 @@
   <div class="chart-grid-2" style="margin-bottom:1.5rem;">
     <div class="chart-wrap">
       <h4>Tony — Demo vs Onboarding Call Volume</h4>
-      <canvas id="chartTonyVol" width="800" height="220"></canvas>
+      <div style="position:relative;height:220px;width:100%;"><canvas id="chartTonyVol"></canvas></div>
     </div>
     <div class="chart-wrap">
       <h4>Tony — Sentiment Comparison (Demo vs Onboarding)</h4>
-      <canvas id="chartTonySent" width="800" height="220"></canvas>
+      <div style="position:relative;height:220px;width:100%;"><canvas id="chartTonySent"></canvas></div>
     </div>
   </div>
   
@@ -1039,11 +1039,11 @@
   <div class="chart-grid-2" style="margin-bottom:1.5rem;">
     <div class="chart-wrap">
       <h4>Graduated vs. Stalled — Key Metrics</h4>
-      <canvas id="chartGradComp" width="800" height="240"></canvas>
+      <div style="position:relative;height:240px;width:100%;"><canvas id="chartGradComp"></canvas></div>
     </div>
     <div class="chart-wrap">
       <h4>Graduation Patterns — Avg Sentiment</h4>
-      <canvas id="chartGradSent" width="800" height="240"></canvas>
+      <div style="position:relative;height:240px;width:100%;"><canvas id="chartGradSent"></canvas></div>
     </div>
   </div>
   
