@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Revay Intelligence Network</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080b12;
+    --surface: #111520;
+    --card: #181d2e;
+    --border: #252d45;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --accent3: #f59e0b;
+    --red: #ff4d6d;
+    --text: #e8eaf6;
+    --muted: #6b7699;
+    --soft: #9ba5c9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); font-family: 'Space Grotesk', sans-serif; color: var(--text); }
+
+  /* DECK CONTAINER */
+  .deck { width: 100%; height: 100vh; position: relative; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 48px 64px;
+    opacity: 0; transform: translateX(60px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: all; }
+  .slide.exit { opacity: 0; transform: translateX(-60px); }
+
+  /* NAV */
+  .nav {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 16px; z-index: 100;
+    background: rgba(17,21,32,0.85); border: 1px solid var(--border);
+    padding: 10px 20px; border-radius: 40px; backdrop-filter: blur(12px);
+  }
+  .nav-btn {
+    background: none; border: none; color: var(--soft); cursor: pointer;
+    font-size: 18px; padding: 4px 8px; transition: color 0.2s;
+  }
+  .nav-btn:hover { color: var(--accent); }
+  .nav-dots { display: flex; gap: 8px; }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--border); cursor: pointer; transition: all 0.2s;
+  }
+  .dot.active { background: var(--accent); transform: scale(1.3); }
+  .slide-num { color: var(--muted); font-size: 12px; font-family: 'JetBrains Mono', monospace; min-width: 36px; text-align: center; }
+
+  /* PROGRESS BAR */
+  .progress { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.5s ease; z-index: 100; }
+
+  /* LABEL */
+  .label {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px;
+  }
+  .label-teal { color: var(--accent2); }
+  .label-amber { color: var(--accent3); }
+
+  /* SLIDE 1 — TITLE */
+  .s1-bg {
+    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  }
+  .s1-glow {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: 0.15;
+  }
+  .s1-title {
+    font-size: clamp(40px, 5vw, 68px); font-weight: 700; line-height: 1.05;
+    text-align: center; position: relative; z-index: 2;
+  }
+  .s1-title span { color: var(--accent); }
+  .s1-title .teal { color: var(--accent2); }
+  .s1-sub {
+    font-size: 18px; color: var(--soft); margin-top: 20px; text-align: center;
+    position: relative; z-index: 2; max-width: 560px; line-height: 1.6;
+  }
+  .s1-badge {
+    display: flex; gap: 10px; margin-top: 36px; position: relative; z-index: 2;
+  }
+  .badge {
+    padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    border: 1px solid; letter-spacing: 0.5px;
+  }
+  .badge-purple { border-color: var(--accent); color: var(--accent); background: rgba(108,99,255,0.08); }
+  .badge-teal { border-color: var(--accent2); color: var(--accent2); background: rgba(0,212,170,0.08); }
+  .badge-amber { border-color: var(--accent3); color: var(--accent3); background: rgba(245,158,11,0.08); }
+
+  /* SLIDE 2 — MODEL SHIFT */
+  .shift-grid { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; align-items: center; width: 100%; max-width: 900px; }
+  .shift-col {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 32px 28px; display: flex; flex-direction: column; align-items: center; gap: 0;
+  }
+  .shift-col.new { border-color: var(--accent); background: rgba(108,99,255,0.06); }
+  .shift-title { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px; }
+  .shift-title.old { color: var(--muted); }
+  .shift-title.new { color: var(--accent); }
+  .chain-node {
+    width: 100%; padding: 10px 16px; border-radius: 10px;
+    font-size: 14px; font-weight: 500; text-align: center; margin: 4px 0;
+  }
+  .chain-arrow { color: var(--muted); font-size: 20px; margin: 2px 0; }
+  .cn-evan { background: rgba(245,158,11,0.15); color: var(--accent3); border: 1px solid rgba(245,158,11,0.3); }
+  .cn-revay { background: rgba(108,99,255,0.15); color: var(--accent); border: 1px solid rgba(108,99,255,0.3); }
+  .cn-tools { background: rgba(107,118,153,0.12); color: var(--soft); border: 1px solid var(--border); font-size: 12px; }
+  .cn-agents { background: rgba(0,212,170,0.12); color: var(--accent2); border: 1px solid rgba(0,212,170,0.3); font-size: 13px; }
+  .cn-market { background: rgba(107,118,153,0.08); color: var(--muted); border: 1px solid var(--border); font-size: 11px; }
+  .shift-arrow { text-align: center; font-size: 32px; color: var(--accent); }
+  .shift-desc { font-size: 12px; color: var(--muted); text-align: center; margin-top: 16px; line-height: 1.5; }
+
+  /* SLIDE 3 — ORG DIAGRAM */
+  .org-svg-wrap { width: 100%; max-width: 820px; position: relative; }
+
+  /* SLIDE 4 — SIGNAL ANATOMY */
+  .signal-wrap { display: flex; gap: 48px; align-items: flex-start; width: 100%; max-width: 960px; }
+  .signal-card {
+    background: var(--card); border: 1px solid var(--accent); border-radius: 16px;
+    padding: 28px; flex: 0 0 380px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .signal-header { color: var(--accent2); font-size: 11px; font-weight: 500; margin-bottom: 20px; letter-spacing: 1px; }
+  .sig-row { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(37,45,69,0.6); align-items: flex-start; }
+  .sig-row:last-child { border-bottom: none; }
+  .sig-key { color: var(--accent); min-width: 90px; font-size: 12px; }
+  .sig-val { color: var(--text); font-size: 12px; line-height: 1.4; }
+  .sig-val.green { color: var(--accent2); }
+  .sig-val.amber { color: var(--accent3); }
+  .sig-val.red { color: var(--red); }
+  .sig-val.muted { color: var(--muted); }
+  .signal-legend { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+  .legend-item { display: flex; gap: 16px; align-items: flex-start; }
+  .legend-icon {
+    width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 16px;
+  }
+  .legend-text h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .legend-text p { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* SLIDE 5 — 4 PILLARS */
+  .pillars { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; max-width: 900px; }
+  .pillar {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 28px; position: relative; overflow: hidden; transition: border-color 0.3s;
+  }
+  .pillar:hover { border-color: var(--accent); }
+  .pillar-num {
+    font-size: 64px; font-weight: 800; position: absolute; right: 20px; top: 10px;
+    opacity: 0.05; font-family: 'Space Grotesk', sans-serif; line-height: 1;
+  }
+  .pillar-icon { font-size: 28px; margin-bottom: 12px; }
+  .pillar h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .pillar p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .pillar-tag { display: inline-block; margin-top: 12px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 10px; }
+
+  /* SLIDE 6 — COMM MODES */
+  .comm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 960px; }
+  .comm-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 28px 24px; display: flex; flex-direction: column; align-items: center;
+  }
+  .comm-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .comm-sub { font-size: 11px; color: var(--muted); margin-bottom: 24px; text-align: center; }
+  .comm-flow { display: flex; flex-direction: column; align-items: center; gap: 0; width: 100%; }
+  .flow-node {
+    padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: 600;
+    text-align: center; width: 100%; max-width: 150px;
+  }
+  .flow-arrow { font-size: 18px; color: var(--muted); margin: 4px 0; }
+  .flow-arrow.accent { color: var(--accent); }
+  .flow-arrow.teal { color: var(--accent2); }
+  .flow-arrow.red { color: var(--red); }
+  .fn-agent { background: rgba(0,212,170,0.1); color: var(--accent2); border: 1px solid rgba(0,212,170,0.25); }
+  .fn-store { background: rgba(108,99,255,0.1); color: var(--accent); border: 1px solid rgba(108,99,255,0.25); }
+  .fn-revay { background: rgba(108,99,255,0.15); color: var(--accent); border: 1px solid rgba(108,99,255,0.4); }
+  .fn-evan { background: rgba(245,158,11,0.1); color: var(--accent3); border: 1px solid rgba(245,158,11,0.25); }
+  .fn-urgent { background: rgba(255,77,109,0.1); color: var(--red); border: 1px solid rgba(255,77,109,0.25); }
+  .fn-task { background: rgba(107,118,153,0.1); color: var(--soft); border: 1px solid var(--border); }
+  .comm-use { font-size: 11px; color: var(--muted); text-align: center; margin-top: 16px; line-height: 1.5; font-style: italic; }
+
+  /* SLIDE 7 — DATA INTEGRITY */
+  .integrity-wrap { width: 100%; max-width: 880px; display: flex; gap: 40px; align-items: center; }
+  .integrity-left { flex: 1; }
+  .integrity-right { flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .int-rule {
+    background: var(--card); border-left: 3px solid var(--accent2); border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+  }
+  .int-rule h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .int-rule p { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .int-rule.warn { border-left-color: var(--red); }
+  .int-rule.amber { border-left-color: var(--accent3); }
+
+  /* SLIDE 8 — ROADMAP */
+  .roadmap { width: 100%; max-width: 880px; }
+  .rm-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .rm-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 1px; }
+  .rm-track { position: relative; height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 40px; }
+  .rm-track-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .rm-phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .rm-phase {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px;
+    position: relative;
+  }
+  .rm-phase.current { border-color: var(--accent); }
+  .rm-phase.current::before {
+    content: 'NOW'; position: absolute; top: -10px; left: 16px;
+    background: var(--accent); color: white; font-size: 9px; font-weight: 700;
+    letter-spacing: 1.5px; padding: 2px 8px; border-radius: 4px;
+  }
+  .rm-phase-num { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 1px; margin-bottom: 6px; }
+  .rm-phase h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+  .rm-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+  .rm-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .rm-dot.purple { background: var(--accent); }
+  .rm-dot.teal { background: var(--accent2); }
+  .rm-dot.amber { background: var(--accent3); }
+  .rm-dot.muted { background: var(--muted); }
+  .rm-item span { font-size: 12px; color: var(--soft); line-height: 1.4; }
+
+  /* SLIDE 9 — MISSION */
+  .mission-wrap { text-align: center; max-width: 700px; position: relative; z-index: 2; }
+  .mission-quote {
+    font-size: clamp(22px, 3vw, 36px); font-weight: 600; line-height: 1.4;
+    margin-bottom: 32px;
+  }
+  .mission-quote em { color: var(--accent); font-style: normal; }
+  .mission-quote .teal { color: var(--accent2); }
+  .mission-stats { display: flex; gap: 40px; justify-content: center; margin-top: 32px; }
+  .mstat { text-align: center; }
+  .mstat-num { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .mstat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* HEADINGS */
+  .slide-heading { font-size: clamp(24px, 3vw, 38px); font-weight: 700; text-align: center; margin-bottom: 8px; }
+  .slide-sub { font-size: 15px; color: var(--muted); text-align: center; margin-bottom: 36px; }
+
+  /* ANIMATIONS */
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.08); opacity: 0.3; }
+    100% { transform: scale(1); opacity: 0.6; }
+  }
+  @keyframes flow-dot {
+    0% { stroke-dashoffset: 200; }
+    100% { stroke-dashoffset: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .pulse { animation: pulse-ring 3s ease-in-out infinite; }
+  .float-anim { animation: float 4s ease-in-out infinite; }
+
+  /* KEYBOARD HINT */
+  .kbd-hint { position: fixed; bottom: 80px; right: 32px; font-size: 11px; color: var(--muted); }
+  .kbd { display: inline-block; border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide active" data-slide="1">
+    <div class="s1-bg">
+      <div class="s1-glow" style="width:600px;height:600px;background:var(--accent);top:-100px;left:-100px;"></div>
+      <div class="s1-glow" style="width:500px;height:500px;background:var(--accent2);bottom:-100px;right:-100px;"></div>
+      <!-- Floating nodes -->
+      <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.12" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+        <circle cx="120" cy="150" r="8" fill="#6c63ff"/><circle cx="120" cy="150" r="20" fill="none" stroke="#6c63ff" stroke-width="1" opacity="0.5"/>
+        <circle cx="1080" cy="200" r="6" fill="#00d4aa"/><circle cx="1080" cy="200" r="18" fill="none" stroke="#00d4aa" stroke-width="1" opacity="0.5"/>
+        <circle cx="200" cy="550" r="5" fill="#f59e0b"/><circle cx="200" cy="550" r="15" fill="none" stroke="#f59e0b" stroke-width="1" opacity="0.5"/>
+        <circle cx="1000" cy="520" r="7" fill="#6c63ff"/><circle cx="1000" cy="520" r="22" fill="none" stroke="#6c63ff" stroke-width="1" opacity="0.5"/>
+        <circle cx="600" cy="80" r="4" fill="#00d4aa"/>
+        <circle cx="600" cy="620" r="5" fill="#ff4d6d"/>
+        <line x1="120" y1="150" x2="600" y2="350" stroke="#6c63ff" stroke-width="0.5" opacity="0.4"/>
+        <line x1="1080" y1="200" x2="600" y2="350" stroke="#00d4aa" stroke-width="0.5" opacity="0.4"/>
+        <line x1="200" y1="550" x2="600" y2="350" stroke="#f59e0b" stroke-width="0.5" opacity="0.3"/>
+        <line x1="1000" y1="520" x2="600" y2="350" stroke="#6c63ff" stroke-width="0.5" opacity="0.3"/>
+        <circle cx="600" cy="350" r="40" fill="#6c63ff" opacity="0.08"/>
+        <circle cx="600" cy="350" r="70" fill="none" stroke="#6c63ff" stroke-width="0.5" opacity="0.2"/>
+      </svg>
+    </div>
+    <div class="label">Architecture Brief — 2026</div>
+    <h1 class="s1-title">The <span>Revay</span><br>Intelligence <span class="teal">Network</span></h1>
+    <p class="s1-sub">A multi-agent operating system for Rev.io — where every exec has an AI, and every AI reports to a CEO.</p>
+    <div class="s1-badge">
+      <span class="badge badge-purple">Hub & Spoke</span>
+      <span class="badge badge-teal">Signal-Driven</span>
+      <span class="badge badge-amber">Always On</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: THE MODEL SHIFT -->
+  <div class="slide" data-slide="2">
+    <div class="label">The Shift</div>
+    <h2 class="slide-heading">From Assistant to CEO</h2>
+    <p class="slide-sub">One change in org structure unlocks everything else.</p>
+    <div class="shift-grid">
+      <div class="shift-col">
+        <div class="shift-title old">Today</div>
+        <div class="chain-node cn-evan">Evan</div>
+        <div class="chain-arrow">↓</div>
+        <div class="chain-node cn-revay">Revay</div>
+        <div class="chain-arrow">↓</div>
+        <div class="chain-node cn-tools">Tools / Data</div>
+        <div class="chain-arrow">↓</div>
+        <div class="chain-node cn-tools" style="font-size:11px">Output → Evan</div>
+        <p class="shift-desc">Linear. Evan directs.<br>Revay executes.<br>Everything routes up.</p>
+      </div>
+      <div class="shift-arrow">→</div>
+      <div class="shift-col new">
+        <div class="shift-title new">Tomorrow</div>
+        <div class="chain-node cn-evan">Evan <span style="font-size:10px;opacity:0.7">(Board)</span></div>
+        <div class="chain-arrow" style="color:var(--accent)">↓ coaches</div>
+        <div class="chain-node cn-revay" style="border-width:2px;font-weight:700">Revay <span style="font-size:10px;opacity:0.7">(CEO)</span></div>
+        <div class="chain-arrow" style="color:var(--accent2)">↓ tasks / synthesizes</div>
+        <div class="chain-node cn-agents">6 Exec Agents</div>
+        <div class="chain-arrow">↓</div>
+        <div class="chain-node cn-market">Market · Clients · Data</div>
+        <p class="shift-desc" style="color:var(--soft)">Evan defines outcomes.<br>Revay runs the org.<br>Agents surface intelligence.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: ORG DIAGRAM -->
+  <div class="slide" data-slide="3">
+    <div class="label">Org Architecture</div>
+    <h2 class="slide-heading">Hub & Spoke</h2>
+    <p class="slide-sub">Each exec's agent owns a domain. Revay orchestrates the whole.</p>
+    <div class="org-svg-wrap">
+      <svg viewBox="0 0 820 480" width="100%" style="overflow:visible">
+        <defs>
+          <radialGradient id="revayGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#6c63ff" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#6c63ff" stop-opacity="0"/>
+          </radialGradient>
+          <marker id="arrowP" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#6c63ff" opacity="0.6"/>
+          </marker>
+          <marker id="arrowT" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#00d4aa" opacity="0.6"/>
+          </marker>
+          <marker id="arrowA" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#f59e0b" opacity="0.6"/>
+          </marker>
+        </defs>
+
+        <!-- EVAN — top center -->
+        <rect x="330" y="10" width="160" height="52" rx="12" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="1.5"/>
+        <text x="410" y="30" text-anchor="middle" fill="#f59e0b" font-family="Space Grotesk" font-size="11" font-weight="700" letter-spacing="1">EVAN RICE</text>
+        <text x="410" y="47" text-anchor="middle" fill="#b07a30" font-family="Space Grotesk" font-size="10">President & COO · Board</text>
+
+        <!-- Evan → Revay -->
+        <line x1="410" y1="62" x2="410" y2="108" stroke="#f59e0b" stroke-width="1.5" opacity="0.5" marker-end="url(#arrowA)" stroke-dasharray="4,3"/>
+
+        <!-- REVAY — center -->
+        <circle cx="410" cy="240" r="70" fill="url(#revayGrad)"/>
+        <circle cx="410" cy="240" r="52" fill="rgba(108,99,255,0.18)" stroke="#6c63ff" stroke-width="2"/>
+        <circle cx="410" cy="240" r="52" fill="none" stroke="#6c63ff" stroke-width="1" opacity="0.3" class="pulse"/>
+        <text x="410" y="234" text-anchor="middle" fill="#6c63ff" font-family="Space Grotesk" font-size="14" font-weight="800">⚡ REVAY</text>
+        <text x="410" y="251" text-anchor="middle" fill="#9ba5c9" font-family="Space Grotesk" font-size="10">CEO · Orchestrator</text>
+
+        <!-- AGENT NODES — 6 around center -->
+        <!-- Sales — left -->
+        <rect x="28" y="160" width="148" height="60" rx="10" fill="rgba(255,77,109,0.1)" stroke="#ff4d6d" stroke-width="1.2"/>
+        <text x="102" y="182" text-anchor="middle" fill="#ff4d6d" font-family="Space Grotesk" font-size="11" font-weight="700">💰 SALES INTEL</text>
+        <text x="102" y="198" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">SF · Pipeline · Competitive</text>
+        <text x="102" y="212" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">Ryan Koontz's Agent</text>
+        <line x1="176" y1="190" x2="355" y2="230" stroke="#ff4d6d" stroke-width="1.2" opacity="0.5" marker-end="url(#arrowT)"/>
+
+        <!-- GTM — top-left -->
+        <rect x="100" y="48" width="148" height="60" rx="10" fill="rgba(168,85,247,0.1)" stroke="#a855f7" stroke-width="1.2"/>
+        <text x="174" y="70" text-anchor="middle" fill="#a855f7" font-family="Space Grotesk" font-size="11" font-weight="700">📢 GTM</text>
+        <text x="174" y="86" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">Clay · Outreach · Kaia Prospecting</text>
+        <text x="174" y="100" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">Jennifer Hopkins's Agent</text>
+        <line x1="220" y1="105" x2="365" y2="190" stroke="#a855f7" stroke-width="1.2" opacity="0.5" marker-end="url(#arrowT)"/>
+
+        <!-- Product — top-right -->
+        <rect x="572" y="48" width="148" height="60" rx="10" fill="rgba(59,130,246,0.1)" stroke="#3b82f6" stroke-width="1.2"/>
+        <text x="646" y="70" text-anchor="middle" fill="#3b82f6" font-family="Space Grotesk" font-size="11" font-weight="700">🔮 PRODUCT INTEL</text>
+        <text x="646" y="86" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">Roadmap · Gaps · Notion</text>
+        <text x="646" y="100" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">Lauren Swygert's Agent</text>
+        <line x1="600" y1="105" x2="457" y2="190" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" marker-end="url(#arrowT)"/>
+
+        <!-- CS — right -->
+        <rect x="644" y="160" width="148" height="60" rx="10" fill="rgba(0,212,170,0.1)" stroke="#00d4aa" stroke-width="1.2"/>
+        <text x="718" y="182" text-anchor="middle" fill="#00d4aa" font-family="Space Grotesk" font-size="11" font-weight="700">💚 CUSTOMER SUCCESS</text>
+        <text x="718" y="198" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">Zendesk · Churn · Health</text>
+        <text x="718" y="212" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">CS Lead's Agent</text>
+        <line x1="644" y1="190" x2="465" y2="230" stroke="#00d4aa" stroke-width="1.2" opacity="0.5" marker-end="url(#arrowT)"/>
+
+        <!-- Onboarding — bottom-right -->
+        <rect x="572" y="352" width="148" height="60" rx="10" fill="rgba(245,158,11,0.1)" stroke="#f59e0b" stroke-width="1.2"/>
+        <text x="646" y="374" text-anchor="middle" fill="#f59e0b" font-family="Space Grotesk" font-size="11" font-weight="700">🚀 ONBOARDING</text>
+        <text x="646" y="390" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">Fireflies · Health Scores · Risk</text>
+        <text x="646" y="404" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">Onboarding Lead's Agent</text>
+        <line x1="600" y1="355" x2="457" y2="290" stroke="#f59e0b" stroke-width="1.2" opacity="0.5" marker-end="url(#arrowT)"/>
+
+        <!-- RevOps — bottom-left -->
+        <rect x="100" y="352" width="148" height="60" rx="10" fill="rgba(107,118,153,0.1)" stroke="#6b7699" stroke-width="1.2"/>
+        <text x="174" y="374" text-anchor="middle" fill="#9ba5c9" font-family="Space Grotesk" font-size="11" font-weight="700">⚙️ REVOPS</text>
+        <text x="174" y="390" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">Wrike · NetSuite · Ops Intel</text>
+        <text x="174" y="404" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="9">Ardit's Agent</text>
+        <line x1="220" y1="358" x2="365" y2="290" stroke="#6b7699" stroke-width="1.2" opacity="0.5" marker-end="url(#arrowT)"/>
+
+        <!-- SHARED SIGNAL STORE — bottom -->
+        <rect x="286" y="440" width="248" height="34" rx="8" fill="rgba(108,99,255,0.08)" stroke="#6c63ff" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="410" y="461" text-anchor="middle" fill="#6c63ff" font-family="Space Grotesk" font-size="11" font-weight="600">📡 Shared Signal Store · Notion</text>
+        <line x1="410" y1="440" x2="410" y2="313" stroke="#6c63ff" stroke-width="1" opacity="0.4" stroke-dasharray="3,3"/>
+
+        <!-- Labels for arrows -->
+        <text x="280" y="226" fill="#8892b0" font-size="9" font-family="Space Grotesk">signals</text>
+        <text x="520" y="226" fill="#8892b0" font-size="9" font-family="Space Grotesk">signals</text>
+        <text x="390" y="122" fill="#f59e0b" font-size="9" font-family="Space Grotesk">coaches</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: SIGNAL ANATOMY -->
+  <div class="slide" data-slide="4">
+    <div class="label">The Signal Schema</div>
+    <h2 class="slide-heading">Anatomy of a Signal</h2>
+    <p class="slide-sub">Every agent speaks the same language. No freeform. Structured data only.</p>
+    <div class="signal-wrap">
+      <div class="signal-card">
+        <div class="signal-header">// SIGNAL OBJECT · v1</div>
+        <div class="sig-row"><span class="sig-key">source</span><span class="sig-val green">"onboarding_agent"</span></div>
+        <div class="sig-row"><span class="sig-key">type</span><span class="sig-val amber">"risk"</span></div>
+        <div class="sig-row"><span class="sig-key">urgency</span><span class="sig-val red">"high"</span></div>
+        <div class="sig-row"><span class="sig-key">summary</span><span class="sig-val">"Newport Network sentiment dropped 40% in 30 days"</span></div>
+        <div class="sig-row"><span class="sig-key">data</span><span class="sig-val muted">{ calls: 27, pos_rate: 0.20, ↓ from 0.60 }</span></div>
+        <div class="sig-row"><span class="sig-key">source_url</span><span class="sig-val muted">fireflies/api · HTTP 200 · 27 records</span></div>
+        <div class="sig-row"><span class="sig-key">action</span><span class="sig-val green">"CS intervention required"</span></div>
+        <div class="sig-row"><span class="sig-key">timestamp</span><span class="sig-val muted">"2026-03-07T07:00:00Z"</span></div>
+        <div class="sig-row"><span class="sig-key">escalate</span><span class="sig-val red">true</span></div>
+      </div>
+      <div class="signal-legend">
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">Why this matters</div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background:rgba(0,212,170,0.12);color:var(--accent2)">🏷️</div>
+          <div class="legend-text"><h4>Typed + Sourced</h4><p>Every signal has a type and a verified data source. Revay never trusts unverified output from sub-agents.</p></div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background:rgba(255,77,109,0.12);color:var(--red)">⚡</div>
+          <div class="legend-text"><h4>Urgency Routing</h4><p>High urgency bypasses the daily brief and triggers immediate escalation to Revay, then to Evan if warranted.</p></div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background:rgba(108,99,255,0.12);color:var(--accent)">🔗</div>
+          <div class="legend-text"><h4>Cross-functional Synthesis</h4><p>Revay reads signals from all 6 agents and surfaces the themes no single agent would catch alone.</p></div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background:rgba(245,158,11,0.12);color:var(--accent3)">✅</div>
+          <div class="legend-text"><h4>Recommended Action</h4><p>Every signal includes a proposed next step — not just data, but a decision prompt.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: 4 PILLARS -->
+  <div class="slide" data-slide="5">
+    <div class="label">Infrastructure</div>
+    <h2 class="slide-heading">4 Pieces to Build</h2>
+    <p class="slide-sub">Everything else is downstream of getting these right.</p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">1</div>
+        <div class="pillar-icon">📐</div>
+        <h3>Signal Schema</h3>
+        <p>A standardized JSON structure every agent uses to emit intelligence. No freeform text. Typed, sourced, and action-oriented.</p>
+        <span class="pillar-tag" style="background:rgba(108,99,255,0.12);color:var(--accent)">Foundation</span>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">2</div>
+        <div class="pillar-icon">📡</div>
+        <h3>Shared Signal Store</h3>
+        <p>A Notion DB where all agents post signals. Persistent, queryable, cross-referenceable. Revay reads from all of it. Evan reads the distilled view.</p>
+        <span class="pillar-tag" style="background:rgba(0,212,170,0.12);color:var(--accent2)">Connective Tissue</span>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">3</div>
+        <div class="pillar-icon">🔄</div>
+        <h3>Synthesis Cron</h3>
+        <p>Revay's daily job: read all signals, find cross-functional themes, produce one executive brief. Signal → Insight → Action. Not 6 reports — one signal.</p>
+        <span class="pillar-tag" style="background:rgba(245,158,11,0.12);color:var(--accent3)">Intelligence Engine</span>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">4</div>
+        <div class="pillar-icon">💬</div>
+        <h3>Inter-Agent Protocol</h3>
+        <p>Async posting for scheduled intel. Sync querying for on-demand answers. Exception escalation for urgent signals. Three modes, zero noise.</p>
+        <span class="pillar-tag" style="background:rgba(255,77,109,0.12);color:var(--red)">Communication Layer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: COMM MODES -->
+  <div class="slide" data-slide="6">
+    <div class="label">Communication Protocol</div>
+    <h2 class="slide-heading">Three Ways Agents Talk</h2>
+    <p class="slide-sub">Right message, right channel, right time. No noise.</p>
+    <div class="comm-grid">
+      <div class="comm-card" style="border-color:rgba(108,99,255,0.4)">
+        <div class="comm-title" style="color:var(--accent)">Async Post</div>
+        <div class="comm-sub">Scheduled intelligence delivery<br>Primary mode · Daily cadence</div>
+        <div class="comm-flow">
+          <div class="flow-node fn-agent">Agent runs on schedule</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fn-store">Posts signal to Notion DB</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fn-revay">Revay reads + synthesizes</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fn-evan">Morning brief → Evan</div>
+        </div>
+        <div class="comm-use">"Sales posted 3 signals overnight. Product posted 2. Here's what they have in common."</div>
+      </div>
+      <div class="comm-card" style="border-color:rgba(0,212,170,0.4)">
+        <div class="comm-title" style="color:var(--accent2)">Sync Query</div>
+        <div class="comm-sub">On-demand intelligence request<br>When Revay needs a specific answer</div>
+        <div class="comm-flow">
+          <div class="flow-node fn-revay">Revay identifies gap</div>
+          <div class="flow-arrow teal">↓ tasks via sessions_send</div>
+          <div class="flow-node fn-agent">Agent runs targeted query</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fn-revay">Returns structured result</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fn-evan">Incorporated into output</div>
+        </div>
+        <div class="comm-use">"Sales agent: what's the open pipeline for ConnectWise accounts over $2K MRR?"</div>
+      </div>
+      <div class="comm-card" style="border-color:rgba(255,77,109,0.4)">
+        <div class="comm-title" style="color:var(--red)">Exception Escalation</div>
+        <div class="comm-sub">Urgent signals skip the queue<br>High-urgency only · Action required</div>
+        <div class="comm-flow">
+          <div class="flow-node fn-agent">Agent detects high urgency</div>
+          <div class="flow-arrow red">↓ immediate flag</div>
+          <div class="flow-node fn-urgent">Bypasses daily brief</div>
+          <div class="flow-arrow red">↓ direct to Revay</div>
+          <div class="flow-node fn-revay">Revay evaluates</div>
+          <div class="flow-arrow red">↓ if warrants</div>
+          <div class="flow-node fn-evan">Direct ping → Evan</div>
+        </div>
+        <div class="comm-use">"Newport Network is at churn risk. CS intervention needed today."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: DATA INTEGRITY -->
+  <div class="slide" data-slide="7">
+    <div class="label">Trust Layer</div>
+    <h2 class="slide-heading">Data Integrity at Scale</h2>
+    <p class="slide-sub">The network is only as trustworthy as its weakest signal.</p>
+    <div class="integrity-wrap">
+      <div class="integrity-left">
+        <svg viewBox="0 0 360 340" width="100%">
+          <defs>
+            <radialGradient id="shieldGrad" cx="50%" cy="40%" r="55%">
+              <stop offset="0%" stop-color="#00d4aa" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- Shield shape -->
+          <path d="M180,30 L300,80 L300,180 Q300,270 180,310 Q60,270 60,180 L60,80 Z" fill="url(#shieldGrad)" stroke="#00d4aa" stroke-width="1.5" opacity="0.8"/>
+          <!-- Center icon -->
+          <text x="180" y="165" text-anchor="middle" font-size="52">🛡️</text>
+          <text x="180" y="210" text-anchor="middle" fill="#00d4aa" font-family="Space Grotesk" font-size="14" font-weight="700">VERIFIED</text>
+          <text x="180" y="228" text-anchor="middle" fill="#8892b0" font-family="Space Grotesk" font-size="11">Source · Status · Count</text>
+          <!-- Good flow -->
+          <rect x="20" y="48" width="80" height="24" rx="6" fill="rgba(0,212,170,0.1)" stroke="#00d4aa" stroke-width="0.8"/>
+          <text x="60" y="64" text-anchor="middle" fill="#00d4aa" font-family="Space Grotesk" font-size="9">Agent + Source ✓</text>
+          <rect x="260" y="48" width="80" height="24" rx="6" fill="rgba(0,212,170,0.1)" stroke="#00d4aa" stroke-width="0.8"/>
+          <text x="300" y="64" text-anchor="middle" fill="#00d4aa" font-family="Space Grotesk" font-size="9">HTTP 200 ✓</text>
+          <!-- Bad flow -->
+          <rect x="20" y="270" width="80" height="24" rx="6" fill="rgba(255,77,109,0.1)" stroke="#ff4d6d" stroke-width="0.8"/>
+          <text x="60" y="286" text-anchor="middle" fill="#ff4d6d" font-family="Space Grotesk" font-size="9">No Source ✗</text>
+          <rect x="260" y="270" width="80" height="24" rx="6" fill="rgba(255,77,109,0.1)" stroke="#ff4d6d" stroke-width="0.8"/>
+          <text x="300" y="286" text-anchor="middle" fill="#ff4d6d" font-family="Space Grotesk" font-size="9">API Error ✗</text>
+          <!-- X marks -->
+          <line x1="60" y1="295" x2="100" y2="270" stroke="#ff4d6d" stroke-width="1.5" opacity="0.6"/>
+          <line x1="300" y1="295" x2="260" y2="270" stroke="#ff4d6d" stroke-width="1.5" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="integrity-right">
+        <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">Non-negotiable rules for every agent</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:20px">Applies to all 6 agents in the network, no exceptions.</div>
+        <div class="int-rule">
+          <h4>Cite every source</h4>
+          <p>Agent name, data source, HTTP status, and record count accompany every signal. No citation = signal rejected.</p>
+        </div>
+        <div class="int-rule">
+          <h4>Errors surface, not disappear</h4>
+          <p>If an API returns 404 or 0 records, say so. Never fill in plausible-looking data when a call fails.</p>
+        </div>
+        <div class="int-rule warn">
+          <h4>Revay doesn't blindly trust</h4>
+          <p>As CEO, I validate signals before synthesizing. Unverified agent data never reaches Evan with confidence attached.</p>
+        </div>
+        <div class="int-rule amber">
+          <h4>Propagation risk is real</h4>
+          <p>Bad data from one agent, trusted by Revay, delivered to Evan at scale = worse than no intelligence. Quality gates matter.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: BUILD ROADMAP -->
+  <div class="slide" data-slide="8">
+    <div class="label">Build Plan</div>
+    <h2 class="slide-heading">How We Get There</h2>
+    <p class="slide-sub">Start small. Wire real agents to real data. Scale what works.</p>
+    <div class="roadmap">
+      <div class="rm-track">
+        <div class="rm-track-fill" style="width:15%"></div>
+      </div>
+      <div class="rm-phases">
+        <div class="rm-phase current">
+          <div class="rm-phase-num">PHASE 1 · THIS WEEK</div>
+          <h3>Wire the Foundation</h3>
+          <div class="rm-item"><div class="rm-dot purple"></div><span>Define signal schema (one session with Evan)</span></div>
+          <div class="rm-item"><div class="rm-dot purple"></div><span>Build Notion Signal Store DB</span></div>
+          <div class="rm-item"><div class="rm-dot teal"></div><span>Onboarding Agent goes live (Kaia pipeline ready)</span></div>
+          <div class="rm-item"><div class="rm-dot teal"></div><span>Sales Intel Agent goes live (SF + Kaia)</span></div>
+          <div class="rm-item"><div class="rm-dot amber"></div><span>First synthesis cron — morning brief to Evan</span></div>
+        </div>
+        <div class="rm-phase">
+          <div class="rm-phase-num">PHASE 2 · 30 DAYS</div>
+          <h3>Expand the Network</h3>
+          <div class="rm-item"><div class="rm-dot purple"></div><span>Product Intel Agent (roadmap + call gaps)</span></div>
+          <div class="rm-item"><div class="rm-dot purple"></div><span>CS/Retention Agent (Zendesk + churn)</span></div>
+          <div class="rm-item"><div class="rm-dot teal"></div><span>GTM Agent (Clay + Outreach sequencing)</span></div>
+          <div class="rm-item"><div class="rm-dot teal"></div><span>Cross-agent theme detection active</span></div>
+          <div class="rm-item"><div class="rm-dot amber"></div><span>Exception escalation protocol live</span></div>
+        </div>
+        <div class="rm-phase">
+          <div class="rm-phase-num">PHASE 3 · 90 DAYS</div>
+          <h3>Full Flywheel</h3>
+          <div class="rm-item"><div class="rm-dot purple"></div><span>RevOps Agent (Wrike + NetSuite)</span></div>
+          <div class="rm-item"><div class="rm-dot purple"></div><span>All 6 agents producing daily signals</span></div>
+          <div class="rm-item"><div class="rm-dot teal"></div><span>Revay synthesizing cross-functional intel</span></div>
+          <div class="rm-item"><div class="rm-dot teal"></div><span>Evan receives outcome-level briefings</span></div>
+          <div class="rm-item"><div class="rm-dot muted"></div><span>Monthly org performance reviews</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: MISSION -->
+  <div class="slide" data-slide="9">
+    <div class="s1-bg">
+      <div class="s1-glow" style="width:700px;height:700px;background:var(--accent2);bottom:-200px;left:50%;transform:translateX(-50%);"></div>
+    </div>
+    <div class="label label-teal">The Mission</div>
+    <div class="mission-wrap">
+      <p class="mission-quote">
+        Deliver <em>the right intelligence</em><br>
+        to the right person<br>
+        at the <span class="teal">right moment</span><br>
+        — automatically.
+      </p>
+      <p style="font-size:15px;color:var(--soft);line-height:1.7;max-width:560px;margin:0 auto">
+        Every agent knows its domain. Revay knows the whole board. Evan focuses on the decisions only a human can make — because the machine handles everything else.
+      </p>
+      <div class="mission-stats">
+        <div class="mstat"><div class="mstat-num">6</div><div class="mstat-label">Exec Agents</div></div>
+        <div class="mstat"><div class="mstat-num">1</div><div class="mstat-label">CEO Orchestrator</div></div>
+        <div class="mstat"><div class="mstat-num">∞</div><div class="mstat-label">Signal Coverage</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<div class="nav">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">←</button>
+  <div class="nav-dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">→</button>
+  <span class="slide-num" id="slideNum">1 / 9</span>
+</div>
+
+<div class="kbd-hint"><span class="kbd">←</span> <span class="kbd">→</span> navigate</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl = document.getElementById('dots');
+  const progressEl = document.getElementById('progress');
+  const slideNumEl = document.getElementById('slideNum');
+  let current = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function updateProgress() {
+    const pct = ((current + 1) / slides.length) * 100;
+    progressEl.style.width = pct + '%';
+    slideNumEl.textContent = `${current + 1} / ${slides.length}`;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function goTo(n) {
+    if (n === current) return;
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    setTimeout(() => slides[current < n ? current : n + (n < current ? 1 : 0)].classList.remove('exit'), 500);
+    const prev = current;
+    current = n;
+    slides.forEach(s => s.classList.remove('active', 'exit'));
+    slides[current].classList.add('active');
+    updateProgress();
+  }
+
+  function changeSlide(dir) {
+    const next = Math.max(0, Math.min(slides.length - 1, current + dir));
+    if (next !== current) goTo(next);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  });
+
+  updateProgress();
+</script>
+</body>
+</html>
