@@ -7,964 +7,743 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-html, body {
-  width:100%; height:100%; overflow:hidden;
-  background:#0a0a00;
-  font-family:'Press Start 2P', monospace;
-  color:#00ff41;
-  image-rendering: pixelated;
-}
+html, body { width:100%; height:100%; overflow:hidden; background:#0a0a00; font-family:'Press Start 2P',monospace; color:#00ff41; image-rendering:pixelated; }
 
 .office {
   width:100vw; height:100vh;
   display:grid;
-  grid-template-rows:56px 1fr 72px;
-  grid-template-columns:1fr 280px;
-  grid-template-areas:"hud hud" "canvas tps" "party party";
+  grid-template-rows:52px 1fr 68px;
+  grid-template-columns:1fr;
+  grid-template-areas:"hud" "canvas" "party";
 }
 
-/* ── HUD TOP BAR ── */
+/* HUD */
 .hud {
-  grid-area:hud;
-  background:#000;
-  border-bottom:3px solid #00ff41;
-  display:flex; align-items:center;
-  padding:0 16px; gap:0;
-  image-rendering:pixelated;
-  position:relative;
-  overflow:hidden;
+  grid-area:hud; background:#000; border-bottom:3px solid #00ff41;
+  display:flex; align-items:center; padding:0 14px; gap:0;
+  position:relative; overflow:hidden; z-index:20;
 }
-.hud::after {
-  content:'';
-  position:absolute; inset:0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,255,65,0.03) 3px, rgba(0,255,65,0.03) 4px);
-  pointer-events:none;
-}
-.hud-logo {
-  font-size:10px; color:#ffff00; letter-spacing:1px;
-  padding-right:20px; border-right:2px solid #1a3a1a;
-  display:flex; align-items:center; gap:8px;
-}
-.hud-logo .blink { animation:blink 1s step-end infinite; }
-.hud-section { padding:0 16px; border-right:2px solid #1a3a1a; font-size:8px; display:flex; flex-direction:column; gap:4px; }
-.hud-label { color:#4a7a4a; }
+.hud::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,65,0.03) 3px,rgba(0,255,65,0.03) 4px); pointer-events:none; }
+.hud-logo { font-size:9px; color:#ffff00; padding-right:16px; border-right:2px solid #1a3a1a; display:flex; align-items:center; gap:8px; flex-shrink:0; }
+.hud-logo small { font-size:5px; color:#4a7a4a; display:block; margin-top:3px; }
+.hud-sec { padding:0 12px; border-right:2px solid #1a3a1a; font-size:7px; display:flex; flex-direction:column; gap:3px; flex-shrink:0; }
+.hud-lbl { color:#4a7a4a; }
 .hud-val { color:#00ff41; }
 .hud-bar { display:flex; gap:2px; }
-.hud-pip { width:8px; height:10px; background:#00ff41; }
+.hud-pip { width:7px; height:9px; background:#00ff41; }
 .hud-pip.empty { background:#1a3a1a; }
 .hud-pip.red { background:#ff0000; }
-.hud-right { margin-left:auto; font-size:8px; color:#00ff41; display:flex; gap:16px; align-items:center; }
-.hud-alert { color:#ff0000; animation:blink 0.7s step-end infinite; }
-.hud-clock { color:#4a7a4a; font-size:7px; }
+.hud-alert { color:#ff0000; font-size:7px; animation:blink .7s step-end infinite; margin-left:12px; }
+.hud-right { margin-left:auto; display:flex; gap:14px; align-items:center; font-size:7px; }
+.hud-clock { color:#4a7a4a; font-size:6px; font-family:'Press Start 2P',monospace; }
+.hud-btn { background:#001500; border:2px solid #00ff41; color:#00ff41; font-family:'Press Start 2P',monospace; font-size:6px; padding:4px 8px; cursor:pointer; transition:all .1s; }
+.hud-btn:hover { background:#00ff41; color:#000; }
 
-/* ── CANVAS ── */
-.canvas-wrap {
-  grid-area:canvas;
-  position:relative; overflow:hidden;
-  background:#0a0a00;
-}
-canvas#gc {
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  image-rendering:pixelated;
-}
-/* Scanlines overlay */
-.canvas-wrap::after {
-  content:'';
-  position:absolute; inset:0;
-  background: repeating-linear-gradient(0deg,
-    transparent, transparent 2px,
-    rgba(0,0,0,0.18) 2px, rgba(0,0,0,0.18) 4px);
-  pointer-events:none; z-index:5;
-}
-/* CRT vignette */
-.canvas-wrap::before {
-  content:'';
-  position:absolute; inset:0;
-  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.6) 100%);
-  pointer-events:none; z-index:6;
-}
+/* CANVAS */
+.canvas-wrap { grid-area:canvas; position:relative; overflow:hidden; background:#0a0a00; }
+canvas#gc { position:absolute; inset:0; width:100%; height:100%; image-rendering:pixelated; }
+.canvas-wrap .scanlines { position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.15) 2px,rgba(0,0,0,0.15) 4px); pointer-events:none; z-index:5; }
+.canvas-wrap .vignette { position:absolute; inset:0; background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.65) 100%); pointer-events:none; z-index:6; }
 
-/* ── TPS REPORT PANEL ── */
-.tps {
-  grid-area:tps;
-  background:#000;
-  border-left:3px solid #00ff41;
+/* DRAWER TOGGLE */
+.drawer-toggle {
+  position:absolute; right:0; top:50%; transform:translateY(-50%);
+  z-index:30; background:#000; border:2px solid #00ff41;
+  border-right:none; padding:10px 6px; cursor:pointer;
+  font-family:'Press Start 2P',monospace; font-size:7px; color:#00ff41;
+  writing-mode:vertical-rl; text-orientation:mixed; letter-spacing:2px;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  transition:background .1s;
+}
+.drawer-toggle:hover { background:#001500; }
+.drawer-toggle .dt-arrow { font-style:normal; writing-mode:horizontal-tb; font-size:10px; }
+
+/* DRAWER */
+.drawer {
+  position:absolute; right:0; top:0; bottom:0; width:260px;
+  background:#000; border-left:3px solid #00ff41; z-index:25;
   display:flex; flex-direction:column;
+  transform:translateX(100%); transition:transform .25s steps(8,end);
   overflow:hidden;
-  position:relative;
 }
-.tps::after {
-  content:'';
-  position:absolute; inset:0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,255,65,0.02) 3px, rgba(0,255,65,0.02) 4px);
-  pointer-events:none;
-}
-.tps-header {
-  padding:10px 12px;
-  border-bottom:2px solid #1a3a1a;
-  font-size:7px; color:#ffff00;
-  display:flex; flex-direction:column; gap:4px;
-}
-.tps-sub { font-size:6px; color:#4a7a4a; }
-.tps-items { flex:1; overflow-y:auto; padding:8px 0; }
-.tps-item {
-  padding:8px 10px;
-  border-bottom:1px solid #0a1a0a;
-  font-size:6px; line-height:1.8;
-}
+.drawer.open { transform:translateX(0); }
+.drawer::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,65,0.02) 3px,rgba(0,255,65,0.02) 4px); pointer-events:none; }
+.drawer-head { padding:10px 12px; border-bottom:2px solid #1a3a1a; font-size:7px; color:#ffff00; display:flex; flex-direction:column; gap:4px; flex-shrink:0; }
+.drawer-head small { font-size:5px; color:#4a7a4a; }
+.drawer-close { background:none; border:1px solid #ff0000; color:#ff0000; font-family:'Press Start 2P',monospace; font-size:5px; padding:3px 6px; cursor:pointer; margin-left:auto; }
+.drawer-head-row { display:flex; align-items:center; }
+.drawer-items { flex:1; overflow-y:auto; }
+.tps-item { padding:7px 10px; border-bottom:1px solid #0a1a0a; font-size:5px; line-height:1.9; }
 .tps-id { color:#ffff00; }
 .tps-ok { color:#00ff41; }
 .tps-err { color:#ff0000; animation:blink 1s step-end infinite; }
-.tps-warn { color:#ffff00; }
 .tps-time { color:#2a5a2a; }
-.tps-meta { color:#4a7a4a; }
-.tps-cursor { display:inline-block; width:7px; height:10px; background:#00ff41; animation:blink 1s step-end infinite; vertical-align:middle; }
-.tps-footer {
-  padding:8px 10px; border-top:2px solid #1a3a1a;
-  font-size:6px; color:#2a5a2a;
-}
+.drawer-legend { padding:10px 12px; border-top:2px solid #1a3a1a; flex-shrink:0; }
+.dl-title { font-size:5px; color:#4a7a4a; margin-bottom:8px; letter-spacing:1px; }
+.dl-row { display:flex; gap:8px; align-items:center; margin-bottom:5px; font-size:5px; }
+.dl-icon { font-size:9px; flex-shrink:0; width:14px; text-align:center; }
+.dl-label { color:#4a7a4a; }
 
-/* ── PARTY / CHARACTER SELECT ── */
-.party {
-  grid-area:party;
-  background:#000;
-  border-top:3px solid #00ff41;
-  display:flex; align-items:stretch;
-  overflow:hidden;
-}
-.party-slot {
-  flex:1; display:flex; align-items:center; gap:8px;
-  padding:0 12px; border-right:2px solid #1a3a1a;
-  position:relative;
-}
-.party-slot.active { background:#001a00; }
-.party-slot.inactive { opacity:0.4; }
-.party-sprite { width:28px; height:28px; flex-shrink:0; image-rendering:pixelated; }
-.party-info { flex:1; }
-.party-name { font-size:6px; color:#00ff41; margin-bottom:3px; }
-.party-name.yellow { color:#ffff00; }
-.party-role { font-size:5px; color:#2a5a2a; margin-bottom:3px; }
-.party-status { font-size:5px; }
-.party-status.online { color:#00ff41; }
-.party-status.offline { color:#ff0000; animation:blink 1.5s step-end infinite; }
-.party-hp { display:flex; gap:1px; margin-top:3px; }
-.party-heart { font-size:7px; }
+/* PARTY */
+.party { grid-area:party; background:#000; border-top:3px solid #00ff41; display:flex; overflow:hidden; }
+.pslot { flex:1; display:flex; align-items:center; gap:7px; padding:0 10px; border-right:2px solid #1a3a1a; min-width:0; }
+.pslot.active { background:#001400; }
+.pslot.offline { opacity:.38; }
+.psprite { width:24px; height:24px; flex-shrink:0; image-rendering:pixelated; }
+.pinfo { flex:1; min-width:0; }
+.pname { font-size:5px; color:#00ff41; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pname.y { color:#ffff00; }
+.prole { font-size:4px; color:#2a5a2a; margin-bottom:2px; }
+.pstatus { font-size:4px; }
+.pstatus.on { color:#00ff41; }
+.pstatus.off { color:#ff0000; animation:blink 2s step-end infinite; }
+.php { display:flex; gap:1px; margin-top:2px; }
 
-/* ── ANIMATIONS ── */
+/* LEGEND PANEL */
+.legend-panel {
+  position:absolute; left:14px; bottom:80px; z-index:20;
+  background:#000; border:2px solid #00ff41; padding:12px;
+  font-size:5px; display:none; min-width:200px;
+}
+.legend-panel.show { display:block; }
+.lp-title { color:#ffff00; font-size:6px; margin-bottom:10px; }
+.lp-row { display:flex; gap:8px; align-items:center; margin-bottom:6px; }
+.lp-icon { font-size:10px; width:16px; text-align:center; flex-shrink:0; }
+.lp-text { color:#4a7a4a; line-height:1.6; }
+.lp-text strong { color:#00ff41; }
+
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-@keyframes walk-r { 0%,100%{transform:translateX(0)} 50%{transform:translateX(1px)} }
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-2px)} }
-@keyframes glitch {
-  0%,95%,100%{transform:none; filter:none}
-  96%{transform:translateX(-2px); filter:hue-rotate(90deg)}
-  98%{transform:translateX(2px); filter:hue-rotate(-90deg)}
-}
-
-/* ── PIXEL SPRITES (CSS) ── */
-.sprite-revay {
-  width:28px; height:28px; position:relative;
-  animation:float 1.5s ease-in-out infinite;
-}
-
-::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar { width:3px; }
 ::-webkit-scrollbar-track { background:#000; }
 ::-webkit-scrollbar-thumb { background:#1a3a1a; }
-::-webkit-scrollbar-thumb:hover { background:#00ff41; }
 </style>
 </head>
 <body>
 <div class="office">
 
-  <!-- HUD -->
-  <header class="hud">
-    <div class="hud-logo">
-      <span>📺</span>
-      <div>
-        <div>INITECH SYS v1.0</div>
-        <div style="font-size:6px;color:#4a7a4a;margin-top:3px">REVAY INTELLIGENCE NETWORK</div>
-      </div>
+<!-- HUD -->
+<header class="hud">
+  <div class="hud-logo">📺 <div>INITECH SYS<small>REVAY INTELLIGENCE NETWORK</small></div></div>
+  <div class="hud-sec"><div class="hud-lbl">PLAYER</div><div class="hud-val">⚡ REVAY</div></div>
+  <div class="hud-sec"><div class="hud-lbl">TPS REPORTS</div><div class="hud-val" id="score">002847</div></div>
+  <div class="hud-sec"><div class="hud-lbl">LEVEL</div><div class="hud-val">01 - PHASE 1</div></div>
+  <div class="hud-sec">
+    <div class="hud-lbl">SYS HP</div>
+    <div class="hud-bar" id="hp-bar">
+      <div class="hud-pip"></div><div class="hud-pip"></div><div class="hud-pip"></div><div class="hud-pip"></div><div class="hud-pip"></div>
+      <div class="hud-pip"></div><div class="hud-pip"></div><div class="hud-pip"></div><div class="hud-pip"></div><div class="hud-pip red"></div>
     </div>
-    <div class="hud-section">
-      <div class="hud-label">PLAYER</div>
-      <div class="hud-val">⚡ REVAY</div>
-    </div>
-    <div class="hud-section">
-      <div class="hud-label">TPS REPORTS</div>
-      <div class="hud-val" id="score-val">002847</div>
-    </div>
-    <div class="hud-section">
-      <div class="hud-label">LEVEL</div>
-      <div class="hud-val">01 - PHASE 1</div>
-    </div>
-    <div class="hud-section">
-      <div class="hud-label">JOBS HP</div>
-      <div class="hud-bar">
-        <div class="hud-pip"></div><div class="hud-pip"></div><div class="hud-pip"></div>
-        <div class="hud-pip"></div><div class="hud-pip"></div><div class="hud-pip"></div>
-        <div class="hud-pip"></div><div class="hud-pip"></div><div class="hud-pip"></div>
-        <div class="hud-pip red"></div>
-      </div>
-    </div>
-    <div class="hud-section">
-      <div class="hud-label">AGENTS</div>
-      <div class="hud-val">1 / 7</div>
-    </div>
-    <div class="hud-right">
-      <div class="hud-alert">⚠ PC LOAD LETTER</div>
-      <div class="hud-clock" id="hud-clock">--:-- UTC</div>
-    </div>
-  </header>
+  </div>
+  <div class="hud-sec"><div class="hud-lbl">AGENTS ONLINE</div><div class="hud-val">1 / 7</div></div>
+  <span class="hud-alert" id="alert-txt">⚠ PC LOAD LETTER</span>
+  <div class="hud-right">
+    <button class="hud-btn" id="legend-btn" onclick="toggleLegend()">? KEY</button>
+    <div class="hud-clock" id="clock">--:--:-- UTC</div>
+  </div>
+</header>
 
-  <!-- MAIN CANVAS -->
-  <div class="canvas-wrap" id="canvasWrap">
-    <canvas id="gc"></canvas>
+<!-- CANVAS -->
+<div class="canvas-wrap" id="cw">
+  <canvas id="gc"></canvas>
+  <div class="scanlines"></div>
+  <div class="vignette"></div>
+
+  <!-- Drawer toggle tab -->
+  <div class="drawer-toggle" id="dtoggle" onclick="toggleDrawer()">
+    <span class="dt-arrow" id="darrow">◀</span>
+    <span>T</span><span>P</span><span>S</span>
   </div>
 
-  <!-- TPS REPORT FEED -->
-  <aside class="tps">
-    <div class="tps-header">
-      <div>📋 TPS REPORTS</div>
-      <div class="tps-sub">INCOMING TRANSMISSIONS<br>DID U GET THE MEMO?</div>
+  <!-- Sliding drawer -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-head">
+      <div class="drawer-head-row">
+        <span>📋 TPS REPORTS</span>
+        <button class="drawer-close" onclick="toggleDrawer()">✕ CLOSE</button>
+      </div>
+      <small>INCOMING TRANSMISSIONS · DID U GET THE MEMO?</small>
     </div>
-    <div class="tps-items" id="tps-feed"></div>
-    <div class="tps-footer">
-      &gt; <span class="tps-cursor"></span>
+    <div class="drawer-items" id="feed"></div>
+    <div class="drawer-legend">
+      <div class="dl-title">ANIM KEY</div>
+      <div class="dl-row"><span class="dl-icon">⌨️</span><span class="dl-label">TYPING = JOB RUNNING</span></div>
+      <div class="dl-row"><span class="dl-icon">😴</span><span class="dl-label">ASLEEP = IDLE / OVERNIGHT</span></div>
+      <div class="dl-row"><span class="dl-icon">💢</span><span class="dl-label">SLUMPED = ERROR STATE</span></div>
+      <div class="dl-row"><span class="dl-icon">🏃</span><span class="dl-label">RUNNING = URGENT SIGNAL</span></div>
+      <div class="dl-row"><span class="dl-icon">☕</span><span class="dl-label">COOLER = COOLDOWN</span></div>
+      <div class="dl-row"><span class="dl-icon">📋</span><span class="dl-label">HOLDING RPT = BRIEF READY</span></div>
+      <div class="dl-row"><span class="dl-icon">💺</span><span class="dl-label">EMPTY CHAIR = PENDING</span></div>
+      <div class="dl-row"><span class="dl-icon">✈️</span><span class="dl-label">PAPER PLANE = SIGNAL SENT</span></div>
     </div>
-  </aside>
+  </div>
 
-  <!-- PARTY BAR -->
-  <footer class="party">
-    <!-- REVAY — active -->
-    <div class="party-slot active">
-      <canvas class="party-sprite" id="spr-revay" width="28" height="28"></canvas>
-      <div class="party-info">
-        <div class="party-name yellow">⚡ REVAY</div>
-        <div class="party-role">CEO · ORCHESTRATOR</div>
-        <div class="party-status online">● ONLINE</div>
-        <div class="party-hp">❤️❤️❤️❤️❤️</div>
-      </div>
-    </div>
-    <!-- Ghost agents -->
-    <div class="party-slot inactive">
-      <canvas class="party-sprite" id="spr-s" width="28" height="28"></canvas>
-      <div class="party-info">
-        <div class="party-name">💰 SALES</div>
-        <div class="party-role">RYAN KOONTZ</div>
-        <div class="party-status offline">PRESS START</div>
-      </div>
-    </div>
-    <div class="party-slot inactive">
-      <canvas class="party-sprite" id="spr-g" width="28" height="28"></canvas>
-      <div class="party-info">
-        <div class="party-name">📢 GTM</div>
-        <div class="party-role">J. HOPKINS</div>
-        <div class="party-status offline">PRESS START</div>
-      </div>
-    </div>
-    <div class="party-slot inactive">
-      <canvas class="party-sprite" id="spr-p" width="28" height="28"></canvas>
-      <div class="party-info">
-        <div class="party-name">🔮 PRODUCT</div>
-        <div class="party-role">L. SWYGERT</div>
-        <div class="party-status offline">PRESS START</div>
-      </div>
-    </div>
-    <div class="party-slot inactive">
-      <canvas class="party-sprite" id="spr-c" width="28" height="28"></canvas>
-      <div class="party-info">
-        <div class="party-name">💚 CS</div>
-        <div class="party-role">CS LEAD</div>
-        <div class="party-status offline">PRESS START</div>
-      </div>
-    </div>
-    <div class="party-slot inactive">
-      <canvas class="party-sprite" id="spr-o" width="28" height="28"></canvas>
-      <div class="party-info">
-        <div class="party-name">🚀 ONBOARD</div>
-        <div class="party-role">OB LEAD</div>
-        <div class="party-status offline">PRESS START</div>
-      </div>
-    </div>
-    <div class="party-slot inactive">
-      <canvas class="party-sprite" id="spr-r" width="28" height="28"></canvas>
-      <div class="party-info">
-        <div class="party-name">⚙️ REVOPS</div>
-        <div class="party-role">ARDIT</div>
-        <div class="party-status offline">PRESS START</div>
-      </div>
-    </div>
-  </footer>
+  <!-- Animation legend popup -->
+  <div class="legend-panel" id="legend">
+    <div class="lp-title">📖 ANIMATION KEY</div>
+    <div class="lp-row"><span class="lp-icon">⌨️</span><span class="lp-text"><strong>TYPING FAST</strong> — Job actively running</span></div>
+    <div class="lp-row"><span class="lp-icon">⌨️</span><span class="lp-text"><strong>TYPING SLOW</strong> — Monitoring / idle watch</span></div>
+    <div class="lp-row"><span class="lp-icon">😴</span><span class="lp-text"><strong>HEAD DOWN / ZZZ</strong> — No recent jobs / overnight</span></div>
+    <div class="lp-row"><span class="lp-icon">💢</span><span class="lp-text"><strong>SLUMPED + RED GLOW</strong> — Error / failed job</span></div>
+    <div class="lp-row"><span class="lp-icon">🏃</span><span class="lp-text"><strong>RUNNING ACROSS FLOOR</strong> — Urgent escalation</span></div>
+    <div class="lp-row"><span class="lp-icon">☕</span><span class="lp-text"><strong>AT WATER COOLER</strong> — Cooldown between jobs</span></div>
+    <div class="lp-row"><span class="lp-icon">📋</span><span class="lp-text"><strong>STANDING W/ PAPER</strong> — Report / brief ready for Evan</span></div>
+    <div class="lp-row"><span class="lp-icon">✈️</span><span class="lp-text"><strong>PAPER AIRPLANE</strong> — Signal in transit to another agent</span></div>
+    <div class="lp-row"><span class="lp-icon">🎉</span><span class="lp-text"><strong>ARMS UP</strong> — Job just completed successfully</span></div>
+    <div class="lp-row"><span class="lp-icon">💺</span><span class="lp-text"><strong>EMPTY SPINNING CHAIR</strong> — Agent slot not yet activated</span></div>
+    <div class="lp-row"><span class="lp-icon">🟢</span><span class="lp-text"><strong>GREEN MONITOR</strong> — Healthy, all jobs OK</span></div>
+    <div class="lp-row"><span class="lp-icon">🔴</span><span class="lp-text"><strong>RED MONITOR</strong> — Error detected</span></div>
+    <div class="lp-row"><span class="lp-icon">💙</span><span class="lp-text"><strong>BLUE MONITOR PULSE</strong> — Processing / API call active</span></div>
+    <div class="lp-row"><span class="lp-icon">🌟</span><span class="lp-text"><strong>BRIGHT DESK GLOW</strong> — Currently executing job</span></div>
+  </div>
+</div>
 
-</div><!-- /office -->
+<!-- PARTY BAR -->
+<footer class="party">
+  <div class="pslot active">
+    <canvas class="psprite" id="sp0" width="24" height="24"></canvas>
+    <div class="pinfo"><div class="pname y">⚡ REVAY</div><div class="prole">CEO · ORCH</div><div class="pstatus on">● ONLINE</div><div class="php">❤️❤️❤️❤️❤️</div></div>
+  </div>
+  <div class="pslot offline"><canvas class="psprite" id="sp1" width="24" height="24"></canvas><div class="pinfo"><div class="pname">💰 SALES</div><div class="prole">RYAN K.</div><div class="pstatus off">PRESS START</div></div></div>
+  <div class="pslot offline"><canvas class="psprite" id="sp2" width="24" height="24"></canvas><div class="pinfo"><div class="pname">📢 GTM</div><div class="prole">J. HOPKINS</div><div class="pstatus off">PRESS START</div></div></div>
+  <div class="pslot offline"><canvas class="psprite" id="sp3" width="24" height="24"></canvas><div class="pinfo"><div class="pname">🔮 PRODUCT</div><div class="prole">L. SWYGERT</div><div class="pstatus off">PRESS START</div></div></div>
+  <div class="pslot offline"><canvas class="psprite" id="sp4" width="24" height="24"></canvas><div class="pinfo"><div class="pname">💚 CS</div><div class="prole">CS LEAD</div><div class="pstatus off">PRESS START</div></div></div>
+  <div class="pslot offline"><canvas class="psprite" id="sp5" width="24" height="24"></canvas><div class="pinfo"><div class="pname">🚀 ONBOARD</div><div class="prole">OB LEAD</div><div class="pstatus off">PRESS START</div></div></div>
+  <div class="pslot offline"><canvas class="psprite" id="sp6" width="24" height="24"></canvas><div class="pinfo"><div class="pname">⚙️ REVOPS</div><div class="prole">ARDIT</div><div class="pstatus off">PRESS START</div></div></div>
+</footer>
+</div>
 
 <script>
-// ─── DATA ─────────────────────────────────────────────────────
+// ── DATA ───────────────────────────────────────────────────────
 const JOBS = [
-  { name:"VAPI TRANSCRIPT", cat:"OPS", color:"#6c63ff", lastRun:1772851767468, status:"ok", dur:26836 },
-  { name:"HOURLY EMAIL DIGEST", cat:"OPS", color:"#6c63ff", lastRun:1772852520522, status:"ok", dur:3612 },
-  { name:"NIGHTLY SELF-IMPROV", cat:"OPS", color:"#6c63ff", lastRun:1772787600010, status:"ok", dur:438928 },
-  { name:"NOTION MEMORY SYNC", cat:"OPS", color:"#6c63ff", lastRun:1772794800008, status:"ok", dur:107280 },
-  { name:"MEETING INTEL BRIEF", cat:"OPS", color:"#6c63ff", lastRun:1772800200009, status:"ok", dur:17221 },
-  { name:"PENDING ACTIONS CHK", cat:"OPS", color:"#6c63ff", lastRun:1772825400010, status:"ok", dur:24410 },
-  { name:"MSP DAILY BRIEF", cat:"REVENUE", color:"#f59e0b", lastRun:1772798400010, status:"ok", dur:41280 },
-  { name:"DAILY SALES SNAPSHOT", cat:"REVENUE", color:"#f59e0b", lastRun:1772827200005, status:"ok", dur:14537 },
-  { name:"WEEKLY SALES WRAP", cat:"REVENUE", color:"#f59e0b", lastRun:null, status:"scheduled" },
-  { name:"KAIA PIPELINE", cat:"INTEL", color:"#3b82f6", lastRun:1772802000010, status:"ok", dur:1158921 },
-  { name:"PROSPECTING ANLYZR", cat:"INTEL", color:"#3b82f6", lastRun:1772823600008, status:"ok", dur:165723 },
-  { name:"INTEL DECK BUILDER", cat:"INTEL", color:"#3b82f6", lastRun:1772825424420, status:"ok", dur:13683 },
-  { name:"INTEL DECK UPDATE", cat:"INTEL", color:"#3b82f6", lastRun:1772827214542, status:"ok", dur:16887 },
-  { name:"COMMUNITY PULSE AM", cat:"CMTY", color:"#00d4aa", lastRun:1772805600010, status:"ok", dur:13392 },
-  { name:"COMMUNITY PULSE PM", cat:"CMTY", color:"#00d4aa", lastRun:1772820000005, status:"ok", dur:13921 },
-  { name:"COMMUNITY PULSE EVE", cat:"CMTY", color:"#00d4aa", lastRun:1772838060015, status:"ok", dur:10803 },
-  { name:"ROADMAP DIGEST", cat:"PROD", color:"#a855f7", lastRun:1772460000003, status:"ok", dur:125543 },
-  { name:"WIN CARD GENERATOR", cat:"PROD", color:"#a855f7", lastRun:1772830800009, status:"ok", dur:68012 },
-  { name:"WEEK AHEAD BRIEF", cat:"OPS", color:"#6c63ff", lastRun:null, status:"scheduled" },
-  { name:"WEEKLY NOISE REPORT", cat:"MON", color:"#ff0000", lastRun:1772838000008, status:"error", lastError:"TIMED OUT" },
+  {n:"VAPI TRANSCRIPT",    cat:"OPS",    col:"#6c63ff", lr:1772851767468, st:"ok",  dur:26836},
+  {n:"EMAIL DIGEST",       cat:"OPS",    col:"#6c63ff", lr:1772852520522, st:"ok",  dur:3612},
+  {n:"NIGHTLY SELF-IMPROV",cat:"OPS",    col:"#6c63ff", lr:1772787600010, st:"ok",  dur:438928},
+  {n:"NOTION MEMORY SYNC", cat:"OPS",    col:"#6c63ff", lr:1772794800008, st:"ok",  dur:107280},
+  {n:"MEETING INTEL BRIEF",cat:"OPS",    col:"#6c63ff", lr:1772800200009, st:"ok",  dur:17221},
+  {n:"PENDING ACTIONS",    cat:"OPS",    col:"#6c63ff", lr:1772825400010, st:"ok",  dur:24410},
+  {n:"MSP DAILY BRIEF",    cat:"REV",    col:"#f59e0b", lr:1772798400010, st:"ok",  dur:41280},
+  {n:"SALES SNAPSHOT",     cat:"REV",    col:"#f59e0b", lr:1772827200005, st:"ok",  dur:14537},
+  {n:"WEEKLY SALES WRAP",  cat:"REV",    col:"#f59e0b", lr:null,          st:"sched"},
+  {n:"KAIA PIPELINE",      cat:"INTEL",  col:"#3b82f6", lr:1772802000010, st:"ok",  dur:1158921},
+  {n:"PROSPECTING",        cat:"INTEL",  col:"#3b82f6", lr:1772823600008, st:"ok",  dur:165723},
+  {n:"INTEL DECK BUILD",   cat:"INTEL",  col:"#3b82f6", lr:1772825424420, st:"ok",  dur:13683},
+  {n:"INTEL DECK UPDATE",  cat:"INTEL",  col:"#3b82f6", lr:1772827214542, st:"ok",  dur:16887},
+  {n:"COMMUNITY AM",       cat:"CMTY",   col:"#00d4aa", lr:1772805600010, st:"ok",  dur:13392},
+  {n:"COMMUNITY MIDDAY",   cat:"CMTY",   col:"#00d4aa", lr:1772820000005, st:"ok",  dur:13921},
+  {n:"COMMUNITY EVE",      cat:"CMTY",   col:"#00d4aa", lr:1772838060015, st:"ok",  dur:10803},
+  {n:"ROADMAP DIGEST",     cat:"PROD",   col:"#a855f7", lr:1772460000003, st:"ok",  dur:125543},
+  {n:"WIN CARD GEN",       cat:"PROD",   col:"#a855f7", lr:1772830800009, st:"ok",  dur:68012},
+  {n:"WEEK AHEAD BRIEF",   cat:"OPS",    col:"#6c63ff", lr:null,          st:"sched"},
+  {n:"NOISE REPORT",       cat:"MON",    col:"#ff0000", lr:1772838000008, st:"error",lastErr:"TIMED OUT"},
 ];
-
-const CAT_COLOR = { OPS:"#6c63ff", REVENUE:"#f59e0b", INTEL:"#3b82f6", CMTY:"#00d4aa", PROD:"#a855f7", MON:"#ff0000" };
-
 const PEERS = [
-  { name:"SALES INTEL", human:"R.KOONTZ", color:"#ff4d6d", angle:270 },
-  { name:"GTM", human:"J.HOPKINS", color:"#a855f7", angle:330 },
-  { name:"PRODUCT", human:"L.SWYGERT", color:"#3b82f6", angle:30 },
-  { name:"CUST SUCCESS", human:"CS LEAD", color:"#00d4aa", angle:90 },
-  { name:"ONBOARDING", human:"OB LEAD", color:"#f59e0b", angle:150 },
-  { name:"REVOPS", human:"ARDIT", color:"#888888", angle:210 },
+  {name:"SALES INTEL", human:"R.KOONTZ",  col:"#ff4d6d", ang:270},
+  {name:"GTM",         human:"J.HOPKINS", col:"#a855f7", ang:330},
+  {name:"PRODUCT",     human:"L.SWYGERT", col:"#3b82f6", ang:30},
+  {name:"CUST SUCCESS",human:"CS LEAD",   col:"#00d4aa", ang:90},
+  {name:"ONBOARDING",  human:"OB LEAD",   col:"#f59e0b", ang:150},
+  {name:"REVOPS",      human:"ARDIT",     col:"#888888", ang:210},
 ];
 
-// ─── CANVAS SETUP ─────────────────────────────────────────────
-const canvas = document.getElementById('gc');
-const ctx = canvas.getContext('2d');
-ctx.imageSmoothingEnabled = false;
+// ── CANVAS ─────────────────────────────────────────────────────
+const gc = document.getElementById('gc');
+const g = gc.getContext('2d');
+g.imageSmoothingEnabled = false;
 let W, H, cx, cy;
-const SCALE = 3; // pixel art scale
-
-function resize() {
-  const wrap = document.getElementById('canvasWrap');
-  W = canvas.width = wrap.clientWidth;
-  H = canvas.height = wrap.clientHeight;
-  cx = W / 2; cy = H / 2;
+function resize(){
+  const w = document.getElementById('cw');
+  W = gc.width  = w.clientWidth;
+  H = gc.height = w.clientHeight;
+  cx = W/2; cy = H/2;
 }
 window.addEventListener('resize', resize);
 resize();
 
-// ─── PIXEL ART HELPERS ────────────────────────────────────────
-function px(x, y, w, h, color) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, w, h);
-}
-function pxText(text, x, y, size, color, align='left') {
-  ctx.font = `${size}px "Press Start 2P"`;
-  ctx.fillStyle = color;
-  ctx.textAlign = align;
-  ctx.textBaseline = 'top';
-  ctx.fillText(text, x, y);
-}
+// ── REVAY STATE MACHINE ────────────────────────────────────────
+const revay = {
+  state: 'typing',       // typing | idle | walking | cooler | celebrating | reporting | running
+  x: 0, y: 0,           // actual screen pos (set each frame from center)
+  walkX: 0, walkY: 0,   // walk target offset from center
+  walkProg: 0,
+  stateTimer: 0,
+  typingSpeed: 8,        // frames between arm toggle
+  armPhase: 0,
+};
 
-// ─── DRAW OFFICE FLOOR (top-down pixel art) ───────────────────
-function drawFloor() {
-  const TW = 28; // tile width
-  const cols = Math.ceil(W / TW) + 1;
-  const rows = Math.ceil(H / TW) + 1;
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const even = (r + c) % 2 === 0;
-      px(c * TW, r * TW, TW, TW, even ? '#0f0f05' : '#0d0d03');
-      // carpet texture lines
-      if (even) {
-        ctx.fillStyle = '#131308';
-        ctx.fillRect(c*TW+2, r*TW, 1, TW);
-        ctx.fillRect(c*TW, r*TW+2, TW, 1);
-      }
-    }
-  }
-  // Ceiling light strips (horizontal)
-  for (let i = 0; i < 4; i++) {
-    const ly = Math.floor(H * (i+1) / 5);
-    const flicker = Math.sin(Date.now()*0.003 + i*1.2) > 0.97;
-    ctx.fillStyle = flicker ? '#aacc00' : '#1a2a08';
-    ctx.fillRect(0, ly, W, 2);
-    // Light cone
-    const coneGrad = ctx.createLinearGradient(0, ly, 0, ly + 60);
-    coneGrad.addColorStop(0, flicker ? 'rgba(100,200,0,0.06)' : 'rgba(0,255,65,0.04)');
-    coneGrad.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = coneGrad;
-    ctx.fillRect(0, ly, W, 60);
-  }
-}
-
-// ─── DRAW CUBICLE ─────────────────────────────────────────────
-function drawCubicle(x, y, w, h, active, label, sublabel, color) {
-  const wallColor = active ? '#3a2e10' : '#1e1e0a';
-  const wallTop   = active ? '#5a4618' : '#2a2a10';
-  const deskColor = active ? '#4a3408' : '#1a1a06';
-  const monColor  = active ? '#001800' : '#080808';
-
-  // Cubicle walls (3 sides open at bottom)
-  px(x, y, w, 4, wallTop);      // top wall (thick)
-  px(x, y, 4, h, wallTop);      // left wall
-  px(x+w-4, y, 4, h, wallTop);  // right wall
-
-  // Floor fill
-  px(x+4, y+4, w-8, h-4, wallColor);
-
-  // Desk
-  const dw = w - 24, dh = 16;
-  const dx = x + 12, dy = y + 14;
-  px(dx, dy, dw, dh, deskColor);
-  px(dx, dy, dw, 2, '#6b5010'); // desk edge highlight
-
-  // Monitor
-  const mw = 24, mh = 18;
-  const mx2 = dx + Math.floor((dw - mw) / 2);
-  const my2 = dy - mh - 2;
-  px(mx2, my2, mw, mh, monColor);
-  px(mx2, my2, mw, 2, '#2a2a2a'); // monitor top border
-  px(mx2, my2+mh, mw, 3, '#333'); // monitor stand
-  // Monitor screen
-  if (active) {
-    // Glowing green screen
-    const sg = ctx.createRadialGradient(mx2+mw/2, my2+mh/2, 0, mx2+mw/2, my2+mh/2, mw);
-    sg.addColorStop(0, 'rgba(0,255,65,0.25)');
-    sg.addColorStop(1, 'rgba(0,255,65,0)');
-    ctx.fillStyle = sg;
-    ctx.fillRect(mx2+2, my2+2, mw-4, mh-4);
-    // Scanlines on monitor
-    for (let sl = my2+2; sl < my2+mh-2; sl += 2) {
-      px(mx2+2, sl, mw-4, 1, 'rgba(0,0,0,0.3)');
-    }
-    // Green text on screen
-    ctx.font = '5px "Press Start 2P"';
-    ctx.fillStyle = '#00ff41';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('OK', mx2+mw/2, my2+mh/2);
+// Schedule random state changes
+function scheduleRevayBehavior() {
+  const states = [
+    {state:'typing',  weight:50},
+    {state:'cooler',  weight:10},
+    {state:'idle',    weight:15},
+    {state:'reporting',weight:10},
+    {state:'celebrating',weight:8},
+    {state:'running', weight:7},
+  ];
+  const total = states.reduce((s,x)=>s+x.weight,0);
+  let r = Math.random()*total;
+  let chosen = states[0].state;
+  for(const s of states){ r-=s.weight; if(r<=0){chosen=s.state;break;} }
+  revay.state = chosen;
+  revay.stateTimer = 180 + Math.floor(Math.random()*300);
+  if(chosen==='running'){
+    const pr = PEERS[Math.floor(Math.random()*PEERS.length)];
+    const rad = (pr.ang-90)*Math.PI/180;
+    const dist = Math.min(W,H)*0.2;
+    revay.walkX = Math.cos(rad)*dist;
+    revay.walkY = Math.sin(rad)*dist;
+    revay.walkProg = 0;
   } else {
-    px(mx2+2, my2+2, mw-4, mh-4, '#050505');
-    ctx.font = '5px "Press Start 2P"';
-    ctx.fillStyle = '#1a1a1a';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('OFF', mx2+mw/2, my2+mh/2);
+    revay.walkX = 0; revay.walkY = 0;
   }
+}
+scheduleRevayBehavior();
 
-  // Red stapler (error state or just decoration on active desk)
-  if (active) {
-    px(dx + dw - 10, dy + 4, 8, 4, '#cc0000'); // stapler body
-    px(dx + dw - 10, dy + 7, 8, 2, '#880000'); // stapler bottom
-  }
-
-  // Agent name label
-  ctx.font = '5px "Press Start 2P"';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = active ? color : '#2a3a1a';
-  ctx.fillText(label, x + w/2, y + h - 16);
-  ctx.fillStyle = active ? '#4a7a4a' : '#1a2a0a';
-  ctx.font = '4px "Press Start 2P"';
-  ctx.fillText(sublabel, x + w/2, y + h - 9);
+// ── DRAW HELPERS ───────────────────────────────────────────────
+function box(x,y,w,h,c){ g.fillStyle=c; g.fillRect(Math.floor(x),Math.floor(y),w,h); }
+function txt(t,x,y,sz,c,align='center'){
+  g.font=`${sz}px "Press Start 2P"`;
+  g.fillStyle=c; g.textAlign=align; g.textBaseline='top';
+  g.fillText(t,Math.floor(x),Math.floor(y));
 }
 
-// ─── DRAW REVAY HERO DESK ─────────────────────────────────────
-function drawRevayDesk(x, y, w, h, t) {
-  // Glowing floor under desk
-  const glow = ctx.createRadialGradient(x+w/2, y+h/2, 0, x+w/2, y+h/2, w*0.7);
-  glow.addColorStop(0, 'rgba(108,99,255,0.15)');
-  glow.addColorStop(1, 'rgba(0,0,0,0)');
-  ctx.fillStyle = glow;
-  ctx.fillRect(x-20, y-20, w+40, h+40);
-
-  // Desk walls
-  px(x, y, w, 4, '#4a3a8a');
-  px(x, y, 4, h, '#4a3a8a');
-  px(x+w-4, y, 4, h, '#4a3a8a');
-  px(x+4, y+4, w-8, h-4, '#1a1430');
-
-  // Desk surface
-  const dw = w-24, dh = 18;
-  const dx = x+12, dy = y+16;
-  px(dx, dy, dw, dh, '#2a1a50');
-  px(dx, dy, dw, 2, '#6c63ff');
-
-  // Main monitor (larger, glowing)
-  const mw = 32, mh = 24;
-  const mx2 = dx + Math.floor((dw-mw)/2);
-  const my2 = dy - mh - 2;
-  px(mx2, my2, mw, mh, '#000820');
-  px(mx2, my2, mw, 2, '#6c63ff');
-  px(mx2, my2+mh, mw, 4, '#3a2a6a');
-
-  // Monitor glow
-  const mg = ctx.createRadialGradient(mx2+mw/2, my2+mh/2, 0, mx2+mw/2, my2+mh/2, mw);
-  mg.addColorStop(0, 'rgba(108,99,255,0.4)');
-  mg.addColorStop(1, 'rgba(108,99,255,0)');
-  ctx.fillStyle = mg;
-  ctx.fillRect(mx2-4, my2-4, mw+8, mh+8);
-
-  // Animated screen content
-  const blink = Math.floor(t * 0.002) % 2 === 0;
-  ctx.font = '5px "Press Start 2P"';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = '#6c63ff';
-  ctx.fillText('REVAY', mx2+mw/2, my2+3);
-  ctx.fillStyle = '#00ff41';
-  ctx.fillText('ACTIVE', mx2+mw/2, my2+10);
-  if (blink) {
-    ctx.fillStyle = '#4a3aaa';
-    ctx.fillText('_', mx2+mw/2, my2+17);
+// ── FLOOR ──────────────────────────────────────────────────────
+function drawFloor(){
+  const TW=32, cols=Math.ceil(W/TW)+1, rows=Math.ceil(H/TW)+1;
+  for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+    const ev=(r+c)%2===0;
+    box(c*TW,r*TW,TW,TW,ev?'#0f0f05':'#0d0d03');
+    if(ev){ g.fillStyle='#111108'; g.fillRect(c*TW+3,r*TW,1,TW); g.fillRect(c*TW,r*TW+3,TW,1); }
   }
-
-  // Side monitor (signals)
-  const sm_x = dx + dw - 4;
-  const sm_w = 18, sm_h = 14;
-  px(sm_x, dy - sm_h, sm_w, sm_h, '#001000');
-  px(sm_x, dy - sm_h, sm_w, 1, '#00d4aa');
-  ctx.font = '4px "Press Start 2P"';
-  ctx.fillStyle = '#00d4aa';
-  ctx.textAlign = 'center';
-  ctx.fillText('JOBS', sm_x + sm_w/2, dy - sm_h + 2);
-  ctx.fillStyle = '#00ff41';
-  ctx.fillText('20', sm_x + sm_w/2, dy - sm_h + 7);
-
-  // Red Swingline stapler (prominent)
-  px(dx + 2, dy + 5, 14, 6, '#cc0000');
-  px(dx + 2, dy + 10, 14, 3, '#880000');
-  ctx.font = '3px "Press Start 2P"';
-  ctx.fillStyle = '#ff6666';
-  ctx.textAlign = 'left';
-  ctx.fillText('STPLR', dx + 2, dy + 2);
-
-  // Character sprite (Revay pixel character)
-  drawCharSprite(ctx, x + w/2 - 6, y + h - 22, '#6c63ff', '#ffcc00', true, t);
-
-  // Name
-  ctx.font = '6px "Press Start 2P"';
-  ctx.textAlign = 'center';
-  ctx.fillStyle = '#8b7aff';
-  ctx.textBaseline = 'top';
-  ctx.fillText('REVAY', x+w/2, y+h-10);
+  // Fluorescent ceiling strips
+  for(let i=0;i<5;i++){
+    const ly=Math.floor(H*(i+1)/6);
+    const flk=Math.sin(Date.now()*0.003+i*1.7)>0.97;
+    box(0,ly,W,2,flk?'#aacc00':'#1a2a08');
+    const cg=g.createLinearGradient(0,ly,0,ly+70);
+    cg.addColorStop(0,flk?'rgba(100,200,0,0.07)':'rgba(0,255,65,0.04)');
+    cg.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle=cg; g.fillRect(0,ly,W,70);
+  }
 }
 
-// ─── PIXEL CHARACTER SPRITE ───────────────────────────────────
-function drawCharSprite(ctx, x, y, bodyColor, hairColor, active, t) {
-  const blink = active ? (Math.floor(t * 0.003) % 6 !== 0) : false;
-  const walkOff = active ? Math.sin(t * 0.004) * 0.5 : 0;
-  x = Math.floor(x + walkOff);
+// ── CUBICLE (ghost agent) ──────────────────────────────────────
+function drawCubicle(x,y,w,h,col,label,sublabel,t){
+  const wx=x, wy=y;
+  // Walls
+  box(wx,wy,w,5,'#252015'); box(wx,wy,5,h,'#252015'); box(wx+w-5,wy,5,h,'#252015');
+  box(wx+5,wy+5,w-10,h-5,'#111108');
+  // Desk
+  const dw=w-28, dh=20, dx=wx+14, dy=wy+h-38;
+  box(dx,dy,dw,dh,'#181408'); box(dx,dy,dw,2,'#3a2c10');
+  // Empty monitor (dark)
+  const mw=28, mh=20, mx=dx+Math.floor((dw-mw)/2), my=dy-mh-3;
+  box(mx,my,mw,mh,'#050505'); box(mx,my,mw,2,'#1a1a1a'); box(mx,my+mh,mw,4,'#111');
+  // Dim screen
+  box(mx+2,my+2,mw-4,mh-4,'#060606');
+  txt('OFF',mx+mw/2,my+7,5,'#111111');
+  // SPINNING CHAIR animation
+  const chairAng = t*0.04;
+  const chx = wx+w/2, chy = dy+dh+8;
+  // Chair base (spinning)
+  g.save(); g.translate(Math.floor(chx),Math.floor(chy));
+  g.rotate(chairAng);
+  box(-8,-2,16,4,'#1a1a0a');
+  box(-2,-8,4,16,'#1a1a0a');
+  box(-6,-6,4,4,'#222218'); box(2,-6,4,4,'#222218');
+  box(-6,2,4,4,'#222218'); box(2,2,4,4,'#222218');
+  g.restore();
+  // Chair seat
+  box(Math.floor(chx-5),Math.floor(chy-10),10,8,'#252515');
+  // VACANT sign above cubicle
+  const vblink = Math.floor(t*0.015)%3===0;
+  box(wx+w/2-18,wy+8,36,12,'#0a0a00');
+  txt('VACANT',wx+w/2,wy+10,4,vblink?'#333322':'#222218');
+  // Labels
+  txt(label,wx+w/2,wy+h-20,5,col+'66');
+  txt(sublabel,wx+w/2,wy+h-12,4,'#2a2a1a');
+  // Dashed line to center (drawn separately)
+}
+
+// ── REVAY CHARACTER ────────────────────────────────────────────
+function drawRevayChar(x,y,t,state){
+  const frame = Math.floor(t*0.02);
+  const bob = state==='typing' ? Math.floor(t*0.015)%2 : 0;
+  x=Math.floor(x); y=Math.floor(y)-bob;
 
   // Shadow
-  ctx.fillStyle = 'rgba(0,0,0,0.4)';
-  ctx.fillRect(x+1, y+11, 10, 2);
+  g.fillStyle='rgba(108,99,255,0.2)'; g.fillRect(x-8,y+16,16,3);
+
+  if(state==='sleeping'){
+    // Slumped over desk
+    box(x-6,y+6,12,8,'#2a1a50'); // body slumped
+    box(x-5,y+2,10,7,'#e8b88a'); // head resting
+    box(x-7,y+5,14,4,'#1a1430'); // arms on desk
+    // ZZZ bubbles
+    const zz=Math.floor(t*0.01)%6;
+    if(zz<3){ txt('Z',x+6+zz*3,y-2-zz*3,5,'#4a3aaa'); }
+    return;
+  }
+  if(state==='error'){
+    // Slumped with red glow
+    const rg=g.createRadialGradient(x,y+8,0,x,y+8,20);
+    rg.addColorStop(0,'rgba(255,0,0,0.2)'); rg.addColorStop(1,'rgba(255,0,0,0)');
+    g.fillStyle=rg; g.fillRect(x-20,y-4,40,28);
+    box(x-5,y+8,10,8,'#1a1430'); box(x-4,y+4,8,7,'#e8b88a');
+    box(x-6,y+7,12,4,'#2a1a50');
+    txt('X',x,y-2,7,'#ff0000');
+    return;
+  }
 
   // Hair
-  ctx.fillStyle = hairColor;
-  ctx.fillRect(x+2, y, 8, 3);
-
+  box(x-5,y,10,4,'#ffcc00');
   // Head
-  ctx.fillStyle = '#e8b88a';
-  ctx.fillRect(x+2, y+2, 8, 6);
-
-  // Eyes
-  if (blink || !active) {
-    ctx.fillStyle = active ? '#333' : '#1a1a1a';
-    ctx.fillRect(x+3, y+4, 2, 2);
-    ctx.fillRect(x+7, y+4, 2, 2);
-  } else {
-    // blink frame
-    ctx.fillStyle = '#333';
-    ctx.fillRect(x+3, y+5, 2, 1);
-    ctx.fillRect(x+7, y+5, 2, 1);
-  }
-
-  // Body
-  ctx.fillStyle = active ? bodyColor : '#333333';
-  ctx.fillRect(x+2, y+8, 8, 5);
-
+  box(x-5,y+3,10,7,'#e8b88a');
+  // Eyes (blink occasionally)
+  const blink2=Math.floor(t*0.005)%20===0;
+  if(!blink2){ box(x-4,y+5,3,2,'#333'); box(x+1,y+5,3,2,'#333'); }
+  else       { box(x-4,y+6,3,1,'#333'); box(x+1,y+6,3,1,'#333'); }
   // Tie
-  if (active) {
-    ctx.fillStyle = '#ff0000';
-    ctx.fillRect(x+5, y+8, 2, 5);
-  }
-
+  box(x-1,y+10,3,7,'#ff0000');
+  // Body
+  box(x-6,y+10,12,8,'#4a2aaa');
   // Arms
-  ctx.fillStyle = active ? bodyColor : '#2a2a2a';
-  ctx.fillRect(x, y+8, 2, 4);
-  ctx.fillRect(x+10, y+8, 2, 4);
-}
-
-// ─── DRAW PRINTER (easter egg) ────────────────────────────────
-function drawPrinter(x, y, t) {
-  const errorFlash = Math.floor(t * 0.004) % 4 === 0;
-  px(x, y, 36, 22, '#2a2a1a');
-  px(x, y, 36, 3, '#3a3a2a');
-  px(x+2, y+5, 32, 10, '#1a1a0a'); // paper slot
-  // Paper feed
-  px(x+4, y+6, 28, 2, '#eeeecc');
-  // Error light
-  px(x+26, y+1, 6, 3, errorFlash ? '#ff0000' : '#330000');
-  // Label
-  ctx.font = '4px "Press Start 2P"';
-  ctx.textAlign = 'center';
-  ctx.fillStyle = errorFlash ? '#ff0000' : '#555533';
-  ctx.textBaseline = 'top';
-  ctx.fillText('PC LOAD', x+18, y+17);
-  if (errorFlash) {
-    ctx.fillStyle = '#ff0000';
-    ctx.fillText('LETTER', x+18, y+22);
+  if(state==='typing'){
+    const af=Math.floor(t*0.04)%2;
+    if(af===0){ box(x-9,y+10,3,5,'#4a2aaa'); box(x+6,y+12,3,5,'#4a2aaa'); }
+    else       { box(x-9,y+12,3,5,'#4a2aaa'); box(x+6,y+10,3,5,'#4a2aaa'); }
+  } else if(state==='celebrating'){
+    const cf=Math.floor(t*0.03)%3;
+    const oy2=cf===1?-3:0;
+    box(x-12,y+8+oy2,4,5,'#4a2aaa'); box(x+8,y+8+oy2,4,5,'#4a2aaa');
+    // Stars
+    txt('★',x-14,y-4,6,'#ffff00'); txt('★',x+10,y-4,6,'#ffff00');
+  } else if(state==='reporting'){
+    // Holding paper
+    box(x-10,y+10,4,6,'#4a2aaa'); // left arm up
+    box(x+6,y+8,4,2,'#4a2aaa'); // right arm holds
+    box(x+9,y+6,7,9,'#eeeecc'); // paper
+    box(x+10,y+8,5,1,'#aaaaaa'); box(x+10,y+10,5,1,'#aaaaaa'); box(x+10,y+12,4,1,'#aaaaaa');
+  } else if(state==='running'){
+    const rf=Math.floor(t*0.05)%4;
+    const arm1=[0,2,-2,0][rf], arm2=[2,-2,0,2][rf];
+    box(x-10,y+10+arm1,4,5,'#4a2aaa'); box(x+6,y+10+arm2,4,5,'#4a2aaa');
+    // Legs running
+    const leg1=[-2,0,2,0][rf], leg2=[2,0,-2,0][rf];
+    box(x-5,y+18+leg1,4,6,'#1a1a6a'); box(x+1,y+18+leg2,4,6,'#1a1a6a');
+    return;
+  } else {
+    box(x-9,y+11,3,5,'#4a2aaa'); box(x+6,y+11,3,5,'#4a2aaa');
   }
+  // Legs
+  box(x-5,y+18,4,6,'#1a1a6a'); box(x+1,y+18,4,6,'#1a1a6a');
 }
 
-// ─── DRAW WATER COOLER ────────────────────────────────────────
-function drawCooler(x, y) {
-  px(x+4, y, 14, 24, '#2244aa');
-  px(x+4, y, 14, 4, '#3366cc');
-  px(x+6, y+1, 10, 8, '#1133bb');
-  // Water level
-  const wg = ctx.createLinearGradient(x+6, y+10, x+6, y+20);
-  wg.addColorStop(0,'rgba(0,150,255,0.8)');
-  wg.addColorStop(1,'rgba(0,80,200,0.8)');
-  ctx.fillStyle = wg;
-  ctx.fillRect(x+6, y+10, 10, 12);
-  // Spigot
-  px(x+8, y+22, 2, 4, '#8899aa');
-  px(x+10, y+24, 4, 2, '#8899aa');
-  // Cups
-  px(x+2, y+20, 4, 5, '#ffffff');
-  px(x+17, y+21, 4, 4, '#ffffff');
-}
-
-// ─── DRAW MILTON (easter egg) ────────────────────────────────
-let miltonX = 0;
-let miltonDir = 1;
-function drawMilton(baseX, baseY, t) {
-  miltonX += miltonDir * 0.3;
-  if (miltonX > 20 || miltonX < -20) miltonDir *= -1;
-  const mx2 = Math.floor(baseX + miltonX);
-  // Milton (gray, hunched)
-  ctx.fillStyle = '#555544';
-  ctx.fillRect(mx2+2, baseY, 6, 3); // hair (messy)
-  ctx.fillStyle = '#c8a870';
-  ctx.fillRect(mx2+2, baseY+3, 6, 5); // head
-  ctx.fillStyle = '#334433';
-  ctx.fillRect(mx2+1, baseY+8, 8, 5); // body (green cardigan)
-  // Stapler (red! Milton's stapler)
-  ctx.fillStyle = '#ff0000';
-  ctx.fillRect(mx2+8, baseY+10, 6, 3);
-  ctx.fillStyle = '#cc0000';
-  ctx.fillRect(mx2+8, baseY+12, 6, 2);
-  // Speech bubble occasionally
-  if (Math.floor(t * 0.001) % 12 === 0) {
-    ctx.fillStyle = '#ffffcc';
-    ctx.fillRect(mx2-30, baseY-14, 38, 12);
-    ctx.strokeStyle = '#888866';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(mx2-30, baseY-14, 38, 12);
-    ctx.font = '4px "Press Start 2P"';
-    ctx.fillStyle = '#333322';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.fillText('MY', mx2-11, baseY-12);
-    ctx.fillText('STPLR', mx2-11, baseY-7);
+// ── REVAY MAIN DESK ────────────────────────────────────────────
+function drawRevayDesk(x,y,w,h,t,state){
+  const isActive = state==='typing'||state==='celebrating'||state==='reporting';
+  // Glow
+  const gd=g.createRadialGradient(x+w/2,y+h/2,0,x+w/2,y+h/2,w*0.9);
+  gd.addColorStop(0,'rgba(108,99,255,0.18)'); gd.addColorStop(1,'rgba(0,0,0,0)');
+  g.fillStyle=gd; g.fillRect(x-30,y-30,w+60,h+60);
+  // Walls
+  box(x,y,w,5,'#4a3a8a'); box(x,y,5,h,'#4a3a8a'); box(x+w-5,y,5,h,'#4a3a8a');
+  box(x+5,y+5,w-10,h-5,'#1a1430');
+  // Desk
+  const dw=w-28, dh=22, dx=x+14, dy=y+h-50;
+  box(dx,dy,dw,dh,'#2a1a50'); box(dx,dy,dw,2,'#6c63ff');
+  // Main monitor
+  const mw=36, mh=26, mx2=dx+Math.floor((dw-mw)/2)-8, my2=dy-mh-4;
+  box(mx2,my2,mw,mh,'#000820'); box(mx2,my2,mw,2,'#6c63ff'); box(mx2,my2+mh,mw,4,'#3a2a6a');
+  // Screen glow
+  const mg=g.createRadialGradient(mx2+mw/2,my2+mh/2,0,mx2+mw/2,my2+mh/2,mw*0.8);
+  const pulse=0.3+0.12*Math.sin(t*0.005);
+  mg.addColorStop(0,`rgba(108,99,255,${pulse})`); mg.addColorStop(1,'rgba(108,99,255,0)');
+  g.fillStyle=mg; g.fillRect(mx2-6,my2-6,mw+12,mh+12);
+  // Screen content
+  const bl=Math.floor(t*0.002)%2===0;
+  txt('REVAY',mx2+mw/2,my2+3,5,'#8b7aff');
+  txt('ACTIVE',mx2+mw/2,my2+10,5,'#00ff41');
+  if(bl) txt('_',mx2+mw/2,my2+18,5,'#4a3aaa');
+  // Second monitor (side)
+  const sm_x=dx+dw-26, smw=22, smh=16;
+  box(sm_x,dy-smh-2,smw,smh,'#001800'); box(sm_x,dy-smh-2,smw,2,'#00d4aa');
+  txt('JOBS',sm_x+smw/2,dy-smh,4,'#00d4aa'); txt('20',sm_x+smw/2,dy-smh+7,5,'#00ff41');
+  // Third monitor error indicator
+  const em_x=dx-3, emw=20, emh=14;
+  box(em_x,dy-emh-2,emw,emh,'#180000'); box(em_x,dy-emh-2,emw,2,'#ff0000');
+  txt('WARN',em_x+emw/2,dy-emh,4,'#ff0000'); txt('1',em_x+emw/2,dy-emh+7,5,'#ff4444');
+  // Red stapler
+  box(dx+2,dy+5,16,6,'#cc0000'); box(dx+2,dy+10,16,3,'#880000');
+  txt('STPLR',dx+4,dy+2,3,'#ff6666','left');
+  // Character
+  const revayScreenX = x+w/2-5;
+  const revayScreenY = state==='cooler'
+    ? (y+h-22 + Math.sin(t*0.005)*2)
+    : y+h-24;
+  // Walk to cooler offset
+  let offX=0, offY=0;
+  if(revay.walkProg>0 && revay.walkProg<1){
+    offX=revay.walkX*revay.walkProg;
+    offY=revay.walkY*revay.walkProg;
   }
-  // Label
-  ctx.font = '4px "Press Start 2P"';
-  ctx.fillStyle = '#555533';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
-  ctx.fillText('MILTON', mx2+5, baseY+14);
+  drawRevayChar(revayScreenX+offX, revayScreenY+offY, t, state);
+  // Labels
+  txt('⚡ REVAY',x+w/2,y+h-10,6,'#8b7aff');
 }
 
-// ─── ORBITAL DOCS (TPS reports flying around Revay) ──────────
-const orbitals = JOBS.map((job, i) => ({
-  job,
-  angle: (i / JOBS.length) * Math.PI * 2,
-  speed: (0.0005 + (i % 3) * 0.0002) * (i % 2 === 0 ? 1 : -1),
-  ring: Math.floor(i / 5),
+// ── ORBITAL TPS REPORTS ────────────────────────────────────────
+const orbs=JOBS.map((j,i)=>({
+  j, ang:(i/JOBS.length)*Math.PI*2,
+  spd:(0.0006+(i%4)*0.00015)*(i%2?1:-1),
+  ring:Math.floor(i/5),
 }));
-
-function drawOrbitals(cx, cy, t) {
-  const rings = [55, 82, 110, 136];
-  orbitals.forEach(orb => {
-    orb.angle += orb.speed;
-    const r = rings[orb.ring] || 136;
-    const ox = cx + Math.cos(orb.angle) * r;
-    const oy = cy + Math.sin(orb.angle) * r;
-
-    // Ring path (dotted)
-    if (orb.angle < 0.05) {
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.setLineDash([2, 6]);
-      ctx.strokeStyle = 'rgba(0,255,65,0.08)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
-
-    // TPS Report paper icon (pixel art)
-    const color = orb.job.status === 'error' ? '#ff0000' :
-                  CAT_COLOR[orb.job.cat] || '#00ff41';
-    const size = 6;
-    px(ox - size/2, oy - size/2, size, size, color + '44');
-    px(ox - size/2, oy - size/2, size, 1, color);
-    px(ox - size/2, oy - size/2, 1, size, color);
-    // Tiny "page" lines
-    px(ox - size/2 + 1, oy - size/2 + 2, size - 2, 1, color + '88');
-    px(ox - size/2 + 1, oy - size/2 + 4, size - 3, 1, color + '66');
-
-    // Error pulse
-    if (orb.job.status === 'error') {
-      const pulse = Math.sin(t * 0.01) * 3;
-      ctx.strokeStyle = '#ff0000';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.rect(ox - size/2 - pulse, oy - size/2 - pulse, size + pulse*2, size + pulse*2);
-      ctx.stroke();
+const RINGS=[62,95,128,162];
+function drawOrbitals(t){
+  RINGS.forEach((r,i)=>{
+    g.beginPath(); g.arc(cx,cy,r,0,Math.PI*2);
+    g.setLineDash([2,8]); g.strokeStyle=`rgba(0,255,65,0.07)`; g.lineWidth=1; g.stroke();
+    g.setLineDash([]);
+  });
+  orbs.forEach(orb=>{
+    orb.ang+=orb.spd;
+    const r=RINGS[orb.ring]||RINGS[3];
+    const ox=cx+Math.cos(orb.ang)*r, oy=cy+Math.sin(orb.ang)*r;
+    const col=orb.j.st==='error'?'#ff0000':orb.j.col;
+    // TPS report icon
+    const sz=7;
+    box(ox-sz/2,oy-sz/2,sz,sz,col+'33');
+    box(ox-sz/2,oy-sz/2,sz,1,col); box(ox-sz/2,oy-sz/2,1,sz,col);
+    box(ox-sz/2+1,oy-sz/2+2,sz-2,1,col+'77');
+    box(ox-sz/2+1,oy-sz/2+4,sz-3,1,col+'55');
+    if(orb.j.st==='error'){
+      const ep=Math.sin(t*0.01)*3;
+      g.strokeStyle='#ff0000'; g.lineWidth=1;
+      g.strokeRect(Math.floor(ox-sz/2-ep),Math.floor(oy-sz/2-ep),sz+ep*2,sz+ep*2);
     }
   });
 }
 
-// ─── PARTICLE BEAMS (signals flowing to Revay) ───────────────
-const beams = [];
-function spawnBeam() {
-  const src = PEERS[Math.floor(Math.random() * PEERS.length)];
-  const rad = (src.angle - 90) * Math.PI / 180;
-  const PR = Math.min(W, H) * 0.36;
-  beams.push({
-    sx: cx + Math.cos(rad) * PR,
-    sy: cy + Math.sin(rad) * PR,
-    progress: 0,
-    speed: 0.012 + Math.random() * 0.008,
-    color: src.color,
-    size: 2,
+// ── BEAMS ──────────────────────────────────────────────────────
+const beams=[];
+function spawnBeam(){
+  const p=PEERS[Math.floor(Math.random()*PEERS.length)];
+  const rad=(p.ang-90)*Math.PI/180;
+  const PR=Math.min(W,H)*0.39;
+  beams.push({sx:cx+Math.cos(rad)*PR, sy:cy+Math.sin(rad)*PR, prog:0, spd:0.01+Math.random()*0.007, col:p.col});
+}
+setInterval(spawnBeam,1800);
+
+// ── PAPER AIRPLANE ─────────────────────────────────────────────
+const planes=[];
+function spawnPlane(){
+  if(revay.state!=='running'&&Math.random()<0.15) return;
+  const pr=PEERS[Math.floor(Math.random()*PEERS.length)];
+  const rad=(pr.ang-90)*Math.PI/180;
+  const PR=Math.min(W,H)*0.39;
+  planes.push({
+    sx:cx,sy:cy,
+    ex:cx+Math.cos(rad)*PR,ey:cy+Math.sin(rad)*PR,
+    prog:0, spd:0.008, col:pr.col,
   });
 }
-setInterval(spawnBeam, 2000);
+setInterval(spawnPlane,5000);
 
-// ─── DRAW GHOST PEER NODES ────────────────────────────────────
-function drawPeers(t) {
-  const PR = Math.min(W, H) * 0.36;
-  PEERS.forEach(p => {
-    const rad = (p.angle - 90) * Math.PI / 180;
-    const px2 = cx + Math.cos(rad) * PR;
-    const py2 = cy + Math.sin(rad) * PR;
-    const CBW = 60, CBH = 52;
-    drawCubicle(
-      Math.floor(px2 - CBW/2), Math.floor(py2 - CBH/2),
-      CBW, CBH,
-      false, p.name, p.human, p.color
-    );
-    // Dashed line to center
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(px2, py2);
-    ctx.setLineDash([3, 5]);
-    ctx.strokeStyle = p.color + '25';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.setLineDash([]);
+// ── DECORATIONS ────────────────────────────────────────────────
+function drawDecorations(t){
+  // INITECH sign (top-left)
+  box(10,55,80,22,'#0a0a00'); box(10,55,80,2,'#ffff00'); box(10,75,80,2,'#ffff00');
+  txt('INITECH',50,60,7,'#ffff00'); txt('LLC',50,70,4,'#555533');
+  // Printer (top-right)
+  const px2=W-75,py2=55,efail=Math.floor(t*0.005)%4===0;
+  box(px2,py2,52,28,'#252515'); box(px2,py2,52,4,'#353525');
+  box(px2+4,py2+7,44,12,'#151500'); box(px2+6,py2+9,40,2,'#ddddbb');
+  box(px2+36,py2+2,8,4,efail?'#ff0000':'#330000');
+  txt('PRINTER',px2+26,py2+20,4,'#444433');
+  if(efail){ g.fillStyle='#ff0000'; txt('PC LOAD',px2+26,py2+25,3,'#ff0000'); }
+  // Water cooler (bottom-left)
+  const wx2=28,wy2=H-95;
+  box(wx2+4,wy2,18,30,'#1a2a55'); box(wx2+4,wy2,18,5,'#2a3a77');
+  box(wx2+6,wy2+1,14,10,'#0a1a44');
+  const wg=g.createLinearGradient(0,wy2+12,0,wy2+28);
+  wg.addColorStop(0,'rgba(0,150,255,0.8)'); wg.addColorStop(1,'rgba(0,80,200,0.8)');
+  g.fillStyle=wg; g.fillRect(wx2+6,wy2+12,14,16);
+  box(wx2+8,wy2+28,3,5,'#7788aa'); box(wx2+10,wy2+30,5,3,'#7788aa');
+  box(wx2+2,wy2+24,5,6,'#ffffff'); box(wx2+19,wy2+25,5,5,'#ffffff');
+  if(revay.state==='cooler'){
+    txt('☕',wx2+8,wy2-14,10,'#f59e0b');
+    drawRevayChar(wx2+12,wy2-8,t,'idle');
+  }
+  // Filing cabinets (right wall)
+  for(let i=0;i<3;i++){
+    const fx=W-28, fy=80+i*55;
+    box(fx,fy,22,50,'#1a1a0a'); box(fx,fy,22,2,'#2a2a15');
+    box(fx+2,fy+8,18,20,'#111108'); box(fx+2,fy+8,18,2,'#333322');
+    box(fx+2,fy+30,18,18,'#111108'); box(fx+2,fy+30,18,2,'#333322');
+    box(fx+8,fy+16,6,3,'#333322'); box(fx+8,fy+38,6,3,'#333322');
+  }
+  // Milton (bottom-right wandering)
+  miltonWalk+=miltonDir*0.25;
+  if(miltonWalk>25||miltonWalk<-25) miltonDir*=-1;
+  const mx3=Math.floor(W-80+miltonWalk), my3=H-65;
+  box(mx3+2,my3,8,4,'#555544'); box(mx3+2,my3+3,8,6,'#c8a870');
+  box(mx3+1,my3+9,10,7,'#334433');
+  box(mx3+11,my3+12,8,4,'#cc0000'); box(mx3+11,my3+15,8,2,'#880000');
+  if(Math.floor(t*0.001)%15===0){
+    box(mx3-32,my3-16,40,14,'#ffffcc'); g.strokeStyle='#888866'; g.lineWidth=1; g.strokeRect(mx3-32,my3-16,40,14);
+    txt('MY',mx3-12,my3-14,4,'#333322'); txt('STPLR',mx3-12,my3-9,4,'#333322');
+  }
+  txt('MILTON',mx3+5,my3+17,4,'#555533');
+  // TGI Fridays flyer on wall
+  box(W-26,H-100,20,28,'#cc2200'); box(W-26,H-100,20,3,'#ff4400');
+  txt('TGI',W-16,H-96,3,'#ffff00'); txt("FRI",W-16,H-90,3,'#ffff00'); txt("DAY",W-16,H-84,3,'#ffff00');
+  // Fire! (bottom corner)
+  const fi=['#ff4400','#ff8800','#ffcc00','#ff2200'];
+  const fc2=fi[Math.floor(t*0.008)%fi.length];
+  box(8,H-28,5,12,fc2); box(12,H-22,4,8,fi[(Math.floor(t*0.01)+1)%4]); box(6,H-20,4,8,fi[(Math.floor(t*0.007)+2)%4]);
+  txt('🔥',8,H-38,8,'#ff4400','left');
+}
+let miltonWalk=0, miltonDir=1;
+
+// ── PEER CUBICLES ───────────────────────────────────────────────
+function drawPeers(t){
+  const PR=Math.min(W,H)*0.40;
+  PEERS.forEach(p=>{
+    const rad=(p.ang-90)*Math.PI/180;
+    const pcx=cx+Math.cos(rad)*PR, pcy=cy+Math.sin(rad)*PR;
+    const CBW=88, CBH=76;
+    drawCubicle(Math.floor(pcx-CBW/2),Math.floor(pcy-CBH/2),CBW,CBH,p.col,p.name,p.human,t);
+    // Dashed connection line
+    g.beginPath(); g.moveTo(cx,cy); g.lineTo(pcx,pcy);
+    g.setLineDash([3,6]); g.strokeStyle=p.col+'20'; g.lineWidth=1; g.stroke();
+    g.setLineDash([]);
   });
 }
 
-// ─── EVAN NODE (top) ─────────────────────────────────────────
-function drawEvan(t) {
-  const ex = cx, ey = 30;
-  // Name plate
-  px(ex-32, ey-6, 64, 16, '#1a1400');
-  px(ex-32, ey-6, 64, 2, '#f59e0b');
-  px(ex-32, ey+8, 64, 2, '#f59e0b');
-  ctx.font = '6px "Press Start 2P"';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = '#f59e0b';
-  ctx.fillText('EVAN RICE', ex, ey-4);
-  // Tiny character
-  drawCharSprite(ctx, ex - 5, ey + 12, '#f59e0b', '#cc8800', true, t);
-  // BOARD label
-  ctx.font = '4px "Press Start 2P"';
-  ctx.fillStyle = '#6b5010';
-  ctx.textAlign = 'center';
-  ctx.fillText('[THE BOARD]', ex, ey + 26);
-  // Line to Revay
-  ctx.beginPath();
-  ctx.moveTo(ex, ey + 26);
-  ctx.lineTo(cx, cy - 30);
-  ctx.setLineDash([2, 4]);
-  ctx.strokeStyle = 'rgba(245,158,11,0.3)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  ctx.setLineDash([]);
+// ── EVAN NODE ───────────────────────────────────────────────────
+function drawEvan(t){
+  const ex=cx, ey=30;
+  box(ex-38,ey-8,76,20,'#0e0c00'); box(ex-38,ey-8,76,2,'#f59e0b'); box(ex-38,ey+10,76,2,'#f59e0b');
+  txt('EVAN RICE',ex,ey-5,6,'#f59e0b');
+  drawRevayChar(ex-5,ey+14,t,'idle'); // tiny evan
+  txt('[THE BOARD]',ex,ey+30,4,'#6b5010');
+  g.beginPath(); g.moveTo(ex,ey+32); g.lineTo(cx,cy-42);
+  g.setLineDash([2,4]); g.strokeStyle='rgba(245,158,11,0.25)'; g.lineWidth=1; g.stroke();
+  g.setLineDash([]);
 }
 
-// ─── DRAW SCENE DECORATIONS ──────────────────────────────────
-function drawDecorations(t) {
-  // Printer — top right corner
-  drawPrinter(W - 56, 50, t);
-  ctx.font = '5px "Press Start 2P"';
-  ctx.fillStyle = '#444433';
-  ctx.textAlign = 'center';
-  ctx.fillText('PRINTER', W - 38, 74);
-
-  // Water cooler — bottom left
-  drawCooler(24, H - 80);
-
-  // Milton — bottom right
-  drawMilton(W - 60, H - 60, t);
-
-  // "INITECH" sign — top left
-  px(8, 50, 68, 18, '#1a1a0a');
-  px(8, 50, 68, 2, '#ffff00');
-  ctx.font = '6px "Press Start 2P"';
-  ctx.textAlign = 'center';
-  ctx.fillStyle = '#ffff00';
-  ctx.textBaseline = 'top';
-  ctx.fillText('INITECH', 42, 53);
-  ctx.font = '4px "Press Start 2P"';
-  ctx.fillStyle = '#555533';
-  ctx.fillText('LLC', 42, 62);
-
-  // Fire in bottom corner (tiny) — Office Space ending
-  const fireColors = ['#ff4400','#ff8800','#ffcc00','#ff2200'];
-  const fc = fireColors[Math.floor(t * 0.008) % fireColors.length];
-  px(8, H-22, 4, 8, fc);
-  px(11, H-18, 3, 6, fireColors[(Math.floor(t*0.01)+1)%4]);
-  px(6, H-16, 3, 5, fireColors[(Math.floor(t*0.007)+2)%4]);
-  ctx.font = '4px "Press Start 2P"';
-  ctx.fillStyle = '#ff4400';
-  ctx.textAlign = 'left';
-  ctx.fillText('🔥', 8, H-28);
-}
-
-// ─── DRAW HQ SCORE COUNTER ───────────────────────────────────
-let scoreCount = 2847;
-setInterval(() => {
-  scoreCount += Math.floor(Math.random() * 3);
-  const el = document.getElementById('score-val');
-  if (el) el.textContent = String(scoreCount).padStart(6,'0');
-}, 3000);
-
-// ─── MAIN DRAW LOOP ──────────────────────────────────────────
-function draw(t) {
+// ── MAIN LOOP ───────────────────────────────────────────────────
+let frame=0;
+function draw(t){
   requestAnimationFrame(draw);
-  ctx.clearRect(0, 0, W, H);
+  frame++;
+  g.clearRect(0,0,W,H);
+
+  // Update Revay state
+  revay.stateTimer--;
+  if(revay.stateTimer<=0) scheduleRevayBehavior();
+  if(revay.state==='running'&&revay.walkProg<1) revay.walkProg+=0.01;
 
   drawFloor();
-
-  // Ghost peer cubicles + dashed lines
   drawPeers(t);
+  drawOrbitals(t);
 
-  // Orbital TPS reports
-  drawOrbitals(cx, cy, t);
-
-  // Beam particles
-  for (let i = beams.length - 1; i >= 0; i--) {
-    const b = beams[i];
-    b.progress += b.speed;
-    if (b.progress >= 1) { beams.splice(i, 1); continue; }
-    const bx = b.sx + (cx - b.sx) * b.progress;
-    const by = b.sy + (cy - b.sy) * b.progress;
-    const alpha = Math.sin(b.progress * Math.PI);
-    ctx.fillStyle = b.color + Math.floor(alpha * 200).toString(16).padStart(2,'0');
-    ctx.fillRect(Math.floor(bx), Math.floor(by), b.size, b.size);
-    // Trail
-    for (let tr = 1; tr <= 3; tr++) {
-      const tp = Math.max(0, b.progress - tr * 0.04);
-      const tx2 = b.sx + (cx - b.sx) * tp;
-      const ty2 = b.sy + (cy - b.sy) * tp;
-      ctx.fillStyle = b.color + Math.floor(alpha * (60 - tr*15)).toString(16).padStart(2,'0');
-      ctx.fillRect(Math.floor(tx2), Math.floor(ty2), b.size - 1, b.size - 1);
+  // Beams
+  for(let i=beams.length-1;i>=0;i--){
+    const b=beams[i]; b.prog+=b.spd;
+    if(b.prog>=1){beams.splice(i,1);continue;}
+    const bx=b.sx+(cx-b.sx)*b.prog, by=b.sy+(cy-b.sy)*b.prog;
+    const al=Math.sin(b.prog*Math.PI);
+    g.fillStyle=b.col+Math.floor(al*200).toString(16).padStart(2,'0');
+    g.fillRect(Math.floor(bx),Math.floor(by),2,2);
+    for(let tr=1;tr<=3;tr++){
+      const tp=Math.max(0,b.prog-tr*0.05);
+      const tx2=b.sx+(cx-b.sx)*tp, ty2=b.sy+(cy-b.sy)*tp;
+      g.fillStyle=b.col+Math.floor(al*(50-tr*14)).toString(16).padStart(2,'0');
+      g.fillRect(Math.floor(tx2),Math.floor(ty2),1,1);
     }
   }
 
-  // Revay main desk (center)
-  const RDW = 80, RDH = 70;
-  drawRevayDesk(Math.floor(cx - RDW/2), Math.floor(cy - RDH/2), RDW, RDH, t);
+  // Paper planes
+  for(let i=planes.length-1;i>=0;i--){
+    const pl=planes[i]; pl.prog+=pl.spd;
+    if(pl.prog>=1){planes.splice(i,1);continue;}
+    const px3=pl.sx+(pl.ex-pl.sx)*pl.prog, py3=pl.sy+(pl.ey-pl.sy)*pl.prog;
+    const ang=Math.atan2(pl.ey-pl.sy,pl.ex-pl.sx);
+    g.save(); g.translate(Math.floor(px3),Math.floor(py3)); g.rotate(ang);
+    g.fillStyle=pl.col; g.fillRect(-5,-2,10,4); g.fillRect(-5,-4,5,2); g.fillRect(-5,2,4,2);
+    g.restore();
+  }
 
-  // Evan node
+  // Revay desk
+  const RDW=100, RDH=90;
+  drawRevayDesk(Math.floor(cx-RDW/2),Math.floor(cy-RDH/2),RDW,RDH,t,revay.state);
+
   drawEvan(t);
-
-  // Decorations
   drawDecorations(t);
 
-  // Corner vignette "CRT" effect on top of everything
-  const vig = ctx.createRadialGradient(cx, cy, Math.min(W,H)*0.35, cx, cy, Math.min(W,H)*0.7);
-  vig.addColorStop(0, 'rgba(0,0,0,0)');
-  vig.addColorStop(1, 'rgba(0,0,0,0.5)');
-  ctx.fillStyle = vig;
-  ctx.fillRect(0, 0, W, H);
-
-  // Pixel grid overlay (subtle)
-  ctx.fillStyle = 'rgba(0,0,0,0.06)';
-  for (let gx = 0; gx < W; gx += 3) ctx.fillRect(gx, 0, 1, H);
+  // CRT vignette
+  const vig=g.createRadialGradient(cx,cy,Math.min(W,H)*0.3,cx,cy,Math.min(W,H)*0.7);
+  vig.addColorStop(0,'rgba(0,0,0,0)'); vig.addColorStop(1,'rgba(0,0,0,0.55)');
+  g.fillStyle=vig; g.fillRect(0,0,W,H);
 }
 requestAnimationFrame(draw);
 
-// ─── TPS FEED ────────────────────────────────────────────────
-function timeAgo(ms) {
-  if (!ms) return 'SCHED';
-  const d = Math.floor((Date.now() - ms) / 1000);
-  if (d < 60) return `${d}S AGO`;
-  if (d < 3600) return `${Math.floor(d/60)}M AGO`;
-  return `${Math.floor(d/3600)}H AGO`;
+// ── DRAWER ──────────────────────────────────────────────────────
+let drawerOpen=false;
+function toggleDrawer(){
+  drawerOpen=!drawerOpen;
+  document.getElementById('drawer').classList.toggle('open',drawerOpen);
+  document.getElementById('darrow').textContent=drawerOpen?'▶':'◀';
 }
-function renderFeed() {
-  const sorted = [...JOBS].sort((a,b) => (b.lastRun||0) - (a.lastRun||0));
-  let tpsNum = 4521;
-  document.getElementById('tps-feed').innerHTML = sorted.map(j => {
-    const num = tpsNum--;
-    const statusClass = j.status === 'ok' ? 'tps-ok' : j.status === 'error' ? 'tps-err' : 'tps-warn';
-    const statusIcon = j.status === 'ok' ? '✓' : j.status === 'error' ? '✗' : '…';
-    return `<div class="tps-item">
-      <div><span class="tps-id">TPS#${num}</span> <span class="${statusClass}">${statusIcon} ${j.name}</span></div>
-      <div class="tps-time">${timeAgo(j.lastRun)} · ${j.cat}</div>
-      ${j.status==='error' ? `<div class="tps-err">ERR: ${j.lastError}</div>` : ''}
-    </div>`;
+
+// ── LEGEND ──────────────────────────────────────────────────────
+let legendOpen=false;
+function toggleLegend(){
+  legendOpen=!legendOpen;
+  document.getElementById('legend').classList.toggle('show',legendOpen);
+}
+
+// ── FEED ────────────────────────────────────────────────────────
+function ago(ms){
+  if(!ms) return 'SCHED';
+  const d=Math.floor((Date.now()-ms)/1000);
+  if(d<60) return `${d}S`;
+  if(d<3600) return `${Math.floor(d/60)}M`;
+  return `${Math.floor(d/3600)}H`;
+}
+function renderFeed(){
+  const sorted=[...JOBS].sort((a,b)=>(b.lr||0)-(a.lr||0));
+  let n=4521;
+  document.getElementById('feed').innerHTML=sorted.map(j=>{
+    const sc=j.st==='ok'?'tps-ok':j.st==='error'?'tps-err':'';
+    const ic=j.st==='ok'?'✓':j.st==='error'?'✗':'…';
+    return `<div class="tps-item"><span class="tps-id">TPS#${n--}</span> <span class="${sc}">${ic} ${j.n}</span><br><span class="tps-time">${ago(j.lr)} · ${j.cat}${j.st==='error'?` · ERR:${j.lastErr}`:''}</span></div>`;
   }).join('');
 }
-renderFeed();
-setInterval(renderFeed, 30000);
+renderFeed(); setInterval(renderFeed,30000);
 
-// ─── CLOCK ──────────────────────────────────────────────────
-function tick() {
-  const n = new Date();
-  const s = n.toISOString().replace('T',' ').substring(0,19)+' UTC';
-  const el = document.getElementById('hud-clock');
-  if (el) el.textContent = s;
-}
-tick(); setInterval(tick, 1000);
+// ── SCORE ──────────────────────────────────────────────────────
+let sc=2847;
+setInterval(()=>{ sc+=Math.floor(Math.random()*3); const e=document.getElementById('score'); if(e) e.textContent=String(sc).padStart(6,'0'); },3000);
 
-// ─── PARTY SPRITES ──────────────────────────────────────────
-function drawPartySprite(canvasId, color, active) {
-  const c = document.getElementById(canvasId);
-  if (!c) return;
-  const x = c.getContext('2d');
-  x.clearRect(0,0,28,28);
-  x.imageSmoothingEnabled = false;
-  // Hair
-  x.fillStyle = active ? '#ffcc00' : '#333';
-  x.fillRect(8,2,12,4);
-  // Head
-  x.fillStyle = active ? '#e8b88a' : '#333';
-  x.fillRect(8,5,12,8);
-  // Eyes
-  x.fillStyle = active ? '#333' : '#222';
-  x.fillRect(10,8,3,2); x.fillRect(15,8,3,2);
-  // Body
-  x.fillStyle = active ? color : '#222';
-  x.fillRect(7,13,14,8);
-  // Legs
-  x.fillStyle = '#333';
-  x.fillRect(8,21,5,5); x.fillRect(15,21,5,5);
+// ── CLOCK ──────────────────────────────────────────────────────
+function tick(){ const e=document.getElementById('clock'); if(e) e.textContent=new Date().toISOString().replace('T',' ').substring(0,19)+' UTC'; }
+tick(); setInterval(tick,1000);
+
+// ── PARTY SPRITES ──────────────────────────────────────────────
+function partySpr(id,col,on){
+  const c=document.getElementById(id); if(!c) return;
+  const x=c.getContext('2d'); x.imageSmoothingEnabled=false;
+  x.clearRect(0,0,24,24);
+  x.fillStyle=on?'#ffcc00':'#444'; x.fillRect(7,1,10,3);
+  x.fillStyle=on?'#e8b88a':'#333'; x.fillRect(7,4,10,7);
+  x.fillStyle='#333'; if(on){x.fillRect(9,7,2,2);x.fillRect(13,7,2,2);}
+  x.fillStyle=on?col:'#222'; x.fillRect(6,11,12,7);
+  x.fillStyle='#333'; x.fillRect(7,18,4,5); x.fillRect(13,18,4,5);
 }
-drawPartySprite('spr-revay','#6c63ff',true);
-drawPartySprite('spr-s','#ff4d6d',false);
-drawPartySprite('spr-g','#a855f7',false);
-drawPartySprite('spr-p','#3b82f6',false);
-drawPartySprite('spr-c','#00d4aa',false);
-drawPartySprite('spr-o','#f59e0b',false);
-drawPartySprite('spr-r','#888888',false);
+partySpr('sp0','#6c63ff',true);
+['#ff4d6d','#a855f7','#3b82f6','#00d4aa','#f59e0b','#888888'].forEach((c,i)=>partySpr('sp'+(i+1),c,false));
 </script>
 </body>
 </html>
