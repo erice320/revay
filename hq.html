@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#020509">
+  <title>Rev.io Grow Team</title>
+  <!-- v3 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ──────────────────────────────────────────────────────────────── */
+    :root {
+      --sky:    #020509;
+      --bldg:   #070e1a;
+      --floor:  #080f1d;
+      --glass:  #050c18;
+      --steel:  #112338;
+      --chrome: #1a3352;
+      --text:   #f0f7ff;
+      --sub:    #a8d4ee;
+      --dim:    #6aaed6;
+      --accent: #7dd4f8;
+      --gold:   #c8a84b;
+
+      --idle:    #c8a84b;
+      --write:   #e8f2ff;
+      --sync:    #22d3ee;
+      --exec:    #a78bfa;
+      --err:     #f43f5e;
+      --off:     #040a14;
+      --research:#818cf8;
+
+      --font: 'Space Grotesk', -apple-system, 'Segoe UI', sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+    }
+
+    /* ── RESET ───────────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font);
+      background: var(--sky);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ──────────────────────────────────────────────────────────────── */
+    #header {
+      position: sticky; top: 0; z-index: 200;
+      display: flex; align-items: center;
+      padding: 11px 18px 10px;
+      background: rgba(2,5,9,0.92);
+      border-bottom: 1px solid var(--steel);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      flex-shrink: 0;
+      gap: 12px;
+    }
+    #hq-logo {
+      width: 28px; height: 28px; border-radius: 4px;
+      background: linear-gradient(135deg, #0f2540, #1a3a60);
+      border: 1px solid var(--chrome);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(86,180,224,0.15);
+    }
+    #hq-id { flex: 1; }
+    #hq-name {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent);
+      line-height: 1;
+    }
+    #hq-addr {
+      font-size: 8.5px; color: var(--sub);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-top: 2px;
+    }
+    #hq-right { display: flex; align-items: center; gap: 14px; }
+    #hq-clock {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--sub); letter-spacing: 0.05em;
+      font-variant-numeric: tabular-nums;
+    }
+    .live-chip {
+      display: flex; align-items: center; gap: 5px;
+      background: rgba(34,211,238,0.06);
+      border: 1px solid rgba(34,211,238,0.15);
+      border-radius: 20px; padding: 3px 9px;
+      font-size: 8.5px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--sync);
+    }
+    .live-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #22d3ee;
+      animation: a-live 2.5s ease-in-out infinite;
+    }
+    @keyframes a-live { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+    /* ── SCENE ───────────────────────────────────────────────────────────────── */
+    #scene {
+      position: relative; flex-shrink: 0;
+      height: clamp(300px, 54vh, 500px);
+      overflow: hidden;
+    }
+
+    /* Sky photo layer */
+    #sky-photo {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&q=80&fm=webp&fit=crop');
+      background-size: cover; background-position: center 40%;
+      opacity: 0.18;
+    }
+    /* Gradient vignette over photo */
+    #sky-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(2,5,9,0.7) 0%, transparent 30%, rgba(2,5,9,0.5) 70%, rgba(2,5,9,0.95) 100%),
+        linear-gradient(to right, rgba(2,5,9,0.4) 0%, transparent 20%, transparent 80%, rgba(2,5,9,0.4) 100%);
+    }
+    /* Stars canvas */
+    #sky-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    /* City skyline */
+    #skyline-svg {
+      position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 160px;
+      pointer-events: none; z-index: 2;
+    }
+    /* Atmospheric fog band */
+    #sky-fog {
+      position: absolute;
+      bottom: 30px; left: 0; right: 0; height: 80px;
+      background: linear-gradient(to top, rgba(8,20,40,0.8) 0%, rgba(5,15,30,0.3) 60%, transparent 100%);
+      pointer-events: none; z-index: 3;
+    }
+    /* Rain */
+    #rain-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; opacity: 0.22; z-index: 6;
+    }
+    /* Tower stage */
+    #tower-stage {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-end;
+      z-index: 5;
+    }
+
+    /* ── CROWN ───────────────────────────────────────────────────────────────── */
+    #crown {
+      width: min(400px, calc(100vw - 32px));
+      background: linear-gradient(to bottom, rgba(4,10,22,0.98), rgba(7,14,26,0.96));
+      border: 1px solid var(--chrome);
+      border-bottom: none;
+      position: relative;
+      padding: 7px 0 5px;
+      overflow: hidden;
+    }
+    /* Top accent line */
+    #crown::before {
+      content: '';
+      position: absolute; top: 0; left: 15%; right: 15%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      opacity: 0.6;
+    }
+    /* Corner chrome lines */
+    #crown::after {
+      content: '';
+      position: absolute; top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--chrome), transparent);
+    }
+    #crown-top {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 0 16px;
+    }
+    .crown-bar { flex: 1; height: 1px; background: var(--steel); }
+    .antenna-beacon {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--err);
+      animation: a-beacon 2s step-end infinite;
+      box-shadow: 0 0 6px var(--err);
+    }
+    @keyframes a-beacon { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+    #crown-label {
+      font-size: 7px; font-weight: 500;
+      letter-spacing: 0.4em; text-transform: uppercase;
+      color: rgba(112,200,240,0.85);
+      text-align: center; padding: 4px 0 0;
+    }
+
+    /* ── TOWER ───────────────────────────────────────────────────────────────── */
+    #tower {
+      width: min(400px, calc(100vw - 32px));
+      border-left: 1px solid var(--chrome);
+      border-right: 1px solid var(--chrome);
+      position: relative;
+      background: var(--bldg);
+    }
+    /* Vertical column lines (architectural mullions) */
+    #tower::before, #tower::after {
+      content: '';
+      position: absolute; top: 0; bottom: 0;
+      width: 1px; background: var(--steel);
+      opacity: 0.6;
+    }
+    #tower::before { left: 30px; }
+    #tower::after  { right: 30px; }
+
+    /* ── FLOOR ───────────────────────────────────────────────────────────────── */
+    .floor {
+      display: grid;
+      grid-template-columns: 30px 1fr 96px;
+      border-bottom: 1px solid var(--steel);
+      min-height: 50px;
+      position: relative;
+      transition: background 0.6s ease;
+    }
+    .floor:last-child { border-bottom: none; }
+    .floor.penthouse { min-height: 65px; background: rgba(8,20,40,0.6); }
+
+    /* Floor number */
+    .f-num {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--sub);
+      border-right: 1px solid var(--steel);
+    }
+    .floor.penthouse .f-num { color: var(--accent); font-size: 10px; }
+
+    /* Windows */
+    .f-glass {
+      display: flex; gap: 2px;
+      padding: 5px 5px;
+      align-items: stretch;
+    }
+    .win {
+      flex: 1;
+      background: var(--glass);
+      border: 1px solid rgba(17,35,56,0.8);
+      position: relative; overflow: hidden;
+      transition: background 0.6s ease, box-shadow 0.6s ease;
+    }
+    .floor.penthouse .win { min-height: 52px; }
+    .floor:not(.penthouse) .win { min-height: 38px; }
+
+    /* Horizontal floor plate line */
+    .win::before {
+      content: '';
+      position: absolute; top: 46%; left: 0;
+      width: 100%; height: 1px;
+      background: rgba(17,35,56,0.9);
+    }
+    /* Agent emoji mark */
+    .f-mark { margin-right: 4px; font-size: 0.85em; }
+
+    /* ── WINDOW SCREEN (center window content) ───────────────────────────────── */
+    .win-screen {
+      position: absolute; inset: 3px;
+      display: flex; flex-direction: column;
+      justify-content: flex-start;
+      overflow: hidden; z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Text lines (writing state) */
+    .wline {
+      font-family: var(--mono);
+      font-size: 5.5px;
+      line-height: 1.6;
+      color: rgba(240,247,255,0.8);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: clip;
+      padding: 0 2px;
+    }
+    .wline.bright { color: rgba(240,247,255,0.98); }
+    .wline.cursor::after { content: ''; }
+    /* Data bars (syncing) */
+    .wbar-wrap { padding: 2px 3px; }
+    .wbar-label { font-family: var(--mono); font-size: 5px; color: rgba(240,247,255,0.85); margin-bottom: 1px; }
+    .wbar-track {
+      height: 2px; background: rgba(34,211,238,0.1); border-radius: 1px; overflow: hidden;
+    }
+    .wbar-fill {
+      height: 100%; border-radius: 1px;
+      background: rgba(34,211,238,0.6);
+      animation: a-bar 1.5s ease-in-out infinite;
+    }
+    @keyframes a-bar { 0%{width:15%} 50%{width:90%} 100%{width:15%} }
+    /* Error screen */
+    .werr-line {
+      font-family: var(--mono); font-size: 5px; line-height: 1.5;
+      color: rgba(240,247,255,0.9); padding: 0 2px;
+      white-space: nowrap; overflow: hidden;
+    }
+    .werr-line.head { color: rgba(255,100,120,1); font-size: 6px; font-weight: 700; }
+    /* Idle — subtle pulse graph */
+    .wpulse-wrap { padding: 4px 3px 0; display: flex; align-items: flex-end; gap: 1px; height: 20px; }
+    .wpulse-bar {
+      flex: 1; background: rgba(200,168,75,0.55); border-radius: 1px;
+      animation: a-pulse-bar 3s ease-in-out infinite;
+    }
+    @keyframes a-pulse-bar { 0%,100%{opacity:.4;transform:scaleY(.4)} 50%{opacity:.9;transform:scaleY(1)} }
+    /* Exec — progress meter */
+    .wexec-wrap { padding: 2px 3px; }
+    .wexec-label { font-family: var(--mono); font-size: 5px; color: rgba(240,247,255,0.9); margin-bottom: 2px; white-space: nowrap; overflow: hidden; }
+    .wexec-meter { height: 2px; background: rgba(167,139,250,0.15); }
+    .wexec-fill { height: 100%; background: linear-gradient(to right, #7c3aed, #a78bfa); animation: a-exec-fill 2s linear infinite; }
+    @keyframes a-exec-fill { 0%{width:5%} 85%{width:100%} 100%{width:5%} }
+
+    /* Glass specular */
+    .win::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.022) 0%, transparent 50%);
+      pointer-events: none; z-index: 2;
+    }
+
+    /* Right meta panel */
+    .f-meta {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5px 9px 5px 8px;
+      border-left: 1px solid var(--steel);
+      gap: 2px; overflow: hidden;
+    }
+    .f-agent-name {
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(232,245,255,0.95);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .floor.penthouse .f-agent-name {
+      font-size: 11px; color: var(--accent);
+      letter-spacing: 0.2em;
+    }
+    .f-exec-name {
+      font-size: 8px; color: var(--sub);
+      letter-spacing: 0.07em; text-transform: uppercase;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+    .f-title {
+      font-size: 7.5px; color: var(--sub);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .f-state {
+      display: flex; align-items: center; gap: 4px;
+      margin-top: 3px;
+    }
+    .f-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--sub); flex-shrink: 0;
+      transition: background 0.4s;
+    }
+    .f-status-text {
+      font-size: 7.5px; color: var(--sub);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.4s;
+    }
+
+    /* ── LOBBY ───────────────────────────────────────────────────────────────── */
+    #lobby {
+      width: min(400px, calc(100vw - 32px));
+      display: grid; grid-template-columns: 30px 1fr;
+      border: 1px solid var(--chrome); border-top: 2px solid var(--chrome);
+      background: linear-gradient(to right, rgba(4,10,22,0.98), rgba(7,14,26,0.95));
+      min-height: 20px;
+    }
+    .lb-num {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; color: var(--dim);
+      border-right: 1px solid var(--steel);
+    }
+    .lb-text {
+      display: flex; align-items: center;
+      padding: 0 10px;
+      font-size: 7px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--dim);
+    }
+
+    /* ── STATE VISUAL THEMES ─────────────────────────────────────────────────── */
+
+    /* IDLE — warm amber desk lamp glow */
+    .floor[data-state="idle"] .win {
+      background: linear-gradient(to bottom, #0c0d07 0%, #07090e 60%, var(--glass) 100%);
+      box-shadow: inset 0 -14px 28px rgba(200,168,75,0.11);
+    }
+    .floor[data-state="idle"] .f-dot { background: var(--idle); animation: a-breathe 3.5s ease-in-out infinite; }
+    .floor[data-state="idle"] .f-status-text { color: rgba(200,168,75,0.7); }
+    @keyframes a-breathe { 0%,100%{opacity:.6} 50%{opacity:1} }
+    /* Lamp glow on floor plate */
+    .floor[data-state="idle"] .win::before {
+      background: linear-gradient(to right, transparent, rgba(200,168,75,0.08), transparent);
+      height: 1px; opacity: 1;
+    }
+
+    /* WRITING — bright, clinical white */
+    .floor[data-state="writing"] .win {
+      background: linear-gradient(to bottom, #0f1828 0%, #0b1220 100%);
+      box-shadow: inset 0 0 18px rgba(232,242,255,0.07), 0 0 5px rgba(232,242,255,0.03);
+    }
+    .floor[data-state="writing"] .f-dot { background: var(--write); }
+    .floor[data-state="writing"] .f-status-text { color: rgba(232,242,255,0.7); }
+    .floor[data-state="writing"] .f-agent-name { color: var(--write); }
+    /* ── WINDOW FRAME BLINK (per state) ──────────────────────────────────────── */
+
+    /* IDLE — slow amber frame pulse */
+    .floor[data-state="idle"] .win {
+      animation: a-frame-idle 3.5s ease-in-out infinite;
+    }
+    @keyframes a-frame-idle {
+      0%,100%{ border-color: rgba(17,35,56,0.8); }
+      50%{ border-color: rgba(200,168,75,0.35); box-shadow: 0 0 4px rgba(200,168,75,0.15) inset; }
+    }
+
+    /* WRITING — rapid white frame flicker */
+    .floor[data-state="writing"] .win {
+      animation: a-frame-write 1.4s ease-in-out infinite;
+    }
+    .floor[data-state="writing"] .win:nth-child(2) {
+      animation: a-frame-write 1.4s ease-in-out infinite, a-frame-write-center 0.9s ease-in-out infinite;
+    }
+    @keyframes a-frame-write {
+      0%,100%{ border-color: rgba(232,242,255,0.12); }
+      50%{ border-color: rgba(232,242,255,0.45); box-shadow: 0 0 5px rgba(232,242,255,0.1) inset; }
+    }
+    @keyframes a-frame-write-center {
+      0%,100%{ border-color: rgba(232,242,255,0.25); }
+      40%{ border-color: rgba(232,242,255,0.7); box-shadow: 0 0 8px rgba(232,242,255,0.15) inset; }
+    }
+
+    /* SYNCING — cyan frame sweep */
+    .floor[data-state="syncing"] .win {
+      animation: a-frame-sync 1.8s ease-in-out infinite;
+    }
+    .floor[data-state="syncing"] .win:nth-child(1) { animation-delay: 0s; }
+    .floor[data-state="syncing"] .win:nth-child(2) { animation-delay: .3s; }
+    .floor[data-state="syncing"] .win:nth-child(3) { animation-delay: .6s; }
+    @keyframes a-frame-sync {
+      0%,100%{ border-color: rgba(34,211,238,0.08); }
+      50%{ border-color: rgba(34,211,238,0.55); box-shadow: 0 0 6px rgba(34,211,238,0.18) inset; }
+    }
+
+    /* EXECUTING — purple frame pulse */
+    .floor[data-state="executing"] .win {
+      animation: a-frame-exec 0.9s ease-in-out infinite;
+    }
+    @keyframes a-frame-exec {
+      0%,100%{ border-color: rgba(167,139,250,0.1); }
+      50%{ border-color: rgba(167,139,250,0.5); box-shadow: 0 0 7px rgba(167,139,250,0.2) inset; }
+    }
+
+    /* THINKING — slow warm gold breathing pulse */
+    .floor[data-state="thinking"] .win {
+      animation: a-frame-think 2.8s ease-in-out infinite;
+    }
+    .floor[data-state="thinking"] .win:nth-child(2) {
+      animation: a-frame-think 2.8s ease-in-out infinite, a-frame-think-center 2s ease-in-out infinite;
+    }
+    @keyframes a-think-dot {
+      0%,100%{ opacity:.2; transform:scale(.8); }
+      50%{ opacity:1; transform:scale(1.3); }
+    }
+    @keyframes a-frame-think {
+      0%,100%{ border-color: rgba(245,158,11,0.08); }
+      50%{ border-color: rgba(245,158,11,0.38); box-shadow: 0 0 6px rgba(245,158,11,0.12) inset; }
+    }
+    @keyframes a-frame-think-center {
+      0%,100%{ border-color: rgba(245,158,11,0.2); }
+      50%{ border-color: rgba(245,158,11,0.65); box-shadow: 0 0 10px rgba(245,158,11,0.2) inset; }
+    }
+
+    /* ERROR — hard red strobe on frame */
+    .floor[data-state="error"] .win {
+      animation: a-err-win .9s ease-in-out infinite, a-frame-error .5s step-end infinite !important;
+    }
+    @keyframes a-frame-error {
+      0%,49%{ border-color: rgba(244,63,94,0.7); box-shadow: 0 0 8px rgba(244,63,94,0.3) inset; }
+      50%,100%{ border-color: rgba(244,63,94,0.1); box-shadow: none; }
+    }
+
+    /* SYNCING — cyan data sweep */
+    .floor[data-state="syncing"] .win {
+      background: linear-gradient(to bottom, #030e12 0%, var(--glass) 100%);
+      box-shadow: inset 0 0 20px rgba(34,211,238,0.1), 0 0 8px rgba(34,211,238,0.05);
+    }
+    .floor[data-state="syncing"] .f-dot { background: var(--sync); animation: a-pulse-c 1.4s ease-in-out infinite; }
+    .floor[data-state="syncing"] .f-status-text { color: var(--sync); }
+    /* Scan line */
+    .floor[data-state="syncing"] .win::before {
+      height: 1px; top: 0; background: linear-gradient(to right, transparent, rgba(34,211,238,0.65), transparent);
+      animation: a-scan 1.8s linear infinite; opacity: 1;
+    }
+    @keyframes a-scan  { from{top:0} to{top:100%} }
+    @keyframes a-pulse-c { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.25;transform:scale(.65)} }
+
+    /* EXECUTING */
+    .floor[data-state="executing"] .win {
+      background: linear-gradient(to bottom, #09061a 0%, var(--glass) 100%);
+      box-shadow: inset 0 0 20px rgba(167,139,250,0.1), 0 0 8px rgba(167,139,250,0.05);
+    }
+    .floor[data-state="executing"] .f-dot { background: var(--exec); animation: a-pulse-p .8s ease-in-out infinite; }
+    .floor[data-state="executing"] .f-status-text { color: var(--exec); }
+    @keyframes a-pulse-p { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+    /* ERROR — red alert */
+    .floor[data-state="error"] .win { animation: a-err-win .9s ease-in-out infinite; }
+    .floor[data-state="error"] .f-dot { background: var(--err); animation: a-err-dot .5s step-end infinite; }
+    .floor[data-state="error"] .f-status-text { color: var(--err); }
+    .floor[data-state="error"] .f-agent-name { color: var(--err); }
+    @keyframes a-err-win {
+      0%,100%{ background: linear-gradient(to bottom,#110205,var(--glass)); box-shadow: inset 0 0 20px rgba(244,63,94,.16); }
+      50%{ background: linear-gradient(to bottom,#1c0308,var(--glass)); box-shadow: inset 0 0 30px rgba(244,63,94,.3); }
+    }
+    @keyframes a-err-dot { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+
+    /* OFFLINE */
+    .floor[data-state="offline"] .win { background: var(--off); }
+    .floor[data-state="offline"] .f-agent-name { opacity: .3; }
+    .floor[data-state="offline"] .f-exec-name  { opacity: .2; }
+    .floor[data-state="offline"] .f-title  { opacity: .15; }
+    .floor[data-state="offline"] .f-status-text { opacity: .25; }
+
+    /* PENTHOUSE — always ambient blue */
+    .floor.penthouse[data-state="idle"] .win,
+    .floor.penthouse[data-state="writing"] .win {
+      background: linear-gradient(to bottom, #060f22 0%, #040c1a 100%);
+      box-shadow: inset 0 0 28px rgba(86,180,224,0.08);
+    }
+
+    /* ── PANELS ──────────────────────────────────────────────────────────────── */
+    #panels-area { flex-shrink: 0; padding-top: 14px; }
+    #scroll-row {
+      display: flex; gap: 10px;
+      padding: 0 16px 8px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      align-items: stretch;
+    }
+    #scroll-row::-webkit-scrollbar { display: none; }
+
+    .pcard {
+      flex: 0 0 min(calc(100vw - 44px), 360px);
+      height: 190px;
+      display: flex; flex-direction: column;
+      background: rgba(6,12,24,0.85);
+      border: 1px solid var(--steel);
+      border-radius: 1px;
+      padding: 14px 15px 13px;
+      scroll-snap-align: start;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative; overflow: hidden;
+      box-sizing: border-box;
+    }
+    .pcard::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--chrome), transparent);
+    }
+    .pcard-label {
+      font-size: 8px; font-weight: 600;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 11px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--steel);
+    }
+
+    /* Status card */
+    #s-icon { font-size: 30px; line-height: 1; display: block; margin-bottom: 7px; }
+    /* ── ACTIVE CAROUSEL (tile 1) ─────────────────────────────────── */
+    #active-carousel {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      padding: 4px 0; overflow: hidden;
+    }
+    .ac-mark   { font-size: 18px; margin-bottom: 4px; }
+    .ac-name   { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: var(--text); margin-bottom: 2px; }
+    .ac-state  { font-size: 8px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+    .ac-detail { font-size: 7.5px; color: var(--sub); line-height: 1.5; }
+    .ac-none   { font-size: 8px; color: var(--sub); font-style: italic; margin-top: 8px; }
+    #carousel-dots { display: flex; gap: 5px; margin-top: 6px; }
+    .cdot { width: 5px; height: 5px; border-radius: 50%; background: var(--steel); transition: background .3s; }
+    .cdot.on { background: var(--accent); }
+
+    /* ── ACTIVITY LOG (tile 2) ────────────────────────────────────── */
+    #activity-log {
+      flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;
+    }
+    #activity-log::-webkit-scrollbar { width: 2px; }
+    #activity-log::-webkit-scrollbar-thumb { background: var(--steel); }
+    .alog-entry {
+      display: flex; align-items: flex-start; gap: 6px;
+      border-bottom: 1px solid rgba(17,35,56,0.6); padding-bottom: 5px;
+    }
+    .alog-mark  { font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+    .alog-body  { flex: 1; min-width: 0; }
+    .alog-head  { display: flex; align-items: baseline; gap: 5px; margin-bottom: 1px; }
+    .alog-name  { font-size: 7.5px; font-weight: 700; color: var(--text); letter-spacing: 0.05em; }
+    .alog-state { font-size: 6.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+    .alog-time  { font-size: 6px; color: var(--dim); margin-left: auto; }
+    .alog-detail{ font-size: 7px; color: var(--sub); line-height: 1.4; }
+    .alog-empty { font-size: 8px; color: var(--dim); font-style: italic; text-align: center; margin-top: 16px; }
+
+    #s-label {
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      transition: color .5s;
+    }
+    #s-detail {
+      font-size: 11px; color: var(--sub);
+      margin-top: 7px; line-height: 1.65;
+      max-height: 56px; overflow: hidden;
+    }
+    #s-time {
+      font-family: var(--mono); font-size: 8px;
+      color: var(--dim); margin-top: 10px; letter-spacing: 0.05em;
+    }
+
+    /* Memo card */
+    #m-date { font-size: 8px; color: var(--sub); letter-spacing: 0.1em; margin-bottom: 9px; }
+    #m-body {
+      font-size: 10.5px; line-height: 1.75;
+      color: #4a6888;
+      max-height: 100px; overflow-y: auto;
+    }
+    #m-body::-webkit-scrollbar { width: 3px; }
+    #m-body::-webkit-scrollbar-thumb { background: var(--steel); }
+
+    /* Agents card */
+    .ar {
+      display: flex; align-items: center; gap: 9px;
+      padding: 5px 0; border-bottom: 1px solid #0a1624;
+    }
+    .ar:last-child { border-bottom: none; }
+    #agents-list { flex: 1; overflow-y: auto; }
+    #agents-list::-webkit-scrollbar { width: 2px; }
+    #agents-list::-webkit-scrollbar-thumb { background: var(--steel); }
+    .ardot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .arbot { font-size: 9px; font-weight: 600; letter-spacing: 0.08em; }
+    .arname { font-size: 7.5px; color: var(--sub); flex: 1; }
+    .arstatus { font-size: 7px; color: var(--sub); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* Dots nav */
+    #dot-nav {
+      display: flex; justify-content: center; gap: 7px;
+      padding: 7px 0 14px;
+    }
+    .dn {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--steel);
+      transition: background .25s, transform .25s;
+    }
+    .dn.on { background: var(--accent); transform: scale(1.4); }
+
+    /* ── DESKTOP ─────────────────────────────────────────────────────────────── */
+    @media (min-width: 680px) {
+      #scene { height: clamp(340px, 62vh, 520px); }
+      .floor { min-height: 58px; }
+      .floor.penthouse { min-height: 74px; }
+      .f-agent-name { font-size: 10px; }
+      .floor.penthouse .f-agent-name { font-size: 12px; }
+      .f-exec-name { font-size: 7.5px; }
+      .f-title { font-size: 7px; }
+      .f-status-text { font-size: 7px; }
+      #scroll-row { justify-content: center; }
+      .pcard { flex: 0 0 310px; }
+    }
+  </style>
+</head>
+<body>
+
+<header id="header">
+  <div id="hq-logo">⚡</div>
+  <div id="hq-id">
+    <div id="hq-name">Rev.io Grow Team</div>
+    <div id="hq-addr">Piedmont Center · Atlanta, GA</div>
+  </div>
+  <div id="hq-right">
+    <div class="live-chip"><div class="live-dot"></div>Live</div>
+    <div id="hq-clock">--:--:--</div>
+  </div>
+</header>
+
+<div id="scene">
+  <div id="sky-photo"></div>
+  <div id="sky-overlay"></div>
+  <canvas id="sky-canvas"></canvas>
+  <svg id="skyline-svg" xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 900 160" preserveAspectRatio="xMidYMax meet"></svg>
+  <div id="sky-fog"></div>
+  <canvas id="rain-canvas"></canvas>
+  <div id="tower-stage">
+    <div id="crown">
+      <div id="crown-top">
+        <div class="crown-bar"></div>
+        <div class="antenna-beacon"></div>
+        <div class="crown-bar"></div>
+      </div>
+      <div id="crown-label">Rev.io · Executive Intelligence Tower</div>
+    </div>
+    <div id="tower"></div>
+    <div id="lobby">
+      <div class="lb-num">G</div>
+      <div class="lb-text">Lobby · Piedmont Center</div>
+    </div>
+  </div>
+</div>
+
+<div id="js-error-banner" style="display:none;background:#f43f5e;color:#fff;font-size:11px;padding:6px 12px;position:fixed;top:0;left:0;right:0;z-index:9999;font-family:monospace;word-break:break-all"></div>
+<div id="panels-area">
+  <div id="scroll-row">
+    <!-- TILE 1: Active Agents (cycles if multiple active) -->
+    <div class="pcard" id="pc-status">
+      <div class="pcard-label">Active Now</div>
+      <div id="active-carousel"></div>
+      <div id="carousel-dots"></div>
+    </div>
+    <!-- TILE 2: Today's Activity Log -->
+    <div class="pcard" id="pc-memo">
+      <div class="pcard-label">Today's Activity</div>
+      <div id="activity-log"></div>
+    </div>
+    <!-- TILE 3: Executive Roster -->
+    <div class="pcard" id="pc-agents">
+      <div class="pcard-label">Executive Roster</div>
+      <div id="agents-list"></div>
+    </div>
+  </div>
+  <div id="dot-nav">
+    <div class="dn on" data-i="0"></div>
+    <div class="dn" data-i="1"></div>
+    <div class="dn" data-i="2"></div>
+  </div>
+</div>
+
+<script>
+// ── ERROR CATCHER ────────────────────────────────────────────────────────────────
+window.onerror = function(msg, src, line, col) {
+  const el = document.getElementById('js-error-banner');
+  if (el) { el.textContent = '⚠ JS Error: ' + msg + ' (line ' + line + ')'; el.style.display='block'; }
+};
+
+// ── SHARED STATE — must be declared before any function that references it ──────
+const agentStateMap = {}; // agentId → {state, detail, name, mark}
+
+// ── ROSTER ──────────────────────────────────────────────────────────────────────
+const FLOORS = [
+  { id:'revay',    agentId:'revay',      bot:'REVAY',       exec:'E. Rice',    title:'President & COO',       num:'P', penthouse:true, mark:'⚡' },
+  { id:'sales',    agentId:'robin',      bot:'ROBIN',       exec:'R. Koontz',  title:'Sales Intelligence',    num:'6', mark:'🦸‍♂️' },
+  { id:'gtm',      agentId:'revitup',    bot:'REV IT UP',   exec:'J. Hopkins', title:'Go-To-Market',          num:'5', mark:'📈' },
+  { id:'product',  agentId:'rosie',      bot:'ROSIE',       exec:'Leslie',     title:'Product Intelligence',  num:'4', mark:'🌹' },
+  { id:'channel',  agentId:'marvin',     bot:'MARVIN',      exec:'Usman',      title:'Channel & Community',   num:'3', mark:'👽' },
+  { id:'onboard',  agentId:'onboarding', bot:'ALFRED',      exec:'Fran',       title:'VP Business Onboarding',num:'2', mark:'🤵🏻‍♂️' },
+  { id:'cs',       agentId:'cs',         bot:'JARVIS',      exec:'Will',       title:'CS + Account Mgmt',     num:'1', mark:'🧿' },
+];
+
+const ICONS  = { idle:'😴', writing:'✍️', researching:'🔍', executing:'⚙️', syncing:'🔄', error:'🚨', offline:'🌑', thinking:'🧠' };
+const LABELS = { idle:'Idle', writing:'Working', researching:'Researching', executing:'Executing', syncing:'Syncing', error:'Error', offline:'Offline', thinking:'Thinking' };
+const COLORS = { idle:'#c8a84b', writing:'#e8f2ff', syncing:'#22d3ee', executing:'#a78bfa', error:'#f43f5e', offline:'#0e1a28', researching:'#818cf8', thinking:'#f59e0b' };
+
+// ── BUILD TOWER ─────────────────────────────────────────────────────────────────
+const towerEl = document.getElementById('tower');
+FLOORS.forEach(f => {
+  const d = document.createElement('div');
+  d.className = 'floor' + (f.penthouse ? ' penthouse' : '');
+  d.dataset.id   = f.id;
+  d.dataset.state = f.id === 'revay' ? 'idle' : 'offline';
+  d.innerHTML = `
+    <div class="f-num">${f.num}</div>
+    <div class="f-glass">
+      <div class="win"></div>
+      <div class="win win-center"><div class="win-screen" id="screen-${f.id}"></div></div>
+      <div class="win"></div>
+    </div>
+    <div class="f-meta">
+      <div class="f-agent-name">${f.mark ? `<span class="f-mark">${f.mark}</span>` : ''}${f.bot}</div>
+      <div class="f-exec-name">${f.exec}</div>
+      <div class="f-title">${f.title}</div>
+      <div class="f-state">
+        <div class="f-dot"></div>
+        <div class="f-status-text">${f.id === 'revay' ? 'IDLE' : 'OFFLINE'}</div>
+      </div>
+    </div>`;
+  towerEl.appendChild(d);
+});
+
+// ── ROSTER CARD ─────────────────────────────────────────────────────────────────
+function renderRoster() {
+  document.getElementById('agents-list').innerHTML = FLOORS.map(f => {
+    const s = (agentStateMap[f.agentId] && agentStateMap[f.agentId].state) || (f.id === 'revay' ? 'idle' : 'offline');
+    return `<div class="ar">
+      <div class="ardot" style="background:${COLORS[s]||'#0e1a28'}"></div>
+      <div class="arbot">${f.mark ? `<span style="margin-right:4px">${f.mark}</span>` : ''}${f.bot}</div>
+      <div class="arname">${f.exec}</div>
+      <div class="arstatus">${LABELS[s]||'Offline'}</div>
+    </div>`;
+  }).join('');
+}
+renderRoster();
+
+// ── WINDOW SCREEN RENDERER ────────────────────────────────────────────────────────
+function renderWindowScreen(id, state, detail) {
+  const scr = document.getElementById('screen-' + id);
+  if (!scr) return;
+  scr.innerHTML = '';
+
+  if (state === 'writing' || state === 'researching') {
+    // Break detail into word-wrapped mini text lines
+    const words = (detail || 'Working…').split(' ');
+    const lines = [];
+    let cur = '';
+    words.forEach(w => {
+      if ((cur + ' ' + w).trim().length > 18) { lines.push(cur.trim()); cur = w; }
+      else { cur = (cur + ' ' + w).trim(); }
+    });
+    if (cur) lines.push(cur.trim());
+    // Pad to fill window
+    while (lines.length < 6) lines.push('');
+    const activeIdx = lines.findIndex(l => l.length > 0);
+    scr.innerHTML = lines.map((l, i) => {
+      const bright = i === activeIdx ? ' bright' : '';
+      const cursor = (i === lines.filter(x=>x).length - 1) ? ' cursor' : '';
+      return `<div class="wline${bright}${cursor}">${l}</div>`;
+    }).join('');
+
+  } else if (state === 'syncing') {
+    const short = (detail || 'Syncing').slice(0, 22);
+    scr.innerHTML = `
+      <div class="wbar-wrap">
+        <div class="wbar-label">${short}</div>
+        <div class="wbar-track"><div class="wbar-fill"></div></div>
+      </div>
+      <div class="wbar-wrap" style="margin-top:3px">
+        <div class="wbar-label">SIGNAL LAYER</div>
+        <div class="wbar-track"><div class="wbar-fill" style="animation-delay:.6s"></div></div>
+      </div>
+      <div class="wbar-wrap" style="margin-top:3px">
+        <div class="wbar-label">NOTION STORE</div>
+        <div class="wbar-track"><div class="wbar-fill" style="animation-delay:1.1s"></div></div>
+      </div>`;
+
+  } else if (state === 'executing') {
+    const short = (detail || 'Executing task').slice(0, 20);
+    scr.innerHTML = `
+      <div class="wexec-wrap">
+        <div class="wexec-label">${short}</div>
+        <div class="wexec-meter"><div class="wexec-fill"></div></div>
+      </div>
+      <div class="wexec-wrap" style="margin-top:3px">
+        <div class="wexec-label">RUNNING</div>
+        <div class="wexec-meter"><div class="wexec-fill" style="animation-delay:.7s"></div></div>
+      </div>`;
+
+  } else if (state === 'error') {
+    const msg = (detail || 'Unhandled error').slice(0, 40);
+    const lines = msg.match(/.{1,16}/g) || [msg];
+    scr.innerHTML = `<div class="werr-line head">⚠ ERROR</div>` +
+      lines.map(l => `<div class="werr-line">${l}</div>`).join('');
+
+  } else if (state === 'thinking') {
+    // Subject of reasoning as text, with slow node-graph dots
+    const words = (detail || 'Reasoning…').split(' ');
+    const lines = [];
+    let cur = '';
+    words.forEach(w => {
+      if ((cur + ' ' + w).trim().length > 18) { lines.push(cur.trim()); cur = w; }
+      else { cur = (cur + ' ' + w).trim(); }
+    });
+    if (cur) lines.push(cur.trim());
+    while (lines.length < 4) lines.push('');
+    scr.innerHTML = lines.map((l, i) =>
+      `<div class="wline" style="color:rgba(240,247,255,${l ? (i===0?0.98:0.78) : 0.2});animation:none">${l || '·'}</div>`
+    ).join('') +
+    `<div style="display:flex;gap:3px;padding:3px 3px 0;align-items:center">
+      ${[0,.4,.8,1.2,1.6].map(d=>`<div style="width:3px;height:3px;border-radius:50%;background:rgba(245,158,11,0.5);animation:a-think-dot 1.8s ease-in-out ${d}s infinite"></div>`).join('')}
+    </div>`;
+
+  } else if (state === 'idle') {
+    // Subtle EKG-style pulse bars
+    const heights = [30,45,25,60,35,50,40,65,30,50,35,45];
+    scr.innerHTML = `<div class="wpulse-wrap">${heights.map((h,i) =>
+      `<div class="wpulse-bar" style="height:${h}%;animation-delay:${(i*0.22).toFixed(2)}s"></div>`
+    ).join('')}</div>`;
+  }
+}
+
+// ── FLOOR STATE ──────────────────────────────────────────────────────────────────
+function setFloor(id, state, detail) {
+  const el = document.querySelector(`.floor[data-id="${id}"]`);
+  if (!el) return;
+  el.dataset.state = state;
+  const dot = el.querySelector('.f-dot');
+  const lbl = el.querySelector('.f-status-text');
+  if (dot) dot.style.background = COLORS[state] || '#1a3045';
+  if (lbl) lbl.textContent = (LABELS[state] || state).toUpperCase();
+  renderWindowScreen(id, state, detail || '');
+}
+
+// ── LIVE AGENT STATE MAP ────────────────────────────────────────────────────────
+// agentStateMap moved to top of script (see initialization below)
+
+function updateCarousel() {
+  const active = Object.entries(agentStateMap)
+    .filter(([,a]) => a.state && !['idle','offline'].includes(a.state))
+    .map(([id,a]) => ({ id, ...a }));
+  const el = document.getElementById('active-carousel');
+  const dotsEl = document.getElementById('carousel-dots');
+  if (!el) return;
+  if (active.length === 0) {
+    el.innerHTML = `<div class="ac-none">All agents standing by</div>`;
+    if (dotsEl) dotsEl.innerHTML = '';
+    return;
+  }
+  // Show current carousel item
+  const idx = (window._carouselIdx || 0) % active.length;
+  const a = active[idx];
+  el.innerHTML = `
+    <div class="ac-mark">${ICONS[a.state] || '⏳'}</div>
+    <div class="ac-name">${a.mark || ''} ${a.name || a.id.toUpperCase()}</div>
+    <div class="ac-state" style="color:${COLORS[a.state]||'var(--sub)'}">${LABELS[a.state]||a.state}</div>
+    <div class="ac-detail">${a.detail || ''}</div>`;
+  dotsEl.innerHTML = active.map((_,i) =>
+    `<div class="cdot${i===idx?' on':''}"></div>`).join('');
+}
+
+// Auto-cycle every 4s when multiple agents active
+setInterval(() => {
+  const active = Object.values(agentStateMap).filter(a => a.state && !['idle','offline'].includes(a.state));
+  if (active.length > 1) { window._carouselIdx = ((window._carouselIdx||0) + 1) % active.length; updateCarousel(); }
+}, 4000);
+
+// ── STATUS POLL ──────────────────────────────────────────────────────────────────
+function applyStatus(d) {
+  const s = d.state || 'idle';
+  const floor = FLOORS.find(f => f.agentId === 'revay');
+  agentStateMap['revay'] = { state: s, detail: d.detail||'', name: 'REVAY', mark: (floor && floor.mark)||'⚡' };
+  setFloor('revay', s, d.detail || '');
+  updateCarousel();
+  renderRoster();
+}
+async function pollStatus() {
+  try { const r = await fetch('/status?t='+Date.now(),{cache:'no-store'}); if(r.ok) applyStatus(await r.json()); } catch(_){}
+  setTimeout(pollStatus, 5000);
+}
+
+// ── MULTI-AGENT POLL ─────────────────────────────────────────────────────────────
+async function pollAgents() {
+  try {
+    const r = await fetch('/agents?t='+Date.now(), { cache:'no-store' });
+    if (!r.ok) return;
+    const agents = await r.json();
+    agents.forEach(a => {
+      if (a.isMain) return;
+      const floor = FLOORS.find(f => f.agentId === a.agentId);
+      if (!floor) return;
+      const state = a.authStatus === 'offline' || a.authStatus === 'pending' ? 'offline' : (a.state || 'offline');
+      setFloor(floor.id, state, a.detail || '');
+      agentStateMap[a.agentId] = { state, detail: a.detail||'', name: floor.bot, mark: floor.mark };
+      if (a.name) {
+        const nameEl = document.querySelector(`.floor[data-id="${floor.id}"] .f-agent-name`);
+        if (nameEl) nameEl.textContent = (floor.mark||'') + (a.name || floor.bot);
+      }
+    });
+    updateCarousel();
+    renderRoster();
+  } catch(_) {}
+  setTimeout(pollAgents, 6000);
+}
+
+pollStatus();
+pollAgents();
+updateCarousel(); // init carousel immediately before first poll
+
+// ── ACTIVITY LOG ──────────────────────────────────────────────────────────────────
+const STATE_COLORS_HEX = { writing:'#e8f2ff', syncing:'#22d3ee', executing:'#a78bfa', error:'#f43f5e', researching:'#818cf8', thinking:'#f59e0b' };
+
+function fmtTime(iso) {
+  try { return new Date(iso).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false}); } catch(_) { return ''; }
+}
+
+async function loadActivityLog() {
+  const el = document.getElementById('activity-log');
+  if (!el) return;
+  try {
+    const r = await fetch('/activity-log?t='+Date.now(), {cache:'no-store'});
+    if (!r.ok) { el.innerHTML = `<div class="alog-empty">API error ${r.status}</div>`; return; }
+    const entries = await r.json();
+    if (!entries.length) {
+      el.innerHTML = `<div class="alog-empty">No activity yet today</div>`;
+      return;
+    }
+    el.innerHTML = entries.map(e => {
+      const col = STATE_COLORS_HEX[e.state] || 'var(--sub)';
+      return `<div class="alog-entry">
+        <div class="alog-mark">${e.mark||'🤖'}</div>
+        <div class="alog-body">
+          <div class="alog-head">
+            <div class="alog-name">${e.name||e.agentId}</div>
+            <div class="alog-state" style="color:${col}">${LABELS[e.state]||e.state}</div>
+            <div class="alog-time">${fmtTime(e.ts)}</div>
+          </div>
+          <div class="alog-detail">${e.detail||''}</div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(err) {
+    if (el) el.innerHTML = `<div class="alog-empty">Load failed: ${err.message}</div>`;
+  }
+  setTimeout(loadActivityLog, 15000);
+}
+
+// Set loading placeholder before first fetch
+const _alogEl = document.getElementById('activity-log');
+if (_alogEl) _alogEl.innerHTML = `<div class="alog-empty">Loading…</div>`;
+loadActivityLog();
+
+// ── CLOCK ────────────────────────────────────────────────────────────────────────
+function tick() {
+  document.getElementById('hq-clock').textContent =
+    new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+}
+tick(); setInterval(tick, 1000);
+
+// Init idle screens
+FLOORS.forEach(f => renderWindowScreen(f.id, f.id === 'revay' ? 'idle' : 'offline', ''));
+
+// ── PANEL DOTS ───────────────────────────────────────────────────────────────────
+const scrollRow = document.getElementById('scroll-row');
+const dots      = document.querySelectorAll('.dn');
+scrollRow.addEventListener('scroll', () => {
+  const i = Math.round(scrollRow.scrollLeft / scrollRow.offsetWidth);
+  dots.forEach((d,j) => d.classList.toggle('on', i===j));
+}, {passive:true});
+
+// ── STARS ────────────────────────────────────────────────────────────────────────
+const skyC = document.getElementById('sky-canvas');
+function drawStars() {
+  skyC.width = skyC.offsetWidth || 400; skyC.height = skyC.offsetHeight || 300;
+  const ctx = skyC.getContext('2d');
+  ctx.clearRect(0,0,skyC.width,skyC.height);
+  const n = Math.floor((skyC.width*skyC.height)/700);
+  for (let i=0;i<n;i++) {
+    ctx.beginPath();
+    ctx.arc(Math.random()*skyC.width, Math.random()*skyC.height*.68, Math.random()*.8+.1, 0, 6.28);
+    ctx.fillStyle=`rgba(255,255,255,${.15+Math.random()*.4})`;
+    ctx.fill();
+  }
+}
+drawStars();
+
+// ── SKYLINE ──────────────────────────────────────────────────────────────────────
+function buildSkyline() {
+  const svg = document.getElementById('skyline-svg');
+  const W=900, H=160;
+  const bldgs = [
+    [0,40,55],[35,24,36],[54,36,50],[84,20,31],[99,48,72],[142,22,40],
+    [158,58,92],[210,32,54],[236,30,44],[260,72,118],[326,28,62],
+    [348,46,76],[388,24,38],[406,64,102],[463,40,68],[496,30,46],
+    [520,56,82],[569,32,52],[594,48,72],[635,22,34],[650,52,90],
+    [695,34,57],[722,48,74],[762,30,50],[785,62,96],[840,36,62],
+    [868,26,42],[888,40,56],[900,30,48],
+  ];
+  let s = '';
+  // Deep background gradient
+  s += `<defs>
+    <linearGradient id="skyFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#020812" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#030a18" stop-opacity="1"/>
+    </linearGradient>
+  </defs>`;
+  bldgs.forEach(([x,w,h]) => {
+    // Building body
+    s += `<rect x="${x}" y="${H-h}" width="${w}" height="${h}" fill="#06101e"/>`;
+    // Subtle gradient on building face
+    s += `<rect x="${x}" y="${H-h}" width="${w}" height="${h}" fill="url(#skyFade)" opacity="0.5"/>`;
+    // Lit windows
+    for (let wy=H-h+7; wy<H-5; wy+=11) {
+      for (let wx=x+4; wx<x+w-3; wx+=9) {
+        if (Math.random()>.5) {
+          const warm=Math.random()>.6;
+          const a=(.08+Math.random()*.16).toFixed(2);
+          s += `<rect x="${wx}" y="${wy}" width="4" height="6" fill="${warm?'#fbbf24':'#93c5fd'}" opacity="${a}"/>`;
+        }
+      }
+    }
+    // Antenna on tall buildings
+    if (h>80 && Math.random()>.5) {
+      s += `<line x1="${x+w/2}" y1="${H-h}" x2="${x+w/2}" y2="${H-h-10}" stroke="#0c1a2e" stroke-width="1.5"/>`;
+    }
+  });
+  // Ground plane
+  s += `<rect x="0" y="${H-20}" width="${W}" height="20" fill="#030a18"/>`;
+  svg.innerHTML = s;
+}
+buildSkyline();
+
+// ── RAIN ─────────────────────────────────────────────────────────────────────────
+const rc = document.getElementById('rain-canvas');
+const rx = rc.getContext('2d');
+let drops=[];
+function initRain() {
+  rc.width=rc.offsetWidth||400; rc.height=rc.offsetHeight||300; drops=[];
+  const n=Math.floor(rc.width/5.5);
+  for(let i=0;i<n;i++) drops.push({
+    x:Math.random()*rc.width, y:Math.random()*rc.height,
+    l:6+Math.random()*10, s:3+Math.random()*4.5, a:.04+Math.random()*.1
+  });
+}
+function drawRain() {
+  rx.clearRect(0,0,rc.width,rc.height);
+  drops.forEach(d=>{
+    rx.beginPath(); rx.moveTo(d.x,d.y); rx.lineTo(d.x-.7,d.y+d.l);
+    rx.strokeStyle=`rgba(120,175,240,${d.a})`; rx.lineWidth=.5; rx.stroke();
+    d.y+=d.s; if(d.y>rc.height){d.y=-d.l;d.x=Math.random()*rc.width;}
+  });
+  requestAnimationFrame(drawRain);
+}
+initRain(); drawRain();
+
+// ── RESIZE ───────────────────────────────────────────────────────────────────────
+let rt;
+window.addEventListener('resize',()=>{
+  clearTimeout(rt); rt=setTimeout(()=>{drawStars();initRain();buildSkyline();},200);
+},{passive:true});
+</script>
+</body>
+</html>
