@@ -1744,6 +1744,236 @@
     </div>
   </div>
 
+  <!-- ── SECTION 5.6 ── -->
+  <div class="section">
+    <div class="section-label">Section 05.6</div>
+    <div class="section-title"><span class="emoji">🧠</span>What I Need to Configure Rev.io — Knowledge Requirements</div>
+    <div class="section-divider"></div>
+
+    <p style="color: var(--text-dim); font-size: 14px; margin-bottom: 8px;">
+      The API surface is accessible. The transcript intelligence is flowing. The missing link is <strong style="color:#e8eaf6;">institutional knowledge</strong> — the same tribal knowledge an experienced SA holds in their head after 50+ onboardings. This section maps exactly what documentation, context, and reference material I need to move from <em>briefing</em> the SA to <em>doing the work</em> before they ever open the account.
+    </p>
+    <p style="color: var(--text-dim); font-size: 13px; margin-bottom: 28px;">
+      Items are tiered by impact: <strong style="color:#e05252;">Tier 1</strong> gates automation entirely · <strong style="color:#f0b429;">Tier 2</strong> prevents the most common rework · <strong style="color:#00d4aa;">Tier 3</strong> enables best-in-class outcomes.
+    </p>
+
+    <!-- TIER 1 -->
+    <div style="margin-bottom: 32px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+        <span style="background:#e0525222; color:#e05252; font-size:11px; font-weight:800; padding:4px 12px; border-radius:4px; text-transform:uppercase; letter-spacing:.8px;">Tier 1 — Gates Automation</span>
+        <span style="color:#7b7f9e; font-size:12px;">Can't reliably pre-configure without these</span>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:14px;">
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #e05252; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">1. PSA Configuration Schema Reference</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">Equivalent of a psa-reference.md — field names, valid values, object dependencies</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8; margin-bottom:10px;">
+            <strong style="color:#e8eaf6;">I need to know:</strong> All configurable elements of a PSA instance — ticket types and their standard taxonomy (Install? Break/Fix? Project? Maintenance? Preventive?), service board structure, user role definitions and permission matrix (Technician / Dispatcher / Manager / Admin / Billing Admin?), SLA config options, dispatch board settings, and the order-of-operations for setup (what must exist before what).
+          </div>
+          <div style="background:#12141d; border-radius:4px; padding:8px 10px;">
+            <div style="font-size:11px; color:#7b7f9e; margin-bottom:3px;">Rework prevented without this:</div>
+            <div style="font-size:11px; color:#e05252;">Wrong ticket types created → SA rebuilds in session 1. Wrong user roles → permission errors on day 1. Wrong setup order → cascade failures in config.</div>
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: Product / SA team — internal PSA config docs or Notion SA runbook</div>
+        </div>
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #e05252; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">2. Integration Setup Guides (QB, NinjaOne, PAX8, HubSpot)</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">Step-by-step config for each integration, including required field mappings</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8; margin-bottom:10px;">
+            <strong style="color:#e8eaf6;">I need to know per integration:</strong> Required auth credentials and where they live, which fields sync bidirectionally vs. one-way, GL account mapping logic (QB Online: which Rev.io product types map to which QB chart-of-accounts codes?), what triggers a sync, known gotchas (e.g. QB Desktop = not supported today — what's the workaround path I set up instead?), and which integrations can be configured pre-kickoff vs. require client credentials at the call.
+          </div>
+          <div style="background:#12141d; border-radius:4px; padding:8px 10px;">
+            <div style="font-size:11px; color:#7b7f9e; margin-bottom:3px;">Rework prevented without this:</div>
+            <div style="font-size:11px; color:#e05252;">Integration configured wrong → SA manually re-maps GL codes in session 2. QB Desktop client gets wrong setup path. NinjaOne asset sync breaks because field mapping was guessed.</div>
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: SA team + product integration docs — likely exists internally for ConnectWise, QB Online at minimum</div>
+        </div>
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #e05252; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">3. Data Migration CSV Templates + Field Mapping Guide</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">Exact formats the data engineering team ingests; field-level mapping from source systems</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8; margin-bottom:10px;">
+            <strong style="color:#e8eaf6;">I need to know:</strong> CSV column structure for customers, contacts, products, assets, historical tickets. Which fields are required vs. optional per object type. Field-level mapping from ConnectWise, Halo, HouseCall Pro, TigerPaw, and Zoho to Rev.io equivalents. What data can NOT be migrated and requires manual re-entry. Max lookback window for each data type (currently: 2 years tickets, 6–8 months media).
+          </div>
+          <div style="background:#12141d; border-radius:4px; padding:8px 10px;">
+            <div style="font-size:11px; color:#7b7f9e; margin-bottom:3px;">Rework prevented without this:</div>
+            <div style="font-size:11px; color:#e05252;">Wrong CSV format → data engineering rejects file → migration delayed. Missing field mapping → manual re-keying of 100s of customers. Client told wrong data scope → expectation failure.</div>
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: Data engineering team — they have these templates; SA team should have field mapping guides</div>
+        </div>
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #e05252; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">4. Required API Credentials &amp; Auth Flows Per Integration</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">What client-side credentials I need to collect before I can wire up integrations via API</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8; margin-bottom:10px;">
+            <strong style="color:#e8eaf6;">I need to know:</strong> For each integration — exactly what the client needs to provide (QB Online: OAuth2 flow? or client ID/secret?), what can be pre-staged vs. what requires live client presence, and whether there's a dev/sandbox mode for each integration so I can pre-wire the connection before client credentials are available.
+          </div>
+          <div style="background:#12141d; border-radius:4px; padding:8px 10px;">
+            <div style="font-size:11px; color:#7b7f9e; margin-bottom:3px;">Rework prevented without this:</div>
+            <div style="font-size:11px; color:#e05252;">Integration can't be set up pre-kickoff because I collected the wrong credentials type. SA loses 20 minutes of kickoff call on credential collection that should have been async.</div>
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: SA team — likely covered in kickoff prep checklist if it exists</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TIER 2 -->
+    <div style="margin-bottom: 32px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+        <span style="background:#f0b42922; color:#f0b429; font-size:11px; font-weight:800; padding:4px 12px; border-radius:4px; text-transform:uppercase; letter-spacing:.8px;">Tier 2 — Prevents Most Common Rework</span>
+        <span style="color:#7b7f9e; font-size:12px;">Skipping these = second session wasted on corrections</span>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:14px;">
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #f0b429; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">5. Client-Type Configuration Templates</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">Standard starting configs by vertical: MSP · Security Integrator · AV · Multi-service</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8; margin-bottom:10px;">
+            From the 103 recordings across 12 wins, four distinct profiles emerge. Each needs a different baseline. A standard MSP (RavGuard, ShinnTek) needs RMM integration, recurring managed service tickets, and a simple dispatch board. A security integrator (Remote Technology, Castle Security) needs install project tickets, inventory tracking, dispatch by technician. A mixed-services shop (First Class Technology, GuentherTech) needs both tracks plus product-heavy quoting. <strong style="color:#e8eaf6;">I need a template per vertical</strong> that defines the default service boards, ticket type sets, user role matrix, and billing cycle structure so I'm not making it up from scratch each time.
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: SA team + Brooke Lee (MSP community / best practices)</div>
+        </div>
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #f0b429; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">6. Prior PSA Migration Runbooks</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">Source-specific gotchas: ConnectWise, Halo, HouseCall Pro, Zoho, Autotask</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8; margin-bottom:10px;">
+            Each source system has unique field structures and migration traps. ConnectWise: tickets have boards and sub-types that don't map 1:1. Halo: custom field schemas that have no Rev.io equivalent. HouseCall Pro: it's a field service tool, not a PSA — migration is mostly manual. Zoho: depends entirely on how they configured it. <strong style="color:#e8eaf6;">I need per-source runbooks</strong> that document what transfers cleanly, what needs transformation, what should be left behind, and what the client needs to manually re-create.
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: Data engineering team — they've run thousands of these migrations</div>
+        </div>
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #f0b429; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">7. Top 10 Rework Patterns from SA Team</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">What SAs fix in session 2 because it was set wrong in session 1</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8; margin-bottom:10px;">
+            This is the highest-leverage input for automation. I don't need all 50 pages of the SA playbook — I need the 10 things that cause the most correction work. Examples I'm guessing at: GL codes mapped to wrong accounts → corrected at first invoice run. Billing cycle set to monthly when client bills quarterly. Wrong tax jurisdiction on customer record. Ticket statuses missing a "pending client" state clients always want. Service boards created too narrowly (separate board per tech instead of one dispatch board). <strong style="color:#e8eaf6;">30 minutes with a senior SA</strong> would give me this list.
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: SA leads — Nicole Hills, Kegan Ehlers, Halle Taylor, Tony Mehner</div>
+        </div>
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #f0b429; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">8. Kickoff Session Agenda + What Gets Configured Live</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">What the SA does with the client present vs. what can be pre-built</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8; margin-bottom:10px;">
+            I need to know which configurations are done <em>with</em> the client on screen (because they're demonstrating value or gathering live input) vs. which should just be done. If I pre-configure something the SA uses as a teaching moment, I've stolen a session activity without realizing it. I need the session-by-session agenda so I can identify exactly where pre-automation inserts cleanly. The goal: SA shows up with 70% done, uses session time for the 30% that actually requires the client's judgment.
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: SA manager — onboarding methodology docs / 13-milestone checklist</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TIER 3 -->
+    <div style="margin-bottom: 32px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+        <span style="background:#00d4aa22; color:#00d4aa; font-size:11px; font-weight:800; padding:4px 12px; border-radius:4px; text-transform:uppercase; letter-spacing:.8px;">Tier 3 — Best-in-Class Outcomes</span>
+        <span style="color:#7b7f9e; font-size:12px;">Client goes live faster, never needs to undo anything</span>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:14px;">
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #00d4aa; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">9. GL Code Standard Mappings by Accounting Software</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">QuickBooks Online chart-of-accounts → Rev.io GL code structure</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8;">
+            When I know the client uses QB Online, I can pre-map their GL codes to the standard QB chart-of-accounts structure before the kickoff. Right now SAs map this manually in every engagement. A reference table (QB account type → Rev.io GL code category → typical account numbers for MSPs) would let me auto-populate 80% of GL codes before anyone touches the keyboard.
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: Finance / accounting team — standard MSP chart-of-accounts is well-known</div>
+        </div>
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #00d4aa; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">10. Product Catalog Naming Conventions + Category Structure</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">Standard taxonomy so catalog doesn't become a mess 6 months in</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8;">
+            Bullfrog Group's transcript showed exactly what happens without this: a product catalog that grew organically over years with inconsistent names, wrong GL codes, and duplicate entries that don't match. If I pre-build the catalog structure using Rev.io's recommended naming conventions and category/subcategory hierarchy, the client starts clean and doesn't develop the same technical debt.
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: SA team — best practices guide or example clean catalog</div>
+        </div>
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #00d4aa; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">11. Invoice Template Library + Billing Cycle Playbook</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">Standard templates by client type; billing cycle guidance by revenue model</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8;">
+            From transcripts: some clients bill monthly, some quarterly, some milestone-based (installation phases). Each needs a different invoice template structure. A library of Rev.io invoice templates mapped to client types — MSP monthly, project-based milestone, mixed recurring + T&amp;M — would let me pre-configure the right one based on what the transcript reveals about how they bill today.
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: SA team + billing platform team</div>
+        </div>
+
+        <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #00d4aa; padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">12. Feature Availability Matrix (Live vs. Roadmap)</div>
+          <div style="font-size:11px; color:#7b7f9e; margin-bottom:10px;">What's available now vs. Apollo 2/3 — so I don't pre-configure around a feature that doesn't exist yet</div>
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8;">
+            Several clients in the scorecard were told features are "coming in April" (sales pipeline, QuickBooks Desktop integration). If I pre-configure expecting a feature that isn't live yet, the SA walks into a broken environment. I need the current feature availability state — specifically: which integrations are GA, which are beta, which are roadmap-only — so I configure only what's actually deployable today.
+          </div>
+          <div style="font-size:11px; color:#6c63ff; margin-top:8px;">Owner: Product team — roadmap Notion page (read-only access already available)</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- What I Can Already Infer -->
+    <div style="background:#1e2235; border-left:4px solid #6c63ff; border-radius:8px; padding:22px 24px; margin-bottom: 24px;">
+      <div style="font-size:13px; font-weight:700; color:#6c63ff; text-transform:uppercase; letter-spacing:.8px; margin-bottom:16px;">✅ What I Can Already Do With Transcript Intelligence Alone</div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
+        <div>
+          <div style="font-size:11px; color:#7b7f9e; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;">Can infer and act on now</div>
+          <ul style="margin:0; padding-left:16px; font-size:12px; color:#c5c8e0; line-height:2;">
+            <li>Prior PSA → migration complexity tier + data scope</li>
+            <li>Accounting software → integration selection + QB Online pre-wire</li>
+            <li>RMM tool → integration priority queue</li>
+            <li>User count + roles → license config + user provisioning</li>
+            <li>Business vertical → template selection (once templates exist)</li>
+            <li>Parent-child need → hierarchy config</li>
+            <li>Multi-location → billing rollup structure</li>
+            <li>Canada jurisdiction → tax config flag</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:11px; color:#7b7f9e; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;">Requires documentation to act on</div>
+          <ul style="margin:0; padding-left:16px; font-size:12px; color:#c5c8e0; line-height:2;">
+            <li>Ticket type taxonomy → need PSA schema reference</li>
+            <li>Service board structure → need client-type template</li>
+            <li>GL code mapping → need QB-to-Rev.io map</li>
+            <li>Integration wiring → need step-by-step setup guides</li>
+            <li>Invoice template selection → need template library</li>
+            <li>Migration CSV prep → need data engineering templates</li>
+            <li>Default settings to change → need rework patterns list</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Ask -->
+    <div style="background:#12141d; border-radius:8px; border:1px solid #2a2f45; padding:20px 22px;">
+      <div style="font-size:13px; font-weight:700; color:#e8eaf6; margin-bottom:12px;">📋 The Ask — Four Conversations That Unlock This</div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
+        <div style="background:#1a1d27; border-radius:6px; padding:12px 14px;">
+          <div style="font-size:12px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">1. Senior SA (30 min)</div>
+          <div style="font-size:11px; color:#c5c8e0; line-height:1.7;">Walk me through a typical onboarding — what you configure in each session, the 10 things you always fix, what you do before kickoff vs. live with client. Unlocks: Tiers 1+2.</div>
+        </div>
+        <div style="background:#1a1d27; border-radius:6px; padding:12px 14px;">
+          <div style="font-size:12px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">2. Data Engineering (15 min)</div>
+          <div style="font-size:11px; color:#c5c8e0; line-height:1.7;">Share the CSV import templates and migration gotchas for ConnectWise, Halo, HouseCall Pro. Unlocks: Tier 1 item 3.</div>
+        </div>
+        <div style="background:#1a1d27; border-radius:6px; padding:12px 14px;">
+          <div style="font-size:12px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">3. Integration Owner (15 min)</div>
+          <div style="font-size:11px; color:#c5c8e0; line-height:1.7;">QB Online field mapping doc + NinjaOne/PAX8 setup guides. What can be pre-wired vs. needs client credentials live. Unlocks: Tier 1 item 2.</div>
+        </div>
+        <div style="background:#1a1d27; border-radius:6px; padding:12px 14px;">
+          <div style="font-size:12px; font-weight:700; color:#e8eaf6; margin-bottom:4px;">4. Product (async)</div>
+          <div style="font-size:11px; color:#c5c8e0; line-height:1.7;">Share current feature availability matrix (GA vs. roadmap) so I don't pre-configure around features that aren't live. Products roadmap page already accessible — just needs a current-state snapshot. Unlocks: Tier 3 item 4.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
   <!-- ── SECTION 6 ── -->
   <div class="section">
     <div class="section-label">Section 06</div>
