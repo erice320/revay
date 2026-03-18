@@ -1974,6 +1974,159 @@
 
   </div>
 
+  <!-- ── SECTION 5.7 ── -->
+  <div class="section">
+    <div class="section-label">Section 05.7</div>
+    <div class="section-title"><span class="emoji">🎯</span>CEO Design Parameters — What the Automation Must Be Built Around</div>
+    <div class="section-divider"></div>
+
+    <p style="color: var(--text-dim); font-size: 14px; margin-bottom: 24px;">
+      From Brent Maropis to Fran Timothy, March 18 2026 — forwarded as design constraints for the Kaia onboarding automation pipeline. These are not aspirational. They are the operating parameters the system must be built to enforce.
+    </p>
+
+    <!-- The 7 Parameters -->
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap:16px; margin-bottom:28px;">
+
+      <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #6c63ff; padding:18px 20px;">
+        <div style="font-size:11px; color:#6c63ff; font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px;">Parameter 1 — Kickoff Timeline</div>
+        <div style="font-size:14px; font-weight:700; color:#e8eaf6; margin-bottom:10px;">Same day or next day. Always.</div>
+        <ul style="margin:0; padding-left:16px; font-size:12px; color:#c5c8e0; line-height:1.9;">
+          <li>Closes before lunch → kickoff scheduled that afternoon</li>
+          <li>Closes after lunch → kickoff scheduled next morning</li>
+          <li>Exceptions: rare, documented, shared accountability Sales + Onboarding</li>
+          <li><strong style="color:#e8eaf6;">Capacity scoring eliminated.</strong> Replace with batter's box rotation — next SA in line takes the next deal, no deliberation</li>
+        </ul>
+        <div style="margin-top:12px; background:#6c63ff18; border-radius:4px; padding:8px 10px; font-size:11px; color:#6c63ff;">
+          Automation implication: Pre-config must complete before kickoff. If deal closes at 11am, the environment needs to be partially built by 2pm.
+        </div>
+      </div>
+
+      <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #6c63ff; padding:18px 20px;">
+        <div style="font-size:11px; color:#6c63ff; font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px;">Parameter 2 — Status Definitions</div>
+        <div style="font-size:14px; font-weight:700; color:#e8eaf6; margin-bottom:10px;">Every status needs a timeline and an owner.</div>
+        <ul style="margin:0; padding-left:16px; font-size:12px; color:#c5c8e0; line-height:1.9;">
+          <li><strong style="color:#00d4aa;">On Track</strong> — client engaged, milestones on schedule, SA owns, reviewed weekly</li>
+          <li><strong style="color:#f0b429;">Off Track</strong> — behind on a milestone, SA escalates to Fran within 24 hours</li>
+          <li><strong style="color:#f0b429;">On Hold</strong> — hold date mandatory at time of status set; no hold date = immediate RTS</li>
+          <li><strong style="color:#e05252;">RTS</strong> — Sales engages within 24hrs; no path back in 5 business days = formally canceled</li>
+          <li><strong style="color:#e05252;">Cancel</strong> — specific subcategory required, no undocumented cancellations</li>
+        </ul>
+      </div>
+
+      <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #e05252; padding:18px 20px;">
+        <div style="font-size:11px; color:#e05252; font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px;">Parameter 3 — Cancellation Reasons</div>
+        <div style="font-size:14px; font-weight:700; color:#e8eaf6; margin-bottom:10px;">"Other" and "Fail to Launch" are eliminated.</div>
+        <ul style="margin:0; padding-left:16px; font-size:12px; color:#c5c8e0; line-height:1.9;">
+          <li><strong style="color:#e8eaf6;">Functionality</strong> — must specify exact product or feature gap</li>
+          <li><strong style="color:#e8eaf6;">Client Initiated / Business Change</strong> — specific reason required (OOB, acquisition, budget cuts)</li>
+          <li>Ambiguous cancellations escalate to Fran before logging</li>
+        </ul>
+        <div style="margin-top:12px; background:#e0525218; border-radius:4px; padding:8px 10px; font-size:11px; color:#e05252;">
+          If a client cancels, it inherently failed to launch. We need to understand why — that data feeds back into improving the process.
+        </div>
+      </div>
+
+      <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #00d4aa; padding:18px 20px;">
+        <div style="font-size:11px; color:#00d4aa; font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px;">Parameter 4 — Go-Live Duration Targets</div>
+        <div style="font-size:14px; font-weight:700; color:#e8eaf6; margin-bottom:10px;">Complexity drives timeline. Simple clients don't wait.</div>
+        <ul style="margin:0; padding-left:16px; font-size:12px; color:#c5c8e0; line-height:1.9;">
+          <li><strong style="color:#00d4aa;">≤$700/mo, no data or payment migration</strong> → live within <strong style="color:#e8eaf6;">1 week</strong></li>
+          <li><strong style="color:#f0b429;">With payment migration</strong> → live within <strong style="color:#e8eaf6;">3 weeks</strong></li>
+          <li><strong style="color:#7b7f9e;">Billing clients</strong> → defined, documented, tracked timeline</li>
+          <li>These targets shrink materially over the next 12 months as automation matures</li>
+        </ul>
+        <div style="margin-top:12px; background:#00d4aa18; border-radius:4px; padding:8px 10px; font-size:11px; color:#00d4aa;">
+          Automation implication: The 1-week target is only achievable if pre-config eliminates Day 1 setup time entirely for simple clients.
+        </div>
+      </div>
+
+      <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #f0b429; padding:18px 20px;">
+        <div style="font-size:11px; color:#f0b429; font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px;">Parameter 5 — Automated Cadence for On Hold / RTS</div>
+        <div style="font-size:14px; font-weight:700; color:#e8eaf6; margin-bottom:10px;">System driven. Not manual.</div>
+        <ul style="margin:0; padding-left:16px; font-size:12px; color:#c5c8e0; line-height:1.9;">
+          <li><strong style="color:#e8eaf6;">Day 0</strong> — SA phone call</li>
+          <li><strong style="color:#e8eaf6;">Day 2</strong> — No response → SA follow-up email</li>
+          <li><strong style="color:#e8eaf6;">Day 4</strong> — No response → escalate to Fran + automated email from Brent flagging cancellation risk; Sales copied</li>
+          <li><strong style="color:#e8eaf6;">Day 6</strong> — No response → Sales notified, account moves to RTS if still on hold</li>
+          <li><strong style="color:#e8eaf6;">Day 10 in RTS</strong> — No re-engagement → formally cancel + log reason</li>
+        </ul>
+        <div style="margin-top:10px; font-size:11px; color:#7b7f9e;">Sales and Onboarding share accountability. This is not owned by one team.</div>
+      </div>
+
+      <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #e05252; padding:18px 20px;">
+        <div style="font-size:11px; color:#e05252; font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px;">Parameter 6 — Cancellation Rate Targets</div>
+        <div style="font-size:14px; font-weight:700; color:#e8eaf6; margin-bottom:10px;">Current: ~25% → Target: 15% → Long-term: 10%</div>
+        <div style="display:flex; gap:10px; margin-bottom:12px;">
+          <div style="flex:1; background:#e0525218; border-radius:6px; padding:10px; text-align:center;">
+            <div style="font-size:22px; font-weight:800; color:#e05252;">~25%</div>
+            <div style="font-size:10px; color:#7b7f9e; margin-top:2px;">Current</div>
+          </div>
+          <div style="flex:1; background:#f0b42918; border-radius:6px; padding:10px; text-align:center;">
+            <div style="font-size:22px; font-weight:800; color:#f0b429;">15%</div>
+            <div style="font-size:10px; color:#7b7f9e; margin-top:2px;">2026 Target</div>
+          </div>
+          <div style="flex:1; background:#00d4aa18; border-radius:6px; padding:10px; text-align:center;">
+            <div style="font-size:22px; font-weight:800; color:#00d4aa;">10%</div>
+            <div style="font-size:10px; color:#7b7f9e; margin-top:2px;">Long-term</div>
+          </div>
+        </div>
+        <div style="font-size:12px; color:#c5c8e0; line-height:1.7;">Every workflow decision, cadence timing, escalation trigger, and RTS threshold must be built to close this gap. On Hold and RTS pools must be actively managed — the overwhelming majority of clients must remain On Track.</div>
+      </div>
+
+      <div style="background:#1a1d27; border-radius:8px; border-left:4px solid #6c63ff; padding:18px 20px; grid-column: 1 / -1;">
+        <div style="font-size:11px; color:#6c63ff; font-weight:800; text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px;">Parameter 7 — Client Obsession and Platform First Execution</div>
+        <div style="font-size:14px; font-weight:700; color:#e8eaf6; margin-bottom:10px;">Revii first. AI first. Every instance, every time.</div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+          <div style="font-size:12px; color:#c5c8e0; line-height:1.8;">
+            None of these parameters compromise focus on extraordinary service — they are designed to support it. This requires intentional training, clear measurements, strict adherence, and real accountability to setting up the platform Revii first / AI first, in a way that enables telemetry, ease of integration, and long-term scalability.
+          </div>
+          <div style="background:#6c63ff18; border-radius:6px; padding:14px 16px;">
+            <div style="font-size:11px; color:#6c63ff; font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:.5px;">What "Platform First" means for automation</div>
+            <ul style="margin:0; padding-left:14px; font-size:11px; color:#c5c8e0; line-height:1.9;">
+              <li>Revii AI configured and enabled in every new instance before kickoff</li>
+              <li>Integrations wired to enable telemetry from day 1 (not retrofitted)</li>
+              <li>Configuration follows a schema that enables long-term scalability — no shortcuts that create technical debt at go-live</li>
+              <li>Done correctly, this discipline delivers the best possible client experience</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- What This Means for the Automation Pipeline -->
+    <div style="background:#1e2235; border-left:4px solid #6c63ff; border-radius:8px; padding:22px 24px;">
+      <div style="font-size:13px; font-weight:700; color:#6c63ff; text-transform:uppercase; letter-spacing:.8px; margin-bottom:14px;">⚡ What These Parameters Demand from the Automation Pipeline</div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
+        <div>
+          <div style="font-size:11px; color:#7b7f9e; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;">Speed requirements</div>
+          <ul style="margin:0; padding-left:14px; font-size:12px; color:#c5c8e0; line-height:1.9;">
+            <li>Pre-config must run in minutes, not hours — same-day kickoff is non-negotiable</li>
+            <li>Simple clients (≤$700/mo, no migration) need a nearly complete environment by kickoff</li>
+            <li>Batter's box rotation removes the deliberation buffer — there's no time to manually prep</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:11px; color:#7b7f9e; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;">Quality requirements</div>
+          <ul style="margin:0; padding-left:14px; font-size:12px; color:#c5c8e0; line-height:1.9;">
+            <li>Revii must be configured and enabled — not optional, not post-launch</li>
+            <li>Integration telemetry must be wired from Day 1, not retrofitted</li>
+            <li>Configuration schema must support long-term scalability (no shortcuts)</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:11px; color:#7b7f9e; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;">Accountability requirements</div>
+          <ul style="margin:0; padding-left:14px; font-size:12px; color:#c5c8e0; line-height:1.9;">
+            <li>Every automated action must be logged with a reason — mirrors the cancellation reason mandate</li>
+            <li>Automated cadence (Hold/RTS) must be system-enforced, not dependent on SA discipline</li>
+            <li>Cancellation data feeds back into automation improvement — closed loop</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
   <!-- ── SECTION 6 ── -->
   <div class="section">
     <div class="section-label">Section 06</div>
