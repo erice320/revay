@@ -2,71 +2,79 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>2026 Sales Pacing — Rev.io</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root{--bg:#0a0c12;--surface:#13161f;--surface2:#1a1e2d;--border:#252a3d;--text:#e8eaf6;--muted:#7b82a8;--accent:#6c63ff;--green:#00d4aa;--yellow:#ffd166;--red:#ef476f;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
-.header{padding:32px 40px 24px;border-bottom:1px solid var(--border);}
-.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
-.title-block h1{font-size:26px;font-weight:700;letter-spacing:-0.5px;}
+.header{padding:28px 40px 20px;border-bottom:1px solid var(--border);}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.title-block h1{font-size:24px;font-weight:700;letter-spacing:-0.5px;}
 .title-block h1 span{color:var(--accent);}
 .title-block p{color:var(--muted);font-size:13px;margin-top:4px;}
 .as-of{color:var(--muted);font-size:12px;background:var(--surface);border:1px solid var(--border);padding:6px 12px;border-radius:6px;white-space:nowrap;}
-.hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px;margin:24px 40px 0;}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin:20px 40px 0;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;}
 .stat-card.highlight{border-color:var(--accent);background:rgba(108,99,255,0.08);}
-.stat-card.dim{opacity:0.7;}
-.stat-card .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;}
-.stat-card .value{font-size:26px;font-weight:700;letter-spacing:-1px;}
-.stat-card .sub{font-size:12px;color:var(--muted);margin-top:3px;}
+.stat-card.dim{opacity:0.65;}
+.stat-card .label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.stat-card .value{font-size:24px;font-weight:700;letter-spacing:-1px;}
+.stat-card .sub{font-size:11px;color:var(--muted);margin-top:3px;}
 .green{color:var(--green);}.yellow{color:var(--yellow);}.red{color:var(--red);}
-.section{padding:28px 40px;}
-.section-title{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;}
+.section{padding:24px 40px;}
+.section-title{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
 .section-title em{color:var(--text);font-style:normal;}
-.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;}
-.chart-card h2{font-size:17px;font-weight:600;margin-bottom:4px;}
-.chart-sub{font-size:13px;color:var(--muted);margin-bottom:18px;}
-.chart-wrap{position:relative;}
-.legend{display:flex;gap:18px;margin-top:12px;flex-wrap:wrap;}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;}
+.chart-card h2{font-size:16px;font-weight:600;margin-bottom:3px;}
+.chart-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
+/* Quarter toggle buttons */
+.qtr-filter{display:flex;gap:8px;align-items:center;margin-bottom:18px;flex-wrap:wrap;}
+.qtr-filter .filter-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-right:4px;}
+.qtr-btn{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;user-select:none;}
+.qtr-btn:hover{border-color:var(--accent);color:var(--text);}
+.qtr-btn.active{background:rgba(108,99,255,0.2);border-color:var(--accent);color:var(--accent);}
+.qtr-btn.all-btn.active{background:rgba(255,255,255,0.08);border-color:var(--muted);color:var(--text);}
+.chart-range-info{font-size:11px;color:var(--muted);margin-bottom:14px;min-height:16px;}
+/* Stats summary below chart */
+.chart-summary{display:flex;gap:24px;margin-top:14px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border);}
+.cs-item{font-size:12px;color:var(--muted);}
+.cs-item span{font-weight:700;color:var(--text);}
+.chart-wrap{position:relative;height:320px;}
+.legend{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;}
 .legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);}
 .legend-dot{width:9px;height:9px;border-radius:50%;}
 .legend-dash{width:18px;height:2px;border-top:2px dashed;}
-/* Quarter summary row */
-.qtr-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
-.qtr-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.qtr-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.qtr-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;}
 .qtr-card.current{border-color:var(--accent);background:rgba(108,99,255,0.06);}
-.qtr-card.future{opacity:0.45;}
-.qtr-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
-.qtr-label .badge{font-size:10px;padding:2px 7px;border-radius:10px;}
-.qtr-val{font-size:22px;font-weight:700;letter-spacing:-0.5px;}
-.qtr-meta{font-size:11px;color:var(--muted);margin-top:3px;}
-.att-bar{height:5px;background:var(--surface2);border-radius:3px;margin-top:10px;overflow:hidden;}
+.qtr-card.future{opacity:0.42;}
+.qtr-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;}
+.qtr-label .badge{font-size:9px;padding:2px 7px;border-radius:10px;}
+.qtr-val{font-size:20px;font-weight:700;letter-spacing:-0.5px;}
+.qtr-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.att-bar{height:4px;background:var(--surface2);border-radius:3px;margin-top:9px;overflow:hidden;}
 .att-fill{height:100%;border-radius:3px;}
-/* Product grid */
-.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:16px;}
-.product-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:14px;}
+.product-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;}
 .product-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
-.product-header .name{font-size:14px;font-weight:600;}
-.product-header .badge{font-size:12px;font-weight:700;padding:3px 9px;border-radius:20px;}
-.product-meta{display:flex;gap:16px;margin-bottom:10px;flex-wrap:wrap;}
-.product-meta .m-item{font-size:12px;color:var(--muted);}
+.product-header .name{font-size:13px;font-weight:600;}
+.product-header .badge{font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;}
+.product-meta{display:flex;gap:14px;margin-bottom:10px;flex-wrap:wrap;}
+.product-meta .m-item{font-size:11px;color:var(--muted);}
 .product-meta .m-item span{color:var(--text);font-weight:600;}
-.product-chart-wrap{position:relative;height:130px;}
-/* Annual table */
+.product-chart-wrap{position:relative;height:120px;}
 .annual-table{width:100%;border-collapse:collapse;font-size:12px;}
-.annual-table th{text-align:right;padding:8px 10px;border-bottom:1px solid var(--border);color:var(--muted);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.6px;}
+.annual-table th{text-align:right;padding:7px 8px;border-bottom:1px solid var(--border);color:var(--muted);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.5px;}
 .annual-table th:first-child{text-align:left;}
-.annual-table td{padding:10px 10px;border-bottom:1px solid var(--border);text-align:right;}
+.annual-table td{padding:9px 8px;border-bottom:1px solid var(--border);text-align:right;}
 .annual-table td:first-child{text-align:left;font-weight:600;}
-.annual-table .qtr-sep{border-right:1px solid var(--accent)20;font-weight:700;}
+.annual-table .qsep{border-right:1px solid rgba(108,99,255,0.2);}
 .annual-table tr.total td{border-bottom:none;font-weight:700;border-top:2px solid var(--border);}
 .ahead{color:var(--green);}.behind{color:var(--red);}.neutral{color:var(--muted);}
-footer{text-align:center;padding:20px 40px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;}
-@media(max-width:900px){.qtr-row{grid-template-columns:1fr 1fr;}.hero-stats{grid-template-columns:1fr 1fr;}.section{padding:20px 20px;}.header{padding:20px 20px 16px;}}
-@media(max-width:600px){.qtr-row{grid-template-columns:1fr 1fr;}.annual-table{font-size:10px;}}
+footer{text-align:center;padding:18px 40px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;}
+@media(max-width:900px){.qtr-row{grid-template-columns:1fr 1fr;}.hero-stats{grid-template-columns:1fr 1fr;}.section{padding:18px 18px;}.header{padding:18px 18px 14px;}}
 </style>
 </head>
 <body>
@@ -74,13 +82,12 @@ footer{text-align:center;padding:20px 40px;border-top:1px solid var(--border);co
   <div class="header-top">
     <div class="title-block">
       <h1>2026 <span>Sales Pacing</span></h1>
-      <p>Actuals vs. budget ramp · YTD &amp; current quarter · Rev.io Grow Team</p>
+      <p>Actuals vs. budget ramp · YTD &amp; quarterly · Rev.io Grow Team</p>
     </div>
-    <div class="as-of">📅 As of March 23, 2026 · Day 82/365</div>
+    <div class="as-of">📅 March 23, 2026 · Day 82/365</div>
   </div>
 </div>
 
-<!-- YTD + Current Qtr Hero Stats -->
 <div class="hero-stats">
   <div class="stat-card highlight">
     <div class="label">YTD Attainment</div>
@@ -95,12 +102,12 @@ footer{text-align:center;padding:20px 40px;border-top:1px solid var(--border);co
   <div class="stat-card">
     <div class="label">YTD Budget Gap</div>
     <div class="value red">$53,120</div>
-    <div class="sub">vs. linear pace today</div>
+    <div class="sub">behind linear pace today</div>
   </div>
   <div class="stat-card dim">
     <div class="label">Full-Year Budget</div>
     <div class="value">$853,919</div>
-    <div class="sub">PSA + Billing + Payments</div>
+    <div class="sub">PSA · Billing · Payments · CP+CH</div>
   </div>
   <div class="stat-card dim">
     <div class="label">Q1 Final</div>
@@ -114,106 +121,124 @@ footer{text-align:center;padding:20px 40px;border-top:1px solid var(--border);co
   </div>
 </div>
 
-<!-- Annual Ramp Chart -->
+<!-- Annual / Quarter Chart -->
 <div class="section">
-  <div class="section-title">Full-Year Ramp — <em>Actuals vs. Budget</em></div>
+  <div class="section-title">Pacing Chart — <em>Select Quarters to Zoom</em></div>
   <div class="chart-card">
-    <h2>2026 Cumulative MRR — Annual View</h2>
-    <div class="chart-sub">Budget ramp reflects monthly targets spread evenly within each month. Quarter boundaries shown. Stepped actuals reflect each deal's Salesforce close date.</div>
-    <div class="chart-wrap" style="height:340px"><canvas id="annualChart"></canvas></div>
+    <h2>Cumulative MRR — Actuals vs. Budget Ramp</h2>
+    <div class="chart-sub">Budget ramp spreads monthly targets evenly within each month. Actuals step up on each Salesforce close date. Select any combination of quarters below to zoom and re-base the view.</div>
+
+    <!-- Quarter toggle -->
+    <div class="qtr-filter">
+      <span class="filter-label">View:</span>
+      <button class="qtr-btn all-btn active" onclick="setAllQtrs(this)">All Year</button>
+      <button class="qtr-btn" data-qtr="0" onclick="toggleQtr(this)">Q1</button>
+      <button class="qtr-btn" data-qtr="1" onclick="toggleQtr(this)">Q2</button>
+      <button class="qtr-btn" data-qtr="2" onclick="toggleQtr(this)">Q3</button>
+      <button class="qtr-btn" data-qtr="3" onclick="toggleQtr(this)">Q4</button>
+    </div>
+    <div class="chart-range-info" id="rangeInfo">Showing full year · Jan 1 – Dec 31, 2026</div>
+
+    <div class="chart-wrap"><canvas id="annualChart"></canvas></div>
     <div class="legend">
       <div class="legend-item"><div class="legend-dot" style="background:#6c63ff"></div>Actual Closed Won</div>
       <div class="legend-item"><div class="legend-dash" style="border-color:#ffffff33"></div>Budget Ramp</div>
       <div class="legend-item"><div class="legend-dash" style="border-color:#00d4aa66"></div>Today · Quarter boundaries</div>
     </div>
+    <div class="chart-summary" id="chartSummary">
+      <div class="cs-item">Budget in view: <span id="csBudget">$853,919</span></div>
+      <div class="cs-item">Actual in view: <span id="csActual">$49,110</span></div>
+      <div class="cs-item">Attainment: <span id="csAtt">48% (YTD vs. budget pace)</span></div>
+      <div class="cs-item">Gap: <span id="csGap">$53,120</span></div>
+    </div>
   </div>
 </div>
 
-<!-- Quarter Summary Row -->
+<!-- Quarter Snapshots -->
 <div class="section" style="padding-top:0">
   <div class="section-title">Quarter Snapshots</div>
   <div class="qtr-row">
     <div class="qtr-card current">
-        <div class="qtr-label">Q1 2026<span class="badge" style="background:rgba(108,99,255,.2);color:#6c63ff">current</span></div>
-        <div class="qtr-val behind">42%</div>
-        <div class="qtr-meta">$49,110 actual · $116,078 budget</div>
-        <div class="qtr-meta">77 deals</div>
-        <div class="att-bar"><div class="att-fill" style="width:42%;background:#ef476f"></div></div>
-      </div><div class="qtr-card future">
-        <div class="qtr-label">Q2 2026<span class="badge" style="background:rgba(255,255,255,.05);color:#7b82a8">upcoming</span></div>
-        <div class="qtr-val neutral">0%</div>
-        <div class="qtr-meta">$0 actual · $197,909 budget</div>
-        <div class="qtr-meta">0 deals</div>
-        <div class="att-bar"><div class="att-fill" style="width:0%;background:#ef476f"></div></div>
-      </div><div class="qtr-card future">
-        <div class="qtr-label">Q3 2026<span class="badge" style="background:rgba(255,255,255,.05);color:#7b82a8">upcoming</span></div>
-        <div class="qtr-val neutral">0%</div>
-        <div class="qtr-meta">$0 actual · $244,546 budget</div>
-        <div class="qtr-meta">0 deals</div>
-        <div class="att-bar"><div class="att-fill" style="width:0%;background:#ef476f"></div></div>
-      </div><div class="qtr-card future">
-        <div class="qtr-label">Q4 2026<span class="badge" style="background:rgba(255,255,255,.05);color:#7b82a8">upcoming</span></div>
-        <div class="qtr-val neutral">0%</div>
-        <div class="qtr-meta">$0 actual · $295,386 budget</div>
-        <div class="qtr-meta">0 deals</div>
-        <div class="att-bar"><div class="att-fill" style="width:0%;background:#ef476f"></div></div>
-      </div>
+      <div class="qtr-label">Q1 2026<span class="badge" style="background:rgba(108,99,255,.2);color:#6c63ff">current</span></div>
+      <div class="qtr-val red">42%</div>
+      <div class="qtr-meta">$49,110 actual · $116,078 budget</div>
+      <div class="qtr-meta">77 deals</div>
+      <div class="att-bar"><div class="att-fill" style="width:42%;background:#ef476f"></div></div>
+    </div><div class="qtr-card future">
+      <div class="qtr-label">Q2 2026<span class="badge" style="background:rgba(255,255,255,.05);color:#7b82a8">upcoming</span></div>
+      <div class="qtr-val red">0%</div>
+      <div class="qtr-meta">$0 actual · $197,909 budget</div>
+      <div class="qtr-meta">0 deals</div>
+      <div class="att-bar"><div class="att-fill" style="width:0%;background:#ef476f"></div></div>
+    </div><div class="qtr-card future">
+      <div class="qtr-label">Q3 2026<span class="badge" style="background:rgba(255,255,255,.05);color:#7b82a8">upcoming</span></div>
+      <div class="qtr-val red">0%</div>
+      <div class="qtr-meta">$0 actual · $244,546 budget</div>
+      <div class="qtr-meta">0 deals</div>
+      <div class="att-bar"><div class="att-fill" style="width:0%;background:#ef476f"></div></div>
+    </div><div class="qtr-card future">
+      <div class="qtr-label">Q4 2026<span class="badge" style="background:rgba(255,255,255,.05);color:#7b82a8">upcoming</span></div>
+      <div class="qtr-val red">0%</div>
+      <div class="qtr-meta">$0 actual · $295,386 budget</div>
+      <div class="qtr-meta">0 deals</div>
+      <div class="att-bar"><div class="att-fill" style="width:0%;background:#ef476f"></div></div>
+    </div>
   </div>
 </div>
 
-<!-- Current Quarter Detail -->
+<!-- Current Quarter Product Detail -->
 <div class="section" style="padding-top:0">
-  <div class="section-title">Q1 2026 Detail — <em>By Product</em></div>
+  <div class="section-title">Q1 2026 — <em>Product Detail</em></div>
   <div class="product-grid">
     <div class="product-card">
-        <div class="product-header">
-          <div class="name" style="color:#6c63ff">PSA 2.0</div>
-          <div class="badge" style="background:rgba(239,71,111,.15);color:#ef476f">33%</div>
-        </div>
-        <div class="product-meta">
-          <div class="m-item">Actual: <span>$20,524</span></div>
-          <div class="m-item">Budget: <span>$63,000</span></div>
-          <div class="m-item">Deals: <span>31</span></div>
-          <div class="m-item">Gap: <span style="color:#ef476f">-$42,476</span></div>
-        </div>
-        <div class="product-chart-wrap"><canvas id="pc_PSA_2_0"></canvas></div>
-      </div><div class="product-card">
-        <div class="product-header">
-          <div class="name" style="color:#00d4aa">Billing & Odin</div>
-          <div class="badge" style="background:rgba(0,212,170,.15);color:#00d4aa">107%</div>
-        </div>
-        <div class="product-meta">
-          <div class="m-item">Actual: <span>$22,085</span></div>
-          <div class="m-item">Budget: <span>$20,588</span></div>
-          <div class="m-item">Deals: <span>18</span></div>
-          <div class="m-item">Gap: <span style="color:#00d4aa">+$1,497</span></div>
-        </div>
-        <div class="product-chart-wrap"><canvas id="pc_Billing___Odin"></canvas></div>
-      </div><div class="product-card">
-        <div class="product-header">
-          <div class="name" style="color:#ffd166">Payments</div>
-          <div class="badge" style="background:rgba(239,71,111,.15);color:#ef476f">21%</div>
-        </div>
-        <div class="product-meta">
-          <div class="m-item">Actual: <span>$5,901</span></div>
-          <div class="m-item">Budget: <span>$27,740</span></div>
-          <div class="m-item">Deals: <span>23</span></div>
-          <div class="m-item">Gap: <span style="color:#ef476f">-$21,839</span></div>
-        </div>
-        <div class="product-chart-wrap"><canvas id="pc_Payments"></canvas></div>
-      </div><div class="product-card">
-        <div class="product-header">
-          <div class="name" style="color:#ff6b6b">Cyber Protect & CommerceHub</div>
-          <div class="badge" style="background:rgba(239,71,111,.15);color:#ef476f">13%</div>
-        </div>
-        <div class="product-meta">
-          <div class="m-item">Actual: <span>$600</span></div>
-          <div class="m-item">Budget: <span>$4,750</span></div>
-          <div class="m-item">Deals: <span>5</span></div>
-          <div class="m-item">Gap: <span style="color:#ef476f">-$4,150</span></div>
-        </div>
-        <div class="product-chart-wrap"><canvas id="pc_Cyber_Protect___CommerceHub"></canvas></div>
+      <div class="product-header">
+        <div class="name" style="color:#6c63ff">PSA 2.0</div>
+        <div class="badge" style="background:rgba(239,71,111,.15);color:#ef476f">33%</div>
       </div>
+      <div class="product-meta">
+        <div class="m-item">Actual: <span>$20,524</span></div>
+        <div class="m-item">Budget: <span>$63,000</span></div>
+        <div class="m-item">Deals: <span>31</span></div>
+        <div class="m-item">Gap: <span style="color:#ef476f">-$42,476</span></div>
+      </div>
+      <div class="product-chart-wrap"><canvas id="pc_PSA_2_0"></canvas></div>
+    </div><div class="product-card">
+      <div class="product-header">
+        <div class="name" style="color:#00d4aa">Billing & Odin</div>
+        <div class="badge" style="background:rgba(0,212,170,.15);color:#00d4aa">107%</div>
+      </div>
+      <div class="product-meta">
+        <div class="m-item">Actual: <span>$22,085</span></div>
+        <div class="m-item">Budget: <span>$20,588</span></div>
+        <div class="m-item">Deals: <span>18</span></div>
+        <div class="m-item">Gap: <span style="color:#00d4aa">+$1,497</span></div>
+      </div>
+      <div class="product-chart-wrap"><canvas id="pc_Billing___Odin"></canvas></div>
+    </div><div class="product-card">
+      <div class="product-header">
+        <div class="name" style="color:#ffd166">Payments</div>
+        <div class="badge" style="background:rgba(239,71,111,.15);color:#ef476f">21%</div>
+      </div>
+      <div class="product-meta">
+        <div class="m-item">Actual: <span>$5,901</span></div>
+        <div class="m-item">Budget: <span>$27,740</span></div>
+        <div class="m-item">Deals: <span>23</span></div>
+        <div class="m-item">Gap: <span style="color:#ef476f">-$21,839</span></div>
+      </div>
+      <div class="product-chart-wrap"><canvas id="pc_Payments"></canvas></div>
+    </div><div class="product-card">
+      <div class="product-header">
+        <div class="name" style="color:#ff6b6b">Cyber Protect & CommerceHub</div>
+        <div class="badge" style="background:rgba(239,71,111,.15);color:#ef476f">13%</div>
+      </div>
+      <div class="product-meta">
+        <div class="m-item">Actual: <span>$600</span></div>
+        <div class="m-item">Budget: <span>$4,750</span></div>
+        <div class="m-item">Deals: <span>5</span></div>
+        <div class="m-item">Gap: <span style="color:#ef476f">-$4,150</span></div>
+      </div>
+      <div class="product-chart-wrap"><canvas id="pc_Cyber_Protect___CommerceHub"></canvas></div>
+    </div>
   </div>
 </div>
 
@@ -222,152 +247,267 @@ footer{text-align:center;padding:20px 40px;border-top:1px solid var(--border);co
   <div class="section-title">Annual Budget vs. Actuals — <em>Monthly</em></div>
   <div class="chart-card" style="overflow-x:auto">
     <table class="annual-table">
-      <thead>
-        <tr>
-          <th style="min-width:140px">Product</th>
-          <th>Jan</th><th>Feb</th><th class="qtr-sep">Mar</th>
-          <th>Apr</th><th>May</th><th class="qtr-sep">Jun</th>
-          <th>Jul</th><th>Aug</th><th class="qtr-sep">Sep</th>
-          <th>Oct</th><th>Nov</th><th>Dec</th>
-          <th style="border-left:1px solid var(--border)">Annual</th>
-          <th>Actual</th>
-          <th>Att%</th>
-        </tr>
-      </thead>
+      <thead><tr>
+        <th style="min-width:160px">Product</th>
+        <th>Jan</th><th>Feb</th><th class="qsep">Mar</th>
+        <th>Apr</th><th>May</th><th class="qsep">Jun</th>
+        <th>Jul</th><th>Aug</th><th class="qsep">Sep</th>
+        <th>Oct</th><th>Nov</th><th>Dec</th>
+        <th style="border-left:1px solid var(--border)">Annual</th>
+        <th>YTD Actual</th><th>Att%</th>
+      </tr></thead>
       <tbody>
         <tr>
             <td style="color:#6c63ff">PSA 2.0</td>
-            <td class="">$17.0K</td><td class="">$21.0K</td><td class="qtr-sep">$25.0K</td><td class="">$30.0K</td><td class="">$34.0K</td><td class="qtr-sep">$38.0K</td><td class="">$42.0K</td><td class="">$46.0K</td><td class="qtr-sep">$50.0K</td><td class="">$55.0K</td><td class="">$59.0K</td><td class="">$63.0K</td>
+            <td class="">$17.0K</td><td class="">$21.0K</td><td class="qsep">$25.0K</td><td class="">$30.0K</td><td class="">$34.0K</td><td class="qsep">$38.0K</td><td class="">$42.0K</td><td class="">$46.0K</td><td class="qsep">$50.0K</td><td class="">$55.0K</td><td class="">$59.0K</td><td class="">$63.0K</td>
             <td style="border-left:1px solid var(--border)">$480,000</td>
             <td>$20,524</td>
-            <td class="behind">4%</td>
+            <td class="behind">4%*</td>
           </tr><tr>
             <td style="color:#00d4aa">Billing & Odin</td>
-            <td class="">$3.2K</td><td class="">$3.2K</td><td class="qtr-sep">$14.3K</td><td class="">$13.4K</td><td class="">$10.3K</td><td class="qtr-sep">$17.4K</td><td class="">$12.4K</td><td class="">$12.4K</td><td class="qtr-sep">$17.4K</td><td class="">$12.4K</td><td class="">$10.1K</td><td class="">$21.4K</td>
+            <td class="">$3.2K</td><td class="">$3.2K</td><td class="qsep">$14.3K</td><td class="">$13.4K</td><td class="">$10.3K</td><td class="qsep">$17.4K</td><td class="">$12.4K</td><td class="">$12.4K</td><td class="qsep">$17.4K</td><td class="">$12.4K</td><td class="">$10.1K</td><td class="">$21.4K</td>
             <td style="border-left:1px solid var(--border)">$147,534</td>
             <td>$22,085</td>
-            <td class="behind">15%</td>
+            <td class="behind">15%*</td>
           </tr><tr>
             <td style="color:#ffd166">Payments</td>
-            <td class="">$9.0K</td><td class="">$9.0K</td><td class="qtr-sep">$9.7K</td><td class="">$10.5K</td><td class="">$11.0K</td><td class="qtr-sep">$11.0K</td><td class="">$11.0K</td><td class="">$10.0K</td><td class="qtr-sep">$9.7K</td><td class="">$9.7K</td><td class="">$9.7K</td><td class="">$9.7K</td>
+            <td class="">$9.0K</td><td class="">$9.0K</td><td class="qsep">$9.7K</td><td class="">$10.5K</td><td class="">$11.0K</td><td class="qsep">$11.0K</td><td class="">$11.0K</td><td class="">$10.0K</td><td class="qsep">$9.7K</td><td class="">$9.7K</td><td class="">$9.7K</td><td class="">$9.7K</td>
             <td style="border-left:1px solid var(--border)">$120,080</td>
             <td>$5,901</td>
-            <td class="behind">5%</td>
+            <td class="behind">5%*</td>
           </tr><tr>
             <td style="color:#ff6b6b">Cyber Protect & CommerceHub</td>
-            <td class="">—</td><td class="">—</td><td class="qtr-sep">$4.8K</td><td class="">$6.2K</td><td class="">$7.4K</td><td class="qtr-sep">$8.7K</td><td class="">$10.0K</td><td class="">$11.2K</td><td class="qtr-sep">$12.5K</td><td class="">$13.9K</td><td class="">$15.2K</td><td class="">$16.5K</td>
+            <td class="">—</td><td class="">—</td><td class="qsep">$4.8K</td><td class="">$6.2K</td><td class="">$7.4K</td><td class="qsep">$8.7K</td><td class="">$10.0K</td><td class="">$11.2K</td><td class="qsep">$12.5K</td><td class="">$13.9K</td><td class="">$15.2K</td><td class="">$16.5K</td>
             <td style="border-left:1px solid var(--border)">$106,305</td>
             <td>$600</td>
-            <td class="behind">1%</td>
+            <td class="behind">1%*</td>
           </tr>
         <tr class="total">
           <td>TOTAL</td>
-          <td class="">$29.2K</td><td class="">$33.2K</td><td class="qtr-sep">$53.7K</td><td class="">$60.1K</td><td class="">$62.7K</td><td class="qtr-sep">$75.1K</td><td class="">$75.4K</td><td class="">$79.6K</td><td class="qtr-sep">$89.5K</td><td class="">$90.9K</td><td class="">$94.0K</td><td class="">$110.5K</td>
+          <td class="">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="qsep">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="qsep">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="qsep">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td><td class="">'$'+(sum>=1000?(sum/1000).toFixed(1)+'K':sum)}</td>
           <td style="border-left:1px solid var(--border)">$853,919</td>
           <td>$49,110</td>
           <td class="behind">48%*</td>
         </tr>
       </tbody>
     </table>
-    <div style="margin-top:10px;font-size:11px;color:var(--muted)">* YTD attainment vs. budget pace as of Mar 23 · Annual attainment through year-end will update as deals close · Billing &amp; Odin = tiers + add-ons + Odin combined · Payments = AR + AP combined</div>
+    <div style="margin-top:10px;font-size:11px;color:var(--muted)">* YTD attainment vs. annualized budget through Mar 23 · Billing &amp; Odin = tiers + add-ons + Odin · Payments = AR + AP · CP+CH = Cyber Protect (RMM/Acronis) + CommerceHub</div>
   </div>
 </div>
 
-<footer>⚡ Revay AI · Salesforce (live SF data) + 2026 Master Bookings Budget (Notion) · Refreshed March 23, 2026</footer>
+<footer>⚡ Revay AI · Salesforce (live) + 2026 Master Bookings Budget (Notion) · Refreshed March 23, 2026</footer>
 
 <script>
-Chart.defaults.color='#7b82a8';
-Chart.defaults.borderColor='#252a3d';
+Chart.defaults.color='#7b82a8';Chart.defaults.borderColor='#252a3d';
 
+// ── Data ──────────────────────────────────────────────────────────────────────
 const annualLabels=["2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-01-31","2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-21","2026-02-22","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03","2026-04-04","2026-04-05","2026-04-06","2026-04-07","2026-04-08","2026-04-09","2026-04-10","2026-04-11","2026-04-12","2026-04-13","2026-04-14","2026-04-15","2026-04-16","2026-04-17","2026-04-18","2026-04-19","2026-04-20","2026-04-21","2026-04-22","2026-04-23","2026-04-24","2026-04-25","2026-04-26","2026-04-27","2026-04-28","2026-04-29","2026-04-30","2026-05-01","2026-05-02","2026-05-03","2026-05-04","2026-05-05","2026-05-06","2026-05-07","2026-05-08","2026-05-09","2026-05-10","2026-05-11","2026-05-12","2026-05-13","2026-05-14","2026-05-15","2026-05-16","2026-05-17","2026-05-18","2026-05-19","2026-05-20","2026-05-21","2026-05-22","2026-05-23","2026-05-24","2026-05-25","2026-05-26","2026-05-27","2026-05-28","2026-05-29","2026-05-30","2026-05-31","2026-06-01","2026-06-02","2026-06-03","2026-06-04","2026-06-05","2026-06-06","2026-06-07","2026-06-08","2026-06-09","2026-06-10","2026-06-11","2026-06-12","2026-06-13","2026-06-14","2026-06-15","2026-06-16","2026-06-17","2026-06-18","2026-06-19","2026-06-20","2026-06-21","2026-06-22","2026-06-23","2026-06-24","2026-06-25","2026-06-26","2026-06-27","2026-06-28","2026-06-29","2026-06-30","2026-07-01","2026-07-02","2026-07-03","2026-07-04","2026-07-05","2026-07-06","2026-07-07","2026-07-08","2026-07-09","2026-07-10","2026-07-11","2026-07-12","2026-07-13","2026-07-14","2026-07-15","2026-07-16","2026-07-17","2026-07-18","2026-07-19","2026-07-20","2026-07-21","2026-07-22","2026-07-23","2026-07-24","2026-07-25","2026-07-26","2026-07-27","2026-07-28","2026-07-29","2026-07-30","2026-07-31","2026-08-01","2026-08-02","2026-08-03","2026-08-04","2026-08-05","2026-08-06","2026-08-07","2026-08-08","2026-08-09","2026-08-10","2026-08-11","2026-08-12","2026-08-13","2026-08-14","2026-08-15","2026-08-16","2026-08-17","2026-08-18","2026-08-19","2026-08-20","2026-08-21","2026-08-22","2026-08-23","2026-08-24","2026-08-25","2026-08-26","2026-08-27","2026-08-28","2026-08-29","2026-08-30","2026-08-31","2026-09-01","2026-09-02","2026-09-03","2026-09-04","2026-09-05","2026-09-06","2026-09-07","2026-09-08","2026-09-09","2026-09-10","2026-09-11","2026-09-12","2026-09-13","2026-09-14","2026-09-15","2026-09-16","2026-09-17","2026-09-18","2026-09-19","2026-09-20","2026-09-21","2026-09-22","2026-09-23","2026-09-24","2026-09-25","2026-09-26","2026-09-27","2026-09-28","2026-09-29","2026-09-30","2026-10-01","2026-10-02","2026-10-03","2026-10-04","2026-10-05","2026-10-06","2026-10-07","2026-10-08","2026-10-09","2026-10-10","2026-10-11","2026-10-12","2026-10-13","2026-10-14","2026-10-15","2026-10-16","2026-10-17","2026-10-18","2026-10-19","2026-10-20","2026-10-21","2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-26","2026-10-27","2026-10-28","2026-10-29","2026-10-30","2026-10-31","2026-11-01","2026-11-02","2026-11-03","2026-11-04","2026-11-05","2026-11-06","2026-11-07","2026-11-08","2026-11-09","2026-11-10","2026-11-11","2026-11-12","2026-11-13","2026-11-14","2026-11-15","2026-11-16","2026-11-17","2026-11-18","2026-11-19","2026-11-20","2026-11-21","2026-11-22","2026-11-23","2026-11-24","2026-11-25","2026-11-26","2026-11-27","2026-11-28","2026-11-29","2026-11-30","2026-12-01","2026-12-02","2026-12-03","2026-12-04","2026-12-05","2026-12-06","2026-12-07","2026-12-08","2026-12-09","2026-12-10","2026-12-11","2026-12-12","2026-12-13","2026-12-14","2026-12-15","2026-12-16","2026-12-17","2026-12-18","2026-12-19","2026-12-20","2026-12-21","2026-12-22","2026-12-23","2026-12-24","2026-12-25","2026-12-26","2026-12-27","2026-12-28","2026-12-29","2026-12-30","2026-12-31"];
-const combinedCumBudget=[942,1884,2827,3769,4711,5653,6595,7538,8480,9422,10364,11306,12249,13191,14133,15075,16017,16959,17902,18844,19786,20728,21670,22613,23555,24497,25439,26381,27324,28266,29208,30394,31580,32766,33952,35138,36324,37510,38696,39882,41068,42254,43440,44626,45812,46998,48184,49370,50556,51742,52928,54114,55300,56486,57672,58858,60044,61230,62416,64147,65878,67609,69340,71071,72802,74533,76264,77995,79726,81457,83188,84919,86650,88381,90113,91844,93575,95306,97037,98768,100499,102230,103961,105692,107423,109154,110885,112616,114347,116078,118081,120083,122086,124088,126091,128093,130096,132098,134101,136103,138106,140108,142111,144113,146116,148118,150121,152123,154126,156128,158131,160133,162136,164138,166141,168143,170146,172148,174151,176153,178176,180200,182223,184247,186270,188294,190317,192340,194364,196387,198411,200434,202457,204481,206504,208528,210551,212575,214598,216621,218645,220668,222692,224715,226738,228762,230785,232809,234832,236856,238879,241383,243886,246390,248893,251397,253901,256404,258908,261411,263915,266419,268922,271426,273929,276433,278937,281440,283944,286447,288951,291455,293958,296462,298965,301469,303973,306476,308980,311483,313987,316418,318850,321281,323713,326144,328576,331007,333439,335870,338302,340733,343164,345596,348027,350459,352890,355322,357753,360185,362616,365047,367479,369910,372342,374773,377205,379636,382068,384499,386931,389362,391931,394500,397069,399638,402207,404777,407346,409915,412484,415053,417622,420191,422760,425329,427898,430468,433037,435606,438175,440744,443313,445882,448451,451020,453589,456159,458728,461297,463866,466435,469004,471988,474973,477957,480941,483925,486910,489894,492878,495863,498847,501831,504816,507800,510784,513768,516753,519737,522721,525706,528690,531674,534659,537643,540627,543611,546596,549580,552564,555549,558533,561467,564400,567334,570268,573202,576135,579069,582003,584936,587870,590804,593738,596671,599605,602539,605472,608406,611340,614273,617207,620141,623075,626008,628942,631876,634809,637743,640677,643611,646544,649478,652610,655742,658874,662006,665138,668270,671402,674535,677667,680799,683931,687063,690195,693327,696459,699591,702723,705855,708987,712119,715251,718383,721516,724648,727780,730912,734044,737176,740308,743440,747004,750568,754132,757695,761259,764823,768387,771951,775515,779078,782642,786206,789770,793334,796898,800461,804025,807589,811153,814717,818281,821844,825408,828972,832536,836100,839664,843227,846791,850355,853919];
-const combinedActualLine=[0,0,0,0,0,0,0,0,0,0,0,0,650,1377,1377,1463,1463,1463,1463,1963,2463,3576,4746,4746,4746,4865,5365,5865,20145,21195,21195,21195,21195,23085,23085,23435,23935,23935,23935,24219,24219,24320,25200,27025,27025,27025,27025,27525,27525,28365,30375,30375,30375,31859,31884,31884,34088,35413,35413,35413,35413,35463,37563,38163,41408,41408,41408,41608,42055,42080,42780,43280,43280,43280,43840,44340,44860,44860,49110,49110,49110,49110,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null];
-const todayIdx=81;
-const qtrStarts=[0,90,181,273];
-const qtrLabels=["Q1","Q2","Q3","Q4"];
-const productData=[{"product":"PSA 2.0","budget":63000,"actual":20524,"attainment":33,"gap":42476,"dealCount":31,"color":"#6c63ff","labels":["2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-01-31","2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-21","2026-02-22","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31"],"actualLine":[0,0,0,0,0,0,0,0,0,0,0,0,0,590,590,590,590,590,590,1090,1590,1590,2710,2710,2710,2710,3210,3710,4740,5740,5740,5740,5740,6315,6315,6315,6815,6815,6815,6815,6815,6815,7345,8420,8420,8420,8420,8920,8920,9760,11770,11770,11770,12270,12270,12270,14474,15774,15774,15774,15774,15774,15774,16374,18444,18444,18444,18444,18444,18444,18444,18944,18944,18944,19504,20004,20524,20524,20524,20524,20524,20524,null,null,null,null,null,null,null,null],"budgetLine":[700,1400,2100,2800,3500,4200,4900,5600,6300,7000,7700,8400,9100,9800,10500,11200,11900,12600,13300,14000,14700,15400,16100,16800,17500,18200,18900,19600,20300,21000,21700,22400,23100,23800,24500,25200,25900,26600,27300,28000,28700,29400,30100,30800,31500,32200,32900,33600,34300,35000,35700,36400,37100,37800,38500,39200,39900,40600,41300,42000,42700,43400,44100,44800,45500,46200,46900,47600,48300,49000,49700,50400,51100,51800,52500,53200,53900,54600,55300,56000,56700,57400,58100,58800,59500,60200,60900,61600,62300,63000]},{"product":"Billing & Odin","budget":20588,"actual":22085,"attainment":107,"gap":-1497,"dealCount":18,"color":"#00d4aa","labels":["2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-01-31","2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-21","2026-02-22","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31"],"actualLine":[0,0,0,0,0,0,0,0,0,0,0,0,650,650,650,650,650,650,650,650,650,650,650,650,650,650,650,650,13900,13900,13900,13900,13900,15215,15215,15315,15315,15315,15315,15315,15315,15315,15665,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,17110,17110,17110,17110,17110,17310,17485,17485,17835,17835,17835,17835,17835,17835,17835,17835,22085,22085,22085,22085,null,null,null,null,null,null,null,null],"budgetLine":[229,458,686,915,1144,1373,1601,1830,2059,2288,2516,2745,2974,3203,3431,3660,3889,4118,4346,4575,4804,5033,5261,5490,5719,5948,6176,6405,6634,6863,7091,7320,7549,7778,8006,8235,8464,8693,8921,9150,9379,9608,9836,10065,10294,10523,10752,10980,11209,11438,11667,11895,12124,12353,12582,12810,13039,13268,13497,13725,13954,14183,14412,14640,14869,15098,15327,15555,15784,16013,16242,16470,16699,16928,17157,17385,17614,17843,18072,18300,18529,18758,18987,19215,19444,19673,19902,20130,20359,20588]},{"product":"Payments","budget":27740,"actual":5901,"attainment":21,"gap":21839,"dealCount":23,"color":"#ffd166","labels":["2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-01-31","2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-21","2026-02-22","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31"],"actualLine":[0,0,0,0,0,0,0,0,0,0,0,0,0,137,137,223,223,223,223,223,223,1336,1386,1386,1386,1505,1505,1505,1505,1555,1555,1555,1555,1555,1555,1555,1555,1555,1555,1839,1839,1940,1940,1940,1940,1940,1940,1940,1940,1940,1940,1940,1940,2924,2949,2949,2949,2974,2974,2974,2974,3024,4429,4429,5604,5604,5604,5604,5876,5901,5901,5901,5901,5901,5901,5901,5901,5901,5901,5901,5901,5901,null,null,null,null,null,null,null,null],"budgetLine":[308,616,925,1233,1541,1849,2158,2466,2774,3082,3390,3699,4007,4315,4623,4932,5240,5548,5856,6164,6473,6781,7089,7397,7706,8014,8322,8630,8938,9247,9555,9863,10171,10480,10788,11096,11404,11712,12021,12329,12637,12945,13254,13562,13870,14178,14486,14795,15103,15411,15719,16028,16336,16644,16952,17260,17569,17877,18185,18493,18802,19110,19418,19726,20034,20343,20651,20959,21267,21576,21884,22192,22500,22808,23117,23425,23733,24041,24350,24658,24966,25274,25582,25891,26199,26507,26815,27124,27432,27740]},{"product":"Cyber Protect & CommerceHub","budget":4750,"actual":600,"attainment":13,"gap":4150,"dealCount":5,"color":"#ff6b6b","labels":["2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-01-31","2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-21","2026-02-22","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31"],"actualLine":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,600,600,600,600,600,600,600,600,600,600,600,600,null,null,null,null,null,null,null,null],"budgetLine":[53,106,158,211,264,317,369,422,475,528,581,633,686,739,792,844,897,950,1003,1056,1108,1161,1214,1267,1319,1372,1425,1478,1531,1583,1636,1689,1742,1794,1847,1900,1953,2006,2058,2111,2164,2217,2269,2322,2375,2428,2481,2533,2586,2639,2692,2744,2797,2850,2903,2956,3008,3061,3114,3167,3219,3272,3325,3378,3431,3483,3536,3589,3642,3694,3747,3800,3853,3906,3958,4011,4064,4117,4169,4222,4275,4328,4381,4433,4486,4539,4592,4644,4697,4750]}];
+const combinedDailyActual=[0,0,0,0,0,0,0,0,0,0,0,0,650,727,0,86,0,0,0,500,500,1113,1170,0,0,119,500,500,14280,1050,0,0,0,1890,0,350,500,0,0,284,0,101,880,1825,0,0,0,500,0,840,2010,0,0,1484,25,0,2204,1325,0,0,0,50,2100,600,3245,0,0,200,447,25,700,500,0,0,560,500,520,0,4250,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+const combinedDailyBudget=[942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,942.1935,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1186,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,1731.0323,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2002.5,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2023.4194,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2503.6,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2431.4516,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2569.0968,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2984.3,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,2933.7097,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3132.0667,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387,3563.8387];
+const todayIdx=81; // 0-indexed
+const QTR_RANGES=[[0,89],[90,180],[181,272],[273,364]];
+const MONTH_NAMES=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+// Compute filtered data for a given start/end (0-indexed, inclusive)
+function computeFiltered(startIdx, endIdx) {
+  const labels=[], actualLine=[], budgetLine=[];
+  let cumA=0, cumB=0;
+  for (let i=startIdx; i<=endIdx; i++) {
+    labels.push(annualLabels[i]);
+    cumA += combinedDailyActual[i]||0;
+    cumB += combinedDailyBudget[i]||0;
+    actualLine.push(i<=todayIdx ? Math.round(cumA) : null);
+    budgetLine.push(Math.round(cumB));
+  }
+  return {labels, actualLine, budgetLine, totalBudget: Math.round(cumB),
+    totalActual: Math.round(labels.slice(0,Math.min(todayIdx-startIdx+1,labels.length)).reduce((_,__,k)=>_+((combinedDailyActual[startIdx+k]||0)),0))};
+}
+
+// Initial: full year
+const initData = computeFiltered(0, 364);
+
+let selectedQtrs = new Set([0,1,2,3]); // all quarters
+let allYear = true;
 
 // Quarter separator + today plugin
-const annotationPlugin={id:'annotations',afterDraw(chart){
-  const ctx=chart.ctx;
-  const {top,bottom}=chart.chartArea;
-  // Quarter lines
-  qtrStarts.slice(1).forEach((idx,i)=>{
-    const x=chart.scales.x.getPixelForValue(idx);
-    ctx.save();
-    ctx.beginPath();ctx.strokeStyle='rgba(108,99,255,0.25)';ctx.lineWidth=1;ctx.setLineDash([]);
-    ctx.moveTo(x,top);ctx.lineTo(x,bottom);ctx.stroke();
-    ctx.fillStyle='rgba(108,99,255,0.6)';ctx.font='bold 10px sans-serif';
-    ctx.fillText('Q'+(i+2),x+4,top+14);
-    ctx.restore();
-  });
-  // Today line
-  const tx=chart.scales.x.getPixelForValue(todayIdx);
-  ctx.save();
-  ctx.beginPath();ctx.strokeStyle='rgba(0,212,170,0.5)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);
-  ctx.moveTo(tx,top);ctx.lineTo(tx,bottom);ctx.stroke();
-  ctx.fillStyle='rgba(0,212,170,0.8)';ctx.font='11px sans-serif';
-  ctx.fillText('Today',tx+4,top+28);
-  ctx.restore();
-}};
-
-new Chart(document.getElementById('annualChart').getContext('2d'),{
-  type:'line',
-  data:{labels:annualLabels,datasets:[
-    {label:'Actual MRR',data:combinedActualLine,borderColor:'#6c63ff',backgroundColor:'rgba(108,99,255,0.07)',borderWidth:2.5,fill:true,tension:0,stepped:'before',pointRadius:0,spanGaps:false},
-    {label:'Budget Ramp',data:combinedCumBudget,borderColor:'rgba(255,255,255,0.2)',borderWidth:1.5,borderDash:[6,4],fill:false,tension:0,pointRadius:0}
-  ]},
-  options:{responsive:true,maintainAspectRatio:false,
-    interaction:{mode:'index',intersect:false},
-    plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1e2d',borderColor:'#252a3d',borderWidth:1,
-      callbacks:{label:c=>c.dataset.label+': $'+Math.round(c.raw||0).toLocaleString(),
-        afterBody:items=>{const a=items.find(i=>i.dataset.label==='Actual MRR')?.raw||0,b=items.find(i=>i.dataset.label==='Budget Ramp')?.raw||0;
-          if(!a||!b)return '';const d=a-b;return d>=0?'▲ Ahead $'+Math.round(d).toLocaleString():'▼ Behind $'+Math.round(Math.abs(d)).toLocaleString();}}}},
-    scales:{
-      x:{ticks:{maxRotation:0,callback:(v,i)=>{const m=['Jan','','','Feb','','','Mar','','','Apr','','','May','','','Jun','','','Jul','','','Aug','','','Sep','','','Oct','','','Nov','','','Dec'];return m[Math.floor(i/10)]||'';},maxTicksLimit:13},grid:{color:'rgba(255,255,255,0.03)'}},
-      y:{ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'},grid:{color:'rgba(255,255,255,0.04)'}}
+function makeAnnotationPlugin(startOffset, qtrBreaks) {
+  return {id:'annotations',afterDraw(chart){
+    const ctx=chart.ctx;const {top,bottom}=chart.chartArea;
+    // Quarter boundary lines
+    qtrBreaks.forEach(({idx, label})=>{
+      if(idx<=0)return;
+      const x=chart.scales.x.getPixelForValue(idx);
+      if(x<chart.chartArea.left||x>chart.chartArea.right)return;
+      ctx.save();
+      ctx.beginPath();ctx.strokeStyle='rgba(108,99,255,0.25)';ctx.lineWidth=1;ctx.setLineDash([]);
+      ctx.moveTo(x,top);ctx.lineTo(x,bottom);ctx.stroke();
+      ctx.fillStyle='rgba(108,99,255,0.55)';ctx.font='bold 10px sans-serif';
+      ctx.fillText(label,x+4,top+13);
+      ctx.restore();
+    });
+    // Today line
+    const ti=todayIdx-startOffset;
+    if(ti>=0&&ti<chart.data.labels.length){
+      const tx=chart.scales.x.getPixelForValue(ti);
+      if(tx>=chart.chartArea.left&&tx<=chart.chartArea.right){
+        ctx.save();
+        ctx.beginPath();ctx.strokeStyle='rgba(0,212,170,0.5)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);
+        ctx.moveTo(tx,top);ctx.lineTo(tx,bottom);ctx.stroke();
+        ctx.fillStyle='rgba(0,212,170,0.8)';ctx.font='11px sans-serif';
+        ctx.fillText('Today',tx+4,top+27);
+        ctx.restore();
+      }
     }
-  },
-  plugins:[annotationPlugin]
-});
+  }};
+}
 
-// Month labels on annual chart — simpler approach
-const annualChart=Chart.getChart('annualChart');
+function getMonthTickCallback(startOffset) {
+  return function(val, idx) {
+    const globalIdx = startOffset + idx;
+    const d = new Date('2026-01-01'); d.setDate(d.getDate()+globalIdx);
+    if(d.getDate()===1) return MONTH_NAMES[d.getMonth()];
+    return '';
+  };
+}
+
+// Build the chart
+let annualChart = null;
+let currentStartOffset = 0;
+
+function buildChart(startIdx, endIdx) {
+  const data = computeFiltered(startIdx, endIdx);
+  currentStartOffset = startIdx;
+
+  // Find quarter break points within this range
+  const qtrBreaks = [];
+  QTR_RANGES.forEach(([s,e],i)=>{
+    if(s>startIdx && s<=endIdx) {
+      qtrBreaks.push({idx: s-startIdx, label:'Q'+(i+1)});
+    }
+  });
+
+  const plugin = makeAnnotationPlugin(startIdx, qtrBreaks);
+
+  // Update range info
+  const startDate=new Date('2026-01-01');startDate.setDate(startDate.getDate()+startIdx);
+  const endDate=new Date('2026-01-01');endDate.setDate(endDate.getDate()+endIdx);
+  const fmtD=d=>d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  document.getElementById('rangeInfo').textContent =
+    (allYear?'Showing full year':'Showing '+[...selectedQtrs].sort().map(q=>'Q'+(q+1)).join('+'))+
+    ' · '+fmtD(startDate)+' – '+fmtD(endDate)+', 2026';
+
+  // Update summary stats
+  const rangeActual = combinedDailyActual.slice(startIdx, Math.min(todayIdx+1,endIdx+1)).reduce((s,v)=>s+v,0);
+  const rangeBudgetAtToday = data.budgetLine[Math.min(todayIdx-startIdx, data.budgetLine.length-1)];
+  const rangeAttPct = rangeBudgetAtToday>0 ? Math.round(rangeActual/rangeBudgetAtToday*100) : 0;
+  const rangeGap = rangeBudgetAtToday - rangeActual;
+  document.getElementById('csBudget').textContent='$'+Math.round(data.totalBudget).toLocaleString();
+  document.getElementById('csActual').textContent='$'+Math.round(rangeActual).toLocaleString();
+  document.getElementById('csAtt').textContent=rangeAttPct+'% (vs. budget pace today)';
+  document.getElementById('csGap').textContent='$'+Math.max(0,Math.round(rangeGap)).toLocaleString()+' behind';
+
+  if (annualChart) {
+    annualChart.data.labels = data.labels;
+    annualChart.data.datasets[0].data = data.actualLine;
+    annualChart.data.datasets[1].data = data.budgetLine;
+    // Remove old annotation plugin, add new one
+    const pluginIdx = annualChart.config.plugins.findIndex(p=>p.id==='annotations');
+    if(pluginIdx>=0) annualChart.config.plugins.splice(pluginIdx,1);
+    annualChart.config.plugins.push(plugin);
+    annualChart.options.scales.x.ticks.callback = getMonthTickCallback(startIdx);
+    annualChart.update('none');
+    return;
+  }
+
+  annualChart = new Chart(document.getElementById('annualChart').getContext('2d'),{
+    type:'line',
+    data:{labels:data.labels,datasets:[
+      {label:'Actual MRR',data:data.actualLine,borderColor:'#6c63ff',backgroundColor:'rgba(108,99,255,.07)',borderWidth:2.5,fill:true,tension:0,stepped:'before',pointRadius:0,spanGaps:false},
+      {label:'Budget Ramp',data:data.budgetLine,borderColor:'rgba(255,255,255,.2)',borderWidth:1.5,borderDash:[6,4],fill:false,tension:0,pointRadius:0}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1e2d',borderColor:'#252a3d',borderWidth:1,
+        callbacks:{label:c=>c.dataset.label+': $'+Math.round(c.raw||0).toLocaleString(),
+          afterBody:items=>{const a=items.find(i=>i.dataset.label==='Actual MRR')?.raw||0,b=items.find(i=>i.dataset.label==='Budget Ramp')?.raw||0;
+            if(!a||!b)return '';const d=a-b;return d>=0?'▲ Ahead $'+Math.round(d).toLocaleString():'▼ Behind $'+Math.round(Math.abs(d)).toLocaleString();}}}},
+      scales:{
+        x:{ticks:{maxRotation:0,callback:getMonthTickCallback(0),maxTicksLimit:14},grid:{color:'rgba(255,255,255,.03)'}},
+        y:{ticks:{callback:v=>'$'+(v>=1000?(v/1000).toFixed(0)+'K':v)},grid:{color:'rgba(255,255,255,.04)'}}
+      }
+    },
+    plugins:[plugin]
+  });
+}
+
+buildChart(0,364);
+
+// ── Quarter toggle logic ──────────────────────────────────────────────────────
+function updateChart() {
+  if(allYear || selectedQtrs.size===0) {
+    buildChart(0,364);
+    return;
+  }
+  const qtrs=[...selectedQtrs].sort();
+  const startIdx = QTR_RANGES[qtrs[0]][0];
+  const endIdx   = QTR_RANGES[qtrs[qtrs.length-1]][1];
+  buildChart(startIdx, endIdx);
+}
+
+function setAllQtrs(btn) {
+  allYear=true;
+  selectedQtrs=new Set([0,1,2,3]);
+  document.querySelectorAll('.qtr-btn.all-btn').forEach(b=>b.classList.add('active'));
+  document.querySelectorAll('.qtr-btn[data-qtr]').forEach(b=>b.classList.remove('active'));
+  updateChart();
+}
+
+function toggleQtr(btn) {
+  const q=parseInt(btn.dataset.qtr);
+  allYear=false;
+  document.querySelector('.all-btn').classList.remove('active');
+
+  if(selectedQtrs.has(q)&&selectedQtrs.size>1) {
+    selectedQtrs.delete(q);
+    btn.classList.remove('active');
+  } else {
+    selectedQtrs.add(q);
+    btn.classList.add('active');
+  }
+  // If all 4 selected, treat as all-year
+  if(selectedQtrs.size===4){
+    allYear=true;
+    document.querySelector('.all-btn').classList.add('active');
+  }
+  updateChart();
+}
 
 // Product mini charts
+const productData=[{"product":"PSA 2.0","pBudget":63000,"actual":20524,"att":33,"gap":42476,"dealCount":31,"color":"#6c63ff","labels":["2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-01-31","2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-21","2026-02-22","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31"],"actualLine":[0,0,0,0,0,0,0,0,0,0,0,0,0,590,590,590,590,590,590,1090,1590,1590,2710,2710,2710,2710,3210,3710,4740,5740,5740,5740,5740,6315,6315,6315,6815,6815,6815,6815,6815,6815,7345,8420,8420,8420,8420,8920,8920,9760,11770,11770,11770,12270,12270,12270,14474,15774,15774,15774,15774,15774,15774,16374,18444,18444,18444,18444,18444,18444,18444,18944,18944,18944,19504,20004,20524,20524,20524,20524,20524,20524,null,null,null,null,null,null,null,null],"budgetLine":[548,1097,1645,2194,2742,3290,3839,4387,4935,5484,6032,6581,7129,7677,8226,8774,9323,9871,10419,10968,11516,12065,12613,13161,13710,14258,14806,15355,15903,16452,17000,17750,18500,19250,20000,20750,21500,22250,23000,23750,24500,25250,26000,26750,27500,28250,29000,29750,30500,31250,32000,32750,33500,34250,35000,35750,36500,37250,38000,38806,39613,40419,41226,42032,42839,43645,44452,45258,46065,46871,47677,48484,49290,50097,50903,51710,52516,53323,54129,54935,55742,56548,57355,58161,58968,59774,60581,61387,62194,63000]},{"product":"Billing & Odin","pBudget":20588,"actual":22085,"att":107,"gap":-1497,"dealCount":18,"color":"#00d4aa","labels":["2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-01-31","2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-21","2026-02-22","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31"],"actualLine":[0,0,0,0,0,0,0,0,0,0,0,0,650,650,650,650,650,650,650,650,650,650,650,650,650,650,650,650,13900,13900,13900,13900,13900,15215,15215,15315,15315,15315,15315,15315,15315,15315,15665,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,16415,17110,17110,17110,17110,17110,17310,17485,17485,17835,17835,17835,17835,17835,17835,17835,17835,22085,22085,22085,22085,null,null,null,null,null,null,null,null],"budgetLine":[102,204,307,409,511,613,715,818,920,1022,1124,1226,1329,1431,1533,1635,1737,1839,1942,2044,2146,2248,2350,2453,2555,2657,2759,2861,2964,3066,3168,3281,3394,3507,3621,3734,3847,3960,4073,4186,4299,4413,4526,4639,4752,4865,4978,5091,5205,5318,5431,5544,5657,5770,5883,5997,6110,6223,6336,6796,7255,7715,8175,8635,9094,9554,10014,10474,10933,11393,11853,12313,12772,13232,13692,14152,14611,15071,15531,15991,16450,16910,17370,17830,18289,18749,19209,19669,20128,20588]},{"product":"Payments","pBudget":27740,"actual":5901,"att":21,"gap":21839,"dealCount":23,"color":"#ffd166","labels":["2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-01-31","2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-21","2026-02-22","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31"],"actualLine":[0,0,0,0,0,0,0,0,0,0,0,0,0,137,137,223,223,223,223,223,223,1336,1386,1386,1386,1505,1505,1505,1505,1555,1555,1555,1555,1555,1555,1555,1555,1555,1555,1839,1839,1940,1940,1940,1940,1940,1940,1940,1940,1940,1940,1940,1940,2924,2949,2949,2949,2974,2974,2974,2974,3024,4429,4429,5604,5604,5604,5604,5876,5901,5901,5901,5901,5901,5901,5901,5901,5901,5901,5901,5901,5901,null,null,null,null,null,null,null,null],"budgetLine":[292,583,875,1166,1458,1750,2041,2333,2625,2916,3208,3499,3791,4083,4374,4666,4957,5249,5541,5832,6124,6415,6707,6999,7290,7582,7874,8165,8457,8748,9040,9363,9686,10009,10331,10654,10977,11300,11623,11946,12269,12591,12914,13237,13560,13883,14206,14529,14851,15174,15497,15820,16143,16466,16789,17111,17434,17757,18080,18392,18703,19015,19326,19638,19950,20261,20573,20885,21196,21508,21819,22131,22443,22754,23066,23377,23689,24001,24312,24624,24935,25247,25559,25870,26182,26494,26805,27117,27428,27740]},{"product":"Cyber Protect & CommerceHub","pBudget":4750,"actual":600,"att":13,"gap":4150,"dealCount":5,"color":"#ff6b6b","labels":["2026-01-01","2026-01-02","2026-01-03","2026-01-04","2026-01-05","2026-01-06","2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-01-31","2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05","2026-02-06","2026-02-07","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-21","2026-02-22","2026-02-23","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31"],"actualLine":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,250,600,600,600,600,600,600,600,600,600,600,600,600,null,null,null,null,null,null,null,null],"budgetLine":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,153,306,460,613,766,919,1073,1226,1379,1532,1685,1839,1992,2145,2298,2452,2605,2758,2911,3065,3218,3371,3524,3677,3831,3984,4137,4290,4444,4597,4750]}];
 productData.forEach(pd=>{
   const canvas=document.getElementById('pc_'+pd.product.replace(/[^a-z0-9]/gi,'_'));
   if(!canvas)return;
-  const qDays=pd.labels.length;
   new Chart(canvas.getContext('2d'),{
     type:'line',
     data:{labels:pd.labels,datasets:[
       {label:'Actual',data:pd.actualLine,borderColor:pd.color,backgroundColor:pd.color+'15',borderWidth:2,fill:true,tension:0,stepped:'before',pointRadius:0,spanGaps:false},
-      ...(pd.budget>0?[{label:'Budget',data:pd.budgetLine,borderColor:'rgba(255,255,255,0.18)',borderWidth:1,borderDash:[5,4],fill:false,tension:0,pointRadius:0}]:[])
+      ...(pd.pBudget>0?[{label:'Budget',data:pd.budgetLine,borderColor:'rgba(255,255,255,.18)',borderWidth:1,borderDash:[5,4],fill:false,tension:0,pointRadius:0}]:[])
     ]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1e2d',borderColor:'#252a3d',borderWidth:1,callbacks:{label:c=>c.dataset.label+': $'+Math.round(c.raw||0).toLocaleString()}}},
       scales:{
-        x:{ticks:{maxRotation:0,callback:(v,i)=>{if(i===0)return 'Jan';if(i===31)return 'Feb';if(i===59)return 'Mar';return '';},maxTicksLimit:4},grid:{color:'rgba(255,255,255,0.03)'}},
-        y:{ticks:{callback:v=>'$'+(v>=1000?(v/1000).toFixed(0)+'K':v),maxTicksLimit:4},grid:{color:'rgba(255,255,255,0.03)'}}
+        x:{ticks:{maxRotation:0,callback:(v,i)=>{if(i===0)return 'Jan';if(i===31)return 'Feb';if(i===59)return 'Mar';return '';},maxTicksLimit:4},grid:{color:'rgba(255,255,255,.03)'}},
+        y:{ticks:{callback:v=>'$'+(v>=1000?(v/1000).toFixed(0)+'K':v),maxTicksLimit:4},grid:{color:'rgba(255,255,255,.03)'}}
       }
     },
-    plugins:[{id:'todayL',afterDraw(c){
-      const x=c.scales.x.getPixelForValue(81-0);
+    plugins:[{id:'tl',afterDraw(c){
+      const x=c.scales.x.getPixelForValue(81);
       if(x<c.chartArea.left||x>c.chartArea.right)return;
-      c.ctx.save();c.ctx.beginPath();c.ctx.strokeStyle='rgba(0,212,170,.35)';c.ctx.lineWidth=1;c.ctx.setLineDash([3,3]);
+      c.ctx.save();c.ctx.beginPath();c.ctx.strokeStyle='rgba(0,212,170,.3)';c.ctx.lineWidth=1;c.ctx.setLineDash([3,3]);
       c.ctx.moveTo(x,c.chartArea.top);c.ctx.lineTo(x,c.chartArea.bottom);c.ctx.stroke();c.ctx.restore();
     }}]
   });
 });
-
-// Fix annual chart x-axis labels manually
-const ac=document.getElementById('annualChart');
-if(ac){
-  // Month label positions (approx day-of-year midpoints)
-  const monthMids=[15,46,74,105,135,166,196,227,258,288,319,349];
-  const monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-}
 </script>
 </body>
 </html>
