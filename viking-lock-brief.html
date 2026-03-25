@@ -411,7 +411,7 @@
 <div class="hero">
   <div class="hero-eyebrow">⚡ Rev.io PSA — Sales to SA Handoff</div>
   <h1><span>Sales Brief</span> — Viking Lock</h1>
-  <p class="hero-sub">Complete at close. Hand off to the SA 48 hours before kickoff. Every field filled = one less question on Day 1.</p>
+  <p class="hero-sub">Pre-filled from Salesforce + Kaia intelligence · Close date 3/23/2026 · Bryan Bettiol → SA Handoff</p>
   <div class="hero-actions">
     <button class="btn btn-primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
     <button class="btn btn-secondary" onclick="clearForm()">↺ Clear Form</button>
@@ -430,30 +430,30 @@
       <div class="field-grid col2">
         <div class="field">
           <label>Company Name <span class="req">*</span></label>
-          <input type="text" placeholder="e.g. Losh Network Services" />
+          <input type="text" placeholder="e.g. Losh Network Services" value="Viking Lock" />
         </div>
         <div class="field">
           <label>Close Date <span class="req">*</span></label>
-          <input type="date" />
+          <input type="date" value="2026-03-23" />
         </div>
         <div class="field">
           <label>Monthly Recurring Revenue (MRR)</label>
-          <input type="text" placeholder="e.g. $1,004" />
+          <input type="text" placeholder="e.g. $1,004" value="$690/mo" />
         </div>
         <div class="field">
           <label>Contract Term</label>
           <select>
             <option value="">— Select —</option>
-            <option>Month-to-Month</option>
+            <option selected>Month-to-Month</option>
             <option>12 Months</option>
             <option>24 Months</option>
             <option>36 Months</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
           <label>Sales Rep <span class="req">*</span></label>
-          <input type="text" placeholder="Full name" />
+          <input type="text" placeholder="Full name" value="Bryan Bettiol" />
         </div>
         <div class="field">
           <label>SA Assigned</label>
@@ -463,16 +463,16 @@
             <option>Halle Taylor</option>
             <option>Kegan Ehlers</option>
             <option>Jeremy Adams</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
           <label>Primary Client Contact <span class="req">*</span></label>
-          <input type="text" placeholder="Name + title" />
+          <input type="text" placeholder="Name + title" value="Rick Alamaa — President" />
         </div>
         <div class="field">
           <label>Primary Contact Email</label>
-          <input type="email" placeholder="email@company.com" />
+          <input type="email" placeholder="email@company.com" value="rick@vikinglock.com" />
         </div>
       </div>
 
@@ -483,7 +483,7 @@
           <label>Existing Rev.io Billing Client?</label>
           <div class="radio-group">
             <label><input type="radio" name="billing_client" value="yes" /> Yes — existing billing</label>
-            <label><input type="radio" name="billing_client" value="no" /> No — net new</label>
+            <label><input type="radio" name="billing_client" value="no" checked /> No — net new</label>
           </div>
           <p class="hint">If No → complete Section 05 (Billing Profile)</p>
         </div>
@@ -497,7 +497,7 @@
             <option>Field Service</option>
             <option>Telecom / VoIP</option>
             <option>Multi-service</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
       </div>
@@ -506,7 +506,16 @@
 
       <div class="field">
         <label>Brief — Key Context for SA</label>
-        <textarea placeholder="Anything from the sales calls the SA should know going in — client personality, key pain points, specific promises made, red flags, champions, etc."></textarea>
+        <textarea placeholder="Anything from the sales calls the SA should know going in — client personality, key pain points, specific promises made, red flags, champions, etc.">Locksmith company — Pueblo, CO. 13 employees. Long sales cycle (Jan–Mar 2026). Client (Rick Alamaa, President) stalled in Jan/Feb because he was worried about not having enough internal bandwidth to onboard — had recently let employees go. Closed 3/23 with 60-day license delay + fees waived.
+
+Key pain points verbatim from closing call:
+• Highly customized door hardware quoting (price varies by vendor/job — no standard catalog)
+• Progressive billing: materials deposit upfront, invoice as materials arrive
+• Change order visibility between field and accounting
+• Time tracking tied to specific jobs, not overhead
+• Client said: "It's just got to be something you guys can handle most of — I'm already working 18 to 20 hour days."
+
+Sandy West (Bookkeeper) owns finance/accounting. Rick was mid-call with his accountant at time of close — GL codes not yet confirmed. Bryan's closing email explicitly flagged QB Desktop limitations.</textarea>
       </div>
     </div>
 
@@ -521,19 +530,19 @@
         </div>
         <div class="field">
           <label>Kickoff Target Time</label>
-          <input type="text" placeholder="e.g. 2:00 PM ET" />
+          <input type="text" placeholder="e.g. 2:00 PM ET" value="9:00 AM MT" />
         </div>
         <div class="field">
           <label>Go-Live Complexity Tier</label>
           <div class="radio-group">
-            <label><input type="radio" name="golive_tier" value="simple" /> <strong>Simple</strong> — ≤$700/mo, no data or payment migration → target 1 week</label>
+            <label><input type="radio" name="golive_tier" value="simple" checked /> <strong>Simple</strong> — ≤$700/mo, no data or payment migration → target 1 week</label>
             <label><input type="radio" name="golive_tier" value="payments" /> <strong>With Payment Migration</strong> → target 3 weeks</label>
             <label><input type="radio" name="golive_tier" value="billing" /> <strong>Billing Client / Complex</strong> → defined timeline required</label>
           </div>
         </div>
         <div class="field">
           <label>Go-Live Target Date</label>
-          <input type="date" />
+          <input type="date" value="2026-03-24" />
           <p class="hint">Based on complexity tier above. Simple clients: 1 week from kickoff.</p>
         </div>
       </div>
@@ -563,31 +572,33 @@
             <option>Autotask</option>
             <option>Jira</option>
             <option>Alarm Biller</option>
-            <option>Spreadsheets only</option>
+            <option selected>Spreadsheets only</option>
             <option>None / starting fresh</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
           <label>If Other — specify</label>
-          <input type="text" placeholder="System name" />
+          <input type="text" placeholder="System name" value="" />
         </div>
         <div class="field">
           <label>Migration Complexity</label>
           <div class="radio-group">
             <label><input type="radio" name="migration" value="clean" /> Clean data — ready to export</label>
-            <label><input type="radio" name="migration" value="messy" /> Needs cleanup first</label>
+            <label><input type="radio" name="migration" value="messy" checked /> Needs cleanup first</label>
             <label><input type="radio" name="migration" value="fresh" /> No migration needed</label>
           </div>
         </div>
         <div class="field">
           <label>Approx. Customer / Record Count</label>
-          <input type="text" placeholder="e.g. ~200 customers, 1,500 tickets" />
+          <input type="text" placeholder="e.g. ~200 customers, 1,500 tickets" value="~13 employees; customer/job count TBD — confirm at kickoff" />
         </div>
       </div>
       <div class="field" style="margin-top:14px;">
         <label>Migration Notes</label>
-        <textarea placeholder="Any known data quality issues, special migration requirements, legacy data to exclude, etc." style="min-height:60px;"></textarea>
+        <textarea placeholder="Any known data quality issues, special migration requirements, legacy data to exclude, etc." style="min-height:60px;">Coming from spreadsheets + QB Desktop. Minimal structured data expected — customer/job records will largely need to be built in Rev.io. QB Desktop holds financial history but no direct integration is available; export workaround required.
+
+Client was concerned about bandwidth for migration. Set a measured, realistic pace at kickoff — don't front-load data migration onto client.</textarea>
       </div>
     </div>
 
@@ -600,24 +611,24 @@
           <select>
             <option value="">— Select —</option>
             <option>QuickBooks Online</option>
-            <option>QuickBooks Desktop</option>
+            <option selected>QuickBooks Desktop</option>
             <option>NetSuite</option>
             <option>Sage</option>
             <option>Xero</option>
             <option>FreshBooks</option>
-            <option>None</option>
-            <option>Other</option>
+            <option selected>None</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
           <label>If Other — specify</label>
-          <input type="text" placeholder="Software name" />
+          <input type="text" placeholder="Software name" value="" />
         </div>
         <div class="field">
           <label>Two-Way Sync Required?</label>
           <div class="radio-group">
             <label><input type="radio" name="qb_sync" value="yes" /> Yes</label>
-            <label><input type="radio" name="qb_sync" value="no" /> No — one-way only</label>
+            <label><input type="radio" name="qb_sync" value="no" checked /> No — one-way only</label>
             <label><input type="radio" name="qb_sync" value="unsure" /> TBD</label>
           </div>
         </div>
@@ -625,7 +636,7 @@
           <label>GL Codes Ready?</label>
           <div class="radio-group">
             <label><input type="radio" name="gl_codes" value="yes" /> Yes — chart of accounts ready</label>
-            <label><input type="radio" name="gl_codes" value="no" /> No — accountant needs to provide</label>
+            <label><input type="radio" name="gl_codes" value="no" checked /> No — accountant needs to provide</label>
           </div>
         </div>
       </div>
@@ -647,20 +658,20 @@
             <option>Syncro</option>
             <option>Kaseya VSA</option>
             <option>N-able N-sight</option>
-            <option>None</option>
-            <option>Other</option>
+            <option selected>None</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
           <label>If Other — specify</label>
-          <input type="text" placeholder="RMM name" />
+          <input type="text" placeholder="RMM name" value="" />
         </div>
         <div class="field">
           <label>Integration Priority</label>
           <div class="radio-group">
             <label><input type="radio" name="rmm_priority" value="day1" /> Day 1 priority</label>
             <label><input type="radio" name="rmm_priority" value="later" /> Phase 2</label>
-            <label><input type="radio" name="rmm_priority" value="none" /> Not needed</label>
+            <label><input type="radio" name="rmm_priority" value="none" checked /> Not needed</label>
           </div>
         </div>
         <div class="field">
@@ -669,7 +680,7 @@
             <label><input type="checkbox" /> PandaDoc</label>
             <label><input type="checkbox" /> HubSpot</label>
             <label><input type="checkbox" /> Outlook</label>
-            <label><input type="checkbox" /> Google Calendar</label>
+            <label><input type="checkbox" checked /> Google Calendar</label>
             <label><input type="checkbox" /> PAX8</label>
             <label><input type="checkbox" /> Zoho CRM</label>
             <label><input type="checkbox" /> Custom API</label>
@@ -678,7 +689,7 @@
       </div>
       <div class="field" style="margin-top:14px;">
         <label>Integration Notes / Custom API Details</label>
-        <textarea placeholder="e.g. custom alarm monitoring system requires bidirectional API — spec TBD" style="min-height:55px;"></textarea>
+        <textarea placeholder="e.g. custom alarm monitoring system requires bidirectional API — spec TBD" style="min-height:55px;">Google Calendar — confirm sync direction and which team members need it on Day 1.</textarea>
       </div>
     </div>
 
@@ -697,8 +708,8 @@
             <option>Authorize.net</option>
             <option>TRX / Payroc</option>
             <option>Manual / check only</option>
-            <option>None yet</option>
-            <option>Other</option>
+            <option selected>None yet</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
@@ -707,7 +718,7 @@
             <label><input type="radio" name="payments_switch" value="yes" /> Yes — migrating</label>
             <label><input type="radio" name="payments_switch" value="no" /> No — keeping current</label>
             <label><input type="radio" name="payments_switch" value="new" /> Setting up new</label>
-            <label><input type="radio" name="payments_switch" value="tbd" /> TBD</label>
+            <label><input type="radio" name="payments_switch" value="tbd" checked /> TBD</label>
           </div>
         </div>
         <div class="field">
@@ -715,15 +726,15 @@
           <div class="radio-group">
             <label><input type="radio" name="merchant" value="yes" /> Yes — 3 months ready</label>
             <label><input type="radio" name="merchant" value="no" /> No — needs to collect</label>
-            <label><input type="radio" name="merchant" value="na" /> N/A</label>
+            <label><input type="radio" name="merchant" value="na" checked /> N/A</label>
           </div>
         </div>
         <div class="field">
           <label>Payment Methods Accepted</label>
           <div class="check-group">
-            <label><input type="checkbox" /> Credit Card</label>
+            <label><input type="checkbox" checked /> Credit Card</label>
             <label><input type="checkbox" /> ACH / Bank Transfer</label>
-            <label><input type="checkbox" /> Check</label>
+            <label><input type="checkbox" checked /> Check</label>
             <label><input type="checkbox" /> Card Reader (in-field)</label>
           </div>
         </div>
@@ -748,13 +759,13 @@
         </thead>
         <tbody id="rolesBody">
           <tr>
-            <td><input type="text" placeholder="Name" /></td>
-            <td><input type="text" placeholder="e.g. Owner" /></td>
-            <td><input type="email" placeholder="email@co.com" /></td>
+            <td><input type="text" placeholder="Name" value="Rick Alamaa" /></td>
+            <td><input type="text" placeholder="e.g. Owner" value="President" /></td>
+            <td><input type="email" placeholder="email@co.com" value="rick@vikinglock.com" /></td>
             <td>
               <select>
                 <option value="">— Role —</option>
-                <option>Admin</option>
+                <option selected>Admin</option>
                 <option>Billing Admin</option>
                 <option>Operations Manager</option>
                 <option>Dispatcher</option>
@@ -766,8 +777,8 @@
             </td>
             <td>
               <div class="radio-group" style="flex-direction:column; gap:4px;">
-                <label><input type="radio" name="mob_0" value="yes" /> Yes</label>
-                <label><input type="radio" name="mob_0" value="no" checked /> No</label>
+                <label><input type="radio" name="mob_0" value="yes" checked /> Yes</label>
+                <label><input type="radio" name="mob_0" value="no" /> No</label>
               </div>
             </td>
             <td><button class="del-btn" onclick="removeRow(this)" title="Remove">✕</button></td>
@@ -787,41 +798,41 @@
             <label><input type="checkbox" /> By Department</label>
             <label><input type="checkbox" /> By Geography / Zone</label>
             <label><input type="checkbox" /> By Skill Set</label>
-            <label><input type="checkbox" /> By Individual Tech</label>
+            <label><input type="checkbox" checked /> By Individual Tech</label>
             <label><input type="checkbox" /> No formal dispatch</label>
           </div>
         </div>
         <div class="field">
           <label>Service Type</label>
           <div class="check-group">
-            <label><input type="checkbox" /> Field / On-site</label>
+            <label><input type="checkbox" checked /> Field / On-site</label>
             <label><input type="checkbox" /> Remote / Help Desk</label>
             <label><input type="checkbox" /> Both</label>
-            <label><input type="checkbox" /> Install Projects</label>
+            <label><input type="checkbox" checked /> Install Projects</label>
           </div>
         </div>
         <div class="field">
           <label>Business Hours</label>
-          <input type="text" placeholder="e.g. Mon–Fri 8am–5pm ET" />
+          <input type="text" placeholder="e.g. Mon–Fri 8am–5pm ET" value="Mon–Fri — confirm exact hours at kickoff" />
         </div>
         <div class="field">
           <label>After-Hours / Weekend Support?</label>
           <div class="radio-group">
             <label><input type="radio" name="afterhours" value="yes" /> Yes</label>
             <label><input type="radio" name="afterhours" value="no" /> No</label>
-            <label><input type="radio" name="afterhours" value="emergency" /> Emergency only</label>
+            <label><input type="radio" name="afterhours" value="emergency" checked /> Emergency only</label>
           </div>
         </div>
         <div class="field">
           <label>Holiday Calendar</label>
-          <input type="text" placeholder="e.g. US Federal holidays" />
+          <input type="text" placeholder="e.g. US Federal holidays" value="US Federal holidays — confirm at kickoff" />
         </div>
         <div class="field">
           <label>Holidays Affect SLA Timers?</label>
           <div class="radio-group">
             <label><input type="radio" name="sla_holidays" value="yes" /> Yes — pause SLA</label>
             <label><input type="radio" name="sla_holidays" value="no" /> No — SLA runs 24/7</label>
-            <label><input type="radio" name="sla_holidays" value="tbd" /> TBD</label>
+            <label><input type="radio" name="sla_holidays" value="tbd" checked /> TBD</label>
           </div>
         </div>
       </div>
@@ -834,17 +845,17 @@
         <div class="field">
           <label>Needs Invoice Continuity? <span class="req">*</span></label>
           <div class="radio-group">
-            <label><input type="radio" name="invoice_cont" value="yes" /> Yes — must continue from current numbers</label>
+            <label><input type="radio" name="invoice_cont" value="yes" checked /> Yes — must continue from current numbers</label>
             <label><input type="radio" name="invoice_cont" value="no" /> No — fresh start is fine</label>
           </div>
         </div>
         <div class="field">
           <label>Last Invoice Number (if continuing)</label>
-          <input type="text" placeholder="e.g. INV-10482" />
+          <input type="text" placeholder="e.g. INV-10482" value="TBD — confirm with Sandy West (Bookkeeper)" />
         </div>
         <div class="field">
           <label>Invoice Prefix / Format</label>
-          <input type="text" placeholder="e.g. INV- or just numeric" />
+          <input type="text" placeholder="e.g. INV- or just numeric" value="TBD" />
         </div>
         <div class="field">
           <label>Starting Number (if resetting)</label>
@@ -863,7 +874,7 @@
             <label><input type="radio" name="suretax" value="existing" /> Has existing SureTax account</label>
             <label><input type="radio" name="suretax" value="new" /> Needs new account set up</label>
             <label><input type="radio" name="suretax" value="exempt" /> Tax exempt — no SureTax needed</label>
-            <label><input type="radio" name="suretax" value="tbd" /> TBD</label>
+            <label><input type="radio" name="suretax" value="tbd" checked /> TBD</label>
           </div>
         </div>
         <div class="field">
@@ -874,12 +885,12 @@
           <label>Tax-Exempt Clients?</label>
           <div class="radio-group">
             <label><input type="radio" name="tax_exempt" value="yes" /> Yes</label>
-            <label><input type="radio" name="tax_exempt" value="no" /> No</label>
+            <label><input type="radio" name="tax_exempt" value="no" checked /> No</label>
           </div>
         </div>
         <div class="field">
           <label>States / Jurisdictions</label>
-          <input type="text" placeholder="e.g. TX, CA, Ontario (Canada)" />
+          <input type="text" placeholder="e.g. TX, CA, Ontario (Canada)" value="Colorado (CO)" />
         </div>
       </div>
       <div class="field" style="margin-top:14px;">
@@ -948,9 +959,9 @@
         <div class="field">
           <label>Inventory Details</label>
           <div class="check-group">
-            <label><input type="checkbox" /> Serialized assets</label>
+            <label><input type="checkbox" checked /> Serialized assets</label>
             <label><input type="checkbox" /> Purchase Orders</label>
-            <label><input type="checkbox" /> Mobile / van inventory</label>
+            <label><input type="checkbox" checked /> Mobile / van inventory</label>
             <label><input type="checkbox" /> Warehouse tracking</label>
           </div>
         </div>
@@ -965,18 +976,18 @@
         <div class="field">
           <label>Project Details</label>
           <div class="check-group">
-            <label><input type="checkbox" /> Multi-phase installs</label>
+            <label><input type="checkbox" checked /> Multi-phase installs</label>
             <label><input type="checkbox" /> Milestone billing</label>
-            <label><input type="checkbox" /> Multiple concurrent projects</label>
+            <label><input type="checkbox" checked /> Multiple concurrent projects</label>
           </div>
         </div>
         <div class="field">
           <label>Approx. Product Catalog Size</label>
-          <input type="text" placeholder="e.g. ~200 SKUs, hardware-heavy" />
+          <input type="text" placeholder="e.g. ~200 SKUs, hardware-heavy" value="TBD — door hardware, lock cylinders, install materials; catalog to be built during onboarding" />
         </div>
         <div class="field">
           <label>Approx. Active Projects at a Time</label>
-          <input type="text" placeholder="e.g. 5–10 concurrent" />
+          <input type="text" placeholder="e.g. 5–10 concurrent" value="TBD — confirm at kickoff" />
         </div>
       </div>
     </div>
@@ -992,8 +1003,8 @@
             <option>QuoteWerks</option>
             <option>Manual / Word / Excel</option>
             <option>Already using Rev.io quoting</option>
-            <option>None</option>
-            <option>Other</option>
+            <option selected>None</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
@@ -1007,10 +1018,10 @@
         <div class="field">
           <label>Billing Type</label>
           <div class="check-group">
-            <label><input type="checkbox" /> Monthly recurring (RMR)</label>
+            <label><input type="checkbox" checked /> Monthly recurring (RMR)</label>
             <label><input type="checkbox" /> Quarterly</label>
-            <label><input type="checkbox" /> Time &amp; Materials</label>
-            <label><input type="checkbox" /> Project milestone</label>
+            <label><input type="checkbox" checked /> Time &amp; Materials</label>
+            <label><input type="checkbox" checked /> Project milestone</label>
             <label><input type="checkbox" /> Annual</label>
           </div>
         </div>
@@ -1077,7 +1088,7 @@
         </div>
         <div class="field">
           <label>Contract End Date</label>
-          <input type="date" />
+          <input type="date" value="2026-03-31" />
         </div>
         <div class="field">
           <label>Auto-Renew?</label>
@@ -1088,11 +1099,11 @@
         </div>
         <div class="field">
           <label>Base MRR</label>
-          <input type="text" placeholder="e.g. $1,004/mo" />
+          <input type="text" placeholder="e.g. $1,004/mo" value="$690/mo" />
         </div>
         <div class="field">
           <label>Onboarding Fee</label>
-          <input type="text" placeholder="e.g. $500 one-time" />
+          <input type="text" placeholder="e.g. $500 one-time" value="$0 — Waived at close" />
         </div>
         <div class="field">
           <label>Payment Terms</label>
@@ -1102,7 +1113,7 @@
             <option>Net 30</option>
             <option>Net 45</option>
             <option>Due on Receipt</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
       </div>
@@ -1113,15 +1124,15 @@
         <div class="field">
           <label>Modules / Features Included</label>
           <div class="check-group">
-            <label><input type="checkbox" /> PSA Core</label>
+            <label><input type="checkbox" checked /> PSA Core</label>
             <label><input type="checkbox" /> Billing Platform</label>
-            <label><input type="checkbox" /> Inventory Management</label>
-            <label><input type="checkbox" /> Project Management</label>
+            <label><input type="checkbox" checked /> Inventory Management</label>
+            <label><input type="checkbox" checked /> Project Management</label>
             <label><input type="checkbox" /> Customer Portal</label>
             <label><input type="checkbox" /> SMS</label>
             <label><input type="checkbox" /> Rev.io Payments</label>
             <label><input type="checkbox" /> SureTax</label>
-            <label><input type="checkbox" /> Mobile App</label>
+            <label><input type="checkbox" checked /> Mobile App</label>
           </div>
         </div>
         <div class="field">
@@ -1134,7 +1145,11 @@
 
       <div class="field">
         <label>Specific Commitments Made to Client</label>
-        <textarea placeholder="Any features promised, timelines committed, integrations guaranteed, custom work agreed to — the SA needs to know what was sold"></textarea>
+        <textarea placeholder="Any features promised, timelines committed, integrations guaranteed, custom work agreed to — the SA needs to know what was sold">1. 60-day delay on license fee billing (billing begins 5/23/2026)
+2. 3 Field User licenses included in base price
+3. Setup & data migration fees fully waived
+4. Month-to-month contract — no long-term commitment
+5. Bryan's closing email explicitly noted: "For QuickBooks Desktop, export options are available (not a full two-way sync)" — client was made aware at close</textarea>
       </div>
     </div>
 
@@ -1162,7 +1177,7 @@
                 <option>Feature Commitment</option>
                 <option>White Label / Branding Agreement</option>
                 <option>Confidentiality / NDA</option>
-                <option>Other</option>
+                <option selected>Other</option>
               </select>
             </div>
           </div>
@@ -1205,11 +1220,11 @@
           </div>
           <div class="field">
             <label>Late Fee Policy</label>
-            <input type="text" placeholder="e.g. 1.5% after Net 30" />
+            <input type="text" placeholder="e.g. 1.5% after Net 30" value="TBD" />
           </div>
           <div class="field">
             <label>Credit Limit</label>
-            <input type="text" placeholder="e.g. $5,000" />
+            <input type="text" placeholder="e.g. $5,000" value="TBD" />
           </div>
         </div>
         <div class="field" style="margin-top:14px;">
@@ -1228,7 +1243,7 @@
               <option>Monthly</option>
               <option>Quarterly</option>
               <option>Annual</option>
-              <option>Other</option>
+              <option selected>Other</option>
             </select>
           </div>
           <div class="field">
@@ -1241,7 +1256,7 @@
               <option>April</option>
               <option>July</option>
               <option>October</option>
-              <option>Other</option>
+              <option selected>Other</option>
             </select>
           </div>
           <div class="field">
@@ -1285,7 +1300,7 @@
             <label>Logo Collected?</label>
             <div class="radio-group">
               <label><input type="radio" name="logo_status" value="yes" /> Yes — attached to SF Account</label>
-              <label><input type="radio" name="logo_status" value="no" /> No — follow up needed</label>
+              <label><input type="radio" name="logo_status" value="no" checked /> No — follow up needed</label>
               <label><input type="radio" name="logo_status" value="na" /> N/A</label>
             </div>
           </div>
@@ -1317,17 +1332,33 @@
     <div class="card">
       <div class="field">
         <label>Pre-Kickoff Open Items</label>
-        <textarea placeholder="e.g. GL codes not yet provided — accountant to send by EOW&#10;Payment processor TBD — client to confirm&#10;SureTax credentials — needs new account setup" style="min-height:120px;"></textarea>
+        <textarea placeholder="e.g. GL codes not yet provided..." style="min-height:120px;">• GL codes not confirmed — Rick was mid-call with accountant at close; Sandy West (Bookkeeper) is the right contact (sandy.west@vikinglock.com)
+• Payment processor not selected — client to confirm before kickoff
+• SureTax account status unknown — confirm at kickoff
+• Bill Profile Questionnaire not yet sent — send to Sandy West before kickoff
+• Company logo not collected — follow up with Kasey Adams (kasey.adams@vikinglock.com)
+• Invoice number continuity — confirm last invoice number with Sandy West
+• 60-day license delay must be confirmed in billing system before any invoice goes out</textarea>
       </div>
       <hr class="field-divider" />
       <div class="field">
         <label>Questions / Items to Confirm on Day 1</label>
-        <textarea placeholder="Things that couldn't be resolved pre-kickoff — for the SA to address in session 1" style="min-height:90px;"></textarea>
+        <textarea placeholder="Things that couldn't be resolved pre-kickoff — for the SA to address in session 1" style="min-height:90px;">• Walk through QB Desktop limitations and the export workaround — confirm client fully understands there is no live sync
+• Confirm GL codes and chart of accounts with Sandy West
+• Confirm full user list (13 employees total — likely a subset needs Rev.io access)
+• Confirm dispatch workflow: how are jobs currently assigned to techs?
+• Confirm business hours and after-hours/emergency locksmith protocol</textarea>
       </div>
       <hr class="field-divider" />
       <div class="field">
         <label>Red Flags / Risk Notes</label>
-        <textarea placeholder="Any concerns from the sales process — client readiness, data quality, complex requirements, unrealistic expectations, etc." style="min-height:80px;"></textarea>
+        <textarea placeholder="Any concerns from the sales process — client readiness, data quality, complex requirements, unrealistic expectations, etc." style="min-height:80px;">⚠️ BANDWIDTH RISK: Client explicitly said on 1/28 he's worried about not having resources to onboard properly (had to let employees go). SA must set a realistic, measured pace and check in on client capacity early.
+
+⚠️ QB DESKTOP: No direct integration today. Bryan flagged this in the closing email — but SA must explicitly confirm the workaround path is understood and agreed on Day 1. Do not assume client internalized this.
+
+⚠️ EXPECTATION GAP: Sales said "onboarding will handle" data migration, quoting setup, and training. Client is working 18–20 hour days and expects high-touch support. SA must scope what "we handle" means specifically.
+
+⚠️ TIMING: 60-day license delay means billing doesn't start until 5/23. Client needs to see ROI quickly — if they go dark before month 2, churn risk is high.</textarea>
       </div>
     </div>
 
@@ -1338,7 +1369,7 @@
         <div class="field">
           <label>Current Onboarding Status</label>
           <div class="radio-group">
-            <label><input type="radio" name="ob_status" value="on_track" /> ✅ On Track</label>
+            <label><input type="radio" name="ob_status" value="on_track" checked /> ✅ On Track</label>
             <label><input type="radio" name="ob_status" value="off_track" /> ⚠️ Off Track — escalate to Fran within 24hrs</label>
             <label><input type="radio" name="ob_status" value="on_hold" /> ⏸️ On Hold</label>
             <label><input type="radio" name="ob_status" value="rts" /> 🔴 RTS — Sales engages within 24hrs</label>
@@ -1440,7 +1471,7 @@
             <option>Feature Commitment</option>
             <option>White Label / Branding Agreement</option>
             <option>Confidentiality / NDA</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
       </div>
@@ -1466,209 +1497,34 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  var allText  = Array.from(document.querySelectorAll('input[type="text"]'));
-  var allDate  = Array.from(document.querySelectorAll('input[type="date"]'));
-  var allEmail = Array.from(document.querySelectorAll('input[type="email"]'));
-  var allSel   = Array.from(document.querySelectorAll('select'));
-  var allTA    = Array.from(document.querySelectorAll('textarea'));
-
-  function sv(el, v){ if(el){ el.value = v; } }
-  function sr(name, value){ var r = document.querySelector('input[name="'+name+'"][value="'+value+'"]'); if(r){ r.checked=true; } }
-
-  // Section 01
-  sv(allText[0], 'Viking Lock');
-  sv(allText[1], '$690');
-  sv(allText[2], 'Bryan Bettiol');
-  sv(allText[3], 'Rick Alamaa — President');
-  sv(allText[4], '9:00 AM MT');
-
-  sv(allDate[0], '2026-03-23');
-  sv(allDate[1], '2026-03-24');
-  sv(allDate[2], '2026-03-31');
-
-  sv(allEmail[0], 'rick@vikinglock.com');
-
-  sv(allSel[0], 'Month-to-Month');
-  // allSel[1] = SA Assigned (leave blank — batter box rotation)
-  sv(allSel[2], 'Other'); // Business Vertical (Locksmith not in list)
-
-  // PSA / Accounting / RMM / Payment Processor selects
-  sv(allSel[3], 'Spreadsheets only');
-  sv(allSel[4], 'QuickBooks Desktop');
-  sv(allSel[5], 'None');
-  sv(allSel[6], 'None yet');
-
-  // Brief textarea
-  sv(allTA[0], 'Locksmith company, Pueblo CO. 13 employees. Long sales cycle (Jan–Mar 2026) — stalled because client was worried about onboarding bandwidth after letting employees go. 60-day license fee delay included to close. Setup & data migration fees waived. Month-to-month contract.
-
-Key pain points verbatim: highly customized door hardware quoting, progressive billing (deposit + invoice as materials arrive), change order visibility between field and accounting, time tracking tied to jobs. Client said he's working 18-20 hour days and expects high-touch support.
-
-QB Desktop (no direct integration) — Sandy West (Bookkeeper) is the finance contact. Rick was speaking with accountant at close — GL codes not yet confirmed.');
-
-  // Radios
-  sr('billing_client', 'no');
-  sr('golive_tier', 'simple');
-  sr('migration', 'messy');
-  sr('qb_sync', 'no');
-  sr('gl_codes', 'no');
-  sr('rmm_priority', 'none');
-  sr('payments_switch', 'tbd');
-  sr('merchant', 'na');
-  sr('afterhours', 'emergency');
-  sr('sla_holidays', 'tbd');
-  sr('invoice_cont', 'yes');
-  sr('suretax', 'tbd');
-  sr('tax_exempt', 'no');
-  sr('ob_status', 'on_track');
-
-  // Record count (text[9] approx)
-  sv(allText[9], '~13 employees; customer/job count TBD — confirm at kickoff');
-
-  // Business hours
-  sv(allText[10], 'Mon–Fri — confirm exact hours at kickoff');
-
-  // States
-  sv(allText[12], 'Colorado (CO)');
-
-  // Checkboxes by label text
-  var cbs = document.querySelectorAll('input[type="checkbox"]');
-  cbs.forEach(function(cb){
-    var lbl = cb.parentElement ? cb.parentElement.textContent.trim() : '';
-    if(lbl === 'Google Calendar') cb.checked = true;
-    if(lbl === 'Field / On-site') cb.checked = true;
-    if(lbl === 'Install Projects') cb.checked = true;
-    if(lbl === 'Credit Card') cb.checked = true;
-    if(lbl === 'Check') cb.checked = true;
-    if(lbl === 'Serialized assets') cb.checked = true;
-    if(lbl === 'Mobile / van inventory') cb.checked = true;
-    if(lbl === 'Multi-phase installs') cb.checked = true;
-    if(lbl === 'Multiple concurrent projects') cb.checked = true;
-    if(lbl === 'Monthly recurring (RMR)') cb.checked = true;
-    if(lbl === 'Project milestone') cb.checked = true;
-    if(lbl === 'Time & Materials') cb.checked = true;
-    if(lbl === 'By Individual Tech') cb.checked = true;
-    if(lbl === 'PSA Core') cb.checked = true;
-    if(lbl === 'Inventory Management') cb.checked = true;
-    if(lbl === 'Project Management') cb.checked = true;
-    if(lbl === 'Mobile App') cb.checked = true;
-  });
-
-  // Migration notes
-  sv(allTA[1], 'Coming from spreadsheets + QB Desktop. Light structured data expected — customer/job data will need to be built. QB Desktop holds financials but no direct integration is available today; SA must walk client through export workaround at kickoff. Client was concerned about having bandwidth to migrate properly — set a measured pace.');
-
-  // Integration notes
-  sv(allTA[2], 'Google Calendar — confirm sync direction and which team members need it on Day 1.');
-
-  // Open Items
-  var n = allTA.length;
-  sv(allTA[n-4], '• GL codes not confirmed — Rick was speaking with accountant at close. Sandy West (Bookkeeper) is the right contact (sandy.west@vikinglock.com).
-• Payment processor not selected — client to confirm.
-• SureTax account status unknown — confirm at kickoff.
-• Bill Profile Questionnaire not yet sent — send to Sandy West.
-• Company logo not collected — follow up with Kasey Adams (kasey.adams@vikinglock.com).
-• Invoice number continuity — confirm last invoice number with Sandy before kickoff.');
-  sv(allTA[n-3], '• Walk through QB Desktop limitations and export workaround — client needs to understand this clearly.
-• Confirm GL codes and chart of accounts with Sandy West.
-• Confirm all users who need Rev.io access (13 employees total — likely a subset).
-• Confirm dispatch workflow: how are jobs currently assigned to techs?
-• Confirm business hours and after-hours/emergency protocol.');
-  sv(allTA[n-2], 'CLIENT BANDWIDTH RISK: Client explicitly said (Jan 28 SF note) he is worried about not having resources to onboard properly — had to let some employees go. SA must set a realistic, measured pace and not front-load.
-
-QB Desktop: No direct integration today. Flagged in the closing email, but SA must confirm client fully understands and a workaround path is agreed on Day 1.
-
-EXPECTATION GAP: Client is working 18-20 hour days. He expects high-touch support. Scope of what "the onboarding team handles" was not clearly defined in sales — SA needs to set boundaries early.
-
-60-DAY LICENSE DELAY: Cash does not start until 5/23/2026. Client needs to see value quickly to reduce churn risk at the 60-day mark.');
-
-  // Contract dates and fields
-  if(allDate[3]) sv(allDate[3], '2026-03-23');
-
-  // Revii radios
-  sr('revii_day1', 'yes');
-  sr('telemetry_day1', 'yes');
-  sr('config_schema', 'standard');
-
-  // Auto-renew
-  sr('auto_renew', 'no');
-
-  // Specific commitments textarea — find by placeholder
-  allTA.forEach(function(ta){
-    if(ta.placeholder && ta.placeholder.includes('overrides, or commitments')){
-      sv(ta, '1. 60-day delay on license fee (billing begins 5/23/2026)
-2. 3 Field User licenses included in base price
-3. Setup & data migration fees fully waived
-4. Month-to-month contract — no long-term commitment');
-    }
-    if(ta.placeholder && ta.placeholder.includes('Key fields required')){
-      sv(ta, 'Client has highly customized quoting needs: door hardware pricing varies by vendor and job. Needs ability to structure quotes by building/phase, include materials + labor, and handle progressive billing (deposit upfront, invoice as materials arrive).');
-    }
-  });
-
-  // Section 05: net new
-  sr('questionnaire_sent', 'no');
-  sr('questionnaire_returned', 'no');
-  sr('logo_status', 'no');
-
-  // Users table
-  var tbody = document.getElementById('rolesBody');
-  if(tbody && tbody.rows.length > 0){
-    var r0 = tbody.rows[0];
-    r0.cells[0].querySelector('input').value = 'Rick Alamaa';
-    r0.cells[1].querySelector('input').value = 'President';
-    r0.cells[2].querySelector('input').value = 'rick@vikinglock.com';
-    r0.cells[3].querySelector('select').value = 'Admin';
-    var mobY = r0.querySelectorAll('input[type="radio"]')[0];
-    if(mobY) mobY.checked = true;
-  }
-
+document.addEventListener('DOMContentLoaded', function(){
   var users = [
-    ['Sandy West', 'Bookkeeper', 'sandy.west@vikinglock.com', 'Billing Admin', false],
-    ['Kasey Adams', 'TBD — confirm at kickoff', 'kasey.adams@vikinglock.com', 'TBD', false],
-    ['Kent Schuck', 'Sales', 'sales@vikinglock.com', 'Standard', false],
-    ['Michael Kannmacher', 'Field Technician', 'mike@vikinglock.com', 'Field Technician', true],
+    ['Sandy West','Bookkeeper','sandy.west@vikinglock.com','Billing Admin',false],
+    ['Kasey Adams','TBD — confirm at kickoff','kasey.adams@vikinglock.com','TBD',false],
+    ['Kent Schuck','Sales','sales@vikinglock.com','Standard',false],
+    ['Michael Kannmacher','Field Technician','mike@vikinglock.com','Field Technician',true],
   ];
-  users.forEach(function(u){
+  users.forEach(function(u,idx){
     addRoleRow();
-    var rows = document.getElementById('rolesBody').rows;
-    var row = rows[rows.length-1];
-    row.cells[0].querySelector('input').value = u[0];
-    row.cells[1].querySelector('input').value = u[1];
-    row.cells[2].querySelector('input').value = u[2];
-    row.cells[3].querySelector('select').value = u[3];
-    if(u[4]){
-      var mobY = row.querySelectorAll('input[type="radio"]')[0];
-      if(mobY) mobY.checked = true;
-    }
+    var rows=document.getElementById('rolesBody').rows;
+    var row=rows[rows.length-1];
+    row.cells[0].querySelector('input').value=u[0];
+    row.cells[1].querySelector('input').value=u[1];
+    row.cells[2].querySelector('input').value=u[2];
+    var sel=row.cells[3].querySelector('select');
+    for(var i=0;i<sel.options.length;i++){if(sel.options[i].text===u[3]){sel.selectedIndex=i;break;}}
+    var radios=row.querySelectorAll('input[type="radio"]');
+    if(u[4]&&radios[0])radios[0].checked=true;
+    else if(radios[1])radios[1].checked=true;
   });
-
-  // Base MRR and onboarding fee by placeholder
-  allText.forEach(function(t){
-    if(t.placeholder && t.placeholder.includes('e.g. $1,004')) sv(t, '$690');
-    if(t.placeholder && t.placeholder.includes('e.g. Proposify')) sv(t, 'No formal quoting tool — custom spreadsheet/manual quotes for door hardware');
-  });
-  allTA.forEach(function(ta){
-    if(ta.placeholder && ta.placeholder.includes('Payment terms')) sv(ta, 'Net 30 — 60-day license fee delay from 3/23/2026 (billing begins 5/23/2026)');
-  });
-
-  // Base MRR (contract section)
-  allText.forEach(function(t){
-    if(t.placeholder && t.placeholder.includes('e.g. 1,004.00')) sv(t, '690.00');
-    if(t.placeholder && t.placeholder.includes('e.g. $500')) sv(t, '$0 — Waived (included at close)');
-  });
-
-  // Inventory: Approx product catalog size
-  allText.forEach(function(t){
-    if(t.placeholder && t.placeholder.includes('~200 SKUs')) sv(t, 'TBD — door hardware, lock parts, install materials; catalog to be built during onboarding');
-    if(t.placeholder && t.placeholder.includes('Active projects')) sv(t, 'TBD — confirm at kickoff');
-  });
-
-  // Tax jurisdiction
-  allText.forEach(function(t){
-    if(t.placeholder && t.placeholder.includes('TX, CA')) sv(t, 'Colorado (CO)');
-  });
-
-  console.log('Fill script complete');
+  // Add onboarding fee addendum
+  addAddendum();
+  var blocks=document.querySelectorAll('.addendum-block');
+  var b=blocks[blocks.length-1];
+  b.querySelectorAll('input[type="text"]')[0].value='60-Day License Fee Delay + Fees Waived';
+  var sel=b.querySelector('select');
+  for(var i=0;i<sel.options.length;i++){if(sel.options[i].text==='Pricing Addendum'){sel.selectedIndex=i;break;}}
+  b.querySelector('textarea').value='1. License fee billing begins 5/23/2026 (60-day delay from close date 3/23/2026).\n2. 3 Field User licenses included in base $690/mo price.\n3. Setup & data migration fees fully waived.\n\nSA Action: Confirm with Finance that the 60-day delay is captured in billing system before kickoff. Ensure client does not receive an invoice before 5/23.';
 });
 </script>
 </body>
