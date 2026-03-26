@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brief Data Sources — Rev.io PSA Onboarding Intelligence</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #21253a;
+    --accent: #6c63ff; --accent2: #00d4aa; --warn: #ffa94d; --danger: #ff6b6b;
+    --muted: #7b7f9e; --text: #e8eaf6; --text-dim: #b0b4cc;
+    --border: rgba(255,255,255,0.07); --radius: 12px;
+    --sf: #00d4aa; --email: #6c63ff; --analysis: #ffa94d; --gap: #ff6b6b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.6; padding: 32px 24px; }
+  .page { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+  .subtitle strong { color: var(--text-dim); }
+
+  /* Legend */
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; padding: 14px 18px; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-sf { background: var(--sf); }
+  .dot-email { background: var(--email); }
+  .dot-analysis { background: var(--analysis); }
+  .dot-gap { background: var(--gap); }
+
+  /* Company card */
+  .company { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 28px; overflow: hidden; }
+  .company-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .company-name { font-size: 17px; font-weight: 700; }
+  .company-meta { color: var(--muted); font-size: 12px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .company-meta span { white-space: nowrap; }
+  .brief-link { margin-left: auto; font-size: 12px; }
+  .brief-link a { color: var(--accent2); text-decoration: none; }
+  .brief-link a:hover { text-decoration: underline; }
+
+  .company-body { padding: 20px; }
+
+  /* Section within card */
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 18px 0 10px; }
+  .section-title:first-child { margin-top: 0; }
+
+  /* Rows */
+  .row { display: grid; grid-template-columns: 200px 1fr 120px; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); align-items: start; }
+  .row:last-child { border-bottom: none; }
+  .row-field { font-size: 12px; font-weight: 600; color: var(--text-dim); padding-top: 1px; }
+  .row-value { font-size: 13px; color: var(--text); }
+  .row-source { font-size: 11px; font-weight: 700; text-align: right; white-space: nowrap; }
+
+  .src-sf { color: var(--sf); }
+  .src-email { color: var(--email); }
+  .src-analysis { color: var(--analysis); }
+  .src-gap { color: var(--gap); }
+
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+  .badge-sf { background: rgba(0,212,170,0.15); color: var(--sf); }
+  .badge-email { background: rgba(108,99,255,0.15); color: var(--email); }
+  .badge-analysis { background: rgba(255,169,77,0.15); color: var(--analysis); }
+  .badge-gap { background: rgba(255,107,107,0.15); color: var(--gap); }
+
+  .flag { font-size: 12px; color: var(--warn); margin-top: 4px; }
+  .flag-red { color: var(--danger); }
+
+  /* Summary table */
+  .summary { background: var(--surface2); border-radius: var(--radius); padding: 20px; margin-bottom: 28px; }
+  .summary h2 { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .summary-cell { text-align: center; }
+  .summary-cell .num { font-size: 24px; font-weight: 800; }
+  .summary-cell .label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .num-sf { color: var(--sf); }
+  .num-email { color: var(--accent); }
+  .num-analysis { color: var(--analysis); }
+  .num-gap { color: var(--gap); }
+
+  /* Methodology */
+  .method { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; margin-bottom: 28px; }
+  .method h2 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+  .method p { color: var(--text-dim); font-size: 13px; margin-bottom: 10px; line-height: 1.7; }
+  .method p:last-child { margin-bottom: 0; }
+
+  .footer { color: var(--muted); font-size: 11px; text-align: center; padding-top: 20px; border-top: 1px solid var(--border); }
+
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .row-source { text-align: left; }
+    .summary-grid { grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Brief Data Sources — Rev.io PSA Onboarding Intelligence</h1>
+  <p class="subtitle">Field-by-field attribution for 4 pre-filled onboarding briefs generated 2026-03-25 / 2026-03-26 &nbsp;·&nbsp; <strong>Revay AI Chief of Staff</strong></p>
+
+  <div class="legend">
+    <div class="legend-item"><div class="dot dot-sf"></div> Salesforce structured field (Opportunity, Account, Contact records)</div>
+    <div class="legend-item"><div class="dot dot-email"></div> Salesforce email task (Outreach-synced email thread stored in SF)</div>
+    <div class="legend-item"><div class="dot dot-analysis"></div> AI analysis / inference (risk assessment, context interpretation, recommendations)</div>
+    <div class="legend-item"><div class="dot dot-gap"></div> Data gap (unknown — flagged for SA to collect at kickoff)</div>
+  </div>
+
+  <div class="summary">
+    <h2>Cross-Brief Summary</h2>
+    <div class="summary-grid">
+      <div class="summary-cell"><div class="num num-sf">~50%</div><div class="label">Fields from SF structured data</div></div>
+      <div class="summary-cell"><div class="num num-email">~20%</div><div class="label">Fields from SF email threads</div></div>
+      <div class="summary-cell"><div class="num num-analysis">~20%</div><div class="label">AI analysis &amp; inference</div></div>
+      <div class="summary-cell"><div class="num num-gap">~10%</div><div class="label">Data gaps flagged for kickoff</div></div>
+    </div>
+  </div>
+
+  <!-- ─── VIKING LOCK ─────────────────────────────────────────────────── -->
+  <div class="company">
+    <div class="company-header">
+      <div class="company-name">Viking Lock</div>
+      <div class="company-meta">
+        <span>$690/mo MRR</span>
+        <span>Closed 2026-03-23</span>
+        <span>Jake Borah (AE)</span>
+        <span>Colorado Springs, CO</span>
+        <span>Locksmith / Security</span>
+      </div>
+      <div class="brief-link"><a href="https://erice320.github.io/revay/viking-lock-brief.html" target="_blank">→ View Brief ↗</a></div>
+    </div>
+    <div class="company-body">
+      <div class="section-title">Section 01 — Client &amp; Deal Info</div>
+      <div class="row"><div class="row-field">Company Name</div><div class="row-value">Viking Lock</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Close Date</div><div class="row-value">2026-03-23</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">MRR</div><div class="row-value">$690/mo</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Contract Term</div><div class="row-value">Month-to-Month</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">Sales Rep</div><div class="row-value">Bryan Bettiol (AE); Jake Borah (SF Owner)</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">Primary Contact</div><div class="row-value">Rick Alamaa — President, rick@vikinglock.com, +17196506332</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">Billing Client</div><div class="row-value">Net new (no prior Rev.io billing)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Business Vertical</div><div class="row-value">Other (Locksmith — not in dropdown; SF Industry = Security Integrator)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+
+      <div class="section-title">Section 02 — Q1 Prior PSA</div>
+      <div class="row"><div class="row-field">Prior System</div><div class="row-value">Spreadsheets only (no formal PSA)</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">Migration Complexity</div><div class="row-value">Messy — multiple spreadsheet sources to consolidate</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+
+      <div class="section-title">Section 02 — Q2 Accounting</div>
+      <div class="row"><div class="row-field">Accounting Software</div><div class="row-value">QuickBooks Desktop</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">QB Desktop flag</div><div class="row-value">Flagged — no direct Rev.io integration</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+
+      <div class="section-title">Section 02 — Q5 Users</div>
+      <div class="row"><div class="row-field">User list (5 people)</div><div class="row-value">Rick Alamaa, Sandy West (Bookkeeper), Kasey Adams, + 2 technicians</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">Roles / Mobile needs</div><div class="row-value">Technician mobile app requirements inferred from trade</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+
+      <div class="section-title">Section 04 — Contract</div>
+      <div class="row"><div class="row-field">Payment Terms</div><div class="row-value">Net 30 with 60-day billing delay from close (billing begins 5/23/2026)</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">Deferred billing</div><div class="row-value">Billing delay documented from Bryan Bettiol's follow-up email</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+
+      <div class="section-title">Section 06 — Flags</div>
+      <div class="row"><div class="row-field">Key contextual notes</div><div class="row-value">QB Desktop no-integration warning; locksmith vertical not in dropdown; billing start date defer</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+    </div>
+  </div>
+
+  <!-- ─── GUENTHERTECH ───────────────────────────────────────────────── -->
+  <div class="company">
+    <div class="company-header">
+      <div class="company-name">GuentherTech</div>
+      <div class="company-meta">
+        <span>$2,070/mo MRR</span>
+        <span>Closed 2026-03-06</span>
+        <span>Cameron Sharpe / Joseph Abarno (AE)</span>
+        <span>Wellesley, ON, Canada</span>
+        <span>MSP - No Voice</span>
+      </div>
+      <div class="brief-link"><a href="https://erice320.github.io/revay/guenthertech-brief.html" target="_blank">→ View Brief ↗</a></div>
+    </div>
+    <div class="company-body">
+      <div class="section-title">Section 01 — Client &amp; Deal Info</div>
+      <div class="row"><div class="row-field">Company Name</div><div class="row-value">GuentherTech</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Close Date</div><div class="row-value">2026-03-06</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">MRR</div><div class="row-value">$2,070/mo</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Sales Rep</div><div class="row-value">Joseph Abarno (SF Owner) / Cameron Sharpe (primary AE, confirmed via email)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Primary Contact</div><div class="row-value">Ben Guenther — CEO — ben@guenthertech.ca — (519) 218-0119</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Business Vertical</div><div class="row-value">MSP (Managed Service Provider)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Location</div><div class="row-value">Wellesley, Ontario, Canada</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+
+      <div class="section-title">Section 02 — Q1 Prior PSA</div>
+      <div class="row"><div class="row-field">Prior PSA</div><div class="row-value">Halo PSA (PSA_Platform__c = HALO)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Migration complexity</div><div class="row-value">Messy — Halo exports structured but field mapping to Rev.io requires SA planning</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+
+      <div class="section-title">Section 02 — Q2 Accounting</div>
+      <div class="row"><div class="row-field">Accounting software</div><div class="row-value">Unknown — not captured in sales process</div><div class="row-source src-gap"><span class="badge badge-gap">DATA GAP</span></div></div>
+
+      <div class="section-title">Section 04 — Contract</div>
+      <div class="row"><div class="row-field">Deferred billing</div><div class="row-value">Both monthly MRR and one-time fees deferred at close — from Cam's 3/6 email</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">Billing start date</div><div class="row-value">Unknown — deferred but no date captured in SF</div><div class="row-source src-gap"><span class="badge badge-gap">DATA GAP</span></div></div>
+      <div class="row"><div class="row-field">Newly hired svc mgr</div><div class="row-value">Ben mentioned a new service manager hired ~3/3/2026 — name not captured</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+
+      <div class="section-title">Section 06 — Flags &amp; Risk</div>
+      <div class="row"><div class="row-field">Kickoff overdue</div><div class="row-value">Close date 3/6 — 19 days past close with no kickoff on record (as of 3/25)</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+      <div class="row"><div class="row-field">Canadian entity</div><div class="row-value">SureTax exempt; Ontario HST 13% required</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+      <div class="row"><div class="row-field">Dispatch SOP</div><div class="row-value">Brook Lee sent Dispatcher SOP during sales — client expects dispatch from Day 1</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+    </div>
+  </div>
+
+  <!-- ─── NETWATCH ───────────────────────────────────────────────────── -->
+  <div class="company">
+    <div class="company-header">
+      <div class="company-name">NetWatch</div>
+      <div class="company-meta">
+        <span>$3,000/mo MRR</span>
+        <span>Closed 2026-03-25</span>
+        <span>Jake Borah (AE)</span>
+        <span>Nixa, MO</span>
+        <span>Security Integrator</span>
+      </div>
+      <div class="brief-link"><a href="https://erice320.github.io/revay/netwatch-brief.html" target="_blank">→ View Brief ↗</a></div>
+    </div>
+    <div class="company-body">
+      <div class="section-title">Section 01 — Client &amp; Deal Info</div>
+      <div class="row"><div class="row-field">Company Name</div><div class="row-value">NetWatch</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Close Date / MRR</div><div class="row-value">2026-03-25 / $3,000/mo</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Sales Rep</div><div class="row-value">Jake Borah</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">ISC West close</div><div class="row-value">Confirmed via NextStep field ("demo 3/25 at 11 am PT at ISC") + Emily Petraglia reminder email</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Primary Contact</div><div class="row-value">Matt Lackrone — President — mlackrone@netwatchip.com — (417) 425-2890</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Industry</div><div class="row-value">Security Integrator</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+
+      <div class="section-title">Section 02 — Q1 Prior PSA</div>
+      <div class="row"><div class="row-field">Prior PSA</div><div class="row-value">ConnectWise (PSA_Platform__c = CONNECTWISE)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Migration tier</div><div class="row-value">Complex — CW migrations are multi-week, field mapping intensive</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+
+      <div class="section-title">Section 02 — Q5 Users (all 6)</div>
+      <div class="row"><div class="row-field">Matt Lackrone — President</div><div class="row-value">mlackrone@netwatchip.com · (417) 425-2890</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Casey Mustion — VP Sales</div><div class="row-value">cmustion@netwatchip.com · (417) 425-2882</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Katherine Wright — Controller</div><div class="row-value">kwright@netwatchip.com</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Shaun Piatchek — VP BD</div><div class="row-value">spiatchek@netwatchip.com · (417) 414-9566</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Matt Haley — Dir. Sales</div><div class="row-value">mhaley@netwatchip.com · (417) 209-0616</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Peter Martin — Field SE</div><div class="row-value">pmartin@netwatchip.com · Mobile app flagged (field role)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Mobile app assignments</div><div class="row-value">Peter Martin (Field SE) flagged for mobile app — inferred from title</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+      <div class="row"><div class="row-field">Billing contact</div><div class="row-value">Katherine Wright (Controller) identified as likely billing/accounting contact</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+
+      <div class="section-title">Section 02 — Q2 Accounting</div>
+      <div class="row"><div class="row-field">Accounting software</div><div class="row-value">Unknown — Katherine Wright is Controller but software not captured at ISC West</div><div class="row-source src-gap"><span class="badge badge-gap">DATA GAP</span></div></div>
+
+      <div class="section-title">Section 06 — Flags &amp; Risk</div>
+      <div class="row"><div class="row-field">Trade show debrief</div><div class="row-value">No pre-close discovery on record — SA must debrief Jake Borah before kickoff</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+      <div class="row"><div class="row-field">Security integrator profile</div><div class="row-value">Physical installs, hardware inventory, project billing, monitoring contracts flagged</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+      <div class="row"><div class="row-field">Contract terms</div><div class="row-value">Setup fees / special pricing not documented — trade show close, confirm post-ISC</div><div class="row-source src-gap"><span class="badge badge-gap">DATA GAP</span></div></div>
+    </div>
+  </div>
+
+  <!-- ─── FRONTLINE SECURITY ─────────────────────────────────────────── -->
+  <div class="company">
+    <div class="company-header">
+      <div class="company-name">Frontline Security</div>
+      <div class="company-meta">
+        <span>$660/mo MRR</span>
+        <span>Closed 2026-03-26</span>
+        <span>Patrick Davies (AE)</span>
+        <span>Calgary, AB, Canada</span>
+        <span>Security Integrator</span>
+      </div>
+      <div class="brief-link"><a href="https://erice320.github.io/revay/frontline-brief.html" target="_blank">→ View Brief ↗</a></div>
+    </div>
+    <div class="company-body">
+      <div class="section-title">Section 01 — Client &amp; Deal Info</div>
+      <div class="row"><div class="row-field">Company Name / Location</div><div class="row-value">Frontline Security — Calgary, AB, Canada</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Close Date / MRR</div><div class="row-value">2026-03-26 / $660/mo</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Sales Rep</div><div class="row-value">Patrick Davies</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">ISC West close</div><div class="row-value">DocuSign sent/signed at ISC West — confirmed via email thread</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">Primary Contact</div><div class="row-value">Christian Ng — Operations Manager — christian@frontlinesecurity.ca</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Contact title correction</div><div class="row-value">SF says "Owner" — email signature says "Operations Manager" — brief uses email sig</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">Mobile number</div><div class="row-value">(403) 988-6166 — extracted from Christian's email reply</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+
+      <div class="section-title">Section 02 — Q1 Prior PSA / Current Stack</div>
+      <div class="row"><div class="row-field">QB Desktop</div><div class="row-value">PSA_Platform__c = QUICKBOOKS (confirmed from SF)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Freshdesk (ticketing)</div><div class="row-value">Used as PSA workaround — from SF Description (discovery notes)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Google Calendar</div><div class="row-value">Used for scheduling — from SF Description</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Silent Salesman</div><div class="row-value">Proprietary CRM + digital quoting tool — from SF Description</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Office 365</div><div class="row-value">Email/Office — from SF Description</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Business profile</div><div class="row-value">90% commercial, card access + cameras + fire monitoring, branching into live video</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+
+      <div class="section-title">Section 02 — Pain Points (all from SF Description field)</div>
+      <div class="row"><div class="row-field">No quote-to-service-order</div><div class="row-value">Explicitly stated in discovery notes (SF Description)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">No centralized ticketing</div><div class="row-value">Explicitly stated in discovery notes (SF Description)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Manual double entry</div><div class="row-value">Explicitly stated in discovery notes (SF Description)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Rudimentary project/time tracking</div><div class="row-value">Explicitly stated in discovery notes (SF Description)</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+      <div class="row"><div class="row-field">Van inventory visibility</div><div class="row-value">Client specifically wanted this — in SF Description</div><div class="row-source src-sf"><span class="badge badge-sf">SF FIELD</span></div></div>
+
+      <div class="section-title">Section 06 — Flags &amp; Risk</div>
+      <div class="row"><div class="row-field">Kickoff timing conflict</div><div class="row-value">Patrick's email said "early next week" — contradicts Brent's same-day mandate. Flagged via addendum.</div><div class="row-source src-email"><span class="badge badge-email">SF EMAIL</span></div></div>
+      <div class="row"><div class="row-field">Canadian entity</div><div class="row-value">SureTax exempt; Alberta GST 5% only (no provincial tax)</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+      <div class="row"><div class="row-field">Silent Salesman wildcard</div><div class="row-value">Proprietary quoting tool — unclear if client wants to migrate quoting into Rev.io</div><div class="row-source src-analysis"><span class="badge badge-analysis">ANALYSIS</span></div></div>
+      <div class="row"><div class="row-field">Accounting software</div><div class="row-value">Not captured (bookkeeper/accountant not identified in SF)</div><div class="row-source src-gap"><span class="badge badge-gap">DATA GAP</span></div></div>
+      <div class="row"><div class="row-field">Other users</div><div class="row-value">Only Christian Ng in SF — full user list unknown</div><div class="row-source src-gap"><span class="badge badge-gap">DATA GAP</span></div></div>
+    </div>
+  </div>
+
+  <div class="method">
+    <h2>Methodology — How Briefs Were Built</h2>
+    <p><strong>Step 1 — Salesforce structured query:</strong> Pulled Opportunity (Name, Amount, CloseDate, Owner, Product_Type__c, Description, NextStep), Account (BillingCity/State, Industry, PSA_Platform__c), and Contact records for each deal via the Salesforce REST API. This covers all green-tagged fields above.</p>
+    <p><strong>Step 2 — Email task extraction:</strong> Pulled Task records associated with each Opportunity (synced from Outreach). These contain the full email thread text — from these we extracted contact details in email signatures, confirmation of deal context (ISC West booth number, deferred billing language, kickoff promises), and discovery notes not structured in SF fields.</p>
+    <p><strong>Step 3 — AI analysis:</strong> Interpreted the raw data to fill contextual fields: migration complexity tier, Canadian tax treatment (SureTax exemption, provincial GST/HST rates), kickoff deadline calculations against Brent's mandate, role-to-function mappings (Controller → billing contact, Field SE → mobile app user), and risk flags. These are clearly attributed as analysis in the briefs and this document.</p>
+    <p><strong>What was NOT available:</strong> Kaia call transcripts were not available for these 4 deals at the time of generation (ISC West closes happened same-day; GuentherTech and Viking Lock had limited Outreach call history). The pipeline typically supplements SF data with Kaia transcript intelligence — for these deals, SF email tasks served as the primary unstructured data source.</p>
+    <p><strong>Data gaps:</strong> Accounting software, GL codes, payment processor details, and full user lists are commonly missing from the sales record — especially for trade show closes. These are documented as gaps in each brief for the SA to collect at kickoff, rather than guessed at.</p>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 · Revay AI Chief of Staff · Rev.io · <a href="https://erice320.github.io/revay/" style="color: var(--accent2);">erice320.github.io/revay</a>
+  </div>
+
+</div>
+</body>
+</html>
