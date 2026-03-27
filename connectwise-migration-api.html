@@ -196,6 +196,38 @@
   .mt-16 { margin-top: 16px; }
   hr.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 
+  /* SOURCE BADGES */
+  .src {
+    display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px;
+    border-radius: 3px; background: rgba(108,99,255,.1); border: 1px solid rgba(108,99,255,.25);
+    color: var(--accent); text-decoration: none; margin-left: 5px; vertical-align: middle;
+    white-space: nowrap; font-family: 'SF Mono', monospace; letter-spacing: .02em;
+  }
+  .src:hover { background: rgba(108,99,255,.2); color: #fff; }
+  .src.teal { background: rgba(0,212,170,.1); border-color: rgba(0,212,170,.25); color: var(--accent2); }
+  .src.teal:hover { background: rgba(0,212,170,.2); }
+  .src.amber { background: rgba(255,169,77,.1); border-color: rgba(255,169,77,.25); color: var(--warn); }
+
+  /* SOURCES SECTION */
+  .sources-grid { display: flex; flex-direction: column; gap: 8px; }
+  .source-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px;
+  }
+  .source-num {
+    min-width: 22px; height: 22px; border-radius: 4px;
+    background: rgba(108,99,255,.15); color: var(--accent);
+    font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+    font-family: 'SF Mono', monospace; flex-shrink: 0;
+  }
+  .source-body { flex: 1; }
+  .source-body strong { font-size: 12px; color: var(--text); display: block; margin-bottom: 2px; }
+  .source-body a { font-size: 11px; color: var(--accent); text-decoration: none; font-family: 'SF Mono', monospace; }
+  .source-body a:hover { text-decoration: underline; }
+  .source-body .src-note { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .verified-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; color: var(--success); margin-left: 8px; }
+  .inferred-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; color: var(--warn); margin-left: 8px; }
+
   /* FOOTER */
   .footer {
     text-align: center; padding: 32px 0 24px;
@@ -231,6 +263,7 @@
     <a href="#libraries">Libraries &amp; Code</a>
     <a href="#setup">Customer Setup</a>
     <a href="#gotchas">Builder Gotchas</a>
+    <a href="#sources">Sources</a>
   </div>
 
   <!-- OVERVIEW -->
@@ -250,15 +283,15 @@
     <div class="grid-3">
       <div class="card accent-left">
         <div class="card-label accent">API Type</div>
-        <p style="font-size:13px;">Standard REST + JSON. OpenAPI/Swagger schema published. No GraphQL or SOAP for external integrations.</p>
+        <p style="font-size:13px;">Standard REST + JSON. OpenAPI/Swagger schema published. No GraphQL or SOAP for external integrations. <a href="https://developer.connectwise.com/Best_Practices/Getting_Started" target="_blank" class="src">CW Dev Portal</a> <a href="https://rollout.com/integration-guides/connect-wise-manage/api-essentials" target="_blank" class="src teal">rollout.com</a></p>
       </div>
       <div class="card teal-left">
         <div class="card-label teal">Access Model</div>
-        <p style="font-size:13px;">Customer-credentialed — no third-party admin access. The migrating customer generates API keys in their own CW Manage instance.</p>
+        <p style="font-size:13px;">Customer-credentialed — no third-party admin access. The migrating customer generates API keys in their own CW Manage instance. <a href="https://docs.tier2tickets.com/content/integration/connectwise/" target="_blank" class="src">tier2tickets</a></p>
       </div>
       <div class="card amber-left">
         <div class="card-label amber">Rate Limits</div>
-        <p style="font-size:13px;">No hard documented req/sec cap. Max 1,000 records per request. Add ~100ms delay between requests during bulk export as a courtesy.</p>
+        <p style="font-size:13px;">No hard documented req/sec cap. Max 1,000 records per request. Add ~100ms delay between requests during bulk export as a courtesy. <a href="https://app.preshmarketingsolutions.com/help/connectwise-developer-documentation" target="_blank" class="src">CW Docs</a> <a href="https://rollout.com/integration-guides/connect-wise-manage/api-essentials" target="_blank" class="src teal">rollout.com</a></p>
       </div>
     </div>
 
@@ -289,7 +322,7 @@
       <div class="section-title">Authentication</div>
     </div>
 
-    <p class="desc">Three pieces are required per customer. Rev.io can register for a single Client ID and reuse it across all migrations.</p>
+    <p class="desc">Three pieces are required per customer. Rev.io can register for a single Client ID and reuse it across all migrations. <a href="https://developer.connectwise.com/Best_Practices/Getting_Started" target="_blank" class="src">CW Dev Portal</a></p>
 
     <div class="grid-2">
       <div class="card">
@@ -346,7 +379,7 @@
     <div class="grid-2">
       <div class="gap-12">
         <div class="card">
-          <div class="card-label teal">Base URLs by Region</div>
+          <div class="card-label teal">Base URLs by Region <a href="https://github.com/codingfoundry/connectwise-manage-api" target="_blank" class="src">codingfoundry/GitHub</a> <a href="https://stackoverflow.com/questions/38524140/connectwise-rest-api-implementation" target="_blank" class="src teal">StackOverflow</a></div>
           <div class="table-wrap mt-12">
             <table>
               <thead><tr><th>Region</th><th>Base URL</th></tr></thead>
@@ -358,10 +391,10 @@
               </tbody>
             </table>
           </div>
-          <p style="font-size:12px;color:var(--muted);margin-top:10px;">Always use <code>/v4_6_release</code> — this is the API version string, not the product version. Do not substitute.</p>
+          <p style="font-size:12px;color:var(--muted);margin-top:10px;">Always use <code>/v4_6_release</code> — this is the API version string, not the product version. Do not substitute. <a href="https://docs.tier2tickets.com/content/integration/connectwise/" target="_blank" class="src">tier2tickets</a></p>
         </div>
         <div class="card">
-          <div class="card-label">Pagination Params</div>
+          <div class="card-label">Pagination Params <a href="https://app.preshmarketingsolutions.com/help/connectwise-developer-documentation" target="_blank" class="src">CW Docs</a></div>
           <div class="table-wrap mt-12">
             <table>
               <thead><tr><th>Param</th><th>Default</th><th>Max</th></tr></thead>
@@ -371,12 +404,12 @@
               </tbody>
             </table>
           </div>
-          <p style="font-size:12px;color:var(--muted);margin-top:10px;">CW returns a <code>Link</code> header (not <code>X-Total-Count</code>) for pagination navigation. For total count, call the dedicated count endpoint: <code>GET /company/companies/count</code>.</p>
+          <p style="font-size:12px;color:var(--muted);margin-top:10px;">CW returns a <code>Link</code> header for pagination navigation. For total count, use the dedicated count endpoint: <code>GET /company/companies/count</code>. <a href="https://www.reddit.com/r/ConnectWise/comments/1emjqg8/hello_world_connectwise_api_edition/" target="_blank" class="src teal">reddit/CW</a></p>
         </div>
       </div>
       <div class="gap-12">
         <div class="card">
-          <div class="card-label accent">Full Export Pattern</div>
+          <div class="card-label accent">Full Export Pattern <a href="https://app.preshmarketingsolutions.com/help/connectwise-developer-documentation" target="_blank" class="src">CW Docs</a></div>
           <div class="code-block"><span class="cm"># Loop until response count &lt; pageSize</span>
 <span class="url">GET /company/companies?page=1&pageSize=1000</span>
 <span class="url">GET /company/companies?page=2&pageSize=1000</span>
@@ -387,7 +420,7 @@
 <span class="url">GET /company/companies/count</span>  <span class="cm"># → {"count": 4382}</div>
         </div>
         <div class="card">
-          <div class="card-label">Filtering, Ordering &amp; Field Selection</div>
+          <div class="card-label">Filtering, Ordering &amp; Field Selection <a href="https://github.com/codingfoundry/connectwise-manage-api" target="_blank" class="src">codingfoundry/GitHub</a></div>
           <div class="code-block"><span class="cm"># Active customers only (recommended base filter)</span>
 <span class="str">conditions=status/name="Active" AND deletedFlag=false AND leadFlag=false AND isVendorFlag=false</span>
 
@@ -415,8 +448,9 @@
       <div class="section-sub"><code>GET /company/companies</code></div>
     </div>
 
-    <p class="desc">Full customer list. Use <code style="color:var(--accent2);">conditions=status/name="Active" AND deletedFlag=false AND leadFlag=false AND isVendorFlag=false</code> as the recommended migration scope filter.</p>
+    <p class="desc">Full customer list. Use <code style="color:var(--accent2);">conditions=status/name="Active" AND deletedFlag=false AND leadFlag=false AND isVendorFlag=false</code> as the recommended migration scope filter. <a href="https://learn.microsoft.com/en-us/connectors/connectwisepsa/" target="_blank" class="src">MS Learn</a> <a href="https://github.com/HealthITAU/pyconnectwise" target="_blank" class="src teal">pyconnectwise schema</a></p>
 
+    <p style="font-size:11px;color:var(--muted);margin-bottom:10px;">Field schemas sourced from pyconnectwise OpenAPI-generated models. <a href="https://github.com/HealthITAU/pyconnectwise/blob/main/src/pyconnectwise/models/manage/__init__.py" target="_blank" class="src teal">pyconnectwise/GitHub</a></p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
@@ -466,11 +500,11 @@
       <div class="section-sub"><code>GET /company/contacts</code></div>
     </div>
 
-    <p class="desc">All contacts across companies. Pull per company using <code style="color:var(--accent2);">conditions=company/id={id} AND inactiveFlag=false</code>, or pull the full dataset and group by <code>company.id</code> in post-processing.</p>
+    <p class="desc">All contacts across companies. Pull per company using <code style="color:var(--accent2);">conditions=company/id={id} AND inactiveFlag=false</code>, or pull the full dataset and group by <code>company.id</code> in post-processing. <a href="https://learn.microsoft.com/en-us/connectors/connectwisepsa/" target="_blank" class="src">MS Learn</a> <a href="https://github.com/HealthITAU/pyconnectwise" target="_blank" class="src teal">pyconnectwise schema</a></p>
 
     <div class="alert amber" style="margin-bottom:16px;">
       <div class="alert-icon">⚠️</div>
-      <div class="alert-body"><strong>Critical:</strong> There is no top-level <code>email</code> field on Contact. All emails and phone numbers live in the <code>communicationItems[]</code> array — see below.</div>
+      <div class="alert-body"><strong>Critical:</strong> There is no top-level <code>email</code> field on Contact. All emails and phone numbers live in the <code>communicationItems[]</code> array — see below. Verified from model: no <code>email</code> field exists in the Contact schema. <a href="https://github.com/HealthITAU/pyconnectwise/blob/main/src/pyconnectwise/models/manage/__init__.py" target="_blank" class="src">pyconnectwise schema</a></div>
     </div>
 
     <div class="grid-2" style="align-items:start;">
@@ -501,7 +535,7 @@
       </div>
       <div class="gap-12">
         <div class="card amber-left">
-          <div class="card-label amber">communicationItems — Structure</div>
+          <div class="card-label amber">communicationItems — Structure <span class="inferred-badge">⚠ structure inferred from model type</span></div>
           <div class="code-block"><span class="str">"communicationItems"</span>: [
   {
     <span class="key">"type"</span>: { <span class="key">"name"</span>: <span class="str">"Email"</span> },
@@ -535,7 +569,7 @@
     <div class="grid-2" style="align-items:start;">
       <div class="gap-12">
         <div class="card teal-left">
-          <div class="card-label teal">Sites — <code>GET /company/companies/{id}/sites</code></div>
+          <div class="card-label teal">Sites — <code>GET /company/companies/{id}/sites</code> <a href="https://github.com/HealthITAU/pyconnectwise" target="_blank" class="src teal">pyconnectwise schema</a></div>
           <p class="desc" style="margin-top:8px;">All physical/billing locations per company. A company's root address is one site; branch offices are additional sites. Pull per company ID.</p>
           <div class="table-wrap">
             <table>
@@ -556,19 +590,19 @@
       </div>
       <div class="gap-12">
         <div class="card">
-          <div class="card-label accent">Agreements (Contracts)</div>
+          <div class="card-label accent">Agreements (Contracts) <span class="inferred-badge">⚠ community-sourced, not independently verified</span></div>
           <div class="code-block"><span class="url">GET /finance/agreements</span>
 <span class="url">GET /finance/agreements/{id}/additions</span></div>
           <p style="font-size:12px;color:var(--muted);margin-top:8px;">Key fields: <code style="color:var(--warn);">id, name, type, company, startDate, endDate, billAmount, billCycles, cancelledFlag</code></p>
         </div>
         <div class="card">
-          <div class="card-label teal">Configurations (Managed Devices)</div>
+          <div class="card-label teal">Configurations (Managed Devices) <span class="inferred-badge">⚠ community-sourced</span></div>
           <div class="code-block"><span class="url">GET /company/configurations</span>
 <span class="url">GET /company/configurations/{id}</span></div>
           <p style="font-size:12px;color:var(--muted);margin-top:8px;">Key fields: <code style="color:var(--warn);">name, type, company, contact, site, serialNumber, modelNumber, tagNumber, warrantyExpirationDate</code></p>
         </div>
         <div class="card">
-          <div class="card-label">Ticket History (Optional)</div>
+          <div class="card-label">Ticket History (Optional) <span class="inferred-badge">⚠ community-sourced</span></div>
           <div class="code-block"><span class="url">GET /service/tickets</span></div>
           <p style="font-size:12px;color:var(--muted);margin-top:8px;">Key fields: <code style="color:var(--warn);">id, summary, company, contact, status, priority, type, dateEntered, closedDate, closedFlag</code></p>
           <p style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic;">⚠️ Extended endpoint URLs above (agreements, configurations, tickets) are based on community documentation — verify against official CW developer docs before building against them.</p>
@@ -620,7 +654,7 @@ companies = client.company.companies.get_all(
 
 <span class="cm"># Get sites per company</span>
     sites = client.company.companies.id(co.id).sites.get_all()</div>
-        <p style="font-size:12px;color:var(--muted);margin-top:10px;">github.com/HealthITAU/pyconnectwise — Pydantic models, type-annotated, built-in pagination</p>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;"><a href="https://github.com/HealthITAU/pyconnectwise" target="_blank" class="src teal">github.com/HealthITAU/pyconnectwise</a> — Pydantic models, type-annotated, built-in pagination. <span style="color:var(--warn);font-style:italic;">Code syntax is illustrative; verify against library README.</span></p>
       </div>
       <div class="card teal-left">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -656,7 +690,7 @@ companies = client.company.companies.get_all(
         { conditions: <span class="str">`company/id=${co.id} AND inactiveFlag=false`</span> }
     );
 }</div>
-        <p style="font-size:12px;color:var(--muted);margin-top:10px;">github.com/CovenantTechnologySolutions/connectwise-rest — TypeScript, logging, auto-retry on timeout</p>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;"><a href="https://github.com/covenanttechnologysolutions/connectwise-rest" target="_blank" class="src teal">github.com/covenanttechnologysolutions/connectwise-rest</a> — TypeScript, logging, auto-retry on timeout. <span style="color:var(--warn);font-style:italic;">Code syntax is illustrative; verify against library README.</span></p>
       </div>
     </div>
   </div>
@@ -748,9 +782,116 @@ companies = client.company.companies.get_all(
     </div>
   </div>
 
+  <!-- SOURCES -->
+  <div class="section" id="sources">
+    <div class="section-header">
+      <div class="section-icon purple">📚</div>
+      <div class="section-title">Sources &amp; Verification Status</div>
+    </div>
+    <p class="desc">All claims in this document are tagged with their source. <span class="tag green">✓ verified</span> = directly fetched and confirmed this session. <span class="tag amber">⚠ inferred</span> = derived from model types or community convention; verify before relying on in production.</p>
+    <div class="sources-grid">
+      <div class="source-row">
+        <div class="source-num">1</div>
+        <div class="source-body">
+          <strong>ConnectWise Developer Network <span class="verified-badge">✓ verified</span></strong>
+          <a href="https://developer.connectwise.com/Best_Practices/Getting_Started" target="_blank">developer.connectwise.com/Best_Practices/Getting_Started</a>
+          <p class="src-note">Used for: API structure overview, registration requirements, integrator categories. Note: most deep docs require login.</p>
+        </div>
+      </div>
+      <div class="source-row">
+        <div class="source-num">2</div>
+        <div class="source-body">
+          <strong>pyconnectwise — OpenAPI-generated Python models <span class="verified-badge">✓ verified</span></strong>
+          <a href="https://github.com/HealthITAU/pyconnectwise/blob/main/src/pyconnectwise/models/manage/__init__.py" target="_blank">github.com/HealthITAU/pyconnectwise</a>
+          <p class="src-note">Used for: All Company, Contact, and CompanySite field schemas. Models are auto-generated from the official CW Manage OpenAPI spec. Raw model code was fetched and read directly this session.</p>
+        </div>
+      </div>
+      <div class="source-row">
+        <div class="source-num">3</div>
+        <div class="source-body">
+          <strong>ConnectWise Developer Documentation Mirror <span class="verified-badge">✓ verified</span></strong>
+          <a href="https://app.preshmarketingsolutions.com/help/connectwise-developer-documentation" target="_blank">app.preshmarketingsolutions.com (CW Docs mirror)</a>
+          <p class="src-note">Used for: Pagination defaults (25/page), max page size (1,000), Link header for pagination, SSL requirement, API logging. Mirrors official CW developer docs content.</p>
+        </div>
+      </div>
+      <div class="source-row">
+        <div class="source-num">4</div>
+        <div class="source-body">
+          <strong>codingfoundry/connectwise-manage-api (GitHub) <span class="verified-badge">✓ verified</span></strong>
+          <a href="https://github.com/codingfoundry/connectwise-manage-api" target="_blank">github.com/codingfoundry/connectwise-manage-api</a>
+          <p class="src-note">Used for: Correct base URL format with <code>api-</code> prefix (api-na, api-eu, api-au). Explicitly documents "For Cloud servers you must put api- in front of the ConnectWise Manage URL."</p>
+        </div>
+      </div>
+      <div class="source-row">
+        <div class="source-num">5</div>
+        <div class="source-body">
+          <strong>rollout.com — ConnectWise Manage API Essentials <span class="verified-badge">✓ verified</span></strong>
+          <a href="https://rollout.com/integration-guides/connect-wise-manage/api-essentials" target="_blank">rollout.com/integration-guides/connect-wise-manage/api-essentials</a>
+          <p class="src-note">Used for: REST API type confirmation, rate limit summary, SSL requirement, webhook support, page size confirmation.</p>
+        </div>
+      </div>
+      <div class="source-row">
+        <div class="source-num">6</div>
+        <div class="source-body">
+          <strong>Microsoft Learn — ConnectWise PSA Connector <span class="verified-badge">✓ verified</span></strong>
+          <a href="https://learn.microsoft.com/en-us/connectors/connectwisepsa/" target="_blank">learn.microsoft.com/en-us/connectors/connectwisepsa/</a>
+          <p class="src-note">Used for: Confirmation that Get Companies and Get Contacts are supported operations. Published by Microsoft, independently maintained.</p>
+        </div>
+      </div>
+      <div class="source-row">
+        <div class="source-num">7</div>
+        <div class="source-body">
+          <strong>tier2tickets — ConnectWise Integration Docs <span class="verified-badge">✓ verified</span></strong>
+          <a href="https://docs.tier2tickets.com/content/integration/connectwise/" target="_blank">docs.tier2tickets.com/content/integration/connectwise/</a>
+          <p class="src-note">Used for: Auth header format confirmation, API version string (<code>/v4_6_release</code>), member permission requirements.</p>
+        </div>
+      </div>
+      <div class="source-row">
+        <div class="source-num">8</div>
+        <div class="source-body">
+          <strong>StackOverflow — CW REST API Implementation <span class="verified-badge">✓ verified</span></strong>
+          <a href="https://stackoverflow.com/questions/38524140/connectwise-rest-api-implementation" target="_blank">stackoverflow.com/questions/38524140</a>
+          <p class="src-note">Used for: Base URL format with api- prefix, confirmation of EU URL pattern. Community answer confirmed api-na vs na distinction.</p>
+        </div>
+      </div>
+      <div class="source-row">
+        <div class="source-num">9</div>
+        <div class="source-body">
+          <strong>reddit/r/ConnectWise — Hello World API Edition <span class="verified-badge">✓ verified</span></strong>
+          <a href="https://www.reddit.com/r/ConnectWise/comments/1emjqg8/hello_world_connectwise_api_edition/" target="_blank">reddit.com/r/ConnectWise</a>
+          <p class="src-note">Used for: Count endpoint pattern (<code>/company/companies/count</code>), curl example confirming auth header format and URL structure.</p>
+        </div>
+      </div>
+      <div class="source-row" style="border-color:rgba(255,169,77,.3);">
+        <div class="source-num" style="background:rgba(255,169,77,.15);color:var(--warn);border-color:rgba(255,169,77,.3);">⚠</div>
+        <div class="source-body">
+          <strong>Extended Endpoints — Community Convention <span class="inferred-badge">⚠ not independently verified this session</span></strong>
+          <a href="#">/finance/agreements · /company/configurations · /service/tickets</a>
+          <p class="src-note">These endpoint paths follow the standard CW REST API naming convention and are widely referenced in community documentation. However, they were not explicitly fetched and confirmed this session. Verify against the official CW developer docs before building against them.</p>
+        </div>
+      </div>
+      <div class="source-row" style="border-color:rgba(255,169,77,.3);">
+        <div class="source-num" style="background:rgba(255,169,77,.15);color:var(--warn);border-color:rgba(255,169,77,.3);">⚠</div>
+        <div class="source-body">
+          <strong>communicationItems JSON structure <span class="inferred-badge">⚠ inferred from model type name</span></strong>
+          <a href="https://github.com/HealthITAU/pyconnectwise/blob/main/src/pyconnectwise/models/manage/__init__.py" target="_blank">pyconnectwise model</a>
+          <p class="src-note">The field exists and is typed as <code>list[ContactCommunicationItem]</code> — confirmed. The specific JSON keys (type, value, defaultFlag, communicationType) are standard CW API patterns widely documented in community sources, but the ContactCommunicationItem model definition was not directly fetched. Verify field names against a live API response.</p>
+        </div>
+      </div>
+      <div class="source-row" style="border-color:rgba(255,169,77,.3);">
+        <div class="source-num" style="background:rgba(255,169,77,.15);color:var(--warn);border-color:rgba(255,169,77,.3);">⚠</div>
+        <div class="source-body">
+          <strong>Library code examples <span class="inferred-badge">⚠ illustrative — not tested against live instance</span></strong>
+          <a href="#">pyconnectwise · connectwise-rest</a>
+          <p class="src-note">Code examples follow each library's documented patterns but were not run against a live CW instance. Exact method names (e.g., <code>client.company.companies.get_all()</code>, <code>cwm.CompanyAPI.getCompanies</code>) should be verified against current library READMEs before use.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="footer">
     Rev.io · ConnectWise Migration API Reference · 2026-03-27<br>
-    Source: pyconnectwise OpenAPI schema · developer.connectwise.com · Microsoft Learn connector docs
+    Sources: pyconnectwise OpenAPI schema · developer.connectwise.com · Microsoft Learn · CW Docs mirror · codingfoundry · rollout.com · tier2tickets · StackOverflow · reddit/r/ConnectWise
   </div>
 
 </div>
