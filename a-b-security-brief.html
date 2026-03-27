@@ -314,7 +314,7 @@
     }
     .addendum-block .remove-btn:hover { opacity: 1; }
 
-    /* ── BADGE ��─ */
+    /* ── BADGE ── */
     .badge {
       display: inline-block;
       padding: 3px 10px;
@@ -410,8 +410,8 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-eyebrow">⚡ Rev.io PSA — Sales to SA Handoff</div>
-  <h1><span>Sales Brief</span> — A&B Security</h1>
-  <p class="hero-sub">Auto-generated from Salesforce · Close date 2026-03-26 · Jake Borah → SA Handoff</p>
+  <h1><span>Sales Brief</span> — A&amp;B Security</h1>
+  <p class="hero-sub">Pre-filled from Salesforce · Close date 3/26/2026 · Jake Borah → SA Handoff · Closed at ISC West (Las Vegas)</p>
   <div class="hero-actions">
     <button class="btn btn-primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
     
@@ -448,7 +448,7 @@
             <option>12 Months</option>
             <option>24 Months</option>
             <option>36 Months</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
@@ -463,16 +463,16 @@
             <option>Halle Taylor</option>
             <option>Kegan Ehlers</option>
             <option>Jeremy Adams</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
           <label>Primary Client Contact <span class="req">*</span></label>
-          <input type="text" placeholder="Name + title" value="Joe Small — Operations Supervisor" />
+          <input type="text" placeholder="Name + title" value="Gary Schaff — President & CEO" />
         </div>
         <div class="field">
           <label>Primary Contact Email</label>
-          <input type="email" placeholder="email@company.com" value="joe.small@locksvegas.com" />
+          <input type="email" placeholder="email@company.com" value="gary@locksvegas.com" />
         </div>
       </div>
 
@@ -497,7 +497,7 @@
             <option>Field Service</option>
             <option>Telecom / VoIP</option>
             <option>Multi-service</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
       </div>
@@ -507,7 +507,17 @@
       <div class="field">
         <label>Brief — Key Context for SA</label>
         <textarea placeholder="Anything from the sales calls the SA should know going in — client personality, key pain points, specific promises made, red flags, champions, etc.">Las Vegas, NV · Security Integrator · Sales rep: Jake Borah
-</textarea>
+
+⚠️ ISC WEST CLOSE: This deal was closed in-person at ISC West (Las Vegas, 3/26/2026) — Jake Borah's third close from the show alongside NetWatch and Frontline Security. No pre-close discovery calls or email threads on record. SA must debrief Jake Borah before the kickoff call.
+
+Contact notes:
+• Gary Schaff — President & CEO — gary@locksvegas.com — (702) 604-3915
+• Jay Keller — CEO — jay.keller@locksvegas.com — (702) 366-5835
+• Joe Small — Operations Supervisor — joe.small@locksvegas.com — (702) 362-0222 / mobile (702) 362-9646
+
+Note: Two contacts with CEO/President titles (Gary Schaff and Jay Keller) — likely co-owners or partners. Email domain is locksvegas.com, suggesting this may be A&B Lock & Security (locksmith + physical security). Confirm the exact business scope at kickoff — card access, cameras, physical locks, monitoring, or some combination.
+
+⚠️ NO DISCOVERY DATA: SF Description is blank, no Outreach email history exists. Everything about this client's tech stack, pain points, and expectations is unknown. The SA is going in essentially cold — the kickoff call will need to serve as both discovery and onboarding session.</textarea>
       </div>
     </div>
 
@@ -522,7 +532,7 @@
         </div>
         <div class="field">
           <label>Kickoff Target Time</label>
-          <input type="text" placeholder="e.g. 2:00 PM ET" value="Morning preferred — confirm with client" />
+          <input type="text" placeholder="e.g. 2:00 PM ET" value="Morning preferred — PT (Las Vegas) — must override any trade show timing promises" />
         </div>
         <div class="field">
           <label>Go-Live Complexity Tier</label>
@@ -564,9 +574,9 @@
             <option>Autotask</option>
             <option>Jira</option>
             <option>Alarm Biller</option>
-            <option selected>Spreadsheets only</option>
+            <option>Spreadsheets only</option>
             <option>None / starting fresh</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
@@ -583,12 +593,16 @@
         </div>
         <div class="field">
           <label>Approx. Customer / Record Count</label>
-          <input type="text" placeholder="e.g. ~200 customers, 1,500 tickets" value="TBD — confirm at kickoff" />
+          <input type="text" placeholder="e.g. ~200 customers, 1,500 tickets" value="TBD — confirm scope at kickoff (Service Fusion has good CSV export capability)" />
         </div>
       </div>
       <div class="field" style="margin-top:14px;">
         <label>Migration Notes</label>
-        <textarea placeholder="Any known data quality issues, special migration requirements, legacy data to exclude, etc." style="min-height:60px;">Migrating from Spreadsheets only. SA should scope data migration in the first session. </textarea>
+        <textarea placeholder="Any known data quality issues, special migration requirements, legacy data to exclude, etc." style="min-height:60px;">Displacing Service Fusion (field service management — commonly used by security integrators, locksmiths, and trade contractors). Service Fusion stores customers, jobs, invoices, and scheduling data. It has CSV export capability.
+
+Note: Service Fusion is not a traditional IT MSP PSA — it's a field service platform. The SA should understand the client's workflow (job-based, field tech dispatch, recurring service agreements) before scoping the migration. Contact data, job history, and invoice history should be the priority.
+
+⚠️ Service Fusion is not in the Rev.io integration ecosystem — no automated migration path. SA should plan for manual CSV import and spend the first session mapping Service Fusion concepts to Rev.io equivalents.</textarea>
       </div>
     </div>
 
@@ -607,19 +621,19 @@
             <option>Xero</option>
             <option>FreshBooks</option>
             <option selected>None</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
           <label>If Other — specify</label>
-          <input type="text" placeholder="Software name" value="TBD — confirm at kickoff" />
+          <input type="text" placeholder="Software name" value="TBD — confirm at kickoff (Service Fusion users commonly use QuickBooks)" />
         </div>
         <div class="field">
           <label>Two-Way Sync Required?</label>
           <div class="radio-group">
             <label><input type="radio" name="qb_sync" value="yes" /> Yes</label>
             <label><input type="radio" name="qb_sync" value="no" /> No — one-way only</label>
-            <label><input type="radio" name="qb_sync" value="unsure" /> TBD</label>
+            <label><input type="radio" name="qb_sync" value="unsure" checked /> TBD</label>
           </div>
         </div>
         <div class="field">
@@ -649,7 +663,7 @@
             <option>Kaseya VSA</option>
             <option>N-able N-sight</option>
             <option selected>None</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
@@ -679,7 +693,7 @@
       </div>
       <div class="field" style="margin-top:14px;">
         <label>Integration Notes / Custom API Details</label>
-        <textarea placeholder="e.g. custom alarm monitoring system requires bidirectional API — spec TBD" style="min-height:55px;"></textarea>
+        <textarea placeholder="e.g. custom alarm monitoring system requires bidirectional API — spec TBD" style="min-height:55px;">Physical security / locksmith company — likely no traditional IT RMM. May use alarm monitoring software (e.g., Alarm.com, Bold Group). Confirm at kickoff whether any monitoring platform integration is needed.</textarea>
       </div>
     </div>
 
@@ -699,7 +713,7 @@
             <option>TRX / Payroc</option>
             <option>Manual / check only</option>
             <option>None yet</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
@@ -724,7 +738,7 @@
           <div class="check-group">
             <label><input type="checkbox" checked /> Credit Card</label>
             <label><input type="checkbox" checked /> ACH / Bank Transfer</label>
-            <label><input type="checkbox" /> Check</label>
+            <label><input type="checkbox" checked /> Check</label>
             <label><input type="checkbox" /> Card Reader (in-field)</label>
           </div>
         </div>
@@ -749,9 +763,9 @@
         </thead>
         <tbody id="rolesBody">
           <tr>
-            <td><input type="text" placeholder="Name" value="Joe Small" /></td>
-            <td><input type="text" placeholder="e.g. Owner" value="Operations Supervisor" /></td>
-            <td><input type="email" placeholder="email@co.com" value="joe.small@locksvegas.com" /></td>
+            <td><input type="text" placeholder="Name" value="Gary Schaff" /></td>
+            <td><input type="text" placeholder="e.g. Owner" value="President &amp; CEO" /></td>
+            <td><input type="email" placeholder="email@co.com" value="gary@locksvegas.com" /></td>
             <td>
               <select>
                 <option value="">— Role —</option>
@@ -767,8 +781,8 @@
             </td>
             <td>
               <div class="radio-group" style="flex-direction:column; gap:4px;">
-                <label><input type="radio" name="mob_0" value="yes" checked /> Yes</label>
-                <label><input type="radio" name="mob_0" value="no" /> No</label>
+                <label><input type="radio" name="mob_0" value="yes" /> Yes</label>
+                <label><input type="radio" name="mob_0" value="no" checked /> No</label>
               </div>
             </td>
             <td><button class="del-btn" onclick="removeRow(this)" title="Remove">✕</button></td>
@@ -786,9 +800,9 @@
           <label>Dispatch Method <span class="req">*</span></label>
           <div class="check-group">
             <label><input type="checkbox" /> By Department</label>
-            <label><input type="checkbox" /> By Geography / Zone</label>
+            <label><input type="checkbox" checked /> By Geography / Zone</label>
             <label><input type="checkbox" /> By Skill Set</label>
-            <label><input type="checkbox" /> By Individual Tech</label>
+            <label><input type="checkbox" checked /> By Individual Tech</label>
             <label><input type="checkbox" /> No formal dispatch</label>
           </div>
         </div>
@@ -803,7 +817,7 @@
         </div>
         <div class="field">
           <label>Business Hours</label>
-          <input type="text" placeholder="e.g. Mon–Fri 8am–5pm ET" value="Mon–Fri — confirm exact hours at kickoff" />
+          <input type="text" placeholder="e.g. Mon–Fri 8am–5pm ET" value="Mon–Fri — confirm hours at kickoff (PT — Las Vegas)" />
         </div>
         <div class="field">
           <label>After-Hours / Weekend Support?</label>
@@ -841,11 +855,11 @@
         </div>
         <div class="field">
           <label>Last Invoice Number (if continuing)</label>
-          <input type="text" placeholder="e.g. INV-10482" />
+          <input type="text" placeholder="e.g. INV-10482" value="TBD — confirm last Service Fusion invoice number" />
         </div>
         <div class="field">
           <label>Invoice Prefix / Format</label>
-          <input type="text" placeholder="e.g. INV- or just numeric" />
+          <input type="text" placeholder="e.g. INV- or just numeric" value="TBD — confirm current format" />
         </div>
         <div class="field">
           <label>Starting Number (if resetting)</label>
@@ -880,7 +894,7 @@
         </div>
         <div class="field">
           <label>States / Jurisdictions</label>
-          <input type="text" placeholder="e.g. TX, CA, Ontario (Canada)" value="NV — confirm additional states if applicable" />
+          <input type="text" placeholder="e.g. TX, CA, Ontario (Canada)" value="Nevada (NV) — confirm additional states if they operate across state lines" />
         </div>
       </div>
       <div class="field" style="margin-top:14px;">
@@ -968,7 +982,7 @@
           <div class="check-group">
             <label><input type="checkbox" checked /> Multi-phase installs</label>
             <label><input type="checkbox" /> Milestone billing</label>
-            <label><input type="checkbox" checked /> Multiple concurrent projects</label>
+            <label><input type="checkbox" /> Multiple concurrent projects</label>
           </div>
         </div>
         <div class="field">
@@ -977,7 +991,7 @@
         </div>
         <div class="field">
           <label>Approx. Active Projects at a Time</label>
-          <input type="text" placeholder="e.g. 5–10 concurrent" />
+          <input type="text" placeholder="e.g. 5–10 concurrent" value="TBD — confirm at kickoff" />
         </div>
       </div>
     </div>
@@ -994,7 +1008,7 @@
             <option>Manual / Word / Excel</option>
             <option>Already using Rev.io quoting</option>
             <option selected>None</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
         <div class="field">
@@ -1008,7 +1022,7 @@
         <div class="field">
           <label>Billing Type</label>
           <div class="check-group">
-            <label><input type="checkbox" /> Monthly recurring (RMR)</label>
+            <label><input type="checkbox" checked /> Monthly recurring (RMR)</label>
             <label><input type="checkbox" /> Quarterly</label>
             <label><input type="checkbox" checked /> Time &amp; Materials</label>
             <label><input type="checkbox" checked /> Project milestone</label>
@@ -1093,7 +1107,7 @@
         </div>
         <div class="field">
           <label>Onboarding Fee</label>
-          <input type="text" placeholder="e.g. $500 one-time" value="TBD — confirm with AE" />
+          <input type="text" placeholder="e.g. $500 one-time" value="TBD — confirm with Jake Borah" />
         </div>
         <div class="field">
           <label>Payment Terms</label>
@@ -1103,7 +1117,7 @@
             <option selected>Net 30</option>
             <option>Net 45</option>
             <option>Due on Receipt</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
       </div>
@@ -1117,12 +1131,12 @@
             <label><input type="checkbox" checked /> PSA Core</label>
             <label><input type="checkbox" /> Billing Platform</label>
             <label><input type="checkbox" /> Inventory Management</label>
-            <label><input type="checkbox" /> Project Management</label>
+            <label><input type="checkbox" checked /> Project Management</label>
             <label><input type="checkbox" /> Customer Portal</label>
             <label><input type="checkbox" /> SMS</label>
             <label><input type="checkbox" /> Rev.io Payments</label>
             <label><input type="checkbox" /> SureTax</label>
-            <label><input type="checkbox" /> Mobile App</label>
+            <label><input type="checkbox" checked /> Mobile App</label>
           </div>
         </div>
         <div class="field">
@@ -1135,7 +1149,7 @@
 
       <div class="field">
         <label>Specific Commitments Made to Client</label>
-        <textarea placeholder="Any features promised, timelines committed, integrations guaranteed, custom work agreed to — the SA needs to know what was sold"></textarea>
+        <textarea placeholder="Any features promised, timelines committed, integrations guaranteed, custom work agreed to — the SA needs to know what was sold">Deal closed in-person at ISC West on 3/26/2026. Jake Borah must be debriefed on all commitments made at the booth before the kickoff call. No email confirmation thread exists — verbal close only.</textarea>
       </div>
     </div>
 
@@ -1163,7 +1177,7 @@
                 <option>Feature Commitment</option>
                 <option>White Label / Branding Agreement</option>
                 <option>Confidentiality / NDA</option>
-                <option>Other</option>
+                <option selected>Other</option>
               </select>
             </div>
           </div>
@@ -1229,7 +1243,7 @@
               <option>Monthly</option>
               <option>Quarterly</option>
               <option>Annual</option>
-              <option>Other</option>
+              <option selected>Other</option>
             </select>
           </div>
           <div class="field">
@@ -1242,7 +1256,7 @@
               <option>April</option>
               <option>July</option>
               <option>October</option>
-              <option>Other</option>
+              <option selected>Other</option>
             </select>
           </div>
           <div class="field">
@@ -1318,24 +1332,38 @@
     <div class="card">
       <div class="field">
         <label>Pre-Kickoff Open Items</label>
-        <textarea placeholder="..." style="min-height:120px;">• Bill Profile Questionnaire not sent — send to joe.small@locksvegas.com
+        <textarea placeholder="..." style="min-height:120px;">⚠️ JAKE BORAH DEBRIEF REQUIRED before kickoff — ISC West verbal close with no email or discovery record. Jake is the only source of what was discussed and committed at the booth.
+• Confirm primary decision maker: Gary Schaff or Jay Keller (both listed as CEO/President — confirm who runs day-to-day)
+• Accounting software unknown — likely QuickBooks but confirm at kickoff
+• Payment processor unknown
+• Service Fusion migration scope — confirm what data to migrate (customers, jobs, invoice history)
+• Full user list beyond 3 SF contacts unknown — who else needs Rev.io access and mobile app?
+• Contract terms (setup fees, any special ISC pricing) not documented
+• Bill Profile Questionnaire not sent — send to gary@locksvegas.com
 • Company logo not collected
-• Accounting software and GL codes — confirm at kickoff
-• Payment processor — confirm before billing goes live</textarea>
+• SureTax status unknown — confirm at kickoff (NV, standard US company)</textarea>
       </div>
       <hr class="field-divider" />
       <div class="field">
         <label>Questions / Items to Confirm on Day 1</label>
-        <textarea placeholder="Things that couldn't be resolved pre-kickoff — for the SA to address in session 1" style="min-height:90px;">• Confirm accounting software and GL codes with billing/finance contact
-• Get full user list (names, titles, emails, mobile app needs)
-• Confirm Spreadsheets only migration scope and data to import
-• Payment processor and billing setup
-• Confirm business hours and SLA/holiday configuration</textarea>
+        <textarea placeholder="Things that couldn't be resolved pre-kickoff — for the SA to address in session 1" style="min-height:90px;">• Debrief from Jake Borah: what was shown, what was promised, any pricing concessions
+• Confirm which of Gary Schaff / Jay Keller is the primary onboarding contact
+• Exact business scope: what types of jobs (locksmith, card access, cameras, monitoring, combinations?)
+• Accounting software and GL codes (likely QuickBooks — confirm)
+• Service Fusion migration scope: customers, job history, invoice continuity
+• Full user and technician list — who needs mobile app access?
+• Recurring service agreement structure — how do they bill for monitoring contracts today?</textarea>
       </div>
       <hr class="field-divider" />
       <div class="field">
         <label>Red Flags / Risk Notes</label>
-        <textarea placeholder="Any concerns from the sales process — client readiness, data quality, complex requirements, unrealistic expectations, etc." style="min-height:80px;">ℹ️ NO KAIA TRANSCRIPTS FOUND: No pre-close discovery calls found in Outreach for this account. All context is from SF fields and email threads.</textarea>
+        <textarea placeholder="Any concerns from the sales process — client readiness, data quality, complex requirements, unrealistic expectations, etc." style="min-height:80px;">⚠️ ZERO DISCOVERY DATA: No SF description, no email thread, no Kaia transcripts. The SA has only: company name, location, industry, MRR, and contacts. This is the thinnest data set of any brief generated to date. The kickoff call will need to function as discovery AND onboarding session 1 — plan extra time.
+
+⚠️ ISC WEST VERBAL CLOSE: Jake Borah closed three deals at ISC West this week (NetWatch, Frontline Security, A&B Security). With multiple verbal closes in rapid succession, there is higher risk that commitments were made that aren't fully documented. Jake debrief is non-negotiable before the SA talks to this client.
+
+⚠️ SERVICE FUSION DISPLACEMENT: Service Fusion is a field service management tool, not a traditional IT PSA. The SA should understand the distinction — this client thinks in terms of jobs, technicians, and dispatch, not tickets, SLAs, and IT service catalog. The onboarding conversation needs to meet them in their vocabulary.
+
+⚠️ DUAL CEO CONTACTS: Two people listed as CEO/President. Could be co-founders, family business (A&B = two owners?), or one may have stepped back. Confirm the actual decision maker and day-to-day onboarding contact immediately.</textarea>
       </div>
     </div>
 
@@ -1448,7 +1476,7 @@
             <option>Feature Commitment</option>
             <option>White Label / Branding Agreement</option>
             <option>Confidentiality / NDA</option>
-            <option>Other</option>
+            <option selected>Other</option>
           </select>
         </div>
       </div>
@@ -1472,15 +1500,20 @@
   }
 </script>
 
+
 <script>
-document.addEventListener('DOMContentLoaded',function(){
-  [{n:"Jay Keller",t:"CEO",e:"jay.keller@locksvegas.com",p:"(702) 366-5835"},{n:"Gary Schaff",t:"President And Chief Executive Officer (CEO)",e:"gary@locksvegas.com",p:"(702) 604-3915"}].forEach(function(u,i){
+document.addEventListener('DOMContentLoaded', function(){
+  var users = [
+    ['Jay Keller','CEO','jay.keller@locksvegas.com','(702) 366-5835'],
+    ['Joe Small','Operations Supervisor','joe.small@locksvegas.com','(702) 362-9646'],
+  ];
+  users.forEach(function(u){
     addRoleRow();
-    var r=document.getElementById('rolesBody').rows;
-    var row=r[r.length-1];
-    row.cells[0].querySelector('input').value=u.n;
-    row.cells[1].querySelector('input').value=u.t;
-    row.cells[2].querySelector('input').value=u.e;
+    var rows=document.getElementById('rolesBody').rows;
+    var row=rows[rows.length-1];
+    row.cells[0].querySelector('input').value=u[0];
+    row.cells[1].querySelector('input').value=u[1];
+    row.cells[2].querySelector('input').value=u[2];
   });
 });
 </script>
