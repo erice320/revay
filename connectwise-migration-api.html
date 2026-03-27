@@ -351,9 +351,9 @@
             <table>
               <thead><tr><th>Region</th><th>Base URL</th></tr></thead>
               <tbody>
-                <tr><td>NA Cloud</td><td><code style="color:var(--accent2);font-size:11px;">https://na.myconnectwise.net/v4_6_release/apis/3.0</code></td></tr>
-                <tr><td>EU Cloud</td><td><code style="color:var(--accent2);font-size:11px;">https://eu.myconnectwise.net/v4_6_release/apis/3.0</code></td></tr>
-                <tr><td>AU Cloud</td><td><code style="color:var(--accent2);font-size:11px;">https://aus.myconnectwise.net/v4_6_release/apis/3.0</code></td></tr>
+                <tr><td>NA Cloud</td><td><code style="color:var(--accent2);font-size:11px;">https://api-na.myconnectwise.net/v4_6_release/apis/3.0</code></td></tr>
+                <tr><td>EU Cloud</td><td><code style="color:var(--accent2);font-size:11px;">https://api-eu.myconnectwise.net/v4_6_release/apis/3.0</code></td></tr>
+                <tr><td>AU Cloud</td><td><code style="color:var(--accent2);font-size:11px;">https://api-au.myconnectwise.net/v4_6_release/apis/3.0</code></td></tr>
                 <tr><td>On-Prem</td><td><code style="color:var(--muted);font-size:11px;">https://{customer-domain}/v4_6_release/apis/3.0</code></td></tr>
               </tbody>
             </table>
@@ -371,7 +371,7 @@
               </tbody>
             </table>
           </div>
-          <p style="font-size:12px;color:var(--muted);margin-top:10px;"><code>X-Total-Count</code> response header gives the total record count — use for progress tracking.</p>
+          <p style="font-size:12px;color:var(--muted);margin-top:10px;">CW returns a <code>Link</code> header (not <code>X-Total-Count</code>) for pagination navigation. For total count, call the dedicated count endpoint: <code>GET /company/companies/count</code>.</p>
         </div>
       </div>
       <div class="gap-12">
@@ -382,8 +382,9 @@
 <span class="url">GET /company/companies?page=2&pageSize=1000</span>
 <span class="cm">... repeat until done</span>
 
-<span class="cm"># Response header</span>
-<span class="key">X-Total-Count:</span> <span class="str">4382</span></div>
+
+<span class="cm"># Get total before looping:</span>
+<span class="url">GET /company/companies/count</span>  <span class="cm"># → {"count": 4382}</div>
         </div>
         <div class="card">
           <div class="card-label">Filtering, Ordering &amp; Field Selection</div>
@@ -570,6 +571,7 @@
           <div class="card-label">Ticket History (Optional)</div>
           <div class="code-block"><span class="url">GET /service/tickets</span></div>
           <p style="font-size:12px;color:var(--muted);margin-top:8px;">Key fields: <code style="color:var(--warn);">id, summary, company, contact, status, priority, type, dateEntered, closedDate, closedFlag</code></p>
+          <p style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic;">⚠️ Extended endpoint URLs above (agreements, configurations, tickets) are based on community documentation — verify against official CW developer docs before building against them.</p>
         </div>
       </div>
     </div>
@@ -597,7 +599,7 @@
 
 client = ConnectWiseManageAPIClient(
     company_name=<span class="str">"acmeit"</span>,
-    manage_url=<span class="str">"na.myconnectwise.net"</span>,
+    manage_url=<span class="str">"api-na.myconnectwise.net"</span>,
     client_id=<span class="str">"your-client-id"</span>,
     public_key=<span class="str">"your-public-key"</span>,
     private_key=<span class="str">"your-private-key"</span>
