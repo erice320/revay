@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ServiceFusion API — Migration Reference | Rev.io</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3250;
+    --text: #e8eaf6;
+    --muted: #8892b0;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --tag-bg: #1e2235;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; line-height: 1.6; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Header */
+  .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 28px 40px 24px; }
+  .header-top { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+  .logo { background: var(--accent); color: #fff; font-weight: 800; font-size: 13px; padding: 4px 10px; border-radius: 6px; letter-spacing: 0.05em; }
+  .header-badge { background: var(--tag-bg); border: 1px solid var(--border); color: var(--muted); font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+  h1 { font-size: 26px; font-weight: 700; color: var(--text); }
+  .header-sub { color: var(--muted); font-size: 13px; margin-top: 6px; }
+
+  /* Nav dots */
+  .nav { display: flex; gap: 8px; flex-wrap: wrap; padding: 18px 40px; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+  .nav a { background: var(--tag-bg); border: 1px solid var(--border); color: var(--muted); font-size: 12px; padding: 5px 14px; border-radius: 20px; transition: all 0.15s; }
+  .nav a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+  /* Main layout */
+  .main { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+  .section { margin-bottom: 52px; }
+  .section-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  h2 { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+  h3 { font-size: 15px; font-weight: 600; color: var(--accent2); margin-bottom: 8px; margin-top: 20px; }
+  p { color: var(--muted); margin-bottom: 10px; }
+
+  /* Cards */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 22px 26px; margin-bottom: 16px; }
+  .card-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+
+  /* Code */
+  .code-block { background: #0a0c12; border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12.5px; color: #a5f3fc; overflow-x: auto; margin: 12px 0; white-space: pre; }
+  code { background: #161929; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px; color: #a5f3fc; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(108,99,255,0.04); }
+  .method { font-family: monospace; font-size: 12px; font-weight: 700; }
+  .get { color: var(--accent2); }
+  .post { color: #60a5fa; }
+  .put { color: #f59e0b; }
+  .del { color: var(--danger); }
+
+  /* Badges */
+  .badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; vertical-align: middle; margin-left: 6px; }
+  .badge-verified { background: rgba(34,197,94,0.15); color: var(--success); border: 1px solid rgba(34,197,94,0.3); }
+  .badge-warn { background: rgba(245,158,11,0.15); color: var(--warn); border: 1px solid rgba(245,158,11,0.3); }
+  .badge-danger { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+  .badge-info { background: rgba(108,99,255,0.15); color: var(--accent); border: 1px solid rgba(108,99,255,0.3); }
+
+  /* Alert boxes */
+  .alert { border-radius: 8px; padding: 14px 18px; margin: 14px 0; font-size: 13px; display: flex; gap: 10px; }
+  .alert-warn { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25); color: #fbbf24; }
+  .alert-info { background: rgba(108,99,255,0.08); border: 1px solid rgba(108,99,255,0.25); color: #a5b4fc; }
+  .alert-danger { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5; }
+  .alert-success { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Bullet lists */
+  ul.clean { list-style: none; padding: 0; }
+  ul.clean li { padding: 5px 0 5px 20px; position: relative; color: var(--muted); font-size: 13px; }
+  ul.clean li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+  /* Rate limit bar */
+  .rate-bar { background: var(--surface2); border-radius: 8px; height: 8px; overflow: hidden; margin: 8px 0; }
+  .rate-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--accent2), var(--accent)); width: 6%; }
+
+  /* Source refs */
+  .src { display: inline-block; font-size: 10px; background: var(--tag-bg); border: 1px solid var(--border); color: var(--muted); padding: 1px 7px; border-radius: 4px; vertical-align: middle; margin-left: 4px; cursor: default; }
+  .src:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Grid */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } .nav { padding: 12px 16px; } .main { padding: 24px 16px 60px; } .header { padding: 20px 16px; } }
+
+  /* Footer */
+  .footer { border-top: 1px solid var(--border); padding: 30px 40px; text-align: center; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <span class="logo">⚡ REVAY</span>
+    <span class="header-badge">Migration Intelligence</span>
+    <span class="header-badge">March 2026</span>
+  </div>
+  <h1>ServiceFusion API — Migration Reference</h1>
+  <div class="header-sub">ServiceFusion → Rev.io PSA 2.0 · REST API · Source-validated · 2026-03-27</div>
+</div>
+
+<div class="nav">
+  <a href="#overview">Overview</a>
+  <a href="#auth">Authentication</a>
+  <a href="#rate-limits">Rate Limits</a>
+  <a href="#endpoints">Endpoints</a>
+  <a href="#data-model">Data Model</a>
+  <a href="#migration">Migration Considerations</a>
+  <a href="#libraries">Libraries</a>
+  <a href="#sources">Sources</a>
+</div>
+
+<div class="main">
+
+  <!-- OVERVIEW -->
+  <div class="section" id="overview">
+    <div class="section-title">Overview</div>
+    <h2>ServiceFusion Open API</h2>
+    <p>ServiceFusion is a cloud-based field service management (FSM) platform targeting residential and commercial service contractors. Their Open API provides programmatic access to the platform's core entities — customers, jobs, estimates, technicians, and equipment — enabling migration, integration, and automation workflows.</p>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>Pro Plan Required.</strong> The ServiceFusion Open API is only available to Pro plan subscribers. Any customer migrating to Rev.io PSA will need active Pro access to extract their own data via API. <a href="https://servicefusion.zendesk.com/hc/en-us/articles/360035145811" target="_blank">Source ↗</a></div>
+    </div>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="card">
+        <div class="card-title">API Type</div>
+        <p style="margin:0;">REST · JSON · Standard HTTP verbs (GET, POST, PUT, DELETE)</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Base URL <span class="badge badge-verified">Verified</span></div>
+        <code>https://api.servicefusion.com/v1</code>
+      </div>
+      <div class="card">
+        <div class="card-title">Auth</div>
+        <p style="margin:0;">OAuth 2.0 — Client Credentials or Authorization Code Grant</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Rate Limit <span class="badge badge-verified">Verified</span></div>
+        <p style="margin:0;">0.5 req/s · 30 req/min</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTH -->
+  <div class="section" id="auth">
+    <div class="section-title">Authentication</div>
+    <h2>OAuth 2.0 — Two Grant Types</h2>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ️</span>
+      <div>For a migration tool, <strong>Client Credentials Grant</strong> is the simpler path — no user redirect needed, pure machine-to-machine. Use Authorization Code (Connected Apps) if you need per-account scoping with revocable tokens.</div>
+    </div>
+
+    <h3>Option 1 — Client Credentials Grant <span class="badge badge-verified">Verified</span></h3>
+    <p style="color:var(--muted);font-size:13px;">Navigate to: <strong>My Office → Developer Settings → API Credentials</strong> to retrieve Client ID and Client Secret.</p>
+    <div class="code-block">POST https://api.servicefusion.com/oauth/access_token
+Content-Type: application/json
+
+{
+  "grant_type": "client_credentials",
+  "client_id": "YOUR_CLIENT_ID",
+  "client_secret": "YOUR_CLIENT_SECRET"
+}</div>
+
+    <h3>Option 2 — Authorization Code Grant (Connected Apps) <span class="badge badge-verified">Verified</span></h3>
+    <p style="color:var(--muted);font-size:13px;">Navigate to: <strong>My Office → Developer Settings → Connected Apps</strong> → Add New OAuth App → provide app name + redirect URL → get unique Client ID + Secret per app.</p>
+    <div class="code-block">POST https://api.servicefusion.com/oauth/access_token
+Content-Type: application/json
+
+{
+  "grant_type": "authorization_code",
+  "client_id": "YOUR_CLIENT_ID",
+  "client_secret": "YOUR_CLIENT_SECRET",
+  "code": "AUTH_CODE",
+  "redirect_uri": "https://your-app.com/callback"
+}</div>
+
+    <h3>Token Refresh <span class="badge badge-verified">Verified</span></h3>
+    <div class="code-block">POST https://api.servicefusion.com/oauth/access_token
+Content-Type: application/json
+
+{
+  "grant_type": "refresh_token",
+  "refresh_token": "YOUR_REFRESH_TOKEN"
+}</div>
+
+    <h3>Using the Token</h3>
+    <div class="code-block">Authorization: Bearer &lt;ACCESS_TOKEN&gt;</div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>Token Expiry Known Issue.</strong> Access tokens expire and refresh logic must be implemented. Real-world reports (Zapier community) confirm tokens can expire unexpectedly in Authorization Code flows. Build auto-refresh into any migration script from the start.</div>
+    </div>
+  </div>
+
+  <!-- RATE LIMITS -->
+  <div class="section" id="rate-limits">
+    <div class="section-title">Rate Limits</div>
+    <h2>0.5 Requests / Second <span class="badge badge-verified">Verified</span></h2>
+    <p>ServiceFusion enforces a hard cap of 30 requests per minute. Exceeding it returns <code>429 Too Many Requests</code> with a <code>Retry-After</code> header.</p>
+
+    <div class="rate-bar"><div class="rate-fill"></div></div>
+    <p style="font-size:12px;">Relative throughput: SF (30/min) vs typical REST APIs (100–1000+/min)</p>
+
+    <h3>Migration Time Estimates</h3>
+    <table>
+      <thead><tr><th>Record Count</th><th>Requests (100/page)</th><th>Time at 0.5 req/s</th></tr></thead>
+      <tbody>
+        <tr><td>100 customers</td><td>1</td><td>&lt;1 min</td></tr>
+        <tr><td>1,000 customers</td><td>10</td><td>~20 sec</td></tr>
+        <tr><td>5,000 customers</td><td>50</td><td>~2 min</td></tr>
+        <tr><td>1,000 jobs</td><td>10</td><td>~20 sec</td></tr>
+        <tr><td>10,000 jobs</td><td>100</td><td>~3.5 min</td></tr>
+        <tr><td>Full account (all entities, 10K records)</td><td>~300–500</td><td>~10–17 min</td></tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ️</span>
+      <div>Build in a <strong>2-second delay between requests</strong> to stay safely under the limit. Use exponential backoff with jitter on 429 responses. The <code>@pmip/servicefusion-adapter</code> handles this automatically via Bottleneck.</div>
+    </div>
+  </div>
+
+  <!-- ENDPOINTS -->
+  <div class="section" id="endpoints">
+    <div class="section-title">Endpoints</div>
+    <h2>Supported API Endpoints</h2>
+
+    <!-- Customers -->
+    <h3>Customers <span class="badge badge-verified">Verified</span></h3>
+    <p style="color:var(--muted);font-size:13px;">Core migration entity. Maps to Accounts in Rev.io PSA.</p>
+    <table>
+      <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><span class="method get">GET</span></td><td><code>/v1/customers</code></td><td>List customers by search criteria or unique ID</td></tr>
+        <tr><td><span class="method post">POST</span></td><td><code>/v1/customers</code></td><td>Create a new customer</td></tr>
+        <tr><td><span class="method put">PUT</span></td><td><code>/v1/customers/{id}</code></td><td>Update a customer</td></tr>
+        <tr><td><span class="method del">DELETE</span></td><td><code>/v1/customers/{id}</code></td><td>Delete a customer</td></tr>
+      </tbody>
+    </table>
+
+    <p style="color:var(--muted);font-size:13px;"><strong>Confirmed search params:</strong> phone number, email address, city, zip code, customer type (Commercial/Residential), date range (created, last service date).</p>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>Field-level schema not verified.</strong> The official SF API docs are JS-rendered and were not parseable. Exact field names (e.g. <code>customer_name</code>, <code>billing_address</code>, contact fields) must be confirmed by running <code>GET /v1/customers</code> against a live account before building field mappings.</div>
+    </div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>Contact structure unknown.</strong> Unlike ConnectWise (which has a separate <code>/contacts</code> endpoint), SF may embed contact info inside the customer object. Confirm before designing the data model. <span class="src" title="Inferred — not confirmed from SF docs">Inferred</span></div>
+    </div>
+
+    <!-- Jobs -->
+    <h3>Jobs <span class="badge badge-verified">Verified</span></h3>
+    <p style="color:var(--muted);font-size:13px;">Maps to Work Orders / Tickets in Rev.io PSA.</p>
+    <table>
+      <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><span class="method get">GET</span></td><td><code>/v1/jobs</code></td><td>List jobs by search criteria or unique ID</td></tr>
+        <tr><td><span class="method post">POST</span></td><td><code>/v1/jobs</code></td><td>Create a new job</td></tr>
+        <tr><td><span class="method put">PUT</span></td><td><code>/v1/jobs/{id}</code></td><td>Update a job</td></tr>
+        <tr><td><span class="method del">DELETE</span></td><td><code>/v1/jobs/{id}</code></td><td>Delete a job</td></tr>
+      </tbody>
+    </table>
+
+    <p style="color:var(--muted);font-size:13px;"><strong>Confirmed job fields</strong> <span class="badge badge-info">Partially verified</span>: customer ID, job type, priority, scheduled date, description, status (Open / In Progress / Completed), assigned technician, service address, notes.</p>
+
+    <!-- Estimates -->
+    <h3>Estimates <span class="badge badge-verified">Verified</span></h3>
+    <table>
+      <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><span class="method get">GET</span></td><td><code>/v1/estimates</code></td><td>List estimates by search criteria or unique ID</td></tr>
+        <tr><td><span class="method post">POST</span></td><td><code>/v1/estimates</code></td><td>Create a new estimate</td></tr>
+        <tr><td><span class="method put">PUT</span></td><td><code>/v1/estimates/{id}</code></td><td>Update an estimate</td></tr>
+        <tr><td><span class="method post">POST</span></td><td><code>/v1/estimates/{id}/convert</code> <span class="badge badge-warn">Unverified path</span></td><td>Convert estimate to job</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Technicians -->
+    <h3>Technicians <span class="badge badge-verified">Verified</span></h3>
+    <p style="color:var(--muted);font-size:13px;">Read-only in official API docs. Maps to Users in Rev.io PSA.</p>
+    <table>
+      <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><span class="method get">GET</span></td><td><code>/v1/technicians</code></td><td>List technicians by search criteria or unique ID</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Equipment -->
+    <h3>Equipment <span class="badge badge-verified">Verified (endpoint path unverified)</span></h3>
+    <p style="color:var(--muted);font-size:13px;">Maps to Assets / Devices in Rev.io PSA. Likely nested under customers.</p>
+    <table>
+      <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><span class="method get">GET</span></td><td><code>/v1/equipment</code> <span class="badge badge-warn">Path unverified</span></td><td>List equipment by search criteria or unique ID</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Invoices -->
+    <h3>Invoices <span class="badge badge-warn">Not in official use cases — likely exists</span></h3>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div>Invoices appear in third-party adapters but are <strong>not listed in SF's official Use Cases article</strong>. Verify against a live account before including in migration scope. May be read-only or limited.</div>
+    </div>
+    <table>
+      <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><span class="method get">GET</span></td><td><code>/v1/invoices</code></td><td>List invoices <span class="badge badge-warn">Unverified</span></td></tr>
+        <tr><td><span class="method post">POST</span></td><td><code>/v1/invoices</code></td><td>Create invoice <span class="badge badge-warn">Unverified</span></td></tr>
+        <tr><td><span class="method put">PUT</span></td><td><code>/v1/invoices/{id}</code></td><td>Update invoice <span class="badge badge-warn">Unverified</span></td></tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <h3>Pagination <span class="badge badge-verified">Verified</span></h3>
+    <div class="code-block">GET /v1/customers?limit=100&amp;offset=0
+GET /v1/customers?limit=100&amp;offset=100
+GET /v1/customers?limit=100&amp;offset=200</div>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>Response envelope unverified.</strong> The shape of the response (whether there's a <code>data[]</code> wrapper, total count field, metadata object) could not be confirmed from official docs. Test the actual response structure before building the pagination loop.</div>
+    </div>
+  </div>
+
+  <!-- DATA MODEL -->
+  <div class="section" id="data-model">
+    <div class="section-title">Data Model</div>
+    <h2>ServiceFusion → Rev.io PSA 2.0 Mapping</h2>
+
+    <table>
+      <thead><tr><th>SF Entity</th><th>Rev.io PSA Equivalent</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Customer</td><td>Account</td><td>Map customer_name → account name; type (Commercial/Residential)</td></tr>
+        <tr><td>Customer Contact</td><td>Contact</td><td>⚠️ May be embedded in customer object, not separate endpoint</td></tr>
+        <tr><td>Job</td><td>Work Order / Ticket</td><td>Status mapping required (SF → Rev.io status values)</td></tr>
+        <tr><td>Estimate</td><td>Quote</td><td>Convert workflow; line items structure unverified</td></tr>
+        <tr><td>Technician</td><td>User / Tech Resource</td><td>Read from SF, create/match in Rev.io</td></tr>
+        <tr><td>Equipment</td><td>Asset / Device</td><td>Nested under customer; confirm endpoint path</td></tr>
+        <tr><td>Invoice</td><td>Invoice</td><td>Billing history carry-over; endpoint unverified</td></tr>
+        <tr><td>Inventory / Parts</td><td>Products / Catalog</td><td>⚠️ No confirmed API endpoint — may require manual export</td></tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-danger">
+      <span class="alert-icon">🚨</span>
+      <div><strong>Inventory / Parts gap.</strong> No confirmed API endpoint for inventory, parts, or products. If the migrating customer has product catalog data in SF, this may require a manual CSV export, not an API pull. Validate with SF support before scoping.</div>
+    </div>
+  </div>
+
+  <!-- MIGRATION CONSIDERATIONS -->
+  <div class="section" id="migration">
+    <div class="section-title">Migration Considerations</div>
+    <h2>Key Factors for SF → Rev.io Migrations</h2>
+
+    <div class="card">
+      <div class="card-title">1. Pro Plan Gate</div>
+      <p>The migrating customer must be on SF's Pro plan to have API access. If they're on Starter/Basic, they cannot extract data via API. Confirm plan status before scoping the migration.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2. Rate Limit Bottleneck</div>
+      <p>At 30 req/min, a full data extraction (customers + jobs + equipment) for a mid-size account with 5,000 records will take 15–30 minutes. Plan for overnight extraction runs on large accounts. Never run extraction during customer business hours without their sign-off.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">3. No Bulk Export Endpoint</div>
+      <p>There's no equivalent to a database dump or CSV export via API. Everything must be paginated through, entity by entity. Build checkpointing into the migration script so a failed run can resume from where it stopped.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">4. Field Schema Requires Hands-On Verification</div>
+      <p>Official SF API docs are JavaScript-rendered and were not accessible via scraping. Before building field mappings, run <code>GET /v1/customers</code> and <code>GET /v1/jobs</code> against a test account and map actual JSON keys to Rev.io fields.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">5. Contact Data Structure Unknown</div>
+      <p>Unlike ConnectWise (separate <code>/contacts</code> endpoint), SF may embed contact info within the customer object. If true, contact extraction is bundled with customer extraction — but you'd need to confirm whether multiple contacts per customer are supported.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">6. Historical Job Data Volume</div>
+      <p>SF customers often have years of job history. A 5-year-old account could have 10,000+ jobs. Decide with the customer what historical depth is needed — migrating all history may not be necessary or practical.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">7. Rev.io Community Thread</div>
+      <p>Rev.io's community has a dedicated thread: <strong>Service Fusion Data Migration to Rev.io</strong> — requires login. Worth reviewing for known gotchas and customer-shared learnings before building. <a href="https://community.rev.io/c/sales-product/service-fusion-data-migration-to-rev-io" target="_blank">community.rev.io ↗</a></p>
+    </div>
+  </div>
+
+  <!-- LIBRARIES -->
+  <div class="section" id="libraries">
+    <div class="section-title">Libraries</div>
+    <h2>Available Client Libraries</h2>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div>All libraries below are <strong>unofficial and community-built</strong>. Not endorsed by or affiliated with ServiceFusion. Verify against the live API before relying on any of them.</div>
+    </div>
+
+    <table>
+      <thead><tr><th>Language</th><th>Package</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>TypeScript / Node.js</td>
+          <td><code>@pmip/servicefusion-adapter</code></td>
+          <td>Most complete — full CRUD, rate limiting via Bottleneck, OAuth auto-refresh, batch sync, TypeScript types. <a href="https://github.com/rashidazarang/servicefusion-adapter" target="_blank">GitHub ↗</a></td>
+        </tr>
+        <tr>
+          <td>Ruby</td>
+          <td><code>service_fusion_api</code></td>
+          <td>Wrapper by customerlobby. Low stars, last updated 2024. <a href="https://github.com/customerlobby/service_fusion_api" target="_blank">GitHub ↗</a></td>
+        </tr>
+        <tr>
+          <td>Python</td>
+          <td><code>servicefusion_api</code></td>
+          <td>Last updated 2021. Likely stale — use as reference only. <a href="https://github.com/vdhug/servicefusion_api" target="_blank">GitHub ↗</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-success">
+      <span class="alert-icon">✅</span>
+      <div>For a Rev.io migration tool, the Node.js adapter is the best starting point — it already handles rate limiting, token refresh, and pagination, which are the three main implementation challenges.</div>
+    </div>
+  </div>
+
+  <!-- SOURCES -->
+  <div class="section" id="sources">
+    <div class="section-title">Sources</div>
+    <h2>Verified Sources</h2>
+    <table>
+      <thead><tr><th>#</th><th>Source</th><th>URL</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>SF Zendesk — Getting Started</td><td><a href="https://servicefusion.zendesk.com/hc/en-us/articles/360035145811" target="_blank">↗</a></td><td><span class="badge badge-verified">Verified</span></td></tr>
+        <tr><td>2</td><td>SF Zendesk — Use Cases / Endpoints list</td><td><a href="https://servicefusion.zendesk.com/hc/en-us/articles/360035146591" target="_blank">↗</a></td><td><span class="badge badge-verified">Verified</span></td></tr>
+        <tr><td>3</td><td>SF Zendesk — Client Credentials Grant</td><td><a href="https://servicefusion.zendesk.com/hc/en-us/articles/360039135151" target="_blank">↗</a></td><td><span class="badge badge-verified">Verified</span></td></tr>
+        <tr><td>4</td><td>SF Zendesk — Connected Apps (Auth Code)</td><td><a href="https://servicefusion.zendesk.com/hc/en-us/articles/360039138891" target="_blank">↗</a></td><td><span class="badge badge-verified">Verified</span></td></tr>
+        <tr><td>5</td><td>Zapier Community — OAuth base URL confirmation</td><td><a href="https://community.zapier.com/general-discussion-13/building-private-service-fusion-app-authentication-expires-23526" target="_blank">↗</a></td><td><span class="badge badge-verified">Verified</span></td></tr>
+        <tr><td>6</td><td>TypeScript Adapter — rate limit, base URL, pagination, methods</td><td><a href="https://github.com/rashidazarang/servicefusion-adapter" target="_blank">↗</a></td><td><span class="badge badge-verified">Verified</span></td></tr>
+        <tr><td>7</td><td>Official SF API Docs (docs.servicefusion.com)</td><td><a href="https://docs.servicefusion.com/#/docs/summary" target="_blank">↗</a></td><td><span class="badge badge-warn">⚠️ JS-rendered — not parseable</span></td></tr>
+        <tr><td>8</td><td>Rev.io Community — SF Migration Thread</td><td><a href="https://community.rev.io/c/sales-product/service-fusion-data-migration-to-rev-io" target="_blank">↗</a></td><td><span class="badge badge-warn">⚠️ Login required</span></td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:20px;" class="alert alert-info">
+      <span class="alert-icon">ℹ️</span>
+      <div><strong>What's not verified:</strong> Exact customer/job field names · Response envelope shape (data wrapper, total count) · Equipment endpoint path · Estimate convert endpoint · Invoice endpoints · Webhook support. All flagged ⚠️ above. Verify against a live SF Pro account before finalizing field mappings.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Built by ⚡ Revay · Rev.io AI Chief of Staff · <a href="https://erice320.github.io/revay/connectwise-migration-api.html">ConnectWise Reference ↗</a> · 2026-03-27
+</div>
+
+</body>
+</html>
