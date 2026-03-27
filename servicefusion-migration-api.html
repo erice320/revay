@@ -115,6 +115,7 @@
 </div>
 
 <div class="nav">
+  <a href="#client-setup">📋 Client Setup</a>
   <a href="#overview">Overview</a>
   <a href="#auth">Authentication</a>
   <a href="#rate-limits">Rate Limits</a>
@@ -126,6 +127,71 @@
 </div>
 
 <div class="main">
+
+  <!-- CLIENT SETUP -->
+  <div class="section" id="client-setup">
+    <div class="section-title">Client Setup</div>
+    <h2>What We Need From You to Run the Migration</h2>
+    <p>To extract your data from ServiceFusion and migrate it to Rev.io PSA, we need API credentials from your ServiceFusion account. Here's exactly what to do — it takes about 5 minutes.</p>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <div><strong>Pro Plan Required.</strong> API access is only available on ServiceFusion's Pro plan. If you're not on Pro, contact ServiceFusion support to confirm your plan or upgrade before proceeding.</div>
+    </div>
+
+    <div class="card" style="border-color: var(--accent); margin-bottom:14px;">
+      <div class="card-title" style="font-size:16px; color: var(--accent2);">Step 1 — Log into ServiceFusion</div>
+      <p style="margin-top:6px;">Log in to your ServiceFusion account at <a href="https://app.servicefusion.com" target="_blank">app.servicefusion.com</a>.</p>
+    </div>
+
+    <div class="card" style="border-color: var(--accent); margin-bottom:14px;">
+      <div class="card-title" style="font-size:16px; color: var(--accent2);">Step 2 — Navigate to API Credentials</div>
+      <p style="margin-top:6px;">In the top navigation, go to:</p>
+      <div style="background: var(--surface2); border-radius:6px; padding: 10px 16px; margin: 10px 0; font-size:14px; font-weight:600; color: var(--text);">
+        My Office → Developer Settings → API Credentials
+      </div>
+      <p>If you don't see "Developer Settings," your account may not be on the Pro plan. Contact ServiceFusion support.</p>
+    </div>
+
+    <div class="card" style="border-color: var(--accent); margin-bottom:14px;">
+      <div class="card-title" style="font-size:16px; color: var(--accent2);">Step 3 — Copy Your Client ID and Client Secret</div>
+      <p style="margin-top:6px;">On the API Credentials screen, you'll see a <strong>Client ID</strong> and <strong>Client Secret</strong>. Copy both values exactly.</p>
+      <div class="alert alert-danger" style="margin-top:10px;">
+        <span class="alert-icon">🔒</span>
+        <div>Treat your Client Secret like a password. Do not share it in email or Slack — send it securely. Rev.io will use it only during the migration process and will not retain it afterward.</div>
+      </div>
+    </div>
+
+    <div class="card" style="border-color: var(--accent); margin-bottom:14px;">
+      <div class="card-title" style="font-size:16px; color: var(--accent2);">Step 4 — Send Credentials to Your Rev.io Onboarding Specialist</div>
+      <p style="margin-top:6px;">Share the following with your Rev.io onboarding team via a secure channel (ask your SA if you're unsure which to use):</p>
+      <ul class="clean" style="margin-top:10px;">
+        <li>ServiceFusion <strong>Client ID</strong></li>
+        <li>ServiceFusion <strong>Client Secret</strong></li>
+        <li>Your ServiceFusion <strong>account/company name</strong> (as it appears in SF)</li>
+        <li>Approximate record counts if known: number of customers, active jobs, years of history needed</li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-title">Optional — Create a Dedicated Connected App (Recommended for Security)</div>
+      <p style="margin-top:6px;">Instead of sharing your primary API credentials, you can create a separate credential set specifically for the Rev.io migration — and revoke it when done.</p>
+      <div style="background: var(--surface2); border-radius:6px; padding: 10px 16px; margin: 10px 0; font-size:14px; font-weight:600; color: var(--text);">
+        My Office → Developer Settings → Connected Apps → + Add New OAuth App
+      </div>
+      <ul class="clean">
+        <li>App name: <code>Rev.io Migration</code></li>
+        <li>Redirect URL: your Rev.io SA will provide this</li>
+        <li>Copy the new Client ID + Secret and share with Rev.io</li>
+        <li>After migration is complete, delete this app to revoke access</li>
+      </ul>
+    </div>
+
+    <div class="alert alert-success">
+      <span class="alert-icon">✅</span>
+      <div>That's it. Once Rev.io has your credentials, we'll run the data extraction, map your records to the Rev.io data model, and walk you through the results before importing anything.</div>
+    </div>
+  </div>
 
   <!-- OVERVIEW -->
   <div class="section" id="overview">
