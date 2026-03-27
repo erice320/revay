@@ -4,485 +4,594 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ConnectWise Migration API — Rev.io Reference</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
-    --bg: #080b12;
-    --surface: #111520;
-    --card: #181d2e;
-    --border: #252d45;
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --border: #2e3147;
+    --text: #e8eaf6;
+    --muted: #7b7f9e;
     --accent: #6c63ff;
     --accent2: #00d4aa;
-    --accent3: #f59e0b;
-    --red: #ff4d6d;
-    --text: #e8eaf6;
-    --muted: #6b7699;
-    --soft: #9ba5c9;
+    --warn: #ffa94d;
+    --danger: #ff6b6b;
+    --success: #51cf66;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); font-family: 'Space Grotesk', sans-serif; color: var(--text); }
-  .deck { width: 100%; height: 100vh; position: relative; overflow: hidden; }
-  .slide {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 48px 64px;
-    opacity: 0; transform: translateX(60px);
-    transition: opacity 0.45s ease, transform 0.45s ease;
-    pointer-events: none;
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
   }
-  .slide.active { opacity: 1; transform: translateX(0); pointer-events: all; }
-  .slide.exit { opacity: 0; transform: translateX(-60px); }
+  @media (min-width: 640px) { body { font-size: 15px; } }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 16px; }
+  @media (min-width: 640px) { .container { padding: 24px; } }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .header h1 {
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .header p { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .chip { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 4px 14px; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .chip.accent { border-color: var(--accent); color: var(--accent); }
+  .chip.accent2 { border-color: var(--accent2); color: var(--accent2); }
+  .chip.warn { border-color: var(--warn); color: var(--warn); }
 
   /* NAV */
-  .nav {
-    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
-    display: flex; align-items: center; gap: 16px; z-index: 100;
-    background: rgba(17,21,32,0.9); border: 1px solid var(--border);
-    padding: 10px 20px; border-radius: 40px; backdrop-filter: blur(12px);
+  .nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+  .nav a {
+    color: var(--muted); text-decoration: none; font-size: 12px; font-weight: 600;
+    padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); transition: all .15s;
   }
-  .nav-btn { background: none; border: none; color: var(--soft); cursor: pointer; font-size: 18px; padding: 4px 8px; transition: color 0.2s; }
-  .nav-btn:hover { color: var(--accent); }
-  .nav-dots { display: flex; gap: 8px; }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); cursor: pointer; transition: all 0.2s; }
-  .dot.active { background: var(--accent); transform: scale(1.3); }
-  .slide-num { color: var(--muted); font-size: 12px; font-family: 'JetBrains Mono', monospace; min-width: 36px; text-align: center; }
-  .progress { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.45s ease; z-index: 100; }
+  .nav a:hover { color: var(--accent); border-color: var(--accent); }
 
-  /* TYPOGRAPHY */
-  .label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-  .label-teal { color: var(--accent2); }
-  .label-amber { color: var(--accent3); }
-  .label-red { color: var(--red); }
-  h1 { font-size: clamp(36px, 4.5vw, 60px); font-weight: 700; line-height: 1.08; }
-  h2 { font-size: clamp(26px, 3vw, 42px); font-weight: 700; line-height: 1.1; }
-  h3 { font-size: 18px; font-weight: 600; color: var(--text); }
-  p { color: var(--soft); line-height: 1.7; }
-  code, .mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  /* SECTION */
+  .section { margin-bottom: 40px; scroll-margin-top: 16px; }
+  .section-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .section-icon.purple { background: rgba(108,99,255,.15); }
+  .section-icon.teal   { background: rgba(0,212,170,.12); }
+  .section-icon.amber  { background: rgba(255,169,77,.12); }
+  .section-icon.red    { background: rgba(255,107,107,.12); }
+  .section-icon.green  { background: rgba(81,207,102,.12); }
+  .section-title { font-size: 16px; font-weight: 700; }
+  .section-sub { font-size: 12px; color: var(--muted); margin-left: auto; }
 
   /* CARDS */
   .card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 24px 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
   }
-  .card-accent { border-left: 3px solid var(--accent); }
-  .card-teal { border-left: 3px solid var(--accent2); }
-  .card-amber { border-left: 3px solid var(--accent3); }
-  .card-red { border-left: 3px solid var(--red); }
+  .card + .card { margin-top: 12px; }
+  .card.accent-left { border-left: 3px solid var(--accent); }
+  .card.teal-left   { border-left: 3px solid var(--accent2); }
+  .card.amber-left  { border-left: 3px solid var(--warn); }
+  .card.red-left    { border-left: 3px solid var(--danger); }
 
-  /* CODE BLOCK */
-  .code-block {
-    background: #0d1118; border: 1px solid var(--border); border-radius: 8px;
-    padding: 16px 20px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
-    color: #a8d8a8; line-height: 1.7; white-space: pre-wrap; word-break: break-all;
-    overflow-y: auto; max-height: 260px;
+  .card-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 10px;
   }
-  .code-block .kw { color: #bb86fc; }
+  .card-label.accent { color: var(--accent); }
+  .card-label.teal   { color: var(--accent2); }
+  .card-label.amber  { color: var(--warn); }
+  .card-label.red    { color: var(--danger); }
+  .card-label.green  { color: var(--success); }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media (max-width: 640px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* STAT ROW */
+  .stat-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .stat {
+    flex: 1; min-width: 100px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; text-align: center;
+  }
+  .stat-val { font-size: 22px; font-weight: 800; color: var(--accent); }
+  .stat-val.teal { color: var(--accent2); }
+  .stat-val.amber { color: var(--warn); }
+  .stat-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* CODE */
+  code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12.5px; }
+  .code-block {
+    background: #0d1018; border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px;
+    color: #a8c8a8; line-height: 1.75; white-space: pre-wrap; word-break: break-all;
+    margin-top: 8px;
+  }
+  .code-block .kw  { color: #bb86fc; }
   .code-block .str { color: #98d8a8; }
-  .code-block .cm { color: #4a5568; }
+  .code-block .cm  { color: #4a5568; font-style: italic; }
   .code-block .url { color: #56cfee; }
   .code-block .key { color: #f9a03f; }
 
   /* TABLE */
-  .ref-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .ref-table th { color: var(--muted); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; font-weight: 500; }
-  .ref-table td { padding: 9px 12px; border-bottom: 1px solid rgba(37,45,69,0.5); color: var(--soft); vertical-align: top; }
-  .ref-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #f9a03f; }
-  .ref-table td:nth-child(2) { color: var(--muted); font-size: 12px; }
-  .ref-table td:nth-child(3) { color: var(--soft); }
-  .ref-table tr:last-child td { border-bottom: none; }
-
-  /* GRID LAYOUTS */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; width: 100%; }
-  .col { display: flex; flex-direction: column; gap: 16px; }
-
-  /* TAGS */
-  .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
-  .tag-purple { background: rgba(108,99,255,0.15); color: var(--accent); border: 1px solid rgba(108,99,255,0.3); }
-  .tag-teal { background: rgba(0,212,170,0.12); color: var(--accent2); border: 1px solid rgba(0,212,170,0.25); }
-  .tag-amber { background: rgba(245,158,11,0.12); color: var(--accent3); border: 1px solid rgba(245,158,11,0.25); }
-  .tag-red { background: rgba(255,77,109,0.12); color: var(--red); border: 1px solid rgba(255,77,109,0.25); }
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    background: rgba(255,255,255,.03); padding: 10px 14px; text-align: left;
+    font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted); border-bottom: 1px solid var(--border);
+  }
+  tbody td { padding: 9px 14px; border-bottom: 1px solid rgba(46,49,71,.5); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,.015); }
+  td.field-name { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: #f9a03f; white-space: nowrap; }
+  td.field-type { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  td.field-note { color: #9ba5c9; }
+  tr.highlight td { background: rgba(108,99,255,.04); }
 
   /* STEP LIST */
-  .steps { display: flex; flex-direction: column; gap: 12px; width: 100%; }
-  .step { display: flex; align-items: flex-start; gap: 14px; }
-  .step-num { width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.3); color: var(--accent); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
-  .step-body h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-  .step-body p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .steps { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .step { display: flex; gap: 12px; align-items: flex-start; }
+  .step-n {
+    width: 26px; height: 26px; min-width: 26px; border-radius: 50%;
+    background: rgba(108,99,255,.15); border: 1px solid rgba(108,99,255,.3);
+    color: var(--accent); font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 1px;
+  }
+  .step-n.amber { background: rgba(255,169,77,.12); border-color: rgba(255,169,77,.3); color: var(--warn); }
+  .step-body h4 { font-size: 13px; font-weight: 600; color: var(--text); }
+  .step-body p  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .step-body code { color: var(--warn); }
 
-  /* FIELD PILL */
-  .field-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(13,17,24,0.8); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #f9a03f; margin: 3px; }
+  /* TAG */
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .tag.purple { background: rgba(108,99,255,.15); color: var(--accent); }
+  .tag.teal   { background: rgba(0,212,170,.12); color: var(--accent2); }
+  .tag.amber  { background: rgba(255,169,77,.12); color: var(--warn); }
+  .tag.red    { background: rgba(255,107,107,.12); color: var(--danger); }
+  .tag.green  { background: rgba(81,207,102,.12); color: var(--success); }
 
-  /* TITLE SLIDE GLOW */
-  .glow-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.12; pointer-events: none; }
+  /* ALERT */
+  .alert {
+    border-radius: 8px; padding: 12px 16px; font-size: 13px; display: flex; gap: 10px; align-items: flex-start;
+  }
+  .alert.amber { background: rgba(255,169,77,.08); border: 1px solid rgba(255,169,77,.2); color: var(--warn); }
+  .alert.red   { background: rgba(255,107,107,.07); border: 1px solid rgba(255,107,107,.2); color: var(--danger); }
+  .alert.teal  { background: rgba(0,212,170,.07); border: 1px solid rgba(0,212,170,.2); color: var(--accent2); }
+  .alert-icon { font-size: 15px; margin-top: 1px; }
+  .alert-body { color: var(--text); }
+  .alert-body strong { color: inherit; }
 
-  /* SCROLLABLE CONTENT */
-  .scroll-content { overflow-y: auto; max-height: calc(100vh - 200px); width: 100%; padding-right: 4px; }
-  .scroll-content::-webkit-scrollbar { width: 4px; }
-  .scroll-content::-webkit-scrollbar-track { background: transparent; }
-  .scroll-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  /* MISC */
+  p.desc { color: var(--muted); font-size: 13px; margin-bottom: 14px; line-height: 1.6; }
+  .gap-12 { display: flex; flex-direction: column; gap: 12px; }
+  .mt-12 { margin-top: 12px; }
+  .mt-16 { margin-top: 16px; }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 
-  /* LOGO BADGE */
-  .logo-badge { display: flex; align-items: center; gap: 8px; }
-  .logo-badge span { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 500; }
-
-  /* DIVIDER */
-  .divider { width: 100%; height: 1px; background: var(--border); margin: 8px 0; }
-
-  /* HIGHLIGHT ROW */
-  .ref-table tr.highlight td { background: rgba(108,99,255,0.05); }
-
-  /* SLIDE-SPECIFIC */
-  .s1-content { position: relative; z-index: 2; text-align: center; max-width: 800px; }
-  .s1-sub { font-size: 18px; color: var(--soft); margin-top: 16px; font-weight: 400; }
-  .s1-meta { margin-top: 32px; display: flex; gap: 24px; justify-content: center; }
-  .s1-meta-item { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .s1-meta-item strong { color: var(--accent2); font-size: 20px; font-weight: 700; }
-
-  .wide { max-width: 1100px; width: 100%; }
-  .med { max-width: 900px; width: 100%; }
+  /* FOOTER */
+  .footer {
+    text-align: center; padding: 32px 0 24px;
+    border-top: 1px solid var(--border); margin-top: 48px;
+    color: var(--muted); font-size: 12px;
+  }
 </style>
 </head>
 <body>
-<div class="progress" id="progress"></div>
-<div class="deck" id="deck">
+<div class="container">
 
-  <!-- SLIDE 1: TITLE -->
-  <div class="slide active" data-slide="0">
-    <div class="glow-orb" style="width:500px;height:500px;background:var(--accent);top:-100px;left:-100px;"></div>
-    <div class="glow-orb" style="width:400px;height:400px;background:var(--accent2);bottom:-80px;right:-80px;"></div>
-    <div class="s1-content">
-      <div class="label" style="text-align:center;margin-bottom:20px;">Rev.io · Migration Intelligence</div>
-      <h1>ConnectWise<br><span style="color:var(--accent);">Migration API</span><br>Reference</h1>
-      <p class="s1-sub">Everything a builder needs to extract customer &amp; contact data from ConnectWise Manage and move it to Rev.io PSA 2.0</p>
-      <div class="s1-meta">
-        <div class="s1-meta-item"><strong>9</strong>Slides</div>
-        <div class="s1-meta-item"><strong>REST</strong>API Type</div>
-        <div class="s1-meta-item"><strong>3</strong>Core Endpoints</div>
-        <div class="s1-meta-item"><strong>2026</strong>Last Updated</div>
+  <!-- HEADER -->
+  <div class="header">
+    <h1>ConnectWise Migration API</h1>
+    <p>Everything needed to extract customer &amp; contact data from ConnectWise Manage for migration to Rev.io PSA 2.0</p>
+    <div class="chips">
+      <span class="chip accent">REST API</span>
+      <span class="chip accent2">JSON</span>
+      <span class="chip warn">Customer-Credentialed</span>
+      <span class="chip">1,000 records/page max</span>
+      <span class="chip">Updated 2026-03-27</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav">
+    <a href="#overview">Overview</a>
+    <a href="#auth">Authentication</a>
+    <a href="#requests">Base URLs &amp; Pagination</a>
+    <a href="#companies">Companies</a>
+    <a href="#contacts">Contacts</a>
+    <a href="#sites">Sites &amp; Extended Data</a>
+    <a href="#libraries">Libraries &amp; Code</a>
+    <a href="#setup">Customer Setup</a>
+    <a href="#gotchas">Builder Gotchas</a>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section" id="overview">
+    <div class="section-header">
+      <div class="section-icon purple">🗺️</div>
+      <div class="section-title">Overview</div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-val">REST</div><div class="stat-lbl">API Type</div></div>
+      <div class="stat"><div class="stat-val teal">3</div><div class="stat-lbl">Core Endpoints</div></div>
+      <div class="stat"><div class="stat-val amber">1,000</div><div class="stat-lbl">Max Records/Page</div></div>
+      <div class="stat"><div class="stat-val" style="color:var(--success);">Free</div><div class="stat-lbl">Dev Registration</div></div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card accent-left">
+        <div class="card-label accent">API Type</div>
+        <p style="font-size:13px;">Standard REST + JSON. OpenAPI/Swagger schema published. No GraphQL or SOAP for external integrations.</p>
+      </div>
+      <div class="card teal-left">
+        <div class="card-label teal">Access Model</div>
+        <p style="font-size:13px;">Customer-credentialed — no third-party admin access. The migrating customer generates API keys in their own CW Manage instance.</p>
+      </div>
+      <div class="card amber-left">
+        <div class="card-label amber">Rate Limits</div>
+        <p style="font-size:13px;">No hard documented req/sec cap. Max 1,000 records per request. Add ~100ms delay between requests during bulk export as a courtesy.</p>
+      </div>
+    </div>
+
+    <div class="mt-12 grid-2">
+      <div class="card">
+        <div class="card-label">Tier 1 — Core Migration (always pull)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+          <span class="tag purple">Companies</span>
+          <span class="tag purple">Contacts</span>
+          <span class="tag purple">Sites</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label teal">Tier 2 — Extended (pull if needed)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+          <span class="tag teal">Agreements</span>
+          <span class="tag teal">Configurations</span>
+          <span class="tag amber">Ticket History</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 2: OVERVIEW -->
-  <div class="slide" data-slide="1">
-    <div class="wide">
-      <div class="label label-teal" style="margin-bottom:8px;">Overview</div>
-      <h2 style="margin-bottom:24px;">What You're Working With</h2>
-      <div class="grid-3" style="margin-bottom:24px;">
-        <div class="card card-accent">
-          <div class="label" style="margin-bottom:8px;">API Type</div>
-          <h3 style="margin-bottom:8px;">REST + JSON</h3>
-          <p style="font-size:13px;">Standard HTTP verbs. OpenAPI (Swagger) schema available. No GraphQL or SOAP for external integrations.</p>
-        </div>
-        <div class="card card-teal">
-          <div class="label label-teal" style="margin-bottom:8px;">Access Model</div>
-          <h3 style="margin-bottom:8px;">Customer-Credentialed</h3>
-          <p style="font-size:13px;">No third-party admin access. The customer generates API keys in their own CW Manage instance and provides them.</p>
-        </div>
-        <div class="card card-amber">
-          <div class="label label-amber" style="margin-bottom:8px;">Rate Limits</div>
-          <h3 style="margin-bottom:8px;">No Hard Cap</h3>
-          <p style="font-size:13px;">Max 1,000 records/request. No documented req/sec limit — but add ~100ms delay between requests during bulk export.</p>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="label" style="margin-bottom:10px;">Tier 1 — Core Migration Data</div>
-          <div style="display:flex;flex-wrap:wrap;">
-            <span class="tag tag-purple" style="margin:3px;">Companies</span>
-            <span class="tag tag-purple" style="margin:3px;">Contacts</span>
-            <span class="tag tag-purple" style="margin:3px;">Sites</span>
-          </div>
-        </div>
-        <div class="card">
-          <div class="label label-teal" style="margin-bottom:10px;">Tier 2 — Extended Data</div>
-          <div style="display:flex;flex-wrap:wrap;">
-            <span class="tag tag-teal" style="margin:3px;">Agreements</span>
-            <span class="tag tag-teal" style="margin:3px;">Configurations</span>
-            <span class="tag tag-amber" style="margin:3px;">Ticket History</span>
-          </div>
-        </div>
-      </div>
+  <!-- AUTH -->
+  <div class="section" id="auth">
+    <div class="section-header">
+      <div class="section-icon amber">🔐</div>
+      <div class="section-title">Authentication</div>
     </div>
-  </div>
 
-  <!-- SLIDE 3: AUTH -->
-  <div class="slide" data-slide="2">
-    <div class="wide">
-      <div class="label label-amber" style="margin-bottom:8px;">Authentication</div>
-      <h2 style="margin-bottom:24px;">Setup &amp; Credentials</h2>
-      <div class="grid-2" style="gap:24px;">
-        <div class="col">
-          <div class="card card-accent">
-            <div class="label" style="margin-bottom:10px;">What the Customer Provides</div>
-            <div class="steps">
-              <div class="step">
-                <div class="step-num">1</div>
-                <div class="step-body">
-                  <h4>Company ID</h4>
-                  <p>Their CW login company name, e.g. <span class="mono" style="color:var(--accent3);">acmeit</span></p>
-                </div>
-              </div>
-              <div class="step">
-                <div class="step-num">2</div>
-                <div class="step-body">
-                  <h4>Public Key + Private Key</h4>
-                  <p>Generated in CW Manage → Setup → Members → API Only Member → API Keys tab</p>
-                </div>
-              </div>
-              <div class="step">
-                <div class="step-num">3</div>
-                <div class="step-body">
-                  <h4>Client ID</h4>
-                  <p>One-time registration at <span class="mono" style="color:var(--accent2);">developer.connectwise.com</span> — Rev.io can share a single Client ID across all migrations</p>
-                </div>
-              </div>
+    <p class="desc">Three pieces are required per customer. Rev.io can register for a single Client ID and reuse it across all migrations.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label amber">What the Customer Provides</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-n">1</div>
+            <div class="step-body">
+              <h4>Company ID</h4>
+              <p>Their CW Manage login company name — e.g. <code>acmeit</code></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">2</div>
+            <div class="step-body">
+              <h4>Public Key + Private Key</h4>
+              <p>Generated in CW Manage → Setup → Members → API Only Member → API Keys tab</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">3</div>
+            <div class="step-body">
+              <h4>Client ID (Rev.io provides)</h4>
+              <p>One-time registration at <code>developer.connectwise.com</code> — free, company-branded email required</p>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card card-teal">
-            <div class="label label-teal" style="margin-bottom:10px;">Auth Header Format</div>
-            <div class="code-block"><span class="cm"># Base64 encode: companyId+publicKey:privateKey</span>
-<span class="cm"># Example input before encoding:</span>
-<span class="str">acmeit+abc123pub:xyz789priv</span>
+      </div>
+      <div class="gap-12">
+        <div class="card">
+          <div class="card-label teal">Header Format</div>
+          <div class="code-block"><span class="cm"># Encode before Base64: companyId+publicKey:privateKey
+# Example input: acmeit+abc123pub:xyz789priv</span>
 
 <span class="key">Authorization:</span> <span class="str">Basic {Base64-encoded-string}</span>
-<span class="key">clientId:</span> <span class="str">{your-client-id}</span>
+<span class="key">clientId:</span>     <span class="str">{your-client-id}</span>
 <span class="key">Content-Type:</span> <span class="str">application/json</span></div>
-          </div>
-          <div class="card" style="background:rgba(255,77,109,0.06);border-color:rgba(255,77,109,0.2);">
-            <div class="label label-red" style="margin-bottom:6px;">⚠️ SSL Required</div>
-            <p style="font-size:13px;">All production calls must use HTTPS. HTTP requests are rejected with 400/403.</p>
-          </div>
+        </div>
+        <div class="alert red">
+          <div class="alert-icon">⚠️</div>
+          <div class="alert-body"><strong>SSL Required.</strong> All production API calls must use HTTPS. HTTP requests are rejected with 400/403.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 4: BASE URLS + PAGINATION -->
-  <div class="slide" data-slide="3">
-    <div class="wide">
-      <div class="label label-teal" style="margin-bottom:8px;">Base URLs &amp; Pagination</div>
-      <h2 style="margin-bottom:24px;">Making Requests</h2>
-      <div class="grid-2" style="gap:24px;">
-        <div class="col">
-          <div class="card card-teal">
-            <div class="label label-teal" style="margin-bottom:12px;">Base URLs by Region</div>
-            <table class="ref-table">
-              <tr><th>Region</th><th>Base URL</th></tr>
-              <tr><td>NA Cloud</td><td><span class="mono" style="color:var(--accent2);font-size:11px;">https://na.myconnectwise.net/v4_6_release/apis/3.0</span></td></tr>
-              <tr><td>EU Cloud</td><td><span class="mono" style="color:var(--accent2);font-size:11px;">https://eu.myconnectwise.net/v4_6_release/apis/3.0</span></td></tr>
-              <tr><td>AU Cloud</td><td><span class="mono" style="color:var(--accent2);font-size:11px;">https://aus.myconnectwise.net/v4_6_release/apis/3.0</span></td></tr>
-              <tr><td>On-Prem</td><td><span class="mono" style="color:var(--muted);font-size:11px;">https://{customer-domain}/v4_6_release/apis/3.0</span></td></tr>
+  <!-- BASE URLS + PAGINATION -->
+  <div class="section" id="requests">
+    <div class="section-header">
+      <div class="section-icon teal">🌐</div>
+      <div class="section-title">Base URLs &amp; Pagination</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="gap-12">
+        <div class="card">
+          <div class="card-label teal">Base URLs by Region</div>
+          <div class="table-wrap mt-12">
+            <table>
+              <thead><tr><th>Region</th><th>Base URL</th></tr></thead>
+              <tbody>
+                <tr><td>NA Cloud</td><td><code style="color:var(--accent2);font-size:11px;">https://na.myconnectwise.net/v4_6_release/apis/3.0</code></td></tr>
+                <tr><td>EU Cloud</td><td><code style="color:var(--accent2);font-size:11px;">https://eu.myconnectwise.net/v4_6_release/apis/3.0</code></td></tr>
+                <tr><td>AU Cloud</td><td><code style="color:var(--accent2);font-size:11px;">https://aus.myconnectwise.net/v4_6_release/apis/3.0</code></td></tr>
+                <tr><td>On-Prem</td><td><code style="color:var(--muted);font-size:11px;">https://{customer-domain}/v4_6_release/apis/3.0</code></td></tr>
+              </tbody>
             </table>
-            <p style="font-size:12px;margin-top:10px;color:var(--muted);">Always use <span class="mono">/v4_6_release</span> — this is the API version, not the product version. Do not substitute.</p>
           </div>
-          <div class="card card-accent">
-            <div class="label" style="margin-bottom:10px;">Conditions (Filtering)</div>
-            <div class="code-block" style="font-size:11.5px;"><span class="cm"># Active companies only</span>
-<span class="str">conditions=status/name="Active" AND deletedFlag=false</span>
+          <p style="font-size:12px;color:var(--muted);margin-top:10px;">Always use <code>/v4_6_release</code> — this is the API version string, not the product version. Do not substitute.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Pagination Params</div>
+          <div class="table-wrap mt-12">
+            <table>
+              <thead><tr><th>Param</th><th>Default</th><th>Max</th></tr></thead>
+              <tbody>
+                <tr><td class="field-name">pageSize</td><td>25</td><td>1,000</td></tr>
+                <tr><td class="field-name">page</td><td>1</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:12px;color:var(--muted);margin-top:10px;"><code>X-Total-Count</code> response header gives the total record count — use for progress tracking.</p>
+        </div>
+      </div>
+      <div class="gap-12">
+        <div class="card">
+          <div class="card-label accent">Full Export Pattern</div>
+          <div class="code-block"><span class="cm"># Loop until response count &lt; pageSize</span>
+<span class="url">GET /company/companies?page=1&pageSize=1000</span>
+<span class="url">GET /company/companies?page=2&pageSize=1000</span>
+<span class="cm">... repeat until done</span>
+
+<span class="cm"># Response header</span>
+<span class="key">X-Total-Count:</span> <span class="str">4382</span></div>
+        </div>
+        <div class="card">
+          <div class="card-label">Filtering, Ordering &amp; Field Selection</div>
+          <div class="code-block"><span class="cm"># Active customers only (recommended base filter)</span>
+<span class="str">conditions=status/name="Active" AND deletedFlag=false AND leadFlag=false AND isVendorFlag=false</span>
 
 <span class="cm"># Contacts for one company</span>
 <span class="str">conditions=company/id=1234 AND inactiveFlag=false</span>
 
-<span class="cm"># Modified recently</span>
+<span class="cm"># Modified since a date</span>
 <span class="str">conditions=_info/lastUpdated>"[2026-01-01T00:00:00Z]"</span>
 
-<span class="cm"># Field selection (reduce payload)</span>
-<span class="str">fields=id,identifier,name,phoneNumber,city,state</span></div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card card-amber">
-            <div class="label label-amber" style="margin-bottom:12px;">Pagination Pattern</div>
-            <table class="ref-table" style="margin-bottom:14px;">
-              <tr><th>Param</th><th>Default</th><th>Max</th></tr>
-              <tr><td>pageSize</td><td>25</td><td>1000</td></tr>
-              <tr><td>page</td><td>1</td><td>—</td></tr>
-            </table>
-            <div class="code-block" style="font-size:11.5px;"><span class="cm"># Full export loop</span>
-<span class="url">GET /company/companies?page=1&pageSize=1000</span>
-<span class="url">GET /company/companies?page=2&pageSize=1000</span>
-<span class="cm"># Stop when response count &lt; pageSize</span>
+<span class="cm"># Order results</span>
+<span class="str">orderBy=name asc</span>
 
-<span class="cm"># Response header for progress</span>
-<span class="key">X-Total-Count:</span> <span class="str">4382</span>  <span class="cm"># total records</span></div>
-          </div>
-          <div class="card">
-            <div class="label" style="margin-bottom:10px;">Ordering</div>
-            <div class="code-block" style="font-size:11.5px;"><span class="url">GET /company/companies?orderBy=name asc</span>
-<span class="url">GET /company/contacts?orderBy=lastName asc,firstName asc</span></div>
-          </div>
+<span class="cm"># Reduce payload (select only needed fields)</span>
+<span class="str">fields=id,identifier,name,phoneNumber,city,state,zip</span></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 5: COMPANIES -->
-  <div class="slide" data-slide="4">
-    <div class="wide">
-      <div class="label" style="margin-bottom:8px;">Endpoint 1</div>
-      <h2 style="margin-bottom:6px;"><span class="mono" style="color:var(--accent);font-size:0.7em;">GET</span> /company/companies</h2>
-      <p style="font-size:13px;margin-bottom:20px;">Full customer list. Use <span class="mono" style="color:var(--accent2);">conditions=status/name="Active" AND deletedFlag=false AND leadFlag=false AND isVendorFlag=false</span> for clean migration scope.</p>
-      <div class="scroll-content">
-        <table class="ref-table">
-          <tr><th>Field</th><th>Type</th><th>Notes</th></tr>
-          <tr class="highlight"><td>id</td><td>int</td><td>CW internal ID — foreign key for contacts &amp; sites</td></tr>
-          <tr class="highlight"><td>identifier</td><td>string(30)</td><td><strong style="color:var(--accent2);">Account code</strong> — unique short name (e.g. "ACME-IT") — preserve as external ref in Rev.io</td></tr>
-          <tr class="highlight"><td>name</td><td>string(50)</td><td>Full company name</td></tr>
-          <tr><td>status</td><td>object</td><td><span class="mono">{id, name}</span> — filter for "Active"</td></tr>
-          <tr><td>phoneNumber</td><td>string(30)</td><td>Main phone</td></tr>
-          <tr><td>faxNumber</td><td>string(30)</td><td></td></tr>
-          <tr><td>addressLine1 / 2</td><td>string(50)</td><td>At least one address field required</td></tr>
-          <tr><td>city / state / zip</td><td>string(50)</td><td></td></tr>
-          <tr><td>country</td><td>object</td><td><span class="mono">{id, name}</span></td></tr>
-          <tr><td>website</td><td>string</td><td></td></tr>
-          <tr><td>territory</td><td>object</td><td><span class="mono">{id, name}</span> — CW "location" / territory assignment</td></tr>
-          <tr><td>market</td><td>object</td><td><span class="mono">{id, name}</span> — industry vertical</td></tr>
-          <tr><td>accountNumber</td><td>string</td><td>External accounting system reference</td></tr>
-          <tr><td>billingTerms</td><td>object</td><td><span class="mono">{id, name}</span></td></tr>
-          <tr><td>taxCode</td><td>object</td><td><span class="mono">{id, name}</span></td></tr>
-          <tr><td>taxIdentifier</td><td>string</td><td>Tax / VAT number</td></tr>
-          <tr><td>currency</td><td>object</td><td><span class="mono">{id, symbol, isoCode}</span></td></tr>
-          <tr><td>defaultContact</td><td>object</td><td><span class="mono">{id, name}</span> — reference to primary contact</td></tr>
-          <tr><td>invoiceToEmailAddress</td><td>string</td><td>Billing email override</td></tr>
-          <tr><td>invoiceCCEmailAddress</td><td>string</td><td></td></tr>
-          <tr><td>invoiceDeliveryMethod</td><td>object</td><td><span class="mono">{id, name}</span></td></tr>
-          <tr><td>isVendorFlag</td><td>bool</td><td>True = vendor; exclude from customer migration</td></tr>
-          <tr><td>leadFlag</td><td>bool</td><td>True = prospect/lead; typically exclude</td></tr>
-          <tr><td>deletedFlag</td><td>bool</td><td>Soft delete — always filter out</td></tr>
-          <tr><td>dateAcquired</td><td>datetime</td><td>Customer since date</td></tr>
-          <tr><td>annualRevenue</td><td>float</td><td></td></tr>
-          <tr><td>numberOfEmployees</td><td>int</td><td></td></tr>
-          <tr><td>userDefinedField1–10</td><td>string(50)</td><td>Custom fields — include in export even if unmapped</td></tr>
-          <tr><td>_info.lastUpdated</td><td>datetime</td><td>Last modified — use for delta sync</td></tr>
+  <!-- COMPANIES -->
+  <div class="section" id="companies">
+    <div class="section-header">
+      <div class="section-icon purple">🏢</div>
+      <div class="section-title">Companies Endpoint</div>
+      <div class="section-sub"><code>GET /company/companies</code></div>
+    </div>
+
+    <p class="desc">Full customer list. Use <code style="color:var(--accent2);">conditions=status/name="Active" AND deletedFlag=false AND leadFlag=false AND isVendorFlag=false</code> as the recommended migration scope filter.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr class="highlight"><td class="field-name">id</td><td class="field-type">int</td><td class="field-note">CW internal ID — foreign key for contacts &amp; sites calls</td></tr>
+          <tr class="highlight"><td class="field-name">identifier</td><td class="field-type">string(30)</td><td class="field-note"><strong>Account code</strong> — unique short name (e.g. "ACME-IT"). <span class="tag purple">Preserve as external ref in Rev.io</span></td></tr>
+          <tr class="highlight"><td class="field-name">name</td><td class="field-type">string(50)</td><td class="field-note">Full company name</td></tr>
+          <tr><td class="field-name">status</td><td class="field-type">object</td><td class="field-note"><code>{id, name}</code> — filter for <code>"Active"</code></td></tr>
+          <tr><td class="field-name">phoneNumber</td><td class="field-type">string(30)</td><td class="field-note">Main phone</td></tr>
+          <tr><td class="field-name">faxNumber</td><td class="field-type">string(30)</td><td class="field-note"></td></tr>
+          <tr><td class="field-name">addressLine1 / 2</td><td class="field-type">string(50)</td><td class="field-note">At least one address field required</td></tr>
+          <tr><td class="field-name">city / state / zip</td><td class="field-type">string(50)</td><td class="field-note"></td></tr>
+          <tr><td class="field-name">country</td><td class="field-type">object</td><td class="field-note"><code>{id, name}</code></td></tr>
+          <tr><td class="field-name">website</td><td class="field-type">string</td><td class="field-note"></td></tr>
+          <tr><td class="field-name">territory</td><td class="field-type">object</td><td class="field-note"><code>{id, name}</code> — CW territory/location assignment</td></tr>
+          <tr><td class="field-name">market</td><td class="field-type">object</td><td class="field-note"><code>{id, name}</code> — industry vertical</td></tr>
+          <tr><td class="field-name">accountNumber</td><td class="field-type">string</td><td class="field-note">External accounting system reference</td></tr>
+          <tr><td class="field-name">billingTerms</td><td class="field-type">object</td><td class="field-note"><code>{id, name}</code></td></tr>
+          <tr><td class="field-name">taxCode</td><td class="field-type">object</td><td class="field-note"><code>{id, name}</code></td></tr>
+          <tr><td class="field-name">taxIdentifier</td><td class="field-type">string</td><td class="field-note">Tax / VAT number</td></tr>
+          <tr><td class="field-name">currency</td><td class="field-type">object</td><td class="field-note"><code>{id, symbol, isoCode}</code></td></tr>
+          <tr><td class="field-name">defaultContact</td><td class="field-type">object</td><td class="field-note"><code>{id, name}</code> — reference to primary contact</td></tr>
+          <tr><td class="field-name">billingContact</td><td class="field-type">object</td><td class="field-note">Contact reference for billing</td></tr>
+          <tr><td class="field-name">billingSite</td><td class="field-type">object</td><td class="field-note">Site reference for billing address</td></tr>
+          <tr><td class="field-name">invoiceToEmailAddress</td><td class="field-type">string</td><td class="field-note">Billing email override</td></tr>
+          <tr><td class="field-name">invoiceCCEmailAddress</td><td class="field-type">string</td><td class="field-note"></td></tr>
+          <tr><td class="field-name">invoiceDeliveryMethod</td><td class="field-type">object</td><td class="field-note"><code>{id, name}</code></td></tr>
+          <tr><td class="field-name">isVendorFlag</td><td class="field-type">bool</td><td class="field-note">True = vendor — exclude from customer migration</td></tr>
+          <tr><td class="field-name">leadFlag</td><td class="field-type">bool</td><td class="field-note">True = prospect/lead — typically exclude</td></tr>
+          <tr><td class="field-name">deletedFlag</td><td class="field-type">bool</td><td class="field-note"><span class="tag red">Soft delete</span> — always filter out</td></tr>
+          <tr><td class="field-name">dateAcquired</td><td class="field-type">datetime</td><td class="field-note">Customer since date</td></tr>
+          <tr><td class="field-name">annualRevenue</td><td class="field-type">float</td><td class="field-note"></td></tr>
+          <tr><td class="field-name">numberOfEmployees</td><td class="field-type">int</td><td class="field-note"></td></tr>
+          <tr><td class="field-name">userDefinedField1–10</td><td class="field-type">string(50)</td><td class="field-note">Custom fields — include in export even if unmapped initially</td></tr>
+          <tr><td class="field-name">_info.lastUpdated</td><td class="field-type">datetime</td><td class="field-note">Last modified — use for delta sync</td></tr>
+          <tr><td class="field-name">_info.dateEntered</td><td class="field-type">datetime</td><td class="field-note">Record creation date</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CONTACTS -->
+  <div class="section" id="contacts">
+    <div class="section-header">
+      <div class="section-icon teal">👤</div>
+      <div class="section-title">Contacts Endpoint</div>
+      <div class="section-sub"><code>GET /company/contacts</code></div>
+    </div>
+
+    <p class="desc">All contacts across companies. Pull per company using <code style="color:var(--accent2);">conditions=company/id={id} AND inactiveFlag=false</code>, or pull the full dataset and group by <code>company.id</code> in post-processing.</p>
+
+    <div class="alert amber" style="margin-bottom:16px;">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-body"><strong>Critical:</strong> There is no top-level <code>email</code> field on Contact. All emails and phone numbers live in the <code>communicationItems[]</code> array — see below.</div>
+    </div>
+
+    <div class="grid-2" style="align-items:start;">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr class="highlight"><td class="field-name">id</td><td class="field-type">int</td><td class="field-note">CW internal contact ID</td></tr>
+            <tr class="highlight"><td class="field-name">firstName / lastName</td><td class="field-type">string</td><td class="field-note"></td></tr>
+            <tr class="highlight"><td class="field-name">company</td><td class="field-type">object</td><td class="field-note"><code>{id, identifier, name}</code> — parent company link</td></tr>
+            <tr><td class="field-name">title</td><td class="field-type">string</td><td class="field-note">Job title</td></tr>
+            <tr><td class="field-name">department</td><td class="field-type">object</td><td class="field-note"><code>{id, name}</code></td></tr>
+            <tr><td class="field-name">site</td><td class="field-type">object</td><td class="field-note"><code>{id, name}</code> — which site this contact belongs to</td></tr>
+            <tr class="highlight"><td class="field-name">communicationItems</td><td class="field-type">array</td><td class="field-note"><strong>Primary source for all emails &amp; phones</strong></td></tr>
+            <tr><td class="field-name">defaultPhoneNbr</td><td class="field-type">string</td><td class="field-note">Quick-access default phone number</td></tr>
+            <tr><td class="field-name">defaultPhoneType</td><td class="field-type">string</td><td class="field-note">"Direct", "Cell", "Home", "Office"</td></tr>
+            <tr><td class="field-name">defaultPhoneExtension</td><td class="field-type">string</td><td class="field-note"></td></tr>
+            <tr><td class="field-name">defaultFlag</td><td class="field-type">bool</td><td class="field-note">Primary contact for the company</td></tr>
+            <tr><td class="field-name">defaultBillingFlag</td><td class="field-type">bool</td><td class="field-note">Primary billing contact</td></tr>
+            <tr><td class="field-name">inactiveFlag</td><td class="field-type">bool</td><td class="field-note"><span class="tag red">Soft delete</span> — always filter out</td></tr>
+            <tr><td class="field-name">portalSecurityLevel</td><td class="field-type">int</td><td class="field-note">Customer portal access level</td></tr>
+            <tr><td class="field-name">disablePortalLoginFlag</td><td class="field-type">bool</td><td class="field-note"></td></tr>
+            <tr><td class="field-name">unsubscribeFlag</td><td class="field-type">bool</td><td class="field-note">Email marketing opt-out</td></tr>
+            <tr><td class="field-name">addressLine1 / city / state / zip</td><td class="field-type">string</td><td class="field-note">Contact-level address (if different from company)</td></tr>
+            <tr><td class="field-name">userDefinedField1–10</td><td class="field-type">string(50)</td><td class="field-note">Custom fields</td></tr>
+          </tbody>
         </table>
       </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 6: CONTACTS -->
-  <div class="slide" data-slide="5">
-    <div class="wide">
-      <div class="label label-teal" style="margin-bottom:8px;">Endpoint 2</div>
-      <h2 style="margin-bottom:6px;"><span class="mono" style="color:var(--accent2);font-size:0.7em;">GET</span> /company/contacts</h2>
-      <p style="font-size:13px;margin-bottom:16px;">All contacts across companies. Filter: <span class="mono" style="color:var(--accent2);">conditions=inactiveFlag=false AND company/id={id}</span> — or pull all at once and group by <span class="mono">company.id</span>.</p>
-      <div class="grid-2" style="gap:20px;align-items:start;">
-        <div class="scroll-content" style="max-height:calc(100vh - 240px);">
-          <table class="ref-table">
-            <tr><th>Field</th><th>Type</th><th>Notes</th></tr>
-            <tr class="highlight"><td>id</td><td>int</td><td>CW internal contact ID</td></tr>
-            <tr class="highlight"><td>firstName / lastName</td><td>string</td><td>Name fields</td></tr>
-            <tr class="highlight"><td>company</td><td>object</td><td><span class="mono">{id, identifier, name}</span> — parent company link</td></tr>
-            <tr><td>title</td><td>string</td><td>Job title</td></tr>
-            <tr><td>department</td><td>object</td><td><span class="mono">{id, name}</span></td></tr>
-            <tr><td>site</td><td>object</td><td><span class="mono">{id, name}</span> — which site this contact belongs to</td></tr>
-            <tr class="highlight"><td>communicationItems</td><td>array</td><td><strong style="color:var(--accent3);">Primary source for emails &amp; phones</strong> — see panel →</td></tr>
-            <tr><td>defaultPhoneNbr</td><td>string</td><td>Quick-access default phone</td></tr>
-            <tr><td>defaultPhoneType</td><td>string</td><td>"Direct", "Cell", "Home", "Office"</td></tr>
-            <tr><td>defaultFlag</td><td>bool</td><td>Primary contact for the company</td></tr>
-            <tr><td>defaultBillingFlag</td><td>bool</td><td>Primary billing contact</td></tr>
-            <tr><td>inactiveFlag</td><td>bool</td><td>Exclude inactive in migration</td></tr>
-            <tr><td>portalSecurityLevel</td><td>int</td><td>Customer portal access level</td></tr>
-            <tr><td>disablePortalLoginFlag</td><td>bool</td><td></td></tr>
-            <tr><td>unsubscribeFlag</td><td>bool</td><td>Email marketing opt-out</td></tr>
-            <tr><td>addressLine1 / city / state / zip</td><td>string</td><td>Contact-level address if different from company</td></tr>
-            <tr><td>userDefinedField1–10</td><td>string(50)</td><td>Custom fields</td></tr>
-          </table>
-        </div>
-        <div class="col">
-          <div class="card card-amber">
-            <div class="label label-amber" style="margin-bottom:10px;">⚠️ communicationItems — Critical</div>
-            <p style="font-size:13px;margin-bottom:12px;">There is <strong>no top-level email field</strong> on Contact. All emails and phones live in this array.</p>
-            <div class="code-block" style="font-size:11.5px;">[
+      <div class="gap-12">
+        <div class="card amber-left">
+          <div class="card-label amber">communicationItems — Structure</div>
+          <div class="code-block"><span class="str">"communicationItems"</span>: [
   {
-    <span class="key">"type"</span>: {<span class="key">"name"</span>: <span class="str">"Email"</span>},
+    <span class="key">"type"</span>: { <span class="key">"name"</span>: <span class="str">"Email"</span> },
     <span class="key">"value"</span>: <span class="str">"john@acmeit.com"</span>,
     <span class="key">"defaultFlag"</span>: <span class="kw">true</span>,
     <span class="key">"communicationType"</span>: <span class="str">"Email"</span>
   },
   {
-    <span class="key">"type"</span>: {<span class="key">"name"</span>: <span class="str">"Direct"</span>},
+    <span class="key">"type"</span>: { <span class="key">"name"</span>: <span class="str">"Direct"</span> },
     <span class="key">"value"</span>: <span class="str">"555-867-5309"</span>,
     <span class="key">"defaultFlag"</span>: <span class="kw">true</span>,
     <span class="key">"communicationType"</span>: <span class="str">"Phone"</span>
   }
 ]</div>
-          </div>
-          <div class="card card-accent">
-            <div class="label" style="margin-bottom:8px;">Extraction Logic</div>
-            <p style="font-size:13px;">Filter <span class="mono" style="color:var(--accent3);">communicationType="Email"</span> where <span class="mono" style="color:var(--accent3);">defaultFlag=true</span> for primary email.<br><br>Filter <span class="mono" style="color:var(--accent3);">communicationType="Phone"</span> where <span class="mono" style="color:var(--accent3);">defaultFlag=true</span> for primary phone.</p>
-          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Extraction Logic</div>
+          <p style="font-size:13px;color:var(--muted);">Filter <code style="color:var(--warn);">communicationType="Email"</code> where <code style="color:var(--warn);">defaultFlag=true</code> → primary email.<br><br>Filter <code style="color:var(--warn);">communicationType="Phone"</code> where <code style="color:var(--warn);">defaultFlag=true</code> → primary phone.<br><br>A contact can have multiple items of each type (work email, personal email, etc.) — defaultFlag identifies the primary one.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 7: SITES + OTHER ENDPOINTS -->
-  <div class="slide" data-slide="6">
-    <div class="wide">
-      <div class="label label-teal" style="margin-bottom:8px;">Endpoint 3 + Extended Data</div>
-      <h2 style="margin-bottom:20px;">Sites, Agreements &amp; More</h2>
-      <div class="grid-2" style="gap:20px;align-items:start;">
-        <div class="col">
-          <div class="card card-teal">
-            <div class="label label-teal" style="margin-bottom:8px;"><span class="mono" style="font-size:12px;">GET /company/companies/{id}/sites</span></div>
-            <p style="font-size:13px;margin-bottom:14px;">All physical/billing locations per company (branch offices, etc.). Pull per company ID.</p>
-            <table class="ref-table">
-              <tr><th>Field</th><th>Notes</th></tr>
-              <tr><td>id / name</td><td>Site identifier</td></tr>
-              <tr><td>addressLine1 / 2</td><td></td></tr>
-              <tr><td>city / state / zip / country</td><td></td></tr>
-              <tr><td>phoneNumber / faxNumber</td><td></td></tr>
-              <tr><td>defaultBillingFlag</td><td>Primary billing address</td></tr>
-              <tr><td>defaultMailingFlag</td><td>Primary mailing address</td></tr>
-              <tr><td>defaultShippingFlag</td><td>Primary shipping address</td></tr>
-              <tr><td>inactiveFlag</td><td>Exclude inactive sites</td></tr>
+  <!-- SITES + EXTENDED -->
+  <div class="section" id="sites">
+    <div class="section-header">
+      <div class="section-icon green">📍</div>
+      <div class="section-title">Sites &amp; Extended Data</div>
+    </div>
+
+    <div class="grid-2" style="align-items:start;">
+      <div class="gap-12">
+        <div class="card teal-left">
+          <div class="card-label teal">Sites — <code>GET /company/companies/{id}/sites</code></div>
+          <p class="desc" style="margin-top:8px;">All physical/billing locations per company. A company's root address is one site; branch offices are additional sites. Pull per company ID.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Field</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td class="field-name">id / name</td><td class="field-note">Site identifier (e.g. "Main", "Branch Office")</td></tr>
+                <tr><td class="field-name">addressLine1 / 2</td><td class="field-note"></td></tr>
+                <tr><td class="field-name">city / state / zip / country</td><td class="field-note"></td></tr>
+                <tr><td class="field-name">phoneNumber / faxNumber</td><td class="field-note"></td></tr>
+                <tr><td class="field-name">defaultBillingFlag</td><td class="field-note">Primary billing address</td></tr>
+                <tr><td class="field-name">defaultMailingFlag</td><td class="field-note">Primary mailing address</td></tr>
+                <tr><td class="field-name">defaultShippingFlag</td><td class="field-note">Primary shipping address</td></tr>
+                <tr><td class="field-name">inactiveFlag</td><td class="field-note">Exclude inactive sites</td></tr>
+              </tbody>
             </table>
           </div>
         </div>
-        <div class="col">
-          <div class="card card-accent">
-            <div class="label" style="margin-bottom:10px;">Agreements (Contracts)</div>
-            <div class="code-block" style="font-size:11.5px;"><span class="url">GET /finance/agreements</span>
-<span class="url">GET /finance/agreements/{id}/additions</span>
-</div>
-            <p style="font-size:12px;margin-top:8px;color:var(--muted);">Key fields: <span class="mono" style="color:var(--accent3);">id, name, type, company, startDate, endDate, billAmount, billCycles, cancelledFlag</span></p>
-          </div>
-          <div class="card card-amber">
-            <div class="label label-amber" style="margin-bottom:10px;">Configurations (Managed Devices)</div>
-            <div class="code-block" style="font-size:11.5px;"><span class="url">GET /company/configurations</span>
+      </div>
+      <div class="gap-12">
+        <div class="card">
+          <div class="card-label accent">Agreements (Contracts)</div>
+          <div class="code-block"><span class="url">GET /finance/agreements</span>
+<span class="url">GET /finance/agreements/{id}/additions</span></div>
+          <p style="font-size:12px;color:var(--muted);margin-top:8px;">Key fields: <code style="color:var(--warn);">id, name, type, company, startDate, endDate, billAmount, billCycles, cancelledFlag</code></p>
+        </div>
+        <div class="card">
+          <div class="card-label teal">Configurations (Managed Devices)</div>
+          <div class="code-block"><span class="url">GET /company/configurations</span>
 <span class="url">GET /company/configurations/{id}</span></div>
-            <p style="font-size:12px;margin-top:8px;color:var(--muted);">Key fields: <span class="mono" style="color:var(--accent3);">name, type, company, contact, site, serialNumber, modelNumber, tagNumber, warrantyExpirationDate</span></p>
-          </div>
-          <div class="card" style="border-color:var(--border);">
-            <div class="label" style="margin-bottom:10px;">Ticket History (Optional)</div>
-            <div class="code-block" style="font-size:11.5px;"><span class="url">GET /service/tickets</span></div>
-            <p style="font-size:12px;margin-top:8px;color:var(--muted);">Key fields: <span class="mono" style="color:var(--accent3);">id, summary, company, contact, status, priority, dateEntered, closedDate, closedFlag</span></p>
-          </div>
+          <p style="font-size:12px;color:var(--muted);margin-top:8px;">Key fields: <code style="color:var(--warn);">name, type, company, contact, site, serialNumber, modelNumber, tagNumber, warrantyExpirationDate</code></p>
+        </div>
+        <div class="card">
+          <div class="card-label">Ticket History (Optional)</div>
+          <div class="code-block"><span class="url">GET /service/tickets</span></div>
+          <p style="font-size:12px;color:var(--muted);margin-top:8px;">Key fields: <code style="color:var(--warn);">id, summary, company, contact, status, priority, type, dateEntered, closedDate, closedFlag</code></p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 8: LIBRARIES + CODE -->
-  <div class="slide" data-slide="7">
-    <div class="wide">
-      <div class="label label-amber" style="margin-bottom:8px;">Libraries &amp; Code</div>
-      <h2 style="margin-bottom:20px;">Open-Source Clients</h2>
-      <div class="grid-2" style="gap:20px;align-items:start;">
-        <div class="col">
-          <div class="card card-accent">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-              <div>
-                <div class="label" style="margin-bottom:4px;">Python</div>
-                <h3>pyconnectwise</h3>
-              </div>
-              <span class="tag tag-teal">100% API coverage</span>
-            </div>
-            <div class="code-block" style="font-size:11.5px;"><span class="kw">pip install</span> <span class="str">pyconnectwise</span>
+  <!-- LIBRARIES -->
+  <div class="section" id="libraries">
+    <div class="section-header">
+      <div class="section-icon amber">📦</div>
+      <div class="section-title">Libraries &amp; Code Examples</div>
+    </div>
+
+    <div class="grid-2" style="align-items:start;">
+      <div class="card accent-left">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div>
+            <div class="card-label accent">Python</div>
+            <strong>pyconnectwise</strong>
+          </div>
+          <span class="tag teal">100% API coverage</span>
+        </div>
+        <div class="code-block"><span class="kw">pip install</span> <span class="str">pyconnectwise</span>
 
 <span class="kw">from</span> pyconnectwise <span class="kw">import</span> ConnectWiseManageAPIClient
 
@@ -496,26 +605,30 @@ client = ConnectWiseManageAPIClient(
 
 <span class="cm"># Get all active companies</span>
 companies = client.company.companies.get_all(
-    params={<span class="str">"conditions"</span>: <span class="str">'status/name="Active" AND deletedFlag=false'</span>}
+    params={
+        <span class="str">"conditions"</span>: <span class="str">'status/name="Active" AND deletedFlag=false AND leadFlag=false'</span>
+    }
 )
 
-<span class="cm"># Get contacts for a company</span>
-contacts = client.company.contacts.get_all(
-    params={<span class="str">"conditions"</span>: <span class="str">f"company/id={company_id} AND inactiveFlag=false"</span>}
-)</div>
-            <p style="font-size:12px;margin-top:10px;color:var(--muted);">github.com/HealthITAU/pyconnectwise — Pydantic models, type-annotated, built-in pagination</p>
+<span class="cm"># Get contacts per company</span>
+<span class="kw">for</span> co <span class="kw">in</span> companies:
+    contacts = client.company.contacts.get_all(
+        params={<span class="str">"conditions"</span>: <span class="str">f"company/id={co.id} AND inactiveFlag=false"</span>}
+    )
+
+<span class="cm"># Get sites per company</span>
+    sites = client.company.companies.id(co.id).sites.get_all()</div>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;">github.com/HealthITAU/pyconnectwise — Pydantic models, type-annotated, built-in pagination</p>
+      </div>
+      <div class="card teal-left">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div>
+            <div class="card-label teal">Node.js / TypeScript</div>
+            <strong>connectwise-rest</strong>
           </div>
+          <span class="tag purple">TypeScript + auto-retry</span>
         </div>
-        <div class="col">
-          <div class="card card-teal">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-              <div>
-                <div class="label label-teal" style="margin-bottom:4px;">Node.js / TypeScript</div>
-                <h3>connectwise-rest</h3>
-              </div>
-              <span class="tag tag-purple">TS + pagination</span>
-            </div>
-            <div class="code-block" style="font-size:11.5px;"><span class="kw">npm install</span> <span class="str">connectwise-rest</span>
+        <div class="code-block"><span class="kw">npm install</span> <span class="str">connectwise-rest</span>
 
 <span class="kw">const</span> { ManageAPI } = <span class="kw">require</span>(<span class="str">'connectwise-rest'</span>);
 <span class="kw">const</span> cwm = <span class="kw">new</span> ManageAPI({
@@ -526,128 +639,118 @@ contacts = client.company.contacts.get_all(
     clientId: <span class="str">'your-client-id'</span>
 });
 
-<span class="cm">// Paginate through all companies</span>
+<span class="cm">// Paginate all active companies</span>
 <span class="kw">const</span> companies = <span class="kw">await</span> cwm.paginate(
     cwm.CompanyAPI.getCompanies,
     { pageSize: <span class="str">1000</span> },
-    { conditions: <span class="str">'status/name="Active"'</span> }
-);</div>
-            <p style="font-size:12px;margin-top:10px;color:var(--muted);">github.com/CovenantTechnologySolutions/connectwise-rest — TypeScript, auto-retry, logging</p>
+    { conditions: <span class="str">'status/name="Active" AND deletedFlag=false'</span> }
+);
+
+<span class="cm">// Paginate contacts per company</span>
+<span class="kw">for</span> (<span class="kw">const</span> co <span class="kw">of</span> companies) {
+    <span class="kw">const</span> contacts = <span class="kw">await</span> cwm.paginate(
+        cwm.CompanyAPI.getContacts,
+        { pageSize: <span class="str">1000</span> },
+        { conditions: <span class="str">`company/id=${co.id} AND inactiveFlag=false`</span> }
+    );
+}</div>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;">github.com/CovenantTechnologySolutions/connectwise-rest — TypeScript, logging, auto-retry on timeout</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER SETUP -->
+  <div class="section" id="setup">
+    <div class="section-header">
+      <div class="section-icon green">🛠️</div>
+      <div class="section-title">Customer Setup Steps</div>
+    </div>
+
+    <p class="desc">The migrating customer must complete these steps in their CW Manage instance before the migration tool can connect.</p>
+
+    <div class="card">
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">1</div>
+          <div class="step-body">
+            <h4>Log in as admin</h4>
+            <p>Admin-level CW Manage account required to create API members</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div class="step-body">
+            <h4>Create an API-Only Member</h4>
+            <p>System → Setup Tables → Members → New → Type: <code>API Member</code> → Set username (e.g. <code>revio-migration</code>)</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">3</div>
+          <div class="step-body">
+            <h4>Assign Inquire permissions</h4>
+            <p>Create a custom security role with Inquire access on: <code>Companies/Company Maintenance</code> · <code>Companies/Contacts</code> · <code>Companies/Company Sites</code> · <code>Finance/Agreements</code> (optional) · <code>Company/Configurations</code> (optional)</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">4</div>
+          <div class="step-body">
+            <h4>Generate API Keys</h4>
+            <p>Members → select the API member → API Keys tab → Add Key → copy both <strong>Public Key</strong> and <strong>Private Key</strong></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">5</div>
+          <div class="step-body">
+            <h4>Provide credentials to Rev.io</h4>
+            <p><strong>Company ID</strong> + <strong>Public Key</strong> + <strong>Private Key</strong>. Rev.io registers for a single <strong>Client ID</strong> at developer.connectwise.com and reuses it across all migrations.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 9: CUSTOMER SETUP + GOTCHAS -->
-  <div class="slide" data-slide="8">
-    <div class="wide">
-      <div class="label label-red" style="margin-bottom:8px;">Setup &amp; Gotchas</div>
-      <h2 style="margin-bottom:20px;">Customer Steps + Builder Notes</h2>
-      <div class="grid-2" style="gap:20px;align-items:start;">
-        <div class="card card-accent">
-          <div class="label" style="margin-bottom:14px;">Customer Setup in CW Manage</div>
-          <div class="steps">
-            <div class="step">
-              <div class="step-num">1</div>
-              <div class="step-body"><h4>Create API-Only Member</h4><p>System → Setup Tables → Members → New → type: API Member</p></div>
-            </div>
-            <div class="step">
-              <div class="step-num">2</div>
-              <div class="step-body"><h4>Assign Inquire Permissions</h4><p>Companies/Company Maintenance • Companies/Contacts • Companies/Company Sites • Finance/Agreements (if needed)</p></div>
-            </div>
-            <div class="step">
-              <div class="step-num">3</div>
-              <div class="step-body"><h4>Generate API Keys</h4><p>Members → API Keys tab → Add Key → copy public + private key</p></div>
-            </div>
-            <div class="step">
-              <div class="step-num">4</div>
-              <div class="step-body"><h4>Provide to Rev.io</h4><p>Company ID + Public Key + Private Key. Rev.io supplies Client ID.</p></div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card card-amber">
-            <div class="label label-amber" style="margin-bottom:12px;">⚠️ Critical Builder Gotchas</div>
-            <div class="steps">
-              <div class="step">
-                <div class="step-num" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);color:var(--accent3);">!</div>
-                <div class="step-body"><h4>No top-level email on Contact</h4><p><span class="mono" style="color:var(--accent3);">communicationItems[]</span> is the only source for emails &amp; phones — do not look for a root-level email field, it doesn't exist.</p></div>
-              </div>
-              <div class="step">
-                <div class="step-num" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);color:var(--accent3);">!</div>
-                <div class="step-body"><h4>Preserve identifier as external key</h4><p><span class="mono" style="color:var(--accent3);">company.identifier</span> is the unique account code (e.g. "ACME-IT"). Store it in Rev.io as the external reference.</p></div>
-              </div>
-              <div class="step">
-                <div class="step-num" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);color:var(--accent3);">!</div>
-                <div class="step-body"><h4>Sites are a separate endpoint</h4><p>Company has a <span class="mono" style="color:var(--accent3);">site</span> reference but full branch list requires <span class="mono" style="color:var(--accent3);">/companies/{id}/sites</span>.</p></div>
-              </div>
-              <div class="step">
-                <div class="step-num" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);color:var(--accent3);">!</div>
-                <div class="step-body"><h4>Always filter soft deletes</h4><p><span class="mono" style="color:var(--accent3);">deletedFlag=true</span> (Company) and <span class="mono" style="color:var(--accent3);">inactiveFlag=true</span> (Contact) — filter both unless you want historical records.</p></div>
-              </div>
-            </div>
-          </div>
-        </div>
+  <!-- GOTCHAS -->
+  <div class="section" id="gotchas">
+    <div class="section-header">
+      <div class="section-icon red">⚠️</div>
+      <div class="section-title">Builder Gotchas</div>
+    </div>
+
+    <p class="desc">Hard-learned patterns from the CW API. Read before writing a single line of extraction code.</p>
+
+    <div class="gap-12">
+      <div class="alert amber">
+        <div class="alert-icon">📧</div>
+        <div class="alert-body"><strong>No top-level email on Contact.</strong> The <code>communicationItems[]</code> array is the only source for email addresses and phone numbers. There is no root-level <code>email</code> or <code>phone</code> field on the Contact object — do not look for it.</div>
+      </div>
+      <div class="alert teal">
+        <div class="alert-icon">🔑</div>
+        <div class="alert-body"><strong>Preserve <code>identifier</code> as the external key.</strong> <code>company.identifier</code> is the unique account code (e.g. "ACME-IT"). Store it in Rev.io as the external reference so future lookups can cross-reference the original CW record.</div>
+      </div>
+      <div class="alert amber">
+        <div class="alert-icon">📍</div>
+        <div class="alert-body"><strong>Sites are a separate endpoint, not embedded.</strong> The Company object has a <code>site</code> reference (default site only). Full branch office list requires a separate call to <code>/company/companies/{id}/sites</code>.</div>
+      </div>
+      <div class="alert red">
+        <div class="alert-icon">🗑️</div>
+        <div class="alert-body"><strong>Always filter soft deletes.</strong> CW uses soft deletes — <code>deletedFlag=true</code> on Company and <code>inactiveFlag=true</code> on Contact. These records still appear in results unless explicitly filtered out.</div>
+      </div>
+      <div class="alert teal">
+        <div class="alert-icon">📋</div>
+        <div class="alert-body"><strong>Include custom fields even if unmapped.</strong> <code>userDefinedField1</code>–<code>10</code> exist on both Company and Contact. Include them in the export payload even if there's no Rev.io mapping yet — customers often have important data stored there.</div>
+      </div>
+      <div class="alert amber">
+        <div class="alert-icon">🌎</div>
+        <div class="alert-body"><strong>Ask which region before connecting.</strong> NA, EU, and AU instances use different base URLs. On-prem customers have a custom domain entirely. Confirm upfront — a wrong base URL gives a misleading auth error.</div>
       </div>
     </div>
   </div>
 
-</div><!-- /deck -->
+  <div class="footer">
+    Rev.io · ConnectWise Migration API Reference · 2026-03-27<br>
+    Source: pyconnectwise OpenAPI schema · developer.connectwise.com · Microsoft Learn connector docs
+  </div>
 
-<!-- NAV -->
-<div class="nav">
-  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">←</button>
-  <div class="nav-dots" id="dots"></div>
-  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
-  <div class="slide-num" id="slideNum"></div>
 </div>
-
-<script>
-  const slides = document.querySelectorAll('.slide');
-  const dotsEl = document.getElementById('dots');
-  const numEl = document.getElementById('slideNum');
-  const progEl = document.getElementById('progress');
-  let cur = 0;
-
-  slides.forEach((_, i) => {
-    const d = document.createElement('div');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.onclick = () => goTo(i);
-    dotsEl.appendChild(d);
-  });
-
-  function updateUI() {
-    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
-    numEl.textContent = `${cur + 1} / ${slides.length}`;
-    progEl.style.width = `${((cur + 1) / slides.length) * 100}%`;
-  }
-
-  function goTo(n) {
-    if (n < 0 || n >= slides.length) return;
-    slides[cur].classList.remove('active');
-    slides[cur].classList.add('exit');
-    setTimeout(() => slides[cur].classList.remove('exit'), 450);
-    cur = n;
-    slides[cur].classList.add('active');
-    updateUI();
-  }
-
-  function navigate(dir) { goTo(cur + dir); }
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === ' ') navigate(1);
-    if (e.key === 'ArrowLeft') navigate(-1);
-  });
-
-  let tx = 0;
-  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
-  document.addEventListener('touchend', e => {
-    const dx = tx - e.changedTouches[0].clientX;
-    if (Math.abs(dx) > 50) navigate(dx > 0 ? 1 : -1);
-  });
-
-  updateUI();
-</script>
 </body>
 </html>
