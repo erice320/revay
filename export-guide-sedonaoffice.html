@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io PSA — SedonaOffice Data Export Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f1117; color: #e8eaf6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 32px 20px; }
+  .wrapper { max-width: 900px; margin: 0 auto; }
+  .header { text-align: center; margin-bottom: 36px; }
+  .header .logo { font-size: 26px; font-weight: 900; color: #6c63ff; margin-bottom: 8px; }
+  .header h1 { font-size: 21px; font-weight: 800; color: #e8eaf6; margin-bottom: 10px; }
+  .header p { color: #7b7f9e; font-size: 14px; line-height: 1.7; max-width: 640px; margin: 0 auto; }
+  .sources-box { background: #1a1d27; border: 1px solid #2a2d3e; border-radius: 10px; padding: 14px 20px; margin-bottom: 20px; font-size: 12px; color: #7b7f9e; line-height: 1.9; }
+  .sources-box strong { color: #b0b4cc; display: block; margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+  .sources-box a { color: #6c63ff; text-decoration: none; }
+  .other-guide { background: #1e2038; border-radius: 8px; padding: 12px 18px; margin-bottom: 28px; font-size: 13px; color: #9b96cc; }
+  .other-guide a { color: #6c63ff; text-decoration: none; font-weight: 700; }
+  .sys-badge { display: flex; align-items: center; gap: 14px; background: #1a1d27; border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; border-left: 4px solid #6c63ff; }
+  .sys-badge .icon { font-size: 30px; }
+  .sys-badge h2 { font-size: 17px; font-weight: 800; color: #e8eaf6; }
+  .sys-badge p { font-size: 12px; color: #7b7f9e; margin-top: 3px; }
+  .section { margin-bottom: 32px; }
+  .section-title { font-size: 12px; font-weight: 700; color: #6c63ff; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #2a2d3e; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px; }
+  .section-title .src { font-size: 10px; color: #4a4e6b; font-weight: 400; text-transform: none; letter-spacing: 0; }
+  .export-block { background: #1a1d27; border-radius: 10px; margin-bottom: 14px; border: 1px solid #2a2d3e; overflow: hidden; }
+  .eb-header { padding: 12px 18px; display: flex; align-items: center; gap: 12px; background: #1e2230; border-bottom: 1px solid #2a2d3e; }
+  .eb-num { width: 26px; height: 26px; border-radius: 50%; background: #6c63ff; color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .eb-header h3 { font-size: 14px; font-weight: 700; color: #e8eaf6; flex: 1; }
+  .priority { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 3px 8px; border-radius: 10px; }
+  .must { background: #1e2038; color: #6c63ff; border: 1px solid #6c63ff55; }
+  .helpful { background: #162820; color: #00d4aa; border: 1px solid #00d4aa44; }
+  .eb-body { padding: 16px 18px; }
+  .how-label { font-size: 11px; font-weight: 700; color: #7b7f9e; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+  .steps { padding-left: 0; list-style: none; margin-bottom: 14px; }
+  .steps li { padding: 6px 0 6px 26px; border-bottom: 1px solid #21253a; font-size: 13px; color: #b0b4cc; line-height: 1.7; position: relative; }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before { content: attr(data-n); position: absolute; left: 0; top: 8px; width: 18px; height: 18px; border-radius: 50%; background: #21253a; color: #6c63ff; font-size: 10px; font-weight: 800; text-align: center; line-height: 18px; }
+  .steps li strong { color: #e8eaf6; }
+  .steps li code { background: #21253a; color: #00d4aa; padding: 1px 6px; border-radius: 4px; font-size: 12px; font-family: monospace; }
+  .map-label { font-size: 11px; font-weight: 700; color: #7b7f9e; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+  .map-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .map-table th { background: #21253a; color: #7b7f9e; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 7px 12px; text-align: left; }
+  .map-table td { padding: 7px 12px; border-bottom: 1px solid #1e2030; color: #b0b4cc; vertical-align: top; line-height: 1.5; }
+  .map-table tr:last-child td { border-bottom: none; }
+  .map-table td.src-field { color: #00d4aa; font-family: monospace; font-size: 11px; }
+  .map-table td.arrow { color: #4a4e6b; text-align: center; width: 24px; }
+  .map-table td.dst-field { color: #6c63ff; font-family: monospace; font-size: 11px; }
+  .map-table td.notes { color: #7b7f9e; font-size: 11px; }
+  .map-table tr:hover td { background: #1e2230; }
+  .note { border-left: 3px solid #6c63ff; border-radius: 6px; padding: 9px 13px; margin-top: 10px; font-size: 12px; color: #9b96cc; line-height: 1.7; background: #1e2038; }
+  .note.warn { border-left-color: #ffa94d; color: #c8a870; background: #1e1a10; }
+  .note.ok { border-left-color: #00d4aa; color: #7bbfa8; background: #162820; }
+  .send-box { background: #1e2038; border-radius: 10px; padding: 18px 22px; margin-top: 28px; border: 1px solid #6c63ff33; }
+  .send-box h4 { font-size: 14px; font-weight: 700; color: #6c63ff; margin-bottom: 10px; }
+  .send-box p { font-size: 13px; color: #9b96cc; line-height: 1.8; }
+  .send-box a { color: #00d4aa; text-decoration: none; }
+  .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1e2030; color: #4a4e6b; font-size: 11px; line-height: 1.9; }
+  .footer a { color: #6c63ff; text-decoration: none; }
+  @media (max-width: 640px) { .map-table td.notes { display: none; } .map-table th:last-child { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div class="logo">⚡ Rev.io PSA</div>
+    <h1>SedonaOffice — Migration Data Export Guide</h1>
+    <p>Field-level instructions for pulling your data out of SedonaOffice before onboarding. Send these files to your SA ahead of your kickoff call.</p>
+  </div>
+
+  <div class="sources-box">
+    <strong>📚 Sources used in this guide</strong>
+    <b>Rev.io PSA data model:</b> Derived from live Rev.io PSA Billing API (api.psarev.io) — field names reflect actual API response schemas from confirmed endpoints. ·
+    <b>SedonaOffice:</b> <a href="https://sedonaoffice.knowledgeowl.com/help/customer-query-builder-basics-in-sedonaoffice" target="_blank">Customer Query Builder KB (Bold Group, Sep 2024)</a> · <a href="https://sedonaoffice.knowledgeowl.com/help/gl-query-builder-overview-and-topics" target="_blank">GL Query Builder KB (Bold Group, Jan 2023)</a> · <a href="https://sedonaoffice.knowledgeowl.com/help/sedonaweb-20" target="_blank">SedonaAPI 2.0 KB (Bold Group)</a> ·
+    <b>Note:</b> Rev.io PSA service/equipment endpoints are not yet public — those sections are marked and will be importable once the API opens.
+  </div>
+
+  <div class="other-guide">🖨️ Coming from <strong>e-automate (ECI)</strong>? → <a href="https://erice320.github.io/revay/export-guide-eautomate.html">Use the e-automate guide instead</a></div>
+
+  <div class="sys-badge">
+    <div class="icon">📋</div>
+    <div>
+      <h2>SedonaOffice</h2>
+      <p>by Bold Group &nbsp;·&nbsp; v6.x &nbsp;·&nbsp; Query Builder exports + right-click CSV &nbsp;·&nbsp; Est. 30–45 min</p>
+    </div>
+  </div>
+
+  <!-- 1. CUSTOMERS -->
+  <div class="section">
+    <div class="section-title">
+      Customer &amp; Contact Data
+      <span class="src">Source: sedonaoffice.knowledgeowl.com — Customer Query Builder (Sep 2024)</span>
+    </div>
+
+    <div class="export-block">
+      <div class="eb-header"><div class="eb-num">1</div><h3>Customer Accounts</h3><span class="priority must">Must Have</span></div>
+      <div class="eb-body">
+        <div class="how-label">How to export</div>
+        <ol class="steps">
+          <li data-n="1">In SedonaOffice toolbar → <strong>Query → Customer Query</strong></li>
+          <li data-n="2">In the Fields to Display panel, add the fields listed in the mapping below</li>
+          <li data-n="3">Leave the filter frame blank (pulls all customers) or filter <code>Status = Active</code></li>
+          <li data-n="4">Click the <strong>green arrow</strong> to run → click <strong>Export → CSV</strong></li>
+          <li data-n="5">Save as <code>sedona-customers.csv</code></li>
+        </ol>
+        <div class="map-label">Field mapping — SedonaOffice → Rev.io PSA</div>
+        <table class="map-table">
+          <thead><tr><th>SedonaOffice Field</th><th></th><th>Rev.io PSA Field</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="src-field">Customer_Number</td><td class="arrow">→</td><td class="dst-field">accountNumber</td><td class="notes">Will be re-assigned in Rev.io; keep for reference matching</td></tr>
+            <tr><td class="src-field">Customer_Name</td><td class="arrow">→</td><td class="dst-field">name</td><td class="notes">Required</td></tr>
+            <tr><td class="src-field">Customer_Type</td><td class="arrow">→</td><td class="dst-field">identity (Business/Individual)</td><td class="notes">Map "Commercial" → Business, "Residential" → Individual</td></tr>
+            <tr><td class="src-field">Customer_Status</td><td class="arrow">→</td><td class="dst-field">status (Open/Closed)</td><td class="notes">Active → Open</td></tr>
+            <tr><td class="src-field">Bill_Address1</td><td class="arrow">→</td><td class="dst-field">address.addressLine1</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Bill_City</td><td class="arrow">→</td><td class="dst-field">address.cityMunicipality</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Bill_State</td><td class="arrow">→</td><td class="dst-field">address.stateProvinceCode</td><td class="notes">2-letter code</td></tr>
+            <tr><td class="src-field">Bill_Zip</td><td class="arrow">→</td><td class="dst-field">address.postalCode</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Bill_Email</td><td class="arrow">→</td><td class="dst-field">emailAddresses[ ]</td><td class="notes">Primary billing email</td></tr>
+            <tr><td class="src-field">Parent_Customer_Number</td><td class="arrow">→</td><td class="dst-field">parentCustomerId</td><td class="notes">For multi-site accounts — link child to parent</td></tr>
+            <tr><td class="src-field">Sales_Rep</td><td class="arrow">→</td><td class="dst-field">customFields.salesPerson</td><td class="notes">Rev.io PSA custom field confirmed in API</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="export-block">
+      <div class="eb-header"><div class="eb-num">2</div><h3>Contacts per Customer</h3><span class="priority must">Must Have</span></div>
+      <div class="eb-body">
+        <div class="how-label">How to export</div>
+        <ol class="steps">
+          <li data-n="1"><strong>Query → Customer Query</strong></li>
+          <li data-n="2">Add contact fields: <code>Customer_Number</code>, <code>Bill_Contact_Name</code>, <code>Bill_Contact_Title</code>, <code>Bill_Contact_E_Mail</code>, <code>Bill_Contact_Phone</code>, <code>Site_Contact_Name</code>, <code>Site_Contact_E_Mail</code>, <code>Site_Contact_Phone</code></li>
+          <li data-n="3">Export → CSV as <code>sedona-contacts.csv</code></li>
+        </ol>
+        <div class="map-label">Field mapping</div>
+        <table class="map-table">
+          <thead><tr><th>SedonaOffice Field</th><th></th><th>Rev.io PSA Field</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="src-field">Customer_Number</td><td class="arrow">→</td><td class="dst-field">customerId (link)</td><td class="notes">Used to associate contact to customer</td></tr>
+            <tr><td class="src-field">Bill_Contact_Name</td><td class="arrow">→</td><td class="dst-field">name</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Bill_Contact_Title</td><td class="arrow">→</td><td class="dst-field">title</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Bill_Contact_E_Mail</td><td class="arrow">→</td><td class="dst-field">emailAddresses[ ]</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Bill_Contact_Phone</td><td class="arrow">→</td><td class="dst-field">phoneNumber</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Site_Contact_Name</td><td class="arrow">→</td><td class="dst-field">name (separate contact row)</td><td class="notes">Create as second contact; set isPrimaryCustomerContact = false</td></tr>
+            <tr><td class="src-field">Site_Contact_E_Mail</td><td class="arrow">→</td><td class="dst-field">emailAddresses[ ]</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Contact_Type</td><td class="arrow">→</td><td class="dst-field">contactTypeDescription</td><td class="notes">e.g., Billing, Technical, Executive</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. BILLING -->
+  <div class="section">
+    <div class="section-title">
+      Recurring Billing &amp; Products
+      <span class="src">Source: SedonaOffice KB — Customer Query Builder; Rev.io PSA API /products schema</span>
+    </div>
+
+    <div class="export-block">
+      <div class="eb-header"><div class="eb-num">3</div><h3>Recurring Revenue / RMR Schedules</h3><span class="priority must">Must Have</span></div>
+      <div class="eb-body">
+        <ol class="steps">
+          <li data-n="1"><strong>Query → Customer Query</strong></li>
+          <li data-n="2">Add: <code>Customer_Number</code>, <code>Customer_Name</code>, <code>System_Number</code>, <code>System_Type</code>, <code>RMR_Amount</code>, <code>Billing_Cycle</code>, <code>Next_Bill_Date</code>, <code>Bill_Code</code>, <code>Bill_Code_Description</code></li>
+          <li data-n="3">Export as <code>sedona-rmr.csv</code></li>
+        </ol>
+        <table class="map-table">
+          <thead><tr><th>SedonaOffice Field</th><th></th><th>Rev.io PSA Field</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="src-field">Customer_Number</td><td class="arrow">→</td><td class="dst-field">customerId (link)</td><td class="notes"></td></tr>
+            <tr><td class="src-field">RMR_Amount</td><td class="arrow">→</td><td class="dst-field">product.rate</td><td class="notes">Monthly billing amount per service line</td></tr>
+            <tr><td class="src-field">Bill_Code</td><td class="arrow">→</td><td class="dst-field">product.productNumber</td><td class="notes">Maps to a product in Rev.io catalog</td></tr>
+            <tr><td class="src-field">Bill_Code_Description</td><td class="arrow">→</td><td class="dst-field">product.productName</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Billing_Cycle</td><td class="arrow">→</td><td class="dst-field">bill profile / billing frequency</td><td class="notes">Monthly, Quarterly, Annual</td></tr>
+            <tr><td class="src-field">Next_Bill_Date</td><td class="arrow">→</td><td class="dst-field">billing start date</td><td class="notes">Ensures no gap or double billing on go-live</td></tr>
+            <tr><td class="src-field">System_Type</td><td class="arrow">→</td><td class="dst-field">product.productCategoryName</td><td class="notes">e.g., Alarm Monitoring, Access Control, Video</td></tr>
+          </tbody>
+        </table>
+        <div class="note warn">⚠️ Each system/service line per customer will be a separate row. Do not filter these out — Rev.io needs one product subscription per billing line.</div>
+      </div>
+    </div>
+
+    <div class="export-block">
+      <div class="eb-header"><div class="eb-num">4</div><h3>Bill Codes / Service Catalog</h3><span class="priority must">Must Have</span></div>
+      <div class="eb-body">
+        <ol class="steps">
+          <li data-n="1">Go to <strong>Accounting → Setup → Bill Codes</strong> (or <strong>Lists → Bill Codes</strong>)</li>
+          <li data-n="2">Right-click the grid → <strong>Export to CSV/Excel</strong></li>
+          <li data-n="3">If unavailable, use Query Builder to pull <code>Bill_Code</code> and <code>Bill_Code_Description</code> fields</li>
+          <li data-n="4">Save as <code>sedona-bill-codes.csv</code></li>
+        </ol>
+        <table class="map-table">
+          <thead><tr><th>SedonaOffice Field</th><th></th><th>Rev.io PSA Field</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="src-field">Bill_Code</td><td class="arrow">→</td><td class="dst-field">productNumber</td><td class="notes">Your internal SKU/code</td></tr>
+            <tr><td class="src-field">Bill_Code_Description</td><td class="arrow">→</td><td class="dst-field">productName</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Default_Rate</td><td class="arrow">→</td><td class="dst-field">rate</td><td class="notes">Standard billing rate for this code</td></tr>
+            <tr><td class="src-field">Cost</td><td class="arrow">→</td><td class="dst-field">cost</td><td class="notes"></td></tr>
+            <tr><td class="src-field">GL_Account</td><td class="arrow">→</td><td class="dst-field">glCodeId</td><td class="notes">Links revenue to your chart of accounts</td></tr>
+            <tr><td class="src-field">Taxable_YN</td><td class="arrow">→</td><td class="dst-field">(tax configuration)</td><td class="notes">Flag for SA during product setup</td></tr>
+            <tr><td class="src-field">One_Time_YN</td><td class="arrow">→</td><td class="dst-field">productTypeOneTime</td><td class="notes">True = one-time charge; False = recurring</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. GL + PAYMENTS -->
+  <div class="section">
+    <div class="section-title">
+      GL Codes &amp; Payment Configuration
+      <span class="src">Source: SedonaOffice KB — GL Query Builder (Jan 2023); Rev.io PSA API /gl-codes &amp; /payment-methods schemas</span>
+    </div>
+
+    <div class="export-block">
+      <div class="eb-header"><div class="eb-num">5</div><h3>GL Codes / Chart of Accounts</h3><span class="priority must">Must Have</span></div>
+      <div class="eb-body">
+        <ol class="steps">
+          <li data-n="1"><strong>Query → GL Query Builder</strong></li>
+          <li data-n="2">Add: <code>GL_Account_Number</code>, <code>GL_Account_Description</code>, <code>Account_Type</code>, <code>Active</code></li>
+          <li data-n="3">Filter: <code>Active = Yes</code></li>
+          <li data-n="4">Export as <code>sedona-gl-codes.csv</code></li>
+        </ol>
+        <table class="map-table">
+          <thead><tr><th>SedonaOffice Field</th><th></th><th>Rev.io PSA Field</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="src-field">GL_Account_Number</td><td class="arrow">→</td><td class="dst-field">glCodeId / glCodeLedger</td><td class="notes">Your account code (e.g., 4000, 4100)</td></tr>
+            <tr><td class="src-field">GL_Account_Description</td><td class="arrow">→</td><td class="dst-field">glCodeDescription</td><td class="notes">e.g., "Monitoring Revenue", "Installation Revenue"</td></tr>
+            <tr><td class="src-field">Account_Type</td><td class="arrow">→</td><td class="dst-field">(revenue vs. expense classification)</td><td class="notes">Rev.io primarily uses revenue GL codes on products</td></tr>
+          </tbody>
+        </table>
+        <div class="note ok">💡 GL codes must be set up in Rev.io PSA before products can be fully configured.</div>
+      </div>
+    </div>
+
+    <div class="export-block">
+      <div class="eb-header"><div class="eb-num">6</div><h3>Payment Methods Accepted</h3><span class="priority helpful">Helpful</span></div>
+      <div class="eb-body">
+        <p style="font-size:13px;color:#b0b4cc;margin-bottom:12px;">No export needed — just tell your SA which payment types you accept:</p>
+        <table class="map-table">
+          <thead><tr><th>SedonaOffice / Your Setup</th><th></th><th>Rev.io PSA Payment Method</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="src-field">ACH / EFT</td><td class="arrow">→</td><td class="dst-field">ACH (isAch: true)</td><td class="notes">Rev.io PSA has ACH built-in with fee support</td></tr>
+            <tr><td class="src-field">Credit Card</td><td class="arrow">→</td><td class="dst-field">Credit Card (isCc: true)</td><td class="notes">Fee configuration available (% or flat)</td></tr>
+            <tr><td class="src-field">Check</td><td class="arrow">→</td><td class="dst-field">Manual Check</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Cash</td><td class="arrow">→</td><td class="dst-field">Cash</td><td class="notes"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. EQUIPMENT -->
+  <div class="section">
+    <div class="section-title">
+      Equipment &amp; Service Data
+      <span class="src">Source: SedonaOffice Customer Query Builder KB; Rev.io PSA service endpoints not yet public</span>
+    </div>
+
+    <div class="export-block">
+      <div class="eb-header"><div class="eb-num">7</div><h3>Installed Systems / Equipment per Site</h3><span class="priority helpful">Helpful</span></div>
+      <div class="eb-body">
+        <ol class="steps">
+          <li data-n="1"><strong>Query → Customer Query</strong></li>
+          <li data-n="2">Expand <strong>System</strong> category and add: <code>System_Number</code>, <code>System_Type</code>, <code>System_Location</code>, <code>Install_Date</code>, <code>Panel_Type</code>, <code>Monitoring_Status</code></li>
+          <li data-n="3">Include <code>Customer_Number</code> for linking</li>
+          <li data-n="4">Export as <code>sedona-systems.csv</code></li>
+        </ol>
+        <table class="map-table">
+          <thead><tr><th>SedonaOffice Field</th><th></th><th>Rev.io PSA (future)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="src-field">System_Number</td><td class="arrow">→</td><td class="dst-field">asset / equipment ID</td><td class="notes"></td></tr>
+            <tr><td class="src-field">System_Type</td><td class="arrow">→</td><td class="dst-field">asset type / category</td><td class="notes">e.g., Burglar Alarm, CCTV, Access Control</td></tr>
+            <tr><td class="src-field">System_Location / Site_Address</td><td class="arrow">→</td><td class="dst-field">service location / site</td><td class="notes">Physical address where system is installed</td></tr>
+            <tr><td class="src-field">Panel_Type</td><td class="arrow">→</td><td class="dst-field">equipment model / description</td><td class="notes"></td></tr>
+            <tr><td class="src-field">Install_Date</td><td class="arrow">→</td><td class="dst-field">asset install date</td><td class="notes"></td></tr>
+          </tbody>
+        </table>
+        <div class="note">📌 Rev.io PSA service/equipment endpoints are not yet in the public API. Collect this data now — your SA will configure it manually during onboarding, and it will be importable once the API opens.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="send-box">
+    <h4>📬 Files to send your Rev.io SA</h4>
+    <p>
+      <code>sedona-customers.csv</code> &nbsp;·&nbsp; <code>sedona-contacts.csv</code> &nbsp;·&nbsp; <code>sedona-rmr.csv</code> &nbsp;·&nbsp; <code>sedona-bill-codes.csv</code> &nbsp;·&nbsp; <code>sedona-gl-codes.csv</code> &nbsp;·&nbsp; <code>sedona-systems.csv</code> (if available)
+      <br><br>
+      Zip all files and email to your SA, or to <a href="mailto:onboarding@rev.io">onboarding@rev.io</a> with subject: <strong>[Your Company] — SedonaOffice Migration Export</strong>. Send before kickoff so we can review the data and pre-configure your environment.
+    </p>
+  </div>
+
+  <div class="footer">
+    ⚡ <a href="https://erice320.github.io/revay/">Rev.io Onboarding Resources</a> &nbsp;·&nbsp;
+    Data model: Rev.io PSA API (api.psarev.io) + SedonaOffice KB (Bold Group) &nbsp;·&nbsp;
+    Questions? <a href="mailto:onboarding@rev.io">onboarding@rev.io</a>
+  </div>
+
+</div>
+</body>
+</html>
