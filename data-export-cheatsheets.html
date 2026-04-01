@@ -3,19 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rev.io Data Export Guide — SedonaOffice & e-automate</title>
+<title>Rev.io PSA — Migration Data Export Guide</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #0f1117; color: #e8eaf6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 32px 20px; }
-  .wrapper { max-width: 900px; margin: 0 auto; }
+  .wrapper { max-width: 820px; margin: 0 auto; }
 
-  /* Header */
   .header { text-align: center; margin-bottom: 40px; }
-  .header .logo { font-size: 28px; font-weight: 900; color: #6c63ff; margin-bottom: 6px; }
-  .header h1 { font-size: 22px; font-weight: 700; color: #e8eaf6; margin-bottom: 8px; }
-  .header p { color: #7b7f9e; font-size: 14px; }
+  .header .logo { font-size: 26px; font-weight: 900; color: #6c63ff; margin-bottom: 8px; }
+  .header h1 { font-size: 21px; font-weight: 800; color: #e8eaf6; margin-bottom: 10px; }
+  .header p { color: #7b7f9e; font-size: 14px; line-height: 1.7; max-width: 600px; margin: 0 auto; }
 
-  /* Tab buttons */
+  .intro-box {
+    background: #162820; border: 1px solid #00d4aa33; border-radius: 10px;
+    padding: 18px 22px; margin-bottom: 32px; color: #b0e8dc; font-size: 14px; line-height: 1.8;
+  }
+  .intro-box strong { color: #00d4aa; }
+
   .tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
   .tab-btn {
     padding: 10px 22px; border-radius: 8px; border: none; cursor: pointer;
@@ -25,455 +29,286 @@
   .tab-btn.active { background: #6c63ff; color: #fff; }
   .tab-btn:hover:not(.active) { background: #21253a; color: #e8eaf6; }
 
-  /* Panels */
   .panel { display: none; }
   .panel.active { display: block; }
 
-  /* System badge */
-  .system-badge {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: #1a1d27; border-radius: 10px; padding: 14px 20px;
+  .sys-badge {
+    display: flex; align-items: center; gap: 14px;
+    background: #1a1d27; border-radius: 10px; padding: 16px 20px;
     margin-bottom: 24px; border-left: 4px solid #6c63ff;
   }
-  .system-badge .icon { font-size: 28px; }
-  .system-badge h2 { font-size: 18px; font-weight: 800; color: #e8eaf6; }
-  .system-badge p { font-size: 12px; color: #7b7f9e; margin-top: 2px; }
+  .sys-badge .icon { font-size: 30px; }
+  .sys-badge h2 { font-size: 17px; font-weight: 800; color: #e8eaf6; }
+  .sys-badge p { font-size: 12px; color: #7b7f9e; margin-top: 3px; }
 
-  /* Intro box */
-  .intro-box {
-    background: #162820; border: 1px solid #00d4aa33; border-radius: 8px;
-    padding: 14px 18px; margin-bottom: 24px; color: #b0e8dc; font-size: 13px; line-height: 1.7;
-  }
-  .intro-box strong { color: #00d4aa; }
-
-  /* Export card */
-  .export-card {
-    background: #1a1d27; border-radius: 10px; margin-bottom: 16px; overflow: hidden;
-    border: 1px solid #2a2d3e;
-  }
-  .card-header {
-    padding: 14px 20px; display: flex; align-items: center; gap: 12px;
-    border-bottom: 1px solid #2a2d3e; cursor: pointer;
-    background: #1e2230;
-  }
-  .card-num {
-    width: 28px; height: 28px; border-radius: 50%; background: #6c63ff;
-    color: #fff; font-size: 12px; font-weight: 800;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .card-header h3 { font-size: 15px; font-weight: 700; color: #e8eaf6; flex: 1; }
-  .card-header .why { font-size: 11px; color: #7b7f9e; text-align: right; }
-  .card-body { padding: 16px 20px; }
-
-  /* Steps */
-  .steps { list-style: none; }
-  .steps li {
-    padding: 8px 0 8px 32px; border-bottom: 1px solid #2a2d3e;
-    font-size: 13px; color: #b0b4cc; line-height: 1.6; position: relative;
-  }
-  .steps li:last-child { border-bottom: none; }
-  .steps li::before {
-    content: attr(data-n);
-    position: absolute; left: 0; top: 8px;
-    width: 20px; height: 20px; border-radius: 50%;
-    background: #21253a; color: #6c63ff;
-    font-size: 11px; font-weight: 800;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .steps li strong { color: #e8eaf6; }
-  .steps li code {
-    background: #21253a; color: #00d4aa; padding: 1px 6px;
-    border-radius: 4px; font-size: 12px; font-family: monospace;
-  }
-
-  /* Fields to include */
-  .fields-label { font-size: 11px; color: #7b7f9e; text-transform: uppercase; letter-spacing: .06em; margin: 12px 0 6px; }
-  .fields-grid { display: flex; flex-wrap: wrap; gap: 6px; }
-  .field-tag {
-    background: #21253a; color: #b0b4cc; padding: 3px 10px;
-    border-radius: 12px; font-size: 12px;
-  }
-  .field-tag.key { background: #1e2038; color: #6c63ff; border: 1px solid #6c63ff44; }
-
-  /* Note box */
-  .note-box {
-    background: #1e1a2e; border-radius: 6px; padding: 10px 14px;
-    margin-top: 10px; font-size: 12px; color: #9b96cc; border-left: 3px solid #6c63ff;
-  }
-  .note-box.warn { background: #1e1a10; border-left-color: #ffa94d; color: #c8a870; }
-  .note-box.ok { background: #162820; border-left-color: #00d4aa; color: #7bbfa8; }
-
-  /* Summary checklist */
-  .summary-box {
-    background: #1a1d27; border-radius: 10px; padding: 20px;
-    margin-top: 28px; border: 1px solid #2a2d3e;
-  }
-  .summary-box h3 { font-size: 14px; font-weight: 700; color: #e8eaf6; margin-bottom: 14px; }
-  .checklist { list-style: none; }
-  .checklist li {
-    padding: 6px 0; font-size: 13px; color: #b0b4cc;
-    display: flex; align-items: center; gap: 10px;
+  .section { margin-bottom: 28px; }
+  .section h3 {
+    font-size: 13px; font-weight: 700; color: #6c63ff;
+    text-transform: uppercase; letter-spacing: .07em;
+    margin-bottom: 12px; padding-bottom: 6px;
     border-bottom: 1px solid #2a2d3e;
   }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist li::before { content: '☐'; font-size: 14px; color: #6c63ff; }
 
-  /* Send instructions */
-  .send-box {
-    background: #1e2038; border-radius: 8px; padding: 16px 20px;
-    margin-top: 20px; border: 1px solid #6c63ff33;
+  .data-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .data-card {
+    background: #1a1d27; border-radius: 8px; padding: 14px 16px;
+    border: 1px solid #2a2d3e;
   }
-  .send-box h4 { font-size: 13px; font-weight: 700; color: #6c63ff; margin-bottom: 8px; }
-  .send-box p { font-size: 13px; color: #9b96cc; line-height: 1.7; }
+  .data-card .title { font-size: 14px; font-weight: 700; color: #e8eaf6; margin-bottom: 4px; }
+  .data-card .desc { font-size: 12px; color: #7b7f9e; line-height: 1.6; }
+  .data-card .priority {
+    display: inline-block; margin-top: 8px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+    padding: 2px 8px; border-radius: 10px;
+  }
+  .priority.must { background: #1e2038; color: #6c63ff; }
+  .priority.helpful { background: #162820; color: #00d4aa; }
+
+  .how-box {
+    background: #1a1d27; border-radius: 10px; padding: 18px 20px;
+    border: 1px solid #2a2d3e; margin-bottom: 12px;
+  }
+  .how-box h4 { font-size: 14px; font-weight: 700; color: #e8eaf6; margin-bottom: 10px; }
+  .how-box ol { padding-left: 20px; }
+  .how-box ol li { font-size: 13px; color: #b0b4cc; line-height: 1.9; }
+  .how-box ol li strong { color: #e8eaf6; }
+  .how-box ol li code {
+    background: #21253a; color: #00d4aa;
+    padding: 1px 6px; border-radius: 4px; font-size: 12px; font-family: monospace;
+  }
+
+  .note { background: #1e2038; border-left: 3px solid #6c63ff; border-radius: 6px; padding: 10px 14px; margin-top: 10px; font-size: 12px; color: #9b96cc; line-height: 1.7; }
+  .note.warn { background: #1e1a10; border-left-color: #ffa94d; color: #c8a870; }
+  .note.ok { background: #162820; border-left-color: #00d4aa; color: #7bbfa8; }
+
+  .send-box {
+    background: #1e2038; border-radius: 10px; padding: 18px 22px;
+    margin-top: 28px; border: 1px solid #6c63ff33;
+  }
+  .send-box h4 { font-size: 14px; font-weight: 700; color: #6c63ff; margin-bottom: 10px; }
+  .send-box p { font-size: 13px; color: #9b96cc; line-height: 1.8; }
   .send-box a { color: #00d4aa; text-decoration: none; }
 
-  /* Footer */
   .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1e2030; color: #4a4e6b; font-size: 12px; }
-
-  @media (max-width: 600px) {
-    .card-header { flex-wrap: wrap; }
-    .card-header .why { text-align: left; width: 100%; }
-  }
+  .footer a { color: #6c63ff; text-decoration: none; }
 </style>
 </head>
 <body>
 <div class="wrapper">
 
   <div class="header">
-    <div class="logo">⚡ Rev.io</div>
-    <h1>Data Export Guide — Migration Prep Cheat Sheets</h1>
-    <p>Step-by-step instructions to export your data from your current system so we can set up Rev.io PSA exactly the way you work.</p>
+    <div class="logo">⚡ Rev.io PSA</div>
+    <h1>Migration Data Export Guide</h1>
+    <p>A simple reference to help you pull your data from your current system before your onboarding kickoff. The more you can share ahead of time, the faster we get you live.</p>
+  </div>
+
+  <div class="intro-box">
+    <strong>What this is for:</strong> Your Rev.io SA will use these exports to pre-configure your new PSA environment — customers, billing codes, GL mappings, service items, and more — so you're not starting from a blank slate on day one. You don't need to be technical to do this. Just follow the steps for your system below and send us the files.
   </div>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('sedona')">📋 SedonaOffice</button>
-    <button class="tab-btn" onclick="showTab('eautomate')">🖨️ e-automate (ECI)</button>
+    <button class="tab-btn active" onclick="showTab('sedona', event)">📋 SedonaOffice</button>
+    <button class="tab-btn" onclick="showTab('eautomate', event)">🖨️ e-automate (ECI)</button>
   </div>
 
-  <!-- ══════════════════════════════════════════ SEDONA ══════════════════════════════════════════ -->
+
+  <!-- ══════════ SEDONA ══════════ -->
   <div id="panel-sedona" class="panel active">
 
-    <div class="system-badge">
+    <div class="sys-badge">
       <div class="icon">📋</div>
       <div>
         <h2>SedonaOffice</h2>
-        <p>by Bold Group &nbsp;·&nbsp; Version 6.x instructions &nbsp;·&nbsp; Estimated time: 20–30 min</p>
+        <p>by Bold Group &nbsp;·&nbsp; Estimated time: 20–30 minutes</p>
       </div>
     </div>
 
-    <div class="intro-box">
-      <strong>Why we need this:</strong> These exports let us pre-configure your Rev.io PSA with your existing customers, billing schedules, GL codes, and service types — so your SA team isn't rebuilding your entire setup from scratch during onboarding. The goal is to get you live faster and correctly.
-    </div>
-
-    <!-- Export 1 -->
-    <div class="export-card">
-      <div class="card-header">
-        <div class="card-num">1</div>
-        <h3>Customer List</h3>
-        <div class="why">Who you bill &amp; their contacts</div>
-      </div>
-      <div class="card-body">
-        <ol class="steps">
-          <li data-n="1">In SedonaOffice, click <strong>Query</strong> in the top menu bar, then click <strong>Customer Query</strong></li>
-          <li data-n="2">In the left panel (Fields to Display), click each of the following to add them:<br>
-            <code>Customer_Number</code> &nbsp;·&nbsp; <code>Customer_Name</code> &nbsp;·&nbsp; <code>Customer_Type</code> &nbsp;·&nbsp; <code>Customer_Status</code> &nbsp;·&nbsp;
-            <code>Bill_Address1</code> &nbsp;·&nbsp; <code>Bill_City</code> &nbsp;·&nbsp; <code>Bill_State</code> &nbsp;·&nbsp; <code>Bill_Zip</code> &nbsp;·&nbsp;
-            <code>Bill_Contact_E_Mail</code> &nbsp;·&nbsp; <code>Bill_Contact_Phone</code> &nbsp;·&nbsp;
-            <code>Site_Contact_E_Mail</code> &nbsp;·&nbsp; <code>Site_Contact_Phone</code>
-          </li>
-          <li data-n="3">Leave the middle filter frame <strong>blank</strong> (this pulls all active customers)</li>
-          <li data-n="4">Click the <strong>green arrow (Run)</strong> button at the bottom</li>
-          <li data-n="5">Click the <strong>Export</strong> button and save as <strong>CSV</strong></li>
-          <li data-n="6">Name the file <code>customers.csv</code></li>
-        </ol>
-        <div class="note-box ok" style="margin-top:12px;">💡 Tip: You can save this query for future use by clicking the <strong>Save</strong> button before exporting.</div>
-      </div>
-    </div>
-
-    <!-- Export 2 -->
-    <div class="export-card">
-      <div class="card-header">
-        <div class="card-num">2</div>
-        <h3>Recurring Monthly Revenue (RMR) / Billing Schedules</h3>
-        <div class="why">What each customer pays monthly</div>
-      </div>
-      <div class="card-body">
-        <ol class="steps">
-          <li data-n="1">Click <strong>Query</strong> → <strong>Customer Query</strong></li>
-          <li data-n="2">Add these fields: <code>Customer_Number</code> &nbsp;·&nbsp; <code>Customer_Name</code> &nbsp;·&nbsp; <code>System_Number</code> &nbsp;·&nbsp; <code>System_Type</code> &nbsp;·&nbsp; <code>RMR_Amount</code> &nbsp;·&nbsp; <code>Billing_Cycle</code> &nbsp;·&nbsp; <code>Next_Bill_Date</code> &nbsp;·&nbsp; <code>Bill_Code</code></li>
-          <li data-n="3">Run the query (green arrow) and click <strong>Export → CSV</strong></li>
-          <li data-n="4">Name the file <code>rmr-billing.csv</code></li>
-        </ol>
-        <div class="note-box warn">⚠️ If you have multiple system types (alarm monitoring, access control, video, etc.) each will show as a separate row. That's expected — don't filter them out.</div>
-      </div>
-    </div>
-
-    <!-- Export 3 -->
-    <div class="export-card">
-      <div class="card-header">
-        <div class="card-num">3</div>
-        <h3>GL Codes / Chart of Accounts</h3>
-        <div class="why">For mapping revenue to the right accounts in Rev.io</div>
-      </div>
-      <div class="card-body">
-        <ol class="steps">
-          <li data-n="1">Click <strong>Query</strong> → <strong>GL Query Builder</strong></li>
-          <li data-n="2">Add fields: <code>GL_Account_Number</code> &nbsp;·&nbsp; <code>GL_Account_Description</code> &nbsp;·&nbsp; <code>Account_Type</code> &nbsp;·&nbsp; <code>Active</code></li>
-          <li data-n="3">Filter: Set <code>Active</code> = <strong>Yes</strong> (to exclude old inactive codes)</li>
-          <li data-n="4">Run and export as CSV</li>
-          <li data-n="5">Name the file <code>gl-codes.csv</code></li>
-        </ol>
-        <div class="note-box">📌 Alternatively: Go to <strong>Accounting → Chart of Accounts</strong>, right-click the list, and choose <strong>Export to Excel/CSV</strong> if that option appears in your version.</div>
-      </div>
-    </div>
-
-    <!-- Export 4 -->
-    <div class="export-card">
-      <div class="card-header">
-        <div class="card-num">4</div>
-        <h3>Service / Bill Codes</h3>
-        <div class="why">Your line-item billing descriptions and rates</div>
-      </div>
-      <div class="card-body">
-        <ol class="steps">
-          <li data-n="1">Go to <strong>Accounting → Setup → Bill Codes</strong> (or <strong>Lists → Bill Codes</strong> depending on your version)</li>
-          <li data-n="2">Right-click the grid of results and select <strong>Export to CSV</strong> or <strong>Export to Excel</strong></li>
-          <li data-n="3">If export isn't available via right-click, use <strong>Query → Customer Query</strong> and add the <code>Bill_Code</code> and <code>Bill_Code_Description</code> fields</li>
-          <li data-n="4">Name the file <code>bill-codes.csv</code></li>
-        </ol>
-        <div class="fields-label">We're specifically looking for:</div>
-        <div class="fields-grid">
-          <span class="field-tag key">Code / ID</span>
-          <span class="field-tag key">Description</span>
-          <span class="field-tag">Rate / Amount</span>
-          <span class="field-tag">GL Account Mapping</span>
-          <span class="field-tag">Taxable Y/N</span>
+    <div class="section">
+      <h3>What to export</h3>
+      <div class="data-grid">
+        <div class="data-card">
+          <div class="title">Customers</div>
+          <div class="desc">Company names, billing addresses, primary contacts, account status</div>
+          <span class="priority must">Must have</span>
+        </div>
+        <div class="data-card">
+          <div class="title">Recurring Billing (RMR)</div>
+          <div class="desc">Monthly amounts, billing cycles, service types per customer/site</div>
+          <span class="priority must">Must have</span>
+        </div>
+        <div class="data-card">
+          <div class="title">GL Codes</div>
+          <div class="desc">Your active chart of accounts codes and descriptions</div>
+          <span class="priority must">Must have</span>
+        </div>
+        <div class="data-card">
+          <div class="title">Bill / Service Codes</div>
+          <div class="desc">Line-item billing codes, descriptions, and rates</div>
+          <span class="priority must">Must have</span>
+        </div>
+        <div class="data-card">
+          <div class="title">Equipment / Systems</div>
+          <div class="desc">Installed systems or equipment at each customer site</div>
+          <span class="priority helpful">Helpful</span>
+        </div>
+        <div class="data-card">
+          <div class="title">Open Service Tickets</div>
+          <div class="desc">Any active work orders that will need to transfer over</div>
+          <span class="priority helpful">Helpful</span>
         </div>
       </div>
     </div>
 
-    <!-- Export 5 -->
-    <div class="export-card">
-      <div class="card-header">
-        <div class="card-num">5</div>
-        <h3>Equipment / Systems per Site</h3>
-        <div class="why">Installed equipment at each customer location</div>
+    <div class="section">
+      <h3>How to export from SedonaOffice</h3>
+
+      <div class="how-box">
+        <h4>Option A — Query Builder (recommended for customer &amp; billing data)</h4>
+        <ol>
+          <li>In SedonaOffice, click <strong>Query</strong> in the top toolbar → <strong>Customer Query</strong></li>
+          <li>In the left panel, click the fields you want to include in your export</li>
+          <li>Leave the middle filter frame blank to pull all records, or filter by <strong>Active</strong> status</li>
+          <li>Click the <strong>green arrow</strong> to run the query</li>
+          <li>Click the <strong>Export</strong> button at the bottom → save as <code>.csv</code></li>
+        </ol>
+        <div class="note ok">💡 You can save your query for future use — click <strong>Save</strong> before exporting so you can re-run it anytime.</div>
       </div>
-      <div class="card-body">
-        <ol class="steps">
-          <li data-n="1">Click <strong>Query</strong> → <strong>Customer Query</strong></li>
-          <li data-n="2">Expand the <strong>System</strong> category and add: <code>System_Number</code> &nbsp;·&nbsp; <code>System_Type</code> &nbsp;·&nbsp; <code>System_Location</code> &nbsp;·&nbsp; <code>Install_Date</code> &nbsp;·&nbsp; <code>Panel_Type</code> &nbsp;·&nbsp; <code>Monitoring_Status</code></li>
-          <li data-n="3">Also include <code>Customer_Number</code> and <code>Customer_Name</code> so we can match systems to customers</li>
-          <li data-n="4">Export to CSV and name it <code>systems-equipment.csv</code></li>
+
+      <div class="how-box">
+        <h4>Option B — GL Query Builder (for GL codes)</h4>
+        <ol>
+          <li>Click <strong>Query</strong> → <strong>GL Query Builder</strong></li>
+          <li>Add the fields you want (account number, description, type)</li>
+          <li>Filter to <strong>Active = Yes</strong> to keep the list clean</li>
+          <li>Run and export to CSV</li>
         </ol>
       </div>
-    </div>
 
-    <!-- Summary checklist -->
-    <div class="summary-box">
-      <h3>📤 Files to send us</h3>
-      <ul class="checklist">
-        <li><code>customers.csv</code> — full customer list with contact info</li>
-        <li><code>rmr-billing.csv</code> — recurring billing schedules and amounts</li>
-        <li><code>gl-codes.csv</code> — active GL account codes</li>
-        <li><code>bill-codes.csv</code> — service/billing line item codes and rates</li>
-        <li><code>systems-equipment.csv</code> — installed systems per site</li>
-      </ul>
+      <div class="how-box">
+        <h4>Option C — Right-click export (for lists and code tables)</h4>
+        <ol>
+          <li>Navigate to the relevant screen (e.g., <strong>Accounting → Bill Codes</strong>)</li>
+          <li>Right-click anywhere in the data grid</li>
+          <li>Select <strong>Export to Excel</strong> or <strong>Export to CSV</strong> if available</li>
+        </ol>
+        <div class="note warn">⚠️ Not all screens support right-click export. If it's not available, use the Query Builder approach instead.</div>
+      </div>
     </div>
 
     <div class="send-box">
       <h4>📬 How to send your files</h4>
-      <p>Zip all files into a single folder and send to your Rev.io onboarding SA. If you're unsure who your SA is, email <a href="mailto:onboarding@rev.io">onboarding@rev.io</a> with subject line: <strong>[Your Company Name] — SedonaOffice Data Export</strong>. Please send prior to your kickoff call so we can review before we meet.</p>
+      <p>Zip your CSV files into a single folder and send to your Rev.io onboarding SA. Not sure who your SA is? Email <a href="mailto:onboarding@rev.io">onboarding@rev.io</a> with subject: <strong>[Your Company] — SedonaOffice Export</strong>. Sending before your kickoff call gives us time to review and saves you setup time on day one.</p>
     </div>
 
-  </div><!-- end sedona panel -->
+  </div><!-- end sedona -->
 
 
-  <!-- ══════════════════════════════════════════ E-AUTOMATE ══════════════════════════════════════ -->
+  <!-- ══════════ E-AUTOMATE ══════════ -->
   <div id="panel-eautomate" class="panel">
 
-    <div class="system-badge">
+    <div class="sys-badge">
       <div class="icon">🖨️</div>
       <div>
         <h2>e-automate (ECI Solutions)</h2>
-        <p>Cloud & On-Premise versions &nbsp;·&nbsp; Uses Excel-based Export Utility &nbsp;·&nbsp; Estimated time: 30–45 min</p>
+        <p>Cloud &amp; On-Premise &nbsp;·&nbsp; Estimated time: 30–45 minutes</p>
       </div>
     </div>
 
-    <div class="intro-box">
-      <strong>Why we need this:</strong> e-automate stores your customers, contracts, service items, and equipment in a structured database. These exports let us mirror that structure in Rev.io PSA — so billing codes, customer accounts, and recurring contracts are already in place when you log in for the first time.
-    </div>
-
-    <!-- Prereq note -->
-    <div class="note-box warn" style="margin-bottom:20px; padding:14px 18px; font-size:13px; border-radius:8px;">
-      ⚠️ <strong>Before you start:</strong> e-automate uses a built-in <strong>Data Import/Export Utility</strong> (also called the <em>DataImportExport</em> tool). If you're on the <strong>Cloud/Hosted version</strong>, you access Export Templates from within e-automate. If you're <strong>On-Premise</strong>, the utility is typically found under <strong>Tools → Import/Export</strong> or as a standalone Excel file provided by ECI. If you can't find it, call ECI support at 1-800-989-3367.
-    </div>
-
-    <!-- Export 1 -->
-    <div class="export-card">
-      <div class="card-header">
-        <div class="card-num">1</div>
-        <h3>Customer List</h3>
-        <div class="why">Company names, addresses, contacts, billing info</div>
-      </div>
-      <div class="card-body">
-        <ol class="steps">
-          <li data-n="1">In e-automate, go to <strong>Customers</strong> in the left navigation</li>
-          <li data-n="2">Set the status filter to <strong>Active</strong> only</li>
-          <li data-n="3">Right-click anywhere in the customer list grid → <strong>Export to Excel</strong> (or look for a <strong>Print/Export</strong> button in the toolbar)</li>
-          <li data-n="4"><strong>Cloud users:</strong> Use the Data Import/Export Utility → download the <code>Customers Export</code> template → drag it into the utility window → click <strong>Export</strong></li>
-          <li data-n="5">Save the output as <code>customers.xlsx</code> or <code>customers.csv</code></li>
-        </ol>
-        <div class="fields-label">Columns we need:</div>
-        <div class="fields-grid">
-          <span class="field-tag key">Customer Number</span>
-          <span class="field-tag key">Company Name</span>
-          <span class="field-tag key">Billing Address</span>
-          <span class="field-tag key">Primary Contact Name</span>
-          <span class="field-tag">Email</span>
-          <span class="field-tag">Phone</span>
-          <span class="field-tag">Credit Hold Y/N</span>
-          <span class="field-tag">Customer Type</span>
+    <div class="section">
+      <h3>What to export</h3>
+      <div class="data-grid">
+        <div class="data-card">
+          <div class="title">Customers</div>
+          <div class="desc">Company names, addresses, billing contacts, account status</div>
+          <span class="priority must">Must have</span>
+        </div>
+        <div class="data-card">
+          <div class="title">Contracts</div>
+          <div class="desc">Active service agreements, billing amounts, renewal dates</div>
+          <span class="priority must">Must have</span>
+        </div>
+        <div class="data-card">
+          <div class="title">Items / Service Codes</div>
+          <div class="desc">Your product and service catalog — labor, parts, supplies</div>
+          <span class="priority must">Must have</span>
+        </div>
+        <div class="data-card">
+          <div class="title">GL Codes</div>
+          <div class="desc">Chart of accounts for revenue mapping</div>
+          <span class="priority must">Must have</span>
+        </div>
+        <div class="data-card">
+          <div class="title">Equipment</div>
+          <div class="desc">Devices/machines under contract at each customer site</div>
+          <span class="priority helpful">Helpful</span>
+        </div>
+        <div class="data-card">
+          <div class="title">Open Service Orders</div>
+          <div class="desc">In-progress work orders that need to carry over</div>
+          <span class="priority helpful">Helpful</span>
         </div>
       </div>
     </div>
 
-    <!-- Export 2 -->
-    <div class="export-card">
-      <div class="card-header">
-        <div class="card-num">2</div>
-        <h3>Equipment / Devices per Customer</h3>
-        <div class="why">Machines under service contract at each site</div>
-      </div>
-      <div class="card-body">
-        <ol class="steps">
-          <li data-n="1">Go to <strong>Equipment</strong> in the left navigation</li>
-          <li data-n="2">Filter to show <strong>Active</strong> equipment only</li>
-          <li data-n="3">Right-click the grid → <strong>Export to Excel</strong>, OR use the Import/Export Utility with the <code>Equipment Export</code> template</li>
-          <li data-n="4">Save as <code>equipment.xlsx</code></li>
-        </ol>
-        <div class="fields-label">Columns we need:</div>
-        <div class="fields-grid">
-          <span class="field-tag key">Equipment ID / Serial Number</span>
-          <span class="field-tag key">Customer Number</span>
-          <span class="field-tag key">Model / Item Code</span>
-          <span class="field-tag">Location / Description</span>
-          <span class="field-tag">Install Date</span>
-          <span class="field-tag">Contract Number</span>
-          <span class="field-tag">Contract Type</span>
-        </div>
-      </div>
-    </div>
+    <div class="section">
+      <h3>How to export from e-automate</h3>
 
-    <!-- Export 3 -->
-    <div class="export-card">
-      <div class="card-header">
-        <div class="card-num">3</div>
-        <h3>Contracts / Service Agreements</h3>
-        <div class="why">Recurring billing contracts and rates</div>
+      <div class="note warn" style="margin-bottom:16px; padding:14px 18px; border-radius:8px; font-size:13px;">
+        ⚠️ <strong>Cloud vs. On-Premise:</strong> If you're on the <strong>hosted/cloud version</strong>, use the built-in <strong>Import/Export Utility</strong> (download an export template from within e-automate and drag it into the utility). If you're <strong>on-premise</strong>, the utility is under <strong>Tools → Import/Export</strong>, or right-click export is available on most grids. If you can't find it, ECI support can help: <strong>1-800-989-3367</strong>.
       </div>
-      <div class="card-body">
-        <ol class="steps">
-          <li data-n="1">Go to <strong>Contracts</strong> in the left navigation</li>
-          <li data-n="2">Filter to <strong>Active</strong> contracts</li>
-          <li data-n="3">Use the Import/Export Utility with the <code>Contracts Export</code> template, OR right-click the grid and select <strong>Export to Excel</strong></li>
-          <li data-n="4">Save as <code>contracts.xlsx</code></li>
-        </ol>
-        <div class="fields-label">Columns we need:</div>
-        <div class="fields-grid">
-          <span class="field-tag key">Contract Number</span>
-          <span class="field-tag key">Customer Number</span>
-          <span class="field-tag key">Contract Type</span>
-          <span class="field-tag key">Monthly Billing Amount</span>
-          <span class="field-tag">Start Date</span>
-          <span class="field-tag">End / Renewal Date</span>
-          <span class="field-tag">Billing Frequency</span>
-          <span class="field-tag">GL Account</span>
-        </div>
-        <div class="note-box warn" style="margin-top:12px;">⚠️ If you have separate billing codes per contract line item, include the <strong>Contract Items</strong> export as well (separate sheet or file). This maps specific billing lines to GL codes.</div>
-      </div>
-    </div>
 
-    <!-- Export 4 -->
-    <div class="export-card">
-      <div class="card-header">
-        <div class="card-num">4</div>
-        <h3>Items / Service Codes</h3>
-        <div class="why">Your product/service catalog — labor rates, part codes, supply items</div>
-      </div>
-      <div class="card-body">
-        <ol class="steps">
-          <li data-n="1">Go to <strong>Inventory → Items</strong> (or <strong>Lists → Items</strong> depending on version)</li>
-          <li data-n="2">Use the Import/Export Utility with the <code>Items Export</code> template, OR right-click the item grid → <strong>Export to Excel</strong></li>
-          <li data-n="3">Filter to <strong>Active</strong> items only to keep the list manageable</li>
-          <li data-n="4">Save as <code>items.xlsx</code></li>
+      <div class="how-box">
+        <h4>Option A — Right-click export (quickest for most screens)</h4>
+        <ol>
+          <li>Navigate to the data you want (e.g., <strong>Customers</strong>, <strong>Contracts</strong>, <strong>Equipment</strong>)</li>
+          <li>Filter to <strong>Active</strong> records only before exporting</li>
+          <li>Right-click anywhere in the list grid</li>
+          <li>Select <strong>Export to Excel</strong> or <strong>Export to CSV</strong></li>
+          <li>Save with a descriptive filename (e.g., <code>customers.xlsx</code>, <code>contracts.xlsx</code>)</li>
         </ol>
-        <div class="fields-label">Columns we need:</div>
-        <div class="fields-grid">
-          <span class="field-tag key">Item Code</span>
-          <span class="field-tag key">Description</span>
-          <span class="field-tag key">Item Type</span>
-          <span class="field-tag">Cost / Price</span>
-          <span class="field-tag">GL Account</span>
-          <span class="field-tag">Taxable Y/N</span>
-          <span class="field-tag">Unit of Measure</span>
-        </div>
       </div>
-    </div>
 
-    <!-- Export 5 -->
-    <div class="export-card">
-      <div class="card-header">
-        <div class="card-num">5</div>
-        <h3>GL Codes / Chart of Accounts</h3>
-        <div class="why">Revenue mapping for billing</div>
-      </div>
-      <div class="card-body">
-        <ol class="steps">
-          <li data-n="1">Go to <strong>Accounting → Chart of Accounts</strong> (or <strong>GL → Accounts</strong>)</li>
-          <li data-n="2">Right-click the list and select <strong>Export to Excel</strong></li>
-          <li data-n="3">If unavailable: use the Import/Export Utility or ask your ECI account rep to pull a GL Account List report</li>
-          <li data-n="4">Save as <code>gl-codes.xlsx</code></li>
+      <div class="how-box">
+        <h4>Option B — Import/Export Utility (cloud users or bulk exports)</h4>
+        <ol>
+          <li>Inside e-automate, open the <strong>Import and Export Utility</strong> (look under <strong>Tools</strong> or the main menu)</li>
+          <li>Download the relevant <strong>Export Template</strong> for the data type (Customers, Contracts, Items, etc.)</li>
+          <li>Drag the <code>.xlsx</code> template file into the utility window's drop zone</li>
+          <li>Click <strong>Export</strong> — the utility will populate the spreadsheet with your live data</li>
+          <li>Save the completed file</li>
         </ol>
-        <div class="note-box ok">💡 Even a printed PDF of your Chart of Accounts is helpful if export isn't available. We just need the code numbers and descriptions.</div>
+        <div class="note ok">💡 Export templates are pre-formatted — don't modify the column headers before dropping into the utility or it may error.</div>
       </div>
-    </div>
 
-    <!-- Summary -->
-    <div class="summary-box">
-      <h3>📤 Files to send us</h3>
-      <ul class="checklist">
-        <li><code>customers.xlsx</code> — full active customer list with contacts</li>
-        <li><code>equipment.xlsx</code> — active devices/machines per customer</li>
-        <li><code>contracts.xlsx</code> — active service contracts and billing amounts</li>
-        <li><code>items.xlsx</code> — your product/service item catalog</li>
-        <li><code>gl-codes.xlsx</code> — chart of accounts / GL code list</li>
-      </ul>
+      <div class="how-box">
+        <h4>For GL Codes specifically</h4>
+        <ol>
+          <li>Go to <strong>Accounting → Chart of Accounts</strong> (or <strong>GL → Accounts</strong>)</li>
+          <li>Right-click the list → <strong>Export to Excel</strong></li>
+          <li>If export isn't available, ask your ECI rep to pull a GL Account List report, or a PDF printout works too</li>
+        </ol>
+      </div>
     </div>
 
     <div class="send-box">
       <h4>📬 How to send your files</h4>
-      <p>Zip all files into a single folder and send to your Rev.io onboarding SA. If you're unsure who your SA is, email <a href="mailto:onboarding@rev.io">onboarding@rev.io</a> with subject line: <strong>[Your Company Name] — e-automate Data Export</strong>. Please send prior to your kickoff call so we can review before we meet.</p>
+      <p>Zip your export files into a single folder and send to your Rev.io onboarding SA. Not sure who your SA is? Email <a href="mailto:onboarding@rev.io">onboarding@rev.io</a> with subject: <strong>[Your Company] — e-automate Export</strong>. Sending before your kickoff call gives us time to review and saves you setup time on day one.</p>
     </div>
 
-    <div class="note-box" style="margin-top:20px; padding:14px 18px; font-size:13px; border-radius:8px;">
-      🤝 <strong>Need help with the export?</strong> Your ECI account rep or ECI support (1-800-989-3367) can assist with the Import/Export Utility. For Cloud customers, the Export Templates are also documented at <strong>Help → e-automate Online Help → Data Import/Export</strong> inside the application.
-    </div>
-
-  </div><!-- end eautomate panel -->
+  </div><!-- end eautomate -->
 
   <div class="footer">
-    ⚡ Rev.io Onboarding &nbsp;·&nbsp; Generated by Revay &nbsp;·&nbsp; <a href="https://erice320.github.io/revay/" style="color:#6c63ff;text-decoration:none;">All Briefs</a>
+    ⚡ <a href="https://erice320.github.io/revay/">Rev.io Onboarding</a> &nbsp;·&nbsp; Questions? Email <a href="mailto:onboarding@rev.io">onboarding@rev.io</a>
   </div>
 
-</div><!-- wrapper -->
+</div>
 
 <script>
-function showTab(name) {
+function showTab(name, e) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
-  event.target.classList.add('active');
+  e.target.classList.add('active');
 }
 </script>
 </body>
