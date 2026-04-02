@@ -103,7 +103,7 @@ footer{text-align:center;padding:18px 40px;border-top:1px solid var(--border);co
       <h1>2026 <span>Bookings Pacing</span></h1>
       <p>Actuals vs. budget ramp · YTD &amp; quarterly · Rev.io Grow Team</p>
     </div>
-    <div class="as-of">📅 Day 92/365 · <strong>Refreshed Apr 2, 2026, 6:59 AM CT</strong></div>
+    <div class="as-of">📅 Day 92/365 · <strong>Refreshed Apr 2, 2026, 7:03 AM CT</strong></div>
   </div>
 </div>
 
@@ -310,7 +310,7 @@ footer{text-align:center;padding:18px 40px;border-top:1px solid var(--border);co
   </div>
 </div>
 
-<footer>⚡ Revay AI · Salesforce live data · Last refresh: Apr 2, 2026, 6:59 AM CT</footer>
+<footer>⚡ Revay AI · Salesforce live data · Last refresh: Apr 2, 2026, 7:03 AM CT</footer>
 
 <script>
 Chart.defaults.color='#7b82a8';Chart.defaults.borderColor='#252a3d';
@@ -509,8 +509,7 @@ function renderDetailSection(qi) {
             +'<div class="deal-rep">'+deal.r+'</div>'
             +'</div>';
         }).join('');
-    const cardId='dcard'+pi;
-    return '<div class="product-card" id="'+cardId+'" onclick="flipCard(''+cardId+'',event)">'
+    return '<div class="product-card" data-pi="'+pi+'" onclick="flipCard(this,event)">'
       +'<div class="card-front">'
         +'<div class="product-header"><div class="name" style="color:'+colors[pi]+'">'+names[pi]+'</div><div class="badge" style="background:'+bg+';color:'+cc+'">'+att+'</div></div>'
         +'<div class="product-meta">'
@@ -526,7 +525,7 @@ function renderDetailSection(qi) {
       +'<div class="card-back">'
         +'<div class="card-back-header">'
           +'<div class="name" style="color:'+colors[pi]+'">'+names[pi]+' — '+pd.deals+' deals</div>'
-          +'<button class="card-back-close" onclick="flipCard(''+cardId+'',event)">✕</button>'
+          +'<button class="card-back-close" onclick="flipCard(this.closest('.product-card'),event)">✕</button>'
         +'</div>'
         +'<div class="deal-list">'+dealRowsHtml+'</div>'
       +'</div>'
@@ -561,21 +560,14 @@ function renderDetailSection(qi) {
 
 function setDetailQtr(qi){renderDetailSection(qi);}
 
-function flipCard(cardId, evt) {
-  const card = document.getElementById(cardId);
+function flipCard(card, evt) {
   if (!card) return;
-  // Don't flip if clicking the close button (it will flip back via its own onclick)
-  if (evt && evt.target.classList.contains('card-back-close')) {
-    card.classList.remove('flipped');
-    evt.stopPropagation();
-    return;
-  }
-  // Don't flip if already showing back and user clicks inside deal list
-  if (card.classList.contains('flipped') && evt && !evt.target.classList.contains('card-back-close')) {
-    return;
-  }
-  card.classList.toggle('flipped');
   if (evt) evt.stopPropagation();
+  const isClose = evt && evt.target.classList.contains('card-back-close');
+  if (isClose) { card.classList.remove('flipped'); return; }
+  // If already flipped and clicking inside deal list, don't toggle back
+  if (card.classList.contains('flipped')) return;
+  card.classList.add('flipped');
 }
 
 // Initial render
