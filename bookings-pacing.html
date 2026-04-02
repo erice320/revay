@@ -103,7 +103,7 @@ footer{text-align:center;padding:18px 40px;border-top:1px solid var(--border);co
       <h1>2026 <span>Bookings Pacing</span></h1>
       <p>Actuals vs. budget ramp · YTD &amp; quarterly · Rev.io Grow Team</p>
     </div>
-    <div class="as-of">📅 Day 92/365 · <strong>Refreshed Apr 2, 2026, 7:03 AM CT</strong></div>
+    <div class="as-of">📅 Day 92/365 · <strong>Refreshed Apr 2, 2026, 7:06 AM CT</strong></div>
   </div>
 </div>
 
@@ -219,43 +219,7 @@ footer{text-align:center;padding:18px 40px;border-top:1px solid var(--border);co
     </div>
   </div>
   <div class="product-grid" id="prodDetailGrid">
-    <div class="product-card">
-      <div class="product-header"><div class="name" style="color:#6c63ff">PSA 2.0</div><div class="badge" style="background:rgba(239,71,111,.15);color:#ef476f">0%</div></div>
-      <div class="product-meta">
-        <div class="m-item">Actual: <span>$500</span></div>
-        <div class="m-item">Budget: <span>$102,000</span></div>
-        <div class="m-item">Deals: <span>1</span></div>
-        <div class="m-item">Gap: <span style="color:#ef476f">-$101,500</span></div>
-      </div>
-      <div class="mini-chart"><canvas id="mc0"></canvas></div>
-    </div><div class="product-card">
-      <div class="product-header"><div class="name" style="color:#00d4aa">Billing & Odin</div><div class="badge" style="background:rgba(239,71,111,.15);color:#ef476f">3%</div></div>
-      <div class="product-meta">
-        <div class="m-item">Actual: <span>$1,130</span></div>
-        <div class="m-item">Budget: <span>$40,988</span></div>
-        <div class="m-item">Deals: <span>2</span></div>
-        <div class="m-item">Gap: <span style="color:#ef476f">-$39,858</span></div>
-      </div>
-      <div class="mini-chart"><canvas id="mc1"></canvas></div>
-    </div><div class="product-card">
-      <div class="product-header"><div class="name" style="color:#ffd166">Payments</div><div class="badge" style="background:rgba(239,71,111,.15);color:#ef476f">2%</div></div>
-      <div class="product-meta">
-        <div class="m-item">Actual: <span>$539</span></div>
-        <div class="m-item">Budget: <span>$32,620</span></div>
-        <div class="m-item">Deals: <span>1</span></div>
-        <div class="m-item">Gap: <span style="color:#ef476f">-$32,081</span></div>
-      </div>
-      <div class="mini-chart"><canvas id="mc2"></canvas></div>
-    </div><div class="product-card">
-      <div class="product-header"><div class="name" style="color:#ff6b6b">Cyber Protect & CommerceHub</div><div class="badge" style="background:rgba(239,71,111,.15);color:#ef476f">0%</div></div>
-      <div class="product-meta">
-        <div class="m-item">Actual: <span>$0</span></div>
-        <div class="m-item">Budget: <span>$22,301</span></div>
-        <div class="m-item">Deals: <span>0</span></div>
-        <div class="m-item">Gap: <span style="color:#ef476f">-$22,301</span></div>
-      </div>
-      <div class="mini-chart"><canvas id="mc3"></canvas></div>
-    </div>
+    <div style="color:var(--muted);font-size:13px;padding:16px">Loading...</div>
   </div>
 </div>
 
@@ -310,7 +274,7 @@ footer{text-align:center;padding:18px 40px;border-top:1px solid var(--border);co
   </div>
 </div>
 
-<footer>⚡ Revay AI · Salesforce live data · Last refresh: Apr 2, 2026, 7:03 AM CT</footer>
+<footer>⚡ Revay AI · Salesforce live data · Last refresh: Apr 2, 2026, 7:06 AM CT</footer>
 
 <script>
 Chart.defaults.color='#7b82a8';Chart.defaults.borderColor='#252a3d';
@@ -525,7 +489,7 @@ function renderDetailSection(qi) {
       +'<div class="card-back">'
         +'<div class="card-back-header">'
           +'<div class="name" style="color:'+colors[pi]+'">'+names[pi]+' — '+pd.deals+' deals</div>'
-          +'<button class="card-back-close" onclick="flipCard(this.closest('.product-card'),event)">✕</button>'
+          +'<button class="card-back-close" onclick="unflipCard(this,event)">✕</button>'
         +'</div>'
         +'<div class="deal-list">'+dealRowsHtml+'</div>'
       +'</div>'
@@ -563,11 +527,15 @@ function setDetailQtr(qi){renderDetailSection(qi);}
 function flipCard(card, evt) {
   if (!card) return;
   if (evt) evt.stopPropagation();
-  const isClose = evt && evt.target.classList.contains('card-back-close');
-  if (isClose) { card.classList.remove('flipped'); return; }
-  // If already flipped and clicking inside deal list, don't toggle back
   if (card.classList.contains('flipped')) return;
   card.classList.add('flipped');
+}
+function unflipCard(btn, evt) {
+  if (evt) evt.stopPropagation();
+  // Walk up to find product-card
+  var el = btn;
+  while (el && !el.classList.contains('product-card')) el = el.parentElement;
+  if (el) el.classList.remove('flipped');
 }
 
 // Initial render
