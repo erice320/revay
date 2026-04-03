@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Podcast Cue Cards — MSPs & Agentic AI</title>
+<style>
+  @page { size: letter; margin: 0.5in; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Georgia', serif; background: white; color: #111; font-size: 14px; }
+
+  .card {
+    border: 3px solid #111;
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+    border-bottom: 2px solid #111;
+    padding-bottom: 10px;
+  }
+
+  .card-num {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #555;
+    white-space: nowrap;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+
+  .card-subtitle {
+    font-size: 12px;
+    color: #444;
+    font-style: italic;
+    margin-top: 4px;
+    margin-bottom: 12px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul li {
+    padding: 5px 0 5px 18px;
+    position: relative;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+
+  ul li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #333;
+    font-size: 12px;
+    top: 6px;
+  }
+
+  .stat-box {
+    background: #f4f4f4;
+    border-left: 4px solid #111;
+    padding: 10px 14px;
+    margin: 12px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .stat-box strong {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+
+  .stat-item {
+    flex: 1;
+    min-width: 120px;
+    background: #f4f4f4;
+    border-left: 4px solid #111;
+    padding: 10px 12px;
+  }
+
+  .stat-item .num {
+    font-size: 22px;
+    font-weight: bold;
+    display: block;
+    line-height: 1.1;
+  }
+
+  .stat-item .label {
+    font-size: 11px;
+    color: #444;
+    line-height: 1.3;
+    margin-top: 4px;
+  }
+
+  .hook {
+    font-size: 16px;
+    font-style: italic;
+    border-left: 4px solid #111;
+    padding: 8px 14px;
+    margin: 12px 0;
+    line-height: 1.5;
+  }
+
+  .tagline {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    background: #111;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 4px;
+    margin: 12px 0;
+    line-height: 1.4;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #666;
+    margin: 14px 0 6px;
+  }
+
+  .page-break { page-break-after: always; break-after: always; }
+
+  @media print {
+    body { font-size: 13px; }
+    .card { margin-bottom: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CARD 0 — TITLE / OPENING HOOK                          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-num">Opening</span>
+    <span class="card-title">The Platform Shift Framing</span>
+  </div>
+  <div class="hook">"Cloud changed <em>where</em> the work happened. Agentic AI changes <em>who</em> does the work. And MSPs are uniquely positioned to own that layer."</div>
+  <div class="section-label">The Moment We're In</div>
+  <ul>
+    <li>This is the biggest platform transition MSPs have faced since the cloud.</li>
+    <li>MSPs who figure this out in the next 18 months will look like the ones who jumped on cloud managed services in 2012.</li>
+    <li>The ones who wait will be doing break-fix on AI someone else deployed.</li>
+  </ul>
+  <div class="section-label">Set the Definition</div>
+  <ul>
+    <li><strong>Traditional AI:</strong> answers questions, assists humans.</li>
+    <li><strong>Agentic AI:</strong> takes actions, runs workflows end-to-end, makes decisions with minimal human input.</li>
+    <li><strong>What your customers care about:</strong> agents that handle AP processing, follow-up, scheduling, ticket routing — not suggesting what to do, <em>actually doing it.</em></li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CARD 1 — MARKET DATA                                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-num">Card 1</span>
+    <span class="card-title">The Numbers — Why This Matters Now</span>
+  </div>
+  <div class="section-label">The MSP Market Today</div>
+  <div class="stat-row">
+    <div class="stat-item">
+      <span class="num">$380B</span>
+      <span class="label">Global managed services market in 2026 (MarketsandMarkets)</span>
+    </div>
+    <div class="stat-item">
+      <span class="num">11.2%</span>
+      <span class="label">CAGR — growing to $510B by 2029 (Gartner)</span>
+    </div>
+    <div class="stat-item">
+      <span class="num">150K+</span>
+      <span class="label">MSPs operating globally (Channel Futures)</span>
+    </div>
+  </div>
+  <div class="section-label">The Agentic AI Opportunity</div>
+  <div class="stat-row">
+    <div class="stat-item">
+      <span class="num">$9.9B</span>
+      <span class="label">Agentic AI market in 2026 (Mordor Intelligence)</span>
+    </div>
+    <div class="stat-item">
+      <span class="num">$57B</span>
+      <span class="label">Projected by 2031 — 42% CAGR (Mordor)</span>
+    </div>
+    <div class="stat-item">
+      <span class="num">46%</span>
+      <span class="label">CAGR on AI agents — fastest-growing enterprise software category (MarketsandMarkets)</span>
+    </div>
+  </div>
+  <div class="section-label">MSP AI Signal</div>
+  <ul>
+    <li>Automation handles <strong>38% of MSP service delivery tasks in 2026</strong>, up from 22% in 2023. (medhacloud.com / ConnectWise data)</li>
+    <li>Accenture generated <strong>$2.6B in generative AI services revenue</strong> in H1 2025 alone — the enterprise tier is already there. The SMB tier needs MSPs to bring it to them.</li>
+    <li>SMB IT spend forecast to hit <strong>$1.1 trillion by 2026</strong> — MSPs are the primary delivery vehicle for that market.</li>
+  </ul>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CARD 2 — WHY MSPs OWN THIS                             -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-num">Card 2</span>
+    <span class="card-title">Why MSPs Are the Natural Owner of the Agentic Layer</span>
+  </div>
+  <div class="tagline">"You hired us to manage your technology. Agents are technology that runs your business. That's still us."</div>
+  <ul>
+    <li><strong>You already own the infrastructure</strong> — the data, integrations, identity systems that agents need to operate. That's the foundation.</li>
+    <li><strong>You already have privileged access</strong> — customers already trust MSPs with their systems. Agents need exactly that same access. Who better to manage and govern it?</li>
+    <li><strong>Cross-customer pattern recognition</strong> — you see what works across 50 clients. An in-house IT person can't replicate that. Your patterns become your IP.</li>
+    <li><strong>The "who do I call when it breaks?" question</strong> — has a clear answer if the MSP is managing it. Has no answer if the customer bought it from a SaaS vendor alone.</li>
+    <li><strong>Security and governance is your moat</strong> — most AI vendors aren't thinking about this at the SMB level. MSPs are. Monitoring, anomaly alerts, approval thresholds — this is your territory.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CARD 3 — HOW TO GET STARTED                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-num">Card 3</span>
+    <span class="card-title">How to Get Started — The 4-Step On-Ramp</span>
+  </div>
+  <div class="card-subtitle">Avoid "boil the ocean." The MSPs gaining traction right now start narrow.</div>
+  <ul>
+    <li><strong>Step 1 — Deploy internally first.</strong> Don't sell it before you've lived it. Ticket triage, quote generation, onboarding automation inside your own MSP. Build the muscle before you bring it to customers.</li>
+    <li><strong>Step 2 — Pick 3–5 clients to start.</strong> Look for: repetitive high-volume workflows, clean-ish data, a pain point they've already complained about. Not your most complex client — your mid-market with straightforward ops.</li>
+    <li><strong>Step 3 — Augment first, automate later.</strong> The first agent handles the repetitive 80% so the person can focus on the 20% that needs judgment. Easier sell, faster win, lower risk.</li>
+    <li><strong>Step 4 — Document everything.</strong> What worked, what broke, how you priced it, what the customer needed to do. That playbook is your IP and your next sales tool.</li>
+  </ul>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CARD 4 — WHAT TO THINK ABOUT                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-num">Card 4</span>
+    <span class="card-title">What MSPs Need to Be Thinking About</span>
+  </div>
+  <ul>
+    <li><strong>Data readiness is the hidden gate.</strong> Agents are only as good as the data they touch. Most SMBs have messy CRMs and disconnected systems. MSPs who add "AI readiness assessment" to their offering are solving a real problem before it becomes a deployment failure.</li>
+    <li><strong>Security & governance is your moat.</strong> An agent with write access is a real risk surface. Who monitors what it did? Who approves actions above a threshold? Who gets alerted on anomalous behavior? Define this upfront — most vendors aren't.</li>
+    <li><strong>Integration complexity is the real work.</strong> The demos look easy. Production hits legacy systems, APIs not designed for agents, auth flows that break. Depth in integration = competitive defensibility.</li>
+    <li><strong>Have the liability conversation early.</strong> When an agent makes a mistake — and it will — who's responsible? Define human-in-the-loop checkpoints. Never let a customer believe something is fully autonomous when it still needs oversight. That's a trust-killer.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CARD 5 — PRICING & SELLING                             -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-num">Card 5</span>
+    <span class="card-title">How to Price and Sell It</span>
+  </div>
+  <div class="hook">"We're not selling you AI. We're selling you the business outcome — and we're the ones accountable for making it work."</div>
+  <div class="section-label">3-Tier Pricing Model</div>
+  <ul>
+    <li><strong>Agent Setup / Deployment</strong> — One-time project fee. Assessment, design, integration, testing, training. This is where you earn on the intellectual work.</li>
+    <li><strong>Agent Management Retainer</strong> — Monthly recurring. Monitoring, tuning, escalation handling, model update management. This is your MRR layer.</li>
+    <li><strong>Outcomes-Based Add-on</strong> — For clients who want skin in the game. If the agent saves 20 hrs/month in AP processing, share a % of documented savings. Higher risk, much higher margin, extremely sticky.</li>
+  </ul>
+  <div class="section-label">The Sales Conversation</div>
+  <ul>
+    <li>Don't lead with technology — lead with the cost of the status quo.</li>
+    <li><em>"Your AP team spends 40 hours a month on invoice matching. What's that costing you in fully-loaded labor? What would you do with those 40 hours?"</em></li>
+    <li>The ROI case almost always closes itself. Your job is to surface the number and connect it to something specific.</li>
+  </ul>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CARD 6 — STAYING ON TOP / COMPETITIVE                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-num">Card 6</span>
+    <span class="card-title">How MSPs Stay on Top of a Fast-Moving Space</span>
+  </div>
+  <ul>
+    <li><strong>Build a standing learning practice.</strong> The model landscape changes quarterly. Someone on your team — even part-time — whose job includes following this space, testing tools, and bringing it back to the team.</li>
+    <li><strong>Get into vendor partner programs now.</strong> AI platform vendors need MSP distribution channels. Early partners get pricing advantages, training access, and co-sell support that late movers won't get.</li>
+    <li><strong>Your peer network is underutilized.</strong> The MSPs figuring this out are talking to each other — at IT Nation, in Slack communities, in Reddit threads. If you're not in those conversations, you're missing the real-world signal that doesn't make it into vendor marketing.</li>
+    <li><strong>Avoid the shiny object trap.</strong> Pick a small stack, go deep on it, build expertise. Breadth without depth doesn't close deals — and your customers will see through it.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CARD 7 — REVENUE & RETENTION                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-num">Card 7</span>
+    <span class="card-title">New Revenue Streams, Retention & Strategic Defensibility</span>
+  </div>
+  <div class="section-label">New Revenue Streams</div>
+  <ul>
+    <li>AI readiness assessments — sell the evaluation before the deployment</li>
+    <li>Agent deployment projects — one-time, high-margin</li>
+    <li>Ongoing agent management retainers — recurring, sticky</li>
+    <li>Training & change management — the human side of AI adoption, often hardest and most valuable</li>
+    <li>Vertical specialization — the MSP who knows agents for dental, legal, or logistics commands a premium</li>
+  </ul>
+  <div class="section-label">Retention</div>
+  <ul>
+    <li>Agents running on a customer's systems deepen the integration moat. Switching MSPs means ripping out something running core workflows. Churn drops significantly.</li>
+    <li>Customers who see measurable ROI from your work don't leave. Managed IT can be commoditized. Managed intelligence saving $200K/year is not.</li>
+  </ul>
+  <div class="section-label">Defensibility</div>
+  <ul>
+    <li>Track record of successful deployments = real IP. Case studies, references, vertical playbooks.</li>
+    <li>The window to build that before the market crowds: <strong>12–24 months.</strong></li>
+  </ul>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CARD 8 — CLOSE                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-num">Closing</span>
+    <span class="card-title">The Call to Action</span>
+  </div>
+  <div class="hook">"The risk of moving too early is small. The risk of moving too late is existential."</div>
+  <ul>
+    <li>Your customers will get agentic AI one way or another — through a SaaS vendor, a consultant, a hyperscaler.</li>
+    <li>The question is whether <strong>you're</strong> the one who deploys it, manages it, and owns that relationship — or someone else is.</li>
+    <li>The conversation to have with yourself as an MSP owner is not <em>"should we do this?"</em> — it's <em>"how fast can we learn enough to start?"</em></li>
+  </ul>
+  <div class="section-label">Leave-Behind Line</div>
+  <div class="tagline">"MSPs who own the agentic layer will look like cloud pioneers in 2032. The window is open now."</div>
+  <div class="section-label">Data Sources (if asked)</div>
+  <ul>
+    <li>MSP market $380B / 11.2% CAGR — MarketsandMarkets 2026</li>
+    <li>Agentic AI market $9.9B → $57B — Mordor Intelligence Jan 2026</li>
+    <li>42–46% CAGR on AI agents — Mordor / MarketsandMarkets</li>
+    <li>38% of MSP tasks automated — medhacloud.com / ConnectWise benchmarks 2026</li>
+    <li>$2.6B Accenture gen AI revenue H1 2025 — Fortino Capital / Accenture earnings</li>
+  </ul>
+</div>
+
+</body>
+</html>
