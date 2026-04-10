@@ -873,101 +873,81 @@ body {
 </main>
 
 <script>
-/* ── CANVAS HERO ANIMATION ─────────────────────────────────── */
+/* ── PARTICLE CANVAS (full hero) ────────────────────────────── */
 (function() {
   const canvas = document.getElementById('heroCanvas');
   const ctx = canvas.getContext('2d');
-  let W, H, mouse = { x: -999, y: -999 };
-  let dots = [];
+  let particles = [], animId;
 
   function resize() {
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-    buildDots();
+    canvas.width  = canvas.offsetWidth  * devicePixelRatio;
+    canvas.height = canvas.offsetHeight * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    createParticles();
   }
 
-  function buildDots() {
-    dots = [];
-    const cx = W * 0.78, cy = H * 0.5;
-    const radii = [60, 110, 170];
-    radii.forEach((r, ri) => {
-      const n = 6 + ri * 4;
-      for (let i = 0; i < n; i++) {
-        const baseAngle = (2 * Math.PI / n) * i;
-        dots.push({
-          cx, cy, r,
-          baseAngle,
-          angle: baseAngle,
-          speed: (0.0003 + ri * 0.0001) * (ri % 2 === 0 ? 1 : -1),
-          ri
-        });
-      }
-    });
+  function createParticles() {
+    particles = [];
+    const w = canvas.offsetWidth, h = canvas.offsetHeight;
+    const count = Math.min(110, Math.floor((w * h) / 9000));
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.8 + 0.4,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        alpha: Math.random() * 0.55 + 0.12,
+        green: Math.random() < 0.15  // ~15% are green (brand accent)
+      });
+    }
   }
-
-  canvas.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
-  canvas.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
 
   function draw() {
-    ctx.clearRect(0, 0, W, H);
-    if (W < 600) { requestAnimationFrame(draw); return; }
+    const w = canvas.offsetWidth, h = canvas.offsetHeight;
+    ctx.clearRect(0, 0, w, h);
 
-    const cx = W * 0.78, cy = H * 0.5;
-    const radii = [60, 110, 170];
-    const now = Date.now();
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
 
-    // Draw rings
-    radii.forEach((r, ri) => {
       ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(0,188,212,${0.12 - ri * 0.025})`;
-      ctx.lineWidth = 1;
-      ctx.setLineDash([4, 8]);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    });
-
-    // Core hub
-    const hubGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 40);
-    hubGrad.addColorStop(0, 'rgba(0,188,212,0.15)');
-    hubGrad.addColorStop(1, 'transparent');
-    ctx.beginPath();
-    ctx.arc(cx, cy, 40, 0, Math.PI * 2);
-    ctx.fillStyle = hubGrad;
-    ctx.fill();
-
-    // Update & draw dots
-    dots.forEach(d => {
-      d.angle += d.speed;
-      const x = d.cx + d.r * Math.cos(d.angle);
-      const y = d.cy + d.r * Math.sin(d.angle);
-      d.x = x; d.y = y;
-
-      // Proximity line to mouse
-      const dist = Math.hypot(mouse.x - x, mouse.y - y);
-      if (dist < 140) {
-        const alpha = (1 - dist / 140) * 0.5;
-        ctx.beginPath();
-        ctx.moveTo(mouse.x, mouse.y);
-        ctx.lineTo(x, y);
-        ctx.strokeStyle = `rgba(0,229,255,${alpha})`;
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
-      }
-
-      // Dot
-      ctx.beginPath();
-      ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = d.ri === 2 ? 'rgba(105,240,174,0.9)' : 'rgba(0,229,255,0.9)';
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.green
+        ? `rgba(105,240,174,${p.alpha})`
+        : `rgba(0,188,212,${p.alpha})`;
       ctx.fill();
     });
 
-    requestAnimationFrame(draw);
+    // Connection lines between nearby particles
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 130) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0,188,212,${0.09 * (1 - dist / 130)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    animId = requestAnimationFrame(draw);
   }
+
+  // Pause when hero is off-screen
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { if (!animId) draw(); }
+    else { cancelAnimationFrame(animId); animId = null; }
+  }, { threshold: 0.05 }).observe(document.querySelector('.hero'));
 
   window.addEventListener('resize', resize);
   resize();
