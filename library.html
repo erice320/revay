@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Revay Deck Library</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222636;
+    --border: #2e3250;
+    --text: #e8eaf6;
+    --muted: #7b82a8;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --accent3: #ff6b6b;
+    --accent4: #ffc857;
+    --accent5: #4ecdc4;
+    --accent6: #a78bfa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #0f1117 0%, #1a1230 50%, #0f1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 24px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .logo-sub {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .deck-count {
+    font-size: 13px;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 20px;
+  }
+  .deck-count span {
+    color: var(--accent2);
+    font-weight: 600;
+  }
+
+  /* Search */
+  .search-wrap {
+    position: relative;
+  }
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 16px;
+    pointer-events: none;
+  }
+  #search {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px 12px 42px;
+    color: var(--text);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #search:focus { border-color: var(--accent); }
+  #search::placeholder { color: var(--muted); }
+
+  /* Category tabs */
+  .tabs {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px 24px 0;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tab:hover { border-color: var(--accent); color: var(--text); }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tab .count {
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-size: 11px;
+  }
+
+  /* Main content */
+  .main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    font-size: 20px;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .section-count {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+
+  /* Card grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.15s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(108,99,255,0.15);
+  }
+  .card:hover::before { opacity: 1; }
+
+  /* Category-specific accent colors */
+  .cat-gtm .card:hover { border-color: var(--accent); box-shadow: 0 8px 24px rgba(108,99,255,0.15); }
+  .cat-gtm .card::before { background: var(--accent); }
+  .cat-onboarding .card:hover { border-color: var(--accent2); box-shadow: 0 8px 24px rgba(0,212,170,0.15); }
+  .cat-onboarding .card::before { background: var(--accent2); }
+  .cat-product .card:hover { border-color: var(--accent4); box-shadow: 0 8px 24px rgba(255,200,87,0.15); }
+  .cat-product .card::before { background: var(--accent4); }
+  .cat-strategy .card:hover { border-color: var(--accent6); box-shadow: 0 8px 24px rgba(167,139,250,0.15); }
+  .cat-strategy .card::before { background: var(--accent6); }
+  .cat-briefs .card:hover { border-color: var(--accent3); box-shadow: 0 8px 24px rgba(255,107,107,0.15); }
+  .cat-briefs .card::before { background: var(--accent3); }
+  .cat-migration .card:hover { border-color: var(--accent5); box-shadow: 0 8px 24px rgba(78,205,196,0.15); }
+  .cat-migration .card::before { background: var(--accent5); }
+
+  .card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    width: fit-content;
+  }
+  .badge-gtm { background: rgba(108,99,255,0.15); color: #9b94ff; }
+  .badge-onboarding { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .badge-product { background: rgba(255,200,87,0.15); color: #ffc857; }
+  .badge-strategy { background: rgba(167,139,250,0.15); color: #a78bfa; }
+  .badge-briefs { background: rgba(255,107,107,0.15); color: #ff6b6b; }
+  .badge-migration { background: rgba(78,205,196,0.15); color: #4ecdc4; }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+  }
+  .card-open {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card:hover .card-open { color: #fff; }
+  .live-badge {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--accent2);
+    background: rgba(0,212,170,0.1);
+    border: 1px solid rgba(0,212,170,0.3);
+    padding: 2px 7px;
+    border-radius: 4px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  /* Empty state */
+  .empty {
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--muted);
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-text { font-size: 15px; }
+
+  /* Hidden */
+  .hidden { display: none !important; }
+
+  @media (max-width: 640px) {
+    .header { padding: 20px 16px 16px; }
+    .main { padding: 16px; }
+    .tabs { padding: 12px 16px 0; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <div>
+          <div class="logo-text">Revay Deck Library</div>
+          <div class="logo-sub">Rev.io Intelligence</div>
+        </div>
+      </div>
+      <div class="deck-count">
+        <span id="visibleCount">44</span> decks
+      </div>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search" placeholder="Search decks, topics, accounts..." autocomplete="off">
+    </div>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" data-cat="all" onclick="filterCat('all', this)">All <span class="count" id="count-all">44</span></button>
+  <button class="tab" data-cat="gtm" onclick="filterCat('gtm', this)">🎯 GTM & Sales <span class="count" id="count-gtm">4</span></button>
+  <button class="tab" data-cat="onboarding" onclick="filterCat('onboarding', this)">🚀 Onboarding <span class="count" id="count-onboarding">8</span></button>
+  <button class="tab" data-cat="product" onclick="filterCat('product', this)">📊 Customer & Product <span class="count" id="count-product">5</span></button>
+  <button class="tab" data-cat="strategy" onclick="filterCat('strategy', this)">🤖 AI & Strategy <span class="count" id="count-strategy">4</span></button>
+  <button class="tab" data-cat="briefs" onclick="filterCat('briefs', this)">🏢 Prospect Briefs <span class="count" id="count-briefs">10</span></button>
+  <button class="tab" data-cat="migration" onclick="filterCat('migration', this)">🔧 Migration & Guides <span class="count" id="count-migration">7</span></button>
+  <button class="tab" data-cat="other" onclick="filterCat('other', this)">📄 Other <span class="count" id="count-other">6</span></button>
+</div>
+
+<div class="main">
+
+  <!-- GTM & Sales -->
+  <div class="section cat-gtm" data-section="gtm">
+    <div class="section-header">
+      <span class="section-icon">🎯</span>
+      <span class="section-title">GTM & Sales Intelligence</span>
+      <span class="section-count">4 decks</span>
+    </div>
+    <div class="grid">
+      <a class="card" href="revio-intelligence-deck.html" target="_blank" data-cat="gtm" data-title="Rev.io Intelligence Deck" data-desc="Daily market and competitive intelligence">
+        <span class="card-badge badge-gtm">GTM</span>
+        <div class="card-title">Rev.io Intelligence Deck</div>
+        <div class="card-desc">Daily-updated GTM intelligence — competitor moves, MSP market signals, pipeline context, and account insights.</div>
+        <div class="card-footer">
+          <span class="card-open">Open deck →</span>
+          <span class="live-badge">● LIVE</span>
+        </div>
+      </a>
+      <a class="card" href="gtm-analysis.html" target="_blank" data-cat="gtm" data-title="GTM Analysis" data-desc="Go-to-market analysis pipeline and sales performance">
+        <span class="card-badge badge-gtm">GTM</span>
+        <div class="card-title">GTM Analysis</div>
+        <div class="card-desc">Sales pipeline analysis, win/loss breakdown, and go-to-market performance metrics across product lines.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="gtm-alignment.html" target="_blank" data-cat="gtm" data-title="GTM Alignment" data-desc="Sales and marketing alignment strategy">
+        <span class="card-badge badge-gtm">GTM</span>
+        <div class="card-title">GTM Alignment</div>
+        <div class="card-desc">Sales and marketing alignment framework — ICP definition, messaging consistency, and funnel ownership.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="bookings-pacing.html" target="_blank" data-cat="gtm" data-title="Bookings Pacing Dashboard" data-desc="Q1 bookings pacing vs targets">
+        <span class="card-badge badge-gtm">GTM</span>
+        <div class="card-title">Bookings Pacing Dashboard</div>
+        <div class="card-desc">Quarter-to-date bookings pacing against targets by product line and rep, with trend overlays.</div>
+        <div class="card-footer">
+          <span class="card-open">Open deck →</span>
+          <span class="live-badge">● LIVE</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Onboarding -->
+  <div class="section cat-onboarding" data-section="onboarding">
+    <div class="section-header">
+      <span class="section-icon">🚀</span>
+      <span class="section-title">Onboarding Intelligence</span>
+      <span class="section-count">8 decks</span>
+    </div>
+    <div class="grid">
+      <a class="card" href="psa-onboarding-automation.html" target="_blank" data-cat="onboarding" data-title="PSA Onboarding Automation" data-desc="AI-powered onboarding automation framework">
+        <span class="card-badge badge-onboarding">Onboarding</span>
+        <div class="card-title">PSA Onboarding Automation</div>
+        <div class="card-desc">Full blueprint for AI-powered onboarding automation — pre-config, session intelligence, and readiness scoring from Kaia data.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="onboarding-process-analysis.html" target="_blank" data-cat="onboarding" data-title="Onboarding Process Analysis" data-desc="110 PSA project analysis, graduation rates, and bottlenecks">
+        <span class="card-badge badge-onboarding">Onboarding</span>
+        <div class="card-title">Onboarding Process Analysis</div>
+        <div class="card-desc">Analysis of 110 PSA onboarding projects — graduation rates, time-in-stage, SA performance, and churn risk by milestone.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="onboarding-analysis.html" target="_blank" data-cat="onboarding" data-title="Onboarding Analysis" data-desc="Deep-dive onboarding performance metrics">
+        <span class="card-badge badge-onboarding">Onboarding</span>
+        <div class="card-title">Onboarding Analysis</div>
+        <div class="card-desc">Deep-dive performance metrics across active onboarding accounts, SA workload distribution, and at-risk account identification.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="onboarding-team-efficiency.html" target="_blank" data-cat="onboarding" data-title="Onboarding Team Efficiency" data-desc="SA capacity and throughput analysis">
+        <span class="card-badge badge-onboarding">Onboarding</span>
+        <div class="card-title">Onboarding Team Efficiency</div>
+        <div class="card-desc">SA capacity planning, throughput by rep, and efficiency recommendations for scaling the onboarding team.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="psa-call-intelligence.html" target="_blank" data-cat="onboarding" data-title="PSA Call Intelligence" data-desc="610 PSA onboarding calls analyzed via Kaia">
+        <span class="card-badge badge-onboarding">Onboarding</span>
+        <div class="card-title">PSA Call Intelligence</div>
+        <div class="card-desc">Intelligence from 610 PSA onboarding calls — sentiment trends, competitor mentions, topic frequency, and at-risk signals.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="psa-transcript-analysis.html" target="_blank" data-cat="onboarding" data-title="PSA Transcript Analysis" data-desc="NLP analysis of onboarding call transcripts">
+        <span class="card-badge badge-onboarding">Onboarding</span>
+        <div class="card-title">PSA Transcript Analysis</div>
+        <div class="card-desc">NLP-powered transcript analysis — topic clustering, objection patterns, and feature request extraction from Kaia recordings.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="onboarding-webonly.html" target="_blank" data-cat="onboarding" data-title="Onboarding Web Report" data-desc="Web-optimized onboarding summary">
+        <span class="card-badge badge-onboarding">Onboarding</span>
+        <div class="card-title">Onboarding Web Report</div>
+        <div class="card-desc">Web-optimized onboarding status report for leadership review — clean, shareable format.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="onboarding-wrike.html" target="_blank" data-cat="onboarding" data-title="Onboarding Wrike Integration" data-desc="Wrike project data overlaid on onboarding metrics">
+        <span class="card-badge badge-onboarding">Onboarding</span>
+        <div class="card-title">Onboarding + Wrike</div>
+        <div class="card-desc">Wrike project task data overlaid on onboarding timelines — milestone completion vs. projected graduation.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Customer & Product -->
+  <div class="section cat-product" data-section="product">
+    <div class="section-header">
+      <span class="section-icon">📊</span>
+      <span class="section-title">Customer & Product Intelligence</span>
+      <span class="section-count">5 decks</span>
+    </div>
+    <div class="grid">
+      <a class="card" href="cs-analysis.html" target="_blank" data-cat="product" data-title="CS Analysis" data-desc="14,401 Zendesk ticket analysis">
+        <span class="card-badge badge-product">Customer</span>
+        <div class="card-title">CS Ticket Analysis</div>
+        <div class="card-desc">Analysis of 14,401 Zendesk tickets — resolution time, ticket category breakdown, volume trends, and CS team performance.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="product-discovery-playbook.html" target="_blank" data-cat="product" data-title="Product Discovery Playbook" data-desc="Framework for product discovery and customer research">
+        <span class="card-badge badge-product">Product</span>
+        <div class="card-title">Product Discovery Playbook</div>
+        <div class="card-desc">Structured playbook for running product discovery — customer interview frameworks, signal triage, and feature prioritization.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="kaia-intelligence-plan.html" target="_blank" data-cat="product" data-title="Kaia Intelligence Plan" data-desc="Strategic plan for Kaia AI conversation intelligence">
+        <span class="card-badge badge-product">Product</span>
+        <div class="card-title">Kaia Intelligence Plan</div>
+        <div class="card-desc">Strategic roadmap for Kaia conversation intelligence pipeline — data architecture, pipeline design, and GTM application.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="ninja-integration-deck.html" target="_blank" data-cat="product" data-title="NinjaOne Integration Deck" data-desc="PSA + NinjaOne RMM integration overview">
+        <span class="card-badge badge-product">Product</span>
+        <div class="card-title">NinjaOne Integration</div>
+        <div class="card-desc">PSA + NinjaOne RMM integration overview — feature scope, customer value, and rollout strategy.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="calendar-utilization.html" target="_blank" data-cat="product" data-title="Calendar Utilization" data-desc="Evan's calendar and time utilization analysis">
+        <span class="card-badge badge-product">Ops</span>
+        <div class="card-title">Calendar Utilization</div>
+        <div class="card-desc">Executive time audit — meeting load, category breakdown, focus time availability, and scheduling recommendations.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- AI & Strategy -->
+  <div class="section cat-strategy" data-section="strategy">
+    <div class="section-header">
+      <span class="section-icon">🤖</span>
+      <span class="section-title">AI & Strategy</span>
+      <span class="section-count">4 decks</span>
+    </div>
+    <div class="grid">
+      <a class="card" href="revay-roi-board-2026.html" target="_blank" data-cat="strategy" data-title="Revay ROI Board Deck 2026" data-desc="Board-ready AI ROI presentation">
+        <span class="card-badge badge-strategy">Strategy</span>
+        <div class="card-title">AI ROI — Board Deck 2026</div>
+        <div class="card-desc">Board-ready deck quantifying AI spend vs. value delivered — $12,557/30 days org spend, 3-7× conservative labor ROI, attribution roadmap.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="agentic-org.html" target="_blank" data-cat="strategy" data-title="Agentic Organization" data-desc="Flywheel agent architecture and agentic org design">
+        <span class="card-badge badge-strategy">Strategy</span>
+        <div class="card-title">Agentic Organization</div>
+        <div class="card-desc">Architecture and vision for Rev.io's agentic flywheel — Scout, Sales Analyst, Customer Analyst roles and orchestration model.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="revay-migration.html" target="_blank" data-cat="strategy" data-title="Revay Migration Plan" data-desc="Infrastructure migration documentation">
+        <span class="card-badge badge-strategy">Infrastructure</span>
+        <div class="card-title">Revay Migration Plan</div>
+        <div class="card-desc">Infrastructure migration documentation — VM setup, gateway config, integration restoration, and rollout sequencing.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+      <a class="card" href="revay-recovery.html" target="_blank" data-cat="strategy" data-title="Revay Recovery Playbook" data-desc="Disaster recovery and backup restoration guide">
+        <span class="card-badge badge-strategy">Infrastructure</span>
+        <div class="card-title">Revay Recovery Playbook</div>
+        <div class="card-desc">Step-by-step disaster recovery guide — GitHub restore, credential recovery, integration reconnection, and cron job restoration.</div>
+        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Prospect Briefs -->
+  <div class="section cat-briefs" data-section="briefs">
+    <div class="section-header">
+      <span class="section-icon">🏢</span>
+      <span class="section-title">Prospect Briefs</span>
+      <span class="section-count">10 briefs</span>
+    </div>
+    <div class="grid">
+      <a class="card" href="a-b-security-brief.html" target="_blank" data-cat="briefs" data-title="A&B Security Brief" data-desc="Account brief for A&B Security">
+        <span class="card-badge badge-briefs">Brief</span>
+        <div class="card-title">A&B Security</div>
+        <div class="card-desc">AI-generated account intelligence brief — company profile, pain signals, PSA displacement opportunity, and recommended approach.</div>
+        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+      </a>
+      <a class="card" href="custom-electronic-consultants-brief.html" target="_blank" data-cat="briefs" data-title="Custom Electronic Consultants Brief" data-desc="Account brief for Custom Electronic Consultants">
+        <span class="card-badge badge-briefs">Brief</span>
+        <div class="card-title">Custom Electronic Consultants</div>
+        <div class="card-desc">Account intelligence brief — security/AV MSP profile, tech stack signals, and PSA fit assessment.</div>
+        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+      </a>
+      <a class="card" href="dfw-security-brief.html" target="_blank" data-cat="briefs" data-title="DFW Security Brief" data-desc="Account brief for DFW Security">
+        <span class="card-badge badge-briefs">Brief</span>
+        <div class="card-title">DFW Security</div>
+        <div class="card-desc">Dallas-area security integrator brief — competitive landscape, growth signals, and outreach recommendation.</div>
+        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+      </a>
+      <a class="card" href="frontline-brief.html" target="_blank" data-cat="briefs" data-title="Frontline Brief" data-desc="Account brief for Frontline">
+        <span class="card-badge badge-briefs">Brief</span>
+        <div class="card-title">Frontline</div>
+        <div class="card-desc">MSP account brief — service offerings, current PSA indicators, and displacement opportunity scoring.</div>
+        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+      </a>
+      <a class="card" href="guenthertech-brief.html" target="_blank" data-cat="briefs" data-title="GuentherTech Brief" data-desc="Account brief for GuentherTech">
+        <span class="card-badge badge-briefs">Brief</span>
+        <div class="card-title">GuentherTech</div>
+        <div class="card-desc">IT MSP account brief — company profile, tech stack, hiring signals, and Rev.io PSA fit analysis.</div>
+        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+      </a>
+      <a class="card" href="integrated-technologies-brief.html" target="_blank" data-cat="briefs" data-title="Integrated Technologies Brief" data-desc="Account brief for Integrated Technologies">
+        <span class="card-badge badge-briefs">Brief</span>
+        <div class="card-title">Integrated Technologies</div>
+        <div class="card-desc">New win (Mar 31) account brief — post-win intelligence, onboarding readiness, and account context for SA handoff.</div>
+        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+      </a>
+      <a class="card" href="itr-systems-brief.html" target="_blank" data-cat="briefs" data-title="ITR Systems Brief" data-desc="Account brief for ITR Systems">
+        <span class="card-badge badge-briefs">Brief</span>
+        <div class="card-title">ITR Systems</div>
+        <div class="card-desc">Security and IT services MSP — competitive positioning, feature requirements, and recommended deal approach.</div>
+        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+      </a>
+      <a class="card" href="mule-security-electric-brief.html" target="_blank" data-cat="briefs" data-title="Mule Security & Electric Brief" data-desc="Account brief for Mule Security & Electric">
+        <span class="card-badge badge-briefs">Brief</span>
+        <div class="card-title">Mule Security & Electric</div>
+        <div class="card-desc">Combined security and electrical services MSP — operational complexity analysis and PSA consolidation opportunity.</div>
+        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+      </a>
+      <a class="card" href="netwatch-brief.html" target="_blank" data-cat="briefs" data-title="Netwatch Brief" data-desc="Account brief for Netwatch">
+        <span class="card-badge badge-briefs">Brief</span>
+        <div class="card-title">Netwatch</div>
+        <div class="card-desc">Remote video monitoring MSP — niche vertical analysis, competitive platform signals, and outreach positioning.</div>
+        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+      </a>
+      <a class="card" href="viking-lock-brief.html" target="_blank" data-cat="briefs" data-title="Viking Lock Brief" data-desc="Account brief for Viking Lock">
+        <span class="card-badge badge-briefs">Brief</span>
+        <div class="card-title">Viking Lock</div>
+        <div class="card-desc">Physical security and locksmith services company — emerging PSA need signals and Rev.io fit assessment.</div>
+        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Migration & Guides -->
+  <div class="section cat-migration" data-section="migration">
+    <div class="section-header">
+      <span class="section-icon">🔧</span>
+      <span class="section-title">Migration & Technical Guides</span>
+      <span class="section-count">7 guides</span>
+    </div>
+    <div class="grid">
+      <a class="card" href="connectwise-migration-api.html" target="_blank" data-cat="migration" data-title="ConnectWise Migration API" data-desc="ConnectWise to Rev.io PSA migration guide">
+        <span class="card-badge badge-migration">Migration</span>
+        <div class="card-title">ConnectWise Migration API</div>
+        <div class="card-desc">Technical guide for ConnectWise → Rev.io PSA migration — API mappings, data export formats, and field transformation rules.</div>
+        <div class="card-footer"><span class="card-open">Open guide →</span></div>
+      </a>
+      <a class="card" href="servicefusion-migration-api.html" target="_blank" data-cat="migration" data-title="ServiceFusion Migration API" data-desc="ServiceFusion to Rev.io PSA migration guide">
+        <span class="card-badge badge-migration">Migration</span>
+        <div class="card-title">ServiceFusion Migration API</div>
+        <div class="card-desc">Technical migration guide for ServiceFusion customers — data export specs, API field mapping, and migration sequencing.</div>
+        <div class="card-footer"><span class="card-open">Open guide →</span></div>
+      </a>
+      <a class="card" href="export-guide-eautomate.html" target="_blank" data-cat="migration" data-title="e-automate Export Guide" data-desc="e-automate data export instructions">
+        <span class="card-badge badge-migration">Guide</span>
+        <div class="card-title">e-automate Export Guide</div>
+        <div class="card-desc">Step-by-step data export guide for e-automate customers migrating to Rev.io — field mapping and CSV templates.</div>
+        <div class="card-footer"><span class="card-open">Open guide →</span></div>
+      </a>
+      <a class="card" href="export-guide-sedonaoffice.html" target="_blank" data-cat="migration" data-title="SedonaOffice Export Guide" data-desc="SedonaOffice data export instructions">
+        <span class="card-badge badge-migration">Guide</span>
+        <div class="card-title">SedonaOffice Export Guide</div>
+        <div class="card-desc">Data export and migration guide for SedonaOffice customers — report specs, field translations, and handoff checklist.</div>
+        <div class="card-footer"><span class="card-open">Open guide →</span></div>
+      </a>
+      <a class="card" href="data-export-cheatsheets.html" target="_blank" data-cat="migration" data-title="Data Export Cheatsheets" data-desc="Quick reference export guides for common PSA platforms">
+        <span class="card-badge badge-migration">Guide</span>
+        <div class="card-title">Data Export Cheatsheets</div>
+        <div class="card-desc">Quick-reference export cheatsheets for common PSA platforms — one-page guides for SA use during onboarding kickoffs.</div>
+        <div class="card-footer"><span class="card-open">Open guide →</span></div>
+      </a>
+      <a class="card" href="brief-data-sources.html" target="_blank" data-cat="migration" data-title="Brief Data Sources" data-desc="Documentation of data sources behind prospect briefs">
+        <span class="card-badge badge-migration">Reference</span>
+        <div class="card-title">Brief Data Sources</div>
+        <div class="card-desc">Documentation of all data sources, APIs, and signal types used to generate prospect intelligence briefs.</div>
+        <div class="card-footer"><span class="card-open">Open →</span></div>
+      </a>
+      <a class="card" href="auto-demo-videos.html" target="_blank" data-cat="migration" data-title="Auto Demo Videos" data-desc="Automated demo video library and generation">
+        <span class="card-badge badge-migration">Reference</span>
+        <div class="card-title">Auto Demo Videos</div>
+        <div class="card-desc">Automated demo video library — product walkthrough clips organized by feature area for sales and onboarding use.</div>
+        <div class="card-footer"><span class="card-open">Open →</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Other -->
+  <div class="section cat-other" data-section="other">
+    <div class="section-header">
+      <span class="section-icon">📄</span>
+      <span class="section-title">Other</span>
+      <span class="section-count">6 items</span>
+    </div>
+    <div class="grid">
+      <a class="card" href="podcast-cue-cards.html" target="_blank" data-cat="other" data-title="Podcast Cue Cards" data-desc="Podcast talking points and cue cards">
+        <span class="card-badge badge-migration">Content</span>
+        <div class="card-title">Podcast Cue Cards</div>
+        <div class="card-desc">Talking points and cue cards for podcast appearances — key messages, stats, and story frameworks.</div>
+        <div class="card-footer"><span class="card-open">Open →</span></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="empty hidden" id="emptyState">
+    <div class="empty-icon">🔍</div>
+    <div class="empty-text">No decks match your search. Try a different term.</div>
+  </div>
+
+</div>
+
+<script>
+  let activecat = 'all';
+  let searchTerm = '';
+
+  function filterCat(cat, el) {
+    activecat = cat;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    applyFilters();
+  }
+
+  document.getElementById('search').addEventListener('input', function() {
+    searchTerm = this.value.toLowerCase().trim();
+    applyFilters();
+  });
+
+  function applyFilters() {
+    const cards = document.querySelectorAll('.card');
+    let visibleCount = 0;
+    const sectionVisible = {};
+
+    cards.forEach(card => {
+      const cat = card.dataset.cat;
+      const title = (card.dataset.title || '').toLowerCase();
+      const desc = (card.dataset.desc || '').toLowerCase();
+      const fullText = card.textContent.toLowerCase();
+
+      const catMatch = activecat === 'all' || cat === activecat;
+      const searchMatch = !searchTerm || fullText.includes(searchTerm) || title.includes(searchTerm) || desc.includes(searchTerm);
+
+      if (catMatch && searchMatch) {
+        card.classList.remove('hidden');
+        visibleCount++;
+        sectionVisible[cat] = (sectionVisible[cat] || 0) + 1;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    // Show/hide sections
+    document.querySelectorAll('.section').forEach(section => {
+      const scat = section.dataset.section;
+      const catMatch = activecat === 'all' || scat === activecat;
+      const hasVisible = section.querySelectorAll('.card:not(.hidden)').length > 0;
+      section.classList.toggle('hidden', !catMatch || !hasVisible);
+    });
+
+    document.getElementById('visibleCount').textContent = visibleCount;
+    document.getElementById('emptyState').classList.toggle('hidden', visibleCount > 0);
+  }
+</script>
+</body>
+</html>
