@@ -3,732 +3,1036 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚡ Revay Deck Library</title>
+<title>⚡ Revay Deck Library — Rev.io Intelligence</title>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #222636;
-    --border: #2e3250;
-    --text: #e8eaf6;
-    --muted: #7b82a8;
-    --accent: #6c63ff;
-    --accent2: #00d4aa;
-    --accent3: #ff6b6b;
-    --accent4: #ffc857;
-    --accent5: #4ecdc4;
-    --accent6: #a78bfa;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    min-height: 100vh;
-  }
+/* ============================================================
+   DESIGN SYSTEM — Rev.io Deck Library
+   Inspired by Rev.io Platform Vision · Gemini 3.1 Pro Design Brief
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* Header */
-  .header {
-    background: linear-gradient(135deg, #0f1117 0%, #1a1230 50%, #0f1117 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 32px 24px 24px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(12px);
-  }
-  .header-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  .header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .logo-icon {
-    width: 36px;
-    height: 36px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-  }
-  .logo-text {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-  }
-  .logo-sub {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  .deck-count {
-    font-size: 13px;
-    color: var(--muted);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 6px 14px;
-    border-radius: 20px;
-  }
-  .deck-count span {
-    color: var(--accent2);
-    font-weight: 600;
-  }
+:root {
+  --bg:          #080E1A;
+  --surface:     rgba(15, 33, 56, 0.55);
+  --surface-solid: #142A46;
+  --border:      rgba(255,255,255,0.08);
+  --border-cyan: rgba(0,229,255,0.3);
+  --cyan:        #00BCD4;
+  --cyan-bright: #00E5FF;
+  --green:       #4CAF50;
+  --green-bright:#69F0AE;
+  --text-1:      #FFFFFF;
+  --text-2:      #A1B0CB;
+  --eyebrow:     #00BCD4;
+  --font-display:'Cabinet Grotesk', system-ui, sans-serif;
+  --font-body:   'Satoshi', system-ui, sans-serif;
+  --spring:      cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  /* Search */
-  .search-wrap {
-    position: relative;
-  }
-  .search-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--muted);
-    font-size: 16px;
-    pointer-events: none;
-  }
-  #search {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px 12px 42px;
-    color: var(--text);
-    font-size: 15px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  #search:focus { border-color: var(--accent); }
-  #search::placeholder { color: var(--muted); }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
-  /* Category tabs */
-  .tabs {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 16px 24px 0;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab {
-    padding: 7px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .tab:hover { border-color: var(--accent); color: var(--text); }
-  .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .tab .count {
-    background: rgba(255,255,255,0.15);
-    border-radius: 10px;
-    padding: 1px 7px;
-    font-size: 11px;
-  }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-1);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
 
-  /* Main content */
-  .main {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 24px;
-  }
+/* ── HERO ─────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 48vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
 
-  /* Section */
-  .section {
-    margin-bottom: 40px;
-  }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  .section-icon {
-    font-size: 20px;
-  }
-  .section-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-  }
-  .section-count {
-    font-size: 12px;
-    color: var(--muted);
-    margin-left: auto;
-  }
+#heroCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
-  /* Card grid */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 14px;
-  }
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(3rem, 8vh, 5rem) clamp(1.5rem, 4vw, 3rem);
+}
 
-  /* Card */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: all 0.15s;
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    opacity: 0;
-    transition: opacity 0.15s;
-  }
-  .card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(108,99,255,0.15);
-  }
-  .card:hover::before { opacity: 1; }
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--eyebrow);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--cyan-bright);
+}
 
-  /* Category-specific accent colors */
-  .cat-gtm .card:hover { border-color: var(--accent); box-shadow: 0 8px 24px rgba(108,99,255,0.15); }
-  .cat-gtm .card::before { background: var(--accent); }
-  .cat-onboarding .card:hover { border-color: var(--accent2); box-shadow: 0 8px 24px rgba(0,212,170,0.15); }
-  .cat-onboarding .card::before { background: var(--accent2); }
-  .cat-product .card:hover { border-color: var(--accent4); box-shadow: 0 8px 24px rgba(255,200,87,0.15); }
-  .cat-product .card::before { background: var(--accent4); }
-  .cat-strategy .card:hover { border-color: var(--accent6); box-shadow: 0 8px 24px rgba(167,139,250,0.15); }
-  .cat-strategy .card::before { background: var(--accent6); }
-  .cat-briefs .card:hover { border-color: var(--accent3); box-shadow: 0 8px 24px rgba(255,107,107,0.15); }
-  .cat-briefs .card::before { background: var(--accent3); }
-  .cat-migration .card:hover { border-color: var(--accent5); box-shadow: 0 8px 24px rgba(78,205,196,0.15); }
-  .cat-migration .card::before { background: var(--accent5); }
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw + 0.5rem, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.hero-title .gradient {
+  background: linear-gradient(135deg, var(--cyan-bright) 0%, #7B9FFF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-  .card-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 4px;
-    width: fit-content;
-  }
-  .badge-gtm { background: rgba(108,99,255,0.15); color: #9b94ff; }
-  .badge-onboarding { background: rgba(0,212,170,0.15); color: #00d4aa; }
-  .badge-product { background: rgba(255,200,87,0.15); color: #ffc857; }
-  .badge-strategy { background: rgba(167,139,250,0.15); color: #a78bfa; }
-  .badge-briefs { background: rgba(255,107,107,0.15); color: #ff6b6b; }
-  .badge-migration { background: rgba(78,205,196,0.15); color: #4ecdc4; }
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: var(--text-2);
+  max-width: 520px;
+  margin-bottom: 28px;
+}
 
-  .card-title {
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.3;
-    color: var(--text);
-  }
-  .card-desc {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.5;
-    flex: 1;
-  }
-  .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 4px;
-  }
-  .card-open {
-    font-size: 12px;
-    color: var(--accent);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .card:hover .card-open { color: #fff; }
-  .live-badge {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--accent2);
-    background: rgba(0,212,170,0.1);
-    border: 1px solid rgba(0,212,170,0.3);
-    padding: 2px 7px;
-    border-radius: 4px;
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.hero-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cyan-bright);
+}
+.hero-divider { width: 1px; height: 32px; background: var(--border-cyan); }
 
-  /* Empty state */
-  .empty {
-    text-align: center;
-    padding: 60px 24px;
-    color: var(--muted);
-  }
-  .empty-icon { font-size: 40px; margin-bottom: 12px; }
-  .empty-text { font-size: 15px; }
+/* Corner L-brackets */
+.corner-line {
+  position: absolute;
+  pointer-events: none;
+}
+.corner-line.tl { top: 24px; left: 24px; }
+.corner-line.br { bottom: 24px; right: 24px; transform: rotate(180deg); }
 
-  /* Hidden */
-  .hidden { display: none !important; }
+/* ── STICKY NAV ───────────────────────────────────────────── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(8, 14, 26, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px clamp(1.5rem, 4vw, 3rem);
+}
+.sticky-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
 
-  @media (max-width: 640px) {
-    .header { padding: 20px 16px 16px; }
-    .main { padding: 16px; }
-    .tabs { padding: 12px 16px 0; }
-    .grid { grid-template-columns: 1fr; }
-  }
+/* Search */
+.search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 360px;
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-2);
+  pointer-events: none;
+  transition: color 0.3s;
+}
+.search-wrap:focus-within .search-icon { color: var(--cyan-bright); }
+#search {
+  width: 100%;
+  background: rgba(15, 33, 56, 0.5);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-bottom-color: var(--border);
+  border-radius: 10px;
+  padding: 10px 16px 10px 42px;
+  color: var(--text-1);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s;
+}
+#search:focus {
+  border-color: var(--border-cyan);
+  border-bottom-color: var(--cyan-bright);
+  background: rgba(15, 33, 56, 0.8);
+}
+#search::placeholder { color: var(--text-2); }
+
+/* Pill tabs */
+.tabs-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 33, 56, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-shrink: 0;
+}
+.tabs-pill::-webkit-scrollbar { display: none; }
+.tab-pill {
+  padding: 7px 18px;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-2);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s var(--spring);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tab-pill:hover { color: var(--text-1); }
+.tab-pill.active {
+  background: rgba(0, 229, 255, 0.1);
+  border-color: rgba(0, 229, 255, 0.3);
+  color: var(--cyan-bright);
+}
+.tab-count {
+  font-size: 0.75rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 99px;
+  padding: 1px 7px;
+}
+.tab-pill.active .tab-count {
+  background: rgba(0, 229, 255, 0.15);
+}
+
+.deck-count-badge {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.deck-count-badge span { color: var(--cyan-bright); font-weight: 700; }
+
+/* ── MAIN GRID ────────────────────────────────────────────── */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 3rem);
+}
+
+.section-block { margin-bottom: 3rem; }
+
+.section-hdr {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-icon { font-size: 1.2rem; }
+.section-label {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 700;
+}
+.section-n {
+  font-size: 0.78rem;
+  color: var(--text-2);
+  margin-left: auto;
+}
+
+/* Mouse-tracking glow grid wrapper */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+/* ── DECK CARD ────────────────────────────────────────────── */
+.deck-card {
+  position: relative;
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: transform 0.5s var(--spring), box-shadow 0.5s var(--spring), border-color 0.4s;
+  cursor: pointer;
+}
+
+/* Gradient border glow — mouse tracking */
+.deck-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 1px;
+  background: radial-gradient(
+    400px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(0,229,255,0.6),
+    transparent 40%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+/* Inner glow behind content */
+.deck-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    400px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(0,229,255,0.04),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card-grid:hover .deck-card::before,
+.card-grid:hover .deck-card::after { opacity: 1; }
+
+.deck-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  border-color: rgba(0,229,255,0.25);
+  box-shadow:
+    0 16px 48px -12px rgba(0, 188, 212, 0.18),
+    inset 0 0 24px -8px rgba(0, 229, 255, 0.08);
+}
+.deck-card:active { transform: translateY(-3px) scale(0.99); }
+
+.deck-card > * { position: relative; z-index: 1; }
+
+/* Category badge */
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 5px;
+  width: fit-content;
+  border: 1px solid transparent;
+}
+.badge-gtm       { background: rgba(0,229,255,0.1);   color: #00E5FF; border-color: rgba(0,229,255,0.2); }
+.badge-onboarding{ background: rgba(105,240,174,0.1); color: #69F0AE; border-color: rgba(105,240,174,0.2); }
+.badge-product   { background: rgba(255,200,87,0.1);  color: #FFD54F; border-color: rgba(255,200,87,0.2); }
+.badge-strategy  { background: rgba(167,139,250,0.1); color: #A78BFA; border-color: rgba(167,139,250,0.2); }
+.badge-briefs    { background: rgba(255,107,107,0.1); color: #FF8A80; border-color: rgba(255,107,107,0.2); }
+.badge-migration { background: rgba(78,205,196,0.1);  color: #4ECDC4; border-color: rgba(78,205,196,0.2); }
+.badge-other     { background: rgba(161,176,203,0.1); color: #A1B0CB; border-color: rgba(161,176,203,0.2); }
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.card-desc {
+  font-size: 0.88rem;
+  color: var(--text-2);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  gap: 8px;
+}
+.card-cta {
+  font-size: 0.82rem;
+  color: var(--cyan);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s, gap 0.2s;
+}
+.deck-card:hover .card-cta {
+  color: var(--cyan-bright);
+  gap: 8px;
+}
+
+/* LIVE badge */
+.badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--green-bright);
+  background: rgba(76,175,80,0.1);
+  border: 1px solid rgba(105,240,174,0.3);
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.badge-live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--green-bright);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--green-bright);
+  animation: live-pulse 2s infinite ease-in-out;
+  flex-shrink: 0;
+}
+@keyframes live-pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* ── SCROLL REVEALS ───────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.7s var(--spring),
+    transform 0.7s var(--spring);
+  transition-delay: var(--delay, 0s);
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── EMPTY STATE ──────────────────────────────────────────── */
+.empty {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--text-2);
+}
+.empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.empty-text { font-size: 1rem; }
+
+.hidden { display: none !important; }
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero { min-height: 38vh; }
+  .hero-meta { gap: 12px; }
+  .sticky-nav-inner { gap: 10px; }
+  .tabs-pill { display: none; }
+  .card-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .search-wrap { max-width: 100%; }
+  .deck-count-badge { display: none; }
+}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-inner">
-    <div class="header-top">
-      <div class="logo">
-        <div class="logo-icon">⚡</div>
-        <div>
-          <div class="logo-text">Revay Deck Library</div>
-          <div class="logo-sub">Rev.io Intelligence</div>
-        </div>
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<section class="hero">
+  <canvas id="heroCanvas"></canvas>
+
+  <!-- Corner L-brackets -->
+  <svg class="corner-line tl" width="80" height="80" viewBox="0 0 80 80" fill="none">
+    <path d="M80 0 L80 60 M20 0 L80 0" stroke="rgba(0,229,255,0.4)" stroke-width="1"/>
+  </svg>
+  <svg class="corner-line br" width="80" height="80" viewBox="0 0 80 80" fill="none">
+    <path d="M80 0 L80 60 M20 0 L80 0" stroke="rgba(0,229,255,0.25)" stroke-width="1"/>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow reveal" style="--delay:0s">Rev.io Intelligence</div>
+    <h1 class="hero-title reveal" style="--delay:0.08s">
+      Revay Deck Library<br>
+      <span class="gradient">All Intelligence. One Place.</span>
+    </h1>
+    <p class="hero-sub reveal" style="--delay:0.16s">
+      GTM intelligence, onboarding analysis, prospect briefs, and strategic decks — all built by Revay, all live.
+    </p>
+    <div class="hero-meta reveal" style="--delay:0.22s">
+      <div class="hero-stat">
+        <span class="hero-stat-num" id="heroTotal">44</span>
+        <span>decks & reports</span>
       </div>
-      <div class="deck-count">
-        <span id="visibleCount">44</span> decks
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">7</span>
+        <span>categories</span>
       </div>
-    </div>
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="search" placeholder="Search decks, topics, accounts..." autocomplete="off">
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">2</span>
+        <span>live dashboards</span>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="tabs" id="tabs">
-  <button class="tab active" data-cat="all" onclick="filterCat('all', this)">All <span class="count" id="count-all">44</span></button>
-  <button class="tab" data-cat="gtm" onclick="filterCat('gtm', this)">🎯 GTM & Sales <span class="count" id="count-gtm">4</span></button>
-  <button class="tab" data-cat="onboarding" onclick="filterCat('onboarding', this)">🚀 Onboarding <span class="count" id="count-onboarding">8</span></button>
-  <button class="tab" data-cat="product" onclick="filterCat('product', this)">📊 Customer & Product <span class="count" id="count-product">5</span></button>
-  <button class="tab" data-cat="strategy" onclick="filterCat('strategy', this)">🤖 AI & Strategy <span class="count" id="count-strategy">4</span></button>
-  <button class="tab" data-cat="briefs" onclick="filterCat('briefs', this)">🏢 Prospect Briefs <span class="count" id="count-briefs">10</span></button>
-  <button class="tab" data-cat="migration" onclick="filterCat('migration', this)">🔧 Migration & Guides <span class="count" id="count-migration">7</span></button>
-  <button class="tab" data-cat="other" onclick="filterCat('other', this)">📄 Other <span class="count" id="count-other">6</span></button>
-</div>
+<!-- ── STICKY NAV ─────────────────────────────────────────── -->
+<nav class="sticky-nav">
+  <div class="sticky-nav-inner">
+    <div class="search-wrap">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search" placeholder="Search decks, topics, accounts…" autocomplete="off">
+    </div>
+    <div class="tabs-pill" id="tabs">
+      <button class="tab-pill active" data-cat="all" onclick="filterCat('all',this)">All <span class="tab-count" id="count-all">44</span></button>
+      <button class="tab-pill" data-cat="gtm" onclick="filterCat('gtm',this)">🎯 GTM <span class="tab-count" id="count-gtm">4</span></button>
+      <button class="tab-pill" data-cat="onboarding" onclick="filterCat('onboarding',this)">🚀 Onboarding <span class="tab-count" id="count-onboarding">8</span></button>
+      <button class="tab-pill" data-cat="product" onclick="filterCat('product',this)">📊 CS & Product <span class="tab-count" id="count-product">5</span></button>
+      <button class="tab-pill" data-cat="strategy" onclick="filterCat('strategy',this)">🤖 AI & Strategy <span class="tab-count" id="count-strategy">4</span></button>
+      <button class="tab-pill" data-cat="briefs" onclick="filterCat('briefs',this)">🏢 Briefs <span class="tab-count" id="count-briefs">10</span></button>
+      <button class="tab-pill" data-cat="migration" onclick="filterCat('migration',this)">🔧 Guides <span class="tab-count" id="count-migration">7</span></button>
+      <button class="tab-pill" data-cat="other" onclick="filterCat('other',this)">📄 Other <span class="tab-count" id="count-other">6</span></button>
+    </div>
+    <div class="deck-count-badge"><span id="visibleCount">44</span> decks</div>
+  </div>
+</nav>
 
-<div class="main">
+<!-- ── MAIN ───────────────────────────────────────────────── -->
+<main class="main">
 
   <!-- GTM & Sales -->
-  <div class="section cat-gtm" data-section="gtm">
-    <div class="section-header">
+  <div class="section-block" data-section="gtm">
+    <div class="section-hdr reveal">
       <span class="section-icon">🎯</span>
-      <span class="section-title">GTM & Sales Intelligence</span>
-      <span class="section-count">4 decks</span>
+      <span class="section-label">GTM & Sales Intelligence</span>
+      <span class="section-n">4 decks</span>
     </div>
-    <div class="grid">
-      <a class="card" href="revio-intelligence-deck.html" target="_blank" data-cat="gtm" data-title="Rev.io Intelligence Deck" data-desc="Daily market and competitive intelligence">
+    <div class="card-grid">
+      <a class="deck-card reveal" href="revio-intelligence-deck.html" target="_blank" data-cat="gtm" data-title="Rev.io Intelligence Deck" data-desc="Daily market and competitive intelligence" style="--delay:0.05s">
         <span class="card-badge badge-gtm">GTM</span>
         <div class="card-title">Rev.io Intelligence Deck</div>
         <div class="card-desc">Daily-updated GTM intelligence — competitor moves, MSP market signals, pipeline context, and account insights.</div>
         <div class="card-footer">
-          <span class="card-open">Open deck →</span>
-          <span class="live-badge">● LIVE</span>
+          <span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="badge-live">Live</span>
         </div>
       </a>
-      <a class="card" href="gtm-analysis.html" target="_blank" data-cat="gtm" data-title="GTM Analysis" data-desc="Go-to-market analysis pipeline and sales performance">
+      <a class="deck-card reveal" href="gtm-analysis.html" target="_blank" data-cat="gtm" data-title="GTM Analysis" data-desc="Go-to-market analysis pipeline and sales performance" style="--delay:0.1s">
         <span class="card-badge badge-gtm">GTM</span>
         <div class="card-title">GTM Analysis</div>
         <div class="card-desc">Sales pipeline analysis, win/loss breakdown, and go-to-market performance metrics across product lines.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="gtm-alignment.html" target="_blank" data-cat="gtm" data-title="GTM Alignment" data-desc="Sales and marketing alignment strategy">
+      <a class="deck-card reveal" href="gtm-alignment.html" target="_blank" data-cat="gtm" data-title="GTM Alignment" data-desc="Sales and marketing alignment strategy" style="--delay:0.15s">
         <span class="card-badge badge-gtm">GTM</span>
         <div class="card-title">GTM Alignment</div>
         <div class="card-desc">Sales and marketing alignment framework — ICP definition, messaging consistency, and funnel ownership.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="bookings-pacing.html" target="_blank" data-cat="gtm" data-title="Bookings Pacing Dashboard" data-desc="Q1 bookings pacing vs targets">
+      <a class="deck-card reveal" href="bookings-pacing.html" target="_blank" data-cat="gtm" data-title="Bookings Pacing Dashboard" data-desc="Q1 bookings pacing vs targets" style="--delay:0.2s">
         <span class="card-badge badge-gtm">GTM</span>
         <div class="card-title">Bookings Pacing Dashboard</div>
         <div class="card-desc">Quarter-to-date bookings pacing against targets by product line and rep, with trend overlays.</div>
         <div class="card-footer">
-          <span class="card-open">Open deck →</span>
-          <span class="live-badge">● LIVE</span>
+          <span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          <span class="badge-live">Live</span>
         </div>
       </a>
     </div>
   </div>
 
   <!-- Onboarding -->
-  <div class="section cat-onboarding" data-section="onboarding">
-    <div class="section-header">
+  <div class="section-block" data-section="onboarding">
+    <div class="section-hdr reveal">
       <span class="section-icon">🚀</span>
-      <span class="section-title">Onboarding Intelligence</span>
-      <span class="section-count">8 decks</span>
+      <span class="section-label">Onboarding Intelligence</span>
+      <span class="section-n">8 decks</span>
     </div>
-    <div class="grid">
-      <a class="card" href="psa-onboarding-automation.html" target="_blank" data-cat="onboarding" data-title="PSA Onboarding Automation" data-desc="AI-powered onboarding automation framework">
+    <div class="card-grid">
+      <a class="deck-card reveal" href="psa-onboarding-automation.html" target="_blank" data-cat="onboarding" data-title="PSA Onboarding Automation" data-desc="AI-powered onboarding automation framework" style="--delay:0.05s">
         <span class="card-badge badge-onboarding">Onboarding</span>
         <div class="card-title">PSA Onboarding Automation</div>
         <div class="card-desc">Full blueprint for AI-powered onboarding automation — pre-config, session intelligence, and readiness scoring from Kaia data.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="onboarding-process-analysis.html" target="_blank" data-cat="onboarding" data-title="Onboarding Process Analysis" data-desc="110 PSA project analysis, graduation rates, and bottlenecks">
+      <a class="deck-card reveal" href="onboarding-process-analysis.html" target="_blank" data-cat="onboarding" data-title="Onboarding Process Analysis" data-desc="110 PSA project analysis, graduation rates, and bottlenecks" style="--delay:0.1s">
         <span class="card-badge badge-onboarding">Onboarding</span>
         <div class="card-title">Onboarding Process Analysis</div>
         <div class="card-desc">Analysis of 110 PSA onboarding projects — graduation rates, time-in-stage, SA performance, and churn risk by milestone.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="onboarding-analysis.html" target="_blank" data-cat="onboarding" data-title="Onboarding Analysis" data-desc="Deep-dive onboarding performance metrics">
+      <a class="deck-card reveal" href="onboarding-analysis.html" target="_blank" data-cat="onboarding" data-title="Onboarding Analysis" data-desc="Deep-dive onboarding performance metrics" style="--delay:0.15s">
         <span class="card-badge badge-onboarding">Onboarding</span>
         <div class="card-title">Onboarding Analysis</div>
         <div class="card-desc">Deep-dive performance metrics across active onboarding accounts, SA workload distribution, and at-risk account identification.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="onboarding-team-efficiency.html" target="_blank" data-cat="onboarding" data-title="Onboarding Team Efficiency" data-desc="SA capacity and throughput analysis">
+      <a class="deck-card reveal" href="onboarding-team-efficiency.html" target="_blank" data-cat="onboarding" data-title="Onboarding Team Efficiency" data-desc="SA capacity and throughput analysis" style="--delay:0.2s">
         <span class="card-badge badge-onboarding">Onboarding</span>
         <div class="card-title">Onboarding Team Efficiency</div>
         <div class="card-desc">SA capacity planning, throughput by rep, and efficiency recommendations for scaling the onboarding team.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="psa-call-intelligence.html" target="_blank" data-cat="onboarding" data-title="PSA Call Intelligence" data-desc="610 PSA onboarding calls analyzed via Kaia">
+      <a class="deck-card reveal" href="psa-call-intelligence.html" target="_blank" data-cat="onboarding" data-title="PSA Call Intelligence" data-desc="610 PSA onboarding calls analyzed via Kaia" style="--delay:0.05s">
         <span class="card-badge badge-onboarding">Onboarding</span>
         <div class="card-title">PSA Call Intelligence</div>
         <div class="card-desc">Intelligence from 610 PSA onboarding calls — sentiment trends, competitor mentions, topic frequency, and at-risk signals.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="psa-transcript-analysis.html" target="_blank" data-cat="onboarding" data-title="PSA Transcript Analysis" data-desc="NLP analysis of onboarding call transcripts">
+      <a class="deck-card reveal" href="psa-transcript-analysis.html" target="_blank" data-cat="onboarding" data-title="PSA Transcript Analysis" data-desc="NLP analysis of onboarding call transcripts" style="--delay:0.1s">
         <span class="card-badge badge-onboarding">Onboarding</span>
         <div class="card-title">PSA Transcript Analysis</div>
         <div class="card-desc">NLP-powered transcript analysis — topic clustering, objection patterns, and feature request extraction from Kaia recordings.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="onboarding-webonly.html" target="_blank" data-cat="onboarding" data-title="Onboarding Web Report" data-desc="Web-optimized onboarding summary">
+      <a class="deck-card reveal" href="onboarding-webonly.html" target="_blank" data-cat="onboarding" data-title="Onboarding Web Report" data-desc="Web-optimized onboarding summary" style="--delay:0.15s">
         <span class="card-badge badge-onboarding">Onboarding</span>
         <div class="card-title">Onboarding Web Report</div>
         <div class="card-desc">Web-optimized onboarding status report for leadership review — clean, shareable format.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="onboarding-wrike.html" target="_blank" data-cat="onboarding" data-title="Onboarding Wrike Integration" data-desc="Wrike project data overlaid on onboarding metrics">
+      <a class="deck-card reveal" href="onboarding-wrike.html" target="_blank" data-cat="onboarding" data-title="Onboarding + Wrike" data-desc="Wrike project data overlaid on onboarding metrics" style="--delay:0.2s">
         <span class="card-badge badge-onboarding">Onboarding</span>
         <div class="card-title">Onboarding + Wrike</div>
         <div class="card-desc">Wrike project task data overlaid on onboarding timelines — milestone completion vs. projected graduation.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
     </div>
   </div>
 
   <!-- Customer & Product -->
-  <div class="section cat-product" data-section="product">
-    <div class="section-header">
+  <div class="section-block" data-section="product">
+    <div class="section-hdr reveal">
       <span class="section-icon">📊</span>
-      <span class="section-title">Customer & Product Intelligence</span>
-      <span class="section-count">5 decks</span>
+      <span class="section-label">Customer & Product Intelligence</span>
+      <span class="section-n">5 decks</span>
     </div>
-    <div class="grid">
-      <a class="card" href="cs-analysis.html" target="_blank" data-cat="product" data-title="CS Analysis" data-desc="14,401 Zendesk ticket analysis">
+    <div class="card-grid">
+      <a class="deck-card reveal" href="cs-analysis.html" target="_blank" data-cat="product" data-title="CS Analysis" data-desc="14,401 Zendesk ticket analysis" style="--delay:0.05s">
         <span class="card-badge badge-product">Customer</span>
         <div class="card-title">CS Ticket Analysis</div>
         <div class="card-desc">Analysis of 14,401 Zendesk tickets — resolution time, ticket category breakdown, volume trends, and CS team performance.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="product-discovery-playbook.html" target="_blank" data-cat="product" data-title="Product Discovery Playbook" data-desc="Framework for product discovery and customer research">
+      <a class="deck-card reveal" href="product-discovery-playbook.html" target="_blank" data-cat="product" data-title="Product Discovery Playbook" data-desc="Framework for product discovery and customer research" style="--delay:0.1s">
         <span class="card-badge badge-product">Product</span>
         <div class="card-title">Product Discovery Playbook</div>
         <div class="card-desc">Structured playbook for running product discovery — customer interview frameworks, signal triage, and feature prioritization.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="kaia-intelligence-plan.html" target="_blank" data-cat="product" data-title="Kaia Intelligence Plan" data-desc="Strategic plan for Kaia AI conversation intelligence">
+      <a class="deck-card reveal" href="kaia-intelligence-plan.html" target="_blank" data-cat="product" data-title="Kaia Intelligence Plan" data-desc="Strategic plan for Kaia AI conversation intelligence" style="--delay:0.15s">
         <span class="card-badge badge-product">Product</span>
         <div class="card-title">Kaia Intelligence Plan</div>
         <div class="card-desc">Strategic roadmap for Kaia conversation intelligence pipeline — data architecture, pipeline design, and GTM application.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="ninja-integration-deck.html" target="_blank" data-cat="product" data-title="NinjaOne Integration Deck" data-desc="PSA + NinjaOne RMM integration overview">
+      <a class="deck-card reveal" href="ninja-integration-deck.html" target="_blank" data-cat="product" data-title="NinjaOne Integration" data-desc="PSA + NinjaOne RMM integration overview" style="--delay:0.2s">
         <span class="card-badge badge-product">Product</span>
         <div class="card-title">NinjaOne Integration</div>
         <div class="card-desc">PSA + NinjaOne RMM integration overview — feature scope, customer value, and rollout strategy.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="calendar-utilization.html" target="_blank" data-cat="product" data-title="Calendar Utilization" data-desc="Evan's calendar and time utilization analysis">
+      <a class="deck-card reveal" href="calendar-utilization.html" target="_blank" data-cat="product" data-title="Calendar Utilization" data-desc="Evan's calendar and time utilization analysis" style="--delay:0.25s">
         <span class="card-badge badge-product">Ops</span>
         <div class="card-title">Calendar Utilization</div>
         <div class="card-desc">Executive time audit — meeting load, category breakdown, focus time availability, and scheduling recommendations.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
     </div>
   </div>
 
   <!-- AI & Strategy -->
-  <div class="section cat-strategy" data-section="strategy">
-    <div class="section-header">
+  <div class="section-block" data-section="strategy">
+    <div class="section-hdr reveal">
       <span class="section-icon">🤖</span>
-      <span class="section-title">AI & Strategy</span>
-      <span class="section-count">4 decks</span>
+      <span class="section-label">AI & Strategy</span>
+      <span class="section-n">4 decks</span>
     </div>
-    <div class="grid">
-      <a class="card" href="revay-roi-board-2026.html" target="_blank" data-cat="strategy" data-title="Revay ROI Board Deck 2026" data-desc="Board-ready AI ROI presentation">
+    <div class="card-grid">
+      <a class="deck-card reveal" href="revay-roi-board-2026.html" target="_blank" data-cat="strategy" data-title="AI ROI Board Deck 2026" data-desc="Board-ready AI ROI presentation" style="--delay:0.05s">
         <span class="card-badge badge-strategy">Strategy</span>
         <div class="card-title">AI ROI — Board Deck 2026</div>
         <div class="card-desc">Board-ready deck quantifying AI spend vs. value delivered — $12,557/30 days org spend, 3-7× conservative labor ROI, attribution roadmap.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="agentic-org.html" target="_blank" data-cat="strategy" data-title="Agentic Organization" data-desc="Flywheel agent architecture and agentic org design">
+      <a class="deck-card reveal" href="agentic-org.html" target="_blank" data-cat="strategy" data-title="Agentic Organization" data-desc="Flywheel agent architecture and agentic org design" style="--delay:0.1s">
         <span class="card-badge badge-strategy">Strategy</span>
         <div class="card-title">Agentic Organization</div>
         <div class="card-desc">Architecture and vision for Rev.io's agentic flywheel — Scout, Sales Analyst, Customer Analyst roles and orchestration model.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="revay-migration.html" target="_blank" data-cat="strategy" data-title="Revay Migration Plan" data-desc="Infrastructure migration documentation">
+      <a class="deck-card reveal" href="revay-migration.html" target="_blank" data-cat="strategy" data-title="Revay Migration Plan" data-desc="Infrastructure migration documentation" style="--delay:0.15s">
         <span class="card-badge badge-strategy">Infrastructure</span>
         <div class="card-title">Revay Migration Plan</div>
         <div class="card-desc">Infrastructure migration documentation — VM setup, gateway config, integration restoration, and rollout sequencing.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="revay-recovery.html" target="_blank" data-cat="strategy" data-title="Revay Recovery Playbook" data-desc="Disaster recovery and backup restoration guide">
+      <a class="deck-card reveal" href="revay-recovery.html" target="_blank" data-cat="strategy" data-title="Revay Recovery Playbook" data-desc="Disaster recovery and backup restoration guide" style="--delay:0.2s">
         <span class="card-badge badge-strategy">Infrastructure</span>
         <div class="card-title">Revay Recovery Playbook</div>
         <div class="card-desc">Step-by-step disaster recovery guide — GitHub restore, credential recovery, integration reconnection, and cron job restoration.</div>
-        <div class="card-footer"><span class="card-open">Open deck →</span></div>
+        <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
     </div>
   </div>
 
   <!-- Prospect Briefs -->
-  <div class="section cat-briefs" data-section="briefs">
-    <div class="section-header">
+  <div class="section-block" data-section="briefs">
+    <div class="section-hdr reveal">
       <span class="section-icon">🏢</span>
-      <span class="section-title">Prospect Briefs</span>
-      <span class="section-count">10 briefs</span>
+      <span class="section-label">Prospect Briefs</span>
+      <span class="section-n">10 briefs</span>
     </div>
-    <div class="grid">
-      <a class="card" href="a-b-security-brief.html" target="_blank" data-cat="briefs" data-title="A&B Security Brief" data-desc="Account brief for A&B Security">
+    <div class="card-grid">
+      <a class="deck-card reveal" href="a-b-security-brief.html" target="_blank" data-cat="briefs" data-title="A&B Security Brief" data-desc="Account brief for A&B Security" style="--delay:0.05s">
         <span class="card-badge badge-briefs">Brief</span>
         <div class="card-title">A&B Security</div>
         <div class="card-desc">AI-generated account intelligence brief — company profile, pain signals, PSA displacement opportunity, and recommended approach.</div>
-        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+        <div class="card-footer"><span class="card-cta">Open brief <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="custom-electronic-consultants-brief.html" target="_blank" data-cat="briefs" data-title="Custom Electronic Consultants Brief" data-desc="Account brief for Custom Electronic Consultants">
+      <a class="deck-card reveal" href="custom-electronic-consultants-brief.html" target="_blank" data-cat="briefs" data-title="Custom Electronic Consultants Brief" data-desc="Account brief for Custom Electronic Consultants" style="--delay:0.1s">
         <span class="card-badge badge-briefs">Brief</span>
         <div class="card-title">Custom Electronic Consultants</div>
         <div class="card-desc">Account intelligence brief — security/AV MSP profile, tech stack signals, and PSA fit assessment.</div>
-        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+        <div class="card-footer"><span class="card-cta">Open brief <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="dfw-security-brief.html" target="_blank" data-cat="briefs" data-title="DFW Security Brief" data-desc="Account brief for DFW Security">
+      <a class="deck-card reveal" href="dfw-security-brief.html" target="_blank" data-cat="briefs" data-title="DFW Security Brief" data-desc="Account brief for DFW Security" style="--delay:0.15s">
         <span class="card-badge badge-briefs">Brief</span>
         <div class="card-title">DFW Security</div>
         <div class="card-desc">Dallas-area security integrator brief — competitive landscape, growth signals, and outreach recommendation.</div>
-        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+        <div class="card-footer"><span class="card-cta">Open brief <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="frontline-brief.html" target="_blank" data-cat="briefs" data-title="Frontline Brief" data-desc="Account brief for Frontline">
+      <a class="deck-card reveal" href="frontline-brief.html" target="_blank" data-cat="briefs" data-title="Frontline Brief" data-desc="Account brief for Frontline" style="--delay:0.2s">
         <span class="card-badge badge-briefs">Brief</span>
         <div class="card-title">Frontline</div>
         <div class="card-desc">MSP account brief — service offerings, current PSA indicators, and displacement opportunity scoring.</div>
-        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+        <div class="card-footer"><span class="card-cta">Open brief <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="guenthertech-brief.html" target="_blank" data-cat="briefs" data-title="GuentherTech Brief" data-desc="Account brief for GuentherTech">
+      <a class="deck-card reveal" href="guenthertech-brief.html" target="_blank" data-cat="briefs" data-title="GuentherTech Brief" data-desc="Account brief for GuentherTech" style="--delay:0.05s">
         <span class="card-badge badge-briefs">Brief</span>
         <div class="card-title">GuentherTech</div>
         <div class="card-desc">IT MSP account brief — company profile, tech stack, hiring signals, and Rev.io PSA fit analysis.</div>
-        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+        <div class="card-footer"><span class="card-cta">Open brief <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="integrated-technologies-brief.html" target="_blank" data-cat="briefs" data-title="Integrated Technologies Brief" data-desc="Account brief for Integrated Technologies">
+      <a class="deck-card reveal" href="integrated-technologies-brief.html" target="_blank" data-cat="briefs" data-title="Integrated Technologies Brief" data-desc="Account brief for Integrated Technologies" style="--delay:0.1s">
         <span class="card-badge badge-briefs">Brief</span>
         <div class="card-title">Integrated Technologies</div>
         <div class="card-desc">New win (Mar 31) account brief — post-win intelligence, onboarding readiness, and account context for SA handoff.</div>
-        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+        <div class="card-footer"><span class="card-cta">Open brief <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="itr-systems-brief.html" target="_blank" data-cat="briefs" data-title="ITR Systems Brief" data-desc="Account brief for ITR Systems">
+      <a class="deck-card reveal" href="itr-systems-brief.html" target="_blank" data-cat="briefs" data-title="ITR Systems Brief" data-desc="Account brief for ITR Systems" style="--delay:0.15s">
         <span class="card-badge badge-briefs">Brief</span>
         <div class="card-title">ITR Systems</div>
         <div class="card-desc">Security and IT services MSP — competitive positioning, feature requirements, and recommended deal approach.</div>
-        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+        <div class="card-footer"><span class="card-cta">Open brief <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="mule-security-electric-brief.html" target="_blank" data-cat="briefs" data-title="Mule Security & Electric Brief" data-desc="Account brief for Mule Security & Electric">
+      <a class="deck-card reveal" href="mule-security-electric-brief.html" target="_blank" data-cat="briefs" data-title="Mule Security & Electric Brief" data-desc="Account brief for Mule Security & Electric" style="--delay:0.2s">
         <span class="card-badge badge-briefs">Brief</span>
         <div class="card-title">Mule Security & Electric</div>
         <div class="card-desc">Combined security and electrical services MSP — operational complexity analysis and PSA consolidation opportunity.</div>
-        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+        <div class="card-footer"><span class="card-cta">Open brief <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="netwatch-brief.html" target="_blank" data-cat="briefs" data-title="Netwatch Brief" data-desc="Account brief for Netwatch">
+      <a class="deck-card reveal" href="netwatch-brief.html" target="_blank" data-cat="briefs" data-title="Netwatch Brief" data-desc="Account brief for Netwatch" style="--delay:0.25s">
         <span class="card-badge badge-briefs">Brief</span>
         <div class="card-title">Netwatch</div>
         <div class="card-desc">Remote video monitoring MSP — niche vertical analysis, competitive platform signals, and outreach positioning.</div>
-        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+        <div class="card-footer"><span class="card-cta">Open brief <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="viking-lock-brief.html" target="_blank" data-cat="briefs" data-title="Viking Lock Brief" data-desc="Account brief for Viking Lock">
+      <a class="deck-card reveal" href="viking-lock-brief.html" target="_blank" data-cat="briefs" data-title="Viking Lock Brief" data-desc="Account brief for Viking Lock" style="--delay:0.3s">
         <span class="card-badge badge-briefs">Brief</span>
         <div class="card-title">Viking Lock</div>
-        <div class="card-desc">Physical security and locksmith services company — emerging PSA need signals and Rev.io fit assessment.</div>
-        <div class="card-footer"><span class="card-open">Open brief →</span></div>
+        <div class="card-desc">Physical security and locksmith services — emerging PSA need signals and Rev.io fit assessment.</div>
+        <div class="card-footer"><span class="card-cta">Open brief <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
     </div>
   </div>
 
   <!-- Migration & Guides -->
-  <div class="section cat-migration" data-section="migration">
-    <div class="section-header">
+  <div class="section-block" data-section="migration">
+    <div class="section-hdr reveal">
       <span class="section-icon">🔧</span>
-      <span class="section-title">Migration & Technical Guides</span>
-      <span class="section-count">7 guides</span>
+      <span class="section-label">Migration & Technical Guides</span>
+      <span class="section-n">7 guides</span>
     </div>
-    <div class="grid">
-      <a class="card" href="connectwise-migration-api.html" target="_blank" data-cat="migration" data-title="ConnectWise Migration API" data-desc="ConnectWise to Rev.io PSA migration guide">
+    <div class="card-grid">
+      <a class="deck-card reveal" href="connectwise-migration-api.html" target="_blank" data-cat="migration" data-title="ConnectWise Migration API" data-desc="ConnectWise to Rev.io PSA migration guide" style="--delay:0.05s">
         <span class="card-badge badge-migration">Migration</span>
         <div class="card-title">ConnectWise Migration API</div>
         <div class="card-desc">Technical guide for ConnectWise → Rev.io PSA migration — API mappings, data export formats, and field transformation rules.</div>
-        <div class="card-footer"><span class="card-open">Open guide →</span></div>
+        <div class="card-footer"><span class="card-cta">Open guide <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="servicefusion-migration-api.html" target="_blank" data-cat="migration" data-title="ServiceFusion Migration API" data-desc="ServiceFusion to Rev.io PSA migration guide">
+      <a class="deck-card reveal" href="servicefusion-migration-api.html" target="_blank" data-cat="migration" data-title="ServiceFusion Migration API" data-desc="ServiceFusion to Rev.io PSA migration guide" style="--delay:0.1s">
         <span class="card-badge badge-migration">Migration</span>
         <div class="card-title">ServiceFusion Migration API</div>
         <div class="card-desc">Technical migration guide for ServiceFusion customers — data export specs, API field mapping, and migration sequencing.</div>
-        <div class="card-footer"><span class="card-open">Open guide →</span></div>
+        <div class="card-footer"><span class="card-cta">Open guide <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="export-guide-eautomate.html" target="_blank" data-cat="migration" data-title="e-automate Export Guide" data-desc="e-automate data export instructions">
+      <a class="deck-card reveal" href="export-guide-eautomate.html" target="_blank" data-cat="migration" data-title="e-automate Export Guide" data-desc="e-automate data export instructions" style="--delay:0.15s">
         <span class="card-badge badge-migration">Guide</span>
         <div class="card-title">e-automate Export Guide</div>
         <div class="card-desc">Step-by-step data export guide for e-automate customers migrating to Rev.io — field mapping and CSV templates.</div>
-        <div class="card-footer"><span class="card-open">Open guide →</span></div>
+        <div class="card-footer"><span class="card-cta">Open guide <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="export-guide-sedonaoffice.html" target="_blank" data-cat="migration" data-title="SedonaOffice Export Guide" data-desc="SedonaOffice data export instructions">
+      <a class="deck-card reveal" href="export-guide-sedonaoffice.html" target="_blank" data-cat="migration" data-title="SedonaOffice Export Guide" data-desc="SedonaOffice data export instructions" style="--delay:0.2s">
         <span class="card-badge badge-migration">Guide</span>
         <div class="card-title">SedonaOffice Export Guide</div>
         <div class="card-desc">Data export and migration guide for SedonaOffice customers — report specs, field translations, and handoff checklist.</div>
-        <div class="card-footer"><span class="card-open">Open guide →</span></div>
+        <div class="card-footer"><span class="card-cta">Open guide <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="data-export-cheatsheets.html" target="_blank" data-cat="migration" data-title="Data Export Cheatsheets" data-desc="Quick reference export guides for common PSA platforms">
+      <a class="deck-card reveal" href="data-export-cheatsheets.html" target="_blank" data-cat="migration" data-title="Data Export Cheatsheets" data-desc="Quick reference export guides for common PSA platforms" style="--delay:0.25s">
         <span class="card-badge badge-migration">Guide</span>
         <div class="card-title">Data Export Cheatsheets</div>
         <div class="card-desc">Quick-reference export cheatsheets for common PSA platforms — one-page guides for SA use during onboarding kickoffs.</div>
-        <div class="card-footer"><span class="card-open">Open guide →</span></div>
+        <div class="card-footer"><span class="card-cta">Open guide <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="brief-data-sources.html" target="_blank" data-cat="migration" data-title="Brief Data Sources" data-desc="Documentation of data sources behind prospect briefs">
+      <a class="deck-card reveal" href="brief-data-sources.html" target="_blank" data-cat="migration" data-title="Brief Data Sources" data-desc="Documentation of data sources behind prospect briefs" style="--delay:0.3s">
         <span class="card-badge badge-migration">Reference</span>
         <div class="card-title">Brief Data Sources</div>
         <div class="card-desc">Documentation of all data sources, APIs, and signal types used to generate prospect intelligence briefs.</div>
-        <div class="card-footer"><span class="card-open">Open →</span></div>
+        <div class="card-footer"><span class="card-cta">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
-      <a class="card" href="auto-demo-videos.html" target="_blank" data-cat="migration" data-title="Auto Demo Videos" data-desc="Automated demo video library and generation">
+      <a class="deck-card reveal" href="auto-demo-videos.html" target="_blank" data-cat="migration" data-title="Auto Demo Videos" data-desc="Automated demo video library and generation" style="--delay:0.35s">
         <span class="card-badge badge-migration">Reference</span>
         <div class="card-title">Auto Demo Videos</div>
         <div class="card-desc">Automated demo video library — product walkthrough clips organized by feature area for sales and onboarding use.</div>
-        <div class="card-footer"><span class="card-open">Open →</span></div>
+        <div class="card-footer"><span class="card-cta">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
     </div>
   </div>
 
   <!-- Other -->
-  <div class="section cat-other" data-section="other">
-    <div class="section-header">
+  <div class="section-block" data-section="other">
+    <div class="section-hdr reveal">
       <span class="section-icon">📄</span>
-      <span class="section-title">Other</span>
-      <span class="section-count">6 items</span>
+      <span class="section-label">Other</span>
+      <span class="section-n">6 items</span>
     </div>
-    <div class="grid">
-      <a class="card" href="podcast-cue-cards.html" target="_blank" data-cat="other" data-title="Podcast Cue Cards" data-desc="Podcast talking points and cue cards">
-        <span class="card-badge badge-migration">Content</span>
+    <div class="card-grid">
+      <a class="deck-card reveal" href="podcast-cue-cards.html" target="_blank" data-cat="other" data-title="Podcast Cue Cards" data-desc="Podcast talking points and cue cards" style="--delay:0.05s">
+        <span class="card-badge badge-other">Content</span>
         <div class="card-title">Podcast Cue Cards</div>
         <div class="card-desc">Talking points and cue cards for podcast appearances — key messages, stats, and story frameworks.</div>
-        <div class="card-footer"><span class="card-open">Open →</span></div>
+        <div class="card-footer"><span class="card-cta">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
     </div>
   </div>
 
   <div class="empty hidden" id="emptyState">
     <div class="empty-icon">🔍</div>
-    <div class="empty-text">No decks match your search. Try a different term.</div>
+    <div class="empty-text">No decks match your search.</div>
   </div>
 
-</div>
+</main>
 
 <script>
-  let activecat = 'all';
-  let searchTerm = '';
+/* ── CANVAS HERO ANIMATION ─────────────────────────────────── */
+(function() {
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, mouse = { x: -999, y: -999 };
+  let dots = [];
 
-  function filterCat(cat, el) {
-    activecat = cat;
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    applyFilters();
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    buildDots();
   }
 
-  document.getElementById('search').addEventListener('input', function() {
-    searchTerm = this.value.toLowerCase().trim();
-    applyFilters();
-  });
-
-  function applyFilters() {
-    const cards = document.querySelectorAll('.card');
-    let visibleCount = 0;
-    const sectionVisible = {};
-
-    cards.forEach(card => {
-      const cat = card.dataset.cat;
-      const title = (card.dataset.title || '').toLowerCase();
-      const desc = (card.dataset.desc || '').toLowerCase();
-      const fullText = card.textContent.toLowerCase();
-
-      const catMatch = activecat === 'all' || cat === activecat;
-      const searchMatch = !searchTerm || fullText.includes(searchTerm) || title.includes(searchTerm) || desc.includes(searchTerm);
-
-      if (catMatch && searchMatch) {
-        card.classList.remove('hidden');
-        visibleCount++;
-        sectionVisible[cat] = (sectionVisible[cat] || 0) + 1;
-      } else {
-        card.classList.add('hidden');
+  function buildDots() {
+    dots = [];
+    const cx = W * 0.78, cy = H * 0.5;
+    const radii = [60, 110, 170];
+    radii.forEach((r, ri) => {
+      const n = 6 + ri * 4;
+      for (let i = 0; i < n; i++) {
+        const baseAngle = (2 * Math.PI / n) * i;
+        dots.push({
+          cx, cy, r,
+          baseAngle,
+          angle: baseAngle,
+          speed: (0.0003 + ri * 0.0001) * (ri % 2 === 0 ? 1 : -1),
+          ri
+        });
       }
     });
+  }
 
-    // Show/hide sections
-    document.querySelectorAll('.section').forEach(section => {
-      const scat = section.dataset.section;
-      const catMatch = activecat === 'all' || scat === activecat;
-      const hasVisible = section.querySelectorAll('.card:not(.hidden)').length > 0;
-      section.classList.toggle('hidden', !catMatch || !hasVisible);
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  canvas.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    if (W < 600) { requestAnimationFrame(draw); return; }
+
+    const cx = W * 0.78, cy = H * 0.5;
+    const radii = [60, 110, 170];
+    const now = Date.now();
+
+    // Draw rings
+    radii.forEach((r, ri) => {
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(0,188,212,${0.12 - ri * 0.025})`;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 8]);
+      ctx.stroke();
+      ctx.setLineDash([]);
     });
 
-    document.getElementById('visibleCount').textContent = visibleCount;
-    document.getElementById('emptyState').classList.toggle('hidden', visibleCount > 0);
+    // Core hub
+    const hubGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 40);
+    hubGrad.addColorStop(0, 'rgba(0,188,212,0.15)');
+    hubGrad.addColorStop(1, 'transparent');
+    ctx.beginPath();
+    ctx.arc(cx, cy, 40, 0, Math.PI * 2);
+    ctx.fillStyle = hubGrad;
+    ctx.fill();
+
+    // Update & draw dots
+    dots.forEach(d => {
+      d.angle += d.speed;
+      const x = d.cx + d.r * Math.cos(d.angle);
+      const y = d.cy + d.r * Math.sin(d.angle);
+      d.x = x; d.y = y;
+
+      // Proximity line to mouse
+      const dist = Math.hypot(mouse.x - x, mouse.y - y);
+      if (dist < 140) {
+        const alpha = (1 - dist / 140) * 0.5;
+        ctx.beginPath();
+        ctx.moveTo(mouse.x, mouse.y);
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = `rgba(0,229,255,${alpha})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+
+      // Dot
+      ctx.beginPath();
+      ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = d.ri === 2 ? 'rgba(105,240,174,0.9)' : 'rgba(0,229,255,0.9)';
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
   }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+
+/* ── MOUSE TRACKING GLOW ───────────────────────────────────── */
+document.querySelectorAll('.card-grid').forEach(grid => {
+  grid.addEventListener('mousemove', e => {
+    grid.querySelectorAll('.deck-card').forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mx', x + 'px');
+      card.style.setProperty('--my', y + 'px');
+    });
+  });
+});
+
+/* ── SCROLL REVEALS ────────────────────────────────────────── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ── FILTER & SEARCH ───────────────────────────────────────── */
+let activecat = 'all', searchTerm = '';
+
+function filterCat(cat, el) {
+  activecat = cat;
+  document.querySelectorAll('.tab-pill').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+
+document.getElementById('search').addEventListener('input', function() {
+  searchTerm = this.value.toLowerCase().trim();
+  applyFilters();
+});
+
+function applyFilters() {
+  const cards = document.querySelectorAll('.deck-card');
+  let count = 0;
+
+  cards.forEach(card => {
+    const cat = card.dataset.cat;
+    const fullText = card.textContent.toLowerCase();
+    const catMatch = activecat === 'all' || cat === activecat;
+    const searchMatch = !searchTerm || fullText.includes(searchTerm);
+    const show = catMatch && searchMatch;
+    card.classList.toggle('hidden', !show);
+    if (show) count++;
+  });
+
+  document.querySelectorAll('.section-block').forEach(sec => {
+    const scat = sec.dataset.section;
+    const catMatch = activecat === 'all' || scat === activecat;
+    const hasVisible = sec.querySelectorAll('.deck-card:not(.hidden)').length > 0;
+    sec.classList.toggle('hidden', !catMatch || !hasVisible);
+  });
+
+  document.getElementById('visibleCount').textContent = count;
+  document.getElementById('heroTotal').textContent = count;
+  document.getElementById('emptyState').classList.toggle('hidden', count > 0);
+}
 </script>
 </body>
 </html>
