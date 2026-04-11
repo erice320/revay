@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io AgentOS — Internal Strategy Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0F;--card:#12121A;--card2:#1A1A2E;--cyan:#00E5FF;--cA:rgba(0,229,255,.12);--purple:#7B61FF;--pA:rgba(123,97,255,.12);--green:#00FFA3;--gA:rgba(0,255,163,.12);--red:#FF3366;--rA:rgba(255,51,102,.12);--orange:#FF9800;--oA:rgba(255,152,0,.12);--yellow:#FFC107;--t1:rgba(255,255,255,.95);--t2:rgba(255,255,255,.6);--t3:rgba(255,255,255,.35);--bd:1px solid rgba(255,255,255,.08);--r:14px;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--t2);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{color:var(--t1);font-weight:700;letter-spacing:-.03em;line-height:1.15}
+h1{font-size:clamp(32px,5vw,64px);font-weight:800}h2{font-size:clamp(24px,3.5vw,44px)}h3{font-size:clamp(18px,2.5vw,24px)}
+a{text-decoration:none;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+section{padding:clamp(70px,10vw,120px) 0}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 600ms var(--ease),transform 600ms var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:80ms}.d2{transition-delay:160ms}.d3{transition-delay:240ms}.d4{transition-delay:320ms}.d5{transition-delay:400ms}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+.tg{background:linear-gradient(135deg,#fff 0%,var(--cyan) 40%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block}
+.section-label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cyan);margin-bottom:12px}
+.subheading{font-size:18px;max-width:720px;margin:12px 0 48px;color:var(--t2);line-height:1.7}
+.card{background:var(--card);border:var(--bd);border-radius:var(--r);padding:32px;transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-3px)}
+.card-c:hover{border-color:rgba(0,229,255,.4);box-shadow:0 12px 40px var(--cA)}
+.card-g:hover{border-color:rgba(0,255,163,.4);box-shadow:0 12px 40px var(--gA)}
+.card-p:hover{border-color:rgba(123,97,255,.4);box-shadow:0 12px 40px var(--pA)}
+.card-r:hover{border-color:rgba(255,51,102,.4);box-shadow:0 12px 40px var(--rA)}
+.card-o:hover{border-color:rgba(255,152,0,.4);box-shadow:0 12px 40px var(--oA)}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px}
+.pill-c{background:var(--cA);color:var(--cyan);border:1px solid rgba(0,229,255,.25)}
+.pill-g{background:var(--gA);color:var(--green);border:1px solid rgba(0,255,163,.25)}
+.pill-p{background:var(--pA);color:var(--purple);border:1px solid rgba(123,97,255,.25)}
+.pill-r{background:var(--rA);color:var(--red);border:1px solid rgba(255,51,102,.3)}
+.pill-o{background:var(--oA);color:var(--orange);border:1px solid rgba(255,152,0,.3)}
+.pill-y{background:rgba(255,193,7,.12);color:var(--yellow);border:1px solid rgba(255,193,7,.3)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr}}
+.callout{border-radius:12px;padding:24px;margin-top:24px;line-height:1.7;font-size:15px}
+.callout-r{background:var(--rA);border:1px solid rgba(255,51,102,.3);border-left:4px solid var(--red)}
+.callout-c{background:var(--cA);border:1px solid rgba(0,229,255,.2);border-left:4px solid var(--cyan)}
+.callout-g{background:var(--gA);border:1px solid rgba(0,255,163,.2);border-left:4px solid var(--green)}
+.callout-o{background:var(--oA);border:1px solid rgba(255,152,0,.2);border-left:4px solid var(--orange)}
+.callout strong{color:var(--t1)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;color:var(--t3);font-size:12px;text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+td{padding:14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--t1);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+.tbl-wrap{background:var(--card);border:var(--bd);border-radius:var(--r);overflow:hidden;margin-top:24px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px);background:rgba(10,10,15,.88);border-bottom:1px solid rgba(255,255,255,.06);height:68px;display:flex;align-items:center}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;width:100%;flex-wrap:wrap;gap:12px}
+.nav-logo{font-weight:800;font-size:18px;color:var(--t1);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.nav-logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:20px;font-size:13px;font-weight:500}
+.nav-links a{color:var(--t2);transition:color .2s}
+.nav-links a:hover{color:var(--t1)}
+@media(max-width:900px){.nav-links{display:none}}
+
+/* HERO */
+#hero{min-height:80vh;display:flex;align-items:center;padding-top:100px;background:radial-gradient(ellipse at 30% 50%,rgba(0,229,255,.04) 0%,transparent 60%)}
+.hero-eyebrow{font-family:var(--mono);font-size:12px;color:var(--red);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:32px;height:2px;background:var(--red);border-radius:2px}
+.hero-sub{font-size:clamp(16px,2vw,20px);max-width:700px;margin:24px 0 48px;color:var(--t2);line-height:1.7}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+.hstat{padding:20px 28px;background:var(--card);border:var(--bd);border-radius:12px;min-width:160px}
+.hstat-val{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--t1);line-height:1}
+.hstat-lbl{font-size:12px;color:var(--t3);margin-top:6px}
+
+/* EXEC SUMMARY */
+.exec-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:900px){.exec-cards{grid-template-columns:1fr}}
+.exec-card{padding:28px;border-radius:var(--r);background:var(--card);border:var(--bd)}
+.exec-card-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+.ec-opp .exec-card-head{color:var(--cyan)}
+.ec-str .exec-card-head{color:var(--green)}
+.ec-moat .exec-card-head{color:var(--purple)}
+.exec-card p{font-size:15px;line-height:1.75;color:var(--t1)}
+
+/* MARKET — whitespace diagram */
+.ws-diagram{display:flex;flex-direction:column;gap:4px}
+.ws-box{padding:16px 20px;border-radius:8px;font-size:14px;font-weight:600;line-height:1.4}
+.ws-top{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--t2)}
+.ws-mid{background:var(--cA);border:2px solid var(--cyan);color:var(--t1)}
+.ws-bot{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--t2)}
+.ws-arrow{text-align:center;color:var(--t3);font-size:20px;line-height:1}
+
+/* FLYWHEEL */
+.flywheel{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin:32px 0;text-align:center}
+@media(max-width:700px){.flywheel{grid-template-columns:1fr}}
+.fw-box{padding:24px;border-radius:12px;font-weight:600}
+.fw-revii{background:var(--gA);border:1px solid rgba(0,255,163,.3);color:var(--green)}
+.fw-hub{background:var(--cA);border:1px solid rgba(0,229,255,.3);color:var(--cyan)}
+.fw-center{width:120px;height:120px;border-radius:50%;background:var(--card2);border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--t1);text-align:center;margin:0 auto;line-height:1.3}
+.fw-arrows{display:flex;justify-content:space-between;padding:0 20px;font-size:20px;color:var(--t3)}
+
+/* BUSINESS MODEL */
+.bm-math{background:var(--card2);border-radius:12px;padding:24px;font-family:var(--mono);font-size:15px;color:var(--t1);line-height:2;margin-top:24px}
+.bm-math .result{color:var(--cyan);font-size:20px;font-weight:700}
+
+/* COMPETITIVE */
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+@media(max-width:700px){.comp-grid{grid-template-columns:1fr}}
+.comp-card{padding:24px;border-radius:var(--r);background:var(--card)}
+.comp-threat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.comp-name{font-size:18px;font-weight:700;color:var(--t1);margin-bottom:12px}
+.comp-card p{font-size:14px;line-height:1.7;margin-bottom:10px}
+.comp-gap{font-size:13px;font-weight:600;padding:10px 14px;border-radius:8px;margin-top:12px}
+.comp-cw{border:1px solid rgba(255,51,102,.4)}
+.comp-cw .comp-gap{background:rgba(0,255,163,.08);color:var(--green)}
+.comp-k{border:1px solid rgba(255,152,0,.4)}
+.comp-k .comp-gap{background:rgba(0,255,163,.08);color:var(--green)}
+.comp-r{border:1px solid rgba(255,193,7,.3)}
+.comp-p{border:1px solid rgba(255,255,255,.1)}
+
+/* PARTNER TABLE */
+.partner-tag{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:4px;white-space:nowrap}
+
+/* PILOT CARDS */
+.pilot-card{padding:32px;border-radius:var(--r);background:var(--card)}
+.pilot-num{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.pilot-name{font-size:20px;font-weight:800;color:var(--t1);margin-bottom:16px}
+.pilot-row{display:grid;grid-template-columns:80px 1fr;gap:12px;font-size:14px;margin-bottom:12px}
+.pilot-label{font-weight:700;color:var(--t3);font-size:12px;text-transform:uppercase;padding-top:2px}
+.pilot-pitch{font-style:italic;color:var(--t1);font-weight:600;background:rgba(255,255,255,.04);padding:12px 16px;border-radius:8px;margin-top:8px;font-size:15px}
+
+/* ROADMAP */
+.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:32px;position:relative}
+@media(max-width:800px){.roadmap{grid-template-columns:1fr}}
+.roadmap::before{content:'';position:absolute;top:28px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--cyan),var(--purple));z-index:0}
+@media(max-width:800px){.roadmap::before{display:none}}
+.phase{padding:20px;position:relative;z-index:1}
+.phase-dot{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;margin:0 auto 20px;border:3px solid}
+.ph1 .phase-dot{background:var(--gA);border-color:var(--green);color:var(--green)}
+.ph2 .phase-dot{background:var(--cA);border-color:var(--cyan);color:var(--cyan)}
+.ph3 .phase-dot{background:var(--pA);border-color:var(--purple);color:var(--purple)}
+.phase-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;text-align:center;margin-bottom:4px}
+.ph1 .phase-title{color:var(--green)}
+.ph2 .phase-title{color:var(--cyan)}
+.ph3 .phase-title{color:var(--purple)}
+.phase-sub{font-size:18px;font-weight:700;color:var(--t1);text-align:center;margin-bottom:20px}
+.phase-items{list-style:none;display:flex;flex-direction:column;gap:10px}
+.phase-items li{font-size:13px;line-height:1.6;padding:10px 14px;background:var(--card);border-radius:8px;border-left:3px solid}
+.ph1 .phase-items li{border-left-color:var(--green)}
+.ph2 .phase-items li{border-left-color:var(--cyan)}
+.ph3 .phase-items li{border-left-color:var(--purple)}
+.phase-kpi{font-family:var(--mono);font-size:12px;padding:12px;background:var(--card2);border-radius:8px;color:var(--t2);margin-top:16px;line-height:1.7}
+
+/* RISKS */
+.risk-card{padding:24px;border-radius:var(--r);background:var(--card);border:var(--bd)}
+.risk-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.risk-title{font-size:16px;font-weight:700;color:var(--t1);line-height:1.3}
+.risk-body{font-size:14px;line-height:1.7;color:var(--t2)}
+.risk-mit{margin-top:14px;padding:12px 16px;border-radius:8px;background:rgba(255,255,255,.03);font-size:13px;line-height:1.6}
+.risk-mit::before{content:'✓ Mitigation: ';font-weight:700;color:var(--green)}
+
+/* NEXT STEPS */
+.step-list{display:flex;flex-direction:column;gap:16px}
+.step-item{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:20px;background:var(--card);border-radius:12px;border:var(--bd);align-items:start}
+.step-timing{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:6px;text-align:center;white-space:nowrap}
+.st-now{background:var(--rA);color:var(--red)}
+.st-m1{background:var(--cA);color:var(--cyan)}
+.st-m2{background:var(--pA);color:var(--purple)}
+.st-m3{background:var(--gA);color:var(--green)}
+.st-m6{background:var(--oA);color:var(--orange)}
+.step-text{font-size:15px;color:var(--t1);line-height:1.6}
+
+footer{border-top:var(--bd);padding:32px 0;text-align:center;font-size:13px;color:var(--t3)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+<div class="container">
+<div class="nav-inner">
+  <div class="nav-logo">⚡ Rev.io <span>AgentOS</span></div>
+  <div class="nav-links">
+    <a href="#market">Market Opp</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#bizmodel">Business Model</a>
+    <a href="#competitive">Competitive</a>
+    <a href="#partners">Partner Stack</a>
+    <a href="#pilots">Pilot Plan</a>
+    <a href="#roadmap">Roadmap</a>
+  </div>
+  <span class="pill pill-r" style="font-size:11px;padding:5px 14px">🔒 INTERNAL — CONFIDENTIAL</span>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+<div class="container">
+<div class="reveal">
+  <div class="hero-eyebrow">INTERNAL STRATEGY BRIEF — APRIL 2026</div>
+  <h1><span class="tg">The AgentOS<br>Business Case</span></h1>
+  <p class="hero-sub">Why Rev.io is uniquely positioned to become the AI operating system for managed services — and how we win before the 18-month window closes.</p>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-val">$424B</div><div class="hstat-lbl">Global MSP market size</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:var(--red)">18 mo</div><div class="hstat-lbl">Competitive window</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:var(--green)">$25.5M</div><div class="hstat-lbl">Projected ARR at scale</div></div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- EXEC SUMMARY -->
+<section id="summary" style="background:rgba(0,229,255,.015)">
+<div class="container">
+<div class="reveal"><span class="section-label">Executive Summary</span><h2>The Case in 60 Seconds</h2></div>
+<div class="exec-cards">
+  <div class="exec-card ec-opp reveal d1">
+    <div class="exec-card-head">The Opportunity</div>
+    <p>MSPs are the distribution layer for AI to 40,000+ SMBs who will never buy AI directly from hyperscalers. No platform exists today that lets MSPs build, sell, and bill AI agents to their end customers. That's the whitespace.</p>
+  </div>
+  <div class="exec-card ec-str reveal d2">
+    <div class="exec-card-head">The Strategy</div>
+    <p>Two products. One platform. Revii manages the MSP's own business (internal AI). AgentHub lets MSPs deliver AI to their clients (external revenue). Same billing rails, same data fabric, compounding flywheel.</p>
+  </div>
+  <div class="exec-card ec-moat reveal d3">
+    <div class="exec-card-head">The Moat</div>
+    <p>Rev.io's billing DNA is the hardest layer to replicate. Every competitor can spin up inference endpoints. Almost none can meter heterogeneous AI consumption, reconcile it against MSP pricing tiers, and push payments through an integrated rail. We already do this.</p>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- MARKET OPPORTUNITY -->
+<section id="market">
+<div class="container">
+<div class="reveal"><span class="section-label">Market Opportunity</span><h2>The Market Opportunity</h2></div>
+<div class="grid2" style="align-items:start">
+  <div class="reveal d1">
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:24px">
+      <div class="card card-c"><div style="font-family:var(--mono);font-size:28px;font-weight:700;color:var(--cyan)">$424B–$511B</div><div style="font-size:14px;color:var(--t2);margin-top:4px">Global MSP Market (2026 projected) · CAGR 8.7% through 2035</div></div>
+      <div class="card"><div style="font-size:15px;color:var(--t1);line-height:1.7"><strong style="color:var(--cyan)">40,000+</strong> MSPs in North America alone, serving millions of SMBs who will never buy AI directly from hyperscalers.</div></div>
+      <div class="card"><div style="font-size:15px;color:var(--t1);line-height:1.7">Enterprise GenAI spending up <strong style="color:var(--green)">50%</strong> in 2025 — average <strong style="color:var(--green)">$2.6M</strong> per use case. MSPs that don't offer AI services within 18–24 months risk commoditization to break-fix.</div></div>
+    </div>
+    <div class="callout callout-r">
+      <strong>🚨 Market Signal — Treeline MSP (a16z, $25M, March 2026)</strong><br><br>
+      a16z bet $25M that AI-native MSPs will disrupt traditional MSPs. This is VC money actively building the threat. Rev.io's play: be the platform that makes <em>existing</em> MSPs the disruptors instead of the disrupted. We turn the threat into our channel.
+    </div>
+  </div>
+  <div class="reveal d2">
+    <div style="font-size:13px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:20px;text-align:center">The Whitespace Map</div>
+    <div class="ws-diagram">
+      <div class="ws-box ws-top">
+        <div style="font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Above market</div>
+        <strong style="color:var(--t1)">Hyperscalers</strong> — AWS / Azure / Google<br>
+        <span style="font-size:13px">Too complex for MSPs. No channel model. No billing integration.</span>
+      </div>
+      <div class="ws-arrow">↕</div>
+      <div class="ws-box ws-mid">
+        <div style="font-size:11px;color:var(--cyan);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">⚡ The Whitespace</div>
+        <strong>Rev.io AgentHub</strong><br>
+        <span style="font-size:13px">Customer-facing AI delivery through MSPs. Nobody is here yet.</span>
+      </div>
+      <div class="ws-arrow">↕</div>
+      <div class="ws-box ws-bot">
+        <div style="font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Below market</div>
+        <strong style="color:var(--t1)">ConnectWise / Kaseya / NinjaOne</strong><br>
+        <span style="font-size:13px">AI for MSP internal operations only. Not customer-facing delivery.</span>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:13px;color:var(--cyan);margin-top:16px;font-weight:600">Nobody is building customer-facing AI delivery for MSPs.<br>That's the gap. That's the play.</div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- TWO-PRODUCT STRATEGY -->
+<section id="strategy" style="background:rgba(123,97,255,.015)">
+<div class="container">
+<div class="reveal"><span class="section-label">The Strategy</span><h2>Two Products. One Flywheel.</h2></div>
+<div class="flywheel reveal">
+  <div class="fw-box fw-revii">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Revii</div>
+    <div style="font-size:15px;color:var(--t1)">MSP gets smarter about clients</div>
+    <div style="font-size:13px;margin-top:8px">Internal AI → data accumulates →</div>
+  </div>
+  <div class="fw-center">DATA<br>FLYWHEEL<br>↻</div>
+  <div class="fw-box fw-hub">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">AgentHub</div>
+    <div style="font-size:15px;color:var(--t1)">Agents are smarter than competitors</div>
+    <div style="font-size:13px;margin-top:8px">→ more adoption → more data</div>
+  </div>
+</div>
+<div class="callout callout-c reveal" style="text-align:center;font-size:16px">
+  <strong>Revii intelligence → better AgentHub agents → more MSP adoption → more client data → smarter Revii → repeat.</strong><br>
+  <span style="font-size:14px">Competitors can copy individual features. They can't copy the flywheel.</span>
+</div>
+<div class="grid2" style="margin-top:32px">
+  <div class="card card-g reveal d1" style="border-top:2px solid var(--green)">
+    <span class="pill pill-g" style="margin-bottom:16px">Internal MSP AI</span>
+    <h3 style="color:var(--green);font-size:24px;margin-bottom:4px">Revii</h3>
+    <div style="font-weight:600;color:var(--t2);margin-bottom:20px">The MSP's AI Chief of Staff</div>
+    <div style="font-size:14px;line-height:1.8;margin-bottom:20px;color:var(--t1)">
+      <div style="margin-bottom:8px">🚀 Client onboarding: 40 hrs → 4 hrs</div>
+      <div style="margin-bottom:8px">💰 Revenue leakage detection: $14,200/mo avg recovery</div>
+      <div style="margin-bottom:8px">📊 QBR generation: 6 hours saved per client per quarter</div>
+      <div>🎫 L1 auto-resolution: 90-second average</div>
+    </div>
+    <div class="callout callout-g" style="margin:0">
+      <strong>Strategic Role:</strong> Revii is the Trojan horse. It embeds Rev.io's AI platform in MSP daily operations, builds trust, and generates the client data that makes AgentHub agents transformatively powerful.
+    </div>
+    <div style="margin-top:20px;padding:16px;background:var(--card2);border-radius:8px;font-size:14px">
+      <div style="font-weight:700;color:var(--t3);font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Revenue Model</div>
+      Platform subscription · $799–$1,999/mo tiered · 80%+ gross margin
+    </div>
+  </div>
+  <div class="card card-c reveal d2" style="border-top:2px solid var(--cyan)">
+    <span class="pill pill-c" style="margin-bottom:16px">External AI Delivery</span>
+    <h3 style="color:var(--cyan);font-size:24px;margin-bottom:4px">AgentHub</h3>
+    <div style="font-weight:600;color:var(--t2);margin-bottom:20px">The MSP's AI Delivery Platform</div>
+    <div style="font-size:14px;line-height:1.8;margin-bottom:20px;color:var(--t1)">
+      <div style="margin-bottom:8px">📞 Voice agents: Answer Agent, Welcome Agent</div>
+      <div style="margin-bottom:8px">⚙️ Workflow agents: Ticket Resolver, Incident Responder</div>
+      <div style="margin-bottom:8px">📈 Intelligence agents: Revenue Finder, QBR Writer, BI</div>
+      <div>🛡️ Compliance agents: Security Compliance, Audit</div>
+    </div>
+    <div class="callout callout-c" style="margin:0">
+      <strong>Strategic Role:</strong> AgentHub transforms the MSP from a cost center into an AI delivery partner — 60–70% gross margins on a new revenue line. Creates lock-in: once clients run on AgentHub agents, they're not leaving.
+    </div>
+    <div style="margin-top:20px;padding:16px;background:var(--card2);border-radius:8px;font-size:14px">
+      <div style="font-weight:700;color:var(--t3);font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Revenue Model</div>
+      Template licensing ($99–$599/mo) + consumption margin (10–15%) + outcome-based premium
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section id="bizmodel">
+<div class="container">
+<div class="reveal"><span class="section-label">Business Model</span><h2>The Revenue Architecture</h2></div>
+<div class="tbl-wrap reveal">
+<table>
+  <thead><tr><th>Revenue Layer</th><th>Mechanism</th><th>Rev.io Margin</th><th>Defensibility</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td><strong style="color:var(--t1)">Platform Access Fee</strong></td><td>$799–$1,999/mo per MSP</td><td><span style="color:var(--green);font-weight:700">80%+</span></td><td>High — switching costs</td><td>Revii Starter / AgentOS Pro / Enterprise tiers</td></tr>
+    <tr><td><strong style="color:var(--t1)">Agent Template Licensing</strong></td><td>$99–$599/mo per template</td><td><span style="color:var(--green);font-weight:700">85%+</span></td><td>High — vertical IP</td><td>MSP activates, Rev.io earns; this is where IP lives</td></tr>
+    <tr><td><strong style="color:var(--t1)">Consumption Pass-Through</strong></td><td>10–15% markup on infra</td><td><span style="color:var(--yellow);font-weight:700">10–15%</span></td><td>Low — keep honest</td><td>Tokens, voice minutes, storage; prevent route-around</td></tr>
+    <tr><td><strong style="color:var(--t1)">Outcome-Based Premium</strong></td><td>10% of recovered revenue / $X per resolution</td><td><span style="color:var(--cyan);font-weight:700">30–60%</span></td><td>Highest — value aligned</td><td>Future tier; highest margin and highest defensibility</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="bm-math reveal d1">
+  <div style="color:var(--t3);font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Unit Economics at Scale</div>
+  500 MSPs<br>
+  × 50 end customers per MSP<br>
+  × $85 avg Rev.io take per end customer / month<br>
+  = $4,250 / MSP / month<br>
+  = $2.125M MRR<br>
+  = <span class="result">$25.5M ARR at scale</span>
+</div>
+<div class="callout callout-r reveal d2" style="margin-top:24px">
+  <strong>⚠️ Critical Warning: The Infrastructure Margin Trap</strong><br><br>
+  The original plan proposed 20–40% infrastructure markup. This is NOT sustainable. Model API costs fall 70–80%/year. Cloudflare, Neon, and Railway are racing to zero. When Microsoft notices MSPs reselling AI, they will offer Copilot Studio + Azure AI with channel incentives that undercut any independent reseller.<br><br>
+  <strong>The fix:</strong> Make margin on agent template IP and outcome billing — not compute. Consumption pass-through at 10–15% only (prevents route-around). Rev.io must be an agent IP company with billing infrastructure — not an infrastructure reseller that happens to have agents.
+</div>
+</div>
+</section>
+
+<!-- COMPETITIVE -->
+<section id="competitive" style="background:rgba(255,51,102,.015)">
+<div class="container">
+<div class="reveal"><span class="section-label">Competitive Landscape</span><h2>Who's Building This — And Why We Can Win</h2><p class="subheading">The window is 18 months. Here's who's in the race and what the gap is.</p></div>
+<div class="comp-grid reveal">
+  <div class="comp-card comp-cw" style="border-top:2px solid var(--red)">
+    <div class="comp-threat" style="color:var(--red)">🔴 Biggest Threat</div>
+    <div class="comp-name">ConnectWise</div>
+    <p><strong style="color:var(--t1)">Sidekick AI:</strong> AI-native across PSA, RMM, and Cybersecurity. Asio platform with RPA Pro and natural language bot creation. 10× Rev.io's install base.</p>
+    <p>Ships features to existing customers — doesn't need to convince anyone to adopt a new platform. This is the most dangerous competitor.</p>
+    <div class="comp-gap">✓ Key gap: Building AI <em>FOR</em> MSPs (internal ops only). NOT building AI <em>THROUGH</em> MSPs to end customers. This is our moat.</div>
+  </div>
+  <div class="comp-card comp-k" style="border-top:2px solid var(--orange)">
+    <div class="comp-threat" style="color:var(--orange)">🟠 High Threat</div>
+    <div class="comp-name">Kaseya</div>
+    <p><strong style="color:var(--t1)">Cooper AI:</strong> 11,000+ users, 300,000+ interactions. Smart triage, SOP generation, MSP workflow automation. Kaseya 365 bundles AI — hard to compete on price.</p>
+    <p>Same strategic gap as ConnectWise: internal MSP operations only. No customer-facing delivery layer.</p>
+    <div class="comp-gap">✓ Same gap applies. Customer-facing AI delivery remains unaddressed.</div>
+  </div>
+  <div class="comp-card comp-r" style="border-top:2px solid var(--yellow)">
+    <div class="comp-threat" style="color:var(--yellow)">🟡 Medium-High Threat</div>
+    <div class="comp-name">Rewst</div>
+    <p><strong style="color:var(--t1)">$76M raised</strong> (Sapphire + Meritech). MSP workflow automation leader. 400+ integrations. Deep MSP relationships. RPA-first, not agent-first.</p>
+    <p>One strategic pivot from customer-facing agent delivery. This is the threat to move fastest against. Alternatively: partner with Rewst to neutralize. Their MSP-internal workflows feed customer-facing AgentHub agents.</p>
+    <div class="comp-gap">⚡ Action: Move faster OR formalize partnership conversation now.</div>
+  </div>
+  <div class="comp-card comp-p" style="border-top:1px solid rgba(255,255,255,.15)">
+    <div class="comp-threat" style="color:var(--t3)">⚪ Emerging</div>
+    <div class="comp-name">Pia / New Entrants</div>
+    <p><strong style="color:var(--t1)">Pia:</strong> In Pax8 marketplace. AI-first MSP automation. Smaller scale but purpose-built for MSPs.</p>
+    <p><strong style="color:var(--t1)">Treeline (a16z $25M):</strong> Proving the AI-native MSP market exists. Not a direct competitor — we should be the platform they build on top of.</p>
+    <div class="comp-gap">→ Treeline is validation, not threat. Position AgentHub as their infrastructure layer.</div>
+  </div>
+</div>
+<div class="callout callout-c reveal d1">
+  <strong>⚡ How We Win: The 18-Month Window</strong><br><br>
+  Competitors are building AI FOR MSP internal operations. Nobody has built the customer-facing agent delivery layer. Rev.io has the billing rails, PSA data, and existing MSP relationships. We need to own "customer-facing MSP AI delivery" as a category before ConnectWise/Kaseya adds it to their platforms.<br><br>
+  <strong>That window is 12–18 months. The window is open NOW. Every month we wait, it narrows.</strong>
+</div>
+</div>
+</section>
+
+<!-- PARTNER STACK -->
+<section id="partners">
+<div class="container">
+<div class="reveal"><span class="section-label">Partner Stack</span><h2>Streamlined: From 50 Partners to 14</h2><p class="subheading">Every partner earns their place or they're cut. Here's the business rationale for each of the 14.</p></div>
+<div class="tbl-wrap reveal">
+<table>
+  <thead><tr><th>#</th><th>Partner</th><th>Category</th><th>Strategic Rationale</th><th>Revenue Impact</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><strong style="color:var(--t1)">Vapi</strong></td><td><span class="partner-tag" style="background:var(--cA);color:var(--cyan)">Voice AI</span></td><td>Per-minute billing creates clean consumption revenue. Best-in-class voice latency. Already integrated with Rev.io.</td><td>Direct consumption margin</td></tr>
+    <tr><td>2</td><td><strong style="color:var(--t1)">Anthropic Claude</strong></td><td><span class="partner-tag" style="background:var(--pA);color:var(--purple)">Foundation LLM</span></td><td>Superior reasoning for business-critical outputs. Constitutional AI reduces liability. Primary model.</td><td>Per-token consumption</td></tr>
+    <tr><td>3</td><td><strong style="color:var(--t1)">OpenAI</strong></td><td><span class="partner-tag" style="background:var(--pA);color:var(--purple)">Foundation LLM</span></td><td>Secondary model for high-volume lower-complexity tasks. Provides model redundancy and cost optimization.</td><td>Per-token consumption</td></tr>
+    <tr><td>4</td><td><strong style="color:var(--t1)">Langfuse</strong></td><td><span class="partner-tag" style="background:rgba(255,255,255,.06);color:var(--t2)">Observability</span></td><td>Self-hostable, white-labelable as "AgentHub Insights." MSPs cannot run production agents without trace-level observability.</td><td>Platform differentiation</td></tr>
+    <tr><td>5</td><td><strong style="color:var(--t1)">Amberflo</strong></td><td><span class="partner-tag" style="background:var(--rA);color:var(--red)">AI Metering</span></td><td><strong style="color:var(--red)">EXISTENTIAL.</strong> Rev.io's telecom billing engine cannot meter AI consumption (tokens, tool calls, embeddings) natively. Amberflo solves this.</td><td>Enables consumption model</td></tr>
+    <tr><td>6</td><td><strong style="color:var(--t1)">Orb</strong></td><td><span class="partner-tag" style="background:var(--oA);color:var(--orange)">Billing Orch.</span></td><td>Manages complex pricing (hybrid, tiered, outcome-based) between Amberflo metering and Rev.io invoicing.</td><td>Enables model complexity</td></tr>
+    <tr><td>7</td><td><strong style="color:var(--t1)">Vanta</strong></td><td><span class="partner-tag" style="background:var(--gA);color:var(--green)">Compliance</span></td><td>"Compliance Passport" per agent kills regulated-vertical objections. Healthcare, finance, legal MSPs have no alternative without this.</td><td>Template premium + upsell</td></tr>
+    <tr><td>8</td><td><strong style="color:var(--t1)">Neon Postgres</strong></td><td><span class="partner-tag" style="background:var(--cA);color:var(--cyan)">Database</span></td><td>80%+ of databases provisioned by AI agents. Built for agentic workloads. Databricks-backed. Branch-per-MSP-tenant.</td><td>Consumption pass-through</td></tr>
+    <tr><td>9</td><td><strong style="color:var(--t1)">Cloudflare stack</strong></td><td><span class="partner-tag" style="background:var(--oA);color:var(--orange)">Edge Infra</span></td><td>Workers + R2 + AI Gateway. Sub-50ms globally. AI Gateway caches LLM calls — saves 30–40% on model costs automatically.</td><td>Cost efficiency + margin</td></tr>
+    <tr><td>10</td><td><strong style="color:var(--t1)">n8n</strong></td><td><span class="partner-tag" style="background:var(--pA);color:var(--purple)">Orchestration</span></td><td>Self-hostable (critical for MSP data sovereignty). 400+ integrations. Visual workflow builder for template customization.</td><td>Platform differentiator</td></tr>
+    <tr><td>11</td><td><strong style="color:var(--t1)">Qdrant</strong></td><td><span class="partner-tag" style="background:var(--cA);color:var(--cyan)">Vector DB</span></td><td>Knowledge backbone. MSP institutional knowledge (ticket history, RMM data) creates lock-in. Namespace isolation per tenant.</td><td>Switching cost driver</td></tr>
+    <tr><td>12</td><td><strong style="color:var(--t1)">Resend</strong></td><td><span class="partner-tag" style="background:rgba(255,255,255,.06);color:var(--t2)">Email</span></td><td>All agent-generated email communications. Simple per-email metering. Excellent deliverability.</td><td>Consumption pass-through</td></tr>
+    <tr><td>13</td><td><strong style="color:var(--t1)">Stripe Connect</strong></td><td><span class="partner-tag" style="background:var(--gA);color:var(--green)">Payments</span></td><td>End-customer payment collection. Rev.io facilitates without touching funds directly. MSP receives, Rev.io earns platform fee.</td><td>Platform revenue</td></tr>
+    <tr><td>14</td><td><strong style="color:var(--t1)">Supabase Auth</strong></td><td><span class="partner-tag" style="background:rgba(255,255,255,.06);color:var(--t2)">Identity</span></td><td>Unified auth across both products. Row-level security maps to MSP multi-tenancy. Social login + SSO support.</td><td>Infrastructure layer</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="callout callout-o reveal d1" style="margin-top:20px">
+  <strong>Why we cut from 50 to 14:</strong> The original list is a supply chain, not a product. 50 APIs = 50 failure surfaces. Rev.io is ~200 people — managing 50 active partnerships requires 15–20 dedicated engineers we don't have. Phase 1: 5 partners, deeply integrated. Month 6: full 14. Phase 3: open SDK, partners self-integrate.
+</div>
+<div class="callout callout-r reveal d2" style="margin-top:16px">
+  <strong>⚠️ MULTI-TENANCY IS THE #1 ENGINEERING PRIORITY — before any partner integrations begin.</strong><br><br>
+  MSP A's end customer data must never leak into MSP B's agent context. This requires namespace isolation at every layer: Neon (database branches per tenant), Qdrant (namespaces), model context (strict API key scoping per tenant). One data leakage event in a healthcare or finance vertical = company-ending event. Build it right before launch. No exceptions.
+</div>
+</div>
+</section>
+
+<!-- PILOTS -->
+<section id="pilots" style="background:rgba(0,255,163,.015)">
+<div class="container">
+<div class="reveal"><span class="section-label">Pilot Plan</span><h2>Phase 1 Pilots — Start Here</h2><p class="subheading">Three use cases that demonstrate ROI in under 30 days and MSPs can sell to non-technical buyers.</p></div>
+<div class="grid3 reveal">
+  <div class="pilot-card card-g" style="border-top:2px solid var(--green)">
+    <div class="pilot-num" style="color:var(--green)">Pilot 1 · Highest Confidence</div>
+    <div class="pilot-name">The Revenue Finder</div>
+    <div class="pilot-row"><div class="pilot-label">Problem</div><div>MSPs under-bill 8–12% through unbilled overages, expired promotions, and asset gaps.</div></div>
+    <div class="pilot-row"><div class="pilot-label">The Agent</div><div>Cross-references RMM assets against PSA contracts and billing records. Surfaces every discrepancy with monthly value.</div></div>
+    <div class="pilot-row"><div class="pilot-label">Outcome</div><div style="color:var(--green);font-weight:700">$14,200/mo in recovered revenue. ROI on day 1.</div></div>
+    <div class="pilot-row"><div class="pilot-label">Demo</div><div>7 days to first result. MSP sees the dollar figure before signing.</div></div>
+    <div class="pilot-pitch">"You're already doing the work. We find the money you forgot to charge for."</div>
+  </div>
+  <div class="pilot-card card-c" style="border-top:2px solid var(--cyan)">
+    <div class="pilot-num" style="color:var(--cyan)">Pilot 2 · Best Demo Impact</div>
+    <div class="pilot-name">The Ticket That Fixes Itself</div>
+    <div class="pilot-row"><div class="pilot-label">Problem</div><div>Average MSP spends 40% of tech time on L1. At $45/hr fully loaded, 50 techs = $936K/yr on L1 alone.</div></div>
+    <div class="pilot-row"><div class="pilot-label">The Agent</div><div>Monitors incoming PSA tickets, classifies, resolves common issues autonomously. Escalates only what needs humans.</div></div>
+    <div class="pilot-row"><div class="pilot-label">Outcome</div><div style="color:var(--cyan);font-weight:700">247 tickets resolved in Month 1. 90-sec avg vs 4.2-hr industry.</div></div>
+    <div class="pilot-row"><div class="pilot-label">Demo</div><div>Live demo: ticket arrives → AI resolves → client notified → billing captured. 90 seconds, live on screen.</div></div>
+    <div class="pilot-pitch">"Your most expensive employees stop doing your cheapest work."</div>
+  </div>
+  <div class="pilot-card card-p" style="border-top:2px solid var(--purple)">
+    <div class="pilot-num" style="color:var(--purple)">Pilot 3 · Highest Stickiness</div>
+    <div class="pilot-name">The QBR That Writes Itself</div>
+    <div class="pilot-row"><div class="pilot-label">Problem</div><div>60% of MSPs skip QBRs because prep takes a full day per client. MSPs that do QBRs retain clients 3× longer.</div></div>
+    <div class="pilot-row"><div class="pilot-label">The Agent</div><div>Pulls 90 days of ticket/SLA/security data. Generates polished presentation with charts and upsell recommendations.</div></div>
+    <div class="pilot-row"><div class="pilot-label">Outcome</div><div style="color:var(--purple);font-weight:700">15 minutes vs 6 hours. One retained client = $60K–$200K LTV.</div></div>
+    <div class="pilot-row"><div class="pilot-label">Demo</div><div>Point at a real client's data. Watch the QBR appear. vCIO jaw drops.</div></div>
+    <div class="pilot-pitch">"Your vCIO spends a day on each QBR. This does it in 15 minutes — and never forgets the upsell."</div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+<div class="container">
+<div class="reveal"><span class="section-label">Execution Roadmap</span><h2>18-Month Execution Plan</h2></div>
+<div class="roadmap reveal">
+  <div class="phase ph1">
+    <div class="phase-dot">1</div>
+    <div class="phase-title">Months 0–6</div>
+    <div class="phase-sub">Foundation</div>
+    <ul class="phase-items">
+      <li><strong>Engineering:</strong> Multi-tenancy architecture (#1 priority). Amberflo AI metering. Langfuse white-labeling.</li>
+      <li><strong>Product:</strong> Revii Starter GA — Revenue Finder, QBR Writer, Client Onboarder, L1 Resolution.</li>
+      <li><strong>Partners:</strong> 5 deep integrations: Vapi, Neon, Cloudflare, Anthropic, Langfuse.</li>
+      <li><strong>GTM:</strong> 5 pilot MSPs selected from existing base. Build category narrative. Document proof points.</li>
+    </ul>
+    <div class="phase-kpi">KPI: 5 MSPs live · $14,200/mo avg recovery demonstrated · 3 case studies published</div>
+  </div>
+  <div class="phase ph2">
+    <div class="phase-dot">2</div>
+    <div class="phase-title">Months 6–12</div>
+    <div class="phase-sub">Scale</div>
+    <ul class="phase-items">
+      <li><strong>Engineering:</strong> AgentHub 10-template catalog. Self-service activation. Partner APIs for Qdrant, Vanta, Orb.</li>
+      <li><strong>Product:</strong> AgentOS Pro GA. 3 template categories live (Voice, Workflow, Intelligence).</li>
+      <li><strong>Partners:</strong> Full 14-partner stack live.</li>
+      <li><strong>GTM:</strong> Open to 50 MSPs. Outcome-based pricing pilots. 3 co-sell partnerships (Vapi, Vanta, Neon).</li>
+    </ul>
+    <div class="phase-kpi">KPI: 50 MSPs · $2M ARR · 500 end customers running agents</div>
+  </div>
+  <div class="phase ph3">
+    <div class="phase-dot">3</div>
+    <div class="phase-title">Months 12–18</div>
+    <div class="phase-sub">Win</div>
+    <ul class="phase-items">
+      <li><strong>Engineering:</strong> Partner self-service SDK. Template marketplace. Compliance Passport (Vanta).</li>
+      <li><strong>Product:</strong> Enterprise tier. Custom template dev service. Rewst integration/partnership.</li>
+      <li><strong>GTM:</strong> Category leadership. "AgentHub Certified MSP" program. IT Nation + DattoCon presence.</li>
+      <li><strong>Goal:</strong> ConnectWise/Kaseya are playing catch-up instead of leading.</li>
+    </ul>
+    <div class="phase-kpi">KPI: 200 MSPs · $8M ARR · Category defined and owned</div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- RISKS -->
+<section id="risks" style="background:rgba(255,51,102,.015)">
+<div class="container">
+<div class="reveal"><span class="section-label">Risk Assessment</span><h2>Top Risks & Mitigations</h2></div>
+<div style="display:flex;flex-direction:column;gap:16px">
+  <div class="risk-card reveal">
+    <div class="risk-header"><div class="risk-title">ConnectWise or Kaseya builds customer-facing agent delivery natively</div><span class="pill pill-r">HIGH</span></div>
+    <div class="risk-body">They have 10× the install base and can ship features to existing customers without needing to win new platform adoption. This is the existential threat.</div>
+    <div class="risk-mit">Speed + differentiation. They're building AI <em>FOR</em> MSPs. We build AI <em>THROUGH</em> MSPs to end customers. Own this distinction as a category. If ConnectWise ships the equivalent in Month 12, we need 200 MSPs already locked in. Time is the only mitigation.</div>
+  </div>
+  <div class="risk-card reveal d1">
+    <div class="risk-header"><div class="risk-title">Multi-tenancy failure causes data leakage between MSP tenants</div><span class="pill pill-r">HIGH — but preventable</span></div>
+    <div class="risk-body">One data leakage event where MSP A's client data appears in MSP B's agent context ends the product in regulated verticals (healthcare, finance, legal). This is a company-ending event.</div>
+    <div class="risk-mit">Multi-tenancy architecture is Engineering Priority #1. Nothing ships until namespace isolation is validated at every layer. No shortcuts, no exceptions. Pre-launch security audit required.</div>
+  </div>
+  <div class="risk-card reveal d2">
+    <div class="risk-header"><div class="risk-title">Rewst expands into customer-facing agent delivery</div><span class="pill pill-o">MEDIUM-HIGH</span></div>
+    <div class="risk-body">$76M raised. Deep MSP relationships. Already the workflow automation leader. One strategic pivot away from being our direct competitor in the customer-facing space.</div>
+    <div class="risk-mit">Move faster. Consider partnership — Rewst's MSP-internal workflows feed customer-facing AgentHub agents. If partnership is viable, this threat becomes an asset. Open partnership conversation now while Rewst is still workflow-focused, not agent-delivery-focused.</div>
+  </div>
+  <div class="risk-card reveal d3">
+    <div class="risk-header"><div class="risk-title">MSP channel lacks skills to sell AI to end customers</div><span class="pill pill-o">MEDIUM</span></div>
+    <div class="risk-body">Most MSPs sell break-fix and managed services. Selling AI agents to a law firm or dental practice requires a completely different consultative sales motion that most MSPs don't have.</div>
+    <div class="risk-mit">Make it turnkey. Pre-build sales collateral, ROI calculators, and self-serve demo environments. Year 1: Rev.io co-sells with MSPs. Year 2: MSPs sell independently. The Revenue Finder demo sells itself — show $14,200 recovered in first scan. No sales skill required.</div>
+  </div>
+  <div class="risk-card reveal d4">
+    <div class="risk-header"><div class="risk-title">Partner stack becomes unmaintainable as we scale</div><span class="pill pill-g">MITIGATED</span></div>
+    <div class="risk-body">The original 50-partner plan would require 15–20 dedicated partnership engineers. Rev.io is ~200 people. API changes, startup failures, and pricing shifts would create constant maintenance debt.</div>
+    <div class="risk-mit">Already mitigated by cutting to 14 partners. Phase 3 opens partner SDK — partners self-integrate. Never expose more than one vendor option per category to MSPs. Build abstraction layers so swaps don't require MSP-facing changes.</div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- NEXT STEPS -->
+<section id="next">
+<div class="container">
+<div class="reveal"><span class="section-label">Action Plan</span><h2>What Needs to Happen Now</h2></div>
+<div class="step-list reveal">
+  <div class="step-item">
+    <span class="step-timing st-now">IMMEDIATELY</span>
+    <div class="step-text"><strong style="color:var(--t1)">Assign engineering team to multi-tenancy architecture spec.</strong> Nothing ships until this is solid. Define namespace isolation at DB, vector store, and model context layers. Pre-launch security audit required.</div>
+  </div>
+  <div class="step-item">
+    <span class="step-timing st-m1">MONTH 1</span>
+    <div class="step-text"><strong style="color:var(--t1)">Formalize partnerships with Vapi, Neon, Cloudflare, Anthropic, and Langfuse.</strong> Negotiate volume pricing commitments. These are the 5 Phase 1 partners — everything else waits.</div>
+  </div>
+  <div class="step-item">
+    <span class="step-timing st-m1">MONTH 1</span>
+    <div class="step-text"><strong style="color:var(--t1)">Select 5 pilot MSPs from existing customer base.</strong> Criteria: 500+ managed endpoints, forward-thinking owner, willing to co-sell with Rev.io to their clients. These are your case studies.</div>
+  </div>
+  <div class="step-item">
+    <span class="step-timing st-m2">MONTH 2</span>
+    <div class="step-text"><strong style="color:var(--t1)">Integrate Amberflo as the AI metering layer.</strong> Rev.io's telecom billing engine cannot handle AI consumption natively. This is existential to the revenue model — not optional.</div>
+  </div>
+  <div class="step-item">
+    <span class="step-timing st-m2">MONTH 2</span>
+    <div class="step-text"><strong style="color:var(--t1)">Ship Revii Revenue Finder pilot.</strong> First customer demo within 60 days of kickoff. The demo sells itself — show $14,200 in recovered revenue in the first scan. This is the first proof point.</div>
+  </div>
+  <div class="step-item">
+    <span class="step-timing st-m3">MONTH 3</span>
+    <div class="step-text"><strong style="color:var(--t1)">Deploy Langfuse as "AgentHub Insights."</strong> MSPs cannot run customer-facing agents in production without observability. Traces, cost attribution, error dashboards — white-labeled under Rev.io brand.</div>
+  </div>
+  <div class="step-item">
+    <span class="step-timing st-m6">MONTH 6</span>
+    <div class="step-text"><strong style="color:var(--t1)">AgentOS Pro GA. First 50 MSPs. $2M ARR target.</strong> AgentHub template catalog live. 3 template categories (Voice, Workflow, Intelligence). Outcome-based pricing pilots begin.</div>
+  </div>
+</div>
+<div class="callout callout-r reveal d1" style="margin-top:32px;text-align:center;font-size:17px;padding:32px">
+  <strong>The window is 18 months.</strong> ConnectWise and Kaseya will ship customer-facing AI. Rewst will pivot. Microsoft will bundle Copilot Studio into channel deals. Rev.io's advantage is the billing moat, existing MSP relationships, and speed.<br><br>
+  <span style="font-size:20px;color:var(--red);font-weight:800">Execute now.</span>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<div>⚡ Rev.io AgentOS — Internal Strategy Brief · April 2026 · <span style="color:var(--red)">CONFIDENTIAL — DO NOT DISTRIBUTE</span></div>
+<div style="margin-top:8px">Prepared with strategic analysis by Opus 4.6 · Designed for executive review</div>
+</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const el=document.querySelector(a.getAttribute('href'));
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
