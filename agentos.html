@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io AgentOS — The AI Operating System for MSPs</title>
+<meta name="description" content="Revii manages your business. AgentHub grows your clients'. One platform, two revenue streams, zero new headcount.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0F;--card:#12121A;--card2:#1A1A2E;--cyan:#00E5FF;--cyanA:rgba(0,229,255,0.15);--purple:#7B61FF;--purpleA:rgba(123,97,255,0.15);--green:#00FFA3;--greenA:rgba(0,255,163,0.15);--red:#FF3366;--t1:rgba(255,255,255,.95);--t2:rgba(255,255,255,.6);--t3:rgba(255,255,255,.35);--bd:1px solid rgba(255,255,255,.08);--r:16px;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--t2);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{color:var(--t1);font-weight:700;letter-spacing:-.03em;line-height:1.1}
+h1{font-size:clamp(36px,6vw,72px);font-weight:800}
+h2{font-size:clamp(28px,4vw,52px)}
+h3{font-size:clamp(20px,2.5vw,28px)}
+a{text-decoration:none;color:inherit;transition:color .3s}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+section{padding:clamp(80px,12vw,140px) 0;position:relative}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 700ms var(--ease),transform 700ms var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:100ms}.d2{transition-delay:200ms}.d3{transition-delay:300ms}.d4{transition-delay:400ms}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+.tg{background:linear-gradient(135deg,#fff 0%,var(--cyan) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 28px;font-weight:600;font-size:16px;border-radius:8px;cursor:pointer;border:none;font-family:var(--sans);transition:all .3s var(--ease)}
+.btn-c{background:var(--cyan);color:var(--bg);box-shadow:0 0 0 rgba(0,229,255,0)}
+.btn-c:hover{box-shadow:0 0 40px rgba(0,229,255,.4);transform:translateY(-2px)}
+.btn-o{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--t1)}
+.btn-o:hover{background:rgba(255,255,255,.05)}
+.pill{display:inline-block;font-size:13px;font-weight:600;padding:5px 14px;border-radius:100px}
+.pc{background:var(--cyanA);color:var(--cyan);border:1px solid rgba(0,229,255,.25)}
+.pg{background:var(--greenA);color:var(--green);border:1px solid rgba(0,255,163,.25)}
+.pp{background:var(--purpleA);color:var(--purple);border:1px solid rgba(123,97,255,.25)}
+.card{background:var(--card);border:var(--bd);border-radius:var(--r);padding:40px;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px);background:rgba(10,10,15,.85);border-bottom:1px solid rgba(255,255,255,.06);height:72px;display:flex;align-items:center}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;width:100%}
+.nav-logo{font-weight:800;font-size:20px;color:var(--t1);display:flex;align-items:center;gap:6px}
+.nav-logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:28px;font-size:14px;font-weight:500}
+.nav-links a{color:var(--t2)}
+.nav-links a:hover{color:var(--t1)}
+@media(max-width:768px){.nav-links{display:none}}
+
+/* HERO */
+#hero{height:100vh;min-height:700px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding-top:72px}
+#particles{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hero-body{position:relative;z-index:1;max-width:900px;padding:0 20px}
+.hero-sub{color:rgba(255,255,255,.7);max-width:620px;margin:24px auto 40px;font-size:18px}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.hero-stats{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-top:60px}
+.hstat{background:rgba(18,18,26,.7);backdrop-filter:blur(10px);border:var(--bd);border-radius:12px;padding:16px 24px;text-align:left}
+.hstat-val{font-family:var(--mono);font-weight:700;font-size:22px;margin-bottom:2px}
+.hstat-lbl{font-size:12px;color:var(--t2)}
+.scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:var(--t3);animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+
+/* PLATFORM */
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+@media(max-width:800px){.prod-grid{grid-template-columns:1fr}}
+.prod-card{padding:40px;border-radius:var(--r);background:var(--card);position:relative}
+.prod-card.rc{border-top:2px solid var(--green)}
+.prod-card.ac{border-top:2px solid var(--cyan)}
+.prod-card h3{font-size:30px;margin:20px 0 4px}
+.prod-sub{font-weight:600;margin-bottom:20px;display:block;font-size:16px}
+.prod-card p{margin-bottom:28px;line-height:1.7}
+.feat-list{list-style:none;margin-bottom:32px}
+.feat-list li{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:15px;color:var(--t1)}
+.feat-list li:last-child{border-bottom:none}
+.chk{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px}
+.chk-g{background:var(--greenA);color:var(--green)}
+.chk-c{background:var(--cyanA);color:var(--cyan)}
+.prod-link{font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:6px}
+.rc .prod-link{color:var(--green)}
+.ac .prod-link{color:var(--cyan)}
+.int-banner{background:rgba(255,255,255,.02);border:1px solid rgba(0,229,255,.15);border-radius:12px;padding:24px;font-size:15px;line-height:1.7}
+.int-banner strong{color:var(--t1)}
+
+/* REVII TABS */
+.tab-nav{display:flex;gap:4px;margin-bottom:32px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:0}
+.tab-btn{background:transparent;border:none;color:var(--t2);padding:12px 20px;font-size:15px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;font-family:var(--sans)}
+.tab-btn:hover{color:var(--t1)}
+.tab-btn.on{color:var(--green);border-bottom-color:var(--green)}
+.tab-pane{display:none}
+.tab-pane.on{display:block}
+.tab-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+@media(max-width:800px){.tab-layout{grid-template-columns:1fr}}
+.ui-box{background:var(--card);border:var(--bd);border-radius:12px;padding:24px;font-family:var(--mono);font-size:13px}
+.ui-table{width:100%;border-collapse:collapse}
+.ui-table th{text-align:left;color:var(--t3);padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}
+.ui-table td{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.gap-cell{color:var(--green);font-weight:700;background:var(--greenA);padding:2px 8px;border-radius:4px}
+.ui-total{display:flex;justify-content:flex-end;align-items:center;gap:12px;padding-top:16px;font-weight:700;color:var(--t1);font-size:16px}
+.tl{position:relative;padding-left:24px}
+.tl::before{content:'';position:absolute;left:7px;top:16px;bottom:0;width:2px;background:rgba(255,255,255,.08)}
+.tl-step{display:flex;align-items:center;gap:16px;margin-bottom:20px;position:relative}
+.tl-dot{width:16px;height:16px;border-radius:50%;background:var(--greenA);border:2px solid var(--green);flex-shrink:0;z-index:1}
+.tl-step.done .tl-dot{background:var(--green)}
+.tl-text{font-size:14px;color:var(--t1)}
+.qbr-card{background:var(--card2);border-radius:8px;padding:20px}
+.qbr-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
+.qbr-row:last-child{border-bottom:none}
+.qbr-ok{color:var(--green);font-weight:600}
+.ticket{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--card2);border-radius:8px;margin-bottom:8px;font-size:13px}
+.ai-badge{background:var(--cyanA);color:var(--cyan);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;border:1px solid rgba(0,229,255,.3)}
+.ticket-counter{text-align:center;margin-top:16px;font-family:var(--mono);color:var(--t3);font-size:13px}
+.ticket-counter span{color:var(--cyan);font-size:24px;font-weight:700;display:block;margin-bottom:4px}
+
+/* CATALOG */
+.filter-tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:40px}
+.filter-btn{background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--t2);padding:8px 18px;border-radius:100px;font-size:14px;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.filter-btn:hover{background:rgba(255,255,255,.05)}
+.filter-btn.on{background:var(--t1);color:var(--bg);border-color:var(--t1);font-weight:600}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.acard{background:var(--card);border:var(--bd);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:12px;transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
+.acard:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.acard[data-cat="voice"]:hover{border-color:rgba(0,229,255,.5);box-shadow:0 20px 40px var(--cyanA)}
+.acard[data-cat="workflow"]:hover{border-color:rgba(123,97,255,.5);box-shadow:0 20px 40px var(--purpleA)}
+.acard[data-cat="intelligence"]:hover{border-color:rgba(0,255,163,.5);box-shadow:0 20px 40px var(--greenA)}
+.acard[data-cat="compliance"]:hover{border-color:rgba(255,152,0,.5)}
+.acard-top{display:flex;align-items:center;gap:14px}
+.acard-icon{width:48px;height:48px;border-radius:12px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.acard-name{font-size:17px;font-weight:700;color:var(--t1)}
+.acard-desc{font-size:14px;line-height:1.6;color:var(--t2);flex:1}
+.acard-outcome{font-size:13px;font-weight:600;padding:6px 12px;border-radius:8px;background:var(--card2)}
+.acard-foot{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)}
+.acard-price{font-family:var(--mono);font-weight:700;color:var(--t1);font-size:15px}
+.act-btn{background:var(--cyan);color:var(--bg);border:none;padding:6px 16px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans)}
+.acard.hidden{display:none}
+.cat-voice .acard-outcome{color:var(--cyan)}
+.cat-workflow .acard-outcome{color:var(--purple)}
+.cat-intelligence .acard-outcome{color:var(--green)}
+.cat-compliance .acard-outcome{color:#ff9800}
+
+/* PSA MOCKUP */
+.browser{background:var(--bg);border:var(--bd);border-radius:12px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.5)}
+.browser-bar{background:var(--card);padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:var(--bd)}
+.browser-dots{display:flex;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%}
+.dot-r{background:#ff5f56}.dot-y{background:#ffbd2e}.dot-g{background:#27c93f}
+.browser-url{flex:1;background:var(--card2);border-radius:6px;padding:4px 12px;font-family:var(--mono);font-size:12px;color:var(--t2);text-align:center;margin:0 12px}
+.psa{display:grid;grid-template-columns:220px 1fr;min-height:480px}
+@media(max-width:700px){.psa{grid-template-columns:1fr}.psa-sb{display:none}}
+.psa-sb{background:var(--card);border-right:var(--bd);padding:20px;display:flex;flex-direction:column;gap:8px}
+.psa-logo{font-weight:800;font-size:18px;color:var(--cyan);padding:4px 0 16px}
+.psa-nav-item{padding:10px 12px;border-radius:8px;font-size:14px;color:var(--t2);display:flex;align-items:center;gap:10px;cursor:pointer;transition:background .2s}
+.psa-nav-item:hover{background:var(--card2)}
+.psa-nav-item.active{background:var(--card2);color:var(--t1)}
+.psa-ai-status{margin-top:auto;padding:12px;background:var(--greenA);border:1px solid rgba(0,255,163,.2);border-radius:8px;font-size:12px;display:flex;align-items:center;gap:8px}
+.psa-pulse{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,255,163,.4)}50%{opacity:.7;box-shadow:0 0 0 6px rgba(0,255,163,0)}}
+.psa-main{padding:24px;display:flex;flex-direction:column;gap:16px;overflow:hidden}
+.psa-greeting{background:rgba(0,255,163,.06);border:1px solid rgba(0,255,163,.15);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--green)}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+.kpi-card{background:var(--card2);border-radius:8px;padding:12px;text-align:center}
+.kpi-val{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--t1)}
+.kpi-lbl{font-size:11px;color:var(--t3);margin-top:2px}
+.kpi-delta{font-size:11px;margin-top:4px}
+.dg{color:var(--green)}.dr{color:var(--red)}
+.ai-insight{border-left:3px solid var(--cyan);background:rgba(0,229,255,.05);border-radius:0 8px 8px 0;padding:12px 16px;font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.insight-link{color:var(--cyan);font-weight:600;white-space:nowrap;font-size:12px;cursor:pointer}
+.ticket-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.ticket-row:last-child{border-bottom:none}
+.ticket-title{flex:1;color:var(--t1)}
+.ticket-client{color:var(--t3);font-size:12px}
+.t-badge{padding:3px 8px;border-radius:100px;font-size:11px;font-weight:700}
+.t-high{background:rgba(255,51,102,.15);color:var(--red)}
+.t-med{background:rgba(255,152,0,.15);color:#ff9800}
+.t-ai{background:var(--cyanA);color:var(--cyan);border:1px solid rgba(0,229,255,.2)}
+
+/* PARTNERS */
+.partner-groups{display:flex;flex-direction:column;gap:28px}
+.partner-group h4{font-size:13px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.partner-pills{display:flex;flex-wrap:wrap;gap:10px}
+.partner-pill{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:8px 18px;font-size:14px;font-weight:500;color:var(--t1);transition:all .2s}
+.partner-pill:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2)}
+.partner-note{margin-top:32px;background:var(--card);border:var(--bd);border-radius:12px;padding:24px;text-align:center;color:var(--t2);font-size:15px;line-height:1.7}
+
+/* PRICING */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.price-grid{grid-template-columns:1fr}}
+.price-card{background:var(--card);border:var(--bd);border-radius:var(--r);padding:36px;display:flex;flex-direction:column;gap:20px;position:relative;transition:transform .3s var(--ease)}
+.price-card:hover{transform:translateY(-4px)}
+.price-card.featured{border-color:rgba(0,229,255,.4);box-shadow:0 0 40px rgba(0,229,255,.1)}
+.popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--cyan);color:var(--bg);font-size:12px;font-weight:800;padding:4px 16px;border-radius:100px}
+.price-name{font-size:14px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.1em}
+.price-amt{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--t1)}
+.price-amt sup{font-size:20px;vertical-align:top;margin-top:6px}
+.price-amt span{font-size:16px;color:var(--t2)}
+.price-desc{font-size:15px;color:var(--t2)}
+.price-feats{list-style:none;display:flex;flex-direction:column;gap:12px;flex:1}
+.price-feats li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--t1)}
+.price-feats li::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0}
+.price-btn{width:100%;padding:14px;font-weight:700;font-size:16px;border-radius:8px;cursor:pointer;border:none;font-family:var(--sans);transition:all .3s}
+.pbtn-c{background:var(--cyan);color:var(--bg)}
+.pbtn-c:hover{box-shadow:0 0 30px rgba(0,229,255,.4)}
+.pbtn-o{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--t1)}
+.pbtn-o:hover{background:rgba(255,255,255,.05)}
+
+/* METRICS */
+.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+@media(max-width:768px){.metrics-row{grid-template-columns:repeat(2,1fr)}}
+.metric-item{text-align:center;padding:32px 20px;background:var(--card);border:var(--bd);border-radius:var(--r)}
+.metric-val{font-family:var(--mono);font-size:clamp(32px,4vw,48px);font-weight:700;color:var(--cyan);line-height:1;margin-bottom:8px}
+.metric-lbl{font-size:14px;color:var(--t2);line-height:1.4}
+
+/* CTA SECTION */
+#cta{text-align:center;background:radial-gradient(ellipse at center,rgba(0,229,255,.05) 0%,transparent 70%)}
+.cta-form{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:40px}
+.cta-input{padding:14px 20px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:var(--t1);font-size:16px;font-family:var(--sans);width:320px;max-width:100%}
+.cta-input::placeholder{color:var(--t3)}
+.cta-note{font-size:14px;color:var(--t3);margin-top:20px}
+
+/* FOOTER */
+footer{border-top:var(--bd);padding:60px 0 32px;background:var(--card)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr}}
+footer h4{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:16px}
+footer ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+footer ul a{font-size:14px;color:var(--t2)}
+footer ul a:hover{color:var(--t1)}
+.footer-logo{font-size:20px;font-weight:800;color:var(--t1);margin-bottom:12px}
+.footer-logo span{color:var(--cyan)}
+.footer-bottom{border-top:var(--bd);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--t3)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+<div class="container">
+<div class="nav-inner">
+  <div class="nav-logo">⚡ Rev.io <span>AgentOS</span></div>
+  <div class="nav-links">
+    <a href="#platform">Platform</a>
+    <a href="#revii">Revii</a>
+    <a href="#catalog">AgentHub</a>
+    <a href="#partners">Partners</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <a href="#cta" class="btn btn-c">Get Early Access</a>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+<canvas id="particles"></canvas>
+<div class="hero-body reveal">
+  <div style="margin-bottom:24px"><span class="pill pc">🤖 Introducing Rev.io AgentOS</span></div>
+  <h1><span class="tg">The AI Operating System<br>For Managed Services</span></h1>
+  <p class="hero-sub">Revii manages your business. AgentHub grows your clients'. One platform, two revenue streams, zero new headcount.</p>
+  <div class="hero-ctas">
+    <a href="#cta" class="btn btn-c">Start Free Trial</a>
+    <a href="#revii" class="btn btn-o">Watch Demo →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat">
+      <div class="hstat-val" style="color:var(--green)">8–12%</div>
+      <div class="hstat-lbl">Average MSP revenue leakage</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val" style="color:var(--cyan)">90 sec</div>
+      <div class="hstat-lbl">L1 ticket resolution time</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val" style="color:var(--purple)">$14,200/mo</div>
+      <div class="hstat-lbl">Average unbilled services found</div>
+    </div>
+  </div>
+</div>
+<div class="scroll-cue">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+</div>
+</section>
+
+<!-- PLATFORM OVERVIEW -->
+<section id="platform">
+<div class="container">
+<div class="reveal" style="text-align:center;margin-bottom:60px">
+  <h2>One Platform. Two Unfair Advantages.</h2>
+  <p style="font-size:18px;max-width:640px;margin:16px auto 0">Revii makes your MSP smarter. AgentHub makes your clients indispensable to their businesses.</p>
+</div>
+<div class="prod-grid">
+  <div class="prod-card rc reveal">
+    <span class="pill pg" style="font-size:11px">FOR YOUR BUSINESS</span>
+    <div style="width:48px;height:48px;background:var(--greenA);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:20px 0 12px;font-size:22px">🧠</div>
+    <h3>Revii</h3>
+    <span class="prod-sub" style="color:var(--green)">Your AI Chief of Staff</span>
+    <p>Revii runs inside your MSP — automating onboarding, finding revenue you're leaving on the table, writing your QBRs, and handling L1 tickets without your techs. The average MSP recovers $14,200/month in unbilled services in the first 30 days.</p>
+    <ul class="feat-list">
+      <li><span class="chk chk-g">✓</span>Automated client onboarding (40 hrs → 4 hrs)</li>
+      <li><span class="chk chk-g">✓</span>Revenue leakage detection (8–12% recovered)</li>
+      <li><span class="chk chk-g">✓</span>AI-generated QBRs in 15 minutes</li>
+      <li><span class="chk chk-g">✓</span>L1 ticket auto-resolution (90-second average)</li>
+    </ul>
+    <a href="#revii" class="prod-link">Learn about Revii →</a>
+  </div>
+  <div class="prod-card ac reveal d1">
+    <span class="pill pc" style="font-size:11px">FOR YOUR CLIENTS</span>
+    <div style="width:48px;height:48px;background:var(--cyanA);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:20px 0 12px;font-size:22px">⚡</div>
+    <h3>AgentHub</h3>
+    <span class="prod-sub" style="color:var(--cyan)">Your AI Delivery Platform</span>
+    <p>AgentHub is a catalog of pre-built AI agent templates you activate and sell to your clients under your brand. Voice agents, workflow automation, business intelligence — your clients pay you for AI that actually works. Average MSP earns $10,250/month in new AI revenue.</p>
+    <ul class="feat-list">
+      <li><span class="chk chk-c">✓</span>10 pre-built agent templates, ready to deploy</li>
+      <li><span class="chk chk-c">✓</span>White-labeled with your brand</li>
+      <li><span class="chk chk-c">✓</span>Built-in billing — track every interaction</li>
+      <li><span class="chk chk-c">✓</span>Powered by Vapi, Claude, Cloudflare, and more</li>
+    </ul>
+    <a href="#catalog" class="prod-link">Explore AgentHub →</a>
+  </div>
+</div>
+<div class="int-banner reveal d2">
+  🔗 <strong>The Integration Advantage</strong> — Revii's knowledge of your clients (ticket history, SLA data, contract terms, infrastructure maps) becomes the context that makes your AgentHub agents smarter than anything a competitor can deploy. Your 5 years of client data. Their agents have zero context. <strong style="color:var(--cyan)">You win.</strong>
+</div>
+</div>
+</section>
+
+<!-- REVII DEEP DIVE -->
+<section id="revii" style="background:rgba(0,255,163,.02)">
+<div class="container">
+<div class="reveal" style="text-align:center;margin-bottom:48px">
+  <h2>Revii: Finally, AI That Runs Your Business</h2>
+  <p style="font-size:18px;max-width:600px;margin:12px auto 0">Four capabilities. All automated. All measurable. All driving real MSP revenue.</p>
+</div>
+<div class="tab-nav reveal">
+  <button class="tab-btn on" onclick="switchTab(0)">💰 Revenue Finder</button>
+  <button class="tab-btn" onclick="switchTab(1)">🚀 Client Onboarding</button>
+  <button class="tab-btn" onclick="switchTab(2)">📊 QBR Generator</button>
+  <button class="tab-btn" onclick="switchTab(3)">🎫 L1 Resolution</button>
+</div>
+
+<div class="tab-pane on reveal">
+<div class="tab-layout">
+  <div>
+    <h3 style="color:var(--green);margin-bottom:16px">Revenue Finder</h3>
+    <p style="margin-bottom:20px;line-height:1.8">Revii continuously audits the gap between what your MSP delivers and what it bills. The average MSP leaks 8–12% of revenue through unbilled overages, expired promotions, and provisioned-but-not-invoiced services.</p>
+    <p style="margin-bottom:20px;line-height:1.8">In the first 30 days, Revenue Finder scans your asset inventory, PSA contracts, and billing records — then surfaces every discrepancy in a prioritized dashboard.</p>
+    <div style="background:var(--greenA);border:1px solid rgba(0,255,163,.2);border-radius:8px;padding:16px;font-size:14px;color:var(--green)">💡 Pitch: <em style="color:var(--t1)">"You're already doing the work. We find the money you forgot to charge for."</em></div>
+  </div>
+  <div class="ui-box">
+    <div style="font-size:12px;color:var(--t3);margin-bottom:16px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Revenue Leakage Dashboard</div>
+    <table class="ui-table">
+      <tr><th>Client</th><th>Managed</th><th>Billed</th><th>Gap / Mo</th></tr>
+      <tr><td>Apex Law Group</td><td>203</td><td>187</td><td><span class="gap-cell">$3,200</span></td></tr>
+      <tr><td>Meridian Dental</td><td>156</td><td>143</td><td><span class="gap-cell">$2,600</span></td></tr>
+      <tr><td>ClearPath Finance</td><td>312</td><td>299</td><td><span class="gap-cell">$5,200</span></td></tr>
+      <tr><td>Summit Logistics</td><td>89</td><td>83</td><td><span class="gap-cell">$3,200</span></td></tr>
+    </table>
+    <div class="ui-total">
+      <span style="color:var(--t3);font-size:13px">Total recovered</span>
+      <span style="color:var(--green);font-size:22px">$14,200/mo</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="tab-pane reveal">
+<div class="tab-layout">
+  <div>
+    <h3 style="color:var(--green);margin-bottom:16px">Client Onboarding</h3>
+    <p style="margin-bottom:20px;line-height:1.8">New client intake that used to take 40 hours of manual configuration now takes 4. Revii ingests contracts, provisions services, configures billing rules, sets SLA thresholds, and creates the client's operational profile automatically.</p>
+    <div style="background:var(--greenA);border:1px solid rgba(0,255,163,.2);border-radius:8px;padding:16px;font-size:14px;color:var(--green)">📈 Impact: <em style="color:var(--t1)">90% faster onboarding. First value delivered Day 1.</em></div>
+  </div>
+  <div class="ui-box">
+    <div style="font-size:12px;color:var(--t3);margin-bottom:20px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Onboarding Progress — Apex Law Group</div>
+    <div class="tl">
+      <div class="tl-step done"><div class="tl-dot"></div><div class="tl-text">✓ Contract Signed &amp; Ingested</div></div>
+      <div class="tl-step done"><div class="tl-dot"></div><div class="tl-text">✓ Services Provisioned (47 items)</div></div>
+      <div class="tl-step done"><div class="tl-dot"></div><div class="tl-text">✓ Billing Rules Created</div></div>
+      <div class="tl-step done"><div class="tl-dot"></div><div class="tl-text">✓ SLA Thresholds Configured</div></div>
+      <div class="tl-step done"><div class="tl-dot"></div><div class="tl-text">✓ Client Live &amp; Monitoring Active</div></div>
+    </div>
+    <div style="text-align:center;margin-top:16px;padding:12px;background:var(--greenA);border-radius:8px;color:var(--green);font-weight:700">Completed in 4.2 hours (was 38 hours) 🎉</div>
+  </div>
+</div>
+</div>
+
+<div class="tab-pane reveal">
+<div class="tab-layout">
+  <div>
+    <h3 style="color:var(--green);margin-bottom:16px">QBR Generator</h3>
+    <p style="margin-bottom:20px;line-height:1.8">Every quarter, Revii generates a complete Quarterly Business Review for each client — ticket trends, SLA compliance, infrastructure health scores, cost optimization opportunities, strategic recommendations. The account manager reviews and presents. The prep work? Done.</p>
+    <div style="background:var(--greenA);border:1px solid rgba(0,255,163,.2);border-radius:8px;padding:16px;font-size:14px;color:var(--green)">⏱️ Time savings: <em style="color:var(--t1)">6 hours saved per client per quarter. MSPs that do QBRs retain clients 3× longer.</em></div>
+  </div>
+  <div class="ui-box">
+    <div style="font-size:12px;color:var(--t3);margin-bottom:16px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Q1 2026 QBR — Meridian Dental</div>
+    <div class="qbr-card">
+      <div class="qbr-row"><span>SLA Performance</span><span class="qbr-ok">99.2% ✓</span></div>
+      <div class="qbr-row"><span>Tickets Resolved</span><span style="color:var(--t1)">847 (↓12% YoY)</span></div>
+      <div class="qbr-row"><span>Security Posture</span><span class="qbr-ok">Strong ✓</span></div>
+      <div class="qbr-row"><span>Avg Resolution Time</span><span style="color:var(--t1)">1.8h (industry: 4.2h)</span></div>
+      <div class="qbr-row"><span>Recommendation</span><span style="color:var(--cyan);font-weight:600">Upgrade to Cyber Protect →</span></div>
+    </div>
+    <div style="text-align:center;margin-top:12px;font-size:12px;color:var(--t3)">Generated in 12 minutes • Ready to present</div>
+  </div>
+</div>
+</div>
+
+<div class="tab-pane reveal">
+<div class="tab-layout">
+  <div>
+    <h3 style="color:var(--green);margin-bottom:16px">L1 Auto-Resolution</h3>
+    <p style="margin-bottom:20px;line-height:1.8">Common, repeatable tickets — password resets, permission changes, certificate renewals, known-fix issues — are resolved autonomously. Revii handles the ticket, documents the resolution, and closes it. Escalating only what requires human judgment.</p>
+    <div style="background:var(--greenA);border:1px solid rgba(0,255,163,.2);border-radius:8px;padding:16px;font-size:14px;color:var(--green)">💡 Pitch: <em style="color:var(--t1)">"Your most expensive employees stop doing your cheapest work."</em></div>
+  </div>
+  <div class="ui-box">
+    <div style="font-size:12px;color:var(--t3);margin-bottom:16px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Live Ticket Feed</div>
+    <div class="ticket"><span style="color:var(--t1)">Password reset — J. Martinez</span><span class="ai-badge">Revii Handling</span></div>
+    <div class="ticket"><span style="color:var(--t1)">SSL cert renewal — apex.com</span><span class="ai-badge">Revii Handling</span></div>
+    <div class="ticket"><span style="color:var(--t1)">VPN access request — T. Chen</span><span class="t-badge t-med">Tech: K. Park</span></div>
+    <div class="ticket"><span style="color:var(--t1)">Printer offline — Floor 3</span><span class="ai-badge">Revii Handling</span></div>
+    <div class="ticket"><span style="color:var(--t1)">Firewall rule change</span><span class="t-badge t-high">Escalated</span></div>
+    <div class="ticket-counter"><span>247</span>tickets resolved this month without tech involvement</div>
+  </div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CATALOG -->
+<section id="catalog">
+<div class="container">
+<div class="reveal" style="text-align:center;margin-bottom:48px">
+  <h2>The Agent Template Catalog</h2>
+  <p style="font-size:18px;max-width:600px;margin:12px auto 0">Activate. Customize. Deploy. Start generating AI revenue this week.</p>
+</div>
+<div class="filter-tabs reveal">
+  <button class="filter-btn on" data-filter="all">All Templates</button>
+  <button class="filter-btn" data-filter="voice">📞 Voice</button>
+  <button class="filter-btn" data-filter="workflow">⚙️ Workflow</button>
+  <button class="filter-btn" data-filter="intelligence">📊 Intelligence</button>
+  <button class="filter-btn" data-filter="compliance">🛡️ Compliance</button>
+</div>
+<div class="cat-grid reveal">
+  <div class="acard cat-voice" data-cat="voice">
+    <div class="acard-top">
+      <div class="acard-icon">📞</div>
+      <div>
+        <span class="pill pc" style="font-size:11px">Voice</span>
+        <div class="acard-name">Answer Agent</div>
+      </div>
+    </div>
+    <div class="acard-desc">AI that answers your clients' phones 24/7, handles FAQs, routes calls, and creates tickets automatically.</div>
+    <div class="acard-outcome">✓ 60% reduction in missed calls</div>
+    <div class="acard-foot"><span class="acard-price">$299/mo per client</span><button class="act-btn">Activate</button></div>
+  </div>
+  <div class="acard cat-intelligence" data-cat="intelligence">
+    <div class="acard-top">
+      <div class="acard-icon">💰</div>
+      <div>
+        <span class="pill pg" style="font-size:11px">Intelligence</span>
+        <div class="acard-name">Revenue Finder</div>
+      </div>
+    </div>
+    <div class="acard-desc">Audits the gap between what you deliver and what you bill. Finds the money. Every month, automatically.</div>
+    <div class="acard-outcome">✓ $14,200/mo average recovery</div>
+    <div class="acard-foot"><span class="acard-price">$199/mo per MSP</span><button class="act-btn">Activate</button></div>
+  </div>
+  <div class="acard cat-intelligence" data-cat="intelligence">
+    <div class="acard-top">
+      <div class="acard-icon">📊</div>
+      <div>
+        <span class="pill pg" style="font-size:11px">Intelligence</span>
+        <div class="acard-name">QBR Writer</div>
+      </div>
+    </div>
+    <div class="acard-desc">Generates polished Quarterly Business Reviews from your PSA data in 15 minutes. Your vCIO's secret weapon.</div>
+    <div class="acard-outcome">✓ 6 hours saved per client per quarter</div>
+    <div class="acard-foot"><span class="acard-price">$149/mo per MSP</span><button class="act-btn">Activate</button></div>
+  </div>
+  <div class="acard cat-workflow" data-cat="workflow">
+    <div class="acard-top">
+      <div class="acard-icon">🎫</div>
+      <div>
+        <span class="pill pp" style="font-size:11px">Workflow</span>
+        <div class="acard-name">Ticket Resolver</div>
+      </div>
+    </div>
+    <div class="acard-desc">Autonomously resolves L1 tickets — password resets, permission changes, known fixes — without tech involvement.</div>
+    <div class="acard-outcome">✓ 90-second average resolution time</div>
+    <div class="acard-foot"><span class="acard-price">$399/mo per MSP</span><button class="act-btn">Activate</button></div>
+  </div>
+  <div class="acard cat-workflow" data-cat="workflow">
+    <div class="acard-top">
+      <div class="acard-icon">🚀</div>
+      <div>
+        <span class="pill pp" style="font-size:11px">Workflow</span>
+        <div class="acard-name">Client Onboarder</div>
+      </div>
+    </div>
+    <div class="acard-desc">Automated new client intake — ingests contracts, provisions services, creates billing rules, sets SLAs.</div>
+    <div class="acard-outcome">✓ 40 hours → 4 hours per onboarding</div>
+    <div class="acard-foot"><span class="acard-price">$249/mo per MSP</span><button class="act-btn">Activate</button></div>
+  </div>
+  <div class="acard cat-intelligence" data-cat="intelligence">
+    <div class="acard-top">
+      <div class="acard-icon">🔄</div>
+      <div>
+        <span class="pill pg" style="font-size:11px">Intelligence</span>
+        <div class="acard-name">Renewal Intelligence</div>
+      </div>
+    </div>
+    <div class="acard-desc">Monitors contract terms, flags renewal windows, and drafts upsell recommendations automatically.</div>
+    <div class="acard-outcome">✓ 3× higher renewal conversation rate</div>
+    <div class="acard-foot"><span class="acard-price">$199/mo per MSP</span><button class="act-btn">Activate</button></div>
+  </div>
+  <div class="acard cat-compliance" data-cat="compliance">
+    <div class="acard-top">
+      <div class="acard-icon">🛡️</div>
+      <div>
+        <span class="pill" style="font-size:11px;background:rgba(255,152,0,.15);color:#ff9800;border:1px solid rgba(255,152,0,.3)">Compliance</span>
+        <div class="acard-name">Security Compliance</div>
+      </div>
+    </div>
+    <div class="acard-desc">Continuous SOC 2 / HIPAA compliance monitoring, evidence collection, and risk scoring for your clients.</div>
+    <div class="acard-outcome">✓ Compliance-as-a-Service revenue line</div>
+    <div class="acard-foot"><span class="acard-price">$499/mo per client</span><button class="act-btn">Activate</button></div>
+  </div>
+  <div class="acard cat-voice" data-cat="voice">
+    <div class="acard-top">
+      <div class="acard-icon">👋</div>
+      <div>
+        <span class="pill pc" style="font-size:11px">Voice</span>
+        <div class="acard-name">Welcome Voice Agent</div>
+      </div>
+    </div>
+    <div class="acard-desc">Custom branded AI that greets new clients, collects onboarding information, and sets expectations perfectly.</div>
+    <div class="acard-outcome">✓ 4.8/5 avg new client satisfaction</div>
+    <div class="acard-foot"><span class="acard-price">$149/mo per MSP</span><button class="act-btn">Activate</button></div>
+  </div>
+  <div class="acard cat-workflow" data-cat="workflow">
+    <div class="acard-top">
+      <div class="acard-icon">🚨</div>
+      <div>
+        <span class="pill pp" style="font-size:11px">Workflow</span>
+        <div class="acard-name">Incident Responder</div>
+      </div>
+    </div>
+    <div class="acard-desc">Security incident detection triggers automated response playbooks, stakeholder notifications, and documentation.</div>
+    <div class="acard-outcome">✓ MTTR reduced by 67%</div>
+    <div class="acard-foot"><span class="acard-price">$599/mo per MSP</span><button class="act-btn">Activate</button></div>
+  </div>
+  <div class="acard cat-intelligence" data-cat="intelligence">
+    <div class="acard-top">
+      <div class="acard-icon">📈</div>
+      <div>
+        <span class="pill pg" style="font-size:11px">Intelligence</span>
+        <div class="acard-name">Business Intelligence</div>
+      </div>
+    </div>
+    <div class="acard-desc">Monthly business performance reports for end clients — using their own operational data from your MSP stack.</div>
+    <div class="acard-outcome">✓ MSPs report 40% higher client retention</div>
+    <div class="acard-foot"><span class="acard-price">$299/mo per client</span><button class="act-btn">Activate</button></div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- PSA MOCKUP -->
+<section id="psa" style="background:rgba(0,229,255,.02)">
+<div class="container">
+<div class="reveal" style="text-align:center;margin-bottom:48px">
+  <h2>The PSA. Reimagined for the Age of Agents.</h2>
+  <p style="font-size:18px;max-width:640px;margin:12px auto 0">This is what RevX.io PSA looks like when AI is native — not bolted on.</p>
+</div>
+<div class="browser reveal">
+  <div class="browser-bar">
+    <div class="browser-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+    <div class="browser-url">revx.io/dashboard</div>
+  </div>
+  <div class="psa">
+    <div class="psa-sb">
+      <div class="psa-logo">⚡ RevX</div>
+      <div class="psa-nav-item active">📊 Dashboard</div>
+      <div class="psa-nav-item">🎫 Tickets</div>
+      <div class="psa-nav-item">🏢 Clients</div>
+      <div class="psa-nav-item">💰 Billing</div>
+      <div class="psa-nav-item" style="color:var(--cyan)">⚡ Agents</div>
+      <div class="psa-nav-item">📈 Reports</div>
+      <div class="psa-nav-item">⚙️ Settings</div>
+      <div class="psa-ai-status">
+        <div class="psa-pulse"></div>
+        <div style="color:var(--green);font-weight:600">Revii Active<br><span style="font-weight:400;color:var(--t2)">AI handling 12 tickets</span></div>
+      </div>
+    </div>
+    <div class="psa-main">
+      <div class="psa-greeting">☀️ Good morning, Taylor. Revii resolved 23 tickets overnight.</div>
+      <div class="kpi-row">
+        <div class="kpi-card"><div class="kpi-val">47</div><div class="kpi-lbl">Open Tickets</div><div class="kpi-delta dg">↓18% vs last week</div></div>
+        <div class="kpi-card"><div class="kpi-val">1.2h</div><div class="kpi-lbl">Avg Resolution</div><div class="kpi-delta dg">↓34% vs industry</div></div>
+        <div class="kpi-card"><div class="kpi-val" style="font-size:14px">$127,400</div><div class="kpi-lbl">Monthly Revenue</div><div class="kpi-delta dg">↑8% vs last month</div></div>
+        <div class="kpi-card"><div class="kpi-val">94/100</div><div class="kpi-lbl">Client Health</div><div class="kpi-delta dg">↑3 pts this week</div></div>
+      </div>
+      <div class="ai-insight">
+        <span>⚡ <strong>Revii</strong> spotted 3 billing discrepancies totaling <strong style="color:var(--green)">$4,200</strong> in unbilled services this month.</span>
+        <span class="insight-link">Review Now →</span>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Active Tickets</div>
+        <div class="ticket-row"><div><div class="ticket-title">Password Reset — J. Martinez (Apex Law)</div><div class="ticket-client">Apex Law Group</div></div><span class="ai-badge">Revii Handling</span></div>
+        <div class="ticket-row"><div><div class="ticket-title">SSL Certificate Renewal — apex.com</div><div class="ticket-client">Apex Law Group</div></div><span class="ai-badge">Revii Handling</span></div>
+        <div class="ticket-row"><div><div class="ticket-title">Firewall policy update request</div><div class="ticket-client">Meridian Dental</div></div><span class="t-badge t-high">High Priority</span></div>
+        <div class="ticket-row"><div><div class="ticket-title">New hire device provisioning</div><div class="ticket-client">ClearPath Finance</div></div><span class="t-badge t-med">In Progress</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners">
+<div class="container">
+<div class="reveal" style="text-align:center;margin-bottom:60px">
+  <h2>Built on the World's Best AI Infrastructure</h2>
+  <p style="font-size:18px;max-width:640px;margin:12px auto 0">14 curated partners. Every integration is deep, tested, and revenue-generating.</p>
+</div>
+<div class="partner-groups reveal">
+  <div><h4>Voice &amp; Communication</h4><div class="partner-pills"><span class="partner-pill">Vapi</span><span class="partner-pill">ElevenLabs</span><span class="partner-pill">Deepgram</span></div></div>
+  <div><h4>Foundation Models</h4><div class="partner-pills"><span class="partner-pill">Anthropic Claude</span><span class="partner-pill">OpenAI</span></div></div>
+  <div><h4>Edge Infrastructure</h4><div class="partner-pills"><span class="partner-pill">Cloudflare Workers</span><span class="partner-pill">Cloudflare R2</span><span class="partner-pill">Cloudflare AI Gateway</span></div></div>
+  <div><h4>Data &amp; Memory</h4><div class="partner-pills"><span class="partner-pill">Neon Postgres</span><span class="partner-pill">Qdrant</span><span class="partner-pill">Supabase Auth</span></div></div>
+  <div><h4>Orchestration &amp; Observability</h4><div class="partner-pills"><span class="partner-pill">n8n</span><span class="partner-pill">Langfuse</span></div></div>
+  <div><h4>Billing, Compliance &amp; Payments</h4><div class="partner-pills"><span class="partner-pill">Amberflo</span><span class="partner-pill">Orb</span><span class="partner-pill">Vanta</span><span class="partner-pill">Stripe</span><span class="partner-pill">Resend</span></div></div>
+</div>
+<div class="partner-note reveal d1">We cut from 50 vendors to 14. Every partner earns their place by powering a core agent capability, creating recurring consumption revenue, and surviving a 3-year business continuity test.</div>
+</div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="background:rgba(123,97,255,.02)">
+<div class="container">
+<div class="reveal" style="text-align:center;margin-bottom:60px">
+  <h2>Pricing That Grows With You</h2>
+  <p style="font-size:18px;max-width:600px;margin:12px auto 0">Start with Revii. Add AgentHub. Scale on outcomes.</p>
+</div>
+<div class="price-grid reveal">
+  <div class="price-card">
+    <div class="price-name">Revii Starter</div>
+    <div class="price-amt"><sup>$</sup>799<span>/mo</span></div>
+    <div class="price-desc">For MSPs up to 250 managed endpoints. Save 40 hours/month, guaranteed.</div>
+    <ul class="price-feats">
+      <li>Revenue Leakage Finder</li>
+      <li>QBR Writer (unlimited clients)</li>
+      <li>Client Onboarder</li>
+      <li>L1 Ticket Auto-Resolution</li>
+      <li>Langfuse Observability Dashboard</li>
+    </ul>
+    <button class="price-btn pbtn-o">Start Free Trial</button>
+  </div>
+  <div class="price-card featured">
+    <div class="popular-badge">MOST POPULAR</div>
+    <div class="price-name">AgentOS Pro</div>
+    <div class="price-amt"><sup>$</sup>1,999<span>/mo</span></div>
+    <div class="price-desc">For MSPs up to 1,000 endpoints. Average MSP adds $8,500/mo in new AI revenue.</div>
+    <ul class="price-feats">
+      <li>Everything in Revii Starter</li>
+      <li>5 AgentHub Template Activations</li>
+      <li>$500 consumption credit/month</li>
+      <li>White-label branding for all agents</li>
+      <li>Client billing automation</li>
+    </ul>
+    <button class="price-btn pbtn-c">Start Free Trial</button>
+  </div>
+  <div class="price-card">
+    <div class="price-name">AgentOS Enterprise</div>
+    <div class="price-amt" style="font-size:32px">Custom</div>
+    <div class="price-desc">For MSPs with 1,000+ endpoints. Unlimited scale, custom templates, SLA guarantees.</div>
+    <ul class="price-feats">
+      <li>Everything in AgentOS Pro</li>
+      <li>Unlimited AgentHub templates</li>
+      <li>Custom agent development</li>
+      <li>Compliance Passport (Vanta)</li>
+      <li>Dedicated onboarding team</li>
+    </ul>
+    <button class="price-btn pbtn-o">Talk to Sales</button>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- METRICS -->
+<section>
+<div class="container">
+<div class="reveal" style="text-align:center;margin-bottom:48px">
+  <h2>The Numbers Don't Lie</h2>
+</div>
+<div class="metrics-row reveal">
+  <div class="metric-item"><div class="metric-val" data-target="14200" data-prefix="$" data-suffix="/mo">$0</div><div class="metric-lbl">Average monthly revenue recovered by Revenue Finder</div></div>
+  <div class="metric-item"><div class="metric-val" data-target="90" data-suffix=" sec">0</div><div class="metric-lbl">Average L1 ticket resolution time</div></div>
+  <div class="metric-item"><div class="metric-val" data-target="6" data-suffix=" hrs">0</div><div class="metric-lbl">Hours saved per QBR generated</div></div>
+  <div class="metric-item"><div class="metric-val" data-target="40" data-suffix="×">0</div><div class="metric-lbl">ROI in first 90 days (average)</div></div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+<div class="container">
+<div class="reveal" style="text-align:center;max-width:700px;margin:0 auto">
+  <h2>Your competitors are watching AI happen.<br>You can lead it.</h2>
+  <p style="font-size:18px;margin:20px 0 0;max-width:560px;margin:20px auto 0">Join the waitlist for early access to Rev.io AgentOS.</p>
+  <div class="cta-form">
+    <input class="cta-input" type="email" placeholder="your@msp.com">
+    <button class="btn btn-c" style="box-shadow:0 0 30px rgba(0,229,255,.3)">Join Waitlist →</button>
+  </div>
+  <p class="cta-note">By MSPs, for MSPs. Built on the infrastructure that powers the world's best AI companies.</p>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+<div class="footer-grid">
+  <div>
+    <div class="footer-logo">⚡ Rev.io <span>AgentOS</span></div>
+    <p style="font-size:14px;max-width:280px;line-height:1.7">The AI operating system for managed services. Revii manages your business. AgentHub grows your clients'.</p>
+  </div>
+  <div>
+    <h4>Products</h4>
+    <ul><li><a href="#">Revii</a></li><li><a href="#">AgentHub</a></li><li><a href="#">PSA</a></li><li><a href="#">Billing</a></li><li><a href="#">Payments</a></li></ul>
+  </div>
+  <div>
+    <h4>Solutions</h4>
+    <ul><li><a href="#">IT MSPs</a></li><li><a href="#">Security MSPs</a></li><li><a href="#">Telecom MSPs</a></li><li><a href="#">Healthcare IT</a></li></ul>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <ul><li><a href="#">About</a></li><li><a href="#">Blog</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul>
+  </div>
+</div>
+<div class="footer-bottom">
+  <span>© 2026 Rev.io. All rights reserved.</span>
+  <span>Privacy Policy · Terms of Service</span>
+</div>
+</div>
+</footer>
+
+<script>
+// PARTICLES
+(function(){
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], mouse = {x:-9999,y:-9999};
+  
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
+  window.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY},{passive:true});
+
+  const colors=['rgba(0,229,255,','rgba(123,97,255,'];
+  for(let i=0;i<120;i++){
+    particles.push({
+      x:Math.random()*window.innerWidth,
+      y:Math.random()*window.innerHeight,
+      r:Math.random()*2+1,
+      vx:(Math.random()-.5)*.3,
+      vy:-Math.random()*.5-.2,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      alpha:Math.random()*.3+.1,
+      phase:Math.random()*Math.PI*2
+    });
+  }
+
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    t+=.01;
+    particles.forEach(p=>{
+      p.y+=p.vy;
+      p.x+=p.vx+Math.sin(t+p.phase)*.3;
+      
+      // mouse repulsion
+      const dx=p.x-mouse.x, dy=p.y-mouse.y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<100){const force=(100-dist)/100;p.x+=dx/dist*force*2;p.y+=dy/dist*force*2}
+      
+      if(p.y<-10)p.y=H+10;
+      if(p.x<-10)p.x=W+10;
+      if(p.x>W+10)p.x=-10;
+      
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color+p.alpha+')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// INTERSECTION OBSERVER
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// TABS (Revii)
+function switchTab(idx){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('on',i===idx));
+  document.querySelectorAll('.tab-pane').forEach((p,i)=>p.classList.toggle('on',i===idx));
+}
+
+// CATALOG FILTER
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+    this.classList.add('on');
+    const f=this.dataset.filter;
+    document.querySelectorAll('.acard').forEach(card=>{
+      card.classList.toggle('hidden',f!=='all'&&card.dataset.cat!==f);
+    });
+  });
+});
+
+// COUNTER ANIMATION
+function countUp(el){
+  const target=parseInt(el.dataset.target);
+  const prefix=el.dataset.prefix||'';
+  const suffix=el.dataset.suffix||'';
+  const dur=2000;
+  const start=performance.now();
+  function step(now){
+    const p=Math.min((now-start)/dur,1);
+    const ease=1-Math.pow(1-p,4);
+    const val=Math.floor(ease*target);
+    el.textContent=prefix+(val>=1000?'$'+Math.floor(val/1000).toLocaleString()+(val%1000?','+(String(val%1000).padStart(3,'0')):''): val)+suffix;
+    if(p<1)requestAnimationFrame(step);
+    else el.textContent=prefix+(target>=1000?'$'+(target/1000).toFixed(0)+'K':target)+suffix;
+  }
+  requestAnimationFrame(step);
+}
+
+const counterObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('[data-target]').forEach(el=>{if(!el._counted){el._counted=true;countUp(el)}});
+      counterObs.unobserve(e.target);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('.metrics-row').forEach(el=>counterObs.observe(el));
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const el=document.querySelector(a.getAttribute('href'));
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
