@@ -51,7 +51,9 @@ th{text-align:left;color:var(--t3);font-size:12px;text-transform:uppercase;lette
 td{padding:14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--t1);vertical-align:top}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:rgba(255,255,255,.02)}
-.tbl-wrap{background:var(--card);border:var(--bd);border-radius:var(--r);overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:24px}
+.tbl-wrap{background:var(--card);border:var(--bd);border-radius:var(--r);overflow:hidden;margin-top:24px}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%}
+.tbl-scroll table{min-width:700px;width:100%}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px);background:rgba(10,10,15,.88);border-bottom:1px solid rgba(255,255,255,.06);height:68px;display:flex;align-items:center}
@@ -348,7 +350,7 @@ footer{border-top:var(--bd);padding:32px 0;text-align:center;font-size:13px;colo
 <section id="bizmodel">
 <div class="container">
 <div class="reveal"><span class="section-label">Business Model</span><h2>The Revenue Architecture</h2></div>
-<div class="tbl-wrap reveal">
+<div class="tbl-wrap reveal"><div class="tbl-scroll">
 <table>
   <thead><tr><th>Revenue Layer</th><th>Mechanism</th><th>Rev.io Margin</th><th>Defensibility</th><th>Notes</th></tr></thead>
   <tbody>
@@ -358,7 +360,7 @@ footer{border-top:var(--bd);padding:32px 0;text-align:center;font-size:13px;colo
     <tr><td><strong style="color:var(--t1)">Outcome-Based Premium</strong></td><td>10% of recovered revenue / $X per resolution</td><td><span style="color:var(--cyan);font-weight:700">30–60%</span></td><td>Highest — value aligned</td><td>Future tier; highest margin and highest defensibility</td></tr>
   </tbody>
 </table>
-</div>
+</div></div>
 <div class="bm-math reveal d1">
   <div style="color:var(--t3);font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Unit Economics at Scale</div>
   500 MSPs<br>
@@ -422,7 +424,7 @@ footer{border-top:var(--bd);padding:32px 0;text-align:center;font-size:13px;colo
 <section id="partners">
 <div class="container">
 <div class="reveal"><span class="section-label">Partner Stack</span><h2>Streamlined: From 50 Partners to 14</h2><p class="subheading">Every partner earns their place or they're cut. Here's the business rationale for each of the 14.</p></div>
-<div class="tbl-wrap reveal">
+<div class="tbl-wrap reveal"><div class="tbl-scroll">
 <table>
   <thead><tr><th>#</th><th>Partner</th><th>Category</th><th>Strategic Rationale</th><th>Revenue Impact</th></tr></thead>
   <tbody>
@@ -442,7 +444,7 @@ footer{border-top:var(--bd);padding:32px 0;text-align:center;font-size:13px;colo
     <tr><td>14</td><td><strong style="color:var(--t1)">Supabase Auth</strong></td><td><span class="partner-tag" style="background:rgba(255,255,255,.06);color:var(--t2)">Identity</span></td><td>Unified auth across both products. Row-level security maps to MSP multi-tenancy. Social login + SSO support.</td><td>Infrastructure layer</td></tr>
   </tbody>
 </table>
-</div>
+</div></div>
 <div class="callout callout-o reveal d1" style="margin-top:20px">
   <strong>Why we cut from 50 to 14:</strong> The original list is a supply chain, not a product. 50 APIs = 50 failure surfaces. Rev.io is ~200 people — managing 50 active partnerships requires 15–20 dedicated engineers we don't have. Phase 1: 5 partners, deeply integrated. Month 6: full 14. Phase 3: open SDK, partners self-integrate.
 </div>
