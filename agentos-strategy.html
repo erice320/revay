@@ -51,7 +51,7 @@ th{text-align:left;color:var(--t3);font-size:12px;text-transform:uppercase;lette
 td{padding:14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--t1);vertical-align:top}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:rgba(255,255,255,.02)}
-.tbl-wrap{background:var(--card);border:var(--bd);border-radius:var(--r);overflow:hidden;margin-top:24px}
+.tbl-wrap{background:var(--card);border:var(--bd);border-radius:var(--r);overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:24px}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px);background:rgba(10,10,15,.88);border-bottom:1px solid rgba(255,255,255,.06);height:68px;display:flex;align-items:center}
@@ -130,11 +130,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px);b
 .pilot-label{font-weight:700;color:var(--t3);font-size:12px;text-transform:uppercase;padding-top:2px}
 .pilot-pitch{font-style:italic;color:var(--t1);font-weight:600;background:rgba(255,255,255,.04);padding:12px 16px;border-radius:8px;margin-top:8px;font-size:15px}
 
-/* ROADMAP */
-.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:32px;position:relative}
-@media(max-width:800px){.roadmap{grid-template-columns:1fr}}
-.roadmap::before{content:'';position:absolute;top:28px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--cyan),var(--purple));z-index:0}
-@media(max-width:800px){.roadmap::before{display:none}}
+/* ROADMAP — 6-month sprint */
+.sprint-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+@media(max-width:900px){.sprint-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.sprint-grid{grid-template-columns:1fr}}
+.sprint-card{background:var(--card);border:var(--bd);border-radius:var(--r);padding:24px;position:relative;transition:transform .3s var(--ease)}
+.sprint-card:hover{transform:translateY(-3px)}
+.sprint-mo{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.sprint-theme{font-size:13px;font-style:italic;color:var(--t3);margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sprint-items{list-style:none;display:flex;flex-direction:column;gap:8px}
+.sprint-items li{font-size:13px;line-height:1.6;padding-left:16px;position:relative}
+.sprint-items li::before{content:'→';position:absolute;left:0;color:var(--t3)}
+.sprint-gate{margin-top:14px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:600;line-height:1.5}
 .phase{padding:20px;position:relative;z-index:1}
 .phase-dot{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;margin:0 auto 20px;border:3px solid}
 .ph1 .phase-dot{background:var(--gA);border-color:var(--green);color:var(--green)}
@@ -485,44 +492,103 @@ footer{border-top:var(--bd);padding:32px 0;text-align:center;font-size:13px;colo
 <!-- ROADMAP -->
 <section id="roadmap">
 <div class="container">
-<div class="reveal"><span class="section-label">Execution Roadmap</span><h2>18-Month Execution Plan</h2></div>
-<div class="roadmap reveal">
-  <div class="phase ph1">
-    <div class="phase-dot">1</div>
-    <div class="phase-title">Months 0–6</div>
-    <div class="phase-sub">Foundation</div>
-    <ul class="phase-items">
-      <li><strong>Engineering:</strong> Multi-tenancy architecture (#1 priority). Amberflo AI metering. Langfuse white-labeling.</li>
-      <li><strong>Product:</strong> Revii Starter GA — Revenue Finder, QBR Writer, Client Onboarder, L1 Resolution.</li>
-      <li><strong>Partners:</strong> 5 deep integrations: Vapi, Neon, Cloudflare, Anthropic, Langfuse.</li>
-      <li><strong>GTM:</strong> 5 pilot MSPs selected from existing base. Build category narrative. Document proof points.</li>
+<div class="reveal">
+  <span class="section-label">Execution Roadmap</span>
+  <h2>6-Month Sprint to Market</h2>
+  <p style="font-size:18px;max-width:700px;margin:12px 0 8px;color:var(--t2);line-height:1.7">The competitive window is 18 months. If we take 18 months to execute, we've already lost. The goal: <strong style="color:var(--cyan)">defensibly in market by Month 6</strong> — real MSPs, real agents, proven economics, category narrative established.</p>
+  <div style="display:inline-block;background:var(--rA);border:1px solid rgba(255,51,102,.3);border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;color:var(--red);margin-bottom:32px">Months 7–18 scale what works. Month 6 is when we win the category — not when we finish building it.</div>
+</div>
+<div class="sprint-grid reveal">
+  <div class="sprint-card" style="border-top:2px solid var(--red)">
+    <div class="sprint-mo" style="color:var(--red)">Month 1</div>
+    <div style="font-size:16px;font-weight:700;color:var(--t1);margin-bottom:6px">Foundation Sprint</div>
+    <div class="sprint-theme">"Build the floor, not the building"</div>
+    <ul class="sprint-items">
+      <li>Multi-tenancy architecture — scoped to <strong>3 tenant slots</strong>. Data isolation + per-tenant metering. Neon branching does the heavy lifting.</li>
+      <li>3 partners live in staging: <strong>Anthropic</strong> (Claude API + prompt templates), <strong>Neon</strong> (per-tenant DB provisioning automated), <strong>Vapi</strong> (voice pipeline scaffolded)</li>
+      <li>All 3 agents (Revenue Finder, QBR Writer, Ticket Resolver) running against synthetic data in isolated tenants</li>
+      <li>3 design-partner MSPs signed — data access commitments, no revenue yet</li>
     </ul>
-    <div class="phase-kpi">KPI: 5 MSPs live · $14,200/mo avg recovery demonstrated · 3 case studies published</div>
+    <div class="sprint-gate" style="background:var(--rA);color:var(--red)">Exit gate: All 3 agents process end-to-end in tenant-isolated staging. It's ugly. It works.</div>
   </div>
-  <div class="phase ph2">
-    <div class="phase-dot">2</div>
-    <div class="phase-title">Months 6–12</div>
-    <div class="phase-sub">Scale</div>
-    <ul class="phase-items">
-      <li><strong>Engineering:</strong> AgentHub 10-template catalog. Self-service activation. Partner APIs for Qdrant, Vanta, Orb.</li>
-      <li><strong>Product:</strong> AgentOS Pro GA. 3 template categories live (Voice, Workflow, Intelligence).</li>
-      <li><strong>Partners:</strong> Full 14-partner stack live.</li>
-      <li><strong>GTM:</strong> Open to 50 MSPs. Outcome-based pricing pilots. 3 co-sell partnerships (Vapi, Vanta, Neon).</li>
+  <div class="sprint-card" style="border-top:2px solid var(--orange)">
+    <div class="sprint-mo" style="color:var(--orange)">Month 2</div>
+    <div style="font-size:16px;font-weight:700;color:var(--t1);margin-bottom:6px">First Agent Live</div>
+    <div class="sprint-theme">"One agent, one MSP, real data"</div>
+    <ul class="sprint-items">
+      <li>Revenue Finder running against <strong>Pilot MSP #1's real billing data</strong> — real PSA export, real discrepancies surfaced</li>
+      <li>QBR Writer generating first draft QBRs from live data</li>
+      <li>Vapi voice pipeline handling test calls with Pilot MSP #1's call patterns</li>
+      <li>Basic auth + tenant routing: MSP admin logs in, sees results</li>
+      <li>Pilots #2 and #3 onboarding started</li>
     </ul>
-    <div class="phase-kpi">KPI: 50 MSPs · $2M ARR · 500 end customers running agents</div>
+    <div class="sprint-gate" style="background:var(--oA);color:var(--orange)">Exit gate: Pilot MSP #1 says "this found money we didn't know we were leaving on the table."</div>
   </div>
-  <div class="phase ph3">
-    <div class="phase-dot">3</div>
-    <div class="phase-title">Months 12–18</div>
-    <div class="phase-sub">Win</div>
-    <ul class="phase-items">
-      <li><strong>Engineering:</strong> Partner self-service SDK. Template marketplace. Compliance Passport (Vanta).</li>
-      <li><strong>Product:</strong> Enterprise tier. Custom template dev service. Rewst integration/partnership.</li>
-      <li><strong>GTM:</strong> Category leadership. "AgentHub Certified MSP" program. IT Nation + DattoCon presence.</li>
-      <li><strong>Goal:</strong> ConnectWise/Kaseya are playing catch-up instead of leading.</li>
+  <div class="sprint-card" style="border-top:2px solid var(--yellow)">
+    <div class="sprint-mo" style="color:var(--yellow)">Month 3</div>
+    <div style="font-size:16px;font-weight:700;color:var(--t1);margin-bottom:6px">First Paying MSP</div>
+    <div class="sprint-theme">"If they'll pay, it's real"</div>
+    <ul class="sprint-items">
+      <li>All 3 agents in production for Pilot MSP #1 — Revenue Finder, QBR Writer, Ticket Resolver all live</li>
+      <li><strong>$14,200/mo avg recovery validated</strong> with real billing data — MSP has actioned findings</li>
+      <li>Pilot MSPs #2 and #3 fully onboarded — agents running</li>
+      <li>MSP admin dashboard v1: agent activity, revenue recovered, tickets resolved</li>
+      <li><strong>Pilot MSP #1 converts to paying customer</strong> — outcome-based pricing: % of recovered revenue + per-resolution + flat QBR fee</li>
     </ul>
-    <div class="phase-kpi">KPI: 200 MSPs · $8M ARR · Category defined and owned</div>
+    <div class="sprint-gate" style="background:rgba(255,193,7,.1);color:var(--yellow)">Exit gate: Revenue hitting Rev.io's bank account from outcome-based payment — not a pilot fee.</div>
   </div>
+  <div class="sprint-card" style="border-top:2px solid var(--green)">
+    <div class="sprint-mo" style="color:var(--green)">Month 4</div>
+    <div style="font-size:16px;font-weight:700;color:var(--t1);margin-bottom:6px">Prove the Pattern</div>
+    <div class="sprint-theme">"One is an anecdote. Three is a pattern."</div>
+    <ul class="sprint-items">
+      <li>Onboarding playbook: reduce MSP onboarding from 2 weeks of engineering handholding to a 3-day repeatable checklist</li>
+      <li>Langfuse dashboards per tenant: MSPs see agent accuracy, resolution rate, recovery rate</li>
+      <li>Qdrant integration for Ticket Resolver memory — learns from resolution patterns</li>
+      <li><strong>3 paying MSPs</strong> (#1 retained + #2 and #3 converted)</li>
+      <li>Pilots #4 and #5 onboarding</li>
+      <li>First case study drafted with Pilot MSP #1: real name, real numbers</li>
+    </ul>
+    <div class="sprint-gate" style="background:var(--gA);color:var(--green)">Exit gate: A PM can onboard MSP #4 with engineering on-call — not engineering hands-on.</div>
+  </div>
+  <div class="sprint-card" style="border-top:2px solid var(--cyan)">
+    <div class="sprint-mo" style="color:var(--cyan)">Month 5</div>
+    <div style="font-size:16px;font-weight:700;color:var(--t1);margin-bottom:6px">Category Declaration</div>
+    <div class="sprint-theme">"Name the category before someone else does"</div>
+    <ul class="sprint-items">
+      <li>Self-service activation prototype: MSP signs up → tenant provisioned → data import → first agent running (rough, works)</li>
+      <li>3 agents formalized as "templates" with configuration surfaces — seed of the template catalog</li>
+      <li>5 MSPs running agents in production, all stable</li>
+      <li><strong>Case study published</strong> — real MSP name, "$14,200/mo average revenue recovery" headline</li>
+      <li>Category narrative fully live: "AgentOS for MSPs" — pricing page live on rev.io</li>
+      <li>Co-marketing with Anthropic or Vapi: "powered by" narrative</li>
+    </ul>
+    <div class="sprint-gate" style="background:var(--cA);color:var(--cyan)">Exit gate: A ConnectWise PM Googles "AI agents for MSPs" and finds our case study. They now know they're behind.</div>
+  </div>
+  <div class="sprint-card" style="border-top:2px solid var(--purple)">
+    <div class="sprint-mo" style="color:var(--purple)">Month 6</div>
+    <div style="font-size:16px;font-weight:700;color:var(--t1);margin-bottom:6px">Defensibly In Market</div>
+    <div class="sprint-theme">"The beachhead is taken"</div>
+    <ul class="sprint-items">
+      <li>System runs without daily engineering intervention — production hardening, monitoring, alerting</li>
+      <li>Amberflo billing fully automated: MSPs receive invoices without manual processing</li>
+      <li>Architecture review: what changes to go from 5 MSPs to 50? Document — don't build yet.</li>
+      <li>3 case studies (1 published, 2 in draft), pipeline of 10+ MSPs wanting to onboard</li>
+      <li>IT Nation / DattoCon talk submitted (events are months out — submit now)</li>
+      <li>1–2 co-sell conversations with channel distributors or peer MSP groups</li>
+    </ul>
+    <div class="sprint-gate" style="background:var(--pA);color:var(--purple)">Exit gate: Board can say — "We are in market. We have paying customers. We have proof. Competitors entering now are responding to us."</div>
+  </div>
+</div>
+<div class="callout callout-c reveal d1" style="margin-top:32px">
+  <strong>After Month 6: Scale What Works</strong><br><br>
+  By Month 6, Rev.io has done something ConnectWise and Kaseya cannot do quickly: proven that AI agents deliver measurable financial outcomes to MSPs, with 5 paying customers and published evidence. Months 7–18 are execution against a proven model — multi-tenancy goes elastic, 3 templates become 10, 5 MSPs become 50 then 200, self-service replaces white-glove, partner stack expands from 3 to 14. None of that is existential risk. The existential risk was letting someone else define this category first. By Month 6, that risk is retired.
+</div>
+<div class="callout callout-r reveal d2" style="margin-top:16px">
+  <strong>⚠️ The Tensions of Moving This Fast (be honest about them)</strong><br><br>
+  <strong>Technical debt is the price of admission.</strong> Month 1 multi-tenancy scoped to 3 tenants means hardcoded configs that need unwinding for Month 7+ scaling. Budget 30% of Month 7–8 engineering for this refactoring.<br><br>
+  <strong>The onboarding bottleneck is real.</strong> Without self-service until Month 5 prototype, every MSP onboarding requires engineering time. At 5 MSPs it's manageable. At 10 it starts to break. This is why Month 4's exit gate is "PM can onboard without engineering hands-on."<br><br>
+  <strong>The PSA dependency.</strong> Revenue Finder requires MSP to export billing and RMM data — we're not building a new PSA. This means onboarding is data-access-first, not self-service-first. Plan for 1–2 weeks of data wrangling per MSP in the early months.
 </div>
 </div>
 </section>
