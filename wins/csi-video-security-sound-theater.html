@@ -7,105 +7,129 @@
 <meta property="og:description" content="All in one system that they can actually get up and running with a streamlined process and easily customizable quote templates.">
 <meta property="og:image" content="https://rev.io/wp-content/uploads/revio-social.png">
 <title>CSI Video Security Sound &amp; Theater · Rev.io Win Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     background: #F0F4F8;
     min-height: 100vh;
     display: flex; align-items: center; justify-content: center;
     padding: 24px;
+    color: #1a2a3a;
   }
   .card {
     background: #fff;
     border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    box-shadow: 0 8px 32px rgba(10,22,40,0.08);
     width: 100%;
-    max-width: 560px;
+    max-width: 580px;
     overflow: hidden;
   }
   .card-header {
     background: linear-gradient(135deg, #0A1628 0%, #1B3A6B 100%);
-    padding: 28px 32px 24px;
+    padding: 32px 32px 28px;
     display: flex; align-items: flex-start; justify-content: space-between;
   }
-  .card-header .badge {
-    font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 2px; color: #64E8B0; margin-bottom: 8px;
+  .header-content { display: flex; flex-direction: column; gap: 10px; }
+  .badge-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .badge {
+    font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+    color: #0A1628; background: #64E8B0;
+    padding: 6px 14px; border-radius: 24px;
+    box-shadow: 0 2px 12px rgba(100,232,176,0.35);
+    display: inline-flex; align-items: center; gap: 6px;
   }
-  .card-header .company {
-    font-size: 26px; font-weight: 800; color: #fff; line-height: 1.15;
+  .mrr-badge {
+    font-size: 13px; font-weight: 700; color: #fff;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+    padding: 5px 12px; border-radius: 20px;
+  }
+  .company {
+    font-size: 30px; font-weight: 800; color: #fff; line-height: 1.1;
     letter-spacing: -0.5px;
   }
-  .card-header .product-badge {
-    background: rgba(27,110,243,0.25);
-    border: 1px solid rgba(27,110,243,0.5);
-    color: #7BB8FF;
-    font-size: 11px; font-weight: 700;
-    padding: 4px 10px; border-radius: 20px;
-    white-space: nowrap; margin-top: 4px;
-    text-transform: uppercase; letter-spacing: 1px;
+  .product-badge {
+    background: rgba(27,110,243,0.25); border: 1px solid rgba(27,110,243,0.5);
+    color: #7BB8FF; font-size: 12px; font-weight: 700;
+    padding: 4px 12px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 1px; display: inline-block;
   }
-  .logo-header { margin-left: 16px; margin-top: 2px; flex-shrink: 0; }
-  .logo-header img { height: 28px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+  .logo-header { margin-left: 16px; margin-top: 4px; flex-shrink: 0; }
+  .logo-header img { height: 32px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
   .logo-footer img { height: 22px; width: auto; }
 
-  .card-body { padding: 24px 32px; }
-
-  .row { margin-bottom: 20px; }
+  .card-body { padding: 32px 32px 12px; }
+  .row { margin-bottom: 32px; }
   .row-label {
-    font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 2px; color: #8A9BB2; margin-bottom: 6px;
+    font-size: 17px; font-weight: 800; color: #0A1628;
+    margin-bottom: 14px; letter-spacing: -0.2px;
   }
-  .competitor-tag, .switch-tag {
-    display: inline-block; background: #FFF3F3; border: 1px solid #FFD0D0;
-    color: #C0392B; font-size: 13px; font-weight: 600;
-    padding: 4px 12px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
+
+  .value-box {
+    background: #F4F7FB; border-left: 5px solid #1B6EF3;
+    border-radius: 0 8px 8px 0; padding: 20px 24px;
+  }
+  .value-box .vtext {
+    font-size: 15px; color: #1a2a3a; line-height: 1.75;
+    font-style: italic;
+  }
+
+  .switch-tag {
+    display: inline-block; background: #F0F4F8; border: 1px solid #D9E2EC;
+    color: #486581; font-size: 14px; font-weight: 600;
+    padding: 6px 16px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
   }
   .eval-tag {
     display: inline-block; background: #FFF8F0; border: 1px solid #FFDDB3;
     color: #C07000; font-size: 13px; font-weight: 600;
-    padding: 4px 12px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
+    padding: 5px 14px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px;
   }
+
   .solution-list { list-style: none; }
   .solution-list li {
-    font-size: 14px; color: #1a2a3a; padding: 6px 0;
-    border-bottom: 1px solid #F0F4F8; line-height: 1.5;
-    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 15px; color: #2D3748; padding: 10px 0;
+    border-bottom: 1px solid #E8EDF5; line-height: 1.5;
+    display: flex; align-items: flex-start; gap: 10px;
   }
   .solution-list li:last-child { border-bottom: none; }
   .solution-list li::before {
-    content: '✓'; color: #1B6EF3; font-weight: 700; font-size: 13px;
+    content: '✓'; color: #26D07C; font-weight: 800; font-size: 16px;
     flex-shrink: 0; margin-top: 1px;
   }
-  .value-box {
-    background: #F7F9FF; border-left: 3px solid #1B6EF3;
-    border-radius: 0 8px 8px 0; padding: 14px 16px;
-  }
-  .value-box .vtext {
-    font-size: 14px; color: #1a2a3a; line-height: 1.6; font-style: italic;
-  }
+  .solution-list strong { color: #0A1628; font-weight: 700; }
 
   .card-footer {
     background: #F7F9FF; border-top: 1px solid #E8EDF5;
-    padding: 14px 32px;
+    padding: 18px 32px;
     display: flex; align-items: center; justify-content: space-between;
   }
-  .footer-brand { font-size: 14px; font-weight: 800; color: #0A1628; letter-spacing: -0.3px; }
-  .footer-date { font-size: 12px; color: #8A9BB2; }
+  .footer-meta {
+    font-size: 13px; color: #718096;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .footer-meta strong { color: #0A1628; font-weight: 700; }
+  .meta-divider { color: #CBD5E0; }
 
-  @media(max-width: 400px) {
-    .card-header .company { font-size: 20px; }
-    .card-body { padding: 20px; }
-    .card-footer { padding: 14px 20px; }
+  @media(max-width: 480px) {
+    .card-header { padding: 24px; flex-direction: column; gap: 16px; }
+    .logo-header { margin-left: 0; }
+    .company { font-size: 24px; }
+    .card-body { padding: 24px 24px 8px; }
+    .card-footer { padding: 16px 24px; flex-direction: column; gap: 12px; align-items: flex-start; }
   }
 </style>
 </head>
 <body>
 <div class="card">
   <div class="card-header">
-    <div>
-      <div class="badge">⚡ New Win</div>
+    <div class="header-content">
+      <div class="badge-row">
+        <div class="badge">🎉 New Win</div>
+        <div class="mrr-badge">$500/mo MRR</div>
+      </div>
       <div class="company">CSI Video Security Sound &amp; Theater</div>
       <div class="product-badge">PSA 2.0</div>
     </div>
@@ -113,6 +137,15 @@
   </div>
 
   <div class="card-body">
+
+    
+    <div class="row">
+      <div class="row-label">Why They Chose Rev.io</div>
+      <div class="value-box">
+        <div class="vtext">All in one system that they can actually get up and running with a streamlined process and easily customizable quote templates.</div>
+      </div>
+    </div>
+
     
 
     
@@ -131,22 +164,18 @@
     <div class="row">
       <div class="row-label">Rev.io Solutions</div>
       <ul class="solution-list">
-        <li>Billing and Ticketing</li><li>RMR management</li><li>Proposals and quoting</li>
+        <li><strong>Billing and Ticketing</strong></li><li><strong>RMR management</strong></li><li><strong>Proposals and quoting</strong></li>
       </ul>
     </div>
 
-    
-    <div class="row">
-      <div class="row-label">Why They Chose Rev.io</div>
-      <div class="value-box">
-        <div class="vtext">All in one system that they can actually get up and running with a streamlined process and easily customizable quote templates.</div>
-      </div>
-    </div>
   </div>
 
   <div class="card-footer">
     <div class="logo-footer"><img src="revio-logo.svg" alt="Rev.io"></div>
-    <div class="footer-date">January 2026</div>
+    <div class="footer-meta">
+      
+      <span>January 2026</span>
+    </div>
   </div>
 </div>
 </body>
