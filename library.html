@@ -379,6 +379,7 @@ body {
 .badge-briefs    { background: rgba(255,107,107,0.1); color: #FF8A80; border-color: rgba(255,107,107,0.2); }
 .badge-migration { background: rgba(78,205,196,0.1);  color: #4ECDC4; border-color: rgba(78,205,196,0.2); }
 .badge-other     { background: rgba(161,176,203,0.1); color: #A1B0CB; border-color: rgba(161,176,203,0.2); }
+.badge-marketing { background: rgba(255,152,0,0.1);   color: #FFB74D; border-color: rgba(255,152,0,0.2); }
 
 .card-title {
   font-family: var(--font-display);
@@ -541,7 +542,7 @@ body {
       <button class="tab-pill" data-cat="migration" onclick="filterCat('migration',this)">🔧 Guides <span class="tab-count" id="count-migration">7</span></button>
       <button class="tab-pill" data-cat="other" onclick="filterCat('other',this)">📄 Other <span class="tab-count" id="count-other">6</span></button>
     </div>
-    <div class="deck-count-badge"><span id="visibleCount">34</span> decks</div>
+    <div class="deck-count-badge"><span id="visibleCount">35</span> decks</div>
   </div>
 </nav>
 
@@ -807,6 +808,23 @@ body {
         <span class="card-badge badge-other">Content</span>
         <div class="card-title">Podcast Cue Cards</div>
         <div class="card-desc">Talking points and cue cards for podcast appearances — key messages, stats, and story frameworks.</div>
+        <div class="card-footer"><span class="card-cta">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section-block" data-section="marketing">
+    <div class="section-hdr reveal">
+      <span class="section-icon">📈</span>
+      <span class="section-label">Marketing</span>
+      <span class="section-n">1 dashboard</span>
+    </div>
+    <div class="card-grid">
+      <a class="deck-card reveal" href="https://revitupbot.github.io/revitup/marketing/" target="_blank" data-cat="marketing" data-title="Marketing Performance Dashboard" data-desc="RevItUp marketing performance dashboard" style="--delay:0.05s">
+        <span class="card-badge badge-marketing">Marketing</span>
+        <span class="badge-live">Live</span>
+        <div class="card-title">Marketing Performance Dashboard</div>
+        <div class="card-desc">Live marketing performance metrics and campaign analytics powered by RevItUp.</div>
         <div class="card-footer"><span class="card-cta">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
     </div>
