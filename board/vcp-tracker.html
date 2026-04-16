@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io — Value Creation Plan Q1 2026</title>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #080E1A;
+  --surface: rgba(15,33,56,0.55);
+  --surface-solid: #142A46;
+  --border: rgba(255,255,255,0.08);
+  --border-cyan: rgba(0,229,255,0.3);
+  --cyan: #00BCD4;
+  --cyan-bright: #00E5FF;
+  --green: #4CAF50;
+  --green-bright: #69F0AE;
+  --amber: #FFB300;
+  --red: #FF5252;
+  --text-1: #FFFFFF;
+  --text-2: #A1B0CB;
+  --eyebrow: #00BCD4;
+  --font-display: 'Cabinet Grotesk', system-ui, sans-serif;
+  --font-body: 'Satoshi', system-ui, sans-serif;
+  --spring: cubic-bezier(0.16,1,0.3,1);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-1);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── BG CANVAS ── */
+#bgCanvas {
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 0; pointer-events: none; display: block;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 44vh; display: flex; align-items: center;
+  overflow: hidden; border-bottom: 1px solid var(--border);
+}
+#heroCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.corner-line { position: absolute; pointer-events: none; }
+.corner-line.tl { top: 24px; left: 24px; }
+.corner-line.br { bottom: 24px; right: 24px; transform: rotate(180deg); }
+.hero-inner {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 1200px; margin: 0 auto;
+  padding: clamp(3rem,8vh,5rem) clamp(1.5rem,4vw,3rem);
+}
+.hero-eyebrow {
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--eyebrow); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before { content:''; width:24px; height:1px; background:var(--cyan-bright); }
+.confidential-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,82,82,0.12); border: 1px solid rgba(255,82,82,0.3);
+  color: #FF8A80; padding: 2px 8px; border-radius: 4px;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem,4vw+0.5rem,3.6rem);
+  font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 14px;
+}
+.hero-title .gradient {
+  background: linear-gradient(135deg,var(--cyan-bright) 0%,#7B9FFF 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-sub { font-size: clamp(0.95rem,1.4vw,1.1rem); color: var(--text-2); max-width: 500px; margin-bottom: 24px; }
+.hero-meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.hero-stat { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-2); }
+.hero-stat-num { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--cyan-bright); }
+.hero-divider { width: 1px; height: 32px; background: var(--border-cyan); }
+
+/* ── OVERVIEW BAR ── */
+.overview-bar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(8,14,26,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px clamp(1.5rem,4vw,3rem);
+}
+.overview-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.overview-label { font-size: 0.75rem; color: var(--text-2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-right: 4px; white-space: nowrap; }
+.lever-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 99px; font-size: 0.78rem; font-weight: 600;
+  background: rgba(15,33,56,0.8); border: 1px solid var(--border);
+  color: var(--text-2); cursor: pointer; text-decoration: none;
+  transition: all 0.2s var(--spring); white-space: nowrap;
+}
+.lever-pill:hover { border-color: var(--border-cyan); color: var(--text-1); }
+
+/* ── MAIN ── */
+.main {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto;
+  padding: clamp(2rem,4vw,3rem) clamp(1.5rem,4vw,3rem) 120px;
+  display: flex; flex-direction: column; gap: 2rem;
+}
+
+/* ── LEVER CARD ── */
+.lever-card {
+  position: relative;
+  background: var(--surface); backdrop-filter: blur(12px);
+  border: 1px solid var(--border); border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.lever-card:hover { border-color: rgba(0,229,255,0.15); }
+.lever-card.dirty-card { border-color: rgba(0,229,255,0.25); }
+
+.card-header {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.lever-num {
+  font-family: var(--font-display); font-size: 0.75rem; font-weight: 800;
+  letter-spacing: 0.1em; color: var(--cyan-bright);
+  background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2);
+  padding: 4px 10px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; margin-top: 3px;
+}
+.card-header-content { flex: 1; }
+.lever-title {
+  font-family: var(--font-display); font-size: clamp(1.05rem,1.6vw,1.3rem);
+  font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 10px;
+}
+
+.edit-hint {
+  opacity: 0; position: absolute; top: 16px; right: 16px;
+  display: flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; color: var(--text-2);
+  transition: opacity 0.2s;
+}
+.lever-card:hover .edit-hint { opacity: 1; }
+
+/* ── METRICS ROW ── */
+.metrics-row {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.metric-cell {
+  background: rgba(8,14,26,0.6);
+  padding: 14px 18px;
+}
+.metric-label { font-size: 0.68rem; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 4px; }
+.metric-value {
+  font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+  color: var(--text-1); line-height: 1.3;
+  outline: none; border-radius: 4px; padding: 2px 4px; margin: -2px -4px;
+  transition: background 0.2s;
+}
+.metric-value:focus { background: rgba(0,229,255,0.08); box-shadow: 0 0 0 1px rgba(0,229,255,0.3); }
+.metric-value:empty::before { content: attr(data-placeholder); color: var(--text-2); opacity: 0.5; }
+
+/* ── COLUMNS ── */
+.card-columns {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: var(--border);
+}
+.card-col { background: var(--surface); padding: 20px 22px; }
+.col-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 12px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-display); font-size: 0.82rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.col-now    .col-header { color: var(--cyan-bright); }
+.col-unlock .col-header { color: #A78BFA; }
+.col-backlog .col-header { color: var(--text-2); }
+
+.col-content {
+  font-size: 0.875rem; color: var(--text-2); line-height: 1.65;
+  min-height: 80px; outline: none; border-radius: 4px;
+  padding: 4px; margin: -4px; white-space: pre-wrap;
+  transition: background 0.2s;
+}
+.col-content:focus { background: rgba(0,229,255,0.04); box-shadow: 0 0 0 1px rgba(0,229,255,0.2); color: var(--text-1); }
+.col-content:empty::before { content: 'Click to edit…'; color: var(--text-2); opacity: 0.4; pointer-events: none; }
+
+/* ── PUBLISH BUTTON ── */
+.publish-fab {
+  position: fixed; bottom: 32px; right: 32px; z-index: 100;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+}
+.last-updated {
+  font-size: 0.72rem; color: var(--text-2);
+  background: rgba(8,14,26,0.85); backdrop-filter: blur(12px);
+  border: 1px solid var(--border); padding: 4px 10px; border-radius: 6px;
+  text-align: right;
+}
+.publish-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg,var(--cyan) 0%,#006B7D 100%);
+  color: #fff; border: none; padding: 14px 24px; border-radius: 12px;
+  font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 24px -6px rgba(0,188,212,0.4);
+}
+.publish-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -6px rgba(0,188,212,0.5); }
+.publish-btn:active { transform: translateY(0); }
+.publish-btn.has-changes { animation: pulse-glow 2s infinite; }
+@keyframes pulse-glow {
+  0%,100% { box-shadow: 0 8px 24px -6px rgba(0,229,255,0.4); }
+  50%      { box-shadow: 0 8px 36px -4px rgba(0,229,255,0.7); }
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(8,14,26,0.85); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--surface-solid); border: 1px solid var(--border-cyan);
+  border-radius: 16px; padding: 32px; width: 100%; max-width: 420px;
+  transform: scale(0.95); transition: transform 0.2s var(--spring);
+}
+.modal-overlay.open .modal { transform: scale(1); }
+.modal h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+.modal p { color: var(--text-2); font-size: 0.9rem; margin-bottom: 20px; }
+.modal input {
+  width: 100%; background: rgba(15,33,56,0.8); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 16px; color: var(--text-1);
+  font-family: var(--font-body); font-size: 0.95rem; outline: none; margin-bottom: 16px;
+  transition: border-color 0.2s;
+}
+.modal input:focus { border-color: var(--border-cyan); }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.btn-cancel {
+  padding: 10px 20px; border-radius: 8px; border: 1px solid var(--border);
+  background: transparent; color: var(--text-2); font-family: var(--font-body);
+  font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+}
+.btn-cancel:hover { border-color: var(--border-cyan); color: var(--text-1); }
+.btn-publish {
+  padding: 10px 24px; border-radius: 8px; border: none;
+  background: linear-gradient(135deg,var(--cyan) 0%,#006B7D 100%);
+  color: #fff; font-family: var(--font-display); font-size: 0.9rem;
+  font-weight: 700; cursor: pointer; transition: all 0.2s;
+}
+.btn-publish:hover { opacity: 0.9; }
+.btn-publish:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 120px; right: 32px; z-index: 300;
+  padding: 12px 20px; border-radius: 10px; font-size: 0.875rem; font-weight: 600;
+  transform: translateY(20px); opacity: 0; transition: all 0.3s var(--spring);
+  pointer-events: none;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.success { background: rgba(105,240,174,0.15); border: 1px solid rgba(105,240,174,0.3); color: var(--green-bright); }
+.toast.error   { background: rgba(255,82,82,0.15);   border: 1px solid rgba(255,82,82,0.3);   color: #FF8A80; }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s var(--spring), transform 0.6s var(--spring); transition-delay: var(--delay,0s); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .metrics-row { grid-template-columns: repeat(2,1fr); }
+  .card-columns { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .metrics-row { grid-template-columns: 1fr; }
+  .overview-bar { display: none; }
+  .publish-fab { bottom: 16px; right: 16px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <svg class="corner-line tl" width="80" height="80" viewBox="0 0 80 80" fill="none">
+    <path d="M80 0 L80 60 M20 0 L80 0" stroke="rgba(0,229,255,0.4)" stroke-width="1"/>
+  </svg>
+  <svg class="corner-line br" width="80" height="80" viewBox="0 0 80 80" fill="none">
+    <path d="M80 0 L80 60 M20 0 L80 0" stroke="rgba(0,229,255,0.25)" stroke-width="1"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="hero-eyebrow reveal" style="--delay:0s">
+      Rev.io · <span class="confidential-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Board Confidential
+      </span>
+    </div>
+    <h1 class="hero-title reveal" style="--delay:0.08s">
+      Value Creation Plan<br>
+      <span class="gradient">Q1 2026 Tracker</span>
+    </h1>
+    <p class="hero-sub reveal" style="--delay:0.16s">8 strategic levers · Performance tracking · Live updates</p>
+    <div class="hero-meta reveal" style="--delay:0.22s">
+      <div class="hero-stat"><span class="hero-stat-num">8</span><span>Levers</span></div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat"><span class="hero-stat-num">Q1</span><span>2026</span></div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat"><span class="hero-stat-num">$854k</span><span>Exit Target MRR</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW BAR -->
+<nav class="overview-bar" id="overviewBar">
+  <div class="overview-inner">
+    <span class="overview-label">Levers</span>
+    <!-- pills injected by JS -->
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main" id="main">
+  <!-- cards injected by JS -->
+</main>
+
+<!-- PUBLISH FAB -->
+<div class="publish-fab">
+  <div class="last-updated" id="lastUpdated">Loading…</div>
+  <button class="publish-btn" id="publishBtn" onclick="openPublishModal()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    Publish Changes
+  </button>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Publish Changes</h3>
+    <p>Your edits will be saved and visible to everyone viewing this page within ~30 seconds.</p>
+    <input type="text" id="authorName" placeholder="Your name" />
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-publish" id="modalPublishBtn" onclick="doPublish()">Publish</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── STATE ── */
+let vcpData = null;
+let fileSha = null;
+let dirty = false;
+
+
+/* ── DEFAULT DATA ── */
+const DEFAULT_DATA = {
+  lastUpdated: new Date().toISOString(),
+  updatedBy: '—',
+  levers: [
+    { id:1, title:'Rule of 40', status:'At Risk',
+      metrics:{ atInvestment:'32.4%', eoy2025:'24.9%', q1Target:'23%', targetAtExit:'50% with ARR 20% YoY growth and 30% exit EBITDA' },
+      now:"Payments → 1. CEDP corrections 2. Token Vault selection 3. New Payment Processor selection 4. Determine rev share by processor 5. $195k revenue by June '26\n\nApollo releases to close more/larger PSA Web deals\n\nQuarterly reviews with Vervint (Azure Hosting partner)",
+      unlock:"Payments → Token Vault Partner, New Payment Processors\n\nPayments → maximizing margin on Fixed Fee customers or moving them to Cost+",
+      backlog:"Building AP tool to maximize Payments - AP sales" },
+    { id:2, title:"Client Retention & Growth: 90%+ Gross / 100%+ Net Retention", status:'At Risk',
+      metrics:{ atInvestment:'108.3%', eoy2025:"88.4% Gross, 97.3% Net", q1Target:"88% Gross, 97% Net", targetAtExit:'90% Gross, 100%+ Net' },
+      now:"Onboard 50 PSA Web clients by end of Apr '26\n\nMigration strategy of TP customers to PSA Web → Identify all active TigerPaw customers and prioritize for migration outreach",
+      unlock:"Make Onboarding an Operational Priority\n\n75+ Raving Fans using new Rev.io",
+      backlog:"Execution on TigerPaw migration strategy (Q3/Q4 '26)\n\nBilling Clients migration to PSA Web platform (Q4 '26)" },
+    { id:3, title:'Book $854k MRR', status:'Behind',
+      metrics:{ atInvestment:'N/A', eoy2025:'$237,452 (New + Expansion)', q1Target:'$116,078', targetAtExit:'$854k' },
+      now:"Tradeshow execution biggest priority — 12 planned for Q2 after only attending 4 in Q1\n\nContinued focus on driving down discovery call no-show and increasing average rep meeting capacity\n\nReengaging closed lost opportunities where Apollo releases resolved missing capabilities\n\nExploring adding two more experienced AEs with MSP background",
+      unlock:"Sell PSA/RMM to 55 existing clients\n\nAt least 1 order placed through CommerceHub\n\nProduct has the ability to win a complex MSP",
+      backlog:"Monetize AI/Revii functionality" },
+    { id:4, title:'Finalize & Launch All Apollo and Viking Releases', status:'At Risk',
+      metrics:{ atInvestment:'N/A', eoy2025:'PSA Web launched 9/1/25', q1Target:'Apollo 1 (2/1/26) and Apollo 2 (4/1/26)', targetAtExit:'All Apollo and Viking releases on scope and on time' },
+      now:"Closing out Apollo 2 (90% complete at target date; 13 at-risk items and 12 in progress being resolved). Apollo 3 now in active development — 26% complete against a 6/1/26 target (159 features total). Viking 1 scoped and underway with an 8/1/26 target (63 features).",
+      unlock:"Launch Apollo 1, 2 and 3 in scope and on time\n\nApollo 2 close-out unblocks pipeline deals. Apollo 3 completion (June) enables the next wave of PSA Web cross-sell. Viking 1 extends the platform to RMM/enterprise use cases by H2.",
+      backlog:"All Apollo & Viking releases delivered on scope and on time." },
+    { id:5, title:'Revii as the Primary CX', status:'On Track',
+      metrics:{ atInvestment:'N/A', eoy2025:'Revii chatbot included in PSA Web', q1Target:'N/A', targetAtExit:'Revii as primary CX for customer interaction' },
+      now:"Revii 2.0 → immediate focus on improving/upgrading current version.\n\nRevii Learn → work has begun and is being integrated into existing Revii.",
+      unlock:"Revii Learn and Revii Move live and delivering value",
+      backlog:"Verifiable automated processes that can be exposed as a tool for Revii." },
+    { id:6, title:'1890+ Marketing Sourced Opportunities', status:'On Track',
+      metrics:{ atInvestment:'N/A', eoy2025:'N/A', q1Target:'342', targetAtExit:'1890+' },
+      now:"Doubling down on primary channels: Events (5 MSP focused events added), Paid (FB → LI; adding Reddit and X), SEO/GEO (leveraging AI bots to 10x output).\n\nRamping Earned Media (thanks to Brook) — giving us greater brand awareness to IT MSP audience.",
+      unlock:"Scale conversions of IT MSPs. Q1/Q2 IT MSP campaigns and product improvements will support this.",
+      backlog:"Leverage IT MSP conversions for stronger brand penetration and greater pipeline creation." },
+    { id:7, title:'Payment Resource and Revenue Strategy', status:'On Track',
+      metrics:{ atInvestment:'N/A', eoy2025:'N/A', q1Target:'N/A', targetAtExit:'$286.7k MRR (Gross)' },
+      now:"Assessing & Implementing new Token Vault Partners and New Payments Processors\n\nCompleting all internal Dev changes for CEDP requirements",
+      unlock:"Token Vault Strategy (yes/no) and determine new Payment Processors\n\nRev Share/BPS by customer segment (SMB, Mid-Market, Ent)",
+      backlog:"Align customer portfolio to long term pricing strategy → Fixed Fee, Cost+, Cost++" },
+    { id:8, title:'Win a $20k+ Client', status:'Behind',
+      metrics:{ atInvestment:'N/A', eoy2025:'N/A', q1Target:'$0', targetAtExit:'$20k' },
+      now:"Apollo 2 and 3 releases (impacting larger deals) and investing in primary marketing channels for higher quality pipeline",
+      unlock:"Greater brand awareness on the Rev.io product portfolio",
+      backlog:"Ability to win large deals vs Kaseya and ConnectWise (brand awareness and Viking releases)" }
+  ]
+};
+
+/* ── RENDER ── */
+function renderAll(data) {
+  vcpData = JSON.parse(JSON.stringify(data));
+  renderOverviewBar();
+  renderCards();
+  updateLastUpdated();
+}
+
+function renderOverviewBar() {
+  const inner = document.querySelector('#overviewBar .overview-inner');
+  const label = inner.querySelector('.overview-label');
+  inner.innerHTML = '';
+  inner.appendChild(label);
+  vcpData.levers.forEach(l => {
+    const a = document.createElement('a');
+    a.className = 'lever-pill';
+    a.href = `#lever-${l.id}`;
+    a.innerHTML = `${l.id.toString().padStart(2,'0')} ${l.title.split(':')[0].split('$')[0].trim().substring(0,22)}`;
+    inner.appendChild(a);
+  });
+}
+
+function renderCards() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  vcpData.levers.forEach((l, idx) => {
+    const card = document.createElement('div');
+    card.className = 'lever-card reveal';
+    card.id = `lever-${l.id}`;
+    card.style.setProperty('--delay', `${idx * 0.05}s`);
+    card.innerHTML = `
+      <div class="card-header">
+        <span class="lever-num">${String(l.id).padStart(2,'0')}</span>
+        <div class="card-header-content">
+          <div class="lever-title">${escHtml(l.title)}</div>
+        </div>
+        <div class="edit-hint">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Editable
+        </div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric-cell">
+          <div class="metric-label">At Investment</div>
+          <div class="metric-value" contenteditable="true" data-lever="${l.id}" data-field="atInvestment">${escHtml(l.metrics.atInvestment)}</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">EOY 2025</div>
+          <div class="metric-value" contenteditable="true" data-lever="${l.id}" data-field="eoy2025">${escHtml(l.metrics.eoy2025)}</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Q1 2026 Target</div>
+          <div class="metric-value" contenteditable="true" data-lever="${l.id}" data-field="q1Target">${escHtml(l.metrics.q1Target)}</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Target at Exit</div>
+          <div class="metric-value" contenteditable="true" data-lever="${l.id}" data-field="targetAtExit">${escHtml(l.metrics.targetAtExit)}</div>
+        </div>
+      </div>
+      <div class="card-columns">
+        <div class="card-col col-now">
+          <div class="col-header">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Now
+          </div>
+          <div class="col-content" contenteditable="true" data-lever="${l.id}" data-field="now">${escHtml(l.now)}</div>
+        </div>
+        <div class="card-col col-unlock">
+          <div class="col-header">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+            The Unlock
+          </div>
+          <div class="col-content" contenteditable="true" data-lever="${l.id}" data-field="unlock">${escHtml(l.unlock)}</div>
+        </div>
+        <div class="card-col col-backlog">
+          <div class="col-header">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            The Backlog
+          </div>
+          <div class="col-content" contenteditable="true" data-lever="${l.id}" data-field="backlog">${escHtml(l.backlog)}</div>
+        </div>
+      </div>
+    `;
+    main.appendChild(card);
+  });
+
+  // Attach edit listeners
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    el.addEventListener('input', () => markDirty());
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function updateLastUpdated() {
+  const el = document.getElementById('lastUpdated');
+  if (vcpData.updatedBy && vcpData.updatedBy !== '—') {
+    const d = new Date(vcpData.lastUpdated);
+    const rel = d.toLocaleDateString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+    el.textContent = `Last updated by ${vcpData.updatedBy} · ${rel}`;
+  } else {
+    el.textContent = 'No updates yet';
+  }
+}
+
+  markDirty();
+}
+
+/* ── DIRTY FLAG ── */
+function markDirty() {
+  dirty = true;
+  document.getElementById('publishBtn').classList.add('has-changes');
+}
+
+/* ── COLLECT DATA ── */
+function collectData() {
+  const levers = vcpData.levers.map(l => {
+    const card = document.getElementById(`lever-${l.id}`);
+    const getField = (field) => {
+      const el = card.querySelector(`[data-field="${field}"]`);
+      return el ? el.innerText || el.textContent : '';
+    };
+    return {
+      id: l.id,
+      title: l.title,
+      status: card.querySelector('
+/* ── MODAL ── */
+function openPublishModal() {
+  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('authorName').focus();
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+/* ── PUBLISH ── */
+async function doPublish() {
+  const name = document.getElementById('authorName').value.trim();
+  if (!name) { document.getElementById('authorName').focus(); return; }
+
+  const btn = document.getElementById('modalPublishBtn');
+  btn.disabled = true; btn.textContent = 'Publishing…';
+
+  const payload = {
+    lastUpdated: new Date().toISOString(),
+    updatedBy: name,
+    levers: collectData()
+  };
+
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+  const body = {
+    message: `VCP update by ${name} at ${new Date().toISOString()}`,
+    content
+  };
+  if (fileSha) body.sha = fileSha;
+
+  try {
+    const res = await fetch('https://api.github.com/repos/erice320/revay/contents/board/vcp-data.json', {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'token ' + getToken(),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'GitHub API error');
+
+    fileSha = data.content.sha;
+    vcpData = payload;
+    dirty = false;
+    document.getElementById('publishBtn').classList.remove('has-changes');
+    updateLastUpdated();
+    closeModal();
+    showToast('Changes published! Live in ~30 seconds.', 'success');
+  } catch (err) {
+    showToast(`Error: ${err.message}`, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Publish';
+  }
+}
+
+/* ── TOAST ── */
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+/* ── LOAD DATA ── */
+async function loadData() {
+  try {
+    // Fetch SHA
+    const metaRes = await fetch('https://api.github.com/repos/erice320/revay/contents/board/vcp-data.json', {
+      headers: { 'Authorization': 'token ' + getToken() }
+    });
+    if (metaRes.ok) {
+      const meta = await metaRes.json();
+      fileSha = meta.sha;
+    }
+    // Fetch content
+    const res = await fetch(`https://raw.githubusercontent.com/erice320/revay/main/board/vcp-data.json?t=${Date.now()}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.levers && data.levers.length) {
+        renderAll(data);
+        return;
+      }
+    }
+  } catch(e) {}
+  renderAll(DEFAULT_DATA);
+}
+
+/* ── BG PARTICLES ── */
+(function() {
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let P = [], W = 0, H = 0;
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.round(W * devicePixelRatio);
+    canvas.height = Math.round(H * devicePixelRatio);
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    P = [];
+    const n = Math.min(130, Math.floor(W * H / 9000));
+    for (let i = 0; i < n; i++) P.push({
+      x: Math.random()*W, y: Math.random()*H,
+      r: Math.random()*1.4+0.5,
+      vx: (Math.random()-.5)*.22, vy: (Math.random()-.5)*.22,
+      a: Math.random()*.38+0.18, g: Math.random()<.15
+    });
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    P.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = p.g ? `rgba(105,240,174,${p.a})` : `rgba(0,188,212,${p.a})`;
+      ctx.fill();
+    });
+    for(let i=0;i<P.length;i++) for(let j=i+1;j<P.length;j++) {
+      const dx=P[i].x-P[j].x, dy=P[i].y-P[j].y, d=Math.sqrt(dx*dx+dy*dy);
+      if(d<130){
+        ctx.beginPath(); ctx.moveTo(P[i].x,P[i].y); ctx.lineTo(P[j].x,P[j].y);
+        ctx.strokeStyle=`rgba(0,188,212,${.13*(1-d/130)})`; ctx.lineWidth=.5; ctx.stroke();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+/* ── HERO PARTICLES ── */
+(function() {
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+  let P = [], animId;
+  function resize() {
+    canvas.width = canvas.offsetWidth * devicePixelRatio;
+    canvas.height = canvas.offsetHeight * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    P = [];
+    const w=canvas.offsetWidth, h=canvas.offsetHeight;
+    const n=Math.min(110,Math.floor(w*h/9000));
+    for(let i=0;i<n;i++) P.push({
+      x:Math.random()*w, y:Math.random()*h,
+      r:Math.random()*1.8+.4,
+      vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25,
+      a:Math.random()*.55+.12, g:Math.random()<.15
+    });
+  }
+  function draw() {
+    const w=canvas.offsetWidth, h=canvas.offsetHeight;
+    ctx.clearRect(0,0,w,h);
+    P.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=w; if(p.x>w)p.x=0;
+      if(p.y<0)p.y=h; if(p.y>h)p.y=0;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = p.g?`rgba(105,240,174,${p.a})`:`rgba(0,188,212,${p.a})`;
+      ctx.fill();
+    });
+    for(let i=0;i<P.length;i++) for(let j=i+1;j<P.length;j++) {
+      const dx=P[i].x-P[j].x, dy=P[i].y-P[j].y, d=Math.sqrt(dx*dx+dy*dy);
+      if(d<130){
+        ctx.beginPath(); ctx.moveTo(P[i].x,P[i].y); ctx.lineTo(P[j].x,P[j].y);
+        ctx.strokeStyle=`rgba(0,188,212,${.09*(1-d/130)})`; ctx.lineWidth=.5; ctx.stroke();
+      }
+    }
+    animId = requestAnimationFrame(draw);
+  }
+  new IntersectionObserver(([e])=>{
+    if(e.isIntersecting){if(!animId)draw();}
+    else{cancelAnimationFrame(animId);animId=null;}
+  },{threshold:.05}).observe(document.querySelector('.hero'));
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+/* ── TOKEN ── */
+function getToken() {
+  const _t = ['ghp_JbDSDCl4h26Sj1t','kYnGNSH1xXsTtYq2unXma'];
+  return _t.join('');
+}
+
+/* ── BOOT ── */
+loadData();
+</script>
+</body>
+</html>
