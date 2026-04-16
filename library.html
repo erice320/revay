@@ -43,6 +43,14 @@ body {
 }
 
 /* ── HERO ─────────────────────────────────────────────────── */
+#bgCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
 .hero {
   position: relative;
   min-height: 48vh;
@@ -50,6 +58,7 @@ body {
   align-items: center;
   overflow: hidden;
   border-bottom: 1px solid var(--border);
+  z-index: 1;
 }
 
 #heroCanvas {
@@ -254,6 +263,8 @@ body {
 
 /* ── MAIN GRID ────────────────────────────────────────────── */
 .main {
+  position: relative;
+  z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
   padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 3rem);
@@ -269,7 +280,11 @@ body {
   padding-bottom: 14px;
   border-bottom: 1px solid var(--border);
 }
-.section-icon { font-size: 1.2rem; }
+.section-icon { 
+  display: inline-flex; 
+  align-items: center; 
+  color: var(--cyan); 
+}
 .section-label {
   font-family: var(--font-display);
   font-size: clamp(1rem, 1.5vw, 1.2rem);
@@ -485,6 +500,8 @@ body {
 </head>
 <body>
 
+  <canvas id="bgCanvas"></canvas>
+
 <!-- ── HERO ─────────────────────────────────────────────────── -->
 <section class="hero">
   <canvas id="heroCanvas"></canvas>
@@ -534,13 +551,13 @@ body {
     </div>
     <div class="tabs-pill" id="tabs">
       <button class="tab-pill active" data-cat="all" onclick="filterCat('all',this)">All <span class="tab-count" id="count-all">34</span></button>
-      <button class="tab-pill" data-cat="gtm" onclick="filterCat('gtm',this)">🎯 GTM <span class="tab-count" id="count-gtm">4</span></button>
-      <button class="tab-pill" data-cat="onboarding" onclick="filterCat('onboarding',this)">🚀 Onboarding <span class="tab-count" id="count-onboarding">8</span></button>
-      <button class="tab-pill" data-cat="product" onclick="filterCat('product',this)">📊 CS & Product <span class="tab-count" id="count-product">5</span></button>
-      <button class="tab-pill" data-cat="strategy" onclick="filterCat('strategy',this)">🤖 AI & Strategy <span class="tab-count" id="count-strategy">7</span></button>
+      <button class="tab-pill" data-cat="gtm" onclick="filterCat('gtm',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> GTM <span class="tab-count" id="count-gtm">4</span></button>
+      <button class="tab-pill" data-cat="onboarding" onclick="filterCat('onboarding',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg> Onboarding <span class="tab-count" id="count-onboarding">8</span></button>
+      <button class="tab-pill" data-cat="product" onclick="filterCat('product',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-4"/></svg> CS & Product <span class="tab-count" id="count-product">5</span></button>
+      <button class="tab-pill" data-cat="strategy" onclick="filterCat('strategy',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> AI & Strategy <span class="tab-count" id="count-strategy">7</span></button>
 
-      <button class="tab-pill" data-cat="migration" onclick="filterCat('migration',this)">🔧 Guides <span class="tab-count" id="count-migration">7</span></button>
-      <button class="tab-pill" data-cat="other" onclick="filterCat('other',this)">📄 Other <span class="tab-count" id="count-other">6</span></button>
+      <button class="tab-pill" data-cat="migration" onclick="filterCat('migration',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Guides <span class="tab-count" id="count-migration">7</span></button>
+      <button class="tab-pill" data-cat="other" onclick="filterCat('other',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg> Other <span class="tab-count" id="count-other">6</span></button>
     </div>
     <div class="deck-count-badge"><span id="visibleCount">35</span> decks</div>
   </div>
@@ -552,7 +569,7 @@ body {
   <!-- GTM & Sales -->
   <div class="section-block" data-section="gtm">
     <div class="section-hdr reveal">
-      <span class="section-icon">🎯</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
       <span class="section-label">GTM & Sales Intelligence</span>
       <span class="section-n">4 decks</span>
     </div>
@@ -593,7 +610,7 @@ body {
   <!-- Onboarding -->
   <div class="section-block" data-section="onboarding">
     <div class="section-hdr reveal">
-      <span class="section-icon">🚀</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span>
       <span class="section-label">Onboarding Intelligence</span>
       <span class="section-n">8 decks</span>
     </div>
@@ -652,7 +669,7 @@ body {
   <!-- Customer & Product -->
   <div class="section-block" data-section="product">
     <div class="section-hdr reveal">
-      <span class="section-icon">📊</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-4"/></svg></span>
       <span class="section-label">Customer & Product Intelligence</span>
       <span class="section-n">5 decks</span>
     </div>
@@ -693,7 +710,7 @@ body {
   <!-- AI & Strategy -->
   <div class="section-block" data-section="strategy">
     <div class="section-hdr reveal">
-      <span class="section-icon">🤖</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>
       <span class="section-label">AI & Strategy</span>
       <span class="section-n">7 decks</span>
     </div>
@@ -723,7 +740,7 @@ body {
         <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
       </a>
       <a class="deck-card reveal" href="agentos-strategy.html" target="_blank" data-cat="strategy" data-title="AgentOS Internal Strategy Brief" data-desc="Board-level business case — market analysis, competitive intel, business model, execution plan" style="--delay:0.05s">
-        <span class="card-badge badge-strategy" style="background:rgba(255,51,102,.15);color:#FF3366;border:1px solid rgba(255,51,102,.3)">🔒 Internal</span>
+        <span class="card-badge badge-strategy" style="background:rgba(255,51,102,.15);color:#FF3366;border:1px solid rgba(255,51,102,.3)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Internal</span>
         <div class="card-title">AgentOS — Internal Strategy Brief</div>
         <div class="card-desc">Board-level business case: $424B market opp, competitive landscape (ConnectWise/Kaseya/Rewst), 4-layer revenue architecture, 14-partner rationale, 3 pilot use cases, 18-month roadmap, risk register.</div>
         <div class="card-footer"><span class="card-cta">Open deck <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
@@ -746,7 +763,7 @@ body {
   <!-- Migration & Guides -->
   <div class="section-block" data-section="migration">
     <div class="section-hdr reveal">
-      <span class="section-icon">🔧</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
       <span class="section-label">Migration & Technical Guides</span>
       <span class="section-n">7 guides</span>
     </div>
@@ -799,7 +816,7 @@ body {
   <!-- Other -->
   <div class="section-block" data-section="other">
     <div class="section-hdr reveal">
-      <span class="section-icon">📄</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></span>
       <span class="section-label">Other</span>
       <span class="section-n">6 items</span>
     </div>
@@ -815,7 +832,7 @@ body {
 
   <div class="section-block" data-section="marketing">
     <div class="section-hdr reveal">
-      <span class="section-icon">📈</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
       <span class="section-label">Marketing</span>
       <span class="section-n">1 dashboard</span>
     </div>
@@ -831,13 +848,87 @@ body {
   </div>
 
   <div class="empty hidden" id="emptyState">
-    <div class="empty-icon">🔍</div>
+    <div class="empty-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A1B0CB" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
     <div class="empty-text">No decks match your search.</div>
   </div>
 
 </main>
 
 <script>
+/* ── PARTICLE CANVAS (full bg) ────────────────────────────── */
+(function() {
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [], animId;
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth  * devicePixelRatio;
+    canvas.height = canvas.offsetHeight * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    createParticles();
+  }
+
+  function createParticles() {
+    particles = [];
+    const w = canvas.offsetWidth, h = canvas.offsetHeight;
+    const count = Math.min(90, Math.floor((w * h) / 14000));
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 0.9 + 0.3,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        alpha: Math.random() * 0.14 + 0.04,
+        green: Math.random() < 0.15
+      });
+    }
+  }
+
+  function draw() {
+    const w = canvas.offsetWidth, h = canvas.offsetHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.green
+        ? `rgba(105,240,174,${p.alpha})`
+        : `rgba(0,188,212,${p.alpha})`;
+      ctx.fill();
+    });
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0,188,212,${0.04 * (1 - dist / 100)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    animId = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+
 /* ── PARTICLE CANVAS (full hero) ────────────────────────────── */
 (function() {
   const canvas = document.getElementById('heroCanvas');
