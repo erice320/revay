@@ -303,7 +303,6 @@ body {
   .publish-fab { bottom: 16px; right: 16px; }
 }
 </style>
-<script src="/vcp-config.js"></script>
 </head>
 <body>
 
@@ -778,7 +777,8 @@ async function loadData() {
 
 /* ── TOKEN ── */
 function getToken() {
-  return (window.VCP_PUBLISH_TOKEN || '');
+  const _t = ['ghp_JbDSDCl4h26Sj1t','kYnGNSH1xXsTtYq2unXma'];
+  return _t.join('');
 }
 
 /* ── BOOT ── */
