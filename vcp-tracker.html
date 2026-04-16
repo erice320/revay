@@ -584,6 +584,9 @@ async function doPublish() {
   const btn = document.getElementById('modalPublishBtn');
   btn.disabled = true; btn.textContent = 'Publishing…';
 
+  // Fetch SHA now if we don't have it
+  if (!fileSha) await fetchSha();
+
   const payload = {
     lastUpdated: new Date().toISOString(),
     updatedBy: name,

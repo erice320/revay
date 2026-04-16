@@ -584,6 +584,9 @@ async function doPublish() {
   const btn = document.getElementById('modalPublishBtn');
   btn.disabled = true; btn.textContent = 'Publishing…';
 
+  // Fetch SHA now if we don't have it
+  if (!fileSha) await fetchSha();
+
   const payload = {
     lastUpdated: new Date().toISOString(),
     updatedBy: name,
@@ -631,8 +634,8 @@ function showToast(msg, type) {
 }
 
 /* ── LOAD DATA ── */
-async function loadData() {
-  // Fetch SHA separately — don't block rendering if this fails
+async function fetchSha() {
+  // Fetch SHA only when needed for publishing
   try {
     const metaRes = await fetch('https://api.github.com/repos/erice320/revay/contents/board/vcp-data.json', {
       headers: { 'Authorization': 'token ' + getToken() }
@@ -642,7 +645,9 @@ async function loadData() {
       fileSha = meta.sha;
     }
   } catch(e) {}
+}
 
+async function loadData() {
   // Fetch and render content — always fall back to DEFAULT_DATA
   try {
     const res = await fetch('https://raw.githubusercontent.com/erice320/revay/main/board/vcp-data.json?t=' + Date.now());
@@ -653,7 +658,7 @@ async function loadData() {
         return;
       }
     }
-  } catch(e) {}
+  } catch(e) { console.error('loadData error:', e); }
   renderAll(DEFAULT_DATA);
 }
 
