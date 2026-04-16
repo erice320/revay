@@ -303,6 +303,7 @@ body {
   .publish-fab { bottom: 16px; right: 16px; }
 }
 </style>
+<script src="/vcp-config.js"></script>
 </head>
 <body>
 
@@ -777,12 +778,7 @@ async function loadData() {
 
 /* ── TOKEN ── */
 function getToken() {
-  let t = sessionStorage.getItem('vcp_gh_token');
-  if (!t) {
-    t = prompt('Enter GitHub publish token (ask Revay if you need it):');
-    if (t) sessionStorage.setItem('vcp_gh_token', t.trim());
-  }
-  return t || '';
+  return (window.VCP_PUBLISH_TOKEN || '');
 }
 
 /* ── BOOT ── */
