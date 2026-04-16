@@ -532,9 +532,6 @@ function updateLastUpdated() {
   }
 }
 
-  markDirty();
-}
-
 /* ── DIRTY FLAG ── */
 function markDirty() {
   dirty = true;
@@ -552,7 +549,21 @@ function collectData() {
     return {
       id: l.id,
       title: l.title,
-      status: card.querySelector('
+      status: 'N/A',
+      metrics: {
+        atInvestment: getField('atInvestment'),
+        eoy2025: getField('eoy2025'),
+        q1Target: getField('q1Target'),
+        targetAtExit: getField('targetAtExit'),
+      },
+      now: getField('now'),
+      unlock: getField('unlock'),
+      backlog: getField('backlog'),
+    };
+  });
+  return levers;
+}
+
 /* ── MODAL ── */
 function openPublishModal() {
   document.getElementById('modalOverlay').classList.add('open');
@@ -741,6 +752,9 @@ function getToken() {
 
 /* ── BOOT ── */
 loadData();
+
+</body>
+</html>
 </script>
 </body>
 </html>
