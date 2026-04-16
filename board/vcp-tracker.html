@@ -621,8 +621,8 @@ function showToast(msg, type) {
 
 /* ── LOAD DATA ── */
 async function loadData() {
+  // Fetch SHA separately — don't block rendering if this fails
   try {
-    // Fetch SHA
     const metaRes = await fetch('https://api.github.com/repos/erice320/revay/contents/board/vcp-data.json', {
       headers: { 'Authorization': 'token ' + getToken() }
     });
@@ -630,8 +630,11 @@ async function loadData() {
       const meta = await metaRes.json();
       fileSha = meta.sha;
     }
-    // Fetch content
-    const res = await fetch(`https://raw.githubusercontent.com/erice320/revay/main/board/vcp-data.json?t=${Date.now()}`);
+  } catch(e) {}
+
+  // Fetch and render content — always fall back to DEFAULT_DATA
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/erice320/revay/main/board/vcp-data.json?t=' + Date.now());
     if (res.ok) {
       const data = await res.json();
       if (data && data.levers && data.levers.length) {
