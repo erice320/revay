@@ -106,10 +106,6 @@ body {
   transition: all 0.2s var(--spring); white-space: nowrap;
 }
 .lever-pill:hover { border-color: var(--border-cyan); color: var(--text-1); }
-.lever-pill .rag { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.rag-green { background: var(--green-bright); box-shadow: 0 0 6px var(--green-bright); }
-.rag-amber { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
-.rag-red { background: var(--red); box-shadow: 0 0 6px var(--red); }
 
 /* ── MAIN ── */
 .main {
@@ -146,16 +142,6 @@ body {
   font-family: var(--font-display); font-size: clamp(1.05rem,1.6vw,1.3rem);
   font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 10px;
 }
-.status-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 4px 12px; border-radius: 99px; font-size: 0.72rem; font-weight: 700;
-  letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
-  transition: all 0.2s; user-select: none; border: 1px solid transparent;
-}
-.status-badge.on-track { background: rgba(105,240,174,0.12); color: var(--green-bright); border-color: rgba(105,240,174,0.25); }
-.status-badge.at-risk  { background: rgba(255,179,0,0.12);   color: var(--amber);        border-color: rgba(255,179,0,0.3); }
-.status-badge.behind   { background: rgba(255,82,82,0.12);   color: var(--red);          border-color: rgba(255,82,82,0.25); }
-.status-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:currentColor; }
 
 .edit-hint {
   opacity: 0; position: absolute; top: 16px; right: 16px;
@@ -383,9 +369,6 @@ let vcpData = null;
 let fileSha = null;
 let dirty = false;
 
-const STATUS_CYCLE = ['On Track', 'At Risk', 'Behind'];
-const STATUS_CLASS = { 'On Track': 'on-track', 'At Risk': 'at-risk', 'Behind': 'behind' };
-const RAG_CLASS    = { 'On Track': 'rag-green', 'At Risk': 'rag-amber', 'Behind': 'rag-red' };
 
 /* ── DEFAULT DATA ── */
 const DEFAULT_DATA = {
@@ -452,7 +435,7 @@ function renderOverviewBar() {
     const a = document.createElement('a');
     a.className = 'lever-pill';
     a.href = `#lever-${l.id}`;
-    a.innerHTML = `<span class="rag ${RAG_CLASS[l.status]}"></span>${l.id.toString().padStart(2,'0')} ${l.title.split(':')[0].split('$')[0].trim().substring(0,22)}`;
+    a.innerHTML = `${l.id.toString().padStart(2,'0')} ${l.title.split(':')[0].split('$')[0].trim().substring(0,22)}`;
     inner.appendChild(a);
   });
 }
@@ -470,7 +453,6 @@ function renderCards() {
         <span class="lever-num">${String(l.id).padStart(2,'0')}</span>
         <div class="card-header-content">
           <div class="lever-title">${escHtml(l.title)}</div>
-          <span class="status-badge ${STATUS_CLASS[l.status]}" data-lever="${l.id}" onclick="cycleStatus(${l.id},this)">${escHtml(l.status)}</span>
         </div>
         <div class="edit-hint">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -550,16 +532,6 @@ function updateLastUpdated() {
   }
 }
 
-/* ── STATUS CYCLE ── */
-function cycleStatus(leverId, el) {
-  const cur = el.textContent.trim();
-  const idx = STATUS_CYCLE.indexOf(cur);
-  const next = STATUS_CYCLE[(idx + 1) % STATUS_CYCLE.length];
-  el.textContent = next;
-  el.className = `status-badge ${STATUS_CLASS[next]}`;
-  // Update overview bar pill
-  const pill = document.querySelector(`.lever-pill[href="#lever-${leverId}"] .rag`);
-  if (pill) { pill.className = `rag ${RAG_CLASS[next]}`; }
   markDirty();
 }
 
@@ -580,21 +552,7 @@ function collectData() {
     return {
       id: l.id,
       title: l.title,
-      status: card.querySelector('.status-badge').textContent.trim(),
-      metrics: {
-        atInvestment: getField('atInvestment'),
-        eoy2025: getField('eoy2025'),
-        q1Target: getField('q1Target'),
-        targetAtExit: getField('targetAtExit'),
-      },
-      now: getField('now'),
-      unlock: getField('unlock'),
-      backlog: getField('backlog'),
-    };
-  });
-  return levers;
-}
-
+      status: card.querySelector('
 /* ── MODAL ── */
 function openPublishModal() {
   document.getElementById('modalOverlay').classList.add('open');
