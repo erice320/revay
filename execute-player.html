@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Rev.io EXECUTE — Full Cut</title>
+<style>
+body{background:#0a0c12;color:#e8eaf6;font-family:-apple-system,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px;}
+h1{font-size:20px;margin-bottom:8px;color:#00d4aa;letter-spacing:2px;}
+p{color:#7b82a8;font-size:13px;margin-bottom:20px;}
+video{width:100%;max-width:1280px;border-radius:8px;border:1px solid #252a3d;background:#000;}
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;width:100%;max-width:1280px;}
+.shot-btn{background:#13161f;border:1px solid #252a3d;border-radius:8px;padding:10px;cursor:pointer;color:#7b82a8;font-size:12px;text-align:center;transition:all .15s;}
+.shot-btn:hover{border-color:#6c63ff;color:#e8eaf6;}
+</style>
+</head>
+<body>
+<h1>⚡ REV.IO — EXECUTE</h1>
+<p>Full 90-second cut · Click shots below to jump to any scene</p>
+<video id="v" controls autoplay>
+  <source src="./execute-full-cut.mp4" type="video/mp4">
+</video>
+<div class="shots">
+  <div class="shot-btn" onclick="seek(0)">Shot 1 (0:00)<br>The Silent Giant</div>
+  <div class="shot-btn" onclick="seek(15)">Shot 2 (0:15)<br>Racing the Void</div>
+  <div class="shot-btn" onclick="seek(30)">Shot 3 (0:30)<br>Lunar Flyover</div>
+  <div class="shot-btn" onclick="seek(45)">Shot 4 (0:45)<br>Crisis</div>
+  <div class="shot-btn" onclick="seek(60)">Shot 5 (1:00)<br>Rev.io Deploys</div>
+  <div class="shot-btn" onclick="seek(75)">Shot 6 (1:15)<br>Mission Mars · Execute</div>
+</div>
+<script>
+function seek(t){const v=document.getElementById('v');v.currentTime=t;v.play();}
+</script>
+</body>
+</html>
