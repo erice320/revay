@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzBmMTExNyIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyNCIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiPuKaoTwvdGV4dD4KPC9zdmc+">
+<meta charset="UTF-8">
+<style>
+  body, html { margin: 0; padding: 0; width: 1920px; height: 1080px; background-color: #000; overflow: hidden; font-family: 'Courier New', monospace; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+  const ctx = document.getElementById('c').getContext('2d');
+  const w = 1920;
+  const h = 1080;
+  const cx = w * 0.45; // Vanishing point slightly left of center
+  const cy = h * 0.55;
+
+  // Background
+  const bgGrad = ctx.createRadialGradient(cx, cy, 100, cx, cy, 1200);
+  bgGrad.addColorStop(0, '#050a15');
+  bgGrad.addColorStop(1, '#000000');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, w, h);
+
+  // Helper for glow
+  function setGlow(color, blur) {
+    ctx.shadowColor = color;
+    ctx.shadowBlur = blur;
+  }
+  function resetGlow() {
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+  }
+
+  // Draw Servers in Background
+  ctx.globalAlpha = 0.3;
+  setGlow('#00E5FF', 10);
+  for (let i = 0; i < 20; i++) {
+    let sx = 100 + i * 90;
+    if (Math.abs(sx - cx) < 200) continue; // Gap in middle
+    ctx.fillStyle = '#020b14';
+    ctx.strokeStyle = '#0066FF';
+    ctx.lineWidth = 1;
+    ctx.fillRect(sx, cy - 300, 60, 400);
+    ctx.strokeRect(sx, cy - 300, 60, 400);
+    
+    // Server lights
+    for (let j = 0; j < 10; j++) {
+      ctx.fillStyle = Math.random() > 0.5 ? '#00E5FF' : '#7B00FF';
+      ctx.fillRect(sx + 10, cy - 280 + j * 35, 8, 8);
+      ctx.fillStyle = Math.random() > 0.2 ? '#00E5FF' : '#000';
+      ctx.fillRect(sx + 30, cy - 280 + j * 35, 20, 4);
+    }
+  }
+  ctx.globalAlpha = 1.0;
+  resetGlow();
+
+  // Perspective Grid Floor
+  ctx.lineWidth = 2;
+  setGlow('#0066FF', 15);
+  ctx.strokeStyle = 'rgba(0, 102, 255, 0.4)';
+  
+  const drawLine = (x1, y1, x2, y2) => {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  };
+
+  // Horizontal lines for floor
+  for (let i = 1; i <= 20; i++) {
+    let y = cy + Math.pow(i, 1.8) * 3;
+    if (y > h) break;
+    ctx.strokeStyle = `rgba(0, 229, 255, ${0.1 + (i/20)*0.5})`;
+    drawLine(0, y, w, y);
+  }
+
+  // Radiating lines from vanishing point
+  for (let i = -30; i <= 30; i++) {
+    let ex = cx + i * 150;
+    drawLine(cx, cy, ex, h);
+  }
+  
+  // Ceiling Grid (Faint)
+  ctx.strokeStyle = 'rgba(123, 0, 255, 0.2)';
+  setGlow('#7B00FF', 10);
+  for (let i = 1; i <= 15; i++) {
+    let y = cy - Math.pow(i, 1.8) * 3;
+    if (y < 0) break;
+    drawLine(0, y, w, y);
+  }
+  for (let i = -30; i <= 30; i++) {
+    let ex = cx + i * 150;
+    drawLine(cx, cy, ex, 0);
+  }
+  resetGlow();
+
+  // Holographic Screens & Data
+  const drawScreen = (x, y, sw, sh, color, title, lines) => {
+    setGlow(color, 20);
+    ctx.fillStyle = `rgba(0, 10, 30, 0.7)`;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.fillRect(x, y, sw, sh);
+    ctx.strokeRect(x, y, sw, sh);
+    
+    // Header
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, sw, 25);
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.fillText(title, x + 10, y + 18);
+    
+    resetGlow();
+    ctx.fillStyle = color;
+    ctx.font = '14px monospace';
+    lines.forEach((l, idx) => {
+      ctx.fillText(l, x + 10, y + 50 + idx * 20);
+    });
+  }
+
+
+
+
+  
+
+
+  // Draw Neural Network / Agent Workflow Nodes
+  const nodes = [];
+  for(let i=0; i<40; i++) {
+    nodes.push({
+      x: cx + (Math.random() - 0.5) * 1200,
+      y: cy + (Math.random() - 0.5) * 800,
+      r: Math.random() * 4 + 2,
+      c: Math.random() > 0.3 ? '#00E5FF' : '#7B00FF'
+    });
+  }
+  
+  ctx.lineWidth = 1;
+  for(let i=0; i<nodes.length; i++) {
+    for(let j=i+1; j<nodes.length; j++) {
+      let d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+      if (d < 250) {
+        ctx.strokeStyle = `rgba(0, 229, 255, ${0.4 - d/250*0.4})`;
+        drawLine(nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y);
+      }
+    }
+  }
+
+  nodes.forEach(n => {
+    setGlow(n.c, 15);
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle = n.c;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  resetGlow();
+
+  // Floating text
+  ctx.fillStyle = 'rgba(0, 229, 255, 0.5)';
+  ctx.font = '24px monospace';
+  ctx.fillText('REV.IO AUTONOMOUS LAB', cx - 150, cy - 200);
+  ctx.fillStyle = 'rgba(123, 0, 255, 0.4)';
+  ctx.fillText('SYSTEM OK', cx - 60, cy - 170);
+
+  // Hexagon overlay
+  ctx.strokeStyle = 'rgba(0, 102, 255, 0.05)';
+  ctx.lineWidth = 1;
+  const drawHex = (x, y, r) => {
+    ctx.beginPath();
+    for(let i=0; i<6; i++) {
+      let angle = Math.PI / 3 * i;
+      let hx = x + r * Math.cos(angle);
+      let hy = y + r * Math.sin(angle);
+      if(i===0) ctx.moveTo(hx, hy);
+      else ctx.lineTo(hx, hy);
+    }
+    ctx.closePath();
+    ctx.stroke();
+  };
+  
+  for(let y = 0; y < h; y+=60) {
+    for(let x = 0; x < w; x+=104) {
+      drawHex(x + (Math.floor(y/60)%2===0 ? 0 : 52), y, 60);
+    }
+  }
+
+</script>
+</body>
+</html>
