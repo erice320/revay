@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io Website Redesign — Claude Design Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #05080f;
+    --bg2: #0a0e1a;
+    --surface: rgba(255,255,255,0.04);
+    --surface-border: rgba(255,255,255,0.08);
+    --text: #e8edf8;
+    --text-muted: #8b95a8;
+    --accent: #00c8d4;
+    --accent-soft: rgba(0,200,212,0.12);
+    --accent-border: rgba(0,200,212,0.3);
+    --white: #f0f4ff;
+    --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Stars */
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s) alternate;
+    opacity: var(--op, 0.4);
+  }
+  @keyframes twinkle { from { opacity: var(--op, 0.4); } to { opacity: 0.05; } }
+
+  /* Layout */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    padding: 16px 24px;
+    background: rgba(5,8,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--surface-border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-size: 18px; font-weight: 700; color: var(--white); letter-spacing: -0.3px; }
+  .nav-logo span { color: var(--accent); }
+  .nav-tag {
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-border);
+    padding: 4px 12px; border-radius: 20px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 100px 0 80px;
+    text-align: center;
+    background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,200,212,0.08) 0%, transparent 70%);
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent-border);
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .hero h1 em {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .hero-sub {
+    font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px;
+    font-weight: 400;
+  }
+  .pill-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
+  .pill {
+    font-size: 13px; font-weight: 500; color: var(--text-muted);
+    background: var(--surface); border: 1px solid var(--surface-border);
+    padding: 8px 16px; border-radius: 20px;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--surface-border);
+    border: 1px solid var(--surface-border); border-radius: var(--radius);
+    overflow: hidden; margin-bottom: 80px;
+  }
+  .stat {
+    background: var(--surface); padding: 28px 24px; text-align: center;
+  }
+  .stat-num { font-size: 36px; font-weight: 800; color: var(--white); letter-spacing: -1px; }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+  /* Sections */
+  section { padding: 80px 0; }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(28px, 3vw, 40px); font-weight: 700;
+    letter-spacing: -0.8px; color: var(--white); margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .section-title em { font-family: 'Fraunces', serif; font-style: italic; color: var(--accent); }
+  .section-sub { font-size: 16px; color: var(--text-muted); max-width: 560px; line-height: 1.7; }
+
+  /* Divider */
+  .divider { height: 1px; background: var(--surface-border); margin: 0; }
+
+  /* Direction section */
+  .direction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .direction-card {
+    background: var(--surface); border: 1px solid var(--surface-border);
+    border-radius: var(--radius); padding: 28px;
+    transition: border-color 0.2s;
+  }
+  .direction-card:hover { border-color: var(--accent-border); }
+  .direction-card h3 { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+  .direction-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+  .color-swatches { display: flex; gap: 8px; margin-top: 12px; }
+  .swatch { width: 28px; height: 28px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); }
+
+  /* Problems */
+  .problems-list { margin-top: 40px; display: flex; flex-direction: column; gap: 12px; }
+  .problem-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--surface); border: 1px solid var(--surface-border);
+    border-radius: var(--radius); padding: 20px 24px;
+  }
+  .problem-num {
+    font-size: 24px; font-weight: 800; color: var(--accent);
+    min-width: 32px; line-height: 1;
+  }
+  .problem-text h4 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+  .problem-text p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* Page tiers */
+  .tier-section { margin-top: 40px; }
+  .tier-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .tier-badge {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 20px;
+  }
+  .tier-1 { background: rgba(0,200,212,0.15); color: var(--accent); border: 1px solid var(--accent-border); }
+  .tier-2 { background: rgba(255,200,100,0.1); color: #ffc864; border: 1px solid rgba(255,200,100,0.3); }
+  .tier-3 { background: rgba(139,149,168,0.1); color: var(--text-muted); border: 1px solid rgba(139,149,168,0.2); }
+  .tier-label { font-size: 14px; font-weight: 600; color: var(--white); }
+  .page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 32px; }
+  .page-card {
+    background: var(--surface); border: 1px solid var(--surface-border);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .page-card a { color: var(--accent); font-size: 13px; font-weight: 500; text-decoration: none; }
+  .page-card a:hover { text-decoration: underline; }
+  .page-card p { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  /* Prompt blocks */
+  .prompt-block {
+    background: #060a14; border: 1px solid var(--accent-border);
+    border-radius: var(--radius); padding: 28px; margin-top: 16px;
+    position: relative;
+  }
+  .prompt-block::before {
+    content: 'PASTE THIS INTO CLAUDE DESIGN';
+    position: absolute; top: -1px; left: 20px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    color: var(--accent); background: #060a14;
+    padding: 0 8px; transform: translateY(-50%);
+  }
+  .prompt-block p {
+    font-size: 14px; color: #c5d0e0; line-height: 1.8;
+    font-family: 'Inter', monospace;
+  }
+
+  /* Priority order */
+  .priority-list { margin-top: 32px; counter-reset: priority; }
+  .priority-item {
+    display: flex; gap: 16px; align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--surface-border);
+  }
+  .priority-item:last-child { border-bottom: none; }
+  .priority-item:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+  .priority-item:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+  .priority-step {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--accent-soft); border: 1px solid var(--accent-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--accent);
+    flex-shrink: 0;
+  }
+  .priority-item-content h4 { font-size: 15px; font-weight: 600; color: var(--white); }
+  .priority-item-content p { font-size: 13px; color: var(--text-muted); }
+  .priority-list-wrap {
+    background: var(--surface); border: 1px solid var(--surface-border);
+    border-radius: var(--radius); overflow: hidden;
+  }
+
+  /* Download section */
+  .download-section {
+    text-align: center; padding: 80px 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 100%, rgba(0,200,212,0.06) 0%, transparent 70%);
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #000;
+    font-size: 15px; font-weight: 700;
+    padding: 14px 28px; border-radius: 40px;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--surface-border);
+    margin-left: 12px;
+  }
+  .btn-ghost:hover { border-color: var(--accent-border); }
+
+  /* Footer */
+  footer {
+    padding: 32px 24px; text-align: center;
+    border-top: 1px solid var(--surface-border);
+    font-size: 13px; color: var(--text-muted);
+  }
+  footer span { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .direction-grid { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: 1fr; }
+    .page-grid { grid-template-columns: 1fr 1fr; }
+    .hero h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<nav>
+  <div class="nav-logo"><span>rev</span>.io</div>
+  <div class="nav-tag">Design Brief</div>
+</nav>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-eyebrow">Claude Design Brief · April 2026</div>
+    <h1>Website Visual<br>Renovation — <em>Dark Enterprise</em></h1>
+    <p class="hero-sub">A complete visual overhaul of rev.io. Same content. Totally new design system. Built for Claude Design.</p>
+    <div class="pill-row">
+      <div class="pill">50+ Pages</div>
+      <div class="pill">HubSpot CMS</div>
+      <div class="pill">Dark Enterprise Theme</div>
+      <div class="pill">Design System Already Built</div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-num"><span>8</span></div>
+        <div class="stat-label">Tier 1 Priority Pages</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span>0</span></div>
+        <div class="stat-label">Content Changes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span>1</span></div>
+        <div class="stat-label">Design System (Summit)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Direction -->
+  <section>
+    <div class="section-eyebrow">01 — Design Direction</div>
+    <h2 class="section-title">Dark Enterprise — <em>Already Established</em></h2>
+    <p class="section-sub">The Rev.io Summit 2026 site (already built in Claude Design) is the visual north star. The design system exists — this is a rollout exercise.</p>
+
+    <div class="direction-grid">
+      <div class="direction-card">
+        <h3>🎨 Color System</h3>
+        <p>Deep navy to near-black backgrounds. White/off-white primary text. Cyan-teal for all CTAs and highlights. Subtle atmospheric depth in hero sections.</p>
+        <div class="color-swatches">
+          <div class="swatch" style="background:#05080f"></div>
+          <div class="swatch" style="background:#0a0e1a"></div>
+          <div class="swatch" style="background:#f0f4ff"></div>
+          <div class="swatch" style="background:#00c8d4"></div>
+          <div class="swatch" style="background:#8b95a8"></div>
+        </div>
+      </div>
+      <div class="direction-card">
+        <h3>✍️ Typography</h3>
+        <p>Bold modern sans for headlines with italic serif contrast on emphasis words — "Prepare for <em>Tomorrow.</em>" treatment. All-caps muted labels for overlines.</p>
+      </div>
+      <div class="direction-card">
+        <h3>🃏 Cards & Surfaces</h3>
+        <p>Dark glass panels with very subtle borders (rgba white 8–12%). No white boxes on white backgrounds. Soft shadow depth. Card borders glow lightly on hover.</p>
+      </div>
+      <div class="direction-card">
+        <h3>⚡ CTAs & Buttons</h3>
+        <p>Pill-shaped. Cyan fill for primary (matching "Register Now →"). Ghost/outline for secondary. Consistent across every page — no more multiple button styles.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Problems to solve -->
+  <section>
+    <div class="section-eyebrow">02 — What's Broken Now</div>
+    <h2 class="section-title">5 Visual Problems to <em>Fix</em></h2>
+    <p class="section-sub">These are the specific issues Claude Design needs to solve on every page.</p>
+
+    <div class="problems-list">
+      <div class="problem-item">
+        <div class="problem-num">1</div>
+        <div class="problem-text">
+          <h4>Split Personality — Dark Hero, White Below</h4>
+          <p>Pages start with a dark header then drop into bright white below the fold. Every product page, every industry page. The dark needs to sustain through the entire page — no white sections below the hero.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">2</div>
+        <div class="problem-text">
+          <h4>White Card Tiles on White Background</h4>
+          <p>The PSA feature grid and similar sections use bright white cards on a white/light gray background. Zero depth, no visual hierarchy. Replace with dark glass panels that have actual presence.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">3</div>
+        <div class="problem-text">
+          <h4>Stats Are Buried Instead of Celebrated</h4>
+          <p>"2x revenue." "300% higher ops efficiency." "5:1 ROI." These are the most powerful proof points on the site. Currently displayed as small icon+text blocks. Should be large, bold visual anchors — the way the summit hero handles "400+ Expected Attendees."</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">4</div>
+        <div class="problem-text">
+          <h4>CTA Button Inconsistency</h4>
+          <p>Multiple button styles across pages — different colors, shapes, weights, hover states. Unify to: cyan pill (primary) + ghost pill (secondary). One system everywhere.</p>
+        </div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">5</div>
+        <div class="problem-text">
+          <h4>Integration Logos Look Like a Vendor List</h4>
+          <p>Currently displayed as a cluttered multi-color grid. Should be white-on-dark with category grouping (Accounting, RMM, CRM, Carriers). Each category gets a dark glass card, logos go white/muted inside.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Page inventory -->
+  <section>
+    <div class="section-eyebrow">03 — Page Inventory</div>
+    <h2 class="section-title">50+ Pages — <em>Three Tiers</em></h2>
+    <p class="section-sub">Tier 1 gets bespoke design attention. Tiers 2 and 3 get the system applied.</p>
+
+    <div class="tier-section">
+      <div class="tier-header">
+        <div class="tier-badge tier-1">Tier 1</div>
+        <div class="tier-label">Conversion Critical — Design These First</div>
+      </div>
+      <div class="page-grid">
+        <div class="page-card"><a href="https://rev.io" target="_blank">Homepage</a><p>Most complex. Hero must be perfect.</p></div>
+        <div class="page-card"><a href="https://rev.io/products/psa" target="_blank">PSA Platform</a><p>Primary product page.</p></div>
+        <div class="page-card"><a href="https://rev.io/products/psa/billing" target="_blank">Billing</a><p>Key product vertical.</p></div>
+        <div class="page-card"><a href="https://rev.io/products/payments-processing" target="_blank">Payments</a><p>Key product vertical.</p></div>
+        <div class="page-card"><a href="https://rev.io/industries/msp" target="_blank">MSP Industry</a><p>Template for all industry pages.</p></div>
+        <div class="page-card"><a href="https://rev.io/industries/communications" target="_blank">Communications</a><p>Industry vertical.</p></div>
+        <div class="page-card"><a href="https://rev.io/industries/security-alarm-system" target="_blank">Security</a><p>Industry vertical.</p></div>
+        <div class="page-card"><a href="https://rev.io/demo" target="_blank">Demo/Contact</a><p>Primary conversion page.</p></div>
+      </div>
+
+      <div class="tier-header">
+        <div class="tier-badge tier-2">Tier 2</div>
+        <div class="tier-label">Secondary — Apply Templates</div>
+      </div>
+      <div class="page-grid">
+        <div class="page-card"><a href="https://rev.io/integrations" target="_blank">Integrations</a><p>Dark logo grid by category.</p></div>
+        <div class="page-card"><a href="https://rev.io/about" target="_blank">About</a><p>Company/mission page.</p></div>
+        <div class="page-card"><a href="https://rev.io/blog" target="_blank">Blog Listing</a><p>Dark editorial template.</p></div>
+        <div class="page-card"><a href="https://rev.io/company-news" target="_blank">Press/News</a><p>Apply dark template.</p></div>
+      </div>
+
+      <div class="tier-header">
+        <div class="tier-badge tier-3">Tier 3</div>
+        <div class="tier-label">Template Pages — System Apply Only</div>
+      </div>
+      <div class="page-grid">
+        <div class="page-card"><a href="https://rev.io/products/psa/service-desk" target="_blank">Service Desk</a></div>
+        <div class="page-card"><a href="https://rev.io/products/psa/time-tracking" target="_blank">Time Tracking</a></div>
+        <div class="page-card"><a href="https://rev.io/products/psa/dispatch" target="_blank">Dispatch</a></div>
+        <div class="page-card"><a href="https://rev.io/products/psa/customer-relationship-management" target="_blank">CRM</a></div>
+        <div class="page-card"><a href="https://rev.io/products/psa/reporting-analytics" target="_blank">Reporting</a></div>
+        <div class="page-card"><a href="https://rev.io/products/psa/inventory-management" target="_blank">Inventory</a></div>
+        <div class="page-card"><a href="https://rev.io/products/psa/project-management" target="_blank">Project Mgmt</a></div>
+        <div class="page-card"><a href="https://rev.io/products/psa/ai-automation" target="_blank">AI Automation</a></div>
+        <div class="page-card"><span style="color:var(--text-muted);font-size:13px">Blog posts</span><p>Dark editorial template.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Claude Design Prompts -->
+  <section>
+    <div class="section-eyebrow">04 — Claude Design Prompts</div>
+    <h2 class="section-title">What to Tell <em>Claude Design</em></h2>
+    <p class="section-sub">Paste these prompts directly into Claude Design. The design system is already built from the Summit site — reference it.</p>
+
+    <h3 style="font-size:16px;font-weight:600;color:var(--white);margin:32px 0 8px;">Onboarding Prompt (paste first, once)</h3>
+    <div class="prompt-block">
+      <p>"I need to redesign the visual layer of rev.io, a B2B SaaS platform for MSPs and telecom providers. The site runs on HubSpot. I am NOT changing any content — only the visual system. Here is the design direction: <strong>dark enterprise</strong>. The reference is a summit event page we already built in Claude Design — dark navy backgrounds (#0a0e1a), white/off-white text, cyan-teal CTAs (#00c8d4), subtle atmospheric depth in backgrounds, italic serif contrast on headline emphasis words, dark glass card panels. This is a full design system rollout across a 50+ page site."</p>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:600;color:var(--white);margin:32px 0 8px;">Per-Page Template Prompt</h3>
+    <div class="prompt-block">
+      <p>"Redesign the [PAGE NAME] page of rev.io with our dark enterprise system. The content and copy stay exactly the same. Apply: dark navy background throughout the full page (no white sections below the fold), dark glass card panels for feature grids, white primary text, cyan CTA buttons, all-caps label overlines in muted gray, large display numbers for stats, white-on-dark treatment for all logos. Reference the design system we built for the Summit hero."</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Priority Order -->
+  <section>
+    <div class="section-eyebrow">05 — Execution Order</div>
+    <h2 class="section-title">Where to <em>Start</em></h2>
+    <p class="section-sub">Get the homepage hero perfect first. Everything else flows from it.</p>
+
+    <div class="priority-list-wrap priority-list">
+      <div class="priority-item">
+        <div class="priority-step">1</div>
+        <div class="priority-item-content">
+          <h4>Homepage Hero Section</h4>
+          <p>Get this perfect. It sets the entire visual system for the site.</p>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-step">2</div>
+        <div class="priority-item-content">
+          <h4>Full Homepage</h4>
+          <p>Complete all sections — stats block, product pillars, social proof, integrations, blog preview.</p>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-step">3</div>
+        <div class="priority-item-content">
+          <h4>PSA Product Page</h4>
+          <p>Primary product page. Dark throughout. Feature grid as glass cards.</p>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-step">4</div>
+        <div class="priority-item-content">
+          <h4>MSP Industry Page (template)</h4>
+          <p>Once this is done, apply the same template to Communications and Security pages.</p>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-step">5</div>
+        <div class="priority-item-content">
+          <h4>Demo/Contact Page</h4>
+          <p>Primary conversion page. Dark form, teal CTA, no distractions.</p>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-step">6</div>
+        <div class="priority-item-content">
+          <h4>Integrations Page</h4>
+          <p>White logos on dark, category cards (Accounting, RMM, CRM, Carriers).</p>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-step">7</div>
+        <div class="priority-item-content">
+          <h4>Remaining Tier 1 Pages</h4>
+          <p>Billing, Payments, Communications, Security — apply templates from steps 3–4.</p>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-step">8</div>
+        <div class="priority-item-content">
+          <h4>Blog Template + About</h4>
+          <p>Dark editorial template for blog. Apply to all 50+ blog posts automatically.</p>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-step">9</div>
+        <div class="priority-item-content">
+          <h4>PSA Sub-Pages (Tier 3)</h4>
+          <p>Service Desk, Time Tracking, Dispatch, CRM, etc. — pure template application.</p>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-step">10</div>
+        <div class="priority-item-content">
+          <h4>Claude Code Handoff</h4>
+          <p>Package designs as handoff bundle → Claude Code → HubSpot module implementation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Download / Links -->
+<div class="download-section">
+  <div class="container">
+    <div class="section-eyebrow" style="justify-content:center;display:flex">06 — Files</div>
+    <h2 class="section-title" style="text-align:center">Ready to <em>Start</em></h2>
+    <p class="hero-sub" style="text-align:center;margin:0 auto 40px">Full technical brief with all URLs, design tokens, and prompt templates.</p>
+    <a href="./revio-website-redesign-brief.md" class="btn">↓ Download Full Brief (MD)</a>
+    <a href="https://rev.io" target="_blank" class="btn btn-ghost">↗ View rev.io Live</a>
+  </div>
+</div>
+
+<footer>
+  Built by <span>Revay ⚡</span> · Rev.io · April 2026
+</footer>
+
+<script>
+  // Generate starfield
+  const stars = document.getElementById('stars');
+  const html = [];
+  for (let i = 0; i < 120; i++) {
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+    const size = Math.random() < 0.85 ? 1 : 2;
+    const dur = (2 + Math.random() * 4).toFixed(1);
+    const delay = -(Math.random() * 4).toFixed(1);
+    const op = (0.2 + Math.random() * 0.5).toFixed(2);
+    html.push(`<div class="star" style="left:${x}vw;top:${y}vh;width:${size}px;height:${size}px;--dur:${dur}s;--delay:${delay}s;--op:${op}"></div>`);
+  }
+  stars.innerHTML = html.join('');
+</script>
+</body>
+</html>
