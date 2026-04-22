@@ -1,1188 +1,940 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzBmMTExNyIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyNCIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiPuKaqTwvdGV4dD4KPC9zdmc+">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzBmMTExNyIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyNCIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiPuKaqTwvdGV4dD0KPC9zdmc+">
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PSA Onboarding Intelligence — Tuesday Brief</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>PSA Onboarding Intelligence — Tuesday Brief · Rev.io</title>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --bg: #0f1117;
-  --surface: #1a1d27;
-  --card: #1e2235;
-  --text: #e8eaf6;
-  --muted: #8892b0;
-  --accent: #6c63ff;
-  --accent2: #00d4aa;
-  --warning: #ff9f43;
-  --danger: #ff6b6b;
-  --success: #26de81;
-  --border: rgba(108,99,255,.18);
-  --critical: #ff4757;
-  --high: #ff6b6b;
-  --medium: #ff9f43;
-  --low: #26de81;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080E1A;
+  --surface:rgba(15,33,56,0.55);
+  --surface-solid:#142A46;
+  --border:rgba(255,255,255,0.08);
+  --border-cyan:rgba(0,229,255,0.3);
+  --border-green:rgba(105,240,174,0.3);
+  --cyan:#00BCD4;
+  --cyan-bright:#00E5FF;
+  --green:#4CAF50;
+  --green-bright:#69F0AE;
+  --amber:#FFB74D;
+  --red:#FF5252;
+  --orange:#FF8A65;
+  --text-1:#FFFFFF;
+  --text-2:#A1B0CB;
+  --font-display:'Cabinet Grotesk',system-ui,sans-serif;
+  --font-body:'Satoshi',system-ui,sans-serif;
+  --spring:cubic-bezier(0.16,1,0.3,1);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6; }
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text-1);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;min-height:100vh}
 
-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(15,17,23,.96); backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 28px; display: flex; align-items: center; height: 54px; gap: 4px;
-  flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-}
-nav::-webkit-scrollbar { display: none; }
-.nav-brand { color: var(--accent2); font-weight: 700; font-size: 15px; margin-right: 16px; white-space: nowrap; flex-shrink: 0; letter-spacing: -.01em; }
-.nav-date { color: var(--muted); font-size: 11px; margin-right: 16px; white-space: nowrap; flex-shrink: 0; border-right: 1px solid var(--border); padding-right: 16px; }
-nav a { color: var(--muted); text-decoration: none; padding: 5px 10px; border-radius: 6px; font-size: 12px; font-weight: 500; transition: all .15s; white-space: nowrap; flex-shrink: 0; }
-nav a:hover { color: var(--text); background: var(--surface); }
+/* PARTICLE BG */
+#bgCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block}
 
-.container { max-width: 1340px; margin: 0 auto; padding: 36px 28px; }
-section { margin-bottom: 60px; scroll-margin-top: 72px; }
-html { scroll-padding-top: 72px; }
-h1 { font-size: 30px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
-h2 { font-size: 19px; font-weight: 600; color: var(--text); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
-h3 { font-size: 15px; font-weight: 600; color: var(--accent2); margin: 20px 0 10px; }
-.subtitle { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+/* NAV */
+.sticky-nav{position:sticky;top:0;z-index:50;background:rgba(8,14,26,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px clamp(1.5rem,4vw,3rem)}
+.sticky-nav-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.nav-brand{font-family:var(--font-display);font-weight:800;font-size:1rem;color:var(--green-bright);margin-right:8px;white-space:nowrap;text-decoration:none}
+.nav-date{font-size:0.78rem;color:var(--text-2);border-right:1px solid var(--border);padding-right:16px;white-space:nowrap}
+.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{padding:5px 12px;border-radius:99px;font-size:0.8rem;font-weight:500;color:var(--text-2);text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--text-1);background:rgba(255,255,255,0.06)}
+.back-link{font-size:0.78rem;color:var(--cyan);text-decoration:none;margin-left:auto;display:flex;align-items:center;gap:5px;white-space:nowrap;font-weight:600}
+.back-link:hover{color:var(--cyan-bright)}
 
-/* HERO BANNER */
-.hero { background: linear-gradient(135deg, rgba(108,99,255,.12) 0%, rgba(0,212,170,.08) 100%);
-  border: 1px solid var(--border); border-radius: 16px; padding: 28px 32px; margin-bottom: 40px; }
-.hero h1 { font-size: 26px; }
-.hero .meta { display: flex; gap: 24px; margin-top: 14px; flex-wrap: wrap; }
-.hero .meta-item { display: flex; flex-direction: column; }
-.hero .meta-item .label { color: var(--muted); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; }
-.hero .meta-item .value { color: var(--accent2); font-size: 20px; font-weight: 700; }
-.hero .meta-item .value.warn { color: var(--warning); }
-.hero .meta-item .value.danger { color: var(--danger); }
-.hero .meta-item .value.ok { color: var(--success); }
+/* HERO */
+.hero{position:relative;min-height:44vh;display:flex;align-items:center;overflow:hidden;border-bottom:1px solid var(--border);z-index:1}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:1320px;margin:0 auto;padding:clamp(3rem,8vh,5rem) clamp(1.5rem,4vw,3rem)}
+.hero-eyebrow{font-family:var(--font-body);font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--green-bright);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--green-bright)}
+.hero-title{font-family:var(--font-display);font-size:clamp(2rem,4vw + 0.5rem,3.4rem);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:14px}
+.hero-title .gradient{background:linear-gradient(135deg,var(--green-bright) 0%,#7BFFD4 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:clamp(0.9rem,1.5vw,1.05rem);color:var(--text-2);max-width:560px;margin-bottom:28px}
+.hero-meta{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column}
+.hero-stat-num{font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--green-bright)}
+.hero-stat-num.amber{color:var(--amber)}
+.hero-stat-num.red{color:var(--red)}
+.hero-stat-num.cyan{color:var(--cyan-bright)}
+.hero-stat-label{font-size:0.72rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.hero-divider{width:1px;height:40px;background:var(--border-green)}
+.live-badge{display:inline-flex;align-items:center;gap:6px;color:var(--green-bright);background:rgba(76,175,80,.1);border:1px solid rgba(105,240,174,.3);padding:4px 12px;border-radius:99px;font-size:0.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-top:16px}
+.live-badge::before{content:'';width:6px;height:6px;background:var(--green-bright);border-radius:50%;box-shadow:0 0 8px var(--green-bright);animation:pulse 2s infinite ease-in-out}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 
-/* KPI GRID */
-.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
-.kpi { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 16px; }
-.kpi .kpi-label { color: var(--muted); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
-.kpi .kpi-val { font-size: 26px; font-weight: 700; }
-.kpi .kpi-val.green { color: var(--success); }
-.kpi .kpi-val.yellow { color: var(--warning); }
-.kpi .kpi-val.red { color: var(--danger); }
-.kpi .kpi-val.teal { color: var(--accent2); }
-.kpi .kpi-val.purple { color: var(--accent); }
-.kpi .kpi-sub { color: var(--muted); font-size: 11px; margin-top: 4px; }
+/* MAIN */
+.main{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:clamp(2rem,4vw,3rem) clamp(1.5rem,4vw,3rem)}
+.section-block{margin-bottom:3.5rem}
+.section-hdr{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.section-hdr-icon{color:var(--green-bright)}
+.section-hdr-label{font-family:var(--font-display);font-size:clamp(1rem,1.5vw,1.25rem);font-weight:700}
+.section-hdr-sub{font-size:0.8rem;color:var(--text-2);margin-left:auto}
 
-/* ALERT BANNER */
-.alert { border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; }
-.alert.critical { background: rgba(255,71,87,.1); border: 1px solid rgba(255,71,87,.35); color: #ff6b6b; }
-.alert.high { background: rgba(255,107,107,.08); border: 1px solid rgba(255,107,107,.3); color: var(--warning); }
-.alert.info { background: rgba(108,99,255,.1); border: 1px solid rgba(108,99,255,.3); color: var(--accent); }
-.alert strong { font-weight: 600; }
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:28px}
+.kpi-tile{background:var(--surface);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:18px 16px;transition:border-color .3s}
+.kpi-tile:hover{border-color:var(--border-green)}
+.kpi-tile .num{font-family:var(--font-display);font-size:1.8rem;font-weight:800;line-height:1}
+.kpi-tile .num.green{color:var(--green-bright)}
+.kpi-tile .num.amber{color:var(--amber)}
+.kpi-tile .num.red{color:var(--red)}
+.kpi-tile .num.cyan{color:var(--cyan-bright)}
+.kpi-tile .lbl{font-size:0.7rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-top:6px}
 
-/* STAGE SWIM LANES */
-.lanes { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; margin-top: 4px; }
-.lane { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-.lane-header { padding: 12px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
-.lane-header.kickoff { background: rgba(108,99,255,.1); color: var(--accent); }
-.lane-header.config { background: rgba(255,159,67,.07); color: var(--warning); }
-.lane-header.training { background: rgba(0,212,170,.07); color: var(--accent2); }
-.lane-header.fundamentals { background: rgba(38,222,129,.07); color: var(--success); }
-.lane-count { background: rgba(255,255,255,.1); border-radius: 20px; padding: 1px 8px; font-size: 10px; }
-.lane-body { padding: 10px; display: flex; flex-direction: column; gap: 6px; max-height: 600px; overflow-y: auto; }
+/* ALERT BANNERS */
+.alert-stack{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.alert-item{border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start;font-size:0.875rem;line-height:1.55}
+.alert-item.critical{background:rgba(255,82,82,.07);border:1px solid rgba(255,82,82,.25);color:var(--text-1)}
+.alert-item.high{background:rgba(255,138,101,.07);border:1px solid rgba(255,138,101,.22);color:var(--text-1)}
+.alert-item.systemic{background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.18);color:var(--text-1)}
+.alert-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+.alert-body strong{font-weight:700}
+.alert-body .sub{color:var(--text-2);font-size:0.82rem;margin-top:3px}
 
-/* CLIENT CARDS */
-.client-card { background: var(--card); border-radius: 8px; padding: 12px 14px; border-left: 3px solid var(--border); cursor: pointer; transition: background .15s; }
-.client-card:hover { background: rgba(108,99,255,.08); }
-.client-card.critical-border { border-left-color: var(--critical); }
-.client-card.high-border { border-left-color: var(--high); }
-.client-card.medium-border { border-left-color: var(--medium); }
-.client-card.low-border { border-left-color: var(--low); }
-.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
-.card-name { font-weight: 600; font-size: 13px; line-height: 1.3; color: var(--text); }
-.card-sa { color: var(--muted); font-size: 11px; margin-top: 2px; }
-.card-score { flex-shrink: 0; text-align: right; }
-.score-val { font-size: 18px; font-weight: 700; line-height: 1; }
-.score-val.score-critical { color: var(--critical); }
-.score-val.score-high { color: var(--high); }
-.score-val.score-medium { color: var(--warning); }
-.score-val.score-low { color: var(--success); }
-.score-label { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-.card-finding { color: var(--muted); font-size: 11px; line-height: 1.5; margin-bottom: 8px; }
-.card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-.tag { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 10px; font-weight: 500; white-space: nowrap; }
-.tag.mrr { background: rgba(0,212,170,.12); color: var(--accent2); }
-.tag.platform { background: rgba(108,99,255,.12); color: var(--accent); }
-.tag.sentiment-positive { background: rgba(38,222,129,.1); color: var(--success); }
-.tag.sentiment-neutral { background: rgba(136,146,176,.1); color: var(--muted); }
-.tag.sentiment-frustrated { background: rgba(255,107,107,.1); color: var(--high); }
-.tag.sentiment-at-risk { background: rgba(255,71,87,.15); color: var(--critical); }
+/* FOCUS CARDS (accounts) */
+.focus-grid{display:flex;flex-direction:column;gap:14px}
+.focus-card{background:var(--surface);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:22px 24px;position:relative;overflow:hidden;transition:border-color .3s,transform .4s var(--spring)}
+.focus-card:hover{transform:translateY(-3px);border-color:rgba(105,240,174,.2)}
+.focus-card.crit{border-left:3px solid var(--red)}
+.focus-card.high{border-left:3px solid var(--orange)}
+.focus-card.medium{border-left:3px solid var(--amber)}
+.focus-card.low{border-left:3px solid var(--green-bright)}
+.focus-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px}
+.focus-badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.risk-badge{display:inline-flex;align-items:center;font-size:0.65rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:5px;border:1px solid transparent}
+.rb-crit{background:rgba(255,82,82,.12);color:#FF5252;border-color:rgba(255,82,82,.25)}
+.rb-high{background:rgba(255,138,101,.12);color:#FF8A65;border-color:rgba(255,138,101,.25)}
+.rb-medium{background:rgba(255,183,77,.1);color:#FFB74D;border-color:rgba(255,183,77,.2)}
+.rb-low{background:rgba(105,240,174,.1);color:#69F0AE;border-color:rgba(105,240,174,.2)}
+.focus-name{font-family:var(--font-display);font-size:1.15rem;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.focus-meta{font-size:0.78rem;color:var(--text-2);margin-top:3px}
+.score-block{text-align:right;flex-shrink:0}
+.score-num{font-family:var(--font-display);font-size:2.2rem;font-weight:800;line-height:1}
+.score-num.crit{color:var(--red)}
+.score-num.high{color:var(--orange)}
+.score-num.medium{color:var(--amber)}
+.score-num.low{color:var(--green-bright)}
+.score-lbl{font-size:0.65rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.07em}
+.focus-finding{font-size:0.88rem;color:var(--text-2);line-height:1.6;margin-bottom:14px}
+.detail-box{border-radius:10px;padding:12px 16px;margin-bottom:10px;font-size:0.82rem;line-height:1.6}
+.detail-box.blockers{background:rgba(255,82,82,.05);border:1px solid rgba(255,82,82,.15)}
+.detail-box.actions{background:rgba(105,240,174,.04);border:1px solid rgba(105,240,174,.15)}
+.detail-box .lbl{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.detail-box.blockers .lbl{color:var(--red)}
+.detail-box.actions .lbl{color:var(--green-bright)}
+.focus-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tag{display:inline-block;padding:2px 9px;border-radius:99px;font-size:0.72rem;font-weight:500}
+.tag-mrr{background:rgba(0,229,255,.1);color:var(--cyan-bright);border:1px solid rgba(0,229,255,.2)}
+.tag-plat{background:rgba(167,139,250,.1);color:#A78BFA;border:1px solid rgba(167,139,250,.2)}
+.tag-pos{background:rgba(105,240,174,.09);color:var(--green-bright);border:1px solid rgba(105,240,174,.18)}
+.tag-neu{background:rgba(161,176,203,.08);color:var(--text-2);border:1px solid rgba(161,176,203,.12)}
+.tag-frus{background:rgba(255,138,101,.1);color:var(--orange);border:1px solid rgba(255,138,101,.2)}
+.tag-risk{background:rgba(255,82,82,.1);color:var(--red);border:1px solid rgba(255,82,82,.2)}
 
-/* FOCUS TABLE - 30 DAY */
-.focus-grid { display: flex; flex-direction: column; gap: 14px; }
-.focus-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
-.focus-card.critical { border-color: rgba(255,71,87,.4); }
-.focus-card.high { border-color: rgba(255,107,107,.3); }
-.focus-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; gap: 12px; }
-.focus-name { font-size: 15px; font-weight: 700; color: var(--text); }
-.focus-meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
-.focus-score-block { text-align: right; flex-shrink: 0; }
-.focus-score-num { font-size: 28px; font-weight: 700; line-height: 1; }
-.focus-score-num.critical { color: var(--critical); }
-.focus-score-num.high { color: var(--high); }
-.focus-score-num.medium { color: var(--warning); }
-.focus-score-num.low { color: var(--success); }
-.focus-badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
-.focus-badge.critical { background: rgba(255,71,87,.15); color: var(--critical); }
-.focus-badge.high { background: rgba(255,107,107,.12); color: var(--high); }
-.focus-badge.medium { background: rgba(255,159,67,.12); color: var(--warning); }
-.focus-badge.low { background: rgba(38,222,129,.1); color: var(--success); }
-.focus-finding { color: var(--muted); font-size: 12.5px; line-height: 1.6; margin-bottom: 10px; }
-.focus-blockers { background: rgba(255,107,107,.06); border: 1px solid rgba(255,107,107,.15); border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; font-size: 12px; color: var(--text); }
-.focus-blockers strong { color: var(--high); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: 4px; }
-.focus-actions { background: rgba(0,212,170,.05); border: 1px solid rgba(0,212,170,.15); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: var(--text); }
-.focus-actions strong { color: var(--accent2); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: 4px; }
-.focus-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+/* TABLE */
+.table-wrap{overflow-x:auto;border-radius:14px;border:1px solid var(--border);margin-bottom:20px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+table{width:100%;border-collapse:collapse}
+thead tr{background:rgba(15,33,56,.8)}
+th{padding:11px 16px;text-align:left;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-2);border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(0,229,255,.04)}
+td{padding:12px 16px;font-size:0.85rem;color:var(--text-1)}
+td.muted{color:var(--text-2)}
 
-/* RISK TABLE */
-.table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 18px; }
-table { width: 100%; border-collapse: collapse; }
-thead tr { background: var(--surface); }
-th { padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
-tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
-tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: rgba(108,99,255,.07); }
-td { padding: 10px 14px; font-size: 12.5px; }
-.risk-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }
-.risk-dot.critical { background: var(--critical); }
-.risk-dot.high { background: var(--high); }
-.risk-dot.medium { background: var(--warning); }
-.risk-dot.low { background: var(--success); }
+/* SWIM LANES */
+.lanes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.lane{background:var(--surface);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.lane-hdr{padding:12px 16px;font-family:var(--font-display);font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.lane-hdr.kickoff{background:rgba(167,139,250,.08);color:#A78BFA}
+.lane-hdr.config{background:rgba(255,183,77,.06);color:var(--amber)}
+.lane-hdr.training{background:rgba(0,229,255,.06);color:var(--cyan-bright)}
+.lane-hdr.fundamentals{background:rgba(105,240,174,.07);color:var(--green-bright)}
+.lane-ct{background:rgba(255,255,255,.08);border-radius:99px;padding:1px 8px;font-size:0.7rem}
+.lane-body{padding:10px;display:flex;flex-direction:column;gap:6px;max-height:560px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 
-/* SENTIMENT PILL */
-.sentiment { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
-.sentiment.Positive { background: rgba(38,222,129,.1); color: var(--success); }
-.sentiment.Neutral { background: rgba(136,146,176,.1); color: var(--muted); }
-.sentiment.Frustrated { background: rgba(255,107,107,.1); color: var(--high); }
-.sentiment.at-risk { background: rgba(255,71,87,.15); color: var(--critical); }
+.mini-card{background:rgba(8,14,26,.5);border:1px solid var(--border);border-left:2px solid var(--border);border-radius:10px;padding:11px 13px;cursor:default;transition:border-color .2s,background .2s}
+.mini-card:hover{background:rgba(0,229,255,.04);border-color:rgba(0,229,255,.15)}
+.mini-card.crit{border-left-color:var(--red)}
+.mini-card.high{border-left-color:var(--orange)}
+.mini-card.medium{border-left-color:var(--amber)}
+.mini-card.low{border-left-color:var(--green-bright)}
+.mini-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:5px}
+.mini-name{font-family:var(--font-display);font-weight:700;font-size:0.88rem;line-height:1.25}
+.mini-sa{font-size:0.72rem;color:var(--text-2);margin-top:1px}
+.mini-score{font-family:var(--font-display);font-size:1.1rem;font-weight:800;flex-shrink:0}
+.mini-score.crit{color:var(--red)}
+.mini-score.high{color:var(--orange)}
+.mini-score.medium{color:var(--amber)}
+.mini-score.low{color:var(--green-bright)}
+.mini-finding{font-size:0.75rem;color:var(--text-2);line-height:1.5;margin-bottom:5px}
+.mini-tags{display:flex;flex-wrap:wrap;gap:3px}
 
-/* SA TABLE */
-.sa-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
-.sa-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
-.sa-name { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 10px; }
-.sa-stats { display: flex; gap: 14px; margin-bottom: 10px; }
-.sa-stat { }
-.sa-stat .n { font-size: 18px; font-weight: 700; }
-.sa-stat .n.red { color: var(--danger); }
-.sa-stat .n.yellow { color: var(--warning); }
-.sa-stat .n.green { color: var(--success); }
-.sa-stat .l { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-.sa-bar { height: 4px; background: var(--surface); border-radius: 2px; overflow: hidden; margin-top: 8px; }
-.sa-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--critical), var(--high) 40%, var(--warning) 70%, var(--success)); }
-
-/* SECTION DIVIDER */
-.divider { height: 1px; background: var(--border); margin: 0 0 60px; }
-
-/* INSIGHT BOX */
-.insight { background: rgba(108,99,255,.08); border: 1px solid rgba(108,99,255,.2); border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; }
-.insight .label { color: var(--accent); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
-.insight p { color: var(--text); font-size: 13px; line-height: 1.6; }
+/* SA GRID */
+.sa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.sa-card{background:var(--surface);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:18px}
+.sa-name{font-family:var(--font-display);font-weight:700;font-size:0.95rem;margin-bottom:12px}
+.sa-stats{display:flex;gap:16px;margin-bottom:10px}
+.sa-stat .n{font-family:var(--font-display);font-size:1.3rem;font-weight:800}
+.sa-stat .n.red{color:var(--red)}
+.sa-stat .n.amber{color:var(--amber)}
+.sa-stat .n.green{color:var(--green-bright)}
+.sa-stat .l{font-size:0.65rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em}
+.sa-note{font-size:0.75rem;color:var(--text-2);line-height:1.5;margin-top:8px}
+.sa-bar{height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;margin-top:10px}
+.sa-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--red),var(--orange) 40%,var(--amber) 70%,var(--green-bright))}
 
 /* BLOCKER THEMES */
-.blocker-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-.blocker-item { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
-.blocker-item .bi-title { color: var(--warning); font-weight: 600; font-size: 13px; margin-bottom: 4px; }
-.blocker-item .bi-count { color: var(--muted); font-size: 11px; margin-bottom: 6px; }
-.blocker-item .bi-clients { color: var(--text); font-size: 11px; line-height: 1.5; }
+.blocker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.blocker-tile{background:var(--surface);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:12px;padding:16px 18px;transition:border-color .3s}
+.blocker-tile:hover{border-color:var(--border-cyan)}
+.bt-title{font-family:var(--font-display);font-weight:700;font-size:0.9rem;margin-bottom:3px}
+.bt-count{font-size:0.72rem;color:var(--text-2);margin-bottom:8px}
+.bt-clients{font-size:0.78rem;color:var(--text-2);line-height:1.55}
 
-/* UPDATED BADGE */
-.updated { color: var(--muted); font-size: 11px; display: flex; align-items: center; gap: 6px; margin-top: 6px; }
-.updated::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--success); display: inline-block; }
+/* INSIGHT BOX */
+.insight{background:rgba(105,240,174,.05);border:1px solid rgba(105,240,174,.15);border-radius:12px;padding:18px 22px;margin-bottom:24px}
+.insight .insight-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--green-bright);margin-bottom:8px}
+.insight p{font-size:0.9rem;color:var(--text-1);line-height:1.65}
 
-/* SCROLL TABLE */
-.table-wrap { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--spring),transform .7s var(--spring);transition-delay:var(--delay,0s)}
+.reveal.visible{opacity:1;transform:none}
 
-@media (max-width: 768px) {
-  .hero .meta { gap: 14px; }
-  .lanes { grid-template-columns: 1fr; }
-  .focus-header { flex-direction: column; }
+/* FOOTER */
+.report-footer{text-align:center;padding:32px 0 48px;color:var(--text-2);font-size:0.78rem;position:relative;z-index:1}
+.report-footer p+p{margin-top:5px}
+
+@media(max-width:768px){
+  .hero{min-height:auto;padding:2rem 0}
+  .hero-meta{gap:14px}
+  .lanes{grid-template-columns:1fr}
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .focus-top{flex-direction:column}
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <span class="nav-brand">⚡ Rev.io Onboarding</span>
-  <span class="nav-date">Tuesday, April 22, 2026</span>
-  <a href="#summary">Summary</a>
-  <a href="#forecast">30-Day Forecast</a>
-  <a href="#risk">Risk Alerts</a>
-  <a href="#backlog">Full Backlog</a>
-  <a href="#blockers">Blocker Themes</a>
-  <a href="#sa-load">SA Load</a>
+<canvas id="bgCanvas"></canvas>
+
+<nav class="sticky-nav">
+  <div class="sticky-nav-inner">
+    <a href="library.html" class="nav-brand">⚡ Revay</a>
+    <span class="nav-date">Tuesday, April 22, 2026</span>
+    <div class="nav-links">
+      <a href="#summary">Summary</a>
+      <a href="#forecast">30-Day Forecast</a>
+      <a href="#risk">Risk Alerts</a>
+      <a href="#backlog">Backlog</a>
+      <a href="#blockers">Blocker Themes</a>
+      <a href="#sa-load">SA Load</a>
+    </div>
+    <a href="library.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Deck Library
+    </a>
+  </div>
 </nav>
 
-<div class="container">
+<!-- HERO -->
+<section class="hero" id="top">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">PSA Onboarding Intelligence</div>
+    <h1 class="hero-title">Tuesday <span class="gradient">Onboarding Brief</span></h1>
+    <p class="hero-sub">Live intelligence across the PSA onboarding backlog — 70 active accounts, 67 calls analyzed, sourced from Kaia + Fireflies + Notion.</p>
+    <div class="hero-meta">
+      <div class="hero-stat">
+        <div class="hero-stat-num">70</div>
+        <div class="hero-stat-label">Active Accounts</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-num red">5</div>
+        <div class="hero-stat-label">Critical Risk</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-num amber">25</div>
+        <div class="hero-stat-label">High Risk</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-num cyan">~8</div>
+        <div class="hero-stat-label">30-Day Launches</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-num amber">64<span style="font-size:1.1rem">/100</span></div>
+        <div class="hero-stat-label">Avg Health Score</div>
+      </div>
+    </div>
+    <div class="live-badge">Live · Updated Apr 22, 2026</div>
+  </div>
+</section>
 
-  <!-- HERO -->
-  <div class="hero" id="top">
-    <h1>PSA Onboarding Intelligence Brief</h1>
-    <div class="updated">Live · Based on 67 calls across 70 active clients · Last 30 days · Updated Apr 22, 2026</div>
-    <div class="meta">
-      <div class="meta-item">
-        <span class="label">Active Projects</span>
-        <span class="value">70</span>
+<main class="main">
+
+<!-- ══════════════════════════════════════════════════════════
+     EXECUTIVE SUMMARY
+══════════════════════════════════════════════════════════ -->
+<div class="section-block" id="summary">
+  <div class="section-hdr">
+    <div class="section-hdr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+    <span class="section-hdr-label">Executive Summary</span>
+    <span class="section-hdr-sub">April 22, 2026 · Weekly Tuesday Brief</span>
+  </div>
+
+  <div class="insight reveal" style="--delay:.05s">
+    <div class="insight-lbl">⚡ Revay Intelligence</div>
+    <p>The PSA onboarding backlog carries significant concentration risk heading into May. Of 70 active clients, <strong>30 are High or Critical risk</strong> — over 40% of the base. The most urgent cohort is the ~8 accounts targeting activation or graduation within 30 days, several of which have critical blockers still unresolved. Class 5 Technologies is at immediate churn risk with a 10-day client ultimatum. The single largest systemic theme across the backlog is <strong>integration and tax configuration failures</strong>, accounting for blockers in 60%+ of active accounts. Three SAs (Halle Taylor, Kegan Ehlers, Nicole Hills) carry the majority of risk exposure.</p>
+  </div>
+
+  <div class="kpi-strip reveal" style="--delay:.1s">
+    <div class="kpi-tile"><div class="num amber">51</div><div class="lbl">In Configuration</div></div>
+    <div class="kpi-tile"><div class="num cyan">13</div><div class="lbl">In Training</div></div>
+    <div class="kpi-tile"><div class="num green">3</div><div class="lbl">Fundamentals</div></div>
+    <div class="kpi-tile"><div class="num" style="color:#A78BFA">3</div><div class="lbl">Kickoff</div></div>
+    <div class="kpi-tile"><div class="num green">12</div><div class="lbl">Low Risk</div></div>
+    <div class="kpi-tile"><div class="num amber">28</div><div class="lbl">Medium Risk</div></div>
+    <div class="kpi-tile"><div class="num red">25</div><div class="lbl">High Risk</div></div>
+    <div class="kpi-tile"><div class="num red">5</div><div class="lbl">Critical Risk</div></div>
+    <div class="kpi-tile"><div class="num cyan">67</div><div class="lbl">Calls Analyzed</div></div>
+    <div class="kpi-tile"><div class="num" style="color:#A78BFA">6+</div><div class="lbl">CW Displacements</div></div>
+  </div>
+
+  <div class="alert-stack reveal" style="--delay:.15s">
+    <div class="alert-item critical">
+      <span class="alert-icon">🔴</span>
+      <div class="alert-body"><strong>CRITICAL: Class 5 Technologies</strong> — 10-day client ultimatum to revert to ConnectWise. Quoting zero-quantity feature blocking $75K job. Executive escalation required immediately.
+        <div class="sub">SA: Halle Taylor · Score: 39/100 · MRR: $500 · Prior: ConnectWise</div>
       </div>
-      <div class="meta-item">
-        <span class="label">Critical Risk</span>
-        <span class="value danger">5</span>
+    </div>
+    <div class="alert-item critical">
+      <span class="alert-icon">🔴</span>
+      <div class="alert-body"><strong>CRITICAL: TSI-NC (Triangle Staffing)</strong> — Client has halted onboarding. Missing: sequential quote numbering + PO-to-invoice automation. Sales leadership + product roadmap response needed.
+        <div class="sub">SA: Halle Taylor · Score: 7/100 · Stage: Configuration</div>
       </div>
-      <div class="meta-item">
-        <span class="label">High Risk</span>
-        <span class="value warn">25</span>
+    </div>
+    <div class="alert-item critical">
+      <span class="alert-icon">🔴</span>
+      <div class="alert-body"><strong>CRITICAL: Losh</strong> — Sentiment: At Risk. PO attachment workflows incompatible with ConnectWise-trained team. $1,004 MRR potential churn.
+        <div class="sub">SA: Halle Taylor · AE: Connor Flynn · MRR: $1,004 · Score: 52/100</div>
       </div>
-      <div class="meta-item">
-        <span class="label">30-Day Launch Forecast</span>
-        <span class="value teal">~8</span>
+    </div>
+    <div class="alert-item systemic">
+      <span class="alert-icon">🟠</span>
+      <div class="alert-body"><strong>SYSTEMIC: SureTax Integration Failures</strong> — Affecting 6+ accounts: Tricom, PTCOA, Double Eagle, POP Communications, Xclutel, TSI. Tax configuration blocking graduation. Engineering + SureTax escalation required.
+        <div class="sub">Pattern: Rev.io/SureTax API mismatches causing filing delays and graduation blocks</div>
       </div>
-      <div class="meta-item">
-        <span class="label">Avg. Health Score</span>
-        <span class="value warn">64/100</span>
-      </div>
-      <div class="meta-item">
-        <span class="label">Calls Analyzed</span>
-        <span class="value purple">67</span>
+    </div>
+    <div class="alert-item systemic">
+      <span class="alert-icon">🟠</span>
+      <div class="alert-body"><strong>SYSTEMIC: QuickBooks Integration Failures</strong> — NetGreene (30-60 payments failing/cycle), Viirtue (overpayment bug), SouthLight (revenue recognition mismatch), Automated Telecom, Class 5.
+        <div class="sub">5+ active accounts impacted — integrations team review overdue</div>
       </div>
     </div>
   </div>
-
-  <!-- EXECUTIVE SUMMARY -->
-  <section id="summary">
-    <h2>Executive Summary</h2>
-    <div class="insight">
-      <div class="label">⚡ Revay Intelligence</div>
-      <p>The PSA onboarding backlog carries significant concentration risk heading into May. Of the 70 active clients with call data, <strong>30 are High or Critical risk</strong> — over 40% of the active base. The most urgent cohort is the ~8 accounts targeting activation or graduation within 30 days, several of which have critical blockers still unresolved (tax processing, payment credentials, product missing features). Class 5 Technologies is at immediate churn risk within 10 days. TSI-NC has already signaled a halt. The single largest theme across the backlog is <strong>integration and tax configuration failures</strong> — accounting for blockers in 60%+ of active accounts.</p>
-    </div>
-
-    <div class="kpi-grid">
-      <div class="kpi">
-        <div class="kpi-label">Configuration</div>
-        <div class="kpi-val yellow">51</div>
-        <div class="kpi-sub">accounts in config</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Training</div>
-        <div class="kpi-val teal">13</div>
-        <div class="kpi-sub">accounts in training</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Fundamentals</div>
-        <div class="kpi-val green">3</div>
-        <div class="kpi-sub">nearing graduation</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Kickoff</div>
-        <div class="kpi-val purple">3</div>
-        <div class="kpi-sub">just kicked off</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Medium Risk</div>
-        <div class="kpi-val yellow">28</div>
-        <div class="kpi-sub">active blockers</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Low Risk</div>
-        <div class="kpi-val green">12</div>
-        <div class="kpi-sub">on track</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">ConnectWise Disp.</div>
-        <div class="kpi-val purple">6+</div>
-        <div class="kpi-sub">in active onboarding</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">TigerPaw Mig.</div>
-        <div class="kpi-val purple">8+</div>
-        <div class="kpi-sub">in active onboarding</div>
-      </div>
-    </div>
-
-    <div class="alert critical">
-      <strong>🔴 CRITICAL: Class 5 Technologies</strong> — Client cited 10-day decision window to revert to ConnectWise. Quoting zero-quantity feature blocking $75K job. Escalation required immediately.
-    </div>
-    <div class="alert critical">
-      <strong>🔴 CRITICAL: TSI-NC (Triangle Staffing)</strong> — Client has halted onboarding. Missing: sequential quote numbering + PO-to-invoice automation. Sales leadership + product roadmap response needed.
-    </div>
-    <div class="alert critical">
-      <strong>🔴 CRITICAL: Losh</strong> — Sentiment: At Risk. PO attachment workflows fundamentally incompatible with ConnectWise-trained team. Potential deal-breaker flagged by client.
-    </div>
-    <div class="alert high">
-      <strong>🟠 SYSTEMIC: SureTax Integration Issues</strong> — Affecting Tricom (2 accounts), PTCOA, Double Eagle, and POP Communications. Tax configuration blocking graduation for 5+ clients. Requires engineering escalation with SureTax.
-    </div>
-    <div class="alert high">
-      <strong>🟠 SYSTEMIC: QuickBooks Integration Failures</strong> — Payment sync failures reported by NetGreene (30-60 payments/cycle failing), Viirtue (API bug causing overpayments), SouthLight Services (revenue recognition period mismatch), Automated Telecom. Affects 4+ active accounts.
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- 30-DAY LAUNCH FORECAST -->
-  <section id="forecast">
-    <h2>30-Day Launch Forecast</h2>
-    <p class="subtitle">Accounts on track or close to activation / graduation within the next ~30 days — plus On Hold / RTS candidates to pull forward.</p>
-
-    <h3>🎯 Active Accounts — May Launch Window</h3>
-    <div class="focus-grid">
-
-      <!-- Xclutel -->
-      <div class="focus-card high">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge medium">Medium Risk</div>
-            <div class="focus-name">Xclutel</div>
-            <div class="focus-meta">SA: Lex Ligon · Stage: Configuration · MRR: n/a</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num medium">78</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding">Targeting <strong>May 1 billing go-live</strong>. Final blocker: tax discrepancies on Alden PRI over VoIP products (~25% tax rate) must be resolved before final data load. Starting balances migration pending QuickBooks aging export from client.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Active Blockers</strong>
-          Tax discrepancies on Alden accounts must resolve before final data load; QuickBooks aging report export from Scott Sinclair pending; customer notification plan pending comparative data validation.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Next Actions</strong>
-          Scott Sinclair (client) to export QB aging report; Lex to validate Alden tax comparison and complete final data load. <strong>Timeline: May 1 target. At risk if tax validation slips this week.</strong>
-        </div>
-        <div class="focus-tags">
-          <span class="tag sentiment-neutral">Neutral Sentiment</span>
-          <span class="tag platform">Prior: QuickBooks</span>
-        </div>
-      </div>
-
-      <!-- Premise Solutions -->
-      <div class="focus-card high">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge medium">Medium Risk</div>
-            <div class="focus-name">Premise Solutions</div>
-            <div class="focus-meta">SA: Halle Taylor · AE: Jaylin Bender · Stage: Configuration · MRR: $560</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num medium">78</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding">Targeting <strong>May 1 go-live</strong>. Projects module is in beta with unknown GA timeline — Halle needs to get commitment from product team on beta release window to protect this date. Client is engaged and progressing well on billing/inventory.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Active Blockers</strong>
-          Projects module beta — unknown GA release date; multi-day task calendar display not fixed; unified calendar view unavailable; scheduling conflict warnings missing; milestone notifications pending.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Next Actions</strong>
-          Halle to confirm beta timeline from Kemp and communicate to Valerie. <strong>If projects module GA is not confirmed by May 1, go-live plan needs revision. Escalate to product this week.</strong>
-        </div>
-        <div class="focus-tags">
-          <span class="tag mrr">$560 MRR</span>
-          <span class="tag sentiment-positive">Positive Sentiment</span>
-          <span class="tag platform">Prior: ComputerEase</span>
-        </div>
-      </div>
-
-      <!-- Avalora -->
-      <div class="focus-card">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge medium">Medium Risk</div>
-            <div class="focus-name">Avalora</div>
-            <div class="focus-meta">SA: Marshall Harris · AE: Joseph Abarno · Stage: Configuration · MRR: $630</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num medium">85</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding">Activation pushed to <strong>end of May</strong>. Product catalog received; data migration 80% complete. Critical dependency: tax mapping report from CommLaw Group must arrive before bill comparative validation can proceed.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Active Blockers</strong>
-          Tax mapping report from CommLaw Group (external dependency); bill comparative process (blocking final activation sign-off); service product tab pending QuickBooks data extraction.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Next Actions</strong>
-          Jessica Stout (client) to upload product catalog and generate tax mapping report. Mark Cederloff to create QB account. Strong account — manageable path to May graduation. <strong>Highest-confidence close in the 30-day window.</strong>
-        </div>
-        <div class="focus-tags">
-          <span class="tag mrr">$630 MRR</span>
-          <span class="tag sentiment-positive">Positive Sentiment</span>
-          <span class="tag platform">Prior: ConnectWise</span>
-        </div>
-      </div>
-
-      <!-- Accelerated Technologies -->
-      <div class="focus-card">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge low">Low Risk</div>
-            <div class="focus-name">Accelerated Technologies</div>
-            <div class="focus-meta">SA: Francesca Thayer · Stage: Fundamentals</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num low">86</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding"><strong>Full billing and auto-debit automation activated</strong> as of April 14. 4 billing cycles scheduled. Migration from Cordial nearly complete. Closest to graduation in the active backlog.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Active Blockers</strong>
-          None. Monitoring 4 automated billing runs. QB Desktop two-way sync needs verification.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Next Actions</strong>
-          Monitor billing runs. If clean, this account should be ready for graduation check-in by early May. <strong>Priority graduation candidate.</strong>
-        </div>
-        <div class="focus-tags">
-          <span class="tag sentiment-positive">Positive Sentiment</span>
-        </div>
-      </div>
-
-      <!-- Orkestra -->
-      <div class="focus-card">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge low">Low Risk</div>
-            <div class="focus-name">Orkestra</div>
-            <div class="focus-meta">SA: Lauren Swygert · Stage: Training</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num low">88</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding">Parent-child billing configured, email templates live, first bills ready to send. Client has <strong>resumed selling the billing product</strong>. Only outstanding: QuickBooks integration follow-up review. Very close to graduation.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Active Blockers</strong>
-          QuickBooks integration review pending.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Next Actions</strong>
-          Complete QB integration review. Schedule graduation review call. <strong>Should graduate within 2–3 weeks barring QB issues.</strong>
-        </div>
-        <div class="focus-tags">
-          <span class="tag sentiment-positive">Positive Sentiment</span>
-        </div>
-      </div>
-
-      <!-- Bank-Tec South -->
-      <div class="focus-card">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge low">Low Risk</div>
-            <div class="focus-name">Bank-Tec South</div>
-            <div class="focus-meta">SA: Kegan Ehlers · Stage: Training</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num low">87</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding">Strong team engagement, progressing through customer/ticketing workflows. Remaining: E Automate historical data import, inventory/asset sync, and contract module completion.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Active Blockers</strong>
-          Historical customer data migration from E Automate; asset data import pending; contract module needs completion.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Next Actions</strong>
-          Coordinate with DE team on E Automate migration. Strong account, clear path to graduation. <strong>Realistic target: late May.</strong>
-        </div>
-        <div class="focus-tags">
-          <span class="tag sentiment-positive">Positive Sentiment</span>
-        </div>
-      </div>
-
-      <!-- White Label Communications / Grupo NGN -->
-      <div class="focus-card high">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge medium">Medium Risk</div>
-            <div class="focus-name">White Label Communications / Grupo NGN</div>
-            <div class="focus-meta">SA: Francesca Thayer · Stage: Configuration</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num medium">66</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding">Targeting <strong>May 15 graduation</strong>. Three importer blockers remain: Horizon CDR documentation missing, INET GZIP format unvalidated, and Sansei invoice re-rating dispute active. Must resolve all three before May batch run.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Active Blockers</strong>
-          Horizon CDR workbook + provider documentation (critical); INET GZIP format validation; Sansei re-rating dispute; payment credentials unresolved on Grupo side (separate blocker from white label).
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Next Actions</strong>
-          Craig Verner (client) to provide Horizon docs ASAP. Importer team to validate INET GZIP format. Sansei dispute resolution needed. <strong>May 15 is at risk if Horizon/INET not resolved by end of week.</strong>
-        </div>
-        <div class="focus-tags">
-          <span class="tag sentiment-neutral">Neutral Sentiment</span>
-        </div>
-      </div>
-
-      <!-- Exabar -->
-      <div class="focus-card high">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge medium">Medium Risk</div>
-            <div class="focus-name">Exabar</div>
-            <div class="focus-meta">SA: Lex Ligon · Stage: Configuration</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num medium">68</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding">Activation scheduled <strong>May 25</strong>, first billing June 1. Clearly IP API integration agreement does not exist — manual file uploads required ongoing. SendGrid domain auth pending.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Active Blockers</strong>
-          Clearly IP has no API agreement with Rev.io (ongoing manual workaround); SendGrid domain auth pending; NRC-only billing profile strategy undefined; CDR workbook update in progress.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Next Actions</strong>
-          Lex/Francesca to establish Clearly IP contact and explore API agreement. Send DM template service products by Wednesday. Project charter sign confirmed. <strong>May 25 activation achievable if Clearly IP integration path is defined.</strong>
-        </div>
-        <div class="focus-tags">
-          <span class="tag sentiment-neutral">Neutral Sentiment</span>
-        </div>
-      </div>
-
-    </div>
-
-    <h3 style="margin-top: 32px;">🔄 Pull-Forward Opportunities — On Hold / Stalled Accounts</h3>
-    <p class="subtitle" style="margin-bottom: 14px;">Accounts currently stalled or on hold that could be reactivated with targeted intervention.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Client</th>
-            <th>SA</th>
-            <th>Stage</th>
-            <th>Score</th>
-            <th>Why Stalled</th>
-            <th>Pull-Forward Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Alarm 24</strong></td>
-            <td>Nicole Hills</td>
-            <td>Configuration</td>
-            <td style="color: var(--danger)"><strong>46</strong></td>
-            <td>7+ months onboarding, only 7% Fundamentals done; UCC acquisition of 200 accounts creating uncertainty about commitment</td>
-            <td>Re-commit 1–2 calls/week intensive plan; confirm go-live by end of May or escalate to sales</td>
-          </tr>
-          <tr>
-            <td><strong>Louisville Tech</strong></td>
-            <td>Francesca Thayer</td>
-            <td>Configuration</td>
-            <td style="color: var(--danger)"><strong>40</strong></td>
-            <td>Jon Clark completed zero tasks due to travel/workload; API access, customer creation, email templates all pending</td>
-            <td>Escalation call — Jon must complete 3 checklist items or delay graduation to Q3</td>
-          </tr>
-          <tr>
-            <td><strong>American Security Devices</strong></td>
-            <td>Kegan Ehlers</td>
-            <td>Configuration</td>
-            <td style="color: var(--danger)"><strong>52</strong></td>
-            <td>Data migration from Tigerpaw unstarted despite multiple requests; DE team backlog</td>
-            <td>Prioritize DE queue escalation; 500+ active agreements need migration before training can begin</td>
-          </tr>
-          <tr>
-            <td><strong>SouthLight Services</strong></td>
-            <td>Tim Smith</td>
-            <td>Configuration</td>
-            <td style="color: var(--danger)"><strong>56</strong></td>
-            <td>Revenue recognition fundamentally broken — invoice date vs. billing cycle date mismatch with QuickBooks causes period misstatements</td>
-            <td>Product + integrations team review needed on QB period assignment; may require accounting policy workaround</td>
-          </tr>
-          <tr>
-            <td><strong>Knight Security</strong></td>
-            <td>Nicole Hills</td>
-            <td>Configuration</td>
-            <td style="color: var(--danger)"><strong>48</strong></td>
-            <td>50+ fragmented data files, 6,000 duplicate product entries; proposing 12-month phased migration with limited internal staffing</td>
-            <td>Project scoping meeting to align on realistic migration phases; set hard go-live milestones or flag revenue risk</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- RISK ALERTS -->
-  <section id="risk">
-    <h2>Risk Alerts — Critical & High</h2>
-    <p class="subtitle">Accounts requiring executive awareness or immediate intervention.</p>
-
-    <h3>🔴 Critical Risk (5 accounts)</h3>
-    <div class="focus-grid">
-
-      <div class="focus-card critical">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge critical">Critical · Score 39</div>
-            <div class="focus-name">Class 5 Technologies</div>
-            <div class="focus-meta">SA: Halle Taylor · AE: Joseph Abarno · MRR: $500 · Prior: ConnectWise</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num critical">39</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding"><strong>10-day churn window.</strong> Ray Paskey has expressed explicit intent to revert to ConnectWise. Critical product gaps: quoting zero-quantity packages (blocking $75K job), ticketing system bugs (closed tickets appearing on dispatch), GL/QB sync failures. The account is losing confidence fast.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Critical Blockers</strong>
-          (1) Quoting zero-quantity feature not delivered; (2) Ticketing bugs persisting; (3) GL/QBO sync failures blocking inventory; (4) Tax calculation errors; (5) No group calendar view.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Required Action</strong>
-          Escalate quoting zero-quantity ETA to product owner immediately. Executive check-in call with Ray. Product roadmap commitment with dates required. <strong>Without intervention this week, churn risk is high.</strong>
-        </div>
-      </div>
-
-      <div class="focus-card critical">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge critical">Critical · Score 7</div>
-            <div class="focus-name">TSI-NC (Triangle Staffing — Patrick Zakaria)</div>
-            <div class="focus-meta">SA: Halle Taylor · Stage: Configuration</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num critical">7</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding"><strong>Client has halted adoption.</strong> Two non-negotiable missing features: (1) user-configurable sequential quote numbers (only auto-generated alphanumeric IDs exist), (2) PO-to-invoice automation essential for B2B commercial ops. Client explicitly frustrated by sales overselling vs. Tiger Paw capabilities.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Critical Blockers</strong>
-          Sequential quote numbering; PO number flow-through from sales to invoices. Both require backend product work with no committed timeline.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Required Action</strong>
-          Sales leadership intervention needed. Product roadmap response with timeline required to retain. Halle standing by for account management but cannot resolve without feature commitment.
-        </div>
-      </div>
-
-      <div class="focus-card critical">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge critical">Critical · Score 52</div>
-            <div class="focus-name">Losh</div>
-            <div class="focus-meta">SA: Halle Taylor · AE: Connor Flynn · MRR: $1,004 · Prior: ConnectWise · Close: Feb 26</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num critical">52</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding"><strong>Sentiment: At Risk.</strong> Stephanie Kern flagged PO workflow incompatibility as potential deal-breaker: Rev.io PSA cannot attach non-ticket-linked products to a single PO — a ConnectWise standard workflow. Product catalog bug preventing setup. Calendar sync also blocking.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Critical Blockers</strong>
-          PO attachment limitation (non-ticket-linked products); product catalog bug at 'add providers' step; calendar sync permissions; serial number bulk upload gap.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Required Action</strong>
-          Product team review of PO attachment workflow urgently. Halle to follow up on development timeline. $1K MRR account at risk without resolution.
-        </div>
-      </div>
-
-      <div class="focus-card critical">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge critical">Critical · Score 37</div>
-            <div class="focus-name">Grahek Technology</div>
-            <div class="focus-meta">SA: Marsha Blobaum · AE: Patrick Davies · MRR: $315 · Prior: Autotask/Datto</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num critical">37</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding">Workflow email sending completely non-functional after adding a new variable — blocking all ticket processing and client notifications. Root cause unresolved; escalated to product owner but no resolution timeline given. Client is frustrated in early config.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Critical Blockers</strong>
-          Workflow email failure: root cause unidentified; product owner not available during call; ticket processing blocked.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Required Action</strong>
-          Engineering ticket required with SLA. Marsha to follow up with product owner and provide client an ETA by EOD tomorrow.
-        </div>
-      </div>
-
-      <div class="focus-card critical">
-        <div class="focus-header">
-          <div>
-            <div class="focus-badge critical">Critical · Score 39</div>
-            <div class="focus-name">Class5 Technologies (Duplicate Entity)</div>
-            <div class="focus-meta">SA: Halle Taylor · Stage: Configuration · Sentiment: Frustrated</div>
-          </div>
-          <div class="focus-score-block">
-            <div class="focus-score-num critical">39</div>
-            <div class="score-label">Health</div>
-          </div>
-        </div>
-        <p class="focus-finding">Same account — two calls captured separately. GL code formatting ambiguity between PSA and QuickBooks blocking financial reporting. Ray Paskey frustrated by inconsistent integration team communication and unclear PSA-to-QB mapping documentation.</p>
-        <div class="focus-blockers">
-          <strong>🚧 Blockers</strong>
-          GL code formatting instructions unclear; SKU fields not editable in PSA; product descriptions not transferring to quotes; QuickBooks sync failures.
-        </div>
-        <div class="focus-actions">
-          <strong>✅ Action</strong>
-          Consolidate to single SA owner; schedule dedicated GL code formatting walkthrough with screenshots by 4pm ET.
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- FULL BACKLOG BY STAGE -->
-  <section id="backlog">
-    <h2>Full Backlog — By Onboarding Stage</h2>
-    <p class="subtitle">All 70 active accounts organized by stage. Color-coded by risk level. Scores are composite health scores (0–100).</p>
-
-    <div class="lanes">
-
-      <!-- KICKOFF -->
-      <div class="lane">
-        <div class="lane-header kickoff">
-          Kickoff
-          <span class="lane-count">3</span>
-        </div>
-        <div class="lane-body">
-          <div class="client-card low-border">
-            <div class="card-top">
-              <div><div class="card-name">VanRan Communications</div><div class="card-sa">Halle Taylor</div></div>
-              <div class="card-score"><div class="score-val score-low">71</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">Tiger Paw → PSA migration kicked off. 5-year ticket history scope. Data cleanup needed before migration. Weekly cadence confirmed.</p>
-            <div class="card-tags"><span class="tag sentiment-positive">Positive</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">HelloSpoke</div><div class="card-sa">Andrew Millington</div></div>
-              <div class="card-score"><div class="score-val score-medium">62</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">Greenfield QB state. One-way sync limitation requires careful workflow design. Intake form sent, follow-up meeting needed.</p>
-            <div class="card-tags"><span class="tag sentiment-neutral">Neutral</span></div>
-          </div>
-          <div class="client-card high-border">
-            <div class="card-top">
-              <div><div class="card-name">Unknown (Internal Ops Meeting)</div><div class="card-sa">Lauren Swygert</div></div>
-              <div class="card-score"><div class="score-val score-high">50</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">Internal process alignment meeting — not a client account. SA/sales onboarding alignment work. Not a billing client.</p>
-            <div class="card-tags"><span class="tag sentiment-neutral">N/A</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- FUNDAMENTALS -->
-      <div class="lane">
-        <div class="lane-header fundamentals">
-          Fundamentals
-          <span class="lane-count">3</span>
-        </div>
-        <div class="lane-body">
-          <div class="client-card low-border">
-            <div class="card-top">
-              <div><div class="card-name">Accelerated Technologies</div><div class="card-sa">Francesca Thayer</div></div>
-              <div class="card-score"><div class="score-val score-low">86</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">Full billing auto-debit activated. 4 billing cycles running. <strong>Closest to graduation.</strong> No blockers.</p>
-            <div class="card-tags"><span class="tag sentiment-positive">Positive</span></div>
-          </div>
-          <div class="client-card high-border">
-            <div class="card-top">
-              <div><div class="card-name">Bridge Comm</div><div class="card-sa">Kegan Ehlers</div></div>
-              <div class="card-score"><div class="score-val score-high">56</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">3,000+ product catalog items incorrectly imported as recurring services. Full re-export and re-import required. CSI tax integration compatibility unknown.</p>
-            <div class="card-tags"><span class="tag sentiment-frustrated">Frustrated</span></div>
-          </div>
-          <div class="client-card high-border">
-            <div class="card-top">
-              <div><div class="card-name">Rite Telephone</div><div class="card-sa">JD Caulkins</div></div>
-              <div class="card-score"><div class="score-val score-high">58</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">First billing cycle exposed invoice mismatches, duplicated charges, incomplete NetSapiens sync (60 of expected users). Tim Smith OOO blocking troubleshooting.</p>
-            <div class="card-tags"><span class="tag sentiment-frustrated">Frustrated</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TRAINING (sample key ones) -->
-      <div class="lane">
-        <div class="lane-header training">
-          Training
-          <span class="lane-count">13</span>
-        </div>
-        <div class="lane-body">
-          <div class="client-card low-border">
-            <div class="card-top">
-              <div><div class="card-name">Orkestra</div><div class="card-sa">Lauren Swygert</div></div>
-              <div class="card-score"><div class="score-val score-low">88</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">First bills ready to send. QB integration final review. Near graduation.</p>
-            <div class="card-tags"><span class="tag sentiment-positive">Positive</span></div>
-          </div>
-          <div class="client-card low-border">
-            <div class="card-top">
-              <div><div class="card-name">Bank-Tec South</div><div class="card-sa">Kegan Ehlers</div></div>
-              <div class="card-score"><div class="score-val score-low">87</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">Strong engagement. E Automate historical data migration remaining. Contract module to complete.</p>
-            <div class="card-tags"><span class="tag sentiment-positive">Positive</span></div>
-          </div>
-          <div class="client-card low-border">
-            <div class="card-top">
-              <div><div class="card-name">Sydewire</div><div class="card-sa">Halle Taylor · AE: Patrick Davies</div></div>
-              <div class="card-score"><div class="score-val score-low">77</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $500. Actively learning platform. GPS tracking fix expected by next Tuesday. Inventory migration from QB not yet addressed.</p>
-            <div class="card-tags"><span class="tag mrr">$500 MRR</span><span class="tag sentiment-positive">Positive</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">4Voice</div><div class="card-sa">Kegan Ehlers · AE: Joseph Abarno</div></div>
-              <div class="card-score"><div class="score-val score-medium">74</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $315. Agent module still not enabled despite Vegas meeting commitment. Ticket #346153 stalled 10+ days.</p>
-            <div class="card-tags"><span class="tag mrr">$315 MRR</span><span class="tag sentiment-positive">Positive</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">Popp</div><div class="card-sa">Conner Sharp</div></div>
-              <div class="card-score"><div class="score-val score-medium">70</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">Training progressing. CDR integration not live; billing cycle date updates still manual. Paula independently building products — good sign.</p>
-            <div class="card-tags"><span class="tag sentiment-positive">Positive</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">Automated Telecom</div><div class="card-sa">Andrew Millington · AE: Joseph Abarno</div></div>
-              <div class="card-score"><div class="score-val score-medium">72</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $500. DocuSign integration can't select templates dynamically; unapplied credits in QB pending fix; proposal reordering lacks drag-and-drop.</p>
-            <div class="card-tags"><span class="tag mrr">$500 MRR</span><span class="tag sentiment-positive">Positive</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">POS Innovation</div><div class="card-sa">Kegan Ehlers · AE: Davis Herndon</div></div>
-              <div class="card-score"><div class="score-val score-medium">64</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $1,200. Management dissatisfied despite Eric's positive feedback — internal alignment risk. Reporting features currently down. Dispatch calendar enhancements pending.</p>
-            <div class="card-tags"><span class="tag mrr">$1,200 MRR</span><span class="tag sentiment-neutral">Neutral</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">Newport Network Solutions</div><div class="card-sa">Halle Taylor</div></div>
-              <div class="card-score"><div class="score-val score-medium">60</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">Client struggling with time tracking fundamentals. Mobile app gaps blocking workflows. Requires clearer guidance before implementation progresses.</p>
-            <div class="card-tags"><span class="tag sentiment-neutral">Neutral</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">Tele-Plus</div><div class="card-sa">Kegan Ehlers · AE: Jamie Butler</div></div>
-              <div class="card-score"><div class="score-val score-medium">63</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $500. Contract profitability reporting demonstrated. Mobile app limitations slowing broader adoption. Linda's participation limited by mic issues.</p>
-            <div class="card-tags"><span class="tag mrr">$500 MRR</span><span class="tag sentiment-neutral">Neutral</span></div>
-          </div>
-          <div class="client-card high-border">
-            <div class="card-top">
-              <div><div class="card-name">ITR Systems</div><div class="card-sa">Kegan Ehlers</div></div>
-              <div class="card-score"><div class="score-val score-high">56</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">Parent-child billing roll-ups not working for multi-location school district workflows. Post-invoice ticket editing blocked. Data migration from Service Fusion not pulling expected data.</p>
-            <div class="card-tags"><span class="tag sentiment-neutral">Neutral</span></div>
-          </div>
-          <div class="client-card high-border">
-            <div class="card-top">
-              <div><div class="card-name">Unknown – Ebbens Web</div><div class="card-sa">Tony Mehner</div></div>
-              <div class="card-score"><div class="score-val score-high">46</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">Internal Rev.io training issues (Product Fruits data loss, backup failures). Training video development bottlenecked. Not a direct client onboarding call.</p>
-            <div class="card-tags"><span class="tag sentiment-frustrated">Frustrated</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">Integrated Installations</div><div class="card-sa">Tony Mehner</div></div>
-              <div class="card-score"><div class="score-val score-low">73</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">Operations owner engaged and aligned. Contract execution (DocuSign) is the only blocker for kickoff. Eric's availability for full onboarding needs to be confirmed.</p>
-            <div class="card-tags"><span class="tag sentiment-positive">Positive</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">Tricom Technology</div><div class="card-sa">Andrew Millington · AE: Jamie Butler</div></div>
-              <div class="card-score"><div class="score-val score-medium">63</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $270. Tax filing delays unresolved for weeks consuming SA bandwidth. Annual billing setup progressing but billing profile behavior needs clarification.</p>
-            <div class="card-tags"><span class="tag mrr">$270 MRR</span><span class="tag sentiment-frustrated">Frustrated</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CONFIGURATION (high value / notable ones) -->
-      <div class="lane">
-        <div class="lane-header config">
-          Configuration — Notable Accounts
-          <span class="lane-count">51 total</span>
-        </div>
-        <div class="lane-body">
-          <div class="client-card low-border">
-            <div class="card-top">
-              <div><div class="card-name">NetWatch</div><div class="card-sa">Nicole Hills · AE: Jake Borah</div></div>
-              <div class="card-score"><div class="score-val score-low">83</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $3,000 — highest MRR in active backlog. CW migration. Labor forecasting sessions needed; provider phone number formatting fix in progress.</p>
-            <div class="card-tags"><span class="tag mrr">$3,000 MRR</span><span class="tag sentiment-positive">Positive</span><span class="tag platform">CW Displacement</span></div>
-          </div>
-          <div class="client-card low-border">
-            <div class="card-top">
-              <div><div class="card-name">DFW Security</div><div class="card-sa">Nicole Hills · AE: Jake Borah</div></div>
-              <div class="card-score"><div class="score-val score-medium">71</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $2,970. Sedona CRM production issues splitting client focus. Sedona API permissions pending Tyler's action. Payments setup not yet scheduled.</p>
-            <div class="card-tags"><span class="tag mrr">$2,970 MRR</span><span class="tag platform">Sedona Displacement</span></div>
-          </div>
-          <div class="client-card low-border">
-            <div class="card-top">
-              <div><div class="card-name">Wyoming.com</div><div class="card-sa">Jessica Cochran · AE: Joseph Abarno</div></div>
-              <div class="card-score"><div class="score-val score-low">86</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $1,740. Password migration approach confirmed. Strong momentum on automation setup. Collections task queues, email templates, service types all progressing.</p>
-            <div class="card-tags"><span class="tag mrr">$1,740 MRR</span><span class="tag sentiment-positive">Positive</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">POS Innovation</div><div class="card-sa">Kegan Ehlers · AE: Davis Herndon</div></div>
-              <div class="card-score"><div class="score-val score-medium">64</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $1,200. Management disatisfied. Reporting features down. Watch closely for churn signals.</p>
-            <div class="card-tags"><span class="tag mrr">$1,200 MRR</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">M2</div><div class="card-sa">Lex Ligon · AE: Patrick Davies</div></div>
-              <div class="card-score"><div class="score-val score-medium">70</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $520. Tax mapping from Tax Data = critical path for May 1 activation. Client deferring to Tax Data for allocation guidance.</p>
-            <div class="card-tags"><span class="tag mrr">$520 MRR</span><span class="tag platform">WorkHorse → Rev.io</span></div>
-          </div>
-          <div class="client-card high-border">
-            <div class="card-top">
-              <div><div class="card-name">Fuse.Cloud</div><div class="card-sa">Mark Kephart · AE: Connor Flynn</div></div>
-              <div class="card-score"><div class="score-val score-high">65</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $750. Complex multi-queue requirement (Voice/Circuit/Fax/IT L2-L3). PSA single-queue architecture creating architectural friction. Client frustrated.</p>
-            <div class="card-tags"><span class="tag mrr">$750 MRR</span><span class="tag sentiment-frustrated">Frustrated</span></div>
-          </div>
-          <div class="client-card high-border">
-            <div class="card-top">
-              <div><div class="card-name">Trifecta</div><div class="card-sa">Mark Kephart · AE: Joseph Abarno</div></div>
-              <div class="card-score"><div class="score-val score-high">60</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $550. Email integration bug blocking ticket creation despite successful OAuth. Workflow/notification sophistication gap vs. client's JIRA-trained expectations.</p>
-            <div class="card-tags"><span class="tag mrr">$550 MRR</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">CMP</div><div class="card-sa">Mark Kephart · AE: Connor Flynn</div></div>
-              <div class="card-score"><div class="score-val score-high">48</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $500. Operating across 3 systems (Synchro/NINJA/Rev PSA). PAX8 integration blocked; labor invoicing delayed; vendor integration not yet available.</p>
-            <div class="card-tags"><span class="tag mrr">$500 MRR</span><span class="tag platform">Syncro Displacement</span><span class="tag sentiment-frustrated">Frustrated</span></div>
-          </div>
-          <div class="client-card medium-border">
-            <div class="card-top">
-              <div><div class="card-name">Security Vision</div><div class="card-sa">Nicole Hills · AE: Jaylin Bender</div></div>
-              <div class="card-score"><div class="score-val score-medium">68</div><div class="score-label">Health</div></div>
-            </div>
-            <p class="card-finding">MRR: $800. Data imports complete but quoting feature blocked by product engineering. Paused training momentum until June.</p>
-            <div class="card-tags"><span class="tag mrr">$800 MRR</span><span class="tag platform">AlarmBiller → PSA</span></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- BLOCKER THEMES -->
-  <section id="blockers">
-    <h2>Top Blocker Themes Across Backlog</h2>
-    <p class="subtitle">Recurring patterns from the past 30 days of call intelligence. Each theme represents a systemic issue affecting multiple accounts.</p>
-
-    <div class="blocker-list">
-      <div class="blocker-item">
-        <div class="bi-title">🔴 Tax Configuration / SureTax Integration</div>
-        <div class="bi-count">Affecting 6+ accounts</div>
-        <div class="bi-clients">Tricom, PTCOA, Double Eagle, POP Communications, Xclutel, TSI (Triangle Security). Rev.io/SureTax API discrepancies causing filing delays, mismatched totals, and blocking graduation. Requires Engineering + SureTax escalation.</div>
-      </div>
-      <div class="blocker-item">
-        <div class="bi-title">🔴 QuickBooks Integration Failures</div>
-        <div class="bi-count">Affecting 5+ accounts</div>
-        <div class="bi-clients">NetGreene (30-60 failed syncs/cycle), Viirtue (overpayment bug), SouthLight (revenue recognition mismatch), Automated Telecom, Class 5 (GL/QB sync). Systemic integration reliability issues requiring integrations team review.</div>
-      </div>
-      <div class="blocker-item">
-        <div class="bi-title">🟠 Missing Product Features (Quoting)</div>
-        <div class="bi-count">Affecting 4+ accounts</div>
-        <div class="bi-clients">TSI-NC (sequential quote numbers), Class 5 (zero-quantity packages), Terapixels (no export capability), Security Vision (product description flow, part number search). Product roadmap alignment needed.</div>
-      </div>
-      <div class="blocker-item">
-        <div class="bi-title">🟠 Payment Processing Credentials</div>
-        <div class="bi-count">Affecting 3+ accounts</div>
-        <div class="bi-clients">Segra (weeks unresolved), White Label/Grupo (authorized.net multi-credential), Cloudli (Paysafe file unavailable — contact on maternity leave). Multiple instances of payment credential setup blocking graduation.</div>
-      </div>
-      <div class="blocker-item">
-        <div class="bi-title">🟡 Data Migration Delays (DE Team Backlog)</div>
-        <div class="bi-count">Affecting 4+ accounts</div>
-        <div class="bi-clients">American Security Devices (Tiger Paw stalled), Bridge Comm (3k product re-import), Knight Security (50+ fragmented files), First Class Tech/Computech (fragmented data 15+ tabs). DE team capacity constraint creating onboarding bottleneck.</div>
-      </div>
-      <div class="blocker-item">
-        <div class="bi-title">🟡 PO / Purchase Order Workflow Gaps</div>
-        <div class="bi-count">Affecting 2+ accounts</div>
-        <div class="bi-clients">Losh ($1K MRR, deal-breaker flagged), TSI-NC (PO-to-invoice automation missing). Common pattern for ConnectWise displacements — PO workflow expectations not met by Rev.io PSA.</div>
-      </div>
-      <div class="blocker-item">
-        <div class="bi-title">🟡 Client Availability / Engagement</div>
-        <div class="bi-count">Affecting 3+ accounts</div>
-        <div class="bi-clients">Louisville Tech (zero task progress), Knight Security (limited staffing), TSI (schedule constraints), Alarm 24 (UCC acquisition uncertainty). Stall pattern: clients on-hold due to external priorities, not product gaps.</div>
-      </div>
-      <div class="blocker-item">
-        <div class="bi-title">🟡 Third-Party Integration Agreements Missing</div>
-        <div class="bi-count">Affecting 2+ accounts</div>
-        <div class="bi-clients">Exabar (Clearly IP has no API agreement with Rev.io), Kloud7 (Geopolitical internet restrictions blocking Pakistan office). External agreement gaps creating manual workaround dependency.</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- SA LOAD -->
-  <section id="sa-load">
-    <h2>SA Load Summary</h2>
-    <p class="subtitle">Account distribution and risk concentration by Solutions Advisor based on last 30 days of call data.</p>
-
-    <div class="sa-grid">
-      <div class="sa-card">
-        <div class="sa-name">Halle Taylor</div>
-        <div class="sa-stats">
-          <div class="sa-stat"><div class="n red">3</div><div class="l">Critical</div></div>
-          <div class="sa-stat"><div class="n yellow">3</div><div class="l">High</div></div>
-          <div class="sa-stat"><div class="n">~10</div><div class="l">Total</div></div>
-        </div>
-        <div class="sa-bar"><div class="sa-bar-fill" style="width: 75%"></div></div>
-        <p style="color: var(--muted); font-size: 11px; margin-top: 8px;">Class 5, TSI-NC, Losh — 3 critical-risk accounts. Highest risk concentration. Priority review recommended.</p>
-      </div>
-      <div class="sa-card">
-        <div class="sa-name">Kegan Ehlers</div>
-        <div class="sa-stats">
-          <div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div>
-          <div class="sa-stat"><div class="n yellow">3</div><div class="l">High</div></div>
-          <div class="sa-stat"><div class="n">~8</div><div class="l">Total</div></div>
-        </div>
-        <div class="sa-bar"><div class="sa-bar-fill" style="width: 50%"></div></div>
-        <p style="color: var(--muted); font-size: 11px; margin-top: 8px;">Bridge Comm, ITR Systems, American Security Devices — data migration backlog pattern. Bank-Tec near graduation.</p>
-      </div>
-      <div class="sa-card">
-        <div class="sa-name">Nicole Hills</div>
-        <div class="sa-stats">
-          <div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div>
-          <div class="sa-stat"><div class="n yellow">3</div><div class="l">High</div></div>
-          <div class="sa-stat"><div class="n">~7</div><div class="l">Total</div></div>
-        </div>
-        <div class="sa-bar"><div class="sa-bar-fill" style="width: 55%"></div></div>
-        <p style="color: var(--muted); font-size: 11px; margin-top: 8px;">NetWatch ($3K MRR — highest value), DFW Security ($2.97K). Knight Security stalled. High MRR concentration.</p>
-      </div>
-      <div class="sa-card">
-        <div class="sa-name">Marshall Harris</div>
-        <div class="sa-stats">
-          <div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div>
-          <div class="sa-stat"><div class="n yellow">3</div><div class="l">High</div></div>
-          <div class="sa-stat"><div class="n">~6</div><div class="l">Total</div></div>
-        </div>
-        <div class="sa-bar"><div class="sa-bar-fill" style="width: 55%"></div></div>
-        <p style="color: var(--muted); font-size: 11px; margin-top: 8px;">Kloud7 (go-live delayed to June), Cloudli (CBP 10 days out). Avalora near graduation — strong account.</p>
-      </div>
-      <div class="sa-card">
-        <div class="sa-name">Mark Kephart</div>
-        <div class="sa-stats">
-          <div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div>
-          <div class="sa-stat"><div class="n yellow">2</div><div class="l">High</div></div>
-          <div class="sa-stat"><div class="n">~5</div><div class="l">Total</div></div>
-        </div>
-        <div class="sa-bar"><div class="sa-bar-fill" style="width: 45%"></div></div>
-        <p style="color: var(--muted); font-size: 11px; margin-top: 8px;">Trifecta (email bug), CMP (3 systems), Fuse.Cloud (architecture friction). Ticket escalation pattern.</p>
-      </div>
-      <div class="sa-card">
-        <div class="sa-name">Lex Ligon</div>
-        <div class="sa-stats">
-          <div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div>
-          <div class="sa-stat"><div class="n yellow">1</div><div class="l">High</div></div>
-          <div class="sa-stat"><div class="n">~5</div><div class="l">Total</div></div>
-        </div>
-        <div class="sa-bar"><div class="sa-bar-fill" style="width: 30%"></div></div>
-        <p style="color: var(--muted); font-size: 11px; margin-top: 8px;">Xclutel (May 1 target), Exabar (May 25 target), M2 (tax path blocker). Two imminent launches.</p>
-      </div>
-      <div class="sa-card">
-        <div class="sa-name">Andrew Millington</div>
-        <div class="sa-stats">
-          <div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div>
-          <div class="sa-stat"><div class="n yellow">2</div><div class="l">High</div></div>
-          <div class="sa-stat"><div class="n">~5</div><div class="l">Total</div></div>
-        </div>
-        <div class="sa-bar"><div class="sa-bar-fill" style="width: 40%"></div></div>
-        <p style="color: var(--muted); font-size: 11px; margin-top: 8px;">Double Eagle (tax blocker), Tricom Technology (tax filing delays). Automated Telecom progressing. HelloSpoke new.</p>
-      </div>
-      <div class="sa-card">
-        <div class="sa-name">Francesca Thayer</div>
-        <div class="sa-stats">
-          <div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div>
-          <div class="sa-stat"><div class="n yellow">1</div><div class="l">High</div></div>
-          <div class="sa-stat"><div class="n">~5</div><div class="l">Total</div></div>
-        </div>
-        <div class="sa-bar"><div class="sa-bar-fill" style="width: 25%"></div></div>
-        <p style="color: var(--muted); font-size: 11px; margin-top: 8px;">Accelerated Technologies (pre-grad), Southern Telecom (progressing), WLC/Grupo (May 15 target). Louisville Tech stalled.</p>
-      </div>
-      <div class="sa-card">
-        <div class="sa-name">Jessica Cochran / Lauren Swygert / Others</div>
-        <div class="sa-stats">
-          <div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div>
-          <div class="sa-stat"><div class="n yellow">2</div><div class="l">High</div></div>
-          <div class="sa-stat"><div class="n">~7</div><div class="l">Total</div></div>
-        </div>
-        <div class="sa-bar"><div class="sa-bar-fill" style="width: 35%"></div></div>
-        <p style="color: var(--muted); font-size: 11px; margin-top: 8px;">Wyoming.com ($1,740 MRR, strong), Orkestra (near grad). Lauren: Zultys ($10B data error), Tricom/Frank (SureTax).</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- FOOTER -->
-  <div style="text-align: center; padding: 24px 0 40px; color: var(--muted); font-size: 12px;">
-    <p>⚡ Rev.io Onboarding Intelligence — Generated by Revay AI · Tuesday, April 22, 2026</p>
-    <p style="margin-top: 6px;">Data sources: Fireflies.ai (67 transcripts) · Notion Onboarding Calls DB · #onboarding channel intelligence (7 days) · Kaia Pipeline</p>
-    <p style="margin-top: 6px; color: var(--border);">Refreshed every Tuesday · Next update: April 29, 2026</p>
-  </div>
-
 </div>
 
+<!-- ══════════════════════════════════════════════════════════
+     30-DAY FORECAST
+══════════════════════════════════════════════════════════ -->
+<div class="section-block" id="forecast">
+  <div class="section-hdr">
+    <div class="section-hdr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+    <span class="section-hdr-label">30-Day Launch Forecast</span>
+    <span class="section-hdr-sub">~8 accounts targeting May activation or graduation</span>
+  </div>
+
+  <div class="focus-grid">
+
+    <div class="focus-card low reveal" style="--delay:.05s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-low">Low Risk · Highest Confidence</span></div>
+          <div class="focus-name">Accelerated Technologies</div>
+          <div class="focus-meta">SA: Francesca Thayer · Stage: Fundamentals</div>
+        </div>
+        <div class="score-block"><div class="score-num low">86</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Full billing and auto-debit automation activated as of April 14. 4 billing cycles running. <strong>No active blockers — closest account to graduation in the backlog.</strong></p>
+      <div class="detail-box actions"><div class="lbl">✅ Next Actions</div>Monitor 4 automated billing runs. If clean, schedule graduation call for early May. Priority graduation candidate.</div>
+      <div class="focus-tags"><span class="tag tag-pos">Positive Sentiment</span></div>
+    </div>
+
+    <div class="focus-card low reveal" style="--delay:.08s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-low">Low Risk · Near Graduation</span></div>
+          <div class="focus-name">Orkestra</div>
+          <div class="focus-meta">SA: Lauren Swygert · Stage: Training</div>
+        </div>
+        <div class="score-block"><div class="score-num low">88</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Parent-child billing configured, email templates live, first bills ready to send. Client has resumed selling the billing product. One remaining item: QuickBooks integration review.</p>
+      <div class="detail-box actions"><div class="lbl">✅ Next Actions</div>Complete QB integration review → schedule graduation call. <strong>Should graduate within 2–3 weeks barring QB issues.</strong></div>
+      <div class="focus-tags"><span class="tag tag-pos">Positive Sentiment</span></div>
+    </div>
+
+    <div class="focus-card low reveal" style="--delay:.1s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-low">Low Risk · May End Target</span></div>
+          <div class="focus-name">Avalora</div>
+          <div class="focus-meta">SA: Marshall Harris · AE: Joseph Abarno · MRR: $630 · Prior: ConnectWise</div>
+        </div>
+        <div class="score-block"><div class="score-num low">85</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Product catalog received; data migration 80% complete. Activation pushed to end of May pending tax mapping report from CommLaw Group and bill comparative validation.</p>
+      <div class="detail-box blockers"><div class="lbl">🚧 Active Blockers</div>Tax mapping report from CommLaw Group (external); bill comparative process (blocking activation sign-off); service product tab pending QB data extraction.</div>
+      <div class="detail-box actions"><div class="lbl">✅ Next Actions</div>Jessica Stout (client) to upload product catalog and generate tax mapping. Mark Cederloff to create QB account. <strong>Highest-confidence close in 30-day window.</strong></div>
+      <div class="focus-tags"><span class="tag tag-mrr">$630 MRR</span><span class="tag tag-pos">Positive</span><span class="tag tag-plat">CW Displacement</span></div>
+    </div>
+
+    <div class="focus-card low reveal" style="--delay:.12s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-low">Low Risk · Late May</span></div>
+          <div class="focus-name">Bank-Tec South</div>
+          <div class="focus-meta">SA: Kegan Ehlers · Stage: Training</div>
+        </div>
+        <div class="score-block"><div class="score-num low">87</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Strong team engagement, progressing through customer/ticketing workflows. Remaining: E Automate historical data import, inventory/asset sync, contract module completion.</p>
+      <div class="detail-box blockers"><div class="lbl">🚧 Active Blockers</div>Historical customer data migration from E Automate; asset data import pending; contract module completion needed.</div>
+      <div class="detail-box actions"><div class="lbl">✅ Next Actions</div>Coordinate with DE team on E Automate migration. Strong account with clear path. <strong>Realistic target: late May.</strong></div>
+      <div class="focus-tags"><span class="tag tag-pos">Positive Sentiment</span></div>
+    </div>
+
+    <div class="focus-card medium reveal" style="--delay:.14s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-medium">Medium Risk · May 1 Target</span></div>
+          <div class="focus-name">Xclutel</div>
+          <div class="focus-meta">SA: Lex Ligon · Stage: Configuration</div>
+        </div>
+        <div class="score-block"><div class="score-num medium">78</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Targeting <strong>May 1 billing go-live</strong>. Final blocker: tax discrepancies on Alden PRI over VoIP accounts (~25% rate) must resolve before final data load. QB aging export from client required for starting balances migration.</p>
+      <div class="detail-box blockers"><div class="lbl">🚧 Active Blockers</div>Tax discrepancies on Alden accounts (PRI over VoIP); QuickBooks aging report export from Scott Sinclair (client); customer notification plan pending data validation.</div>
+      <div class="detail-box actions"><div class="lbl">✅ Next Actions</div>Scott Sinclair to export QB aging report. Lex to validate Alden tax comparison. <strong>May 1 at risk if tax validation slips this week.</strong></div>
+      <div class="focus-tags"><span class="tag tag-neu">Neutral Sentiment</span><span class="tag tag-plat">Prior: QuickBooks</span></div>
+    </div>
+
+    <div class="focus-card medium reveal" style="--delay:.16s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-medium">Medium Risk · May 1 Target</span></div>
+          <div class="focus-name">Premise Solutions</div>
+          <div class="focus-meta">SA: Halle Taylor · AE: Jaylin Bender · MRR: $560 · Prior: ComputerEase</div>
+        </div>
+        <div class="score-block"><div class="score-num medium">78</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Targeting May 1 go-live. Projects module is in beta with unknown GA timeline — needs product commitment to protect this date. Client is engaged and progressing well on billing/inventory.</p>
+      <div class="detail-box blockers"><div class="lbl">🚧 Active Blockers</div>Projects module beta — unknown GA release date; multi-day task calendar display bug; unified calendar view unavailable; milestone notifications pending.</div>
+      <div class="detail-box actions"><div class="lbl">✅ Next Actions</div>Halle to get Projects module beta timeline from product (Kemp) and communicate to client Valerie. <strong>If GA not confirmed by May 1, go-live plan needs revision — escalate to product this week.</strong></div>
+      <div class="focus-tags"><span class="tag tag-mrr">$560 MRR</span><span class="tag tag-pos">Positive</span></div>
+    </div>
+
+    <div class="focus-card medium reveal" style="--delay:.18s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-medium">Medium Risk · May 15 Target</span></div>
+          <div class="focus-name">White Label Communications / Grupo NGN</div>
+          <div class="focus-meta">SA: Francesca Thayer · Stage: Configuration</div>
+        </div>
+        <div class="score-block"><div class="score-num medium">66</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Targeting May 15 graduation. Three importer blockers remain: Horizon CDR documentation missing, INET GZIP format unvalidated, and Sansei invoice re-rating dispute active.</p>
+      <div class="detail-box blockers"><div class="lbl">🚧 Active Blockers</div>Horizon CDR workbook + provider documentation (critical); INET GZIP format validation; Sansei re-rating dispute; payment credentials on Grupo side.</div>
+      <div class="detail-box actions"><div class="lbl">✅ Next Actions</div>Craig Verner (client) to provide Horizon docs ASAP. Importer team to validate INET GZIP. <strong>May 15 is at risk if Horizon/INET not resolved by end of week.</strong></div>
+      <div class="focus-tags"><span class="tag tag-neu">Neutral Sentiment</span></div>
+    </div>
+
+    <div class="focus-card medium reveal" style="--delay:.2s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-medium">Medium Risk · May 25 Target</span></div>
+          <div class="focus-name">Exabar</div>
+          <div class="focus-meta">SA: Lex Ligon · Stage: Configuration</div>
+        </div>
+        <div class="score-block"><div class="score-num medium">68</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Activation scheduled May 25, first billing June 1. Clearly IP API integration agreement does not exist — manual file uploads required as ongoing workaround. SendGrid domain auth pending. Project charter signed.</p>
+      <div class="detail-box blockers"><div class="lbl">🚧 Active Blockers</div>Clearly IP has no API agreement with Rev.io (ongoing manual workaround); SendGrid domain auth pending; NRC-only billing profile strategy undefined.</div>
+      <div class="detail-box actions"><div class="lbl">✅ Next Actions</div>Lex/Francesca to establish Clearly IP contact and explore API agreement. Send DM template service products by Wednesday. <strong>May 25 activation achievable if Clearly IP integration path is defined.</strong></div>
+      <div class="focus-tags"><span class="tag tag-neu">Neutral Sentiment</span></div>
+    </div>
+
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--cyan-bright);margin:32px 0 14px">🔄 Pull-Forward Opportunities — Stalled / On Hold</h3>
+  <div class="table-wrap reveal" style="--delay:.22s">
+    <table>
+      <thead><tr>
+        <th>Client</th><th>SA</th><th>Score</th><th>Why Stalled</th><th>Pull-Forward Action</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><strong>Alarm 24</strong></td><td class="muted">Nicole Hills</td><td style="color:var(--red);font-weight:700;font-family:var(--font-display)">46</td><td class="muted">7+ months onboarding, UCC acquisition creating commitment uncertainty</td><td>Re-commit to 1–2 calls/week intensive; confirm go-live by end of May or escalate to sales</td></tr>
+        <tr><td><strong>Louisville Tech</strong></td><td class="muted">Francesca Thayer</td><td style="color:var(--red);font-weight:700;font-family:var(--font-display)">40</td><td class="muted">Jon Clark completed zero tasks — travel/workload blocking progress</td><td>Escalation call — complete 3 checklist items or push graduation to Q3</td></tr>
+        <tr><td><strong>American Security Devices</strong></td><td class="muted">Kegan Ehlers</td><td style="color:var(--red);font-weight:700;font-family:var(--font-display)">52</td><td class="muted">Tiger Paw migration unstarted despite multiple requests — DE backlog</td><td>Prioritize DE queue escalation — 500+ agreements need migration before training</td></tr>
+        <tr><td><strong>SouthLight Services</strong></td><td class="muted">Tim Smith</td><td style="color:var(--orange);font-weight:700;font-family:var(--font-display)">56</td><td class="muted">QB revenue recognition fundamentally broken — period mismatch</td><td>Product + integrations review on QB period assignment; may require accounting policy workaround</td></tr>
+        <tr><td><strong>Knight Security</strong></td><td class="muted">Nicole Hills</td><td style="color:var(--red);font-weight:700;font-family:var(--font-display)">48</td><td class="muted">50+ fragmented data files, 6K duplicate products, limited internal staffing</td><td>Project scoping meeting to align on realistic migration phases and hard milestones</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     RISK ALERTS — CRITICAL
+══════════════════════════════════════════════════════════ -->
+<div class="section-block" id="risk">
+  <div class="section-hdr">
+    <div class="section-hdr-icon" style="color:var(--red)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+    <span class="section-hdr-label">Risk Alerts — Critical</span>
+    <span class="section-hdr-sub">5 accounts requiring immediate action</span>
+  </div>
+
+  <div class="focus-grid">
+
+    <div class="focus-card crit reveal" style="--delay:.05s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-crit">Critical · 10-Day Window</span></div>
+          <div class="focus-name">Class 5 Technologies</div>
+          <div class="focus-meta">SA: Halle Taylor · AE: Joseph Abarno · MRR: $500 · Prior: ConnectWise</div>
+        </div>
+        <div class="score-block"><div class="score-num crit">39</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Ray Paskey has explicitly stated intent to revert to ConnectWise within 10 days. Critical product gaps blocking: quoting zero-quantity packages ($75K job on hold), ticketing bugs (closed tickets on dispatch), GL/QB sync failures, tax calculation errors, no group calendar view.</p>
+      <div class="detail-box blockers"><div class="lbl">🚧 Critical Blockers</div>(1) Quoting zero-quantity feature — no ETA committed; (2) Ticketing display bugs persisting; (3) GL/QBO sync failures blocking inventory; (4) Tax errors; (5) Group calendar missing.</div>
+      <div class="detail-box actions"><div class="lbl">✅ Required Action</div>Escalate quoting zero-quantity ETA to product owner <strong>today</strong>. Executive check-in call with Ray. Product roadmap commitment with dates required. Without intervention this week, churn is highly likely.</div>
+      <div class="focus-tags"><span class="tag tag-risk">At Risk · Churn Imminent</span><span class="tag tag-mrr">$500 MRR</span></div>
+    </div>
+
+    <div class="focus-card crit reveal" style="--delay:.08s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-crit">Critical · Adoption Halted</span></div>
+          <div class="focus-name">TSI-NC — Triangle Staffing (Patrick Zakaria)</div>
+          <div class="focus-meta">SA: Halle Taylor · Stage: Configuration</div>
+        </div>
+        <div class="score-block"><div class="score-num crit">7</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Client has halted adoption. Two non-negotiable missing features: (1) user-configurable sequential quote numbers — only auto-generated alphanumeric IDs exist; (2) PO-to-invoice automation essential for B2B commercial operations. Client frustrated by sales overselling vs. Tiger Paw capabilities.</p>
+      <div class="detail-box blockers"><div class="lbl">🚧 Critical Blockers</div>Sequential quote numbering (requires backend product work, no timeline); PO number flow-through from sales to invoices (same). Both blockers are product architecture gaps, not configuration issues.</div>
+      <div class="detail-box actions"><div class="lbl">✅ Required Action</div>Sales leadership intervention needed. Product roadmap response with committed timeline required to retain this account. Halle standing by but cannot resolve without feature commitment.</div>
+      <div class="focus-tags"><span class="tag tag-risk">Adoption Stopped</span></div>
+    </div>
+
+    <div class="focus-card crit reveal" style="--delay:.1s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-crit">Critical · At Risk</span></div>
+          <div class="focus-name">Losh</div>
+          <div class="focus-meta">SA: Halle Taylor · AE: Connor Flynn · MRR: $1,004 · Prior: ConnectWise · Close: Feb 26</div>
+        </div>
+        <div class="score-block"><div class="score-num crit">52</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Sentiment: At Risk. Stephanie Kern flagged PO workflow incompatibility as potential deal-breaker — Rev.io PSA cannot attach non-ticket-linked products to a single PO, a ConnectWise standard workflow. Product catalog bug preventing setup. Calendar sync also blocking.</p>
+      <div class="detail-box blockers"><div class="lbl">🚧 Critical Blockers</div>PO attachment limitation (non-ticket-linked products not supported); product catalog bug at 'add providers' step; calendar sync permissions; serial number bulk upload gap.</div>
+      <div class="detail-box actions"><div class="lbl">✅ Required Action</div>Urgent product team review of PO attachment workflow. Halle to follow up on development timeline. <strong>$1K MRR account at churn risk without resolution path confirmed this week.</strong></div>
+      <div class="focus-tags"><span class="tag tag-risk">At Risk</span><span class="tag tag-mrr">$1,004 MRR</span><span class="tag tag-plat">CW Displacement</span></div>
+    </div>
+
+    <div class="focus-card crit reveal" style="--delay:.12s">
+      <div class="focus-top">
+        <div>
+          <div class="focus-badges"><span class="risk-badge rb-crit">Critical · Workflow Broken</span></div>
+          <div class="focus-name">Grahek Technology</div>
+          <div class="focus-meta">SA: Marsha Blobaum · AE: Patrick Davies · MRR: $315 · Prior: Autotask/Datto</div>
+        </div>
+        <div class="score-block"><div class="score-num crit">37</div><div class="score-lbl">Health</div></div>
+      </div>
+      <p class="focus-finding">Workflow email sending completely non-functional after adding a new variable — blocking all ticket processing and client notifications. Root cause unresolved; product owner not available during last call; no ETA given.</p>
+      <div class="detail-box blockers"><div class="lbl">🚧 Critical Blockers</div>Workflow email failure: root cause unidentified; product owner unavailable for call; ticket processing blocked for all clients.</div>
+      <div class="detail-box actions"><div class="lbl">✅ Required Action</div>Engineering ticket required with SLA. Marsha to follow up with product owner and provide client an ETA by EOD today.</div>
+      <div class="focus-tags"><span class="tag tag-mrr">$315 MRR</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     FULL BACKLOG BY STAGE
+══════════════════════════════════════════════════════════ -->
+<div class="section-block" id="backlog">
+  <div class="section-hdr">
+    <div class="section-hdr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+    <span class="section-hdr-label">Full Backlog — By Stage</span>
+    <span class="section-hdr-sub">70 active accounts · color-coded by risk</span>
+  </div>
+
+  <div class="lanes">
+
+    <div class="lane reveal" style="--delay:.05s">
+      <div class="lane-hdr kickoff">Kickoff <span class="lane-ct">3</span></div>
+      <div class="lane-body">
+        <div class="mini-card low">
+          <div class="mini-top"><div><div class="mini-name">VanRan Communications</div><div class="mini-sa">Halle Taylor</div></div><div class="mini-score low">71</div></div>
+          <p class="mini-finding">Tiger Paw → PSA. 5-year ticket history. Data cleanup needed. Weekly cadence confirmed.</p>
+          <div class="mini-tags"><span class="tag tag-pos" style="font-size:.65rem;padding:1px 7px">Positive</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">HelloSpoke</div><div class="mini-sa">Andrew Millington</div></div><div class="mini-score medium">62</div></div>
+          <p class="mini-finding">Greenfield QB state. One-way sync limitation — careful workflow design required. Follow-up meeting needed.</p>
+          <div class="mini-tags"><span class="tag tag-neu" style="font-size:.65rem;padding:1px 7px">Neutral</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Integrated Installations</div><div class="mini-sa">Tony Mehner</div></div><div class="mini-score medium">73</div></div>
+          <p class="mini-finding">Operations owner aligned. DocuSign execution is the only remaining kickoff blocker.</p>
+          <div class="mini-tags"><span class="tag tag-pos" style="font-size:.65rem;padding:1px 7px">Positive</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lane reveal" style="--delay:.08s">
+      <div class="lane-hdr fundamentals">Fundamentals <span class="lane-ct">3</span></div>
+      <div class="lane-body">
+        <div class="mini-card low">
+          <div class="mini-top"><div><div class="mini-name">Accelerated Technologies</div><div class="mini-sa">Francesca Thayer</div></div><div class="mini-score low">86</div></div>
+          <p class="mini-finding">Auto-debit live. 4 billing cycles running. <strong>Pre-graduation — no blockers.</strong></p>
+          <div class="mini-tags"><span class="tag tag-pos" style="font-size:.65rem;padding:1px 7px">Positive</span></div>
+        </div>
+        <div class="mini-card high">
+          <div class="mini-top"><div><div class="mini-name">Bridge Comm</div><div class="mini-sa">Kegan Ehlers</div></div><div class="mini-score high">56</div></div>
+          <p class="mini-finding">3,000+ product items incorrectly imported as recurring. Full re-export and re-import required. CSI tax integration unknown.</p>
+          <div class="mini-tags"><span class="tag tag-frus" style="font-size:.65rem;padding:1px 7px">Frustrated</span></div>
+        </div>
+        <div class="mini-card high">
+          <div class="mini-top"><div><div class="mini-name">Rite Telephone</div><div class="mini-sa">JD Caulkins</div></div><div class="mini-score high">58</div></div>
+          <p class="mini-finding">First billing cycle exposed invoice mismatches, duplicated charges, NetSapiens sync only 60 of expected users. Tim Smith OOO.</p>
+          <div class="mini-tags"><span class="tag tag-frus" style="font-size:.65rem;padding:1px 7px">Frustrated</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lane reveal" style="--delay:.1s">
+      <div class="lane-hdr training">Training <span class="lane-ct">13</span></div>
+      <div class="lane-body">
+        <div class="mini-card low">
+          <div class="mini-top"><div><div class="mini-name">Orkestra</div><div class="mini-sa">Lauren Swygert</div></div><div class="mini-score low">88</div></div>
+          <p class="mini-finding">First bills ready to send. QB integration final review. Near graduation.</p>
+          <div class="mini-tags"><span class="tag tag-pos" style="font-size:.65rem;padding:1px 7px">Positive</span></div>
+        </div>
+        <div class="mini-card low">
+          <div class="mini-top"><div><div class="mini-name">Bank-Tec South</div><div class="mini-sa">Kegan Ehlers</div></div><div class="mini-score low">87</div></div>
+          <p class="mini-finding">Strong engagement. E Automate migration remaining. Contract module to complete.</p>
+          <div class="mini-tags"><span class="tag tag-pos" style="font-size:.65rem;padding:1px 7px">Positive</span></div>
+        </div>
+        <div class="mini-card low">
+          <div class="mini-top"><div><div class="mini-name">Sydewire</div><div class="mini-sa">Halle Taylor</div></div><div class="mini-score low">77</div></div>
+          <p class="mini-finding">$500 MRR. GPS tracking fix expected Tuesday. Inventory migration from QB not yet addressed.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$500 MRR</span><span class="tag tag-pos" style="font-size:.65rem;padding:1px 7px">Positive</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">4Voice</div><div class="mini-sa">Kegan Ehlers</div></div><div class="mini-score medium">74</div></div>
+          <p class="mini-finding">$315 MRR. Agent module still not enabled despite Vegas meeting commitment. Ticket #346153 stalled 10+ days.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$315 MRR</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Automated Telecom</div><div class="mini-sa">Andrew Millington</div></div><div class="mini-score medium">72</div></div>
+          <p class="mini-finding">$500 MRR. DocuSign template selection blocked; unapplied credits in QB; proposal reordering missing drag-and-drop.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$500 MRR</span><span class="tag tag-pos" style="font-size:.65rem;padding:1px 7px">Positive</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Popp</div><div class="mini-sa">Conner Sharp</div></div><div class="mini-score medium">70</div></div>
+          <p class="mini-finding">Training progressing. CDR integration not live; billing cycle dates still manual. Paula independently building products — good sign.</p>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">POS Innovation</div><div class="mini-sa">Kegan Ehlers</div></div><div class="mini-score medium">64</div></div>
+          <p class="mini-finding">$1,200 MRR. Management dissatisfied despite Eric's positive feedback. Reporting features down. Dispatch calendar enhancements pending.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$1,200 MRR</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Newport Network Solutions</div><div class="mini-sa">Halle Taylor</div></div><div class="mini-score medium">60</div></div>
+          <p class="mini-finding">Struggling with time tracking fundamentals. Mobile app gaps blocking workflows.</p>
+          <div class="mini-tags"><span class="tag tag-neu" style="font-size:.65rem;padding:1px 7px">Neutral</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Tele-Plus</div><div class="mini-sa">Kegan Ehlers</div></div><div class="mini-score medium">63</div></div>
+          <p class="mini-finding">$500 MRR. Contract profitability demoed. Mobile app slowing broader adoption. Linda's participation limited.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$500 MRR</span></div>
+        </div>
+        <div class="mini-card high">
+          <div class="mini-top"><div><div class="mini-name">ITR Systems</div><div class="mini-sa">Kegan Ehlers</div></div><div class="mini-score high">56</div></div>
+          <p class="mini-finding">Parent-child billing roll-ups broken for multi-location school district. Post-invoice ticket editing blocked. Service Fusion migration not pulling.</p>
+          <div class="mini-tags"><span class="tag tag-neu" style="font-size:.65rem;padding:1px 7px">Neutral</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Tricom Technology</div><div class="mini-sa">Andrew Millington</div></div><div class="mini-score medium">63</div></div>
+          <p class="mini-finding">$270 MRR. Tax filing delays consuming SA bandwidth. Annual billing progressing but behavior needs clarification.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$270 MRR</span><span class="tag tag-frus" style="font-size:.65rem;padding:1px 7px">Frustrated</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lane reveal" style="--delay:.12s">
+      <div class="lane-hdr config">Configuration — High-Value / Notable <span class="lane-ct">51 total</span></div>
+      <div class="lane-body">
+        <div class="mini-card low">
+          <div class="mini-top"><div><div class="mini-name">NetWatch</div><div class="mini-sa">Nicole Hills · AE: Jake Borah</div></div><div class="mini-score low">83</div></div>
+          <p class="mini-finding">$3,000 MRR — highest in active backlog. CW migration. Labor forecasting sessions needed; phone number formatting fix in progress.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$3,000 MRR</span><span class="tag tag-plat" style="font-size:.65rem;padding:1px 7px">CW Displacement</span></div>
+        </div>
+        <div class="mini-card low">
+          <div class="mini-top"><div><div class="mini-name">Wyoming.com</div><div class="mini-sa">Jessica Cochran · AE: Joseph Abarno</div></div><div class="mini-score low">86</div></div>
+          <p class="mini-finding">$1,740 MRR. Password migration confirmed. Strong momentum on automation. Collections queues + email templates progressing.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$1,740 MRR</span><span class="tag tag-pos" style="font-size:.65rem;padding:1px 7px">Positive</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">DFW Security</div><div class="mini-sa">Nicole Hills · AE: Jake Borah</div></div><div class="mini-score medium">71</div></div>
+          <p class="mini-finding">$2,970 MRR. Sedona CRM production issues splitting focus. API permissions pending. Payments setup not scheduled.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$2,970 MRR</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Security Vision</div><div class="mini-sa">Nicole Hills · AE: Jaylin Bender</div></div><div class="mini-score medium">68</div></div>
+          <p class="mini-finding">$800 MRR. Quoting feature blocked by product engineering. Training paused until June.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$800 MRR</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Fuse.Cloud</div><div class="mini-sa">Mark Kephart · AE: Connor Flynn</div></div><div class="mini-score medium">65</div></div>
+          <p class="mini-finding">$750 MRR. Complex multi-queue requirement (Voice/Circuit/Fax/IT L2-L3). Single-queue PSA architecture creating friction.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$750 MRR</span><span class="tag tag-frus" style="font-size:.65rem;padding:1px 7px">Frustrated</span></div>
+        </div>
+        <div class="mini-card high">
+          <div class="mini-top"><div><div class="mini-name">Trifecta</div><div class="mini-sa">Mark Kephart · AE: Joseph Abarno</div></div><div class="mini-score high">60</div></div>
+          <p class="mini-finding">$550 MRR. Email integration bug blocking ticket creation despite successful OAuth. Workflow sophistication gap vs. JIRA-trained team.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$550 MRR</span></div>
+        </div>
+        <div class="mini-card high">
+          <div class="mini-top"><div><div class="mini-name">Zultys</div><div class="mini-sa">Lauren Swygert</div></div><div class="mini-score high">61</div></div>
+          <p class="mini-finding">Critical data validation issues ($10B revenue errors in reports). Pre-release validation checklist required. Spandox XML baseline file missing.</p>
+          <div class="mini-tags"><span class="tag tag-frus" style="font-size:.65rem;padding:1px 7px">Frustrated</span></div>
+        </div>
+        <div class="mini-card high">
+          <div class="mini-top"><div><div class="mini-name">CMP</div><div class="mini-sa">Mark Kephart · AE: Connor Flynn</div></div><div class="mini-score high">48</div></div>
+          <p class="mini-finding">$500 MRR. Operating across 3 systems. PAX8 integration blocked; labor invoicing delayed; vendor integration unavailable.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$500 MRR</span><span class="tag tag-plat" style="font-size:.65rem;padding:1px 7px">Syncro Displacement</span><span class="tag tag-frus" style="font-size:.65rem;padding:1px 7px">Frustrated</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Frontline Security</div><div class="mini-sa">Kegan Ehlers</div></div><div class="mini-score medium">77</div></div>
+          <p class="mini-finding">$660 MRR. 3,500-client staged migration underway. Portal login issue for Christian. QB address jumbling requiring manual fix.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$660 MRR</span><span class="tag tag-pos" style="font-size:.65rem;padding:1px 7px">Positive</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Avalora</div><div class="mini-sa">Marshall Harris</div></div><div class="mini-score medium">85</div></div>
+          <p class="mini-finding">$630 MRR. 80% migrated. May end activation. CommLaw Group tax mapping = critical path. <em>See 30-Day Forecast above.</em></p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$630 MRR</span><span class="tag tag-pos" style="font-size:.65rem;padding:1px 7px">Positive</span></div>
+        </div>
+        <div class="mini-card crit">
+          <div class="mini-top"><div><div class="mini-name">Class 5 Technologies</div><div class="mini-sa">Halle Taylor</div></div><div class="mini-score crit">39</div></div>
+          <p class="mini-finding">$500 MRR. 10-day churn window. <em>See Risk Alerts above.</em></p>
+          <div class="mini-tags"><span class="tag tag-risk" style="font-size:.65rem;padding:1px 7px">Critical Risk</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">Custom Electric Consultants</div><div class="mini-sa">Halle Taylor</div></div><div class="mini-score medium">72</div></div>
+          <p class="mini-finding">102-min config call completed. 15+ action items outstanding. System glitches (PO editing, calendar permissions) blocking progress.</p>
+          <div class="mini-tags"><span class="tag tag-neu" style="font-size:.65rem;padding:1px 7px">Neutral</span></div>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">PTCOA</div><div class="mini-sa">Shane Frost / JD Caulkins</div></div><div class="mini-score medium">65</div></div>
+          <p class="mini-finding">Tax bundle file processing ready. Primary contact (Daryl) unavailable — tax item clarifications pending before processing can begin.</p>
+        </div>
+        <div class="mini-card medium">
+          <div class="mini-top"><div><div class="mini-name">M2</div><div class="mini-sa">Lex Ligon · AE: Patrick Davies</div></div><div class="mini-score medium">70</div></div>
+          <p class="mini-finding">$520 MRR. Tax mapping from Tax Data = critical path for May 1 activation. Client deferring to Tax Data for guidance.</p>
+          <div class="mini-tags"><span class="tag tag-mrr" style="font-size:.65rem;padding:1px 7px">$520 MRR</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     BLOCKER THEMES
+══════════════════════════════════════════════════════════ -->
+<div class="section-block" id="blockers">
+  <div class="section-hdr">
+    <div class="section-hdr-icon" style="color:var(--amber)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+    <span class="section-hdr-label">Systemic Blocker Themes</span>
+    <span class="section-hdr-sub">8 recurring patterns affecting multiple accounts</span>
+  </div>
+  <div class="blocker-grid">
+    <div class="blocker-tile reveal" style="--delay:.04s"><div class="bt-title" style="color:var(--red)">🔴 Tax Configuration / SureTax Integration</div><div class="bt-count">6+ accounts affected</div><div class="bt-clients">Tricom, PTCOA, Double Eagle, POP Communications, Xclutel, TSI (Triangle Security). Rev.io/SureTax API discrepancies causing filing delays, mismatched totals, and graduation blocks. Requires Engineering + SureTax escalation.</div></div>
+    <div class="blocker-tile reveal" style="--delay:.06s"><div class="bt-title" style="color:var(--red)">🔴 QuickBooks Integration Failures</div><div class="bt-count">5+ accounts affected</div><div class="bt-clients">NetGreene (30-60 failed syncs/cycle), Viirtue (overpayment bug), SouthLight (revenue recognition mismatch), Automated Telecom, Class 5 (GL/QB sync). Systemic reliability issues — integrations team review overdue.</div></div>
+    <div class="blocker-tile reveal" style="--delay:.08s"><div class="bt-title" style="color:var(--orange)">🟠 Missing Product Features (Quoting)</div><div class="bt-count">4+ accounts affected</div><div class="bt-clients">TSI-NC (sequential quote numbers), Class 5 (zero-quantity packages), Terapixels (no export capability), Security Vision (product description flow). Product roadmap alignment needed.</div></div>
+    <div class="blocker-tile reveal" style="--delay:.1s"><div class="bt-title" style="color:var(--orange)">🟠 Payment Processing Credentials</div><div class="bt-count">3+ accounts affected</div><div class="bt-clients">Segra (weeks unresolved), White Label/Grupo (Authorized.net multi-credential), Cloudli (Paysafe file unavailable — contact on maternity leave). Multiple graduation blocks.</div></div>
+    <div class="blocker-tile reveal" style="--delay:.12s"><div class="bt-title" style="color:var(--amber)">🟡 Data Migration Delays (DE Team Backlog)</div><div class="bt-count">4+ accounts affected</div><div class="bt-clients">American Security Devices (Tiger Paw stalled), Bridge Comm (3K product re-import), Knight Security (50+ fragmented files). DE team capacity constraint creating onboarding bottleneck.</div></div>
+    <div class="blocker-tile reveal" style="--delay:.14s"><div class="bt-title" style="color:var(--amber)">🟡 PO / Purchase Order Workflow Gaps</div><div class="bt-count">2+ accounts affected</div><div class="bt-clients">Losh ($1K MRR, deal-breaker flagged), TSI-NC (PO-to-invoice automation missing). Common ConnectWise displacement pattern — PO workflow expectations not met by Rev.io PSA.</div></div>
+    <div class="blocker-tile reveal" style="--delay:.16s"><div class="bt-title" style="color:var(--amber)">🟡 Client Availability / Engagement</div><div class="bt-count">3+ accounts affected</div><div class="bt-clients">Louisville Tech (zero task progress), Knight Security (limited staffing), TSI (schedule constraints), Alarm 24 (UCC acquisition uncertainty). Stall pattern: external priorities, not product gaps.</div></div>
+    <div class="blocker-tile reveal" style="--delay:.18s"><div class="bt-title" style="color:var(--amber)">🟡 Third-Party Integration Agreements Missing</div><div class="bt-count">2+ accounts affected</div><div class="bt-clients">Exabar (Clearly IP has no API agreement with Rev.io), Kloud7 (geopolitical internet restrictions blocking Pakistan office). External agreement gaps creating manual workaround dependency.</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SA LOAD
+══════════════════════════════════════════════════════════ -->
+<div class="section-block" id="sa-load">
+  <div class="section-hdr">
+    <div class="section-hdr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <span class="section-hdr-label">SA Load Summary</span>
+    <span class="section-hdr-sub">Risk concentration by Solutions Advisor · last 30 days</span>
+  </div>
+  <div class="sa-grid">
+    <div class="sa-card reveal" style="--delay:.04s">
+      <div class="sa-name">Halle Taylor</div>
+      <div class="sa-stats"><div class="sa-stat"><div class="n red">3</div><div class="l">Critical</div></div><div class="sa-stat"><div class="n amber">3</div><div class="l">High</div></div><div class="sa-stat"><div class="n">~10</div><div class="l">Total</div></div></div>
+      <div class="sa-bar"><div class="sa-fill" style="width:78%"></div></div>
+      <p class="sa-note">Class 5, TSI-NC, Losh — 3 critical-risk accounts simultaneously. Highest risk concentration. Recommend immediate workload review.</p>
+    </div>
+    <div class="sa-card reveal" style="--delay:.06s">
+      <div class="sa-name">Kegan Ehlers</div>
+      <div class="sa-stats"><div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div><div class="sa-stat"><div class="n amber">3</div><div class="l">High</div></div><div class="sa-stat"><div class="n">~8</div><div class="l">Total</div></div></div>
+      <div class="sa-bar"><div class="sa-fill" style="width:52%"></div></div>
+      <p class="sa-note">Bridge Comm, ITR Systems, American Security Devices — data migration backlog pattern. Bank-Tec near graduation, strong.</p>
+    </div>
+    <div class="sa-card reveal" style="--delay:.08s">
+      <div class="sa-name">Nicole Hills</div>
+      <div class="sa-stats"><div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div><div class="sa-stat"><div class="n amber">3</div><div class="l">High</div></div><div class="sa-stat"><div class="n">~7</div><div class="l">Total</div></div></div>
+      <div class="sa-bar"><div class="sa-fill" style="width:56%"></div></div>
+      <p class="sa-note">NetWatch ($3K MRR), DFW Security ($2.97K) — highest MRR concentration. Knight Security stalled. Alarm 24 needs intervention.</p>
+    </div>
+    <div class="sa-card reveal" style="--delay:.1s">
+      <div class="sa-name">Marshall Harris</div>
+      <div class="sa-stats"><div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div><div class="sa-stat"><div class="n amber">3</div><div class="l">High</div></div><div class="sa-stat"><div class="n">~6</div><div class="l">Total</div></div></div>
+      <div class="sa-bar"><div class="sa-fill" style="width:50%"></div></div>
+      <p class="sa-note">Kloud7 (June delay), Cloudli (CBP 10 days out). Avalora near graduation — high-confidence close.</p>
+    </div>
+    <div class="sa-card reveal" style="--delay:.12s">
+      <div class="sa-name">Mark Kephart</div>
+      <div class="sa-stats"><div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div><div class="sa-stat"><div class="n amber">2</div><div class="l">High</div></div><div class="sa-stat"><div class="n">~5</div><div class="l">Total</div></div></div>
+      <div class="sa-bar"><div class="sa-fill" style="width:42%"></div></div>
+      <p class="sa-note">Trifecta (email bug), CMP (3 systems), Fuse.Cloud (architecture friction). Ticket escalation pattern across portfolio.</p>
+    </div>
+    <div class="sa-card reveal" style="--delay:.14s">
+      <div class="sa-name">Lex Ligon</div>
+      <div class="sa-stats"><div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div><div class="sa-stat"><div class="n amber">1</div><div class="l">High</div></div><div class="sa-stat"><div class="n">~5</div><div class="l">Total</div></div></div>
+      <div class="sa-bar"><div class="sa-fill" style="width:30%"></div></div>
+      <p class="sa-note">Xclutel (May 1 target), Exabar (May 25 target), M2 (tax path). Two imminent launches — high May graduation potential.</p>
+    </div>
+    <div class="sa-card reveal" style="--delay:.16s">
+      <div class="sa-name">Andrew Millington</div>
+      <div class="sa-stats"><div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div><div class="sa-stat"><div class="n amber">2</div><div class="l">High</div></div><div class="sa-stat"><div class="n">~5</div><div class="l">Total</div></div></div>
+      <div class="sa-bar"><div class="sa-fill" style="width:40%"></div></div>
+      <p class="sa-note">Double Eagle (tax blocker), Tricom Technology (tax delays). Automated Telecom progressing. HelloSpoke new kickoff.</p>
+    </div>
+    <div class="sa-card reveal" style="--delay:.18s">
+      <div class="sa-name">Francesca Thayer</div>
+      <div class="sa-stats"><div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div><div class="sa-stat"><div class="n amber">1</div><div class="l">High</div></div><div class="sa-stat"><div class="n">~5</div><div class="l">Total</div></div></div>
+      <div class="sa-bar"><div class="sa-fill" style="width:25%"></div></div>
+      <p class="sa-note">Accelerated Technologies (pre-grad), WLC/Grupo (May 15 target). Louisville Tech stalled — needs escalation.</p>
+    </div>
+    <div class="sa-card reveal" style="--delay:.2s">
+      <div class="sa-name">Lauren Swygert + Others</div>
+      <div class="sa-stats"><div class="sa-stat"><div class="n red">0</div><div class="l">Critical</div></div><div class="sa-stat"><div class="n amber">2</div><div class="l">High</div></div><div class="sa-stat"><div class="n">~7</div><div class="l">Total</div></div></div>
+      <div class="sa-bar"><div class="sa-fill" style="width:36%"></div></div>
+      <p class="sa-note">Orkestra (near grad), Wyoming.com ($1.74K MRR strong). Lauren: Zultys ($10B data error), Tricom/Frank (SureTax).</p>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div class="report-footer">
+  <p>⚡ Rev.io Onboarding Intelligence — Generated by Revay AI · Tuesday, April 22, 2026</p>
+  <p>Data sources: Fireflies.ai (67 transcripts) · Notion Onboarding Calls DB · #onboarding channel (7 days) · Kaia Pipeline</p>
+  <p style="color:rgba(161,176,203,.4);margin-top:8px">Refreshed every Tuesday · Next update: April 29, 2026</p>
+</div>
+
+<script>
+/* ── PARTICLE BG ─────────────────────────────────────────── */
+(function(){
+  const canvas=document.getElementById('bgCanvas'),ctx=canvas.getContext('2d');
+  let particles=[],W=0,H=0;
+  function resize(){
+    W=window.innerWidth;H=window.innerHeight;
+    canvas.width=Math.round(W*devicePixelRatio);canvas.height=Math.round(H*devicePixelRatio);
+    canvas.style.width=W+'px';canvas.style.height=H+'px';
+    ctx.scale(devicePixelRatio,devicePixelRatio);createP();
+  }
+  function createP(){
+    particles=[];
+    const n=Math.min(120,Math.floor(W*H/9000));
+    for(let i=0;i<n;i++) particles.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.5,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,a:Math.random()*.35+.15,g:Math.random()<.15});
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.g?`rgba(105,240,174,${p.a})`:`rgba(0,188,212,${p.a})`;ctx.fill();
+    });
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(0,188,212,${.12*(1-d/120)})`;ctx.lineWidth=.5;ctx.stroke();}
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);resize();draw();
+})();
+
+/* ── HERO CANVAS ─────────────────────────────────────────── */
+(function(){
+  const canvas=document.getElementById('heroCanvas'),ctx=canvas.getContext('2d');
+  let particles=[];
+  function resize(){
+    canvas.width=canvas.offsetWidth*devicePixelRatio;canvas.height=canvas.offsetHeight*devicePixelRatio;
+    ctx.scale(devicePixelRatio,devicePixelRatio);createP();
+  }
+  function createP(){
+    particles=[];const w=canvas.offsetWidth,h=canvas.offsetHeight;
+    const n=Math.min(100,Math.floor(w*h/9000));
+    for(let i=0;i<n;i++) particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+.4,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,a:Math.random()*.5+.12,g:Math.random()<.15});
+  }
+  function draw(){
+    const w=canvas.offsetWidth,h=canvas.offsetHeight;ctx.clearRect(0,0,w,h);
+    particles.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.g?`rgba(105,240,174,${p.a})`:`rgba(0,188,212,${p.a})`;ctx.fill();
+    });
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(0,188,212,${.09*(1-d/120)})`;ctx.lineWidth=.5;ctx.stroke();}
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);resize();draw();
+})();
+
+/* ── SCROLL REVEALS ──────────────────────────────────────── */
+const revealEls=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el=>io.observe(el));
+
+/* ── CARD MOUSE GLOW ─────────────────────────────────────── */
+document.querySelectorAll('.focus-card,.mini-card,.sa-card,.blocker-tile,.kpi-tile').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+  });
+});
+</script>
 </body>
 </html>
