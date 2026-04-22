@@ -5,143 +5,201 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rev.io Market Intelligence Report</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
   <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #0f1117; --surface: #1a1d27; --card: #1e2235; --text: #e8eaf6; --muted: #8892b0;
-  --accent: #6c63ff; --accent2: #00d4aa; --warning: #ff9f43; --danger: #ff6b6b;
-  --border: rgba(108,99,255,.18); --border2: rgba(255,255,255,.07);
+  --bg: #080E1A; --surface: rgba(15,33,56,0.55); --surface-solid: #142A46;
+  --border: rgba(255,255,255,0.08); --border-cyan: rgba(0,229,255,0.3);
+  --cyan: #00BCD4; --cyan-bright: #00E5FF; --green: #4CAF50; --green-bright: #69F0AE;
+  --text-1: #FFFFFF; --text-2: #A1B0CB; --eyebrow: #00BCD4;
+  --font-display: 'Cabinet Grotesk', system-ui, sans-serif;
+  --font-body: 'Satoshi', system-ui, sans-serif;
+  --spring: cubic-bezier(0.16, 1, 0.3, 1);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 52px; gap: 4px; overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap; }
-nav::-webkit-scrollbar { display: none; }
-nav a { color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 500; transition: all .2s; white-space: nowrap; flex-shrink: 0; }
-nav a:hover { color: var(--text); background: var(--surface); }
-.nav-brand { color: var(--accent); font-weight: 700; font-size: 15px; margin-right: 12px; white-space: nowrap; flex-shrink: 0; }
-.container { max-width: 1280px; margin: 0 auto; padding: 32px 24px; }
-section { margin-bottom: 56px; scroll-margin-top: 68px; }
-html { scroll-padding-top: 68px; scroll-behavior: smooth; }
-h1 { font-size: 30px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-h2 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
-h3 { font-size: 14px; font-weight: 600; color: var(--accent2); margin: 20px 0 10px; text-transform: uppercase; letter-spacing: .04em; }
-.subtitle { color: var(--muted); font-size: 13px; margin-bottom: 4px; }
-.deck-header { margin-bottom: 40px; padding: 36px 0 28px; border-bottom: 1px solid var(--border2); }
-.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; margin-bottom: 24px; }
-.kpi-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 18px; }
-.kpi-card .kpi-label { color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
-.kpi-card .kpi-value { font-size: 28px; font-weight: 700; color: var(--accent2); }
-.kpi-card .kpi-sub { color: var(--muted); font-size: 11px; margin-top: 4px; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 72px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text-1); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* Canvas background */
+#bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+
+/* Hero */
+.hero { position: relative; min-height: 44vh; display: flex; align-items: center; border-bottom: 1px solid var(--border); z-index: 1; background: radial-gradient(ellipse at 20% 50%, rgba(0,188,212,.06) 0%, transparent 60%); }
+.hero-inner { position: relative; z-index: 2; width: 100%; max-width: 1200px; margin: 0 auto; padding: clamp(3rem,8vh,5rem) clamp(1.5rem,4vw,3rem); }
+.hero-eyebrow { font-family: var(--font-body); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; color: var(--eyebrow); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--cyan-bright); }
+.hero-title { font-family: var(--font-display); font-size: clamp(2rem,4vw+.5rem,3.4rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 14px; }
+.hero-title .gradient { background: linear-gradient(135deg, var(--cyan-bright) 0%, #7B9FFF 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-sub { font-size: clamp(.9rem,1.5vw,1.05rem); color: var(--text-2); max-width: 520px; margin-bottom: 32px; }
+.hero-stats { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.hero-stat { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--text-2); }
+.hero-stat-num { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--cyan-bright); }
+.hero-divider { width: 1px; height: 32px; background: var(--border-cyan); }
+
+/* Sticky nav */
+.sticky-nav { position: sticky; top: 0; z-index: 50; background: rgba(8,14,26,.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 12px clamp(1.5rem,4vw,3rem); }
+.sticky-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.sticky-nav-inner::-webkit-scrollbar { display: none; }
+.nav-brand { font-family: var(--font-display); font-weight: 800; font-size: 1rem; color: var(--text-1); white-space: nowrap; flex-shrink: 0; margin-right: 8px; }
+.nav-brand span { color: var(--cyan-bright); }
+.nav-links { display: flex; gap: 4px; align-items: center; }
+.nav-links a { color: var(--text-2); text-decoration: none; padding: 6px 12px; border-radius: 8px; font-size: .8rem; font-weight: 500; transition: all .2s; white-space: nowrap; }
+.nav-links a:hover { color: var(--text-1); background: rgba(255,255,255,.06); }
+
+/* Main layout */
+.main { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: clamp(1.5rem,4vw,2.5rem) clamp(1.5rem,4vw,3rem); }
+.section-block { margin-bottom: 3.5rem; }
+.section-hdr { display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.section-label { font-family: var(--font-display); font-size: clamp(.95rem,1.5vw,1.1rem); font-weight: 700; color: var(--text-1); }
+.section-sub { font-size: .85rem; color: var(--text-2); margin-bottom: 20px; line-height: 1.6; }
+
+/* Cards */
+.deck-card { background: var(--surface); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 14px; padding: 22px; transition: border-color .3s, transform .3s var(--spring); }
+.deck-card:hover { border-color: var(--border-cyan); transform: translateY(-2px); }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media(max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; margin-bottom: 16px; }
-.card h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 14px; }
-.table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 16px; }
+@media(max-width:900px){ .two-col { grid-template-columns: 1fr; } }
+
+/* KPI strip */
+.kpi-strip { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 2rem; }
+.kpi-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; flex: 1; min-width: 140px; }
+.kpi-item .kpi-lbl { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-2); margin-bottom: 8px; }
+.kpi-item .kpi-val { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--cyan-bright); line-height: 1; }
+.kpi-item .kpi-sub { font-size: .75rem; color: var(--text-2); margin-top: 4px; }
+
+/* Tables */
+.tbl-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 16px; }
 table { width: 100%; border-collapse: collapse; }
-thead tr { background: var(--surface); }
-th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
-tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+thead tr { background: rgba(255,255,255,.04); }
+th { padding: 10px 16px; text-align: left; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-2); border-bottom: 1px solid var(--border); white-space: nowrap; }
+tbody tr { border-bottom: 1px solid rgba(255,255,255,.04); transition: background .15s; }
 tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: rgba(108,99,255,.06); }
-td { padding: 10px 14px; color: var(--text); }
+tbody tr:hover { background: rgba(0,229,255,.03); }
+td { padding: 10px 16px; color: var(--text-1); font-size: .9rem; }
+
+/* Bars */
 .bar-row { display: flex; align-items: center; }
-.bar-track { flex: 1; height: 6px; background: rgba(255,255,255,.06); border-radius: 3px; }
+.bar-track { flex: 1; height: 5px; background: rgba(255,255,255,.06); border-radius: 3px; }
 .bar-fill { height: 100%; border-radius: 3px; }
-.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap; }
-.badge.accent { background: rgba(108,99,255,.15); color: var(--accent); }
-.badge.teal { background: rgba(0,212,170,.12); color: var(--accent2); }
-.badge.warn { background: rgba(255,159,67,.15); color: var(--warning); }
-.badge.danger { background: rgba(255,107,107,.15); color: var(--danger); }
-.signal-card { background: var(--surface); border-left: 3px solid var(--accent2); border-radius: 0 8px 8px 0; padding: 11px 14px; margin-bottom: 8px; }
-.signal-card .signal-text { font-size: 13px; line-height: 1.5; color: var(--text); }
-.signal-card .signal-meta { font-size: 11px; color: var(--muted); margin-top: 4px; }
-.signal-card.loss { border-left-color: var(--danger); }
-.insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 20px; }
-.insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
-.insight-card .insight-label { font-size: 11px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.insight-card p { font-size: 13px; color: var(--text); line-height: 1.5; }
-.empty-state { color: var(--muted); font-size: 13px; font-style: italic; padding: 20px 0; }
-footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; color: var(--muted); font-size: 11px; margin-top: 32px; }
-footer a { color: var(--accent); text-decoration: none; }
+
+/* Badges */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 100px; font-size: .7rem; font-weight: 700; white-space: nowrap; }
+.pill-c { background: rgba(0,229,255,.1); color: var(--cyan-bright); border: 1px solid rgba(0,229,255,.2); }
+.pill-g { background: rgba(105,240,174,.1); color: #69F0AE; border: 1px solid rgba(105,240,174,.2); }
+.pill-w { background: rgba(255,200,87,.1); color: #FFD54F; border: 1px solid rgba(255,200,87,.2); }
+.pill-r { background: rgba(255,107,107,.1); color: #FF8A80; border: 1px solid rgba(255,107,107,.2); }
+.pill-m { background: rgba(161,176,203,.1); color: var(--text-2); border: 1px solid rgba(161,176,203,.2); }
+
+/* Signal cards */
+.sig-card { background: rgba(0,229,255,.04); border-left: 3px solid var(--cyan-bright); border-radius: 0 10px 10px 0; padding: 11px 14px; margin-bottom: 8px; }
+.sig-card.loss { background: rgba(255,107,107,.04); border-left-color: #FF8A80; }
+.sig-card .sig-text { font-size: .88rem; line-height: 1.5; color: var(--text-1); }
+.sig-card .sig-meta { font-size: .75rem; color: var(--text-2); margin-top: 4px; }
+
+/* Insight grid */
+.insight-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 14px; margin-top: 20px; }
+.insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.insight-card .ins-lbl { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--cyan); margin-bottom: 6px; }
+.insight-card p { font-size: .85rem; color: var(--text-2); line-height: 1.5; }
+
+.empty-state { color: var(--text-2); font-size: .85rem; font-style: italic; padding: 20px 0; opacity: .6; }
+
+footer { border-top: 1px solid var(--border); padding: 32px clamp(1.5rem,4vw,3rem); text-align: center; color: var(--text-2); font-size: .8rem; margin-top: 32px; position: relative; z-index: 1; }
+footer a { color: var(--cyan-bright); text-decoration: none; }
   </style>
 </head>
 <body>
 
-<nav>
-  <span class="nav-brand">&#9889; Revay</span>
-  <a href="#overview">Overview</a>
-  <a href="#features">Feature Demand</a>
-  <a href="#competitors">Competitive</a>
-  <a href="#signals">Win / Loss</a>
-  <a href="#prospecting">Prospecting</a>
-  <a href="#correlation">Correlation</a>
-  <a href="#trends">Monthly Trends</a>
+<canvas id="bgCanvas"></canvas>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Rev.io Intelligence Hub</div>
+    <h1 class="hero-title">Market <span class="gradient">Intelligence</span> Report</h1>
+    <p class="hero-sub">Kaia meeting analysis + prospecting call intelligence — rebuilt daily from Notion. Rolling 90-day detail view.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">414</span><span>meetings analyzed</span></div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat"><span class="hero-stat-num">1459</span><span>prospecting calls</span></div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat"><span class="hero-stat-num">5.2%</span><span>first-touch conversion</span></div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat"><span class="hero-stat-num">8</span><span>competitors tracked</span></div>
+    </div>
+    <p style="font-size:.75rem;color:var(--text-2);margin-top:20px;">Generated Tuesday, April 21, 2026 at 09:34 PM CDT</p>
+  </div>
+</header>
+
+<nav class="sticky-nav">
+  <div class="sticky-nav-inner">
+    <div class="nav-brand">&#9889; <span>Revay</span></div>
+    <div class="nav-links">
+      <a href="#features">Feature Demand</a>
+      <a href="#competitors">Competitive</a>
+      <a href="#signals">Win / Loss</a>
+      <a href="#prospecting">Prospecting</a>
+      <a href="#correlation">Correlation</a>
+      <a href="#trends">Monthly Trends</a>
+    </div>
+  </div>
 </nav>
 
-<div class="container">
-
-  <!-- HEADER -->
-  <div class="deck-header" id="overview">
-    <h1>Market Intelligence Report</h1>
-    <p class="subtitle">Rev.io · Kaia Meeting Pipeline + Prospecting Call Intelligence · Rebuilt daily from Notion</p>
-    <p class="subtitle" style="margin-top:4px;">Generated Tuesday, April 21, 2026 at 09:20 PM CDT</p>
-  </div>
+<div class="main">
 
   <!-- KPI STRIP -->
   <div class="kpi-grid" style="margin-bottom:48px;">
-    <div class="kpi-card">
-      <div class="kpi-label">Total Meetings Analyzed</div>
-      <div class="kpi-value">414</div>
+    <div class="kpi-item">
+      <div class="kpi-lbl">Total Meetings Analyzed</div>
+      <div class="kpi-val">414</div>
       
     </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Prospecting Calls</div>
-      <div class="kpi-value" style="color:var(--accent);">1459</div>
+    <div class="kpi-item">
+      <div class="kpi-lbl">Prospecting Calls</div>
+      <div class="kpi-val" style="color:var(--accent);">1459</div>
       <div class="kpi-sub">Contact dispositions · 45s–2 min</div>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Meetings Booked</div>
-      <div class="kpi-value">76</div>
+    <div class="kpi-item">
+      <div class="kpi-lbl">Meetings Booked</div>
+      <div class="kpi-val">76</div>
       <div class="kpi-sub">5.2% first-touch conversion</div>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Win Signal Rate</div>
-      <div class="kpi-value" style="color:var(--accent2);">59%</div>
+    <div class="kpi-item">
+      <div class="kpi-lbl">Win Signal Rate</div>
+      <div class="kpi-val" style="color:var(--accent2);">59%</div>
       <div class="kpi-sub">of analyzed meetings</div>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Competitors Tracked</div>
-      <div class="kpi-value" style="color:var(--accent);">8</div>
+    <div class="kpi-item">
+      <div class="kpi-lbl">Competitors Tracked</div>
+      <div class="kpi-val" style="color:var(--accent);">8</div>
       <div class="kpi-sub">across both layers</div>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Top Objection</div>
-      <div class="kpi-value" style="font-size:14px;color:var(--warning);">Satisfied with Current Platform</div>
+    <div class="kpi-item">
+      <div class="kpi-lbl">Top Objection</div>
+      <div class="kpi-val" style="font-size:14px;color:var(--warning);">Satisfied with Current Platform</div>
       <div class="kpi-sub">282 instances</div>
     </div>
   </div>
 
   <!-- FEATURE DEMAND -->
-  <section id="features">
-    <h2>1. Feature Demand</h2>
+  <div class="section-block" id="features">
+    <div class="section-hdr"><span class="section-label">Feature Demand</h2>
     <p class="subtitle" style="margin-bottom:20px;">Features requested across all analyzed meetings — combines 414 deeply-analyzed calls. Ranked by mention frequency; compounds with every daily pipeline run.</p>
-    <div class="table-wrap">
+    <div class="tbl-wrap">
       <table>
         <thead><tr><th>Feature</th><th>Frequency</th><th style="text-align:right;">Count</th></tr></thead>
         <tbody><tr><td>Serialized Inventory Management</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">27</td></tr><tr><td>QuickBooks Online</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">27</td></tr><tr><td>Enhanced Customer Portal</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:81%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">22</td></tr><tr><td>User Management/Authentication</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:78%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">21</td></tr><tr><td>GPS Tracking in PSA/Map in dispatch board</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:70%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">19</td></tr><tr><td>PSA Mobile App (Foundation)</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:63%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">17</td></tr><tr><td>Time Tracking on Tickets</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:59%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">16</td></tr><tr><td>Dispatch Board</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:52%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">14</td></tr><tr><td>SLA Management</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:37%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">10</td></tr><tr><td>Bulk Import / Export Engine</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:37%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">10</td></tr><tr><td>Agents &amp; Commissions</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:33%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">9</td></tr><tr><td>Internationalization</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:30%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">8</td></tr><tr><td>PAX8 Integration</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:26%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">7</td></tr><tr><td>Google Calendar Integration</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:22%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">6</td></tr></tbody>
       </table>
     </div>
-  </section>
+  </div>
 
   <!-- COMPETITIVE INTEL -->
-  <section id="competitors">
-    <h2>2. Competitive Intelligence</h2>
+  <div class="section-block" id="competitors">
+    <div class="section-hdr"><span class="section-label">Competitive Intelligence</h2>
     <p class="subtitle" style="margin-bottom:20px;">Competitors surfacing in meetings (deep evaluation) and prospecting calls (first touch). Both layers together tell a more complete story than either alone.</p>
     <div class="two-col">
       <div>
         <h3>Named in Meetings</h3>
         <p class="subtitle" style="margin-bottom:12px;">Platforms in play during active evaluation</p>
-        <div class="table-wrap">
+        <div class="tbl-wrap">
           <table>
             <thead><tr><th>Competitor</th><th>Frequency</th><th style="text-align:right;">Count</th></tr></thead>
             <tbody><tr><td>QuickBooks</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">36</td></tr><tr><td>ConnectWise</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:83%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">30</td></tr><tr><td>Tiger Paw</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:58%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">21</td></tr><tr><td>Autotask</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:36%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">13</td></tr><tr><td>Syncro</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:17%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">6</td></tr><tr><td>Kaseya</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:14%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">5</td></tr><tr><td>QuickBooks Online</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:11%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">4</td></tr><tr><td>Datto</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:11%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">4</td></tr><tr><td>iPoint</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">3</td></tr></tbody>
@@ -151,7 +209,7 @@ footer a { color: var(--accent); text-decoration: none; }
       <div>
         <h3>Named at First Touch</h3>
         <p class="subtitle" style="margin-bottom:12px;">Platforms prospects name in the first 90 seconds</p>
-        <div class="table-wrap">
+        <div class="tbl-wrap">
           <table>
             <thead><tr><th>Competitor</th><th>Frequency</th><th style="text-align:right;">Count</th></tr></thead>
             <tbody><tr><td>QuickBooks</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">58</td></tr><tr><td>ConnectWise</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:67%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">39</td></tr><tr><td>Kaseya</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:36%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">21</td></tr><tr><td>Autotask</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:29%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">17</td></tr><tr><td>Simpro</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:16%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">9</td></tr><tr><td>Tiger Paw</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:14%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">8</td></tr><tr><td>Zoho</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:14%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">8</td></tr><tr><td>Salesforce</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:12%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">7</td></tr><tr><td>Sedona</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:10%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">6</td></tr><tr><td>Skyswitch</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:10%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">6</td></tr></tbody>
@@ -160,61 +218,61 @@ footer a { color: var(--accent); text-decoration: none; }
       </div>
     </div>
     <h3 style="margin-top:24px;">Key Findings from Meetings</h3>
-    <div class="signal-card"><div class="signal-text">Pricing agreed live ($400/mo, 4+1 users). NinjaOne integration depth is the make-or-break — follow-up with Brenda Harvey Thursday 4:30pm ET.</div><div class="signal-meta">CMP Consulting</div></div><div class="signal-card"><div class="signal-text">Owner Brian wants to delegate and exit day-to-day. 20 employees, growing. PSA as an owner-exit motion resonates strongly.</div><div class="signal-meta">Lubbock Audio Visual</div></div><div class="signal-card"><div class="signal-text">CRITICAL GAP: No GDPR compliance, data only in Azure Virginia, payments only settle in USD/CAD. UK billing team needs a single platform for both markets. Likely a no-go without product changes.</div><div class="signal-meta">Xinix Pro</div></div><div class="signal-card"><div class="signal-text">iPoint crashing weekly, techs cannot clock in/out in field. Accountant suspects revenue leakage from untracked inventory — inventory management is #1 eval criterion for this deal.</div><div class="signal-meta">Kazar Security</div></div><div class="signal-card"><div class="signal-text">Microsoft Dynamics integration (PSA/CRM sync to Dynamics)</div><div class="signal-meta">Claris</div></div>
-  </section>
+    <div class="sig-card"><div class="sig-text">Pricing agreed live ($400/mo, 4+1 users). NinjaOne integration depth is the make-or-break — follow-up with Brenda Harvey Thursday 4:30pm ET.</div><div class="sig-meta">CMP Consulting</div></div><div class="sig-card"><div class="sig-text">Owner Brian wants to delegate and exit day-to-day. 20 employees, growing. PSA as an owner-exit motion resonates strongly.</div><div class="sig-meta">Lubbock Audio Visual</div></div><div class="sig-card"><div class="sig-text">CRITICAL GAP: No GDPR compliance, data only in Azure Virginia, payments only settle in USD/CAD. UK billing team needs a single platform for both markets. Likely a no-go without product changes.</div><div class="sig-meta">Xinix Pro</div></div><div class="sig-card"><div class="sig-text">iPoint crashing weekly, techs cannot clock in/out in field. Accountant suspects revenue leakage from untracked inventory — inventory management is #1 eval criterion for this deal.</div><div class="sig-meta">Kazar Security</div></div><div class="sig-card"><div class="sig-text">Microsoft Dynamics integration (PSA/CRM sync to Dynamics)</div><div class="sig-meta">Claris</div></div>
+  </div>
 
   <!-- WIN / LOSS SIGNALS -->
-  <section id="signals">
-    <h2>3. Win / Loss Signals</h2>
+  <div class="section-block" id="signals">
+    <div class="section-hdr"><span class="section-label">Win / Loss Signals</h2>
     <p class="subtitle" style="margin-bottom:20px;">Surfaced directly from meeting transcripts across all analyzed calls. Both surfaces update daily as new recordings are processed.</p>
     <div class="two-col">
       <div>
         <h3>Win Signals</h3>
-        <div class="signal-card"><div class="signal-text">Decision maker (Steve Smith) actively participated and engaged</div><div class="signal-meta">Patrick Davies · EKC Enterprises</div></div><div class="signal-card"><div class="signal-text">Sister company Voice.us already partnered with Rev.io</div><div class="signal-meta">Jamie Butler · JAS Communications</div></div><div class="signal-card"><div class="signal-text">6x revenue growth since last conversation showing momentum</div><div class="signal-meta">Andy Whisenant · PC Solutions</div></div><div class="signal-card"><div class="signal-text">Looking for all-in-one platform to replace Simpro</div><div class="signal-meta">Husam Zalmiyar · Automated Abode - Smart Home Automation Specialist</div></div><div class="signal-card"><div class="signal-text">Dedicated meeting about specific integration need</div><div class="signal-meta">Ingrid Beard · Fireflies.ai Notetaker Andrew</div></div><div class="signal-card"><div class="signal-text">Confirmed payments team can support separate merchant profiles for dual entity structure</div><div class="signal-meta">Husam Zalmiyar · Modern Wave Systems</div></div>
+        <div class="sig-card"><div class="sig-text">Decision maker (Steve Smith) actively participated and engaged</div><div class="sig-meta">Patrick Davies · EKC Enterprises</div></div><div class="sig-card"><div class="sig-text">Sister company Voice.us already partnered with Rev.io</div><div class="sig-meta">Jamie Butler · JAS Communications</div></div><div class="sig-card"><div class="sig-text">6x revenue growth since last conversation showing momentum</div><div class="sig-meta">Andy Whisenant · PC Solutions</div></div><div class="sig-card"><div class="sig-text">Looking for all-in-one platform to replace Simpro</div><div class="sig-meta">Husam Zalmiyar · Automated Abode - Smart Home Automation Specialist</div></div><div class="sig-card"><div class="sig-text">Dedicated meeting about specific integration need</div><div class="sig-meta">Ingrid Beard · Fireflies.ai Notetaker Andrew</div></div><div class="sig-card"><div class="sig-text">Confirmed payments team can support separate merchant profiles for dual entity structure</div><div class="sig-meta">Husam Zalmiyar · Modern Wave Systems</div></div>
       </div>
       <div>
         <h3>Loss Risks</h3>
-        <div class="signal-card loss"><div class="signal-text">No transcript available - unable to extract conversation details</div><div class="signal-meta">Abigail Marchese · Eric Carnahan</div></div><div class="signal-card loss"><div class="signal-text">Adam (East Coast GM with buy-in) declined invite and didn't attend</div><div class="signal-meta">Patrick Davies · EKC Enterprises</div></div><div class="signal-card loss"><div class="signal-text">Rev.io acknowledged gaps in license provisioning automation functionality</div><div class="signal-meta">Jamie Butler · JAS Communications</div></div><div class="signal-card loss"><div class="signal-text">Price sensitivity - $500/month may be high at current $10K MRR scale</div><div class="signal-meta">Andy Whisenant · PC Solutions</div></div><div class="signal-card loss"><div class="signal-text">No transcript available - unable to extract call intelligence</div><div class="signal-meta">Ingrid Beard · Jim Rusnock</div></div><div class="signal-card loss"><div class="signal-text">No transcript available - unable to extract call intelligence</div><div class="signal-meta">Ingrid Beard · Brian Giffin</div></div>
+        <div class="sig-card loss"><div class="sig-text">No transcript available - unable to extract conversation details</div><div class="sig-meta">Abigail Marchese · Eric Carnahan</div></div><div class="sig-card loss"><div class="sig-text">Adam (East Coast GM with buy-in) declined invite and didn't attend</div><div class="sig-meta">Patrick Davies · EKC Enterprises</div></div><div class="sig-card loss"><div class="sig-text">Rev.io acknowledged gaps in license provisioning automation functionality</div><div class="sig-meta">Jamie Butler · JAS Communications</div></div><div class="sig-card loss"><div class="sig-text">Price sensitivity - $500/month may be high at current $10K MRR scale</div><div class="sig-meta">Andy Whisenant · PC Solutions</div></div><div class="sig-card loss"><div class="sig-text">No transcript available - unable to extract call intelligence</div><div class="sig-meta">Ingrid Beard · Jim Rusnock</div></div><div class="sig-card loss"><div class="sig-text">No transcript available - unable to extract call intelligence</div><div class="sig-meta">Ingrid Beard · Brian Giffin</div></div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- PROSPECTING PULSE -->
-  <section id="prospecting">
-    <h2>4. Prospecting Call Pulse</h2>
+  <div class="section-block" id="prospecting">
+    <div class="section-hdr"><span class="section-label">Prospecting Call Pulse</h2>
     <p class="subtitle" style="margin-bottom:20px;">1459 short outbound prospecting calls (45s–2 min, Contact dispositions) — what the market says before they decide to care. Cumulative across all processed calls.</p>
 
     <div class="two-col" style="margin-bottom:20px;">
       <div>
         <h3>Call Outcomes</h3>
-        <div class="table-wrap">
+        <div class="tbl-wrap">
           <table>
             <thead><tr><th>Outcome</th><th>Frequency</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th></tr></thead>
             <tbody><tr><td>Satisfied with Current Platform</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--danger);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--danger)">282</td><td style="text-align:right;color:var(--muted);">19%</td></tr><tr><td>Not Interested - No Reason Given</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:77%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--accent2)">217</td><td style="text-align:right;color:var(--muted);">15%</td></tr><tr><td>Not the Right Time</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:69%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">195</td><td style="text-align:right;color:var(--muted);">13%</td></tr><tr><td>Send Information</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:50%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">140</td><td style="text-align:right;color:var(--muted);">10%</td></tr><tr><td>Current Opportunity</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:43%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--accent2)">121</td><td style="text-align:right;color:var(--muted);">8%</td></tr><tr><td>Referred to Another Contact</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:39%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">111</td><td style="text-align:right;color:var(--muted);">8%</td></tr><tr><td>Too Small</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:29%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">81</td><td style="text-align:right;color:var(--muted);">6%</td></tr><tr><td>Interested - Follow Up Later</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--accent2)">70</td><td style="text-align:right;color:var(--muted);">5%</td></tr><tr><td>Client</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:23%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">65</td><td style="text-align:right;color:var(--muted);">4%</td></tr><tr><td>Discovery Meeting Set</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:18%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--accent2)">51</td><td style="text-align:right;color:var(--muted);">3%</td></tr></tbody>
           </table>
         </div>
-        <div class="kpi-card" style="margin-top:16px;">
-          <div class="kpi-label">Meetings Booked</div>
-          <div class="kpi-value">76</div>
+        <div class="kpi-item" style="margin-top:16px;">
+          <div class="kpi-lbl">Meetings Booked</div>
+          <div class="kpi-val">76</div>
           <div class="kpi-sub">from 1459 contact calls · 5.2% conversion</div>
         </div>
       </div>
       <div>
         <h3>Product Areas at First Touch</h3>
-        <div class="kpi-grid" style="grid-template-columns: 1fr 1fr;"><div class="kpi-card"><div class="kpi-label">PSA</div><div class="kpi-value">1045</div><div class="kpi-sub">mentions</div></div><div class="kpi-card"><div class="kpi-label">Billing</div><div class="kpi-value">684</div><div class="kpi-sub">mentions</div></div><div class="kpi-card"><div class="kpi-label">General Platform</div><div class="kpi-value">310</div><div class="kpi-sub">mentions</div></div><div class="kpi-card"><div class="kpi-label">Payments</div><div class="kpi-value">223</div><div class="kpi-sub">mentions</div></div><div class="kpi-card"><div class="kpi-label">Communications</div><div class="kpi-value">1</div><div class="kpi-sub">mentions</div></div><div class="kpi-card"><div class="kpi-label">Operations</div><div class="kpi-value">1</div><div class="kpi-sub">mentions</div></div></div>
+        <div class="kpi-grid" style="grid-template-columns: 1fr 1fr;"><div class="kpi-item"><div class="kpi-lbl">PSA</div><div class="kpi-val">1045</div><div class="kpi-sub">mentions</div></div><div class="kpi-item"><div class="kpi-lbl">Billing</div><div class="kpi-val">684</div><div class="kpi-sub">mentions</div></div><div class="kpi-item"><div class="kpi-lbl">General Platform</div><div class="kpi-val">310</div><div class="kpi-sub">mentions</div></div><div class="kpi-item"><div class="kpi-lbl">Payments</div><div class="kpi-val">223</div><div class="kpi-sub">mentions</div></div><div class="kpi-item"><div class="kpi-lbl">Communications</div><div class="kpi-val">1</div><div class="kpi-sub">mentions</div></div><div class="kpi-item"><div class="kpi-lbl">Operations</div><div class="kpi-val">1</div><div class="kpi-sub">mentions</div></div></div>
         <h3 style="margin-top:24px;">Buying Signals</h3>
-        <div class="signal-card"><div class="signal-text">Prospect agreed to reschedule the meeting to Monday at 11 AM, indicating willingness to engage.</div><div class="signal-meta">Abbey McIntosh</div></div><div class="signal-card"><div class="signal-text">Prospect agreed to put a meeting on the calendar.</div><div class="signal-meta">Ingrid Beard</div></div><div class="signal-card"><div class="signal-text">Ben expressed genuine appreciation for the outreach, confirmed willingness to see a demo of Rev.io's approach, and agreed to reconnect in 2-3 weeks after resolving current platform issues.</div><div class="signal-meta">Ingrid Beard</div></div><div class="signal-card"><div class="signal-text">Prospect asked for main point of contact and indicated willingness to pass information along to Tim and follow up if needed.</div><div class="signal-meta">Reid Doster</div></div><div class="signal-card"><div class="signal-text">Prospect confirmed existing meeting scheduled and agreed to receive confirmation email resend.</div><div class="signal-meta">Emily Petraglia</div></div><div class="signal-card"><div class="signal-text">Prospect agreed to review information with his partner via email.</div><div class="signal-meta">Emily Petraglia</div></div>
+        <div class="sig-card"><div class="sig-text">Prospect agreed to reschedule the meeting to Monday at 11 AM, indicating willingness to engage.</div><div class="sig-meta">Abbey McIntosh</div></div><div class="sig-card"><div class="sig-text">Prospect agreed to put a meeting on the calendar.</div><div class="sig-meta">Ingrid Beard</div></div><div class="sig-card"><div class="sig-text">Ben expressed genuine appreciation for the outreach, confirmed willingness to see a demo of Rev.io's approach, and agreed to reconnect in 2-3 weeks after resolving current platform issues.</div><div class="sig-meta">Ingrid Beard</div></div><div class="sig-card"><div class="sig-text">Prospect asked for main point of contact and indicated willingness to pass information along to Tim and follow up if needed.</div><div class="sig-meta">Reid Doster</div></div><div class="sig-card"><div class="sig-text">Prospect confirmed existing meeting scheduled and agreed to receive confirmation email resend.</div><div class="sig-meta">Emily Petraglia</div></div><div class="sig-card"><div class="sig-text">Prospect agreed to review information with his partner via email.</div><div class="sig-meta">Emily Petraglia</div></div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- SIGNAL CORRELATION -->
-  <section id="correlation">
-    <h2>5. Signal Correlation</h2>
+  <div class="section-block" id="correlation">
+    <div class="section-hdr"><span class="section-label">Signal Correlation</h2>
     <p class="subtitle" style="margin-bottom:20px;">What the market says at first touch vs. what engaged prospects say during evaluation. Agreement = high-confidence signal. Divergence = where assumptions need testing.</p>
 
     <h3>Competitive Footprint — Both Layers</h3>
-    <div class="table-wrap">
+    <div class="tbl-wrap">
       <table>
         <thead>
           <tr>
@@ -223,7 +281,7 @@ footer a { color: var(--accent); text-decoration: none; }
             <th style="text-align:center;">Meetings</th>
           </tr>
         </thead>
-        <tbody><tr><td><strong>QuickBooks</strong> <span class="badge teal" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×58</td><td style="text-align:center;">×36</td></tr><tr><td><strong>ConnectWise</strong> <span class="badge teal" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×39</td><td style="text-align:center;">×30</td></tr><tr><td><strong>Autotask</strong> <span class="badge teal" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×17</td><td style="text-align:center;">×13</td></tr><tr><td><strong>Tiger Paw</strong> <span class="badge teal" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×8</td><td style="text-align:center;">×21</td></tr><tr><td><strong>Kaseya</strong> <span class="badge teal" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×21</td><td style="text-align:center;">×5</td></tr><tr><td><strong>Simpro</strong> <span class="badge teal" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×9</td><td style="text-align:center;">×3</td></tr><tr><td><strong>Salesforce</strong> <span class="badge teal" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×7</td><td style="text-align:center;">×3</td></tr><tr><td><strong>Zoho</strong></td><td style="text-align:center;">×8</td><td style="text-align:center;">—</td></tr></tbody>
+        <tbody><tr><td><strong>QuickBooks</strong> <span class="pill pill-c" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×58</td><td style="text-align:center;">×36</td></tr><tr><td><strong>ConnectWise</strong> <span class="pill pill-c" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×39</td><td style="text-align:center;">×30</td></tr><tr><td><strong>Autotask</strong> <span class="pill pill-c" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×17</td><td style="text-align:center;">×13</td></tr><tr><td><strong>Tiger Paw</strong> <span class="pill pill-c" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×8</td><td style="text-align:center;">×21</td></tr><tr><td><strong>Kaseya</strong> <span class="pill pill-c" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×21</td><td style="text-align:center;">×5</td></tr><tr><td><strong>Simpro</strong> <span class="pill pill-c" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×9</td><td style="text-align:center;">×3</td></tr><tr><td><strong>Salesforce</strong> <span class="pill pill-c" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×7</td><td style="text-align:center;">×3</td></tr><tr><td><strong>Zoho</strong></td><td style="text-align:center;">×8</td><td style="text-align:center;">—</td></tr></tbody>
       </table>
     </div>
 
@@ -232,23 +290,23 @@ footer a { color: var(--accent); text-decoration: none; }
 
     <div class="insight-grid" style="margin-top:24px;">
       <div class="insight-card">
-        <div class="insight-label"><span class="badge teal">Total Signal</span></div>
+        <div class="insight-label"><span class="pill pill-c">Total Signal</span></div>
         <p>414 meetings + 1459 prospecting calls = 1873 analyzed interactions. Data compounds daily.</p>
       </div>
       <div class="insight-card">
-        <div class="insight-label"><span class="badge warn">Top First-Touch Objection</span></div>
+        <div class="insight-label"><span class="pill pill-w">Top First-Touch Objection</span></div>
         <p>"Satisfied with Current Platform" — 282 times (19% of contact calls).</p>
       </div>
       <div class="insight-card">
-        <div class="insight-label"><span class="badge accent">Most-Tracked Competitor</span></div>
+        <div class="insight-label"><span class="pill pill-m">Most-Tracked Competitor</span></div>
         <p>QuickBooks — ×58 prospecting + ×36 meetings = ×94 total.</p>
       </div>
       <div class="insight-card">
-        <div class="insight-label"><span class="badge teal">Top Feature Request</span></div>
+        <div class="insight-label"><span class="pill pill-c">Top Feature Request</span></div>
         <p>"Serialized Inventory Management" — mentioned ×27. Runner-up: "QuickBooks Online" (×27).</p>
       </div>
     </div>
-  </section>
+  </div>
 
 
 </div>
@@ -257,8 +315,8 @@ footer a { color: var(--accent); text-decoration: none; }
   <section style="margin-bottom:56px;scroll-margin-top:68px;">
     <h2 style="font-size:20px;font-weight:600;color:var(--text);margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--border);">6. Monthly Trends</h2>
     <p class="subtitle" style="margin-bottom:24px;">Market signal over time — Nov 2025 to present. Historical months (pre-pipeline) show Kaia recording volumes from the aggregate analysis; Notion-sourced months (Mar 2026+) show live feature/competitor data.</p>
-    <div class="table-wrap" style="margin-bottom:20px;"><table><thead><tr><th>Month</th><th style="text-align:center;">Meetings</th><th style="text-align:center;">Prospecting</th><th style="text-align:center;">Conv. Rate</th><th>Top Features</th><th>Top Competitors</th></tr></thead><tbody><tr><td><strong>November 2025</strong><br><span class="badge accent">Historical</span></td><td style="text-align:center;">122</td><td style="text-align:center;">—</td><td style="text-align:center;color:var(--accent2);">—</td><td>Enhanced Customer Portal, QuickBooks Online, Serialized Inventory Management</td><td>QuickBooks, ConnectWise</td></tr><tr><td><strong>December 2025</strong><br><span class="badge accent">Historical</span></td><td style="text-align:center;">165</td><td style="text-align:center;">—</td><td style="text-align:center;color:var(--accent2);">—</td><td>Enhanced Customer Portal, QuickBooks Online, Serialized Inventory Management</td><td>QuickBooks, ConnectWise</td></tr><tr><td><strong>January 2026</strong><br><span class="badge accent">Historical</span></td><td style="text-align:center;">110</td><td style="text-align:center;">—</td><td style="text-align:center;color:var(--accent2);">—</td><td>Enhanced Customer Portal, QuickBooks Online, Serialized Inventory Management</td><td>QuickBooks, ConnectWise</td></tr><tr><td><strong>February 2026</strong><br><span class="badge warn">Hybrid</span></td><td style="text-align:center;">186</td><td style="text-align:center;">197</td><td style="text-align:center;color:var(--accent2);">4.6%</td><td>Enhanced Customer Portal, QuickBooks Online, Serialized Inventory Management</td><td>QuickBooks, ConnectWise</td></tr><tr><td><strong>March 2026</strong><br><span class="badge teal">Live</span></td><td style="text-align:center;">249</td><td style="text-align:center;">763</td><td style="text-align:center;color:var(--accent2);">4.8%</td><td>Serialized Inventory Management, QuickBooks Online, Enhanced Customer Portal</td><td>ConnectWise, Tiger Paw / Tigerpaw</td></tr><tr><td><strong>April 2026 (MTD)</strong><br><span class="badge teal">Live</span></td><td style="text-align:center;">165</td><td style="text-align:center;">499</td><td style="text-align:center;color:var(--accent2);">6%</td><td>QuickBooks Online Integration, QuickBooks Desktop Integration, Inventory Tracking</td><td>QuickBooks, ConnectWise</td></tr></tbody></table></div><div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:12px 16px;font-size:13px;color:var(--text);"><strong style="color:var(--accent2);">Key Trend: </strong>▲ +1.4% conversion rate from February 2026 to April 2026 (MTD)</div>
-  </section>
+    <div class="tbl-wrap" style="margin-bottom:20px;"><table><thead><tr><th>Month</th><th style="text-align:center;">Meetings</th><th style="text-align:center;">Prospecting</th><th style="text-align:center;">Conv. Rate</th><th>Top Features</th><th>Top Competitors</th></tr></thead><tbody><tr><td><strong>November 2025</strong><br><span class="pill pill-m">Historical</span></td><td style="text-align:center;">122</td><td style="text-align:center;">—</td><td style="text-align:center;color:var(--accent2);">—</td><td>Enhanced Customer Portal, QuickBooks Online, Serialized Inventory Management</td><td>QuickBooks, ConnectWise</td></tr><tr><td><strong>December 2025</strong><br><span class="pill pill-m">Historical</span></td><td style="text-align:center;">165</td><td style="text-align:center;">—</td><td style="text-align:center;color:var(--accent2);">—</td><td>Enhanced Customer Portal, QuickBooks Online, Serialized Inventory Management</td><td>QuickBooks, ConnectWise</td></tr><tr><td><strong>January 2026</strong><br><span class="pill pill-m">Historical</span></td><td style="text-align:center;">110</td><td style="text-align:center;">—</td><td style="text-align:center;color:var(--accent2);">—</td><td>Enhanced Customer Portal, QuickBooks Online, Serialized Inventory Management</td><td>QuickBooks, ConnectWise</td></tr><tr><td><strong>February 2026</strong><br><span class="pill pill-w">Hybrid</span></td><td style="text-align:center;">186</td><td style="text-align:center;">197</td><td style="text-align:center;color:var(--accent2);">4.6%</td><td>Enhanced Customer Portal, QuickBooks Online, Serialized Inventory Management</td><td>QuickBooks, ConnectWise</td></tr><tr><td><strong>March 2026</strong><br><span class="pill pill-c">Live</span></td><td style="text-align:center;">249</td><td style="text-align:center;">763</td><td style="text-align:center;color:var(--accent2);">4.8%</td><td>Serialized Inventory Management, QuickBooks Online, Enhanced Customer Portal</td><td>ConnectWise, Tiger Paw / Tigerpaw</td></tr><tr><td><strong>April 2026 (MTD)</strong><br><span class="pill pill-c">Live</span></td><td style="text-align:center;">165</td><td style="text-align:center;">499</td><td style="text-align:center;color:var(--accent2);">6%</td><td>QuickBooks Online Integration, QuickBooks Desktop Integration, Inventory Tracking</td><td>QuickBooks, ConnectWise</td></tr></tbody></table></div><div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:12px 16px;font-size:13px;color:var(--text);"><strong style="color:var(--accent2);">Key Trend: </strong>▲ +1.4% conversion rate from February 2026 to April 2026 (MTD)</div>
+  </div>
 </div>
 
 <div class="container">
@@ -267,8 +325,33 @@ footer a { color: var(--accent); text-decoration: none; }
 <footer>
   <p>Rev.io Intelligence Hub · Kaia Meeting Pipeline · Prospecting Call Intelligence · Rebuilt daily from Notion</p>
   <p style="margin-top:6px;">Source: 414 Kaia Meetings · 1459 Prospecting Calls · <a href="https://www.notion.so/319a59b7e7b2814f98ceed22d752d815">Notion Intelligence Hub &#8594;</a> · <a href="https://erice320.github.io/revay/library.html">Library &#8594;</a></p>
-  <p style="margin-top:6px;">Generated Tuesday, April 21, 2026 at 09:20 PM CDT</p>
+  <p style="margin-top:6px;">Generated Tuesday, April 21, 2026 at 09:34 PM CDT</p>
 </footer>
 
+
+<script>
+(function(){
+  const c = document.getElementById('bgCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, dots = [];
+  function resize() { W = c.width = innerWidth; H = c.height = innerHeight; }
+  function mkDot() { return { x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.2+.3, vx: (Math.random()-.5)*.15, vy: (Math.random()-.5)*.15, a: Math.random()*.4+.05 }; }
+  function init() { resize(); dots = Array.from({length:80}, mkDot); }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    for (const d of dots) {
+      ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+      ctx.fillStyle = 'rgba(0,188,212,'+d.a+')'; ctx.fill();
+      d.x+=d.vx; d.y+=d.vy;
+      if(d.x<0||d.x>W) d.vx*=-1;
+      if(d.y<0||d.y>H) d.vy*=-1;
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  init(); draw();
+})();
+</script>
 </body>
 </html>
