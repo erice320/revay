@@ -194,6 +194,7 @@ footer.rf{text-align:center;padding:28px 0 44px;color:var(--text-2);font-size:.7
       <a href="#actions">Required Actions</a>
       <a href="#guenther-brief">GT Brief</a>
       <a href="#novalera-brief">NOV Brief</a>
+      <a href="#class5-brief">Class 5 Brief</a>
     </div>
     <a href="library.html" class="back-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Library</a>
   </div>
@@ -205,7 +206,7 @@ footer.rf{text-align:center;padding:28px 0 44px;color:var(--text-2);font-size:.7
   <div class="hero-inner">
     <div class="hero-eyebrow">ELT + Product Leadership Brief — April 23, 2026</div>
     <h1 class="hero-title">Halo PSA Displacement<br><span class="g">Churn Risk & Recovery</span></h1>
-    <p class="hero-sub">We're 0 for 3 on Halo displacements. One confirmed churn in 31 days. Two more actively deliberating departure. This is an analysis of what happened, the systemic patterns, and what we must fix to compete for Halo customers.</p>
+    <p class="hero-sub">Three Halo PSA displacements failed. One billing client cancelled PSA today after 4.5 months of onboarding. A total of four accounts — four different failure modes, one systemic problem. This is the full analysis: what was promised, what failed, and what we must fix.</p>
     <div class="hero-meta">
       <div class="hm"><div class="hm-num r">3</div><div class="hm-lbl">Halo Displ. Attempted</div></div>
       <div class="hdiv"></div>
@@ -234,7 +235,7 @@ footer.rf{text-align:center;padding:28px 0 44px;color:var(--text-2);font-size:.7
   <div class="insight red reveal" style="--delay:.05s">
     <div class="il">🔴 Bottom Line Up Front</div>
     <p>Rev.io has won three PSA deals from Halo in the past 12 months. All three have either churned or are at critical risk of churning within the next 30 days. <strong>The pattern is consistent across all three accounts: we are selling a Halo-level experience, onboarding on an unstable platform, and delivering below Halo's baseline on features customers use daily.</strong> Until we close specific platform and process gaps, we should not be pursuing Halo displacements.</p>
-    <p>This brief covers the full analysis — what was promised, what was delivered, what the systemic failures are, and what it will take to recover the two remaining at-risk accounts. Evan will be making personal calls to both this week.</p>
+    <p>This brief covers the full analysis — what was promised, what was delivered, and what the systemic failures are. Class 5 Technologies cancelled PSA today after 4.5 months of onboarding without ever going live. They are a ,250/mo billing client and that relationship is now at risk. Evan will be making personal calls to GuentherTech, Novalera, and Class 5 this week.</p>
   </div>
 
   <div class="stat-grid reveal" style="--delay:.08s">
@@ -249,6 +250,7 @@ footer.rf{text-align:center;padding:28px 0 44px;color:var(--text-2);font-size:.7
   <div class="alert-stack reveal" style="--delay:.1s">
     <div class="ai crit"><span>🔴</span><div><strong>Ravguard — CONFIRMED CHURN</strong> — Won Feb 20, 2026 at $500/mo. Closed Lost Mar 23 — SF note: "Ravguard cancelled PSA so will not be moving forward." 31 days from signature to departure. Lost to competitor.<div class="sub">Rep: Andy Whisenant · SA: Nicole Hills · Prior: Halo PSA</div></div></div>
     <div class="ai crit"><span>🔴</span><div><strong>Novalera — ACTIVELY DELIBERATING DEPARTURE</strong> — Apr 3 call was effectively a "show cause" meeting. Tony and Mary told to "discuss internally and decide on commitment to Rev.io PSA." NinjaOne integration (primary reason for buying) still has data duplication bugs in Week 8. Platform outages went uncommunicated for weeks.<div class="sub">MRR: $500 · Rep: Joseph Abarno · SA: Nicole Hills · Prior: Halo PSA</div></div></div>
+    <div class="ai crit"><span>🔴</span><div><strong>Class 5 Technologies — PSA CANCELLED TODAY</strong> — Billing client since Nov 2023 (,250/mo). PSA signed Dec 11, 2025 as cost-neutral expansion. 15 recorded onboarding calls over 4.5 months. Never went live on PSA. Cancelled April 23, 2026 and returned to ConnectWise. QB integration, dispatch, calendar sync, and zero-quantity quoting all failed. Ray had a 5K job sitting idle the day he announced the cancellation.<div class="sub">Billing MRR: ,250 — still active but at elevated risk · Rep: Joseph Abarno · SA: Halle Taylor · Prior: ConnectWise</div></div></div>
     <div class="ai crit"><span>🔴</span><div><strong>GuentherTech — SILENT DECAY</strong> — Core ticket functionality broken for 4 consecutive weeks with no resolution. Payments AR dropped Apr 8. Half of their revenue is product sales — the #1 reason they bought us. Not configured. $2,070/mo highest-value recent Halo displacement.<div class="sub">MRR: $2,070 · Rep: Andy Whisenant + Cameron Sharpe · SA: Nicole Hills · Prior: Halo PSA</div></div></div>
   </div>
 </div>
@@ -348,6 +350,25 @@ footer.rf{text-align:center;padding:28px 0 44px;color:var(--text-2);font-size:.7
       </tbody>
     </table>
   </div>
+  <p style="font-size:.82rem;color:var(--text-2);margin:18px 0 12px;font-weight:600">Class 5 Technologies</p>
+  <div class="table-wrap reveal" style="--delay:.14s">
+    <table>
+      <thead><tr><th>What Was Promised</th><th>Who Said It</th><th>Delivered?</th><th>Gap</th></tr></thead>
+      <tbody>
+        <tr><td>45–60 day go-live</td><td class="mu">Halle Taylor at kickoff</td><td class="status-broken">105 days, 0 days live</td><td class="mu">Never reached go-live after 4.5 months</td></tr>
+        <tr><td>Working QuickBooks integration (migration driver)</td><td class="mu">Joseph Abarno (implicit); Halle confirmed</td><td class="status-broken">GL codes still in testing at Week 11; ambiguous documentation throughout</td><td class="mu">Critical — they migrated to QBO specifically for this integration</td></tr>
+        <tr><td>Working Outlook calendar sync</td><td class="mu">Implied (ConnectWise pain)</td><td class="status-broken">Calendar loading failures, no group calendar, dispatch timeline bug</td><td class="mu">His #1 stated ConnectWise grievance — still broken</td></tr>
+        <tr><td>Clean tax engine</td><td class="mu">Core platform promise</td><td class="status-broken">Apr 20: &quot;Taxes didn't go out right again&quot;</td><td class="mu">Same pain he left ConnectWise to escape</td></tr>
+        <tr><td>Zero-quantity quoting</td><td class="mu">Joe flagged CPQ &quot;on the horizon&quot;</td><td class="status-broken">Manual workaround only — no timeline. 5K job blocked.</td><td class="mu">Critical — blocked a real revenue event</td></tr>
+        <tr><td>Consistent product catalog (PSA + billing)</td><td class="mu">Core onboarding promise</td><td class="status-broken">&quot;There's no consistency across this whole platform&quot; — Apr 20</td><td class="mu">Names pulled wrong from CW migration; SKUs not editable</td></tr>
+        <tr><td>Clear GL code documentation</td><td class="mu">Integration team</td><td class="status-broken">Apr 8: nobody could agree on the format. Basic gap.</td><td class="mu">Documentation failure blocking a solvable problem</td></tr>
+        <tr><td>Working dispatch board</td><td class="mu">Core PSA feature</td><td class="status-broken">Drag-and-drop disappeared; closed tickets still showing; ticket creation from dispatch requires navigating away</td><td class="mu">High — daily workflow broken</td></tr>
+        <tr><td>Partnership arrangement (Usman)</td><td class="mu">Joseph Abarno at kickoff</td><td class="status-broken">Never materialized in 15 calls of transcripts</td><td class="mu">Medium — trust element</td></tr>
+        <tr><td>Cost-neutral PSA (&quot;it's free&quot;)</td><td class="mu">Joseph Abarno — confirmed at kickoff</td><td class="status-partial">True financially. Operationally cost staff morale + 5K revenue opportunity.</td><td class="mu">The worst kind of gap — true in theory, false in practice</td></tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
 <!-- SYSTEMIC PATTERNS -->
@@ -360,7 +381,7 @@ footer.rf{text-align:center;padding:28px 0 44px;color:var(--text-2);font-size:.7
 
   <div class="insight amber reveal" style="--delay:.05s">
     <div class="il">⚡ Pattern Summary</div>
-    <p>This is not an account management problem. These are systemic failures that will repeat on every Halo displacement until they are fixed. Ravguard, GuentherTech, and Novalera share the same 6 failure modes. If we don't address these, winning from Halo is a churn factory, not a growth motion.</p>
+    <p>This is not an account management problem. These are systemic failures across all four accounts. Ravguard, GuentherTech, Novalera, and Class 5 share overlapping failure modes — 9 total patterns identified across the cohort. If we don't address these, every PSA onboarding is a churn risk, not just Halo displacements.</p>
   </div>
 
   <div class="pattern-grid">
@@ -393,6 +414,21 @@ footer.rf{text-align:center;padding:28px 0 44px;color:var(--text-2);font-size:.7
       <div class="pt-t" style="color:var(--amber)">6. Communication gaps compound technical failures</div>
       <div class="pt-n">Affects: Novalera (explicitly), likely others</div>
       <div class="pt-d">Novalera: no status page, broken community forum (couldn't file feature requests), no proactive outage comms. An outage you warn customers about is frustrating. An outage you don't warn about is a trust breach. This is fixable infrastructure Rev.io hasn't built yet — and it's the exact pain point Halo customers are escaping.</div>
+    </div>
+    <div class="pt reveal" style="--delay:.18s">
+      <div class="pt-t" style="color:var(--amber)">7. The &quot;Cost-Neutral&quot; pitch creates a no-escape trap</div>
+      <div class="pt-n">Affects: Class 5 (explicitly), likely others</div>
+      <div class="pt-d">When you sell PSA as &quot;free because of savings,&quot; you remove the customer's financial pressure valve. Class 5 cancelled a product that was literally free. If the cost argument is removed and they still leave, the signal to the market is devastating: our product failed worse than its own price tag. Never pitch PSA as cost-neutral before the product can deliver baseline.</div>
+    </div>
+    <div class="pt reveal" style="--delay:.2s">
+      <div class="pt-t" style="color:var(--amber)">8. Legacy billing clients are our highest-risk PSA prospects</div>
+      <div class="pt-n">Affects: Class 5 — new pattern</div>
+      <div class="pt-d">Class 5 has 2.5 years of billing history. They know when promises aren't kept because they've seen Rev.io work well for billing. When PSA underdelivers, the comparison to billing is immediate and damaging. Billing clients expanding to PSA need a dedicated PSA-readiness assessment before kickoff — not the same onboarding flow as a net-new account. When billing clients churn PSA, billing itself is at elevated risk.</div>
+    </div>
+    <div class="pt reveal" style="--delay:.22s">
+      <div class="pt-t" style="color:var(--amber)">9. Documentation failures are silent technical blockers</div>
+      <div class="pt-n">Affects: Class 5 (GL codes), GuentherTech (QB sync), others</div>
+      <div class="pt-d">The GL code issue at Class 5 (Apr 4 and Apr 8) wasn't a missing feature — it was ambiguous documentation. The integration team couldn't agree on the format in front of the customer. Ray spent weeks on a problem that had a correct answer nobody wrote down. Documentation quality compounds every other platform gap — it multiplies the SA's inability to unblock customers.</div>
     </div>
   </div>
 </div>
@@ -562,9 +598,61 @@ footer.rf{text-align:center;padding:28px 0 44px;color:var(--text-2);font-size:.7
 
 </main>
 
+
+<div class="sb" id="class5-brief">
+  <div class="sh">
+    <div class="sh-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.42 2 2 0 0 1 3.62 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.92z"/></svg></div>
+    <span class="sh-lbl">Pre-Call Brief: Class 5 Technologies</span>
+    <span class="sh-sub">Ray Paskey (CEO) · (360) 949-1381 · ray.paskey@class5technologies.com</span>
+  </div>
+  <div class="call-brief reveal" style="--delay:.05s">
+    <div class="cb-header">
+      <div><div class="cb-name">Class 5 Technologies — Ray Paskey</div><div class="cb-meta">CEO · (360) 949-1381 · ray.paskey@class5technologies.com · PSA cancelled today · Billing $2,250/mo still active</div></div>
+      <span class="cb-pill">Protect Billing · PSA Door Open</span>
+    </div>
+    <div style="background:rgba(255,183,77,.06);border:1px solid rgba(255,183,77,.2);border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:.82rem;color:var(--amber)"><strong>Call objective is different from GT and Novalera.</strong> Do NOT try to save the PSA deal. Goal: protect $27K ARR billing + earn the right to re-pitch PSA in 12-18 months when the product is ready.</div>
+    <div class="open-line">"Ray — Evan Rice, COO at Rev.io. I'm not calling to ask you to reconsider PSA. I'm calling because you spent 4.5 months in onboarding and our product didn't do what Joe told you it would do. I read every one of those 15 call transcripts last night. I owe you an apology and a straight conversation about what happens next with billing. Got ten minutes?"</div>
+    <div class="cb-section">
+      <div class="cb-section-label">What Ray said at kickoff — his own words</div>
+      <div class="quote-block">"If that PSA causes you as much pain as it does help you, <strong>then why have it?</strong>" — He set the bar on Day 1. We delivered exactly what he described.</div>
+      <div class="quote-block">"My staff absolutely hates it." — Apr 20, the final call.</div>
+      <div class="quote-block">"I literally have a $75,000 job waiting and waiting and waiting." — Apr 20. Zero-quantity quoting still unresolved after 4+ months.</div>
+      <div class="cb-content muted" style="margin-top:8px">Ray tried Tigerpaw twice, then ConnectWise, then us. Most sophisticated PSA buyer we have had. He cancelled a product that was literally free to him. The objection is product, not price.</div>
+    </div>
+    <div class="cb-section">
+      <div class="cb-section-label">The 4 things you must address</div>
+      <div class="commit-list">
+        <div class="commit-item yes"><span class="ci"></span><div><strong>Acknowledge the free PSA framing was the wrong pitch.</strong> "Free isn't free when it costs you a $75K job and your team's morale. Joe's math was right on paper and wrong in practice."</div></div>
+        <div class="commit-item yes"><span class="ci"></span><div><strong>Own the QuickBooks integration failure by name.</strong> He migrated to QBO for us. 11 weeks in, GL codes were still in testing. "We knew the QB integration wasn't ready when we sold it. That's on us, not on you, not on Halle."</div></div>
+        <div class="commit-item yes"><span class="ci"></span><div><strong>Protect the billing relationship explicitly.</strong> "Your billing has worked for 2.5 years. I want to make sure the PSA experience doesn't break your faith in that. What would you need from me to keep billing running cleanly?" Then listen.</div></div>
+        <div class="commit-item yes"><span class="ci"></span><div><strong>Leave the PSA door open without pitching it.</strong> "When we have fixed dispatch, QB integration, and zero-quantity quoting — and I will tell you honestly when that is — I would like the chance to show it to you again. No pressure, no timeline from us. Deal?"</div></div>
+      </div>
+    </div>
+    <div class="cb-section">
+      <div class="cb-section-label">What to commit / not commit</div>
+      <div class="commit-list">
+        <div class="commit-item yes"><span class="ci"></span>30-day billing health check — named senior CSM to walk Chrissy through billing config</div>
+        <div class="commit-item yes"><span class="ci"></span>Refund on PSA months paid (~4.5 x $500 + ~4 x $50 = <strong>~$2,450</strong>) — signals we agree we did not deliver</div>
+        <div class="commit-item yes"><span class="ci"></span>Your direct line for 90 days — not a support queue</div>
+        <div class="commit-item yes"><span class="ci"></span>Honesty on product timelines — only when you actually have them</div>
+        <div class="commit-item no"><span class="ci"></span>DON'T give a timeline for QB / dispatch / CPQ — he has heard "testing and development" for months</div>
+        <div class="commit-item no"><span class="ci"></span>DON'T offer an unprompted billing discount — signals billing is also at risk</div>
+        <div class="commit-item no"><span class="ci"></span>DON'T re-pitch PSA on this call under any circumstances</div>
+      </div>
+    </div>
+    <div class="cb-section">
+      <div class="cb-section-label">Lines that show you know this account</div>
+      <div class="quote-block"><strong>Drop these — they show you read all 15 calls</strong><br>"You told us at kickoff: if PSA causes as much pain as it helps, you will not have it. You gave us 4.5 months." • "You have been through Tigerpaw twice and ConnectWise. You gave us more runway than anyone." • "The GL code issue — our own team could not agree on the format in front of you. That is not acceptable." • "You had a $75,000 job sitting because of zero-quantity quoting. I saw it in the transcript." • "Joe told you it was free. The cost was your team's morale and a job you could not close."</div>
+    </div>
+    <div class="cb-section">
+      <div class="cb-section-label">The one thing that determines if Ray stays on billing</div>
+      <div class="cb-content">Whether he believes Evan is honest with him. Ray does not need simplicity — he programmed phone systems off TTY terminals. He needs people who tell him the truth. <strong>If Evan is straight with him and the billing team takes care of Chrissy and John, he stays on billing.</strong> The refund + no PSA re-pitch + direct line = the signal that we agree with his decision and respect it.</div>
+    </div>
+  </div>
+</div>
 <footer class="rf">
   <p>⚡ Rev.io Halo PSA Churn Risk Brief — Confidential · ELT + Product Leadership · April 23, 2026</p>
-  <p>Prepared by Revay AI · Intelligence: Fireflies transcripts (12 calls) · Salesforce · Rev.io PSA · Opus 4.7 analysis</p>
+  <p>Prepared by Revay AI · Intelligence: Fireflies transcripts (74 calls across 4 accounts) · Salesforce · Rev.io PSA · Opus 4.7 analysis</p>
   <p style="color:rgba(161,176,203,.35);margin-top:8px">Not for distribution outside of ELT</p>
 </footer>
 
