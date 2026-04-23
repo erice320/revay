@@ -313,7 +313,77 @@ footer.rf{text-align:center;padding:28px 0 44px;color:var(--text-2);font-size:.7
   </div>
 
   <!-- PROMISE vs DELIVERED TABLES -->
-  <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--orange);margin-bottom:14px">Promised vs. Delivered</h3>
+  <h3 style="font-family:var(--font-
+
+  <!-- CLASS 5 DEEP ANALYSIS -->
+  <div style="margin-top:24px;margin-bottom:24px">
+    <h3 style="font-family:var(--font-display);font-size:.95rem;font-weight:700;color:var(--orange);margin-bottom:14px">Class 5 — Trust Erosion Timeline (14 Calls)</h3>
+    <div class="table-wrap reveal" style="--delay:.09s">
+      <table>
+        <thead><tr><th>Phase</th><th>Call / Date</th><th>What Happened</th><th>Ray's State</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Optimism</strong></td><td class="mu">Jan 5 · Kickoff</td><td>Strong rapport. Joe sells PSA as free. 45-60 day target. Ray agrees to be guinea pig for Yeastar integration.</td><td class="mu">Engaged.</td></tr>
+          <tr><td><strong>First Tremor</strong></td><td class="mu">Jan 12 · Day 7</td><td>Finds bugs in <em>already-released</em> features — dispatch drag-and-drop disappearing. Learns platform is still in beta. Sets bar: "I just want things to work."</td><td class="mu">Recalibrating.</td></tr>
+          <tr><td><strong>Early Doubt</strong></td><td class="mu">Jan 15</td><td>Dispatch calendar broken system-wide (Halle confirms). Ray has cleaned 3,800 products to 564 himself. Rev.io has not matched his effort.</td><td class="mu">Noticing asymmetry.</td></tr>
+          <tr><td><strong style="color:var(--orange)">Warning Shot</strong></td><td class="mu">Feb 3</td><td>"I have 30 days… I can't spend the next 30 days setting up to find out it doesn't work. It'll be too late." Explicit deadline set.</td><td style="color:var(--orange)"><strong>Warning. Ignored.</strong></td></tr>
+          <tr><td><strong>Disappointment</strong></td><td class="mu">Feb 4–12</td><td>Time-logging disconnected. Zero-quantity quoting confirmed as manual-only with no timeline. Halle: "I don't have a timeline." The "Mountain Dew and Snickers" joke — humor as cope.</td><td class="mu">Darkly humorous.</td></tr>
+          <tr><td><strong>Integration Reality</strong></td><td class="mu">Feb 13 · Week 7</td><td>First real QB integration session — 7 weeks post-kickoff. Product sync is inbound-only, not two-way. Chrissy on the call for the first time.</td><td class="mu">Surprised.</td></tr>
+          <tr><td><strong style="color:var(--red)">Loss of Faith</strong></td><td class="mu">Feb 17</td><td>"I don't understand how this hasn't come up already. This is insane." Gap between expectations and platform maturity is now undeniable.</td><td style="color:var(--red)">First real anger.</td></tr>
+          <tr><td><strong style="color:var(--red)">Disengagement</strong></td><td class="mu">Mar 2 · Week 8</td><td>"I didn't touch anything last week... I got frustrated and started working on our website." Ray emotionally checked out.</td><td style="color:var(--red)"><strong>Point of no return.</strong></td></tr>
+          <tr><td><strong style="color:var(--red)">Chaos Compounds</strong></td><td class="mu">Mar 4–6</td><td>GL code format: nobody can answer what format to use. SKUs, product names, part numbers inconsistent across billing/PSA/quoting. "There's no consistency across this whole platform." Ray requests free onboarding months — exit signal.</td><td style="color:var(--red)">Negotiating down.</td></tr>
+          <tr><td><strong>Resigned</strong></td><td class="mu">Mar 25 · Week 11</td><td>Still no working QB integration. GL codes "in testing." Halle takes vacation. No new commitments.</td><td class="mu">Running out the clock.</td></tr>
+          <tr><td><strong style="color:var(--red)">Avoidance</strong></td><td class="mu">Apr 8</td><td>86-minute call — 20+ minutes of SpaceX small talk. Avoidance is measurable. "Fix basic problems before adding new features." Integrations and Jeremy not aligned in front of client.</td><td style="color:var(--red)">Done trying.</td></tr>
+          <tr><td><strong style="color:var(--red)">Cancellation</strong></td><td class="mu">Apr 20 · FINAL</td><td>"Let's dump this. Let's go back to ConnectWise. We got 10 days." $75K job blocked. Grand totals missing in quote previews. Closed tickets on dispatch. "My staff absolutely hates it."</td><td style="color:var(--red)">Gone.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family:var(--font-display);font-size:.92rem;font-weight:700;color:var(--red);margin:22px 0 11px">5 Critical Product Failures — Call References</h3>
+    <div class="blocker-grid reveal" style="--delay:.1s">
+      <div class="blocker-tile" style="border-color:rgba(255,82,82,.35)">
+        <div class="bt-title" style="color:var(--red)">1. Zero-Quantity Quoting / CPQ</div>
+        <div class="bt-count">Promised Call 1 · Confirmed missing Call 6 · Never resolved · Blocked $75K job</div>
+        <div class="bt-clients">Sold as "CPQ on the horizon." Delivered as manual workaround with no timeline. Halle: "I don't have a timeline." The single failure that killed the deal. Ray had a $75K job sitting idle on the final call.</div>
+      </div>
+      <div class="blocker-tile" style="border-color:rgba(255,82,82,.35)">
+        <div class="bt-title" style="color:var(--red)">2. QuickBooks Integration</div>
+        <div class="bt-count">First attempt Week 7 · GL codes still "in testing" Week 11 · Never functional</div>
+        <div class="bt-clients">Ray migrated his books to QBO specifically for this integration. Delivered as inbound-only. GL code format undocumented — integrations team and Jeremy couldn't agree in front of the client. Chrissy manually reconciling for 4+ months. We caused him to do irreversible work on a false premise.</div>
+      </div>
+      <div class="blocker-tile" style="border-color:rgba(255,138,101,.3)">
+        <div class="bt-title" style="color:var(--orange)">3. Dispatch / Scheduling</div>
+        <div class="bt-count">First surfaced Call 3 · Still broken on final call</div>
+        <div class="bt-clients">Calendar loading failures, assigned tickets not clearing, closed tickets still showing, task timeline bug (5pm invisible), no group calendar view. Core MSP daily workflow. Techs couldn't trust the board.</div>
+      </div>
+      <div class="blocker-tile" style="border-color:rgba(255,138,101,.3)">
+        <div class="bt-title" style="color:var(--orange)">4. Ticketing Workflow Fragmentation</div>
+        <div class="bt-count">First surfaced Call 5 (Feb 4) · Escalated to Jeremy · Never resolved</div>
+        <div class="bt-clients">Time logs separated from activity notes. No auto-refresh. Multiple ways to do the same task = inconsistency. Email-to-ticket customer matching broken. "My staff absolutely hates it." This is the human cost of the failure.</div>
+      </div>
+      <div class="blocker-tile" style="border-color:rgba(255,183,77,.25)">
+        <div class="bt-title" style="color:var(--amber)">5. Data Inconsistency (Billing / PSA / Quoting)</div>
+        <div class="bt-count">First surfaced Call 8 · "No consistency" Call 11 · Never resolved</div>
+        <div class="bt-clients">SKUs, product names, part numbers, GL codes all different across billing, PSA, and quoting. SKU field in database but not editable in UI. Duplicate customer records. "There's no consistency across this whole platform." If the data layer is incoherent, nothing above it can be trusted.</div>
+      </div>
+    </div>
+
+    <div class="insight cyan reveal" style="--delay:.12s;margin-top:18px">
+      <div class="il">Key Signal: What Class 5 Adds to the Pattern Analysis</div>
+      <p><strong>The patient technical CEO is the most dangerous customer, not the safest.</strong> Ray is not a screamer. He quietly stopped doing the work on Week 8 and ran out the clock for two months. His disengagement was measurable only in 20 minutes of SpaceX small talk on an 86-minute call. We need leading indicators that catch disengagement before it becomes a cancellation — not just escalation flags after the customer yells.</p>
+      <p style="margin-top:8px"><strong>Migration-triggering promises are worse than missing features.</strong> Ray moved his books to QBO on our promise of a working integration. When it didn't work, we didn't just miss a feature — we caused irreversible work on a false premise. That is a categorically worse failure than the Halo accounts.</p>
+      <p style="margin-top:8px"><strong>All 5 failures were visible by Day 43 (Call 8). None were resolved by Day 105 (Call 14). 62 days of warning. Zero closures.</strong></p>
+    </div>
+
+    <div class="insight amber reveal" style="--delay:.14s;margin-top:12px">
+      <div class="il">The 3 Things That Would Have Saved This Account</div>
+      <p><strong>1. A zero-quantity quoting ETA by Call 6 (Feb 12).</strong> Any date — even 90 days — would have let Ray plan around it. "I don't have a timeline" is the worst possible answer to a CEO with a $75K job in queue.</p>
+      <p style="margin-top:8px"><strong>2. GL code documentation before Call 10 (Mar 4).</strong> This was not a product gap — the correct format existed. Nobody wrote it down. One internal Slack thread would have saved this.</p>
+      <p style="margin-top:8px"><strong>3. An exec call after Call 9 (Mar 2)</strong> — when Ray said he got frustrated and worked on his website instead. That was the signal. An executive call at that moment, acknowledging the gaps with a concrete 30-day plan, had a real chance. Nobody called. The next 7 weeks were runway that burned unused.</p>
+    </div>
+  </div>
+
+
+  display);font-size:1rem;font-weight:700;color:var(--orange);margin-bottom:14px">Promised vs. Delivered</h3>
 
   <p style="font-size:.82rem;color:var(--text-2);margin-bottom:12px;font-weight:600">GuentherTech</p>
   <div class="table-wrap reveal" style="--delay:.1s">
