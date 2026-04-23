@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzBmMTExNyIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyNCIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiPuKaoTwvdGV4dD4KPC9zdmc+">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Halo PSA Displacement — Churn Risk Brief · Rev.io ELT</title>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080E1A;--surface:rgba(15,33,56,0.55);--surface-solid:#142A46;
+  --border:rgba(255,255,255,0.08);--border-cyan:rgba(0,229,255,0.3);
+  --cyan:#00BCD4;--cyan-bright:#00E5FF;--green:#4CAF50;--green-bright:#69F0AE;
+  --amber:#FFB74D;--red:#FF5252;--orange:#FF8A65;--purple:#A78BFA;
+  --text-1:#FFFFFF;--text-2:#A1B0CB;
+  --font-display:'Cabinet Grotesk',system-ui,sans-serif;
+  --font-body:'Satoshi',system-ui,sans-serif;
+  --spring:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text-1);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+#bgCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+
+/* NAV */
+.sticky-nav{position:sticky;top:0;z-index:50;background:rgba(8,14,26,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px clamp(1.5rem,4vw,3rem)}
+.sticky-nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nav-brand{font-family:var(--font-display);font-weight:800;font-size:.95rem;color:var(--red);text-decoration:none;white-space:nowrap}
+.nav-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,82,82,.12);border:1px solid rgba(255,82,82,.3);border-radius:99px;padding:3px 10px;font-size:.68rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
+.nav-links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{padding:4px 10px;border-radius:99px;font-size:.78rem;font-weight:500;color:var(--text-2);text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--text-1);background:rgba(255,255,255,.06)}
+.back-link{font-size:.75rem;color:var(--cyan);text-decoration:none;margin-left:auto;display:flex;align-items:center;gap:5px;white-space:nowrap;font-weight:600;flex-shrink:0}
+.back-link:hover{color:var(--cyan-bright)}
+
+/* HERO */
+.hero{position:relative;min-height:46vh;display:flex;align-items:center;overflow:hidden;border-bottom:1px solid var(--border);z-index:1}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:1280px;margin:0 auto;padding:clamp(3rem,8vh,5rem) clamp(1.5rem,4vw,3rem)}
+.hero-eyebrow{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--red);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--red)}
+.hero-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,.5rem,3rem);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:14px}
+.hero-title .g{background:linear-gradient(135deg,#FF5252 0%,#FF8A65 60%,var(--amber) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:clamp(.88rem,1.4vw,1.05rem);color:var(--text-2);max-width:640px;margin-bottom:24px}
+.hero-meta{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.hm{display:flex;flex-direction:column}
+.hm-num{font-family:var(--font-display);font-size:1.5rem;font-weight:800;line-height:1}
+.hm-num.r{color:var(--red)}.hm-num.a{color:var(--amber)}.hm-num.g{color:var(--green-bright)}.hm-num.c{color:var(--cyan-bright)}
+.hm-lbl{font-size:.66rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.hdiv{width:1px;height:36px;background:rgba(255,82,82,.3)}
+.conf-badge{display:inline-flex;align-items:center;gap:6px;color:var(--red);background:rgba(255,82,82,.1);border:1px solid rgba(255,82,82,.3);padding:4px 12px;border-radius:99px;font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-top:14px}
+.conf-badge::before{content:'🔴'}
+
+/* MAIN */
+.main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:clamp(2rem,4vw,3rem) clamp(1.5rem,4vw,3rem)}
+.sb{margin-bottom:3.5rem}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:1.4rem;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.sh-icon{flex-shrink:0}
+.sh-lbl{font-family:var(--font-display);font-size:clamp(1rem,1.5vw,1.2rem);font-weight:700}
+.sh-sub{font-size:.78rem;color:var(--text-2);margin-left:auto;white-space:nowrap}
+
+/* STAT CARDS */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-bottom:24px}
+.sc{background:var(--surface);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:12px;padding:16px 14px;transition:border-color .3s}
+.sc:hover{border-color:rgba(255,82,82,.3)}
+.sc .n{font-family:var(--font-display);font-size:1.7rem;font-weight:800;line-height:1}
+.sc .n.r{color:var(--red)}.sc .n.a{color:var(--amber)}.sc .n.g{color:var(--green-bright)}.sc .n.c{color:var(--cyan-bright)}.sc .n.p{color:var(--purple)}
+.sc .l{font-size:.68rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-top:5px}
+
+/* ALERT BANNER */
+.alert-stack{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
+.ai{border-radius:11px;padding:13px 17px;display:flex;gap:11px;align-items:flex-start;font-size:.86rem;line-height:1.55}
+.ai.crit{background:rgba(255,82,82,.07);border:1px solid rgba(255,82,82,.3)}
+.ai.high{background:rgba(255,138,101,.07);border:1px solid rgba(255,138,101,.25)}
+.ai.sys{background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.18)}
+.ai.action{background:rgba(105,240,174,.05);border:1px solid rgba(105,240,174,.18)}
+.ai strong{font-weight:700}
+.ai .sub{color:var(--text-2);font-size:.78rem;margin-top:3px}
+
+/* ACCOUNT CARDS */
+.account-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:18px;margin-bottom:24px}
+@media(max-width:960px){.account-grid{grid-template-columns:1fr}}
+.ac{background:var(--surface);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:15px;padding:24px;transition:border-color .3s}
+.ac.crit{border-left:4px solid var(--red)}
+.ac.high{border-left:4px solid var(--orange)}
+.ac.lost{border-left:4px solid rgba(255,82,82,.4);opacity:.75}
+.ac-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+.ac-name{font-family:var(--font-display);font-size:1.15rem;font-weight:800;letter-spacing:-.01em}
+.ac-meta{font-size:.75rem;color:var(--text-2);margin-top:3px}
+.risk-pill{display:inline-flex;align-items:center;font-size:.63rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:5px;border:1px solid transparent;margin-bottom:5px}
+.rp-crit{background:rgba(255,82,82,.12);color:var(--red);border-color:rgba(255,82,82,.25)}
+.rp-high{background:rgba(255,138,101,.12);color:var(--orange);border-color:rgba(255,138,101,.25)}
+.rp-lost{background:rgba(255,82,82,.08);color:rgba(255,82,82,.6);border-color:rgba(255,82,82,.15)}
+.score-block{text-align:right;flex-shrink:0}
+.score-n{font-family:var(--font-display);font-size:2rem;font-weight:800;line-height:1}
+.score-n.crit{color:var(--red)}.score-n.high{color:var(--orange)}.score-n.lost{color:rgba(255,82,82,.5)}
+.score-lbl{font-size:.62rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.07em}
+.ac-finding{color:var(--text-2);font-size:.86rem;line-height:1.6;margin-bottom:14px}
+.db{border-radius:9px;padding:11px 14px;margin-bottom:10px;font-size:.82rem;line-height:1.6}
+.db.bl{background:rgba(255,82,82,.05);border:1px solid rgba(255,82,82,.15)}
+.db.ac2{background:rgba(105,240,174,.04);border:1px solid rgba(105,240,174,.14)}
+.db.warn{background:rgba(255,183,77,.05);border:1px solid rgba(255,183,77,.15)}
+.db .dl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.db.bl .dl{color:var(--red)}.db.ac2 .dl{color:var(--green-bright)}.db.warn .dl{color:var(--amber)}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.tg{display:inline-block;padding:2px 8px;border-radius:99px;font-size:.7rem;font-weight:500}
+.tg.r{background:rgba(255,82,82,.1);color:var(--red);border:1px solid rgba(255,82,82,.2)}
+.tg.a{background:rgba(255,183,77,.1);color:var(--amber);border:1px solid rgba(255,183,77,.2)}
+.tg.g{background:rgba(105,240,174,.09);color:var(--green-bright);border:1px solid rgba(105,240,174,.18)}
+.tg.c{background:rgba(0,229,255,.1);color:var(--cyan-bright);border:1px solid rgba(0,229,255,.2)}
+.tg.p{background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.2)}
+
+/* PROMISE TABLE */
+.table-wrap{overflow-x:auto;border-radius:13px;border:1px solid var(--border);margin-bottom:18px;scrollbar-width:thin}
+table{width:100%;border-collapse:collapse}
+thead tr{background:rgba(15,33,56,.9)}
+th{padding:10px 14px;text-align:left;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-2);border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border);transition:background .12s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(255,82,82,.04)}
+td{padding:11px 14px;font-size:.82rem}
+td.mu{color:var(--text-2)}
+.status-ok{color:var(--green-bright);font-weight:600}
+.status-broken{color:var(--red);font-weight:600}
+.status-late{color:var(--amber);font-weight:600}
+.status-partial{color:var(--orange);font-weight:600}
+
+/* PATTERNS */
+.pattern-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.pt{background:var(--surface);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:12px;padding:16px 18px;transition:border-color .3s}
+.pt:hover{border-color:var(--border-cyan)}
+.pt-t{font-family:var(--font-display);font-weight:700;font-size:.9rem;margin-bottom:3px}
+.pt-n{font-size:.7rem;color:var(--text-2);margin-bottom:7px}
+.pt-d{font-size:.78rem;color:var(--text-2);line-height:1.55}
+
+/* INSIGHT BOX */
+.insight{border-radius:12px;padding:18px 22px;margin-bottom:22px}
+.insight.red{background:rgba(255,82,82,.06);border:1px solid rgba(255,82,82,.2)}
+.insight.amber{background:rgba(255,183,77,.05);border:1px solid rgba(255,183,77,.18)}
+.insight.green{background:rgba(105,240,174,.05);border:1px solid rgba(105,240,174,.15)}
+.insight.cyan{background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.18)}
+.insight .il{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+.insight.red .il{color:var(--red)}.insight.amber .il{color:var(--amber)}.insight.green .il{color:var(--green-bright)}.insight.cyan .il{color:var(--cyan-bright)}
+.insight p{font-size:.88rem;line-height:1.65}
+.insight p+p{margin-top:10px}
+
+/* CALL BRIEF */
+.call-brief{background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.2);border-radius:14px;padding:22px 24px;margin-bottom:22px}
+.cb-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.cb-name{font-family:var(--font-display);font-size:1.1rem;font-weight:800}
+.cb-meta{font-size:.75rem;color:var(--text-2);margin-top:2px}
+.cb-pill{display:inline-flex;align-items:center;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);border-radius:99px;padding:3px 10px;font-size:.65rem;font-weight:700;color:var(--cyan-bright);text-transform:uppercase;letter-spacing:.07em}
+.cb-section{margin-bottom:14px}
+.cb-section-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--cyan-bright);margin-bottom:6px}
+.cb-content{font-size:.84rem;color:var(--text-1);line-height:1.65}
+.cb-content.muted{color:var(--text-2)}
+.quote-block{background:rgba(8,14,26,.7);border-left:3px solid var(--cyan);border-radius:0 8px 8px 0;padding:10px 14px;margin:8px 0;font-style:italic;font-size:.82rem;color:var(--text-2)}
+.quote-block strong{color:var(--text-1);font-style:normal}
+.commit-list{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.commit-item{display:flex;align-items:flex-start;gap:8px;font-size:.82rem}
+.commit-item .ci{flex-shrink:0;margin-top:2px;font-size:.75rem}
+.commit-item.yes .ci::before{content:'✅'}
+.commit-item.no .ci::before{content:'❌'}
+.open-line{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:10px;padding:14px 18px;font-size:.9rem;font-style:italic;color:var(--text-1);margin-top:12px}
+.open-line::before{content:'💬 Opening line: ';font-style:normal;font-weight:700;color:var(--cyan-bright);display:block;font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s var(--spring),transform .6s var(--spring);transition-delay:var(--delay,0s)}
+.reveal.visible{opacity:1;transform:none}
+
+/* FOOTER */
+footer.rf{text-align:center;padding:28px 0 44px;color:var(--text-2);font-size:.75rem;position:relative;z-index:1}
+
+@media(max-width:768px){
+  .hero-meta{gap:14px}
+  .account-grid{grid-template-columns:1fr}
+  .pattern-grid{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+
+<nav class="sticky-nav">
+  <div class="sticky-nav-inner">
+    <a href="library.html" class="nav-brand">⚡ Rev.io ELT</a>
+    <span class="nav-badge">Confidential · Not for Distribution</span>
+    <div class="nav-links">
+      <a href="#situation">Situation</a>
+      <a href="#accounts">Accounts</a>
+      <a href="#patterns">Patterns</a>
+      <a href="#actions">Required Actions</a>
+      <a href="#guenther-brief">GT Brief</a>
+      <a href="#novalera-brief">NOV Brief</a>
+    </div>
+    <a href="library.html" class="back-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Library</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">ELT + Product Leadership Brief — April 23, 2026</div>
+    <h1 class="hero-title">Halo PSA Displacement<br><span class="g">Churn Risk & Recovery</span></h1>
+    <p class="hero-sub">We're 0 for 3 on Halo displacements. One confirmed churn in 31 days. Two more actively deliberating departure. This is an analysis of what happened, the systemic patterns, and what we must fix to compete for Halo customers.</p>
+    <div class="hero-meta">
+      <div class="hm"><div class="hm-num r">3</div><div class="hm-lbl">Halo Displ. Attempted</div></div>
+      <div class="hdiv"></div>
+      <div class="hm"><div class="hm-num r">1</div><div class="hm-lbl">Confirmed Churn</div></div>
+      <div class="hdiv"></div>
+      <div class="hm"><div class="hm-num r">2</div><div class="hm-lbl">Critical Risk</div></div>
+      <div class="hdiv"></div>
+      <div class="hm"><div class="hm-num a">$2,570</div><div class="hm-lbl">MRR at Risk</div></div>
+      <div class="hdiv"></div>
+      <div class="hm"><div class="hm-num a">0%</div><div class="hm-lbl">Halo Disp. Success Rate</div></div>
+    </div>
+    <div class="conf-badge">Confidential · Prepared by Revay AI · April 23, 2026</div>
+  </div>
+</section>
+
+<main class="main">
+
+<!-- SITUATION -->
+<div class="sb" id="situation">
+  <div class="sh">
+    <div class="sh-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF5252" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+    <span class="sh-lbl">Situation</span>
+    <span class="sh-sub">As of April 23, 2026</span>
+  </div>
+
+  <div class="insight red reveal" style="--delay:.05s">
+    <div class="il">🔴 Bottom Line Up Front</div>
+    <p>Rev.io has won three PSA deals from Halo in the past 12 months. All three have either churned or are at critical risk of churning within the next 30 days. <strong>The pattern is consistent across all three accounts: we are selling a Halo-level experience, onboarding on an unstable platform, and delivering below Halo's baseline on features customers use daily.</strong> Until we close specific platform and process gaps, we should not be pursuing Halo displacements.</p>
+    <p>This brief covers the full analysis — what was promised, what was delivered, what the systemic failures are, and what it will take to recover the two remaining at-risk accounts. Evan will be making personal calls to both this week.</p>
+  </div>
+
+  <div class="stat-grid reveal" style="--delay:.08s">
+    <div class="sc"><div class="n r">Ravguard</div><div class="l">Churned · 31 days post-close · Back to Halo</div></div>
+    <div class="sc"><div class="n r">85–90%</div><div class="l">Novalera churn probability (Opus 4.7 assessment)</div></div>
+    <div class="sc"><div class="n a">75–80%</div><div class="l">GuentherTech churn probability</div></div>
+    <div class="sc"><div class="n a">$2,570</div><div class="l">PSA MRR at immediate risk (GT + NOV)</div></div>
+    <div class="sc"><div class="n r">4 weeks</div><div class="l">GuentherTech: ticket bug unresolved</div></div>
+    <div class="sc"><div class="n r">8 weeks</div><div class="l">Novalera: NinjaOne still not working</div></div>
+  </div>
+
+  <div class="alert-stack reveal" style="--delay:.1s">
+    <div class="ai crit"><span>🔴</span><div><strong>Ravguard — CONFIRMED CHURN</strong> — Won Feb 20, 2026 at $500/mo. Closed Lost Mar 23 — SF note: "Ravguard cancelled PSA so will not be moving forward." 31 days from signature to departure. Lost to competitor.<div class="sub">Rep: Andy Whisenant · SA: Nicole Hills · Prior: Halo PSA</div></div></div>
+    <div class="ai crit"><span>🔴</span><div><strong>Novalera — ACTIVELY DELIBERATING DEPARTURE</strong> — Apr 3 call was effectively a "show cause" meeting. Tony and Mary told to "discuss internally and decide on commitment to Rev.io PSA." NinjaOne integration (primary reason for buying) still has data duplication bugs in Week 8. Platform outages went uncommunicated for weeks.<div class="sub">MRR: $500 · Rep: Joseph Abarno · SA: Nicole Hills · Prior: Halo PSA</div></div></div>
+    <div class="ai crit"><span>🔴</span><div><strong>GuentherTech — SILENT DECAY</strong> — Core ticket functionality broken for 4 consecutive weeks with no resolution. Payments AR dropped Apr 8. Half of their revenue is product sales — the #1 reason they bought us. Not configured. $2,070/mo highest-value recent Halo displacement.<div class="sub">MRR: $2,070 · Rep: Andy Whisenant + Cameron Sharpe · SA: Nicole Hills · Prior: Halo PSA</div></div></div>
+  </div>
+</div>
+
+<!-- ACCOUNT DEEP DIVES -->
+<div class="sb" id="accounts">
+  <div class="sh">
+    <div class="sh-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF8A65" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <span class="sh-lbl">Account Analysis</span>
+    <span class="sh-sub">3 Halo PSA displacements · Full transcript intelligence</span>
+  </div>
+
+  <div class="account-grid">
+    <!-- RAVGUARD -->
+    <div class="ac lost reveal" style="--delay:.04s">
+      <div class="ac-top">
+        <div><div class="risk-pill rp-lost">Churned</div><div class="ac-name">Ravguard</div><div class="ac-meta">Rep: Andy Whisenant · MRR: $500 · Close: Feb 20, 2026</div></div>
+        <div class="score-block"><div class="score-n lost">✗</div><div class="score-lbl">31 days</div></div>
+      </div>
+      <p class="ac-finding">Won from Halo Feb 20. Closed Lost Mar 23. SF note explicitly states: <em>"Ravguard cancelled PSA so will not be moving forward."</em> Loss reason: Lost to Competitor. Returned to Halo or competitor within 31 days of signing.</p>
+      <div class="db bl"><div class="dl">What went wrong</div>No post-mortem transcript available. 31-day window suggests core onboarding experience failure — likely same pattern as GuentherTech (stability, feature gaps vs. Halo baseline). No escalation occurred before the decision was made.</div>
+      <div class="tags"><span class="tg r">Confirmed Churn</span><span class="tg a">31 Days</span><span class="tg p">Halo Displacement</span></div>
+    </div>
+
+    <!-- GUENTHERTECH -->
+    <div class="ac crit reveal" style="--delay:.06s">
+      <div class="ac-top">
+        <div><div class="risk-pill rp-crit">Critical · 75–80% Churn</div><div class="ac-name">GuentherTech</div><div class="ac-meta">Rep: Andy Whisenant + Cameron Sharpe · SA: Nicole Hills · MRR: $2,070</div></div>
+        <div class="score-block"><div class="score-n crit">High</div><div class="score-lbl">Risk</div></div>
+      </div>
+      <p class="ac-finding">Canadian MSP. Owner Ben Guenther waited <strong>18 months</strong> from first meeting (summer 2024, product inception) to signature. Cameron's framing at close: "appreciate you keeping us in mind when things get a little bit sticky." Ben didn't buy a product — he bought a partnership.</p>
+      <div class="db bl"><div class="dl">🚧 What Ben was promised (his own words at kickoff)</div>
+        <strong>"Half of our revenue is sales... it's really important to have a very good system for being able to update those prices. We had that with our old system, but with Halo we don't have that."</strong> He also needed: inventory control, quote-to-ticket workflow, projects module, Canadian QB Online integration, D&H Canada/Synnex/Ingram distributor integrations, PAX8, Passportal password management.
+      </div>
+      <div class="db warn"><div class="dl">⚠️ What was actually delivered (Week 4)</div>
+        Ticket statuses and priorities load blank — first reported Week 2, <strong>still unresolved at Week 4.</strong> QB Online discovered to be one-way sync for products (he expected two-way). Canadian distributor integrations: no follow-up after kickoff. Product catalog incomplete. Inventory not configured. No billing activity. May 7 billing go-live target appears unrealistic. Payments AR sold on Day 4, abandoned Apr 8.
+      </div>
+      <div class="db bl"><div class="dl">Root cause</div>Core platform stability issue unresolved for 4 weeks. QB one-way limitation should have been disclosed pre-sale. AE commitments ("I'll look into" on 4 integrations) never followed up. Cross-sell attempt before core delivery stabilized.</div>
+      <div class="tags"><span class="tg r">$2,070 MRR</span><span class="tg a">Halo Displacement</span><span class="tg a">Canadian MSP</span><span class="tg p">4-Week Ticket Bug</span></div>
+    </div>
+
+    <!-- NOVALERA -->
+    <div class="ac crit reveal" style="--delay:.08s">
+      <div class="ac-top">
+        <div><div class="risk-pill rp-crit">Critical · 85–90% Churn</div><div class="ac-name">Novalera</div><div class="ac-meta">Rep: Joseph Abarno · SE: Tony Mehner · SA: Nicole Hills · MRR: $500</div></div>
+        <div class="score-block"><div class="score-n crit" style="font-size:1.4rem">Crisis</div><div class="score-lbl">Week 8</div></div>
+      </div>
+      <p class="ac-finding">MSP/MSSP. Tony Testerman (CEO) and Merry McFadden (Ops). Previously on Repair Shopper → Synchro → Halo. <strong>Two prior migrations</strong> — they are not going to keep moving. They bought Rev.io for exactly one non-negotiable reason: NinjaOne integration, which Halo doesn't have.</p>
+      <div class="db bl"><div class="dl">🚧 The NinjaOne timeline problem</div>
+        On the <strong>recorded Feb 6 demo</strong>, Joe Abarno said NinjaOne was "in beta" and "sometime this year" for Huntress. <strong>Tony walked into the Feb 20 kickoff saying "version one was supposed to drop at the end of the month."</strong> That date is not in any recorded call. Someone gave Tony a February deadline off-transcript. It was never delivered. NinjaOne Phase 1 finally rolled out ~Apr 3 — 6 weeks late — with parent-child mapping bugs causing <strong>data duplication.</strong>
+      </div>
+      <div class="db warn"><div class="dl">⚠️ Platform onboarded during known instability</div>
+        The auth service PHP rewrite was <strong>50–60% complete when Novalera kicked off Feb 20.</strong> This caused 6+ weeks of slow load times, session errors, and outages. Engineering confirmed this was the root cause on the Mar 13 call. Novalera was onboarded on a known-unstable foundation without disclosure. When outages occurred, <strong>no proactive communication was sent.</strong> Tony said: "I have to send a declaration of war to the British to get anybody at Halo" — then experienced radio silence during outages.
+      </div>
+      <div class="db bl"><div class="dl">Apr 3 crisis call summary</div>
+        Tony: "I can easily spend that time and money in Halo." Mary: "I don't think it was clear that the integrations were just starting. We knew you were about to bring on Ninja, but that was like days away at that point, supposedly." The account is actively deliberating departure. Matthew Hills (engineering) attended. Brenda Harvey committed to NinjaOne fix. Nicole essentially asked them to go home and decide.
+      </div>
+      <div class="tags"><span class="tg r">$500 MRR</span><span class="tg r">Halo Displacement</span><span class="tg a">NinjaOne Not Working</span><span class="tg p">2nd+ PSA Migration</span></div>
+    </div>
+  </div>
+
+  <!-- PROMISE vs DELIVERED TABLES -->
+  <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--orange);margin-bottom:14px">Promised vs. Delivered</h3>
+
+  <p style="font-size:.82rem;color:var(--text-2);margin-bottom:12px;font-weight:600">GuentherTech</p>
+  <div class="table-wrap reveal" style="--delay:.1s">
+    <table>
+      <thead><tr><th>What Was Promised</th><th>Who Said It</th><th>Delivered?</th><th>Gap</th></tr></thead>
+      <tbody>
+        <tr><td>Working PSA on kickoff</td><td class="mu">Nicole Hills</td><td class="status-broken">Tickets load blank (4 weeks)</td><td class="mu">Critical — core function broken</td></tr>
+        <tr><td>Product/purchasing workflow fixing Halo pain</td><td class="mu">Sales team (implicit in close)</td><td class="status-broken">Product catalog incomplete, inventory not set up</td><td class="mu">His #1 stated reason for buying</td></tr>
+        <tr><td>QuickBooks Online integration</td><td class="mu">Nicole Hills at kickoff</td><td class="status-partial">One-way for products only</td><td class="mu">Two-way was his expectation; not disclosed pre-sale</td></tr>
+        <tr><td>D&H Canada / Synnex / Ingram integrations</td><td class="mu">Cameron Sharpe ("I'll look into it")</td><td class="status-broken">No follow-up in 5 weeks</td><td class="mu">Core to his distributor workflow</td></tr>
+        <tr><td>SureTax Canadian HST/provincial tax</td><td class="mu">Nicole Hills at kickoff</td><td class="status-ok">Confirmed available ✓</td><td class="mu">None</td></tr>
+        <tr><td>Product description on ticket items</td><td class="mu">Nicole Hills — "Apollo 3, June"</td><td class="status-late">Not yet shipped</td><td class="mu">Halo has this; deferred twice</td></tr>
+        <tr><td>Passportal / Password management</td><td class="mu">Nicole Hills — "Apollo 3, June"</td><td class="status-late">Not yet shipped</td><td class="mu">External integration may be required</td></tr>
+        <tr><td>Billing go-live May 7</td><td class="mu">Nicole Hills at kickoff</td><td class="status-broken">No billing activity; target unrealistic</td><td class="mu">Zero progress after 4 weeks</td></tr>
+        <tr><td>Payments AR merchant analysis</td><td class="mu">Ingrid Beard at kickoff</td><td class="status-broken">Abandoned — dropped Apr 8</td><td class="mu">Open commitment abandoned mid-onboarding</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:.82rem;color:var(--text-2);margin:18px 0 12px;font-weight:600">Novalera</p>
+  <div class="table-wrap reveal" style="--delay:.12s">
+    <table>
+      <thead><tr><th>What Was Promised</th><th>Who Said It</th><th>Delivered?</th><th>Gap</th></tr></thead>
+      <tbody>
+        <tr><td>NinjaOne integration v1 "end of February"</td><td class="mu">Off-transcript (presumed Joe Abarno) — not in recorded demo</td><td class="status-broken">Rolled out Apr 3 with data duplication bugs</td><td class="mu">Critical — the primary reason they switched</td></tr>
+        <tr><td>NinjaOne "in beta, looking for beta users"</td><td class="mu">Nicole Hills at kickoff</td><td class="status-broken">8 weeks later, still broken</td><td class="mu">High</td></tr>
+        <tr><td>Quote-to-cash, SureTax, digital contracts</td><td class="mu">Tony Mehner — demonstrated live</td><td class="status-ok">Working ✓</td><td class="mu">None</td></tr>
+        <tr><td>Time-based workflows / 48hr inactivity alerts</td><td class="mu">Tony Mehner — "not quite in here yet, coming soon"</td><td class="status-late">Still not shipped</td><td class="mu">Mary's 4 asks all dependent on this</td></tr>
+        <tr><td>SLA management</td><td class="mu">Tony Mehner — "coming out in not too much longer"</td><td class="status-late">Not yet shipped</td><td class="mu">Medium</td></tr>
+        <tr><td>Platform stability</td><td class="mu">Implied in "human-centric support" pitch</td><td class="status-broken">Onboarded during PHP auth rewrite; 6+ weeks of instability</td><td class="mu">Critical — anti-Halo experience broken from Day 1</td></tr>
+        <tr><td>Proactive outage communication</td><td class="mu">Anti-Halo support pitch (no SLA in Halo)</td><td class="status-broken">No status page; no proactive comms during outages</td><td class="mu">Trust breach — worse than Halo on support transparency</td></tr>
+        <tr><td>PAX8 integration</td><td class="mu">Positioned as available</td><td class="status-partial">Issues discovered</td><td class="mu">Medium</td></tr>
+        <tr><td>"4 weeks to 3 months" onboarding</td><td class="mu">Tony Mehner at demo</td><td class="status-late">Week 8, still in configuration, no go-live</td><td class="mu">Behind schedule</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SYSTEMIC PATTERNS -->
+<div class="sb" id="patterns">
+  <div class="sh">
+    <div class="sh-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFB74D" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+    <span class="sh-lbl">Systemic Patterns</span>
+    <span class="sh-sub">Why Halo displacements are failing — 6 root causes</span>
+  </div>
+
+  <div class="insight amber reveal" style="--delay:.05s">
+    <div class="il">⚡ Pattern Summary</div>
+    <p>This is not an account management problem. These are systemic failures that will repeat on every Halo displacement until they are fixed. Ravguard, GuentherTech, and Novalera share the same 6 failure modes. If we don't address these, winning from Halo is a churn factory, not a growth motion.</p>
+  </div>
+
+  <div class="pattern-grid">
+    <div class="pt reveal" style="--delay:.06s">
+      <div class="pt-t" style="color:var(--red)">1. We're selling the roadmap</div>
+      <div class="pt-n">Affects: All 3 accounts</div>
+      <div class="pt-d">Halo delivers features on Day 1. We sell "Apollo 3, June." NinjaOne integration, two-way QB sync, multi-provider packages, product line-item descriptions — all sold as "coming." Halo customers are feature-parity buyers. We're asking them to pay now for something we'll build later.</div>
+    </div>
+    <div class="pt reveal" style="--delay:.08s">
+      <div class="pt-t" style="color:var(--red)">2. Halo is the benchmark and we're losing on UX basics</div>
+      <div class="pt-n">Affects: GuentherTech, Novalera</div>
+      <div class="pt-d">Ben said "the way we did it with Halo" 3+ times across 4 calls. Tony said "Halo, despite its grievances, still works." Both customers left Halo for one specific reason — everything else Halo did adequately. We're not matching baseline on ticketing, QB sync, stability, or communication.</div>
+    </div>
+    <div class="pt reveal" style="--delay:.1s">
+      <div class="pt-t" style="color:var(--red)">3. Onboarding on unstable foundations</div>
+      <div class="pt-n">Affects: Novalera (confirmed), likely Ravguard</div>
+      <div class="pt-d">Novalera kicked off Feb 20 while the PHP auth rewrite was 50–60% complete — a known cause of platform-wide slowness. GuentherTech had a 4-week ticket loading bug. Engineering and GTM are not coordinating on which customers can safely begin live configuration.</div>
+    </div>
+    <div class="pt reveal" style="--delay:.12s">
+      <div class="pt-t" style="color:var(--orange)">4. No escalation triggers in onboarding</div>
+      <div class="pt-n">Affects: All 3 accounts</div>
+      <div class="pt-d">Both active accounts had Week 1 issues. Both still had the same issues at Week 4–8. There is no mechanism that fires when an SA-level issue can't be resolved in 5 business days. Nicole is carrying SA + CSM + escalation coordinator on multiple at-risk accounts simultaneously.</div>
+    </div>
+    <div class="pt reveal" style="--delay:.14s">
+      <div class="pt-t" style="color:var(--orange)">5. Cross-selling before stabilizing</div>
+      <div class="pt-n">Affects: GuentherTech, Novalera</div>
+      <div class="pt-d">GuentherTech was pitched Payments AR 4 days after PSA close. Novalera's Payments AR was attempted and dropped to "Price." Both customers interpret early cross-sell as tone-deaf when their core product isn't working. The AR team is operating on its own timeline independent of onboarding health.</div>
+    </div>
+    <div class="pt reveal" style="--delay:.16s">
+      <div class="pt-t" style="color:var(--amber)">6. Communication gaps compound technical failures</div>
+      <div class="pt-n">Affects: Novalera (explicitly), likely others</div>
+      <div class="pt-d">Novalera: no status page, broken community forum (couldn't file feature requests), no proactive outage comms. An outage you warn customers about is frustrating. An outage you don't warn about is a trust breach. This is fixable infrastructure Rev.io hasn't built yet — and it's the exact pain point Halo customers are escaping.</div>
+    </div>
+  </div>
+</div>
+
+<!-- REQUIRED ACTIONS -->
+<div class="sb" id="actions">
+  <div class="sh">
+    <div class="sh-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#69F0AE" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+    <span class="sh-lbl">Required Actions</span>
+    <span class="sh-sub">Immediate + structural · prioritized</span>
+  </div>
+
+  <div class="insight green reveal" style="--delay:.05s">
+    <div class="il">✅ Recovery Actions (This Week)</div>
+    <p><strong>Evan personal call to Tony Testerman (Novalera) — today or tomorrow.</strong> Not a Teams invite. Phone call. Acknowledge NinjaOne by name. NinjaOne war room with named ETA and daily standup Tony can observe. Month-to-month conversion + Feb–Apr credits. Written 30-day cure plan with milestones.</p>
+    <p><strong>Evan personal call to Ben Guenther (GuentherTech) — this week.</strong> Engineering SWAT on ticket loading bug TODAY — named engineer, daily update to Ben. Written roadmap commitment for QB limitations and Apollo 3 feature dates. Credit for 4 lost configuration weeks. Revised billing go-live timeline.</p>
+  </div>
+
+  <div class="alert-stack reveal" style="--delay:.08s">
+    <div class="ai action"><span>🛠️</span><div><strong>Engineering — Ticket Loading Bug (GuentherTech)</strong> — P0. 4-week-old issue. Named owner and hard date required by end of today.<div class="sub">Owner: Engineering lead · Due: Today</div></div></div>
+    <div class="ai action"><span>🛠️</span><div><strong>Engineering — NinjaOne Parent-Child Mapping (Novalera)</strong> — P0. Data duplication in production. Brenda Harvey's team. Date committed to customer by end of this week.<div class="sub">Owner: Brenda Harvey (integrations) · Due: Within 14 days or account is lost</div></div></div>
+    <div class="ai action"><span>🛠️</span><div><strong>Product — Apollo 3 Commitment Calendar</strong> — Ben Guenther and at least 6 other active accounts are riding on "Apollo 3, June" features. Product must confirm which items are locked vs. aspirational — this week. ELT needs to own the communication.<div class="sub">Owner: Product leadership · Due: This week</div></div></div>
+    <div class="ai action"><span>🛠️</span><div><strong>Onboarding Ops — Intake Gate for Platform Stability</strong> — No customer should kick off PSA onboarding during a known platform instability event. Engineering + Onboarding need a shared signal. Define the checklist and owner.<div class="sub">Owner: Onboarding + Engineering · Due: Before next onboarding cohort</div></div></div>
+    <div class="ai action"><span>🛠️</span><div><strong>GTM — Halo Displacement Playbook</strong> — Until these issues are resolved, AEs should not be committing to NinjaOne timelines, two-way QB sync, or distributor integrations without written product confirmation. Sales needs a Halo-specific "what we have vs. what's coming" one-pager.<div class="sub">Owner: Sales leadership + Product · Due: 2 weeks</div></div></div>
+    <div class="ai action"><span>🛠️</span><div><strong>CS / Onboarding — Escalation Trigger Protocol</strong> — Any unresolved technical issue in an active PSA onboarding after 5 business days should auto-escalate to CSM + engineering with executive visibility. Nicole cannot be the sole escalation path.<div class="sub">Owner: CS / Onboarding leadership · Due: 2 weeks</div></div></div>
+    <div class="ai action"><span>🛠️</span><div><strong>Platform — Status Page + Proactive Outage Communication</strong> — Novalera's trust broke because we had outages with no communication. This is table stakes. Rev.io needs a public status page before the next Halo customer activates.<div class="sub">Owner: Engineering + Support · Due: 30 days</div></div></div>
+    <div class="ai action"><span>🛠️</span><div><strong>AR Team — Cross-Sell Gate Protocol</strong> — No Payments AR, Cyber Protect, or add-on cross-sell for any customer in active onboarding with open P1/P2 technical issues. AR team must check onboarding health before pitching.<div class="sub">Owner: AR team leadership · Due: Immediate policy change</div></div></div>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div style="height:1px;background:var(--border);margin:0 0 3.5rem"></div>
+<div style="text-align:center;margin-bottom:3rem">
+  <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--cyan-bright);margin-bottom:8px">Appendix: Pre-Call Briefs</div>
+  <div style="font-size:.88rem;color:var(--text-2)">For Evan's use on personal calls with GuentherTech and Novalera. Not for distribution.</div>
+</div>
+
+<!-- GUENTHERTECH PRE-CALL BRIEF -->
+<div class="sb" id="guenther-brief">
+  <div class="sh">
+    <div class="sh-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.42 2 2 0 0 1 3.62 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.92z"/></svg></div>
+    <span class="sh-lbl">Pre-Call Brief: GuentherTech</span>
+    <span class="sh-sub">Ben Guenther (Owner) · ben@guenthertech.ca · No mobile on file</span>
+  </div>
+
+  <div class="call-brief reveal" style="--delay:.05s">
+    <div class="cb-header">
+      <div><div class="cb-name">GuentherTech — Ben Guenther</div><div class="cb-meta">Owner · ben@guenthertech.ca · Canadian MSP · 23 seats · $2,070/mo</div></div>
+      <span class="cb-pill">Confidential</span>
+    </div>
+
+    <div class="open-line">"Ben — this is Evan Rice, President at Rev.io. I've been reviewing your account personally and I wanted to call you directly. You gave us 18 months of patience before you signed, and four weeks in we have a ticket loading bug we haven't fixed and a series of follow-ups we never delivered. I'm not calling to manage this — I'm calling because you deserve better and I want to make it right."</div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">What Ben bought — in his own words</div>
+      <div class="quote-block">"The whole purchasing product part because... we sell a lot of product... <strong>half of our revenue is sales</strong>... it's really important to have a very good system for being able to update those prices. We had that with our old system, but with Halo we don't have that."</div>
+      <div class="quote-block">"We had that with our old system, but with Halo we don't have that. It's very, very manual and very easy to forget."</div>
+      <div class="cb-content muted" style="margin-top:8px">His 5 non-negotiables: (1) product/purchasing workflow, (2) projects module for techs, (3) inventory control, (4) Canadian QB Online + HST/SureTax, (5) D&H Canada / Synnex / Ingram distributor integrations. He waited 18 months. He's not a tire-kicker.</div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">The 4 things you must address</div>
+      <div class="commit-list">
+        <div class="commit-item yes"><span class="ci"></span><div><strong>Ticket loading bug.</strong> 4 weeks. Ticket statuses and priorities loading blank. Named engineer + hard date to fix. "That's been broken for four weeks — that's on us, not you."</div></div>
+        <div class="commit-item yes"><span class="ci"></span><div><strong>QuickBooks one-way limitation.</strong> He expected two-way product sync. He got one-way. Acknowledge the gap and come with either: (a) a timeline to close it, or (b) an honest alternative. Don't minimize — this affects his pricing workflow daily.</div></div>
+        <div class="commit-item yes"><span class="ci"></span><div><strong>Apollo 3 features.</strong> Product descriptions on ticket items, password manager in assets — he's heard "Apollo 3, June" twice. Tell him which items have a locked date vs. aspirational, and make those dates your personal commitment.</div></div>
+        <div class="commit-item yes"><span class="ci"></span><div><strong>Canadian integrations + Ingrid/Payments.</strong> Cameron said "I'll look into" D&H Canada, Synnex, Ingram, ClickUp at kickoff. No follow-up in 5 weeks. Come with yes/no/when for each. The Ingrid Payments thread — either reopen it or kill it cleanly.</div></div>
+      </div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">What to commit / not commit</div>
+      <div class="commit-list">
+        <div class="commit-item yes"><span class="ci"></span>Named dated fix for ticket bug — this week</div>
+        <div class="commit-item yes"><span class="ci"></span>Personal weekly check-in from you through billing go-live</div>
+        <div class="commit-item yes"><span class="ci"></span>Revised billing timeline — May 7 is not real, be honest</div>
+        <div class="commit-item yes"><span class="ci"></span>Credit for the 4 weeks of lost configuration time</div>
+        <div class="commit-item yes"><span class="ci"></span>Yes/no on each distributor integration within 5 business days</div>
+        <div class="commit-item no"><span class="ci"></span>DON'T commit to Apollo 3 June date unless product has locked it tonight</div>
+        <div class="commit-item no"><span class="ci"></span>DON'T commit to bi-directional QB sync unless engineering confirms</div>
+        <div class="commit-item no"><span class="ci"></span>DON'T reference things Cameron "was going to look into" unless you now own them</div>
+      </div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">Lines that show you know this account</div>
+      <div class="quote-block"><strong>Use these phrases — they signal you've read the tape</strong><br>"Half your revenue is product sales." • "18 months from summer '24 to signature — you gave us that runway." • "Projects and purchasing were your two non-negotiables at kickoff." • "Canadian QB, SureTax for HST, D&H Canada, Synnex, Ingram — we knew this was a Canadian build." • "Tickets are loading blank. Four weeks. That's on us."</div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">The one thing that determines if Ben stays</div>
+      <div class="cb-content">Whether he feels that Cameron's promises and Nicole's delivery are now <strong>your accountability</strong> — that someone with actual authority has the wheel. Ben waited 18 months out of loyalty. He doesn't churn on features. He churns when he feels handed off to people with no power to fix things. The escape valve isn't a discount. It's a direct line to you and a firm date on the ticket bug.</div>
+    </div>
+  </div>
+</div>
+
+<!-- NOVALERA PRE-CALL BRIEF -->
+<div class="sb" id="novalera-brief">
+  <div class="sh">
+    <div class="sh-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.42 2 2 0 0 1 3.62 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.92z"/></svg></div>
+    <span class="sh-lbl">Pre-Call Brief: Novalera</span>
+    <span class="sh-sub">Tony Testerman (CEO) · (443) 528-7060 · ttesterman@novalera.com</span>
+  </div>
+
+  <div class="call-brief reveal" style="--delay:.05s">
+    <div class="cb-header">
+      <div><div class="cb-name">Novalera — Tony Testerman + Mary McFadden</div><div class="cb-meta">CEO Tony · Ops Mary · (443) 528-7060 · $500/mo · Prior: Halo PSA (3rd PSA migration)</div></div>
+      <span class="cb-pill">Confidential</span>
+    </div>
+
+    <div class="open-line">"Tony — Evan Rice, President at Rev.io. I've gone back through every call you've had with our team since February. I know what was said about NinjaOne. I know about the outages we didn't communicate. I know Mary asked about time-based workflows on the demo and heard 'coming soon' — twice. I'm calling because the buck stops with me, and I want to have an honest conversation about what we owe you and what we can actually deliver."</div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">The NinjaOne timeline — who said what</div>
+      <div class="cb-content muted">On the <strong>recorded Feb 6 demo</strong>, Joseph Abarno said NinjaOne was "in beta" and "sometime this year." Nicole at kickoff framed it as a beta they could participate in. <strong>Tony walked into the Feb 20 kickoff saying "version one was supposed to drop at the end of the month."</strong> That date is not in any recorded call. Someone told Tony that off-transcript — most likely Joe in a side conversation. NinjaOne finally shipped ~Apr 3 with parent-child mapping bugs causing data duplication. Tony's reaction on Apr 3:</div>
+      <div class="quote-block">"I can easily spend that time and money in Halo."</div>
+      <div class="quote-block">Mary McFadden: "I don't think it was clear that the integrations were just starting. We knew you were about to bring on Ninja, but that was like <strong>days away at that point, supposedly.</strong>"</div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">Why Tony left Halo — and what he got instead</div>
+      <div class="quote-block">On Halo support: "<strong>I have to send a declaration of war to the British to get anybody at Halo.</strong>"</div>
+      <div class="cb-content muted" style="margin-top:8px">He bought Rev.io specifically to escape that. Then: platform outages with zero communication, community forum broken, no status page. The anti-Halo support experience failed in exactly the dimension he was escaping. This is the emotional wound under all of it.</div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">The 4 things you must address</div>
+      <div class="commit-list">
+        <div class="commit-item yes"><span class="ci"></span><div><strong>NinjaOne parent-child mapping bug.</strong> The one thing they bought that Halo doesn't have. Still broken. Name the engineer, name the date. "NinjaOne doesn't work. Here's the person fixing it and here's when it will be done."</div></div>
+        <div class="commit-item yes"><span class="ci"></span><div><strong>Platform instability + communication failure.</strong> Auth rewrite during their onboarding. Outages with no communication. Say it directly: "We onboarded you on an unstable platform and then went silent during outages. That's not acceptable and here's what's changing."</div></div>
+        <div class="commit-item yes"><span class="ci"></span><div><strong>Mary's 4 workflow asks.</strong> Time-based workflows, 48hr inactivity alerts, quote reminders, client-pending nudge. All answered with "coming soon" on Feb 6. Come with the actual timeline — even if it's 6 months. Uncertainty is worse than a hard date they can plan around.</div></div>
+        <div class="commit-item yes"><span class="ci"></span><div><strong>The decision they've been asked to make.</strong> Nicole essentially told them to go home and decide on Apr 3. Evan calling changes the conversation from "we're waiting for your answer" to "you don't have to decide alone — I'm here." Reframe the decision as a partnership conversation, not an ultimatum.</div></div>
+      </div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">What to commit / not commit</div>
+      <div class="commit-list">
+        <div class="commit-item yes"><span class="ci"></span>Month-to-month conversion (remove annual commit pressure)</div>
+        <div class="commit-item yes"><span class="ci"></span>Credits for February, March, April — acknowledge the value they didn't receive</div>
+        <div class="commit-item yes"><span class="ci"></span>Named ETA on NinjaOne fix with personal ownership — Evan's name on it</div>
+        <div class="commit-item yes"><span class="ci"></span>Written 30-day cure plan with measurable milestones Tony can hold you to</div>
+        <div class="commit-item yes"><span class="ci"></span>Weekly executive check-in (you or a named exec) until NinjaOne is live and stable</div>
+        <div class="commit-item no"><span class="ci"></span>DON'T commit to Mary's 4 workflow features unless product confirms a date tonight</div>
+        <div class="commit-item no"><span class="ci"></span>DON'T promise PAX8 clarity unless integrations team has confirmed</div>
+        <div class="commit-item no"><span class="ci"></span>DON'T push any cross-sell on this call — it will end the relationship</div>
+        <div class="commit-item no"><span class="ci"></span>If NinjaOne fix can't be committed to within 14 days, offer a clean exit with full refund. Holding them on a broken platform costs more than losing gracefully.</div>
+      </div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">Lines that show you know this account</div>
+      <div class="quote-block"><strong>Drop these — they show you read everything</strong><br>"Tony, I know you said at your kickoff that NinjaOne version one was supposed to drop by end of February." • "Mary asked on the demo about 48-hour inactivity notifications. Tony Mehner said 'coming soon.' That was two months ago." • "You left Halo because you had to send a declaration of war to get anybody on the phone. And then we had outages and didn't call you." • "You've been through Repair Shopper, Synchro, and Halo. You're not going to keep migrating. We know that — which is why this matters."</div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">The one thing that determines if Tony stays</div>
+      <div class="cb-content"><strong>Whether NinjaOne works within 14 days.</strong> That is the only thing he bought that Halo doesn't have. If it ships clean — parent-child mapping resolved, assets syncing correctly — and Evan personally communicates it, there is a path. If it slips again, Tony leaves. He said it himself: "I can easily spend that time and money in Halo."</div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-label">Honest assessment — what Rev.io owes Novalera</div>
+      <div class="cb-content muted">The NinjaOne "end of February" date was almost certainly given by Joe Abarno off-transcript. Novalera was also onboarded on a known-unstable platform without disclosure. These are not over-optimism — they cross into material misrepresentation. The appropriate remedies are: month-to-month conversion, Feb–Apr credits, and a clean exit option if NinjaOne doesn't ship within 14 days. Holding them accountable to an annual contract after what happened would be the wrong call.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer class="rf">
+  <p>⚡ Rev.io Halo PSA Churn Risk Brief — Confidential · ELT + Product Leadership · April 23, 2026</p>
+  <p>Prepared by Revay AI · Intelligence: Fireflies transcripts (12 calls) · Salesforce · Rev.io PSA · Opus 4.7 analysis</p>
+  <p style="color:rgba(161,176,203,.35);margin-top:8px">Not for distribution outside of ELT</p>
+</footer>
+
+<script>
+(function(){
+  const c=document.getElementById('bgCanvas'),x=c.getContext('2d');
+  let p=[],W=0,H=0;
+  function resize(){W=window.innerWidth;H=window.innerHeight;c.width=Math.round(W*devicePixelRatio);c.height=Math.round(H*devicePixelRatio);c.style.width=W+'px';c.style.height=H+'px';x.scale(devicePixelRatio,devicePixelRatio);mk();}
+  function mk(){p=[];const n=Math.min(100,Math.floor(W*H/10000));for(let i=0;i<n;i++)p.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.4,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,a:Math.random()*.28+.1,g:Math.random()<.1});}
+  function draw(){x.clearRect(0,0,W,H);p.forEach(d=>{d.x+=d.vx;d.y+=d.vy;if(d.x<0)d.x=W;if(d.x>W)d.x=0;if(d.y<0)d.y=H;if(d.y>H)d.y=0;x.beginPath();x.arc(d.x,d.y,d.r,0,Math.PI*2);x.fillStyle=d.g?`rgba(255,138,101,${d.a})`:`rgba(255,82,82,${d.a})`;x.fill();});for(let i=0;i<p.length;i++){for(let j=i+1;j<p.length;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,dd=Math.sqrt(dx*dx+dy*dy);if(dd<110){x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle=`rgba(255,82,82,${.08*(1-dd/110)})`;x.lineWidth=.5;x.stroke();}}}requestAnimationFrame(draw);}
+  window.addEventListener('resize',resize);resize();draw();
+})();
+(function(){
+  const c=document.getElementById('heroCanvas'),x=c.getContext('2d');
+  let p=[];
+  function resize(){c.width=c.offsetWidth*devicePixelRatio;c.height=c.offsetHeight*devicePixelRatio;x.scale(devicePixelRatio,devicePixelRatio);mk();}
+  function mk(){p=[];const w=c.offsetWidth,h=c.offsetHeight,n=Math.min(80,Math.floor(w*h/9000));for(let i=0;i<n;i++)p.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.6+.4,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,a:Math.random()*.4+.1,g:Math.random()<.15});}
+  function draw(){const w=c.offsetWidth,h=c.offsetHeight;x.clearRect(0,0,w,h);p.forEach(d=>{d.x+=d.vx;d.y+=d.vy;if(d.x<0)d.x=w;if(d.x>w)d.x=0;if(d.y<0)d.y=h;if(d.y>h)d.y=0;x.beginPath();x.arc(d.x,d.y,d.r,0,Math.PI*2);x.fillStyle=d.g?`rgba(255,183,77,${d.a})`:`rgba(255,82,82,${d.a})`;x.fill();});for(let i=0;i<p.length;i++){for(let j=i+1;j<p.length;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,dd=Math.sqrt(dx*dx+dy*dy);if(dd<110){x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle=`rgba(255,82,82,${.07*(1-dd/110)})`;x.lineWidth=.5;x.stroke();}}}requestAnimationFrame(draw);}
+  window.addEventListener('resize',resize);resize();draw();
+})();
+const ro=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){n.target.classList.add('visible');ro.unobserve(n.target);}});},{threshold:.06,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
