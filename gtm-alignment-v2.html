@@ -55,7 +55,7 @@ section{max-width:1200px;margin:0 auto;padding:4rem 2rem}
 .section-num{font-size:0.68rem;color:var(--accent);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
 
 /* CARDS */
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;transition:border-color 0.2s,transform 0.2s}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;position:relative;overflow:clip;transition:border-color 0.2s,transform 0.2s}
 .card:hover{border-color:rgba(108,99,255,0.32);transform:translateY(-1px)}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(108,99,255,0.35),transparent)}
 .card-title{font-family:var(--font-h);font-weight:700;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:1rem}
@@ -353,7 +353,7 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
         <li><strong>No-show at 20%+ still costs 1-in-5 meetings:</strong> Improved but not fixed. Each no-show is a wasted SDR credit. Sub-12% is the target to unlock the 5× math.</li>
         <li><strong>"Software Missing Capabilities" rising in 60-day data (53 losses)</strong> — reps are still citing features that shipped in Apollo 2 as reasons for loss. This is an <span class="hl-warn">enablement failure</span>, not a product failure.</li>
         <li><strong>Lack of Decision Maker Involvement now #5 in 60 days (38 losses)</strong> — qualification is better but incomplete. DM attendance must be confirmed before booking.</li>
-        <li><strong>Joe Abarno 5× regression:</strong> Was March's top closer (~33% meeting-to-win). Now 5.9% over 34 opps. This is not a slump — it's a collapse. Needs immediate investigation.</li>
+        <li><strong>Joe Abarno — Departed Q1 2026:</strong> Was March's top closer (~33% meeting-to-win). Departed for personal reasons; last close March 25. Pipeline transitioned. This is a retention loss — not a coaching issue. Note the vacancy as you evaluate rep coverage and capacity.</li>
         <li><strong>Onboarding fragility is an invisible tax on net bookings:</strong> 4 critical churns wiping ~$4,820 MRR. At $835 avg PSA deal size, that's 5-6 new deals erased monthly.</li>
         <li><strong>QB Online integration still absent:</strong> #1 Kaia feature request, blocking MSP expansion. Apollo 3 timeframe — needs escalation.</li>
         <li><strong>NinjaOne bugs unresolved:</strong> Literally causing a customer to churn (Novalera). A flagship MSP integration shipping with parent-child mapping bugs is a reputational risk.</li>
@@ -402,8 +402,8 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
         <tr>
           <td>Joe Abarno leads team training</td>
           <td>Sales Mgmt</td>
-          <td><span class="status-check sc-missing">❌ Unclear</span></td>
-          <td>Abarno himself has regressed to 5.9% win rate — making him a training leader now would be premature. Investigate first.</td>
+          <td><span class="status-check sc-missing">❌ N/A — Departed</span></td>
+          <td>Abarno departed Q1 2026. This action item is closed — identify a replacement training lead from top performers (Justin Lee, Ingrid Beard).</td>
         </tr>
         <tr>
           <td>SDR ICP scoring + qualification overhaul</td>
@@ -603,11 +603,11 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
           <td><span class="tag tag-red">⚠️ Monitor</span></td>
         </tr>
         <tr style="background:rgba(255,107,107,0.04)">
-          <td><strong>Joseph Abarno</strong> 🚨</td>
+          <td><strong>Joseph Abarno</strong> 🚪</td>
           <td>2</td><td>32</td>
-          <td><strong style="color:var(--accent3)">5.9%</strong></td>
-          <td>$1,050</td><td>$525</td><td>—</td>
-          <td><span class="tag tag-red">🚨 Regression</span></td>
+          <td><strong style="color:var(--muted)">Departed</strong></td>
+          <td>—</td><td>—</td><td>—</td>
+          <td><span class="tag tag-yellow">🚪 Departed Q1</span></td>
         </tr>
         <tr style="background:rgba(255,107,107,0.04)">
           <td><strong>Husam Zalmiyar</strong> 🚨</td>
@@ -936,7 +936,7 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
       <tbody>
         <tr><td><span class="tag tag-yellow">🟡 Watch</span></td><td>GuentherTech — Evan called Apr 25. Monitoring, not canceling. Ticket bug + QB gaps still open. Follow-up: May 9.</td><td>Evan + Product</td><td>May 9</td><td><span class="status-check sc-partial">Monitoring</span></td></tr>
         <tr><td><span class="tag tag-yellow">🟡 Watch</span></td><td>Novalera — Evan called Apr 25. Monitoring, not canceling. NinjaOne fix is the gate. Offer written 30-day cure plan.</td><td>Evan + Product</td><td>Per NinjaOne fix</td><td><span class="status-check sc-partial">Monitoring</span></td></tr>
-        <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>Ryan Koontz in Abarno's next 3 calls — diagnose 5× win rate collapse</td><td>Ryan Koontz</td><td>This week</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 Closed</span></td><td>Joe Abarno — Departed Q1 2026. Pipeline transitioned. Monitor reps who absorbed his deals for capacity strain.</td><td>Ryan Koontz</td><td>Complete</td><td><span class="status-check sc-partial">Closed — Departed</span></td></tr>
         <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>"Apollo 2 Is Live" battlecard — shipped features reps don't know about</td><td>Marketing + Sales Enablement</td><td>This week</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
         <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>NinjaOne bug fix escalation — get written timeline from Product</td><td>Product</td><td>This week</td><td><span class="status-check sc-missing">Urgent</span></td></tr>
         <tr><td><span class="tag tag-yellow">🟡 Investigate</span></td><td>Halle Taylor — audit account assignment history. Is her 20.8% critical rate (vs 8.3% team peer) driven by complex account assignment or performance? Answer before action.</td><td>Onboarding Mgmt</td><td>May 5</td><td><span class="status-check sc-partial">Open Question</span></td></tr>
@@ -1014,7 +1014,7 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
       <div class="play-number">04</div>
       <div class="play-title">The "Justin Lee Playbook" Fast-Follow Program</div>
       <div class="play-desc">
-        Justin Lee is closing at 39.1%. The team median is ~12%. The gap is 27 percentage points across the same product, same market, same pricing. That gap is not luck — it's process. Ryan Koontz should personally shadow Lee's next 3 discovery calls this week, document verbatim the questions he asks, how he handles objections, and what he says to confirm DM attendance before the meeting. Then build a 90-minute training session where Lee walks the team through his playbook. Do the same with Ingrid Beard (36.1%, 22 wins). These two reps have cracked something. Rolling their methods out to the bottom 4 reps (Zalmiyar 5.6%, Abarno 5.9%, Herndon 6.3%, Bender 7.3%) is the fastest performance lever available. Target: bring underperformers from 6-8% → 15%+ win rate within 60 days of training.
+        Justin Lee is closing at 39.1%. The team median is ~12%. The gap is 27 percentage points across the same product, same market, same pricing. That gap is not luck — it's process. Ryan Koontz should personally shadow Lee's next 3 discovery calls this week, document verbatim the questions he asks, how he handles objections, and what he says to confirm DM attendance before the meeting. Then build a 90-minute training session where Lee walks the team through his playbook. Do the same with Ingrid Beard (36.1%, 22 wins). These two reps have cracked something. Rolling their methods out to the bottom 3 active reps (Zalmiyar 5.6%, Herndon 6.3%, Bender 7.3%) is the fastest performance lever available. (Abarno departed Q1 2026.) Target: bring underperformers from 6-8% → 15%+ win rate within 60 days of training.
       </div>
       <div class="play-meta">
         <span class="tag tag-red">🔴 Shadow calls this week</span>
