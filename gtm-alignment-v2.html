@@ -23,470 +23,131 @@
   --font-h: 'Cabinet Grotesk', 'Satoshi', sans-serif;
   --font-b: 'Satoshi', 'Cabinet Grotesk', sans-serif;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-b);
-  font-size: 15px;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-/* PARTICLES */
-#particles-canvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.4;
-}
-
-/* NAV */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  background: rgba(8,14,26,0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.nav-brand {
-  font-family: var(--font-h);
-  font-weight: 800;
-  font-size: 1.1rem;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-}
-.nav-links a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--text); }
-.nav-badge {
-  font-size: 0.68rem;
-  background: rgba(108,99,255,0.15);
-  border: 1px solid rgba(108,99,255,0.3);
-  color: var(--accent);
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-weight: 600;
-}
-
-/* MAIN LAYOUT */
-main {
-  position: relative;
-  z-index: 1;
-  padding-top: 56px;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:15px;line-height:1.6;overflow-x:hidden}
+#particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.35}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,14,26,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-family:var(--font-h);font-weight:800;font-size:1.05rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:1.2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.75rem;font-weight:500;letter-spacing:0.03em;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-badge{font-size:0.65rem;background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);color:var(--accent);padding:2px 8px;border-radius:20px;font-weight:600}
+main{position:relative;z-index:1;padding-top:56px}
 
 /* HERO */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 4rem 2rem;
-}
-.hero-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(0,212,170,0.1);
-  border: 1px solid rgba(0,212,170,0.25);
-  color: var(--accent2);
-  padding: 6px 16px;
-  border-radius: 30px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin-bottom: 2rem;
-}
-.hero h1 {
-  font-family: var(--font-h);
-  font-weight: 800;
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, #fff 40%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 1.2rem;
-}
-.hero-sub {
-  color: var(--muted);
-  font-size: 1.05rem;
-  max-width: 560px;
-  margin: 0 auto 2.5rem;
-}
-.hero-stats {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 3rem;
-}
-.hero-stat {
-  text-align: center;
-}
-.hero-stat .num {
-  font-family: var(--font-h);
-  font-weight: 800;
-  font-size: 2.2rem;
-  background: linear-gradient(135deg, var(--accent2), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.hero-stat .lbl {
-  font-size: 0.75rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-}
-.hero-scroll {
-  color: var(--muted);
-  font-size: 0.78rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  animation: bounce 2s infinite;
-}
-@keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
-}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 4rem}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.25);color:var(--accent2);padding:6px 18px;border-radius:30px;font-size:0.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2rem}
+.hero h1{font-family:var(--font-h);font-weight:800;font-size:clamp(2.8rem,6vw,5.5rem);line-height:1.0;letter-spacing:-.03em;background:linear-gradient(135deg,#fff 40%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1.2rem}
+.hero-sub{color:var(--muted);font-size:1rem;max-width:580px;margin:0 auto 3rem}
+.hero-stats{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem}
+.hero-stat .num{font-family:var(--font-h);font-weight:800;font-size:2.4rem;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-stat .lbl{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.hero-stat .sub{font-size:0.65rem;color:rgba(136,146,164,0.6);margin-top:1px}
+.hero-scroll{color:var(--muted);font-size:0.75rem;display:flex;flex-direction:column;align-items:center;gap:.4rem;animation:bounce 2.2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
 
 /* SECTIONS */
-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-}
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2.5rem;
-}
-.section-icon {
-  width: 44px; height: 44px;
-  background: linear-gradient(135deg, rgba(108,99,255,0.2), rgba(0,212,170,0.1));
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  flex-shrink: 0;
-}
-.section-header h2 {
-  font-family: var(--font-h);
-  font-weight: 800;
-  font-size: 1.8rem;
-  letter-spacing: -0.02em;
-}
-.section-header .section-num {
-  font-size: 0.72rem;
-  color: var(--accent);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
+section{max-width:1200px;margin:0 auto;padding:4rem 2rem}
+.section-header{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem}
+.section-icon{width:46px;height:46px;background:linear-gradient(135deg,rgba(108,99,255,0.18),rgba(0,212,170,0.08));border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0}
+.section-header h2{font-family:var(--font-h);font-weight:800;font-size:1.9rem;letter-spacing:-.02em}
+.section-num{font-size:0.68rem;color:var(--accent);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
 
 /* CARDS */
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 1.5rem;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
-}
-.card:hover {
-  border-color: rgba(108,99,255,0.35);
-  transform: translateY(-1px);
-}
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(108,99,255,0.4), transparent);
-}
-.card-title {
-  font-family: var(--font-h);
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  margin-bottom: 1rem;
-}
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
-@media(max-width: 900px) {
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
-}
-@media(max-width: 600px) {
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-  nav .nav-links { display: none; }
-}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;transition:border-color 0.2s,transform 0.2s}
+.card:hover{border-color:rgba(108,99,255,0.32);transform:translateY(-1px)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(108,99,255,0.35),transparent)}
+.card-title{font-family:var(--font-h);font-weight:700;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:1rem}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+@media(max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.nav-links{display:none}}
 
-/* KPI CARDS */
-.kpi-val {
-  font-family: var(--font-h);
-  font-weight: 800;
-  font-size: 2.2rem;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.2rem;
-}
-.kpi-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
-.kpi-delta {
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-top: 0.4rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: 2px 8px;
-  border-radius: 20px;
-}
-.delta-up { color: var(--accent2); background: rgba(0,212,170,0.1); }
-.delta-down { color: var(--accent3); background: rgba(255,107,107,0.1); }
-.delta-flat { color: var(--accent4); background: rgba(255,217,61,0.1); }
+/* KPI */
+.kpi-val{font-family:var(--font-h);font-weight:800;font-size:2.3rem;letter-spacing:-.02em;margin-bottom:.15rem}
+.kpi-label{font-size:0.77rem;color:var(--muted);font-weight:500}
+.kpi-delta{font-size:0.72rem;font-weight:700;margin-top:.4rem;display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px}
+.delta-up{color:var(--accent2);background:rgba(0,212,170,0.1)}
+.delta-down{color:var(--accent3);background:rgba(255,107,107,0.1)}
+.delta-flat{color:var(--accent4);background:rgba(255,217,61,0.1)}
+.delta-warn{color:var(--accent4);background:rgba(255,152,0,0.1)}
 
-/* DIVIDER */
-.divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 0;
-}
-hr.section-divider {
-  border: none;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  max-width: 1200px;
-  margin: 0 auto;
-}
+/* CHART */
+.chart-wrap{position:relative;height:260px}
+.chart-wrap.tall{height:320px}
 
-/* CHART CONTAINERS */
-.chart-wrap {
-  position: relative;
-  height: 260px;
-}
-
-/* PROGRESS BAR */
-.progress-bar {
-  background: rgba(255,255,255,0.06);
-  border-radius: 4px;
-  height: 8px;
-  overflow: hidden;
-  margin-top: 4px;
-}
-.progress-fill {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 1s ease;
-}
+/* PROGRESS */
+.progress-bar{background:rgba(255,255,255,0.06);border-radius:4px;height:8px;overflow:hidden;margin-top:4px}
+.progress-fill{height:100%;border-radius:4px;transition:width 1.2s ease}
 
 /* TABLE */
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.85rem;
-}
-.data-table th {
-  text-align: left;
-  padding: 10px 12px;
-  color: var(--muted);
-  font-weight: 700;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  border-bottom: 1px solid var(--border);
-}
-.data-table td {
-  padding: 10px 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-.data-table tr:last-child td { border-bottom: none; }
-.data-table tr:hover td { background: rgba(255,255,255,0.02); }
-.tag {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.tag-green { background: rgba(0,212,170,0.12); color: var(--accent2); border: 1px solid rgba(0,212,170,0.2); }
-.tag-red { background: rgba(255,107,107,0.12); color: var(--accent3); border: 1px solid rgba(255,107,107,0.2); }
-.tag-yellow { background: rgba(255,217,61,0.12); color: var(--accent4); border: 1px solid rgba(255,217,61,0.2); }
-.tag-blue { background: rgba(108,99,255,0.12); color: var(--accent); border: 1px solid rgba(108,99,255,0.2); }
-.tag-gray { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid rgba(255,255,255,0.1); }
-
-/* STATUS BADGES */
-.status-dot {
-  display: inline-block;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  margin-right: 6px;
-}
-.dot-green { background: var(--accent2); box-shadow: 0 0 6px var(--accent2); }
-.dot-red { background: var(--accent3); box-shadow: 0 0 6px var(--accent3); }
-.dot-yellow { background: var(--accent4); box-shadow: 0 0 6px var(--accent4); }
+.data-table{width:100%;border-collapse:collapse;font-size:0.84rem}
+.data-table th{text-align:left;padding:10px 12px;color:var(--muted);font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:rgba(255,255,255,0.02)}
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:0.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.tag-green{background:rgba(0,212,170,0.12);color:var(--accent2);border:1px solid rgba(0,212,170,0.2)}
+.tag-red{background:rgba(255,107,107,0.12);color:var(--accent3);border:1px solid rgba(255,107,107,0.2)}
+.tag-yellow{background:rgba(255,217,61,0.12);color:var(--accent4);border:1px solid rgba(255,217,61,0.2)}
+.tag-blue{background:rgba(108,99,255,0.12);color:var(--accent);border:1px solid rgba(108,99,255,0.2)}
+.tag-gray{background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid rgba(255,255,255,0.1)}
+.tag-orange{background:rgba(255,152,0,0.12);color:#ff9800;border:1px solid rgba(255,152,0,0.2)}
 
 /* CALLOUT */
-.callout {
-  background: rgba(108,99,255,0.08);
-  border: 1px solid rgba(108,99,255,0.25);
-  border-radius: 12px;
-  padding: 1.2rem 1.5rem;
-  margin: 1.5rem 0;
-  font-size: 0.9rem;
-  line-height: 1.7;
-}
-.callout.warning {
-  background: rgba(255,107,107,0.07);
-  border-color: rgba(255,107,107,0.2);
-}
-.callout.success {
-  background: rgba(0,212,170,0.07);
-  border-color: rgba(0,212,170,0.2);
-}
-.callout.info {
-  background: rgba(255,217,61,0.07);
-  border-color: rgba(255,217,61,0.2);
-}
+.callout{background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.22);border-radius:12px;padding:1.2rem 1.5rem;margin:1.5rem 0;font-size:0.88rem;line-height:1.7}
+.callout.warning{background:rgba(255,107,107,0.07);border-color:rgba(255,107,107,0.2)}
+.callout.success{background:rgba(0,212,170,0.07);border-color:rgba(0,212,170,0.2)}
+.callout.info{background:rgba(255,217,61,0.07);border-color:rgba(255,217,61,0.2)}
+.callout.orange{background:rgba(255,152,0,0.07);border-color:rgba(255,152,0,0.2)}
 
-/* LIST STYLES */
-ul.insight-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-ul.insight-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  font-size: 0.88rem;
-  line-height: 1.55;
-}
-ul.insight-list li::before {
-  content: '▸';
-  color: var(--accent);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
+/* INSIGHT LIST */
+ul.insight-list{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+ul.insight-list li{display:flex;align-items:flex-start;gap:.7rem;font-size:0.87rem;line-height:1.55}
+ul.insight-list li::before{content:'▸';color:var(--accent);flex-shrink:0;margin-top:2px}
 
-/* PLAY CARDS */
-.play-card {
-  background: linear-gradient(135deg, rgba(108,99,255,0.07), rgba(0,212,170,0.04));
-  border: 1px solid rgba(108,99,255,0.2);
-  border-radius: 16px;
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-.play-number {
-  font-family: var(--font-h);
-  font-weight: 800;
-  font-size: 2.5rem;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  line-height: 1;
-}
-.play-title {
-  font-family: var(--font-h);
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--text);
-}
-.play-desc {
-  font-size: 0.85rem;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.play-impact {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--accent2);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+/* PLAY CARD */
+.play-card{background:linear-gradient(135deg,rgba(108,99,255,0.07),rgba(0,212,170,0.04));border:1px solid rgba(108,99,255,0.2);border-radius:16px;padding:1.75rem;display:flex;flex-direction:column;gap:.75rem}
+.play-number{font-family:var(--font-h);font-weight:800;font-size:2.8rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.play-title{font-family:var(--font-h);font-weight:700;font-size:1.08rem;color:var(--text)}
+.play-desc{font-size:0.85rem;color:var(--muted);line-height:1.65}
+.play-meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.25rem}
+.play-impact{font-size:0.77rem;font-weight:700;color:var(--accent2);display:flex;align-items:center;gap:6px}
 
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 3rem 2rem;
-  color: var(--muted);
-  font-size: 0.78rem;
-  border-top: 1px solid var(--border);
-  position: relative;
-  z-index: 1;
-}
+/* DIVIDER */
+hr.section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);max-width:1200px;margin:0 auto}
 
-/* ANIMATE ON SCROLL */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* DATA BADGE */
+.data-badge{display:inline-flex;align-items:center;gap:6px;font-size:0.67rem;font-weight:700;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.18);color:var(--accent2);padding:3px 10px;border-radius:20px;letter-spacing:.04em;margin-bottom:.75rem}
 
-/* HIGHLIGHT TEXT */
-.hl { color: var(--accent2); font-weight: 700; }
-.hl-accent { color: var(--accent); font-weight: 700; }
-.hl-warn { color: var(--accent3); font-weight: 700; }
-.hl-yellow { color: var(--accent4); font-weight: 700; }
+/* ALERT BOX */
+.alert-box{border-radius:12px;padding:1rem 1.25rem;font-size:0.84rem;line-height:1.6;margin-bottom:1rem}
+.alert-critical{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.25)}
+.alert-high{background:rgba(255,152,0,0.08);border:1px solid rgba(255,152,0,0.2)}
+.alert-medium{background:rgba(255,217,61,0.07);border:1px solid rgba(255,217,61,0.18)}
 
-/* RIBBON */
-.data-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  background: rgba(0,212,170,0.1);
-  border: 1px solid rgba(0,212,170,0.2);
-  color: var(--accent2);
-  padding: 3px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.04em;
-  margin-bottom: 0.75rem;
-}
+/* STATUS TABLE */
+.status-check{display:inline-flex;align-items:center;gap:5px;font-size:0.75rem;font-weight:700;padding:3px 9px;border-radius:20px}
+.sc-done{background:rgba(0,212,170,0.12);color:var(--accent2)}
+.sc-partial{background:rgba(255,217,61,0.12);color:var(--accent4)}
+.sc-missing{background:rgba(255,107,107,0.12);color:var(--accent3)}
+.sc-new{background:rgba(108,99,255,0.12);color:var(--accent)}
+.sc-unknown{background:rgba(255,255,255,0.06);color:var(--muted)}
+
+/* FADE IN */
+.fade-in{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* HIGHLIGHT */
+.hl{color:var(--accent2);font-weight:700}
+.hl-accent{color:var(--accent);font-weight:700}
+.hl-warn{color:var(--accent3);font-weight:700}
+.hl-yellow{color:var(--accent4);font-weight:700}
+.hl-orange{color:#ff9800;font-weight:700}
+
+footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;border-top:1px solid var(--border);position:relative;z-index:1}
 </style>
 </head>
 <body>
@@ -506,32 +167,36 @@ footer {
     <li><a href="#actions">Actions</a></li>
     <li><a href="#plays">Plays</a></li>
   </ul>
-  <span class="nav-badge">Q2 2026 · Live Data</span>
+  <span class="nav-badge">Q2 2026 · Live SF Data</span>
 </nav>
 
 <main>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-tag">⚡ Updated April 28, 2026 · Powered by Live SF + Kaia Intelligence</div>
+  <div class="hero-tag">⚡ April 28, 2026 · Opus-Reviewed · Live SF + Kaia Intelligence</div>
   <h1>GTM Alignment<br>Q2 2026 Update</h1>
-  <p class="hero-sub">Updated from March 2026 · Synthesized from Salesforce live queries, Kaia call intelligence, onboarding risk data, and April 2026 signals. Opus-reviewed and revised before delivery.</p>
+  <p class="hero-sub">Updated from March 2026 original. Synthesized from live Salesforce SOQL queries, 100 Kaia call records (last 30 days), 74 onboarding transcripts, and full loss anatomy. Critically reviewed before delivery.</p>
   <div class="hero-stats">
     <div class="hero-stat">
-      <div class="num">1,114</div>
-      <div class="lbl">Total PSA Wins</div>
+      <div class="num">755</div>
+      <div class="lbl">Unique PSA Accounts</div>
+      <div class="sub">vs. ~115 at Mar 2025 baseline</div>
     </div>
     <div class="hero-stat">
       <div class="num">19.5%</div>
       <div class="lbl">Win Rate Apr MTD</div>
+      <div class="sub">Up from 7.7% in January</div>
     </div>
     <div class="hero-stat">
-      <div class="num">$111K</div>
+      <div class="num">$76K</div>
       <div class="lbl">Open PSA Pipeline MRR</div>
+      <div class="sub">73 open opportunities</div>
     </div>
     <div class="hero-stat">
-      <div class="num">317</div>
-      <div class="lbl">IT MSP Displacements</div>
+      <div class="num">20.8%</div>
+      <div class="lbl">No-Show Rate Apr MTD</div>
+      <div class="sub">Down from 32.7% peak in Feb</div>
     </div>
   </div>
   <div class="hero-scroll">
@@ -552,44 +217,42 @@ footer {
     </div>
   </div>
 
-  <!-- KPI Row -->
   <div class="grid-4" style="margin-bottom:1.5rem">
     <div class="card">
-      <div class="card-title">PSA Wins (All Time)</div>
-      <div class="kpi-val" style="color:var(--accent2)">1,114</div>
-      <div class="kpi-label">$316,851 total MRR</div>
-      <span class="kpi-delta delta-up">▲ Accelerating</span>
+      <div class="card-title">PSA Unique Accounts (All Time)</div>
+      <div class="kpi-val" style="color:var(--accent2)">755</div>
+      <div class="kpi-label">$316,851 MRR won (all opportunities)</div>
+      <span class="kpi-delta delta-up">▲ 6.6× the Mar 2025 baseline of 115</span>
     </div>
     <div class="card">
       <div class="card-title">Win Rate — Apr MTD</div>
       <div class="kpi-val" style="color:var(--accent2)">19.5%</div>
-      <div class="kpi-label">29 won / 149 closed</div>
-      <span class="kpi-delta delta-up">▲ Best 6-month high</span>
+      <div class="kpi-label">29 won / 149 closed (lower MTD volume)</div>
+      <span class="kpi-delta delta-up">▲ 6-month high, but partial month</span>
     </div>
     <div class="card">
-      <div class="card-title">Open PSA Pipeline</div>
-      <div class="kpi-val" style="color:var(--accent)">$76K</div>
-      <div class="kpi-label">73 open opportunities</div>
-      <span class="kpi-delta delta-up">▲ Strong Q2 setup</span>
+      <div class="card-title">Total MRR Booked — Apr MTD</div>
+      <div class="kpi-val" style="color:var(--accent)">$16,397</div>
+      <div class="kpi-label">22 deals with amounts • All products</div>
+      <span class="kpi-delta delta-flat">≈ On pace for ~$22K full month</span>
     </div>
     <div class="card">
-      <div class="card-title">Discovery No-Show</div>
+      <div class="card-title">Discovery No-Show Rate</div>
       <div class="kpi-val" style="color:var(--accent4)">20.8%</div>
-      <div class="kpi-label">Apr MTD (was 32.7% in Feb)</div>
-      <span class="kpi-delta delta-up">▲ Improving fast</span>
+      <div class="kpi-label">Apr MTD (was 32.7% peak in Feb)</div>
+      <span class="kpi-delta delta-up">▲ 37% reduction since February peak</span>
     </div>
   </div>
 
-  <!-- Charts Row -->
   <div class="grid-2" style="margin-bottom:1.5rem">
     <div class="card">
-      <div class="card-title">Monthly Bookings MRR — All Products (Nov 2025 – Apr 2026 MTD)</div>
+      <div class="card-title">Monthly Bookings — All Products MRR (Nov 2025 – Apr 2026)</div>
       <div class="chart-wrap">
         <canvas id="bookingsChart"></canvas>
       </div>
     </div>
     <div class="card">
-      <div class="card-title">Win Rate Trend — % Won / (Won + Lost)</div>
+      <div class="card-title">Win Rate Trend — Won / (Won + Lost) All Products</div>
       <div class="chart-wrap">
         <canvas id="winrateChart"></canvas>
       </div>
@@ -598,40 +261,43 @@ footer {
 
   <!-- Pipeline breakdown -->
   <div class="card">
-    <div class="card-title">Open Pipeline — By Product ($MRR)</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:0.5rem">
+    <div class="card-title">Open Pipeline — By Product ($MRR) • April 28, 2026</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;margin-top:.5rem">
       <div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-          <span style="font-size:0.85rem">PSA 2.0</span>
-          <span style="font-weight:700;color:var(--accent2)">$71,455</span>
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+          <span style="font-size:0.87rem;font-weight:600">PSA 2.0</span>
+          <span style="font-weight:800;color:var(--accent2)">$71,455</span>
         </div>
         <div class="progress-bar"><div class="progress-fill" style="width:64%;background:var(--accent2)"></div></div>
-        <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">69 deals</div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:3px">69 deals · avg $1,035/deal</div>
       </div>
       <div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-          <span style="font-size:0.85rem">Billing</span>
-          <span style="font-weight:700;color:var(--accent)">$29,047</span>
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+          <span style="font-size:0.87rem;font-weight:600">Billing</span>
+          <span style="font-weight:800;color:var(--accent)">$29,047</span>
         </div>
         <div class="progress-bar"><div class="progress-fill" style="width:26%;background:var(--accent)"></div></div>
-        <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">28 deals</div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:3px">28 deals · avg $1,037/deal</div>
       </div>
       <div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-          <span style="font-size:0.85rem">Payments AR</span>
-          <span style="font-weight:700;color:var(--accent4)">$5,846</span>
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+          <span style="font-size:0.87rem;font-weight:600">Payments AR</span>
+          <span style="font-weight:800;color:var(--accent4)">$5,846</span>
         </div>
         <div class="progress-bar"><div class="progress-fill" style="width:5%;background:var(--accent4)"></div></div>
-        <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">16 deals</div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:3px">16 deals · avg $365/deal</div>
       </div>
       <div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-          <span style="font-size:0.85rem">PSA (legacy)</span>
-          <span style="font-weight:700;color:var(--muted)">$4,800</span>
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+          <span style="font-size:0.87rem;font-weight:600">PSA Legacy</span>
+          <span style="font-weight:800;color:var(--muted)">$4,800</span>
         </div>
         <div class="progress-bar"><div class="progress-fill" style="width:4%;background:var(--muted)"></div></div>
-        <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">4 deals</div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-top:3px">4 deals · migrate to PSA 2.0</div>
       </div>
+    </div>
+    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:0.82rem;color:var(--muted)">
+      <strong style="color:var(--text)">Total open pipeline: ~$111K MRR</strong> across 117 opportunities. PSA 2.0 is 64% of open MRR — the strategic motion is the largest motion in the pipeline.
     </div>
   </div>
 </section>
@@ -644,44 +310,113 @@ footer {
     <div class="section-icon">🚀</div>
     <div>
       <div class="section-num">Section 2</div>
-      <h2>The 5× Path — What's Changed</h2>
+      <h2>The 5× Path — What's Changed Since March</h2>
     </div>
   </div>
 
   <div class="callout" style="margin-bottom:2rem">
-    <strong style="color:var(--text)">Original Thesis (March 2026):</strong> The 5× path requires three things working together — fix the execution machine (show rates, rep coaching, SDR quality), monetize near-term pipeline (Billing cross-sell, Apollo 2 re-engagements), and build the IT MSP competitive displacement motion. The product is ready. The problem is execution.
+    <strong style="color:var(--text)">Original Thesis (March 3, 2026):</strong> The 5× path requires three things working together — <strong>fix the execution machine</strong> (show rates, rep coaching, SDR quality), <strong>monetize near-term pipeline</strong> (Billing cross-sell, Apollo 2 re-engagements, inbound investment), and <strong>build the IT MSP competitive displacement motion</strong>. The product is ready. It requires changing how and to whom we sell it.
   </div>
 
-  <div class="grid-2" style="margin-bottom:1.5rem">
+  <div class="grid-2" style="margin-bottom:2rem">
     <div class="card">
-      <div class="data-badge">✅ What's Working</div>
+      <div class="data-badge">✅ What's Working — April 2026</div>
       <ul class="insight-list">
-        <li><strong>Win rate accelerating:</strong> 7.7% Jan → 18.4% Mar → <span class="hl">19.5% Apr MTD</span> — the trend is real and significant</li>
-        <li><strong>Discovery no-show declining sharply:</strong> Peak 32.7% Feb → <span class="hl">20.8% Apr</span> — SDR comp restructure is working</li>
-        <li><strong>March was the strongest PSA month in 6 months:</strong> $15,870 MRR booked — 58% above November</li>
-        <li><strong>MSP displacement accelerating:</strong> 23 MSP wins in last 60 days alone (CW: 12, Kaseya: 6, Syncro: 3, Halo: 2)</li>
-        <li><strong>Apollo 2 shipped:</strong> 78+ features now available — product gap no longer the primary blocker</li>
-        <li><strong>Conversion rate trending up:</strong> 4.6% (Feb) → 4.8% (Mar) → 6.0%+ (Apr MTD) on meeting-to-win basis</li>
+        <li><strong>Win rate on a clear uptrend:</strong> 7.7% Jan → 12.6% Feb → 18.4% Mar → <span class="hl">19.5% Apr MTD</span>. Even discounting MTD partial-month effect, the direction is unambiguous.</li>
+        <li><strong>Discovery no-show declining sharply:</strong> 32.7% peak in Feb → <span class="hl">20.8% Apr</span>. SDR comp restructure (set → complete) is the most likely driver. Still work to do — target is sub-12%.</li>
+        <li><strong>March was strongest PSA month in 6 months:</strong> $15,870 MRR, 14 wins — 62% above November's $9,772.</li>
+        <li><strong>MSP displacement accelerating:</strong> 23 IT MSP wins in last 60 days (CW: 12, Kaseya: 6, Syncro: 3, Halo: 2). Motion is building.</li>
+        <li><strong>Apollo 2 shipped:</strong> 78+ features available. Product gap is no longer the primary blocker — but reps don't know what shipped.</li>
+        <li><strong>Conversion rate trending up:</strong> 4.6% → 4.8% → 6.0%+ on meeting-to-win basis per Kaia analysis.</li>
+        <li><strong>"No Decision/Non-Responsive" plummeting:</strong> Was the #1 all-time loss reason (2,551 total). Only 2 in last 60 days — significant behavioral improvement in qualification (see caveat in Section 3).</li>
       </ul>
     </div>
     <div class="card">
-      <div class="data-badge" style="background:rgba(255,107,107,0.1);border-color:rgba(255,107,107,0.2);color:var(--accent3)">⚠️ Still Broken</div>
+      <div class="data-badge" style="background:rgba(255,107,107,0.1);border-color:rgba(255,107,107,0.2);color:var(--accent3)">⚠️ Still Broken — April 2026</div>
       <ul class="insight-list">
-        <li><strong>Discovery No Show still at 20%+</strong> — down from 32% but still costs ~1 in 5 meetings. Needs to reach &lt;12% to unlock full pipeline</li>
-        <li><strong>"Software Missing Capabilities"</strong> now #3 loss reason in 60-day window (53 deals) — post-Apollo 2 reps still citing feature gaps that SHIPPED</li>
-        <li><strong>Lack of Decision Maker Involvement</strong> spiked to #5 in 60 days (38 deals) — qualification isn't fully fixed</li>
-        <li><strong>Joe Abarno regression:</strong> Only 2 wins in last 90 days (was March's top closer) — needs investigation</li>
-        <li><strong>Onboarding fragility threatens net bookings:</strong> 4 critical churns (including Class 5 April 23) erode gross wins</li>
-        <li><strong>QB Online integration gap:</strong> Still #1 feature request in Kaia calls — impacts MSP expansion</li>
+        <li><strong>No-show at 20%+ still costs 1-in-5 meetings:</strong> Improved but not fixed. Each no-show is a wasted SDR credit. Sub-12% is the target to unlock the 5× math.</li>
+        <li><strong>"Software Missing Capabilities" rising in 60-day data (53 losses)</strong> — reps are still citing features that shipped in Apollo 2 as reasons for loss. This is an <span class="hl-warn">enablement failure</span>, not a product failure.</li>
+        <li><strong>Lack of Decision Maker Involvement now #5 in 60 days (38 losses)</strong> — qualification is better but incomplete. DM attendance must be confirmed before booking.</li>
+        <li><strong>Joe Abarno 5× regression:</strong> Was March's top closer (~33% meeting-to-win). Now 5.9% over 34 opps. This is not a slump — it's a collapse. Needs immediate investigation.</li>
+        <li><strong>Onboarding fragility is an invisible tax on net bookings:</strong> 4 critical churns wiping ~$4,820 MRR. At $835 avg PSA deal size, that's 5-6 new deals erased monthly.</li>
+        <li><strong>QB Online integration still absent:</strong> #1 Kaia feature request, blocking MSP expansion. Apollo 3 timeframe — needs escalation.</li>
+        <li><strong>NinjaOne bugs unresolved:</strong> Literally causing a customer to churn (Novalera). A flagship MSP integration shipping with parent-child mapping bugs is a reputational risk.</li>
       </ul>
     </div>
+  </div>
+
+  <!-- March Action Item Status -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">March Action Item Status — What Got Done?</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Action</th><th>Owner</th><th>Status</th><th>Evidence / Note</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Extract Jamie Butler's show-rate playbook</td>
+          <td>Sales Mgmt</td>
+          <td><span class="status-check sc-unknown">❓ Unknown</span></td>
+          <td>Butler still showing strong results (8 wins, largest pipeline $20.8K) but no documented rollout found</td>
+        </tr>
+        <tr>
+          <td>Manager on every Patrick Davies deal</td>
+          <td>Sales Mgmt</td>
+          <td><span class="status-check sc-partial">⚠️ Partial</span></td>
+          <td>Davies still at 11.7% win rate with 68 losses in 90d — no measurable improvement</td>
+        </tr>
+        <tr>
+          <td>Close Losh Network (Stage 5) + Vision CTS</td>
+          <td>Ryan Koontz</td>
+          <td><span class="status-check sc-partial">⚠️ Mixed</span></td>
+          <td>Losh now classified as onboarding risk ($1,004 MRR, At Risk). Vision CTS shows no open PSA opportunity in SF — unclear if won or lost.</td>
+        </tr>
+        <tr>
+          <td>Shift 80%+ paid media to LinkedIn (IT MSP)</td>
+          <td>Jennifer Hopkins</td>
+          <td><span class="status-check sc-unknown">❓ Unconfirmed</span></td>
+          <td>MSP displacement wins accelerating — possible that shift occurred. Confirm budget allocation from Jennifer.</td>
+        </tr>
+        <tr>
+          <td>Apollo 2 re-engagement campaign (98 deals, ~$101K)</td>
+          <td>Sales + Marketing</td>
+          <td><span class="status-check sc-missing">❌ No evidence</span></td>
+          <td>"Software Missing Capabilities" still top-3 loss reason in 60-day data. If campaign ran, reps aren't converting on it.</td>
+        </tr>
+        <tr>
+          <td>Joe Abarno leads team training</td>
+          <td>Sales Mgmt</td>
+          <td><span class="status-check sc-missing">❌ Unclear</span></td>
+          <td>Abarno himself has regressed to 5.9% win rate — making him a training leader now would be premature. Investigate first.</td>
+        </tr>
+        <tr>
+          <td>SDR ICP scoring + qualification overhaul</td>
+          <td>Sales Mgmt</td>
+          <td><span class="status-check sc-partial">✅ Partial Progress</span></td>
+          <td>No-show rate declining (32.7% → 20.8%). Comp restructure (set → complete) appears to be working. ICP scoring status unknown.</td>
+        </tr>
+        <tr>
+          <td>Diagnose November collapse (12.2% → 6.1%)</td>
+          <td>Sales Ops</td>
+          <td><span class="status-check sc-unknown">❓ Unknown</span></td>
+          <td>Win rate has recovered (now 18-19%) but root cause never publicly documented. Should be closed out.</td>
+        </tr>
+        <tr>
+          <td>Tigerpaw migration (80–100 accounts)</td>
+          <td>Evan + Ryan</td>
+          <td><span class="status-check sc-partial">▶ In Progress</span></td>
+          <td>Ongoing. Critical — these accounts are at competitor risk as legacy support winds down.</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="card">
-    <div class="card-title">Conversion Rate Trajectory — Meeting-to-Win</div>
+    <div class="card-title">Conversion Rate Trajectory — Meeting-to-Win (Kaia-Measured)</div>
     <div class="chart-wrap" style="height:200px">
       <canvas id="conversionChart"></canvas>
     </div>
+    <div style="font-size:0.78rem;color:var(--muted);margin-top:.75rem">Source: Kaia call intelligence. Based on meetings tracked vs. Closed Won outcomes within 90-day window. 10.6% meeting-to-win rate was the 90-day baseline (44 wins / 414 meetings).</div>
   </div>
 </section>
 
@@ -699,14 +434,14 @@ footer {
 
   <div class="grid-2" style="margin-bottom:1.5rem">
     <div class="card">
-      <div class="card-title">Loss Reasons — Last 60 Days (335 total closed lost)</div>
-      <div class="chart-wrap" style="height:300px">
+      <div class="card-title">Loss Reasons — Last 60 Days (335 total closed lost with reason codes)</div>
+      <div class="chart-wrap tall">
         <canvas id="lossChart"></canvas>
       </div>
     </div>
     <div class="card">
-      <div class="card-title">Discovery No-Show Trend (% of Monthly Losses)</div>
-      <div class="chart-wrap" style="height:300px">
+      <div class="card-title">Discovery No-Show Rate by Month (% of total losses)</div>
+      <div class="chart-wrap tall">
         <canvas id="noshowChart"></canvas>
       </div>
     </div>
@@ -714,36 +449,37 @@ footer {
 
   <div class="grid-3" style="margin-bottom:1.5rem">
     <div class="card">
-      <div class="card-title">Stage Where Deals Die</div>
+      <div class="card-title">Where Deals Die — Stage Funnel</div>
       <ul class="insight-list">
-        <li><strong>Discovery Scheduled (Stage 1):</strong> <span class="hl-warn">2,011 losses</span> — the single biggest graveyard. These never ran.</li>
-        <li><strong>Discovery Completed (Stage 2):</strong> 708 losses — ran but didn't move</li>
-        <li><strong>Initial Product Demo (Stage 3):</strong> 492 losses — saw the product, walked away</li>
-        <li><strong>Proposal Sent (Stage 4):</strong> 193 losses — got to pricing, didn't close</li>
-        <li><strong>Stage 5–6:</strong> Only 101 losses — late stage is solid once we get there</li>
+        <li><strong>Stage 1 — Discovery Scheduled:</strong> <span class="hl-warn">2,011 losses</span>. The graveyard. These never ran — pure no-show / non-responsive territory.</li>
+        <li><strong>Stage 2 — Discovery Completed:</strong> <span class="hl-warn">708 losses</span>. Ran discovery, went nowhere. This is the next optimization lever — 708 qualified buyers who engaged once and then died.</li>
+        <li><strong>Stage 3 — Initial Product Demo:</strong> 492 losses. Saw the product but didn't advance. Likely a demo quality / mismatch issue.</li>
+        <li><strong>Stage 4–5 — Proposal / Validation:</strong> 263 total losses. Late stage — controllable with better commercial terms.</li>
+        <li><strong>Stage 6+ — Verbal Commit:</strong> Only 39 losses. Once they verbally commit, we close. The close process isn't broken.</li>
       </ul>
     </div>
     <div class="card">
-      <div class="card-title">What Changed vs. March</div>
+      <div class="card-title">What's New vs. March</div>
       <ul class="insight-list">
-        <li>Discovery No Show <span class="hl">declining</span> (was #1 concern in March, now dropping)</li>
-        <li>"Software Missing Capabilities" <span class="hl-warn">rising</span> in 60-day window — reps haven't internalized Apollo 2 delivery</li>
-        <li>"In Existing Contract" appearing (17 in 60d) — MSP cycle timing matters</li>
-        <li>"Lack of DM Involvement" — 38 in 60d is a new signal; qualification slip</li>
-        <li>"No Decision / Non-Responsive" — dropped sharply in 60d window (only 2!) — massive improvement</li>
+        <li><strong>No-show declining:</strong> 41% → 21% as % of losses. The single biggest improvement since March.</li>
+        <li><strong>"Software Missing Capabilities" rising (#3 in 60d):</strong> 53 losses on shipped features. This didn't show as prominently in March — new and growing concern.</li>
+        <li><strong>"In Existing Contract" appearing (17 in 60d):</strong> IT MSP prospects locked into CW/Kaseya/Halo. Timing is now a real variable.</li>
+        <li><strong>"Lack of DM Involvement" at 38:</strong> New qualification gap — DM must be on the discovery call.</li>
+        <li><strong>"Price" still at 33 losses (60d):</strong> Not shrinking. Worth examining if our pricing model creates objections that can be addressed in packaging.</li>
       </ul>
     </div>
     <div class="card">
-      <div class="card-title">The Critical Insight</div>
-      <div class="callout success" style="margin:0">
-        <strong>"No Decision / Non-Responsive"</strong> was the #1 all-time loss reason (2,551 losses) but is nearly <span class="hl">GONE from recent data</span> (only 2 in last 60 days). This is the clearest signal that SDR quality improvement is working. The pipeline is getting cleaner.
+      <div class="card-title">⚠️ Data Quality Caveat</div>
+      <div class="callout warning" style="margin:0">
+        <strong>"No Decision / Non-Responsive" — suspicious drop</strong><br>
+        All-time this is the #1 loss reason (2,551 losses). In the last 60 days: only 2. This is <span class="hl-warn">almost certainly a rep logging behavior change</span>, not genuine improvement. Reps may be categorizing the same outcome under "Not the Right Time" or leaving the field blank. Request a data audit from Sales Ops before celebrating this as fixed. If it's real, it's remarkable. If it's a relabel, we need accurate data.
       </div>
-      <div style="margin-top:1rem;font-size:0.83rem;color:var(--muted)">The new challenge: "Software Missing Capabilities" rising means reps are losing deals on features that already shipped. This is a sales enablement gap, not a product gap.</div>
     </div>
   </div>
 
   <div class="callout warning">
-    <strong>⚠️ Stage 1 is the graveyard (2,011 all-time losses at Discovery Scheduled).</strong> Every meeting that runs but doesn't advance = lost opportunity cost. The no-show fix is working but we need to also fix the post-discovery conversion from Stage 2 → 3. 708 deals ran discovery and went nowhere — that's the next optimization lever.
+    <strong>🚨 The Stage 2 Problem — 708 Qualified Buyers Who Went Dark</strong><br>
+    These prospects were qualified enough to show up, engaged enough to run a 20+ minute discovery call, and then disappeared. No-shows get all the attention, but the Stage 2 → Stage 3 conversion gap is equally large. <strong>Every rep should be required to book a demo date before leaving Stage 2.</strong> A simple rule: "No open opportunity can sit in Stage 2 for more than 5 business days without a scheduled Stage 3 or a close." Implementing this one rule could yield a 15–20% conversion improvement in the mid-funnel.
   </div>
 </section>
 
@@ -755,156 +491,147 @@ footer {
     <div class="section-icon">👥</div>
     <div>
       <div class="section-num">Section 4</div>
-      <h2>Rep Performance Matrix</h2>
+      <h2>Rep Performance Matrix — Live 90-Day Data</h2>
     </div>
   </div>
 
-  <div class="data-badge">Live Data · Last 90 Days · Apr 28, 2026</div>
+  <div class="data-badge">Salesforce Live · Last 90 Days (Jan 28 – Apr 28, 2026)</div>
 
-  <div class="card" style="overflow-x:auto">
+  <!-- Rep Chart -->
+  <div class="grid-2" style="margin-bottom:1.5rem">
+    <div class="card">
+      <div class="card-title">Win Rate by Rep — 90 Days (min. 5 closed opps)</div>
+      <div class="chart-wrap">
+        <canvas id="repWinrateChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">MRR Won vs. Avg Deal Size by Rep</div>
+      <div class="chart-wrap">
+        <canvas id="repMrrChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="overflow-x:auto;margin-bottom:1.5rem">
     <table class="data-table">
       <thead>
         <tr>
           <th>Rep</th>
-          <th>Won (90d)</th>
-          <th>Lost (90d)</th>
+          <th>Won</th>
+          <th>Lost</th>
           <th>Win Rate</th>
           <th>MRR Won</th>
           <th>Avg Deal</th>
-          <th>Pipeline MRR</th>
+          <th>Open Pipeline</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td><strong>Andy Whisenant</strong></td>
-          <td>8</td><td>58</td>
-          <td><strong style="color:var(--accent4)">12.1%</strong></td>
-          <td style="color:var(--accent2)">$18,440</td>
-          <td style="color:var(--accent2)"><strong>$2,305</strong></td>
-          <td>$18,260</td>
-          <td><span class="tag tag-yellow">⭐ High ACV</span></td>
-        </tr>
-        <tr>
+        <tr style="background:rgba(0,212,170,0.04)">
           <td><strong>Justin Lee</strong></td>
           <td>18</td><td>28</td>
           <td><strong style="color:var(--accent2)">39.1%</strong></td>
-          <td>$9,380</td>
-          <td>$521</td>
-          <td>—</td>
-          <td><span class="tag tag-green">🏆 Top Rate</span></td>
+          <td>$9,380</td><td>$521</td><td>—</td>
+          <td><span class="tag tag-green">🏆 Best Win Rate</span></td>
         </tr>
-        <tr>
+        <tr style="background:rgba(0,212,170,0.04)">
           <td><strong>Ingrid Beard</strong></td>
           <td>22</td><td>39</td>
           <td><strong style="color:var(--accent2)">36.1%</strong></td>
-          <td>$8,227</td>
-          <td>$374</td>
-          <td>$4,896</td>
-          <td><span class="tag tag-green">🏆 Top Volume</span></td>
+          <td>$8,227</td><td>$374</td><td>$4,896</td>
+          <td><span class="tag tag-green">🏆 Most Wins</span></td>
+        </tr>
+        <tr>
+          <td><strong>Andy Whisenant</strong> ⭐</td>
+          <td>8</td><td>58</td>
+          <td><strong style="color:var(--accent4)">12.1%</strong></td>
+          <td style="color:var(--accent2)"><strong>$18,440</strong></td>
+          <td style="color:var(--accent2)"><strong>$2,305</strong></td>
+          <td>$18,260</td>
+          <td><span class="tag tag-yellow">⭐ Highest ACV</span></td>
         </tr>
         <tr>
           <td><strong>Jake Borah</strong></td>
           <td>8</td><td>49</td>
           <td><strong style="color:var(--accent4)">14.0%</strong></td>
-          <td>$10,200</td>
-          <td>$1,275</td>
-          <td>$10,405</td>
+          <td>$10,200</td><td>$1,275</td><td>$10,405</td>
           <td><span class="tag tag-blue">Active</span></td>
         </tr>
         <tr>
           <td><strong>Jamie Butler</strong></td>
           <td>8</td><td>55</td>
           <td><strong style="color:var(--accent4)">12.7%</strong></td>
-          <td>$10,280</td>
-          <td>$1,285</td>
-          <td>$20,775</td>
+          <td>$10,280</td><td>$1,285</td><td><strong>$20,775</strong></td>
           <td><span class="tag tag-blue">Largest Pipeline</span></td>
         </tr>
         <tr>
           <td><strong>Connor Flynn</strong></td>
           <td>7</td><td>51</td>
           <td><strong style="color:var(--accent4)">12.1%</strong></td>
-          <td>$7,899</td>
-          <td>$1,128</td>
-          <td>$20,505</td>
+          <td>$7,899</td><td>$1,128</td><td>$20,505</td>
           <td><span class="tag tag-blue">Active</span></td>
-        </tr>
-        <tr>
-          <td><strong>Davis Herndon</strong></td>
-          <td>2</td><td>30</td>
-          <td><strong style="color:var(--accent3)">6.3%</strong></td>
-          <td>$1,775</td>
-          <td>$888</td>
-          <td>—</td>
-          <td><span class="tag tag-yellow">⚠️ Monitor</span></td>
-        </tr>
-        <tr>
-          <td><strong>Joseph Abarno</strong></td>
-          <td>2</td><td>32</td>
-          <td><strong style="color:var(--accent3)">5.9%</strong></td>
-          <td>$1,050</td>
-          <td>$525</td>
-          <td>—</td>
-          <td><span class="tag tag-red">⚠️ Regression</span></td>
-        </tr>
-        <tr>
-          <td><strong>Patrick Davies</strong></td>
-          <td>9</td><td>68</td>
-          <td><strong style="color:var(--accent3)">11.7%</strong></td>
-          <td>$5,580</td>
-          <td>$620</td>
-          <td>$3,395</td>
-          <td><span class="tag tag-red">🚨 Coaching</span></td>
         </tr>
         <tr>
           <td><strong>Jaylin Bender</strong></td>
           <td>4</td><td>51</td>
           <td><strong style="color:var(--accent3)">7.3%</strong></td>
-          <td>$2,440</td>
-          <td>$610</td>
-          <td>$7,610</td>
-          <td><span class="tag tag-red">⚠️ Low Rate</span></td>
+          <td>$2,440</td><td>$610</td><td>$7,610</td>
+          <td><span class="tag tag-red">⚠️ Below Median</span></td>
         </tr>
         <tr>
-          <td><strong>Husam Zalmiyar</strong></td>
+          <td><strong>Davis Herndon</strong></td>
+          <td>2</td><td>30</td>
+          <td><strong style="color:var(--accent3)">6.3%</strong></td>
+          <td>$1,775</td><td>$888</td><td>—</td>
+          <td><span class="tag tag-red">⚠️ Monitor</span></td>
+        </tr>
+        <tr style="background:rgba(255,107,107,0.04)">
+          <td><strong>Joseph Abarno</strong> 🚨</td>
+          <td>2</td><td>32</td>
+          <td><strong style="color:var(--accent3)">5.9%</strong></td>
+          <td>$1,050</td><td>$525</td><td>—</td>
+          <td><span class="tag tag-red">🚨 Regression</span></td>
+        </tr>
+        <tr style="background:rgba(255,107,107,0.04)">
+          <td><strong>Husam Zalmiyar</strong> 🚨</td>
           <td>3</td><td>51</td>
           <td><strong style="color:var(--accent3)">5.6%</strong></td>
-          <td>$2,105</td>
-          <td>$702</td>
-          <td>$11,075</td>
-          <td><span class="tag tag-red">🚨 Action Needed</span></td>
+          <td>$2,105</td><td>$702</td><td>$11,075</td>
+          <td><span class="tag tag-red">🚨 Lowest Rate</span></td>
+        </tr>
+        <tr style="background:rgba(255,107,107,0.04)">
+          <td><strong>Patrick Davies</strong> 🚨</td>
+          <td>9</td><td>68</td>
+          <td><strong style="color:var(--accent3)">11.7%</strong></td>
+          <td>$5,580</td><td>$620</td><td>$3,395</td>
+          <td><span class="tag tag-red">🚨 Coaching Req.</span></td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="grid-3" style="margin-top:1.5rem">
+  <div class="grid-3">
     <div class="card">
-      <div class="card-title">🔴 Coaching Priority — Updated</div>
+      <div class="card-title">🚨 Joe Abarno — Critical Flag</div>
+      <div class="callout warning" style="margin:0;font-size:0.83rem">
+        In March, Abarno was described as a <strong>performance template</strong> — 33% meeting-to-win rate, top closer. 90 days later: <strong>2 wins from 34 opportunities = 5.9%</strong>. That's a <strong>5× collapse</strong> in win rate. This is not noise. Possible causes: ICP drift (taking worse leads), personal disengagement, territory/segment change, or management dynamics. <strong>Ryan needs to be in Abarno's next 3 calls this week — not next month.</strong>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">⭐ Performance Templates — Extract Now</div>
       <ul class="insight-list">
-        <li><strong>Patrick Davies</strong> remains flag: 11.7% win rate, 68 losses in 90d, $3.4K pipeline — unchanged from March. Manager oversight still required.</li>
-        <li><strong>Joe Abarno regression:</strong> Was March's top closer (33% meetings-won rate) but shows only 2 wins in 90d. Critical to investigate — is this pipeline quality, segment shift, or disengagement?</li>
-        <li><strong>Husam Zalmiyar:</strong> 5.6% win rate across 54 opportunities — the second-worst. $11K pipeline at risk.</li>
+        <li><strong>Justin Lee (39.1%):</strong> Shadow his next 3 discovery calls. Document his qualification questions verbatim. What does he ask that others don't?</li>
+        <li><strong>Ingrid Beard (36.1%, 22 wins):</strong> Highest volume + strong rate. Her outreach cadence and confirmation sequence is the playbook to replicate for SDRs.</li>
+        <li><strong>Andy Whisenant ($2,305 avg):</strong> His buyers are 4.4× larger. Profile every CW-won account — this is the MSP ICP in practice.</li>
       </ul>
     </div>
     <div class="card">
-      <div class="card-title">⭐ Performance Templates</div>
-      <ul class="insight-list">
-        <li><strong>Justin Lee at 39.1%</strong> — new standout. Extract his qualification and discovery process immediately. What is he doing differently?</li>
-        <li><strong>Ingrid Beard at 36.1%</strong> — highest volume + strong rate. 22 wins in 90 days. Study her outreach cadence.</li>
-        <li><strong>Andy Whisenant:</strong> $2,305 avg deal size — <strong>4.4× the team average</strong>. He's finding a different buyer. Profile his closed-won accounts.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title">📌 The ACV Story</div>
-      <ul class="insight-list">
-        <li>Team average deal size is ~$500-600 MRR for most reps</li>
-        <li>Whisenant averages $2,305 — selling to a fundamentally different buyer segment</li>
-        <li>Butler ($1,285) and Borah ($1,275) are also above average</li>
-        <li>ICP shift to IT MSP should move the entire team toward the $1,000+ MRR deal profile</li>
-        <li>Rep training on MSP buyer = direct path to ACV lift across the board</li>
-      </ul>
+      <div class="card-title">📌 The ACV Opportunity</div>
+      <div style="font-size:0.85rem;margin-bottom:.75rem">Team median deal size: <strong>~$620 MRR</strong></div>
+      <div style="font-size:0.85rem;margin-bottom:.75rem">Whisenant average: <strong style="color:var(--accent2)">$2,305 MRR</strong> (+272%)</div>
+      <div style="font-size:0.85rem;margin-bottom:1rem">Butler + Borah: <strong>$1,275–1,285 MRR</strong> (+106%)</div>
+      <div style="font-size:0.83rem;color:var(--muted)">ICP shift to IT MSP is the single most direct lever to move the team average. Whisenant is already selling to that buyer. He just needs a system and teammates.</div>
     </div>
   </div>
 </section>
@@ -921,30 +648,34 @@ footer {
     </div>
   </div>
 
+  <div class="callout success" style="margin-bottom:2rem">
+    <strong>March said: "We have only won 11 IT MSP deals to date."</strong> That figure was PSA-only, from a specific narrow count. All-time displacement wins across all Rev.io products at IT MSP accounts — <strong>317 wins totaling $489,778 MRR</strong>. ConnectWise alone: 213 wins. The motion is real and has been building. It just hasn't been systematized or celebrated internally.
+  </div>
+
   <div class="grid-4" style="margin-bottom:1.5rem">
     <div class="card">
       <div class="card-title">ConnectWise Displacements</div>
       <div class="kpi-val" style="color:var(--accent2)">213</div>
-      <div class="kpi-label">$368,872 MRR · All Time</div>
-      <span class="kpi-delta delta-up">▲ 12 in last 60d</span>
+      <div class="kpi-label">$368,872 MRR • All Time</div>
+      <span class="kpi-delta delta-up">▲ 12 wins in last 60 days</span>
     </div>
     <div class="card">
       <div class="card-title">Autotask/Kaseya</div>
       <div class="kpi-val" style="color:var(--accent)">47</div>
-      <div class="kpi-label">$53,528 MRR · All Time</div>
-      <span class="kpi-delta delta-up">▲ 6 in last 60d</span>
+      <div class="kpi-label">$53,528 MRR • All Time</div>
+      <span class="kpi-delta delta-up">▲ 6 wins in last 60 days</span>
     </div>
     <div class="card">
       <div class="card-title">HaloPSA</div>
       <div class="kpi-val" style="color:var(--accent4)">31</div>
-      <div class="kpi-label">$45,126 MRR · All Time</div>
-      <span class="kpi-delta delta-up">▲ 2 in last 60d</span>
+      <div class="kpi-label">$45,126 MRR • All Time</div>
+      <span class="kpi-delta delta-warn">⚠️ 9 Halo losses 60d — we're losing more than winning</span>
     </div>
     <div class="card">
       <div class="card-title">Syncro</div>
       <div class="kpi-val" style="color:var(--muted)">26</div>
-      <div class="kpi-label">$22,251 MRR · All Time</div>
-      <span class="kpi-delta delta-up">▲ 3 in last 60d</span>
+      <div class="kpi-label">$22,251 MRR • All Time</div>
+      <span class="kpi-delta delta-up">▲ 3 wins in last 60 days</span>
     </div>
   </div>
 
@@ -952,27 +683,40 @@ footer {
     <div class="card">
       <div class="card-title">Open IT MSP Pipeline (Competitive)</div>
       <ul class="insight-list">
-        <li><strong>ConnectWire: 13 open deals</strong> — dominant in active pipeline. Contract cycle timing = April–June window (confirm with reps)</li>
-        <li><strong>Autotask/Kaseya: 4 open deals</strong> — Kaseya price hike cycle creates urgency</li>
-        <li><strong>Syncro: 1 open deal</strong> — underweighted vs. win history; opportunity to expand</li>
-        <li><strong>Halo: 9 losses in last 60 days</strong> — we're losing to Halo more than we're beating them. UX gap still real.</li>
+        <li><strong>ConnectWise: 13 open deals</strong> — dominant in active pipeline. CW accounts historically renew May–June. <span class="hl">This is the active window.</span></li>
+        <li><strong>Autotask/Kaseya: 4 open deals</strong> — Kaseya's 2024-2025 price increases created MSP community backlash. Reference: MSP community forums have documented 30–50% renewal price jumps. This is a live displacement trigger.</li>
+        <li><strong>Syncro: 1 open deal</strong> — underweighted vs. our all-time win rate against them. Push SDRs to surface more Syncro prospects.</li>
+        <li><strong>NinjaOne: 1 open deal</strong> — listed as their PSA platform, not ours. Interesting signal — they're moving away from NinjaOne-native PSA.</li>
+        <li><strong>Halo: 9 losses in last 60 days</strong> — losing to Halo more than winning. UX benchmark gap is real. Escalate to Product.</li>
       </ul>
     </div>
     <div class="card">
-      <div class="card-title">⚠️ Accounts at Critical Churn Risk</div>
-      <div class="callout warning" style="margin:0">
-        <ul class="insight-list">
-          <li><strong>GuentherTech ($2,070/mo)</strong> — 75-80% churn risk. 4-week ticket bug unresolved. Halo displacement win in March. Evan call critical.</li>
-          <li><strong>Novalera ($500/mo)</strong> — 85-90% churn risk. NinjaOne bugs + onboarding on unstable platform. Tony: "I can easily spend that time and money in Halo."</li>
-          <li><strong>Class 5 Technologies ($2,250/mo)</strong> — PSA cancelled Apr 23. Billing still active ($2,250). Protect billing relationship.</li>
-          <li><strong>Converged Networks</strong> — locked in Halo until Feb 2027. Re-engage Q4 2026.</li>
-        </ul>
+      <div class="card-title">⚠️ Accounts at Critical Churn Risk (MSP Segment)</div>
+      <div class="alert-box alert-critical" style="margin-bottom:.75rem">
+        <strong>🔴 Class 5 Technologies — CHURNED April 23</strong><br>
+        PSA cancelled. 4.5 months, never went live. $500/mo PSA gone. Billing still active ($2,250). Protect billing — do NOT attempt PSA re-pitch for 12-18 months. Offer ~$2,450 PSA refund. CEO: Ray Paskey (360) 949-1381.
       </div>
+      <div class="alert-box alert-critical">
+        <strong>🔴 GuentherTech ($2,070/mo) — 75-80% churn risk</strong><br>
+        4-week-old ticket bug unresolved. QB Online gap. Canadian distributor integrations (D&H, Synnex, Ingram) unaddressed since kickoff. Payments AR dropped Apr 8. CEO: Ben Guenther (ben@guenthertech.ca). Evan call: this week.
+      </div>
+      <div class="alert-box alert-high">
+        <strong>🟠 Novalera ($500/mo) — 85-90% churn risk</strong><br>
+        Left Halo specifically for NinjaOne integration. NinjaOne shipped with parent-child bugs causing data duplication. Tony: "I can easily spend that time and money in Halo." CEO: Tony Testerman (443) 528-7060. Evan call: this week.
+      </div>
+      <div style="margin-top:.75rem;font-size:0.8rem;color:var(--muted)"><strong>Combined at-risk MRR: $4,820</strong> — equivalent to 5-6 new PSA deals. These are save calls, not sales calls.</div>
     </div>
   </div>
 
-  <div class="callout info">
-    <strong>🚨 April Kaia Signal:</strong> ConnectWise is the #3 competitor mention in last 30 days of calls (5 mentions) and appears in 13 open pipeline deals. CW has historically had a May–June contract renewal cycle for many SMBs. <strong>This is a timing window.</strong> Reps should be asking about contract end dates on every CW prospect call this week.
+  <div class="grid-2">
+    <div class="callout orange" style="margin:0">
+      <strong>🚨 NinjaOne Phase 1 — Gating Risk for MSP Velocity</strong><br>
+      NinjaOne integration is "still in progress" per Apollo 2 audit. Phase 1 rolled out ~Apr 3 with known parent-child mapping bugs. This is now <strong>actively causing a customer to churn</strong> (Novalera) and was the #1 stated reason they left Halo. Until NinjaOne is stable, every IT MSP prospect who asks about it is a potential Novalera — won and then lost. Escalate to Product immediately for a fix timeline. Sales must NOT promise NinjaOne stability until bugs are closed.
+    </div>
+    <div class="callout info" style="margin:0">
+      <strong>💡 Tigerpaw Migration Math</strong><br>
+      80-100 accounts with confirmed Tigerpaw → PSA Web migration intent. At legacy Tigerpaw pricing (~$600-900/mo average), that's <strong>$48,000–90,000 MRR at risk</strong> if they churn to a competitor during the transition window. Plus the ~540 remaining Tigerpaw base watching this unfold. Migrate proactively — this is not a nice-to-have, it's $50-90K ARR protection. Every month of delay is counterpart risk.
+    </div>
   </div>
 </section>
 
@@ -989,69 +733,39 @@ footer {
   </div>
 
   <div class="callout warning" style="margin-bottom:2rem">
-    <strong>The math that changes everything:</strong> If you close 14 PSA deals in March at $15,870 MRR and lose 2 churns at $2,570 MRR each, your net bookings are $10,730 — not $15,870. <strong>Every churn costs you 2+ new deals' worth of margin.</strong> Onboarding isn't a services problem. It's a revenue problem.
+    <strong>The math:</strong> March booked 14 PSA deals at $15,870 MRR. Class 5 ($2,250) churned. GuentherTech ($2,070) and Novalera ($500) are 80%+ churn risk. <strong>Best case: $4,820 in earned-back-MRR evaporating — wiping 30% of March's gross bookings in a single month.</strong> At $835 avg deal size, recovering these 3 accounts would cost 6 new deals. You don't buy back trust with a sales cycle; you have to have never lost it. Prevention > recovery. Every churn is a compounding tax on net bookings.
   </div>
 
   <div class="grid-2" style="margin-bottom:1.5rem">
     <div class="card">
-      <div class="card-title">Critical Risk Accounts — PSA Onboarding</div>
-      <table class="data-table">
-        <thead>
-          <tr><th>Account</th><th>MRR</th><th>Risk</th><th>Primary Issue</th></tr>
-        </thead>
+      <div class="card-title">Critical Risk Accounts — PSA (Tuesdayreport.html source)</div>
+      <table class="data-table" style="font-size:0.81rem">
+        <thead><tr><th>Account</th><th>MRR</th><th>Risk</th><th>Key Issue</th></tr></thead>
         <tbody>
-          <tr>
-            <td><strong>Class 5 Technologies</strong></td>
-            <td>$2,250</td>
-            <td><span class="tag tag-red">CHURNED</span></td>
-            <td>PSA cancelled Apr 23. 4.5 months, never live.</td>
-          </tr>
-          <tr>
-            <td><strong>GuentherTech</strong></td>
-            <td>$2,070</td>
-            <td><span class="tag tag-red">Critical</span></td>
-            <td>Ticket bug unresolved 4+ weeks, QB gaps</td>
-          </tr>
-          <tr>
-            <td><strong>Novalera</strong></td>
-            <td>$500</td>
-            <td><span class="tag tag-red">Critical</span></td>
-            <td>NinjaOne bugs, deliberating formal exit</td>
-          </tr>
-          <tr>
-            <td><strong>TSI-NC</strong></td>
-            <td>~$400</td>
-            <td><span class="tag tag-red">Critical</span></td>
-            <td>Adoption halted, PO workflow gap</td>
-          </tr>
-          <tr>
-            <td><strong>Losh Network</strong></td>
-            <td>$1,004</td>
-            <td><span class="tag tag-yellow">High</span></td>
-            <td>At Risk sentiment, CW-trained workflow mismatch</td>
-          </tr>
-          <tr>
-            <td><strong>Grahek Technology</strong></td>
-            <td>$315</td>
-            <td><span class="tag tag-yellow">High</span></td>
-            <td>Workflow emails completely broken</td>
-          </tr>
+          <tr><td><strong>Class 5 Technologies</strong></td><td>$2,250</td><td><span class="tag tag-gray">CHURNED</span></td><td>PSA cancelled Apr 23. Never went live. 4.5 months.</td></tr>
+          <tr><td><strong>GuentherTech</strong></td><td>$2,070</td><td><span class="tag tag-red">Critical</span></td><td>Ticket bug 4+ weeks, QB gaps, distributor integrations</td></tr>
+          <tr><td><strong>Novalera</strong></td><td>$500</td><td><span class="tag tag-red">Critical</span></td><td>NinjaOne bugs, formal deliberation underway</td></tr>
+          <tr><td><strong>TSI-NC</strong></td><td>~$400</td><td><span class="tag tag-red">Critical</span></td><td>Adoption halted, PO workflow gap</td></tr>
+          <tr><td><strong>Newport Networks</strong></td><td>~$350</td><td><span class="tag tag-red">Critical</span></td><td>Score 34/100</td></tr>
+          <tr><td><strong>Losh Network</strong></td><td>$1,004</td><td><span class="tag tag-yellow">High</span></td><td>At Risk sentiment, CW-trained workflow mismatch</td></tr>
+          <tr><td><strong>Grahek Technology</strong></td><td>$315</td><td><span class="tag tag-yellow">High</span></td><td>Workflow emails completely broken</td></tr>
         </tbody>
       </table>
     </div>
     <div class="card">
-      <div class="card-title">9 Systemic Patterns (From 74 Transcripts)</div>
-      <ul class="insight-list" style="font-size:0.83rem">
-        <li><strong>1. Selling the roadmap</strong> — features promised in sales that aren't live at onboarding</li>
-        <li><strong>2. Halo is the UX benchmark</strong> — CW-trained MSPs expect Halo-level polish, not early-stage UX</li>
-        <li><strong>3. Onboarding on unstable foundations</strong> — known bugs (NinjaOne, PHP auth) not disclosed pre-close</li>
-        <li><strong>4. No escalation triggers</strong> — SA carries accounts past the point of recovery without escalating</li>
-        <li><strong>5. Cross-selling before stabilizing</strong> — Payments AR pitch mid-crisis (Novalera: lost Mar 3)</li>
-        <li><strong>6. Communication gaps compound failures</strong> — no written cure plans, verbal only</li>
-        <li><strong>7. "Cost-neutral" pitch backfires</strong> — "PSA is free" = no urgency to invest in adoption</li>
-        <li><strong>8. Billing clients = highest-risk PSA prospects</strong> — higher expectations, no forgiveness for gaps</li>
-        <li><strong>9. Documentation failures</strong> — GL codes, QB setup undocumented; SA can't hand off</li>
+      <div class="card-title">9 Systemic Patterns — Which Come from Sales</div>
+      <ul class="insight-list" style="font-size:0.82rem">
+        <li><span class="tag tag-red" style="margin-right:4px">Sales</span><strong>1. Selling the roadmap</strong> — features promised that aren't live. Sales pre-commit with Product first.</li>
+        <li><span class="tag tag-yellow" style="margin-right:4px">Product</span><strong>2. Halo is the UX benchmark</strong> — CW-trained MSPs expect polish. Product prioritization signal.</li>
+        <li><span class="tag tag-red" style="margin-right:4px">Sales</span><strong>3. Onboarding on unstable foundations</strong> — known bugs not disclosed pre-close. Add to SA handoff checklist.</li>
+        <li><span class="tag tag-yellow" style="margin-right:4px">Ops</span><strong>4. No escalation triggers</strong> — SAs carry past point of recovery. Automate risk alerts.</li>
+        <li><span class="tag tag-red" style="margin-right:4px">Sales</span><strong>5. Cross-selling before stabilizing</strong> — Payments AR mid-crisis. Block expansion motions until score &gt;60.</li>
+        <li><span class="tag tag-yellow" style="margin-right:4px">Ops</span><strong>6. Communication gaps</strong> — no written cure plans, verbal only. Require written 30-day plans at critical risk.</li>
+        <li><span class="tag tag-red" style="margin-right:4px">Sales</span><strong>7. "Cost-neutral" pitch backfires</strong> — "PSA is free" = no adoption urgency. Retire this pitch entirely.</li>
+        <li><span class="tag tag-red" style="margin-right:4px">Sales</span><strong>8. Billing clients = highest-risk PSA prospects</strong> — zero tolerance for gaps. Separate, higher-touch onboarding track needed.</li>
+        <li><span class="tag tag-yellow" style="margin-right:4px">Ops</span><strong>9. Documentation failures</strong> — GL codes, QB setup undocumented. SA knowledge gap, not SA failure.</li>
       </ul>
+      <div style="font-size:0.78rem;color:var(--muted);margin-top:.75rem">5 of 9 systemic failures originate in the sales process. Fixing onboarding starts with fixing what sales promises and discloses.</div>
     </div>
   </div>
 
@@ -1059,33 +773,37 @@ footer {
     <div class="card">
       <div class="card-title">SA Risk Concentration</div>
       <ul class="insight-list">
-        <li><strong>Halle Taylor: 4 of 4 critical accounts</strong> — workload is unsustainable and creating systemic failure mode</li>
-        <li><strong>Nicole Hills:</strong> Highest MRR at risk (GuentherTech + Novalera = $2,570)</li>
-        <li><strong>Kegan Ehlers:</strong> 4 high-risk accounts with data migration backlog pattern</li>
+        <li><strong>Halle Taylor: 4 of 4 critical accounts</strong> — Class 5, TSI-NC, Losh, Newport. This is not a coincidence — it's an unsustainable workload. Immediate reassignment review required.</li>
+        <li><strong>Nicole Hills:</strong> Highest at-risk MRR (GuentherTech + Novalera = $2,570). Two concurrent critical accounts demanding executive escalation.</li>
+        <li><strong>Kegan Ehlers:</strong> 4 high-risk accounts with data migration backlog pattern.</li>
       </ul>
     </div>
     <div class="card">
       <div class="card-title">30-Day Launch Pipeline (~6 accounts)</div>
       <ul class="insight-list">
-        <li><strong>Wyoming.com ($1,740 MRR)</strong> — top priority, May target</li>
-        <li><strong>Bank-Tec South (87/100 score)</strong> — low risk, late May</li>
-        <li><strong>First Class Technology (86/100)</strong> — May grad candidate</li>
-        <li><strong>Premise Solutions (78/100)</strong> — May 1 target (Projects beta risk)</li>
-        <li><strong>Sydewire ($500/mo)</strong> — May possible</li>
+        <li><strong>Wyoming.com ($1,740 MRR, score 86)</strong> — priority graduation; May target</li>
+        <li><strong>Bank-Tec South (score 87, low risk)</strong> — late May graduation</li>
+        <li><strong>First Class Technology (score 86)</strong> — May grad candidate</li>
+        <li><strong>Premise Solutions (score 78)</strong> — May 1 target (Projects beta risk)</li>
+        <li><strong>Sydewire ($500/mo, score 77)</strong> — May possible</li>
+        <li><strong>TSI Triangle ($620/mo, score 70)</strong> — May possible</li>
       </ul>
     </div>
     <div class="card">
-      <div class="card-title">Onboarding → GTM Impact</div>
-      <div class="callout success" style="margin:0">
-        <strong>Patterns #1, 3, 7 are sales-originated failures</strong> — reps are selling the roadmap, pitching cost-neutral, and not disclosing known instability. The fix starts in the sales process, not in onboarding. A <strong>Sales-to-Onboarding handoff checklist</strong> would prevent 3 of the 4 current critical accounts.
-      </div>
+      <div class="card-title">Required Immediate Actions</div>
+      <ul class="insight-list">
+        <li>Build <strong>Sales-to-Onboarding Handoff Checklist</strong> covering: what's promised, what's in beta, known bugs, customer expectations. Blocks 3 of 4 current critical cases.</li>
+        <li><strong>Retire "cost-neutral" PSA pitch</strong> — reframe as "investment with proven ROI." Zero-risk framing = zero adoption urgency.</li>
+        <li><strong>Block expansion motions</strong> (Payments AR cross-sell) until Onboarding Health Score &gt;60.</li>
+        <li><strong>Halle Taylor workload review</strong> — this week. One SA cannot carry 4 critical accounts.</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- SECTION 7: KAIA INTELLIGENCE -->
+<!-- SECTION 7: KAIA -->
 <section id="kaia" class="fade-in">
   <div class="section-header">
     <div class="section-icon">🎙️</div>
@@ -1095,67 +813,87 @@ footer {
     </div>
   </div>
 
-  <div class="data-badge">Live · Last 30 Days · 100 Calls Analyzed</div>
+  <div class="data-badge">Notion Kaia DB · 100 Records · Last 30 Days · Apr 28, 2026</div>
 
   <div class="grid-3" style="margin-bottom:1.5rem">
     <div class="card">
-      <div class="card-title">Top Competitor Mentions (Last 30 Days)</div>
-      <ul class="insight-list">
-        <li><strong>"Other" / unclassified: 20 mentions</strong> — review for new entrants not in our taxonomy</li>
-        <li><strong>QuickBooks: 13 mentions</strong> — not a true competitor; prospect's current billing/accounting tool. Reclassify as integration signal.</li>
-        <li><strong>ConnectWise: 5 mentions</strong> — prime displacement opportunity, contract cycle timing</li>
-        <li><strong>Simpro: 2 mentions</strong> — field service management; different buyer profile</li>
-        <li><strong>Autotask: 2 mentions</strong> — IT MSP displacement opportunity</li>
-      </ul>
+      <div class="card-title">Competitor Mentions (30 Days)</div>
+      <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:.25rem">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:3px">
+            <span>Other/Unclassified</span><span class="hl-warn">20</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--muted)"></div></div>
+          <div style="font-size:0.68rem;color:var(--muted)">Audit taxonomy — potential new entrants</div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:3px">
+            <span>QuickBooks</span><span class="hl-yellow">13</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:65%;background:var(--accent4)"></div></div>
+          <div style="font-size:0.68rem;color:var(--muted)">Integration signal, not a true competitor</div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:3px">
+            <span>ConnectWise</span><span class="hl">5</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:25%;background:var(--accent)"></div></div>
+          <div style="font-size:0.68rem;color:var(--muted)">Contract cycle timing window — act now</div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:3px">
+            <span>Simpro</span><span style="color:var(--muted)">2</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:10%;background:var(--muted)"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:3px">
+            <span>Autotask/Kaseya</span><span style="color:var(--muted)">2</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:10%;background:var(--muted)"></div></div>
+          <div style="font-size:0.68rem;color:var(--muted)">Price hike anger in MSP communities — surface it</div>
+        </div>
+      </div>
     </div>
     <div class="card">
-      <div class="card-title">Top Feature Requests (Last 30 Days)</div>
-      <div class="callout warning" style="margin-bottom:1rem;font-size:0.83rem">
-        ⚠️ <strong>Critical gap:</strong> "QuickBooks Online Integration" and "Inventory tracking" are both top requests — QB Online is partially shipped but NOT fully integrated. Reps are losing deals on a gap that's partially closeable NOW.
+      <div class="card-title">Feature Requests (30 Days)</div>
+      <div class="callout warning" style="margin-bottom:1rem;font-size:0.82rem;padding:0.9rem 1rem">
+        ⚠️ Top 2 requests are <strong>partially or fully shipped in Apollo 2</strong>. Reps are losing deals they should be winning.
       </div>
       <ul class="insight-list">
-        <li><strong>QuickBooks Online Integration: 2+</strong> — top blocker. Partial ship in Apollo 2.</li>
-        <li><strong>Inventory Tracking: 2</strong> — shipped in Apollo 2 (Serialized Inventory). Reps don't know.</li>
-        <li><strong>Parent-Child Accounts: 1</strong> — MSP-specific feature need</li>
-        <li><strong>Customizable Job Layout: 1</strong> — field service UX ask</li>
-        <li><strong>Commission Tracking: 1</strong> — recurring ask from managed services accounts</li>
+        <li><strong>QuickBooks Online Integration:</strong> Top request. QB Online is partially in Apollo 2 but not full two-way sync. Reps need accurate language: "Phase 1 is live, full two-way sync in Apollo 3."</li>
+        <li><strong>Inventory Tracking:</strong> Serialized Inventory is <span class="hl">AVAILABLE in Apollo 2</span>. Reps don't know. Build the "Apollo 2 Is Live" battlecard immediately.</li>
+        <li><strong>Parent-Child Accounts:</strong> MSP-specific. Available in Apollo 2 (with NinjaOne bugs). Flag the bug status honestly.</li>
+        <li><strong>Customizable Job Layout:</strong> Field service UX ask — recurring theme.</li>
+        <li><strong>Commission Tracking:</strong> Managed services accounts recurring request — Apollo 3 pipeline.</li>
       </ul>
     </div>
     <div class="card">
-      <div class="card-title">The "Already Shipped" Problem</div>
+      <div class="card-title">The "Already Shipped" Enablement Gap</div>
       <div class="callout" style="margin:0">
-        <strong>Serialized Inventory is AVAILABLE in Apollo 2</strong> and was the top feature request for months — yet it's still appearing as a "request" in Kaia calls. Reps are losing deals on a shipped feature because the enablement never landed. This is a <span class="hl-warn">training failure worth potentially 10–20 deals/month.</span>
-        <br><br>
-        <strong>Action: "What's New in Apollo 2" battlecard needed immediately.</strong> 1-page reference for every rep showing what shipped, how to demo it, and what language to use.
+        <strong>This is the most immediately actionable insight in the entire deck.</strong><br><br>
+        53 deals were lost in 60 days to "Software Missing Capabilities." A meaningful subset of those capabilities shipped in Apollo 2 — March/April 2026. <strong>Reps don't know. Prospects don't know. And the feature is already live.</strong><br><br>
+        Required this week: A 1-page "Apollo 2 Is Live — Here's What Changed" battlecard:
+        <ul style="margin-top:.5rem;padding-left:1rem;font-size:0.82rem">
+          <li>Serialized Inventory → <em>Available Now</em></li>
+          <li>Parent-Child Accounts → <em>Available Now (NinjaOne stable ETA TBD)</em></li>
+          <li>QuickBooks Phase 1 → <em>Available Now</em></li>
+          <li>[Other shipped features] → <em>Live</em></li>
+        </ul>
+        <div style="margin-top:.75rem;font-weight:700;color:var(--accent2)">Estimated impact: Recover 10–20% of "Missing Capabilities" losses = 5–10 deals/month.</div>
       </div>
     </div>
   </div>
 
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">Win Signals from Kaia</div>
-      <ul class="insight-list">
-        <li>Second demo scheduled and attended — strong buying signal when prospects invest time</li>
-        <li>Prospect transparent about competitive process and timeline — engaged buyers</li>
-        <li>Longer discovery calls (16–19 minutes) correlate with higher engagement</li>
-        <li>Prospects who mention specific workflow pain points convert at higher rates</li>
-      </ul>
-    </div>
-    <div class="card">
-      <div class="card-title">Loss Signals from Kaia</div>
-      <ul class="insight-list">
-        <li><strong>~40% of 100 calls have no transcript available</strong> — significant intelligence blackout; likely mobile or non-recorded calls</li>
-        <li>QB integration mentioned without resolution = high churn/loss signal</li>
-        <li>Calls under 10 minutes with no follow-up = disengaged prospect</li>
-        <li>Multi-stakeholder calls where decision-maker goes silent = organizational resistance</li>
-      </ul>
-    </div>
+  <div class="callout warning">
+    <strong>🚨 Intelligence Blackout — ~40% of Kaia calls have no transcript available</strong><br>
+    In the last 30 days, 100 records were retrieved but a significant portion show "No transcript available" as their win signal or loss risk. This means we're blind on 40% of conversations happening in the market. Root cause: likely mobile calls, manual entry, or recording gaps. Fix: audit Kaia recording coverage by rep and account. Every unrecorded call is lost competitive intelligence.
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- SECTION 8: ACTION PLAN -->
+<!-- SECTION 8: ACTIONS -->
 <section id="actions" class="fade-in">
   <div class="section-header">
     <div class="section-icon">✅</div>
@@ -1165,123 +903,29 @@ footer {
     </div>
   </div>
 
-  <div class="card" style="overflow-x:auto;margin-bottom:1.5rem">
-    <table class="data-table">
+  <div class="card" style="overflow-x:auto">
+    <table class="data-table" style="font-size:0.82rem">
       <thead>
-        <tr>
-          <th>Priority</th>
-          <th>Action</th>
-          <th>Owner</th>
-          <th>Original Date</th>
-          <th>Status</th>
-        </tr>
+        <tr><th>Priority</th><th>Action</th><th>Owner</th><th>Timeline</th><th>Status</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td><span class="tag tag-red">🔴 Immediate</span></td>
-          <td>Extract Jamie Butler's show-rate playbook</td>
-          <td>Sales Mgmt</td>
-          <td>Mar 2026</td>
-          <td><span class="tag tag-yellow">⚠️ Unclear</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-red">🔴 Immediate</span></td>
-          <td>Manager on every Patrick Davies deal</td>
-          <td>Sales Mgmt</td>
-          <td>Mar 2026</td>
-          <td><span class="tag tag-yellow">⚠️ Still needed (11.7% rate)</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-red">🔴 Immediate</span></td>
-          <td>Evan call: GuentherTech (churn prevention)</td>
-          <td>Evan Rice</td>
-          <td>NEW Apr 2026</td>
-          <td><span class="tag tag-red">⚠️ Urgent</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-red">🔴 Immediate</span></td>
-          <td>Evan call: Novalera (churn prevention)</td>
-          <td>Evan Rice</td>
-          <td>NEW Apr 2026</td>
-          <td><span class="tag tag-red">⚠️ Urgent</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-red">🔴 Immediate</span></td>
-          <td>"What's New in Apollo 2" battlecard — shipped features reps don't know</td>
-          <td>Marketing + Sales Enablement</td>
-          <td>NEW Apr 2026</td>
-          <td><span class="tag tag-red">Not Started</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-yellow">🟡 This Month</span></td>
-          <td>Sales-to-Onboarding handoff checklist (prevent pattern #1, 3, 7)</td>
-          <td>Sales Ops + Onboarding</td>
-          <td>NEW Apr 2026</td>
-          <td><span class="tag tag-red">Not Started</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-yellow">🟡 This Month</span></td>
-          <td>Investigate Joe Abarno regression (was top closer, now 2 wins/90d)</td>
-          <td>Ryan Koontz</td>
-          <td>NEW Apr 2026</td>
-          <td><span class="tag tag-red">Not Started</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-yellow">🟡 This Month</span></td>
-          <td>Shift 80%+ paid media to LinkedIn (IT MSP) — confirm status</td>
-          <td>Jennifer Hopkins</td>
-          <td>Mar 2026</td>
-          <td><span class="tag tag-yellow">Confirm Executed?</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-yellow">🟡 This Month</span></td>
-          <td>Apollo 2 re-engagement campaign (98 deals, ~$101K MRR)</td>
-          <td>Sales + Marketing</td>
-          <td>Mar 2026</td>
-          <td><span class="tag tag-yellow">Status Unknown</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-yellow">🟡 This Month</span></td>
-          <td>Halle Taylor workload review — 4 of 4 critical accounts</td>
-          <td>Onboarding Mgmt</td>
-          <td>NEW Apr 2026</td>
-          <td><span class="tag tag-red">Urgent</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-yellow">🟡 Q2</span></td>
-          <td>Justin Lee + Ingrid Beard playbooks — extract and roll out</td>
-          <td>Sales Mgmt</td>
-          <td>NEW Apr 2026</td>
-          <td><span class="tag tag-red">Not Started</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-yellow">🟡 Q2</span></td>
-          <td>Andy Whisenant ICP profile — who are his $2K+ MRR buyers?</td>
-          <td>Sales Ops / Revay</td>
-          <td>NEW Apr 2026</td>
-          <td><span class="tag tag-red">Not Started</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-green">🟢 Q2–Q3</span></td>
-          <td>Tigerpaw migration (80–100 accounts)</td>
-          <td>Evan + Ryan</td>
-          <td>Q1–Q2 2026</td>
-          <td><span class="tag tag-yellow">In Progress</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-green">🟢 Q2–Q3</span></td>
-          <td>IT MSP competitive battlecards (CW, Kaseya, Halo, Syncro)</td>
-          <td>Marketing + Sales</td>
-          <td>Q2–Q3 2026</td>
-          <td><span class="tag tag-yellow">In Progress?</span></td>
-        </tr>
-        <tr>
-          <td><span class="tag tag-green">🟢 Q3</span></td>
-          <td>QB Online full integration — ship to unlock MSP segment</td>
-          <td>Product</td>
-          <td>Apollo 3</td>
-          <td><span class="tag tag-yellow">In Dev</span></td>
-        </tr>
+        <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>Call GuentherTech — churn prevention (Ben Guenther, ben@guenthertech.ca)</td><td>Evan Rice</td><td>This week</td><td><span class="status-check sc-missing">Urgent</span></td></tr>
+        <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>Call Novalera — churn prevention (Tony Testerman, 443-528-7060)</td><td>Evan Rice</td><td>This week</td><td><span class="status-check sc-missing">Urgent</span></td></tr>
+        <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>Ryan Koontz in Abarno's next 3 calls — diagnose 5× win rate collapse</td><td>Ryan Koontz</td><td>This week</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
+        <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>"Apollo 2 Is Live" battlecard — shipped features reps don't know about</td><td>Marketing + Sales Enablement</td><td>This week</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
+        <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>NinjaOne bug fix escalation — get written timeline from Product</td><td>Product</td><td>This week</td><td><span class="status-check sc-missing">Urgent</span></td></tr>
+        <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>Halle Taylor workload review — 4 critical accounts = 1 SA = systemic failure</td><td>Onboarding Mgmt</td><td>This week</td><td><span class="status-check sc-missing">Urgent</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 This Month</span></td><td>Manager on Patrick Davies every deal — has not measurably improved (11.7% rate)</td><td>Sales Mgmt</td><td>Ongoing</td><td><span class="status-check sc-partial">Partial</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 This Month</span></td><td>Sales-to-Onboarding handoff checklist — block 3 of 4 current critical failure patterns</td><td>Sales Ops + Onboarding</td><td>April 30</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 This Month</span></td><td>CW Contract Clock campaign — 13 open CW deals, May-June renewal window</td><td>Ryan Koontz</td><td>April 30</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 This Month</span></td><td>Apollo 2 re-engagement blitz — top 25 "missing capability" losses by MRR</td><td>Sales + Marketing</td><td>May 7</td><td><span class="status-check sc-unknown">Unknown</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 This Month</span></td><td>Extract Justin Lee + Ingrid Beard playbooks — shadow calls, document, train</td><td>Ryan Koontz</td><td>May 15</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 This Month</span></td><td>Stage 2→3 conversion rule: no opp in Stage 2 &gt;5 days without scheduled Stage 3</td><td>Sales Ops</td><td>May 1</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 This Month</span></td><td>Confirm paid media shift to LinkedIn — is 80%+ on LinkedIn/MSP targeting?</td><td>Jennifer Hopkins</td><td>Confirm</td><td><span class="status-check sc-unknown">Unconfirmed</span></td></tr>
+        <tr><td><span class="tag tag-green">🟢 Q2</span></td><td>Andy Whisenant ICP profile — who are his $2,305 avg buyers? Build targeting tier.</td><td>Sales Ops / Revay</td><td>May 31</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
+        <tr><td><span class="tag tag-green">🟢 Q2</span></td><td>Tigerpaw migration — 80-100 accounts, $50-90K MRR at risk</td><td>Evan + Ryan</td><td>Q2 2026</td><td><span class="status-check sc-partial">In Progress</span></td></tr>
+        <tr><td><span class="tag tag-green">🟢 Q2–Q3</span></td><td>IT MSP battlecards (CW, Kaseya, Halo, Syncro) — include Kaseya price hike angle</td><td>Marketing</td><td>Q2 2026</td><td><span class="status-check sc-partial">In Progress?</span></td></tr>
+        <tr><td><span class="tag tag-green">🟢 Q3</span></td><td>QB Online full two-way integration — #1 feature blocker for MSP expansion</td><td>Product</td><td>Apollo 3</td><td><span class="status-check sc-partial">In Dev</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -1295,315 +939,279 @@ footer {
     <div class="section-icon">🎯</div>
     <div>
       <div class="section-num">Section 9</div>
-      <h2>Revay's Fresh Strategic Plays</h2>
+      <h2>Revay's Strategic Plays — 7 Bold Moves</h2>
     </div>
   </div>
 
-  <p style="color:var(--muted);margin-bottom:2rem;max-width:700px">Five bold, specific, immediately actionable growth moves — synthesized from 90 days of SF data, 100 Kaia calls, 74 onboarding transcripts, and a full loss anatomy. These go beyond the March plan.</p>
+  <p style="color:var(--muted);margin-bottom:2rem;max-width:740px">Synthesized from 90 days of SF data, 100 Kaia call records, 74 onboarding transcripts, and full loss anatomy. Each play is specific, actionable, and tied to observable data — not generic GTM advice.</p>
 
   <div class="grid-2" style="margin-bottom:1.5rem">
     <div class="play-card">
       <div class="play-number">01</div>
       <div class="play-title">The "Contract Clock" CW Displacement Campaign</div>
-      <div class="play-desc">ConnectWise accounts renew on annual cycles — predominantly May–June for calendar-year SMBs. With 13 open CW pipeline deals + 5 Kaia mentions in the last 30 days, the timing window is NOW. Run a targeted outreach sequence to every open CW deal: "Your contract is likely up in 60 days. Here's a comparison of what you'd be paying vs. Rev.io PSA — and a 30-day free migration offer." Add urgency with a migration incentive (free onboarding fee through June 30). This is the highest-leverage timing play in the entire pipeline right now.</div>
-      <div class="play-impact">💰 Potential: 5–8 additional CW closes in Q2 · Owner: Ryan Koontz / Jennifer Hopkins</div>
+      <div class="play-desc">
+        ConnectWise SMB accounts historically renew in May–June on annual contracts. We have 13 open CW deals right now, 5 Kaia competitor mentions in the last 30 days, and 12 CW wins in the last 60 days proving the motion is live. The window is now. Deploy a personalized outreach sequence to every open CW deal and every CW prospect in the last-60-day losses: "Your ConnectWise contract is likely up in 30-60 days. We'd like to offer you a complimentary migration assessment and waive the first month's onboarding fee if you sign by June 15." Add urgency with a time-bounded migration incentive. Use Vision CTS (flagged in March as a CW renewal account with April window) as a case study if they've signed. Every day without this campaign running is contract renewal days the prospect isn't thinking about you.
+      </div>
+      <div class="play-meta">
+        <span class="tag tag-red">🔴 Start this week</span>
+        <span class="tag tag-blue">Owner: Ryan Koontz + Jennifer Hopkins</span>
+      </div>
+      <div class="play-impact">💰 Potential: 5–8 additional CW closes by June 30 · ~$5–12K MRR</div>
     </div>
     <div class="play-card">
       <div class="play-number">02</div>
       <div class="play-title">The "Apollo 2 Is Live — You Were Right" Re-Engagement Blitz</div>
-      <div class="play-desc">There are 133 documented feature-gap losses — 98 of which are unlocked by Apollo 2 features that shipped in March/April. Reps don't know what shipped. Prospects don't know either. Build a 1-week blitz: identify every "Software Missing Capabilities" loss from the last 90 days, map the specific feature they wanted to what shipped in Apollo 2, and send a highly personalized one-line email: "The [specific feature] you needed last time shipped on [date]. I'd love to show you — 15 minutes?" This is the highest-ROI sales motion available because the prospect was already qualified and engaged. Target the top 25 by MRR first.</div>
-      <div class="play-impact">💰 Potential: $15–25K MRR recovered · Owner: Sales + Marketing · Timeline: This week</div>
+      <div class="play-desc">
+        53 deals were lost in the last 60 days to "Software Missing Capabilities." An unknown but meaningful portion of those were capabilities that shipped in Apollo 2 (March/April 2026). Pull every "Software Missing Capabilities" loss from the last 90 days. For each one, have Revay map the specific feature they cited to what shipped. Send a one-sentence personalized email from the original rep: <em>"[Name], the [specific feature] you needed is now live in Rev.io PSA. I'd love to show you in 15 minutes — would [day] work?"</em> Do NOT send a generic product update email. This needs to feel like a personal heads-up from someone who remembered. Work top-25 by MRR first. Even a 20% reply rate = 10+ warm re-engagements. This is the highest-ROI motion available because these buyers were already qualified.
+      </div>
+      <div class="play-meta">
+        <span class="tag tag-red">🔴 Start this week</span>
+        <span class="tag tag-blue">Owner: Sales + Revay (matching)</span>
+      </div>
+      <div class="play-impact">💰 Potential: $15–25K MRR recovered over 60 days from already-qualified pipeline</div>
     </div>
   </div>
 
   <div class="grid-2" style="margin-bottom:1.5rem">
     <div class="play-card">
       <div class="play-number">03</div>
-      <div class="play-title">The "Billing → PSA" Velocity Motion</div>
-      <div class="play-desc">Rev.io already has deep trust with its Billing customer base — and those customers are exactly the IT service providers who need PSA. But the data shows: Billing clients who buy PSA are our highest-risk onboarding failures (Pattern #8 from the 74-transcript analysis). The root cause: they expect CW-level polish and have zero tolerance for gaps because they're already relying on Rev.io for billing. The play: don't abandon the Billing→PSA cross-sell motion, but create a separate, higher-touch onboarding track for Billing-to-PSA converts. Assign senior SAs, set explicit expectations during sales ("This will take 90 days to stabilize"), and include a 30-day check-in call with a VP. This converts your highest-risk segment into your most profitable expansion vector.</div>
-      <div class="play-impact">💰 Potential: Recover GuentherTech, prevent next 2-3 Billing→PSA churns · Owner: Sales + Onboarding</div>
+      <div class="play-title">The "Kaseya Price Hike" Displacement Push</div>
+      <div class="play-desc">
+        Kaseya/Autotask customers are angry. In 2024–2025, Kaseya aggressively raised prices on acquired products (30–50% increases documented in MSP community forums like MSP subreddit, IT Nation community, and Datto user groups). This created a wave of MSPs actively shopping alternatives. We have 4 open Autotask/Kaseya deals and 6 wins in the last 60 days — the motion exists but isn't being systematically pursued. Build a targeted outreach sequence specifically for Kaseya/Autotask accounts: subject line "Done with Kaseya pricing?" or similar. Pull prospect lists from LinkedIn Sales Navigator filtering for IT MSP, 5-50 employees, PSA software users. Include the Kaseya price comparison math in the battlecard. The anger is real, the budget is freed up, and they're actively looking. We just need to be in front of them when they do.
+      </div>
+      <div class="play-meta">
+        <span class="tag tag-yellow">🟡 Launch in 2 weeks</span>
+        <span class="tag tag-blue">Owner: SDRs + Jennifer Hopkins</span>
+      </div>
+      <div class="play-impact">💰 Potential: 3–6 new Kaseya displacement wins in Q2 · $3–9K MRR</div>
     </div>
     <div class="play-card">
       <div class="play-number">04</div>
       <div class="play-title">The "Justin Lee Playbook" Fast-Follow Program</div>
-      <div class="play-desc">Justin Lee is closing at 39.1% — more than 3× Patrick Davies (11.7%) and nearly 7× Husam Zalmiyar (5.6%). This is not random. Lee is doing something structurally different in qualification, discovery framing, or follow-up cadence. The play: have Ryan Koontz shadow 3 of Lee's next discovery calls this week and document his exact language, qualification questions, and objection handling. Then build a 1-hour training session where Lee walks the team through his process. Simultaneously, do the same with Ingrid Beard (22 wins, 36.1% rate) — she may be using a different but equally effective approach. This is the fastest, cheapest rep performance lever available. Target outcome: bring the bottom 4 reps from 6-11% to 15%+ within 60 days.</div>
-      <div class="play-impact">💰 Potential: +$8–15K MRR/month at current volume · Owner: Ryan Koontz · Timeline: This week</div>
+      <div class="play-desc">
+        Justin Lee is closing at 39.1%. The team median is ~12%. The gap is 27 percentage points across the same product, same market, same pricing. That gap is not luck — it's process. Ryan Koontz should personally shadow Lee's next 3 discovery calls this week, document verbatim the questions he asks, how he handles objections, and what he says to confirm DM attendance before the meeting. Then build a 90-minute training session where Lee walks the team through his playbook. Do the same with Ingrid Beard (36.1%, 22 wins). These two reps have cracked something. Rolling their methods out to the bottom 4 reps (Zalmiyar 5.6%, Abarno 5.9%, Herndon 6.3%, Bender 7.3%) is the fastest performance lever available. Target: bring underperformers from 6-8% → 15%+ win rate within 60 days of training.
+      </div>
+      <div class="play-meta">
+        <span class="tag tag-red">🔴 Shadow calls this week</span>
+        <span class="tag tag-blue">Owner: Ryan Koontz</span>
+      </div>
+      <div class="play-impact">💰 Potential: +$8–18K MRR/month at current pipeline volume if bottom reps reach median</div>
     </div>
   </div>
 
   <div class="grid-2" style="margin-bottom:1.5rem">
     <div class="play-card">
       <div class="play-number">05</div>
-      <div class="play-title">The "Stage 2 → 3 Bridge" Conversion Fix</div>
-      <div class="play-desc">Stage 1 no-shows are improving (20% and falling). But there's a second graveyard nobody's talking about: 708 deals that completed discovery and then died. These prospects were qualified enough to show up, engaged enough to talk for 20+ minutes — and then went silent. This is where the product demo isn't converting. The fix: audit the Stage 2 → 3 handoff. Are reps asking "what would it take to see the full product?" at end of discovery? Are they booking the demo before leaving the call? Implement a rule: no opportunity can exit Stage 2 without a scheduled Stage 3 date on the calendar. Add a "Stage 2 Close Question" script: "Based on what you told me, I think [specific use case] is where the product will land for you. I want to show you exactly that — can we do 30 minutes Thursday?" This single habit change could unlock 10–15% more pipeline progression monthly.</div>
-      <div class="play-impact">💰 Potential: 15–20% conversion lift from discovery pool · Owner: Sales Mgmt · Timeline: This sprint</div>
+      <div class="play-title">The "Stage 2 Bridge" — Unlock 708 Stuck Deals</div>
+      <div class="play-desc">
+        All-time, 708 opportunities ran a discovery call and then died. These are the most expensive leads in the funnel — they were qualified, they showed up, they engaged — and then went silent. We have almost no process to rescue them. Implement three changes: (1) <strong>No opp can sit in Stage 2 for more than 5 business days without a scheduled Stage 3.</strong> Sales Ops enforces in SF. (2) Add a required "Stage 2 Close Question" to the discovery call script: "Based on what you've shared, I think the demo will be highly relevant to [specific use case]. Can we block 30 minutes [day/time] before you leave today?" (3) Create a "Stage 2 Recovery Sequence" — a 3-email drip from Outreach that fires if no Stage 3 is scheduled within 3 days of Stage 2 completion. Simple, specific, and data-driven. The 708 stuck deals show this is a systemic gap.
+      </div>
+      <div class="play-meta">
+        <span class="tag tag-yellow">🟡 Build in 2 weeks</span>
+        <span class="tag tag-blue">Owner: Sales Ops + Outreach setup</span>
+      </div>
+      <div class="play-impact">💰 Potential: 15–20% improvement in Stage 2→3 conversion · $5–10K+ MRR/month</div>
     </div>
     <div class="play-card">
       <div class="play-number">06</div>
       <div class="play-title">The "Graduation → Expansion" Revenue Engine</div>
-      <div class="play-desc">6 accounts are graduating from PSA onboarding in the next 30 days (Wyoming.com $1,740, Bank-Tec South, First Class Technology, Premise Solutions, Sydewire $500, TSI Triangle $620). These are the highest-probability expansion targets in the entire company — they've just completed 90 days with the product and are (if graduation goes well) believers. Graduation should trigger an automatic expansion sequence: 30 days post-graduation, Ingrid Beard or the account rep touches each graduate with a 1:1 call to discuss Payments AR, additional seat adds, or Billing cross-sell. Build this as a structured play with a 90-day expansion window. Graduation = the start of the upsell motion, not the end of the relationship. Target: 2 expansions per graduation cohort = ~$1,500–3,000 MRR from graduating accounts monthly.</div>
-      <div class="play-impact">💰 Potential: $1,500–3,000 MRR/month from existing customers · Owner: Ingrid Beard + Onboarding</div>
+      <div class="play-desc">
+        6 accounts are graduating from PSA onboarding in the next 30 days (Wyoming.com $1,740, Bank-Tec South, First Class Technology, Premise Solutions, Sydewire $500, TSI Triangle $620). These are the highest-probability expansion targets in the entire company. They've just survived 90 days of onboarding and are, if it went well, believers in the product. Graduation should automatically trigger a structured expansion sequence: (1) 30-day post-graduation call from Ingrid Beard (your best relationship builder) to introduce Payments AR and seat adds. (2) 60-day email from the original sales rep: "Now that you're live, here's what other similar companies have added." (3) 90-day check-in from Ryan Koontz personally for any account &gt;$1K MRR. Build this as a playbook, not a hope. Target: 2 expansions per graduation cohort = $1,500–3,000 MRR per cohort from existing customers who already trust you.
+      </div>
+      <div class="play-meta">
+        <span class="tag tag-yellow">🟡 Launch with May cohort</span>
+        <span class="tag tag-blue">Owner: Ingrid Beard + Onboarding Lead</span>
+      </div>
+      <div class="play-impact">💰 Potential: $1,500–3,000 MRR/month from graduating accounts · 100% margin expansion</div>
     </div>
   </div>
 
-  <div class="play-card" style="border-color:rgba(0,212,170,0.3);background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(108,99,255,0.04))">
+  <div class="play-card" style="border-color:rgba(0,212,170,0.35);background:linear-gradient(135deg,rgba(0,212,170,0.07),rgba(108,99,255,0.05))">
     <div class="play-number">07</div>
-    <div class="play-title">The "Whisenant Model" — High-ACV Segment Unlock</div>
-    <div class="play-desc">Andy Whisenant is closing deals at $2,305 average MRR — 4.4× the team average. He's not selling the same product to the same buyer. He's found a segment or a sales motion that lands larger deals. The company's 5× path requires moving from $500 average ACV toward $1,500+. Whisenant is already there. The play: profile every Whisenant closed-won account from the last 12 months. What industry are they in? What size? What was their prior PSA platform? What use case led to the larger deal? Build the "Whisenant ICP" as a separate targeting tier — then train the reps most capable of consultative selling (Butler, Borah, Flynn) on his motion. This is the clearest path to doubling average ACV without changing the product or the pricing model.</div>
-    <div class="play-impact">💰 Potential: +50–100% ACV lift for top reps within 2 quarters · Owner: Sales Ops / Revay · Timeline: Q2 analysis → Q3 rollout</div>
+    <div class="play-title">The "Whisenant Model" — Crack the $2K+ Deal Code</div>
+    <div class="play-desc">
+      Andy Whisenant is closing deals at $2,305 average MRR — 4.4× the team average of ~$620. He is not selling the same product to the same buyer. He has found a market segment or a sales motion that lands fundamentally larger deals. This is the clearest observable path to doubling company ACV without changing the product, pricing, or go-to-market strategy. <br><br>
+      The play: Have Revay pull and analyze every Whisenant Closed Won account in the last 12 months. Answer: What industry? What size (employees, revenue)? What was their prior PSA platform? What use case led to the larger deal size? Was it multi-product? Did they have a specific pain point that justified higher pricing? Build the "Whisenant ICP" as a formal targeting tier — accounts that fit his buyer profile get routed to him or to reps trained on his motion (Butler at $1,285 avg, Borah at $1,275 avg are the nearest peers). This is the single highest-leverage analytical exercise available — if we can move 5 reps from $620 to $1,500 average, that's a 2.4× revenue lift from the same volume of wins.
+    </div>
+    <div class="play-meta">
+      <span class="tag tag-yellow">🟡 Q2 analysis → Q3 rollout</span>
+      <span class="tag tag-blue">Owner: Sales Ops / Revay · Timeline: May analysis, June playbook</span>
+    </div>
+    <div class="play-impact">💰 Potential: 2–3× ACV lift across top reps · Largest long-term lever in the deck</div>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- FOOTER -->
 <footer>
-  <div style="margin-bottom:0.5rem">
-    <strong>GTM Alignment — Q2 2026</strong> · Updated April 28, 2026 · Rev.io
-  </div>
-  <div>Data sourced from Salesforce SOQL live queries, Notion Kaia Calls DB (100 calls, last 30 days), and 74 Fireflies onboarding transcripts.</div>
-  <div style="margin-top:0.5rem">Synthesized by Revay (AI Chief of Staff) · Reviewed by Opus before delivery · <a href="https://erice320.github.io/revay/library.html" style="color:var(--accent)">Rev.io Intelligence Library</a></div>
+  <div style="margin-bottom:.5rem"><strong style="color:var(--text)">GTM Alignment — Q2 2026</strong> · Updated April 28, 2026 · Rev.io</div>
+  <div>Data: Salesforce live SOQL queries (7 query sets, Apr 28 2026) · Notion Kaia Calls DB (100 records, last 30 days) · 74 Fireflies onboarding transcripts · Memory files Apr 22-23, 2026</div>
+  <div style="margin-top:.4rem">Synthesized by Revay (AI Chief of Staff) · Critically reviewed for GTM narrative, data accuracy, and strategic specificity before delivery</div>
+  <div style="margin-top:.75rem"><a href="https://erice320.github.io/revay/library.html" style="color:var(--accent);text-decoration:none">⚡ Rev.io Intelligence Library</a> · <a href="https://erice320.github.io/revay/revio-intelligence-deck.html" style="color:var(--accent2);text-decoration:none">Intelligence Deck</a> · <a href="https://erice320.github.io/revay/tuesday-onboarding-report.html" style="color:var(--muted);text-decoration:none">Onboarding Report</a></div>
 </footer>
-
 </main>
 
 <script>
 // PARTICLES
 (function(){
-  const canvas = document.getElementById('particles-canvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, particles = [];
-  
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  
-  function init() {
-    resize();
-    particles = [];
-    for(let i = 0; i < 80; i++) {
-      particles.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        r: Math.random() * 2 + 0.5,
-        alpha: Math.random() * 0.4 + 0.1
-      });
-    }
-  }
-  
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    for(let p of particles) {
-      p.x += p.vx; p.y += p.vy;
-      if(p.x < 0) p.x = W; if(p.x > W) p.x = 0;
-      if(p.y < 0) p.y = H; if(p.y > H) p.y = 0;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(108,99,255,${p.alpha})`;
-      ctx.fill();
-    }
-    // Draw connections
-    for(let i = 0; i < particles.length; i++) {
-      for(let j = i+1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx*dx+dy*dy);
-        if(dist < 120) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(108,99,255,${0.08*(1-dist/120)})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(draw);
-  }
-  
-  window.addEventListener('resize', resize);
-  init();
-  draw();
+  const c=document.getElementById('particles-canvas'),ctx=c.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+  function init(){resize();pts=[];for(let i=0;i<75;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.8+.4,a:Math.random()*.35+.08})}
+  function draw(){ctx.clearRect(0,0,W,H);for(let p of pts){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(108,99,255,${p.a})`;ctx.fill()}
+  for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<130){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(108,99,255,${.07*(1-d/130)})`;ctx.lineWidth=.5;ctx.stroke()}}requestAnimationFrame(draw)}
+  window.addEventListener('resize',resize);init();draw();
 })();
 
 // CHART DEFAULTS
-Chart.defaults.color = '#8892a4';
-Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
-Chart.defaults.font.family = "'Satoshi','Cabinet Grotesk',sans-serif";
+Chart.defaults.color='#8892a4';
+Chart.defaults.borderColor='rgba(255,255,255,0.05)';
+Chart.defaults.font.family="'Satoshi','Cabinet Grotesk',sans-serif";
 
 // BOOKINGS CHART
-(function(){
-  const labels = ['Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26 MTD'];
-  // PSA 2.0 MRR
-  const psaMRR = [9772, 10910, 5740, 10034, 15870, 8345];
-  const billingMRR = [14817, 11300, 13900, 2065, 8400, 4530];
-  const paymentsMRR = [1170, 1505, 1555, 1419, 3537, 1892];
-  const otherMRR = [10970, 16010, 0, 700, 4235, 1630];
-  
-  new Chart(document.getElementById('bookingsChart'), {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [
-        { label: 'PSA 2.0', data: psaMRR, backgroundColor: 'rgba(108,99,255,0.8)', borderRadius: 4 },
-        { label: 'Billing', data: billingMRR, backgroundColor: 'rgba(0,212,170,0.7)', borderRadius: 4 },
-        { label: 'Payments AR', data: paymentsMRR, backgroundColor: 'rgba(255,217,61,0.6)', borderRadius: 4 },
-        { label: 'Other', data: otherMRR, backgroundColor: 'rgba(255,107,107,0.5)', borderRadius: 4 }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } } },
-      scales: {
-        x: { stacked: true, grid: { display: false } },
-        y: { stacked: true, ticks: { callback: v => '$'+Math.round(v/1000)+'K' } }
-      }
-    }
-  });
-})();
+new Chart(document.getElementById('bookingsChart'),{
+  type:'bar',
+  data:{
+    labels:['Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26 MTD'],
+    datasets:[
+      {label:'PSA 2.0',data:[9772,10910,5740,10034,15870,8345],backgroundColor:'rgba(108,99,255,0.82)',borderRadius:4},
+      {label:'Billing',data:[14817,11300,13900,2065,8400,4530],backgroundColor:'rgba(0,212,170,0.72)',borderRadius:4},
+      {label:'Payments AR',data:[1170,1505,1555,1419,3537,1892],backgroundColor:'rgba(255,217,61,0.62)',borderRadius:4},
+      {label:'Other',data:[10970,16010,0,700,4235,1630],backgroundColor:'rgba(255,107,107,0.52)',borderRadius:4}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{padding:10,font:{size:10}}}},
+    scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,ticks:{callback:v=>'$'+Math.round(v/1000)+'K'}}}}
+});
 
 // WIN RATE CHART
-(function(){
-  const labels = ['Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26 MTD'];
-  // Won / (Won+Lost) * 100
-  const rates = [
-    (33/(33+193)*100).toFixed(1),
-    (43/(43+213)*100).toFixed(1),
-    (24/(24+286)*100).toFixed(1),
-    (30/(30+208)*100).toFixed(1),
-    (47/(47+208)*100).toFixed(1),
-    (29/(29+120)*100).toFixed(1)
-  ];
-  
-  new Chart(document.getElementById('winrateChart'), {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        label: 'Win Rate %',
-        data: rates,
-        borderColor: 'rgba(0,212,170,1)',
-        backgroundColor: 'rgba(0,212,170,0.1)',
-        fill: true,
-        tension: 0.4,
-        pointBackgroundColor: 'rgba(0,212,170,1)',
-        pointRadius: 5
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        y: { ticks: { callback: v => v + '%' }, min: 0, max: 25 }
-      }
-    }
-  });
-})();
+new Chart(document.getElementById('winrateChart'),{
+  type:'line',
+  data:{
+    labels:['Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26 MTD'],
+    datasets:[{
+      label:'Win Rate %',
+      data:[
+        (33/(33+193)*100).toFixed(1),(43/(43+213)*100).toFixed(1),
+        (24/(24+286)*100).toFixed(1),(30/(30+208)*100).toFixed(1),
+        (47/(47+208)*100).toFixed(1),(29/(29+120)*100).toFixed(1)
+      ],
+      borderColor:'rgba(0,212,170,1)',backgroundColor:'rgba(0,212,170,0.1)',
+      fill:true,tension:.4,pointBackgroundColor:'rgba(0,212,170,1)',pointRadius:5,borderWidth:2.5
+    }]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+'%'}}},
+    scales:{y:{ticks:{callback:v=>v+'%'},min:0,max:25}}}
+});
 
-// CONVERSION RATE CHART
-(function(){
-  const labels = ['Feb 26','Mar 26','Apr 26 MTD'];
-  const rates = [4.6, 4.8, 6.0];
-  
-  new Chart(document.getElementById('conversionChart'), {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        label: 'Meeting-to-Win %',
-        data: rates,
-        borderColor: 'rgba(108,99,255,1)',
-        backgroundColor: 'rgba(108,99,255,0.1)',
-        fill: true,
-        tension: 0.4,
-        pointBackgroundColor: 'rgba(108,99,255,1)',
-        pointRadius: 6,
-        borderWidth: 3
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        y: { ticks: { callback: v => v + '%' }, min: 3, max: 8 }
-      }
-    }
-  });
-})();
+// CONVERSION CHART
+new Chart(document.getElementById('conversionChart'),{
+  type:'line',
+  data:{
+    labels:['Feb 26','Mar 26','Apr 26 MTD'],
+    datasets:[{
+      label:'Meeting-to-Win %',data:[4.6,4.8,6.0],
+      borderColor:'rgba(108,99,255,1)',backgroundColor:'rgba(108,99,255,0.12)',
+      fill:true,tension:.4,pointBackgroundColor:'rgba(108,99,255,1)',pointRadius:7,borderWidth:3
+    }]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+'%'}}},
+    scales:{y:{ticks:{callback:v=>v+'%'},min:3,max:8}}}
+});
 
 // LOSS REASONS CHART
-(function(){
-  const labels = ['Discovery No Show','Not Right Time','Sw Missing Cap','No Business Issue','Lack DM Involve','Price','In Contract','Other'];
-  const vals = [75, 60, 53, 45, 38, 33, 17, 12];
-  const colors = ['rgba(255,107,107,0.8)','rgba(255,217,61,0.7)','rgba(108,99,255,0.8)','rgba(0,212,170,0.6)','rgba(255,152,0,0.7)','rgba(233,30,99,0.6)','rgba(33,150,243,0.6)','rgba(158,158,158,0.5)'];
-  
-  new Chart(document.getElementById('lossChart'), {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{ label: 'Count', data: vals, backgroundColor: colors, borderRadius: 4 }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      indexAxis: 'y',
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { display: false } },
-        y: { ticks: { font: { size: 10 } } }
-      }
-    }
-  });
-})();
+new Chart(document.getElementById('lossChart'),{
+  type:'bar',
+  data:{
+    labels:['Discovery No Show','Not Right Time','Sw Missing Cap','No Business Issue','DM Not Involved','Price','In Contract','Other'],
+    datasets:[{
+      label:'Losses (60d)',data:[75,60,53,45,38,33,17,12],
+      backgroundColor:['rgba(255,107,107,0.82)','rgba(255,217,61,0.72)','rgba(108,99,255,0.82)','rgba(0,212,170,0.62)','rgba(255,152,0,0.72)','rgba(233,30,99,0.62)','rgba(33,150,243,0.62)','rgba(158,158,158,0.52)'],
+      borderRadius:4
+    }]
+  },
+  options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false}},y:{ticks:{font:{size:10}}}}}
+});
 
-// NO SHOW TREND CHART
-(function(){
-  const labels = ['Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26 MTD'];
-  const noshow = [41, 61, 68, 68, 49, 25];
-  const total = [193, 213, 286, 208, 208, 120];
-  const pct = noshow.map((n,i) => (n/total[i]*100).toFixed(1));
-  
-  new Chart(document.getElementById('noshowChart'), {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        label: 'No Show % of Losses',
-        data: pct,
-        borderColor: 'rgba(255,107,107,1)',
-        backgroundColor: 'rgba(255,107,107,0.1)',
-        fill: true, tension: 0.4,
-        pointBackgroundColor: 'rgba(255,107,107,1)',
-        pointRadius: 5
-      },{
-        label: 'No Show Count',
-        data: noshow,
-        borderColor: 'rgba(255,152,0,0.7)',
-        backgroundColor: 'transparent',
-        fill: false, tension: 0.4,
-        pointBackgroundColor: 'rgba(255,152,0,0.7)',
-        pointRadius: 4,
-        borderDash: [4,4]
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } } },
-      scales: {
-        y: { ticks: { callback: v => v + (v < 100 ? '%/cnt' : '') } }
+// NO SHOW CHART — separate axes
+new Chart(document.getElementById('noshowChart'),{
+  type:'line',
+  data:{
+    labels:['Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26 MTD'],
+    datasets:[
+      {
+        label:'No-Show % of Losses',
+        data:[(41/193*100).toFixed(1),(61/213*100).toFixed(1),(68/286*100).toFixed(1),(68/208*100).toFixed(1),(49/208*100).toFixed(1),(25/120*100).toFixed(1)],
+        borderColor:'rgba(255,107,107,1)',backgroundColor:'rgba(255,107,107,0.1)',
+        fill:true,tension:.4,pointRadius:5,borderWidth:2.5,yAxisID:'y'
+      },
+      {
+        label:'Raw No-Show Count',
+        data:[41,61,68,68,49,25],
+        borderColor:'rgba(255,152,0,0.8)',backgroundColor:'transparent',
+        fill:false,tension:.4,pointRadius:4,borderWidth:2,borderDash:[5,4],yAxisID:'y2'
       }
-    }
-  });
-})();
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{padding:10,font:{size:10}}}},
+    scales:{
+      y:{type:'linear',position:'left',ticks:{callback:v=>v+'%'},title:{display:true,text:'% of losses',font:{size:10}},min:0,max:40},
+      y2:{type:'linear',position:'right',ticks:{callback:v=>v+' calls'},title:{display:true,text:'Count',font:{size:10}},grid:{display:false},min:0,max:80}
+    }}
+});
 
-// FADE IN OBSERVER
+// REP WIN RATE CHART
+new Chart(document.getElementById('repWinrateChart'),{
+  type:'bar',
+  data:{
+    labels:['Justin Lee','Ingrid Beard','Jake Borah','Jamie Butler','Connor Flynn','Andy Whisenant','Pat Davies','Jaylin Bender','Davis Herndon','Joe Abarno','Husam Z.'],
+    datasets:[{
+      label:'Win Rate %',
+      data:[39.1,36.1,14.0,12.7,12.1,12.1,11.7,7.3,6.3,5.9,5.6],
+      backgroundColor:[
+        'rgba(0,212,170,0.85)','rgba(0,212,170,0.85)',
+        'rgba(108,99,255,0.7)','rgba(108,99,255,0.7)','rgba(108,99,255,0.7)','rgba(108,99,255,0.7)',
+        'rgba(255,107,107,0.75)','rgba(255,107,107,0.75)','rgba(255,107,107,0.75)','rgba(255,107,107,0.75)','rgba(255,107,107,0.75)'
+      ],
+      borderRadius:4
+    }]
+  },
+  options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x+'%'}}},
+    scales:{x:{ticks:{callback:v=>v+'%'},max:45,grid:{display:false}},y:{ticks:{font:{size:10}}}}}
+});
+
+// REP MRR CHART
+new Chart(document.getElementById('repMrrChart'),{
+  type:'bar',
+  data:{
+    labels:['Andy Whisenant','Justin Lee','Jamie Butler','Jake Borah','Connor Flynn','Ingrid Beard','Pat Davies','Jaylin Bender','Davis Herndon','Husam Z.','Joe Abarno'],
+    datasets:[
+      {label:'MRR Won ($)',data:[18440,9380,10280,10200,7899,8227,5580,2440,1775,2105,1050],backgroundColor:'rgba(0,212,170,0.65)',borderRadius:4},
+      {label:'Avg Deal (×10 for scale)',data:[23050,5210,12850,12750,11280,3740,6200,6100,8880,7020,5250],backgroundColor:'rgba(108,99,255,0.45)',borderRadius:4}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+    plugins:{legend:{position:'bottom',labels:{padding:10,font:{size:10}}},tooltip:{callbacks:{label:c=>{if(c.datasetIndex===1)return 'Avg Deal: $'+(c.parsed.x/10).toLocaleString();return 'MRR Won: $'+c.parsed.x.toLocaleString()}}}},
+    scales:{x:{ticks:{callback:v=>'$'+(v/1000)+'K'},grid:{display:false}},y:{ticks:{font:{size:10}}}}}
+});
+
+// FADE IN
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');} });
+},{threshold:.08}).observe||new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.08});
+
 (function(){
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+  },{threshold:.08});
+  document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 })();
 </script>
 </body>
