@@ -787,12 +787,21 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
 
   <div class="grid-3">
     <div class="card">
-      <div class="card-title">SA Risk Concentration</div>
-      <ul class="insight-list">
-        <li><strong>Halle Taylor: 4 of 4 critical accounts</strong> — Class 5, TSI-NC, Losh, Newport. This is not a coincidence — it's an unsustainable workload. Immediate reassignment review required.</li>
-        <li><strong>Nicole Hills:</strong> Highest at-risk MRR (GuentherTech + Novalera = $2,570). Two concurrent critical accounts demanding executive escalation.</li>
-        <li><strong>Kegan Ehlers:</strong> 4 high-risk accounts with data migration backlog pattern.</li>
-      </ul>
+      <div class="card-title">SA Risk Distribution — 249 Onboarding Calls · Notion DB</div>
+      <table class="data-table" style="font-size:0.78rem;margin-bottom:.75rem">
+        <thead><tr><th>SA</th><th>Calls</th><th>Critical</th><th>Crit %</th><th>Avg Score</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Halle Taylor</strong></td><td>24</td><td><span class="hl-warn">5</span></td><td><span class="hl-warn">20.8%</span></td><td>13.7</td></tr>
+          <tr><td>Nicole Hills</td><td>24</td><td>2</td><td>8.3%</td><td><strong style="color:var(--accent2)">16.3</strong></td></tr>
+          <tr><td>Kegan Ehlers</td><td>23</td><td>2</td><td>8.7%</td><td class="hl-warn">11.4</td></tr>
+          <tr><td>Marshall Harris</td><td>19</td><td>0</td><td>—</td><td>16.2</td></tr>
+          <tr><td>Conner Sharp</td><td>19</td><td>0</td><td>—</td><td>13.9</td></tr>
+          <tr><td>JD Caulkins</td><td>18</td><td>0</td><td>—</td><td>15.9</td></tr>
+        </tbody>
+      </table>
+      <div class="callout info" style="margin:0;font-size:0.8rem">
+        <strong>Is Halle the problem?</strong> Data says: <em>concentration, not necessarily performance.</em> Her 20.8% critical rate is 2.5× Nicole Hills' 8.3% at the same call volume — that's a real gap. But Kegan Ehlers carries a lower avg risk score (11.4) and also has 2 critical accounts. Halle's portfolio skews toward Halo-displacement and billing-client PSA cross-sells — the documented highest-risk account types. <strong>Key question before any judgment: who assigned these accounts?</strong> If Halle inherited the complex-migration cohort while others got greenfield, it's an assignment problem. If assignments were random, it's a performance conversation.
+      </div>
     </div>
     <div class="card">
       <div class="card-title">30-Day Launch Pipeline (~6 accounts)</div>
@@ -811,7 +820,7 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
         <li>Build <strong>Sales-to-Onboarding Handoff Checklist</strong> covering: what's promised, what's in beta, known bugs, customer expectations. Blocks 3 of 4 current critical cases.</li>
         <li><strong>Retire "cost-neutral" PSA pitch</strong> — reframe as "investment with proven ROI." Zero-risk framing = zero adoption urgency.</li>
         <li><strong>Payments AR is an onboarding dependency, not a cross-sell.</strong> Setup takes time — initiate early or the client won't have Payments ready at go-live. The risk signal is Payments AR being pushed on clients already in crisis as a distraction from core PSA stabilization — not Payments AR itself.</li>
-        <li><strong>Halle Taylor workload review</strong> — this week. One SA cannot carry 4 critical accounts.</li>
+        <li><strong>Halle Taylor — review account assignment history</strong>, not just workload. Determine whether her critical-account concentration reflects assignment bias (complex migrations, Halo/billing cross-sells) or performance. Answer this before any corrective action.</li>
       </ul>
     </div>
   </div>
@@ -930,7 +939,7 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
         <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>Ryan Koontz in Abarno's next 3 calls — diagnose 5× win rate collapse</td><td>Ryan Koontz</td><td>This week</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
         <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>"Apollo 2 Is Live" battlecard — shipped features reps don't know about</td><td>Marketing + Sales Enablement</td><td>This week</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
         <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>NinjaOne bug fix escalation — get written timeline from Product</td><td>Product</td><td>This week</td><td><span class="status-check sc-missing">Urgent</span></td></tr>
-        <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>Halle Taylor workload review — 4 critical accounts = 1 SA = systemic failure</td><td>Onboarding Mgmt</td><td>This week</td><td><span class="status-check sc-missing">Urgent</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 Investigate</span></td><td>Halle Taylor — audit account assignment history. Is her 20.8% critical rate (vs 8.3% team peer) driven by complex account assignment or performance? Answer before action.</td><td>Onboarding Mgmt</td><td>May 5</td><td><span class="status-check sc-partial">Open Question</span></td></tr>
         <tr><td><span class="tag tag-yellow">🟡 This Month</span></td><td>Manager on Patrick Davies every deal — has not measurably improved (11.7% rate)</td><td>Sales Mgmt</td><td>Ongoing</td><td><span class="status-check sc-partial">Partial</span></td></tr>
         <tr><td><span class="tag tag-yellow">🟡 This Month</span></td><td>Sales-to-Onboarding handoff checklist — block 3 of 4 current critical failure patterns</td><td>Sales Ops + Onboarding</td><td>April 30</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
         <tr><td><span class="tag tag-yellow">🟡 This Month</span></td><td>CW Contract Clock campaign — 13 open CW deals, May-June renewal window</td><td>Ryan Koontz</td><td>April 30</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
