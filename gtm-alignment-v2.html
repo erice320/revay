@@ -62,8 +62,24 @@ section{max-width:1200px;margin:0 auto;padding:4rem 2rem}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.table-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 @media(max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.nav-links{display:none}}
+@media(max-width:700px){.grid-3,.grid-4{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .data-table{font-size:0.75rem}
+  .data-table th,.data-table td{padding:7px 8px}
+  .kpi-val{font-size:1.8rem}
+  section{padding:2.5rem 1rem}
+  .section-header h2{font-size:1.4rem}
+  .hero h1{font-size:clamp(2rem,8vw,3.5rem)}
+  .hero-stats{gap:1.2rem}
+  .hero-stat .num{font-size:1.8rem}
+  .play-card{padding:1.25rem}
+  .play-number{font-size:2rem}
+  .card{padding:1rem}
+}
 
 /* KPI */
 .kpi-val{font-family:var(--font-h);font-weight:800;font-size:2.3rem;letter-spacing:-.02em;margin-bottom:.15rem}
@@ -738,19 +754,19 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
 
   <div class="grid-2" style="margin-bottom:1.5rem">
     <div class="card">
-      <div class="card-title">Critical Risk Accounts — PSA (Tuesdayreport.html source)</div>
-      <table class="data-table" style="font-size:0.81rem">
+      <div class="card-title">Critical Risk Accounts — PSA · Updated Apr 28, 2026</div>
+      <div class="table-scroll"><table class="data-table" style="font-size:0.81rem;min-width:440px">
         <thead><tr><th>Account</th><th>MRR</th><th>Risk</th><th>Key Issue</th></tr></thead>
         <tbody>
-          <tr><td><strong>Class 5 Technologies</strong></td><td>$2,250</td><td><span class="tag tag-gray">CHURNED</span></td><td>PSA cancelled Apr 23. Never went live. 4.5 months.</td></tr>
-          <tr><td><strong>GuentherTech</strong></td><td>$2,070</td><td><span class="tag tag-red">Critical</span></td><td>Ticket bug 4+ weeks, QB gaps, distributor integrations</td></tr>
-          <tr><td><strong>Novalera</strong></td><td>$500</td><td><span class="tag tag-red">Critical</span></td><td>NinjaOne bugs, formal deliberation underway</td></tr>
+          <tr><td><strong>Class 5 Technologies</strong></td><td>$2,250</td><td><span class="tag tag-green">✅ SAVED</span></td><td>Evan 1.5hr call Apr 25. PSA retained. Reactivation plan in progress.</td></tr>
+          <tr><td><strong>GuentherTech</strong></td><td>$2,070</td><td><span class="tag tag-yellow">Watching</span></td><td>Evan called Apr 25. Monitoring progress, not canceling. Ticket bug + QB still open.</td></tr>
+          <tr><td><strong>Novalera</strong></td><td>$500</td><td><span class="tag tag-yellow">Watching</span></td><td>Evan called Apr 25. Monitoring progress, not canceling. NinjaOne fix is the gate.</td></tr>
           <tr><td><strong>TSI-NC</strong></td><td>~$400</td><td><span class="tag tag-red">Critical</span></td><td>Adoption halted, PO workflow gap</td></tr>
           <tr><td><strong>Newport Networks</strong></td><td>~$350</td><td><span class="tag tag-red">Critical</span></td><td>Score 34/100</td></tr>
           <tr><td><strong>Losh Network</strong></td><td>$1,004</td><td><span class="tag tag-yellow">High</span></td><td>At Risk sentiment, CW-trained workflow mismatch</td></tr>
           <tr><td><strong>Grahek Technology</strong></td><td>$315</td><td><span class="tag tag-yellow">High</span></td><td>Workflow emails completely broken</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </div>
     <div class="card">
       <div class="card-title">9 Systemic Patterns — Which Come from Sales</div>
@@ -903,14 +919,14 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
     </div>
   </div>
 
-  <div class="card" style="overflow-x:auto">
-    <table class="data-table" style="font-size:0.82rem">
+  <div class="table-scroll"><div class="card">
+    <table class="data-table" style="font-size:0.82rem;min-width:600px">
       <thead>
         <tr><th>Priority</th><th>Action</th><th>Owner</th><th>Timeline</th><th>Status</th></tr>
       </thead>
       <tbody>
-        <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>Call GuentherTech — churn prevention (Ben Guenther, ben@guenthertech.ca)</td><td>Evan Rice</td><td>This week</td><td><span class="status-check sc-missing">Urgent</span></td></tr>
-        <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>Call Novalera — churn prevention (Tony Testerman, 443-528-7060)</td><td>Evan Rice</td><td>This week</td><td><span class="status-check sc-missing">Urgent</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 Watch</span></td><td>GuentherTech — Evan called Apr 25. Monitoring, not canceling. Ticket bug + QB gaps still open. Follow-up: May 9.</td><td>Evan + Product</td><td>May 9</td><td><span class="status-check sc-partial">Monitoring</span></td></tr>
+        <tr><td><span class="tag tag-yellow">🟡 Watch</span></td><td>Novalera — Evan called Apr 25. Monitoring, not canceling. NinjaOne fix is the gate. Offer written 30-day cure plan.</td><td>Evan + Product</td><td>Per NinjaOne fix</td><td><span class="status-check sc-partial">Monitoring</span></td></tr>
         <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>Ryan Koontz in Abarno's next 3 calls — diagnose 5× win rate collapse</td><td>Ryan Koontz</td><td>This week</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
         <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>"Apollo 2 Is Live" battlecard — shipped features reps don't know about</td><td>Marketing + Sales Enablement</td><td>This week</td><td><span class="status-check sc-missing">Not Started</span></td></tr>
         <tr><td><span class="tag tag-red">🔴 NOW</span></td><td>NinjaOne bug fix escalation — get written timeline from Product</td><td>Product</td><td>This week</td><td><span class="status-check sc-missing">Urgent</span></td></tr>
@@ -928,7 +944,7 @@ footer{text-align:center;padding:3rem 2rem;color:var(--muted);font-size:0.77rem;
         <tr><td><span class="tag tag-green">🟢 Q3</span></td><td>QB Online full two-way integration — #1 feature blocker for MSP expansion</td><td>Product</td><td>Apollo 3</td><td><span class="status-check sc-partial">In Dev</span></td></tr>
       </tbody>
     </table>
-  </div>
+  </div></div>
 </section>
 
 <hr class="section-divider">
