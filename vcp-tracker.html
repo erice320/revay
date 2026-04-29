@@ -1,5 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+<script>
+(function(){
+  var PASS = 'Primus2026';
+  var key = 'vcp_auth';
+  if(sessionStorage.getItem(key) !== PASS){
+    var entered = prompt('Enter password to view this presentation:');
+    if(entered !== PASS){
+      document.write('<div style="background:#0f1117;color:#e8eaf6;height:100vh;display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;font-size:1.2rem;">Access denied. Please refresh and enter the correct password.</div>');
+      document.close();
+      throw new Error('auth');
+    }
+    sessionStorage.setItem(key, PASS);
+  }
+})();
+</script>
 <head>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzBmMTExNyIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyNCIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiPuKaoTwvdGV4dD4KPC9zdmc+">
   <meta charset="UTF-8">
