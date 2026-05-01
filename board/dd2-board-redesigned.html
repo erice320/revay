@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Dive 2: Scaling Sales Bookings | Rev.io Board Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* ── Brent's exact design system ── */
+:root {
+  --navy: #1D3756;
+  --navy-mid: #162e4a;
+  --navy-light: #1e3d63;
+  --accent: #2399B5;
+  --accent-bright: #2399B5;
+  --green: #6EBE4F;
+  --green-bg: rgba(110,190,79,0.12);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245,158,11,0.12);
+  --red: #ef4444;
+  --red-bg: rgba(239,68,68,0.12);
+  --white: #E8E8EC;
+  --muted: #a8bdd0;
+  --divider: rgba(255,255,255,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Open Sans', -apple-system, sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  line-height: 1.6;
+  font-size: 15px;
+}
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,27,42,0.97);
+  border-bottom: 1px solid var(--divider);
+  padding: 0 24px;
+  display: flex; align-items: center; gap: 4px;
+  overflow-x: auto; white-space: nowrap;
+  scrollbar-width: none;
+}
+nav::-webkit-scrollbar { display: none; }
+.nav-brand { font-weight: 700; color: var(--accent-bright); margin-right: 16px; font-size: 14px; padding: 14px 0; }
+nav a { color: var(--muted); text-decoration: none; font-size: 12px; padding: 14px 10px; border-bottom: 2px solid transparent; transition: all 0.2s; font-weight: 500; }
+nav a:hover { color: var(--white); }
+section { padding: 64px 24px; max-width: 960px; margin: 0 auto; }
+section + section { border-top: 1px solid var(--divider); }
+h2 { font-size: 28px; font-weight: 800; color: var(--white); margin-bottom: 8px; letter-spacing: -0.5px; }
+h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 12px; margin-top: 28px; }
+h4 { font-size: 14px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; margin-top: 20px; }
+.section-label { font-size: 11px; font-weight: 700; color: var(--accent-bright); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+.section-desc { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+.card { background: var(--navy-mid); border: 1px solid var(--divider); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.tag { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-amber { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: rgba(30,111,191,0.15); color: var(--accent-bright); }
+ul.wins, ul.challenges, ul.plan { list-style: none; padding: 0; }
+ul.wins li::before { content: "✅ "; }
+ul.challenges li::before { content: "⚠️ "; }
+ul.plan li::before { content: "→ "; color: var(--accent-bright); font-weight: 700; }
+ul.wins li, ul.challenges li, ul.plan li { margin-bottom: 6px; font-size: 14px; padding-left: 4px; }
+.metric-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.metric { background: var(--navy-mid); border: 1px solid var(--divider); border-radius: 10px; padding: 16px 20px; flex: 1; min-width: 140px; }
+.metric .val { font-size: 26px; font-weight: 800; line-height: 1.1; font-family: 'Montserrat', sans-serif; }
+.metric .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+.metric .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.metric.green .val { color: var(--green); }
+.metric.amber .val { color: var(--amber); }
+.metric.red .val { color: var(--red); }
+.metric.blue .val { color: var(--accent-bright); }
+.progress-bar-wrap { margin-bottom: 16px; }
+.progress-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+.progress-label .pct { font-weight: 700; }
+.progress-track { background: var(--navy-light); border-radius: 999px; height: 8px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 999px; }
+.progress-fill.green { background: var(--green); }
+.progress-fill.amber { background: var(--amber); }
+.progress-fill.red { background: var(--red); }
+.progress-fill.blue { background: var(--accent); }
+table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+th { background: var(--navy-light); color: var(--muted); text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--divider); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+.lever { background: var(--navy-mid); border: 1px solid var(--divider); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; }
+.lever-num { font-size: 11px; font-weight: 700; color: var(--accent-bright); text-transform: uppercase; letter-spacing: 1px; }
+.lever h3 { margin-top: 4px; font-size: 16px; }
+hr { border: none; border-top: 1px solid var(--divider); margin: 24px 0; }
+.chart-wrap { position: relative; height: 220px; margin-top: 12px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:640px) { .grid-2 { grid-template-columns: 1fr; } }
+<style id="scorecard-overrides">
+  /* Modern Enterprise + Rev.io Summit Aesthetic */
+  #scorecard-section {
+    background: #0d1b2e;
+    position: relative;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+  
+  /* Teal geometric glow / wash */
+  #scorecard-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -10%; right: -10%; height: 250px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(35, 153, 181, 0.15) 0%, rgba(29, 55, 86, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Vibrant top gradient band */
+  .scorecard-header-band {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #1D3756 0%, #2399B5 50%, #f59e0b 100%);
+  }
+
+  .scorecard-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 32px;
+    padding: 0 32px;
+  }
+
+  h3#scorecard {
+    font-size: 32px;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    border: none;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(13, 27, 42, 0.6);
+    border: 1px solid rgba(110, 190, 79, 0.3);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #E8E8EC;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    background: #6EBE4F;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #6EBE4F;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 14px #6EBE4F; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+  }
+
+  #scorecard-section .metric-row {
+    position: relative; z-index: 1;
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  #scorecard-section .metric {
+    background: rgba(21, 32, 50, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 12px;
+    padding: 24px 20px;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #scorecard-section .metric::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 3px; height: 100%;
+    opacity: 0.8;
+  }
+  #scorecard-section .metric.green::after { background: var(--green); }
+  #scorecard-section .metric.blue::after { background: var(--accent-bright); }
+
+  #scorecard-section .metric:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(35, 153, 181, 0.15);
+    border-color: rgba(35, 153, 181, 0.3);
+    background: rgba(30, 45, 68, 0.8);
+  }
+
+  #scorecard-section .metric .val {
+    font-size: 36px;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -1px;
+    margin-bottom: 6px;
+    color: #ffffff;
+    line-height: 1.1;
+  }
+
+  #scorecard-section .metric .lbl {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  #scorecard-section .metric .sub {
+    font-size: 12px;
+    color: rgba(232, 232, 236, 0.7);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 12px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .trend {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .trend.up { background: rgba(110, 190, 79, 0.15); color: var(--green); }
+  .trend.down { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+  .trend.neutral { background: rgba(168, 189, 208, 0.15); color: var(--muted); }
+
+  #scorecard-section .grid-2 {
+    position: relative; z-index: 1;
+    padding: 0 32px;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  #scorecard-section .card {
+    background: rgba(26, 40, 64, 0.7);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #scorecard-section .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+    border-color: rgba(255,255,255,0.1);
+  }
+
+  #scorecard-section .card .section-label {
+    color: var(--white);
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  /* Progress Bars */
+  #scorecard-section .progress-bar-wrap {
+    margin-bottom: 24px;
+  }
+  
+  #scorecard-section .progress-label {
+    font-size: 14px;
+    margin-bottom: 10px;
+    align-items: flex-end;
+  }
+
+  #scorecard-section .progress-track {
+    height: 14px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius: 8px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+  }
+
+  #scorecard-section .progress-fill {
+    position: relative;
+    border-radius: 8px;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+  }
+
+  #scorecard-section .progress-fill::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    border-radius: 8px;
+    background: inherit;
+    opacity: 0.5;
+    filter: blur(4px);
+  }
+
+  #scorecard-section .progress-fill.green { background-color: var(--green); box-shadow: 0 0 16px rgba(110,190,79,0.4); }
+  #scorecard-section .progress-fill.blue { background-color: var(--accent-bright); box-shadow: 0 0 16px rgba(35,153,181,0.4); }
+  #scorecard-section .progress-fill.amber { background-color: #f59e0b; box-shadow: 0 0 16px rgba(245,158,11,0.4); }
+  #scorecard-section .progress-fill.muted { background-color: var(--muted); }
+
+  .pipeline-total {
+    background: linear-gradient(90deg, rgba(13, 27, 42, 0.6) 0%, rgba(29, 55, 86, 0.4) 100%);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 32px;
+    border: 1px solid rgba(35,153,181,0.2);
+    border-left: 4px solid #f59e0b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  
+  .pipeline-total-val {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(35,153,181,0.2);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .badge.green { color: var(--green); background: rgba(110,190,79,0.1); border: 1px solid rgba(110,190,79,0.3); }
+  .badge.blue { color: var(--accent-bright); background: rgba(35,153,181,0.1); border: 1px solid rgba(35,153,181,0.3); }
+  .badge.amber { color: #f59e0b; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); }
+  .badge.muted { color: var(--muted); background: rgba(168,189,208,0.1); border: 1px solid rgba(168,189,208,0.3); }
+
+</style>
+
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Rev.io Board · May 2026</span>
+  <a href="#scorecard">GTM Scorecard</a>
+  <a href="#plan">Events</a>
+  <a href="#lever2">Paid Media</a>
+  <a href="#lever3">SEO + GEO</a>
+  <a href="#lever4">Revii</a>
+  <a href="#prospecting">Prospecting</a>
+  <a href="#fieldintel">Field Intel</a>
+  <a href="#pac">PAC</a>
+  <a href="#integrations">Integrations</a>
+  <a href="#winback">Apollo 2 Winback</a>
+  <a href="#references">References</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ↓↓↓  COPY FROM HERE — paste as <section id="dd2"> in Brent's file  ↓↓↓
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<section id="dd2" style="max-width:960px;margin:0 auto;padding:64px 24px;">
+  <div class="section-label">Section 6 — Deep Dive 2</div>
+  <h2>Scaling Sales Bookings</h2>
+  <p class="section-desc">GTM blueprint for scaling bookings. Here's the scorecard, the levers, and the actions already underway.</p>
+
+    <!-- ── GTM SCORECARD ─────────────────────────────────────────────────── -->
+  <div id="scorecard-section">
+    <div class="scorecard-header">
+      <h3 id="scorecard">GTM Scorecard</h3>
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        Live Salesforce Data · Apr 28, 2026
+      </div>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric green">
+        <div class="lbl">PSA Accounts Won</div>
+        <div class="val" style="color:var(--green)">153</div>
+        <div class="sub">
+          <span class="trend up">▲ 24</span>
+          <span>$107K MRR · PSA 2.0</span>
+        </div>
+      </div>
+      <div class="metric green">
+        <div class="lbl">Win Rate — Apr MTD</div>
+        <div class="val" style="color:var(--green)">19.5%</div>
+        <div class="sub">
+          <span class="trend up">▲</span>
+          <span>6-mo high (7.7% in Jan)</span>
+        </div>
+      </div>
+      <div class="metric blue">
+        <div class="lbl">MRR Booked — Apr MTD</div>
+        <div class="val" style="color:var(--accent-bright)">$16,397</div>
+        <div class="sub">
+          <span class="trend neutral">→</span>
+          <span>Pacing ~$22K final</span>
+        </div>
+      </div>
+      <div class="metric green">
+        <div class="lbl">Discovery No-Show Rate</div>
+        <div class="val" style="color:var(--green)">20.8%</div>
+        <div class="sub">
+          <span class="trend down">▼ 37%</span>
+          <span>Down from 32.7% (Feb)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="section-label" style="letter-spacing: 2px; font-size: 10px; margin-bottom: 4px;">MONTHLY BOOKINGS</div>
+        <div style="font-size:12px;color:rgba(168,189,208,0.7);margin-bottom:8px;">All Products MRR · Nov 2025 – Apr 2026</div>
+        <div class="chart-wrap"><canvas id="dd2BookingsChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="section-label" style="letter-spacing: 2px; font-size: 10px; margin-bottom: 4px;">WIN RATE TREND</div>
+        <div style="font-size:12px;color:rgba(168,189,208,0.7);margin-bottom:8px;">Won ÷ (Won + Lost) · All Products</div>
+        <div class="chart-wrap"><canvas id="dd2WinrateChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Open Pipeline -->
+    <div style="padding: 0 24px;">
+      <div class="card" style="margin-bottom:0">
+        <div class="section-label" style="letter-spacing: 2px; font-size: 10px; margin-bottom: 16px;">OPEN PIPELINE BY PRODUCT</div>
+        
+        <div class="progress-bar-wrap">
+          <div class="progress-label">
+            <span style="display:flex; align-items:center; gap:12px; font-weight:600; color:var(--white);">
+              PSA 2.0 
+              <span class="badge green">69 deals</span>
+              <span style="font-size:12px; color:var(--muted); font-weight:400;">avg $1,035</span>
+            </span>
+            <span class="pct" style="color:var(--green); font-size:16px; font-family:'Montserrat', sans-serif;">$71,455</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill green" style="width:64%; background:var(--green);"></div></div>
+        </div>
+        
+        <div class="progress-bar-wrap">
+          <div class="progress-label">
+            <span style="display:flex; align-items:center; gap:12px; font-weight:600; color:var(--white);">
+              Billing 
+              <span class="badge blue">28 deals</span>
+              <span style="font-size:12px; color:var(--muted); font-weight:400;">avg $1,037</span>
+            </span>
+            <span class="pct" style="color:var(--accent-bright); font-size:16px; font-family:'Montserrat', sans-serif;">$29,047</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill blue" style="width:26%; background:var(--accent-bright);"></div></div>
+        </div>
+
+        <div class="progress-bar-wrap">
+          <div class="progress-label">
+            <span style="display:flex; align-items:center; gap:12px; font-weight:600; color:var(--white);">
+              Payments AR 
+              <span class="badge amber">16 deals</span>
+            </span>
+            <span class="pct" style="color:var(--amber); font-size:16px; font-family:'Montserrat', sans-serif;">$5,846</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill amber" style="width:5%; background:var(--amber);"></div></div>
+        </div>
+
+        <div class="progress-bar-wrap">
+          <div class="progress-label">
+            <span style="display:flex; align-items:center; gap:12px; font-weight:600; color:var(--white);">
+              PSA Legacy 
+              <span class="badge muted">4 deals</span>
+            </span>
+            <span class="pct" style="color:var(--muted); font-size:16px; font-family:'Montserrat', sans-serif;">$4,800</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill muted" style="width:4%; background:var(--muted);"></div></div>
+        </div>
+
+        <div class="pipeline-total">
+          <div style="font-size:13px; color:var(--muted); line-height:1.5;">
+            <strong style="color:var(--white); font-weight:700;">173 active opportunities</strong> in pipeline.<br>
+            PSA 2.0 constitutes 64% of open MRR.
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:4px; font-weight:700;">Total Open Pipeline</div>
+            <div class="pipeline-total-val">$111,148 MRR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── THE 5 LEVERS ──────────────────────────────────────────────────── -->
+  <h3 id="plan" style="font-size:20px;margin-top:0;border-top:2px solid var(--accent);padding-top:12px">⚡ Key Initiatives for Amplifying Bookings</h3>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:24px;">Each initiative covers optimizations across the customer journey to accelerate performance.</p>
+
+  <!-- Lever 1: Events -->
+  <div class="lever">
+    <h3>Event-Led Market Penetration — Credibility with the IT MSP Buyer</h3>
+    <div style="background:rgba(108,99,255,0.07);border-left:4px solid #6c63ff;border-radius:0 8px 8px 0;padding:14px 18px;margin:14px 0 18px;">
+      <span style="font-weight:700;color:#fff;">Opportunity:</span> <span style="font-size:13px;color:var(--muted);">Reallocate savings into this proven channel to accelerate awareness, trust, and conversions with the IT MSP audience. Events are Rev.io's #1 revenue-generating channel — the play is to double down and make it even more intentional.</span>
+    </div>
+    <!-- YTD Tradeshow Performance block -->
+    <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:10px;padding:16px 20px;margin-bottom:16px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent-bright);margin-bottom:14px;">YTD Tradeshow Performance — 2026</div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:16px;">
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px 10px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:#fff;font-family:'Montserrat',sans-serif;">312</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px;">Total Leads</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px 10px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:#fff;font-family:'Montserrat',sans-serif;">125</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px;">Total Opps</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px 10px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--accent-bright);font-family:'Montserrat',sans-serif;">$128.3K</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px;">Pipeline Created</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px 10px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--green);font-family:'Montserrat',sans-serif;">$17.7K</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px;">MRR Closed Won</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px 10px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:#a78bfa;font-family:'Montserrat',sans-serif;">$1,266</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px;">Avg Deal Size</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px 10px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--amber);font-family:'Montserrat',sans-serif;">11.4%</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px;">Opp → Closed Won</div>
+        </div>
+      </div>
+
+      <!-- Pipeline by ICP -->
+      <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Pipeline by ICP</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+            <span style="font-weight:600;">Integrator</span>
+            <span style="color:var(--amber);font-weight:700;">$61,800 &nbsp;<span style="color:var(--muted);font-weight:400;">61 opps · 48%</span></span>
+          </div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:3px;height:6px;overflow:hidden;"><div style="width:48%;height:100%;background:var(--amber);border-radius:3px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+            <span style="font-weight:600;">IT MSP</span>
+            <span style="color:var(--accent-bright);font-weight:700;">$62,329 &nbsp;<span style="color:var(--muted);font-weight:400;">58 opps · 49%</span></span>
+          </div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:3px;height:6px;overflow:hidden;"><div style="width:49%;height:100%;background:var(--accent-bright);border-radius:3px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+            <span style="font-weight:600;">Other / Unknown</span>
+            <span style="color:var(--muted);font-weight:700;">$4,200 &nbsp;<span style="font-weight:400;">6 opps · 3%</span></span>
+          </div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:3px;height:6px;overflow:hidden;"><div style="width:3%;height:100%;background:var(--muted);border-radius:3px;"></div></div>
+        </div>
+      </div>
+
+      <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:6px;padding:10px 14px;font-size:12px;color:var(--muted);">
+        ⚠️ <strong style="color:var(--amber);">Near 50/50 split between IT MSP and Integrator pipeline</strong> — driven heavily by ISC West on the integrator side. New MSP-focused shows added to H2 calendar are designed to shift this mix further toward IT MSP over time.
+      </div>
+    </div>
+
+    <!-- What's Working / Keep an Eye On -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div style="background:var(--navy-light);border:1px solid rgba(110,190,79,0.2);border-left:4px solid var(--green);border-radius:8px;padding:14px 16px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--green);margin-bottom:10px;">✓ What's Working</div>
+        <ul class="plan" style="margin:0">
+          <li><strong style="color:#fff;">Cross-team collaboration</strong> on resource reallocation moving quickly — budget freed up and redirected into events without net new spend</li>
+          <li><strong style="color:#fff;">9 new MSP-focused events</strong> added to 2026 calendar — deliberate, audience-first selection targeting the IT MSP peer community</li>
+          <li><strong style="color:#fff;">Brook Lee</strong> bringing experience-backed show selection + actively negotiating speaking slots and discounted sponsorships for additional exposure</li>
+          <li><strong style="color:#fff;">ISC West</strong> — strong performance; integrator pipeline and closed won revenue validate the channel's ROI potential</li>
+        </ul>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(35,153,181,0.2);border-left:4px solid var(--accent-bright);border-radius:8px;padding:14px 16px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--accent-bright);margin-bottom:10px;">👁 Keep an Eye On</div>
+        <ul class="plan" style="margin:0">
+          <li><strong style="color:#fff;">MSP show conversion metrics</strong> — new MSP-focused shows are early. 2025 tradeshow baseline was 44% lead→opp / 11% opp→won. Need to watch whether MSP-specific shows beat or trail the blended average as H2 data comes in.</li>
+          <li><strong style="color:#fff;">ICP mix shift</strong> — Integrators at 48% of event pipeline YTD vs. IT MSP at 26%. Sep–Nov calendar is weighted toward MSP shows; expecting the mix to rebalance by year end.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Additional Levers -->
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Additional Levers to Pull</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:8px;padding:14px 16px;">
+        <div style="font-size:12px;font-weight:700;color:var(--accent-bright);margin-bottom:6px;">🎪 Bigger Activations at Key Shows</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6;">Invest in elevated booth presence and experiences at flagship events — CompTIA ChannelCon, IT Nation, NinjaOne MSPNXT. Increases awareness spend with later, harder-to-track ROI but compounds brand recognition within the MSP community.</div>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:8px;padding:14px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="font-size:12px;font-weight:700;color:var(--green);">💡 Influencer Advisory Group</div>
+          <span style="background:rgba(110,190,79,0.12);border:1px solid rgba(110,190,79,0.3);color:var(--green);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;">New Idea</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6;">Identify MSP influencers ahead of key shows and invite them to a private product experience — "wow them" before they walk the floor for 3 days. Double effect: <strong style="color:#fff;">impress the influencer</strong> + earn <strong style="color:#fff;">immediate grassroots advocacy</strong> at the event itself.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="lever2"></div><!-- Lever 2: Paid Media -->
+  <div class="lever">
+    <h3>Multi-Platform Paid Media Engine — Precision Coverage of a Niche Buyer</h3>
+
+    <!-- Opportunity -->
+    <div style="background:rgba(35,153,181,0.07);border-left:4px solid var(--accent-bright);border-radius:0 8px 8px 0;padding:14px 18px;margin:14px 0 18px;">
+      <span style="font-weight:700;color:#fff;">Opportunity:</span> <span style="font-size:13px;color:var(--muted);">Paid media is Rev.io's fastest lever for scaling reach into the IT MSP market. While this audience converts best face-to-face, paid plays a critical dual role: <strong style="color:#fff;">(a) Awareness</strong> — putting our name in front of MSPs before they ever see us at an event, compressing the trust-building timeline, and <strong style="color:#fff;">(b) Conversion</strong> — capturing the small but high-value segment ready to engage directly.</span>
+    </div>
+
+    <!-- Platform mix pills -->
+    <div style="margin-bottom:18px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Media Platform Mix</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+        <span style="background:rgba(35,153,181,0.15);border:1px solid rgba(35,153,181,0.4);color:var(--accent-bright);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;">Google</span>
+        <span style="background:rgba(35,153,181,0.15);border:1px solid rgba(35,153,181,0.4);color:var(--accent-bright);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;">LinkedIn</span>
+        <span style="background:rgba(35,153,181,0.15);border:1px solid rgba(35,153,181,0.4);color:var(--accent-bright);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;">Facebook</span>
+        <div style="width:1px;height:24px;background:rgba(255,255,255,0.1);margin:0 4px;"></div>
+        <span style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-right:2px;">New →</span>
+        <span style="background:rgba(110,190,79,0.12);border:1px solid rgba(110,190,79,0.4);color:var(--green);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;">Bing</span>
+        <span style="background:rgba(110,190,79,0.12);border:1px solid rgba(110,190,79,0.4);color:var(--green);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;">Reddit</span>
+        <span style="background:rgba(110,190,79,0.12);border:1px solid rgba(110,190,79,0.4);color:var(--green);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;">X</span>
+        <span style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:var(--muted);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;">YouTube <span style="font-weight:400;font-size:10px;">coming soon</span></span>
+      </div>
+    </div>
+
+    <!-- Platform spend table -->
+    <div style="margin-bottom:18px;">
+      <table style="margin:0">
+        <tr><th>Platform</th><th>Current / Historic Spend</th><th style="color:var(--accent-bright);">Updated Spend (May)</th><th>Strategy</th></tr>
+        <tr><td style="font-weight:700">Google</td><td>$5K</td><td style="color:var(--accent-bright);font-weight:700">$10K</td><td style="color:var(--muted);font-size:12px">More budget to convert on product keyword campaigns (not just Brand/Competitor)</td></tr>
+        <tr><td style="font-weight:700">LinkedIn</td><td>$18K</td><td style="color:var(--accent-bright);font-weight:700">$20K</td><td style="color:var(--muted);font-size:12px">Looking for IT MSP scale here</td></tr>
+        <tr><td style="font-weight:700">Reddit</td><td>$1.8K</td><td style="color:var(--accent-bright);font-weight:700">$5K</td><td style="color:var(--muted);font-size:12px">Curated, sniper IT MSP targeting / goal to direct to website for conversion</td></tr>
+        <tr><td style="font-weight:700">Bing</td><td>$2K</td><td style="color:var(--accent-bright);font-weight:700">$3K</td><td style="color:var(--muted);font-size:12px">Duplicate Google results at lower cost</td></tr>
+        <tr><td style="font-weight:700">FB</td><td>—</td><td style="color:var(--accent-bright);font-weight:700">$5K</td><td style="color:var(--muted);font-size:12px">Data shows correlation of media spend (integrators) and web leads. Activating for <span style="color:var(--amber)">30-day experiment</span>.</td></tr>
+        <tr><td style="font-weight:700">X</td><td>$1.5K</td><td style="color:var(--accent-bright);font-weight:700">$3K</td><td style="color:var(--muted);font-size:12px">Similar to Reddit, curated IT MSP audiences with goal to direct to website for conversion</td></tr>
+        <tr><td style="font-weight:700">YouTube</td><td>—</td><td style="color:var(--accent-bright);font-weight:700">$3K</td><td style="color:var(--muted);font-size:12px">Good platform for technical audiences; we have more video content now</td></tr>
+        <tr style="background:var(--navy-light)"><td style="font-weight:800">TOTAL</td><td style="font-weight:700">$28.3K</td><td style="font-weight:800;color:var(--accent-bright)">$49K</td><td style="color:var(--muted);font-size:12px">7 platforms · May 2026</td></tr>
+      </table>
+    </div>
+
+    <!-- What's Working / What's Not -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+      <div style="background:var(--navy-light);border:1px solid rgba(110,190,79,0.3);border-radius:8px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--green);margin-bottom:10px;">✓ What's Working</div>
+        <ul class="plan" style="margin:0">
+          <li>Reddit, X, and Bing are live with <strong style="color:#fff;">3+ weeks of learning data</strong> already in</li>
+          <li><strong style="color:#fff;">Reddit has strong potential</strong> — fraction of the cost, excellent IT MSP audience targeting</li>
+          <li>All active platforms showing <strong style="color:#fff;">audience reach</strong> — a good leading indicator of awareness building</li>
+        </ul>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--red);margin-bottom:10px;">✕ What's Not</div>
+        <ul class="plan" style="margin:0">
+          <li>New platforms take longer to ramp — more bugs, more setup friction vs. mature platforms</li>
+          <li>Impressions and clicks are there — <strong style="color:#fff;">conversions not at target level yet</strong>. Fixes in motion:
+            <div style="margin-top:6px;display:flex;flex-direction:column;gap:4px;padding-left:4px;">
+              <span style="font-size:12px;color:var(--muted);">→ Retargeting audiences now live on all platforms; video as leading indicator</span>
+              <span style="font-size:12px;color:var(--muted);">→ Simplifying ad structure on LinkedIn — fewer campaigns, more budget concentration</span>
+              <span style="font-size:12px;color:var(--muted);">→ More A/B testing on content, creative, and ad types</span>
+              <span style="font-size:12px;color:var(--muted);">→ Evaluating logo personalization / ABM tools (Karrot)</span>
+              <span style="font-size:12px;color:var(--muted);">→ Data boosts — 3,500 net-new MSP contacts every 30 days via ZoomInfo</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Ad Angles -->
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Ad Angles</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+      <div style="background:var(--navy-light);border:1px solid rgba(110,190,79,0.2);border-top:2px solid var(--green);border-radius:8px;padding:14px;">
+        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:6px;">"Not Your Grandma's PSA"</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Disruptive, personality-driven. Signals modern vs. legacy without being technical. Brook's voice makes it land authentically.</div>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(35,153,181,0.2);border-top:2px solid var(--accent-bright);border-radius:8px;padding:14px;">
+        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:6px;">"In a Bad Marriage with Your PSA?"</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Empathy-led. Speaks directly to the pain of being locked into the wrong platform — relatable for any MSP mid-contract.</div>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(110,190,79,0.2);border-top:2px solid var(--green);border-radius:8px;padding:14px;">
+        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:6px;">"Legacy PSAs Can't Do X. We Can."</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Feature contrast framing. High intent — catches buyers actively researching alternatives. Pairs well with Google/Bing demand capture.</div>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(108,99,255,0.25);border-top:2px solid #6c63ff;border-radius:8px;padding:14px;">
+        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:6px;">CEO-Led Demo</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5;">Signals conviction, stands out in a crowded feed. Testing across paid and organic to measure lift on demo requests and conversion.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="lever3"></div><!-- Lever 3: SEO + GEO -->
+  <div class="lever">
+    <h3>SEO + GEO — Own the Search Journey Before the Buyer Reaches a Competitor</h3>
+
+    <!-- Opportunity callout -->
+    <div style="background:rgba(108,99,255,0.07);border-left:4px solid #6c63ff;border-radius:0 8px 8px 0;padding:14px 18px;margin:14px 0 18px;">
+      <span style="font-weight:700;color:#fff;">Opportunity:</span> <span style="font-size:13px;color:var(--muted);">Compound, lower-cost leads with the highest intent of any channel — and the only channel that gets cheaper over time. SEO + GEO together cover both where buyers search today (Google) and where they're searching tomorrow (AI). Both are in motion.</span>
+    </div>
+
+    <!-- Chart + keyword stats side by side -->
+    <div style="display:grid;grid-template-columns:1fr 280px;gap:16px;margin-bottom:16px;align-items:stretch;">
+
+      <!-- Stacked bar chart -->
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:10px;padding:16px;display:flex;flex-direction:column;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent-bright);margin-bottom:2px;">Past 30 Days — Keyword Rankings</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:12px;">Apr 7 – Apr 27, 2026</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+          <span style="font-size:11px;color:var(--muted);display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#F5C518;display:inline-block;"></span>#1–3</span>
+          <span style="font-size:11px;color:var(--muted);display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#2399B5;display:inline-block;"></span>#4–10</span>
+          <span style="font-size:11px;color:var(--muted);display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#6BB8CC;display:inline-block;"></span>#11–20</span>
+          <span style="font-size:11px;color:var(--muted);display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#B8DDE6;display:inline-block;"></span>#21–100</span>
+        </div>
+        <div style="position:relative;flex:1;min-height:200px;height:100%;"><canvas id="dd2SeoChart"></canvas></div>
+      </div>
+
+      <!-- Keyword stats sidebar -->
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);">Keywords</div>
+
+        <div>
+          <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">Top 3</div>
+          <div style="display:flex;align-items:baseline;gap:8px;">
+            <span style="font-size:26px;font-weight:800;color:var(--accent-bright);font-family:'Montserrat',sans-serif;">112</span>
+            <div style="font-size:10px;line-height:1.4;"><span style="color:var(--green);font-weight:700;">+73 new</span><br><span style="color:var(--red);font-weight:700;">−9 lost</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border-radius:3px;height:4px;overflow:hidden;margin-top:4px;"><div style="width:75%;height:100%;background:var(--accent-bright);border-radius:3px;"></div></div>
+        </div>
+
+        <div>
+          <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">Top 10</div>
+          <div style="display:flex;align-items:baseline;gap:8px;">
+            <span style="font-size:26px;font-weight:800;color:var(--accent-bright);font-family:'Montserrat',sans-serif;">155</span>
+            <div style="font-size:10px;line-height:1.4;"><span style="color:var(--green);font-weight:700;">+70 new</span><br><span style="color:var(--red);font-weight:700;">−8 lost</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border-radius:3px;height:4px;overflow:hidden;margin-top:4px;"><div style="width:60%;height:100%;background:var(--accent-bright);border-radius:3px;"></div></div>
+        </div>
+
+        <div>
+          <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">Top 20</div>
+          <div style="display:flex;align-items:baseline;gap:8px;">
+            <span style="font-size:26px;font-weight:800;color:var(--accent-bright);font-family:'Montserrat',sans-serif;">185</span>
+            <div style="font-size:10px;line-height:1.4;"><span style="color:var(--green);font-weight:700;">+59 new</span><br><span style="color:var(--red);font-weight:700;">−9 lost</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border-radius:3px;height:4px;overflow:hidden;margin-top:4px;"><div style="width:50%;height:100%;background:var(--accent-bright);border-radius:3px;"></div></div>
+        </div>
+
+        <div>
+          <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">Top 100</div>
+          <div style="display:flex;align-items:baseline;gap:8px;">
+            <span style="font-size:26px;font-weight:800;color:var(--accent-bright);font-family:'Montserrat',sans-serif;">203</span>
+            <div style="font-size:10px;line-height:1.4;"><span style="color:var(--green);font-weight:700;">+45 new</span><br><span style="color:var(--red);font-weight:700;">−8 lost</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border-radius:3px;height:4px;overflow:hidden;margin-top:4px;"><div style="width:45%;height:100%;background:var(--accent-bright);border-radius:3px;"></div></div>
+        </div>
+
+        <hr style="border-color:var(--divider);margin:0">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Improved vs. Declined</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:20px;font-weight:800;color:var(--green);font-family:'Montserrat',sans-serif;">154</span>
+          <div style="flex:1;height:6px;border-radius:3px;overflow:hidden;background:rgba(255,255,255,.06);"><div style="width:80%;height:100%;background:linear-gradient(90deg,var(--green) 80%,var(--red) 80%);border-radius:3px;"></div></div>
+          <span style="font-size:20px;font-weight:800;color:var(--red);font-family:'Montserrat',sans-serif;">37</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- What's Working / What's Not -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div style="background:var(--navy-light);border:1px solid rgba(110,190,79,0.3);border-radius:8px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--green);margin-bottom:10px;">✓ What's Working</div>
+        <ul class="plan" style="margin:0">
+          <li><strong style="color:#fff;">Strong SEO consultant</strong> — portfolio recommendation via Bloomfire; already executing, not ramping</li>
+          <li><strong style="color:#fff;">Bot-accelerated page creation</strong> — RevItUp building HubSpot pages at dev speed, cutting out web developer dependency entirely</li>
+          <li><strong style="color:#fff;">Significant amount of new keywords landing in top 3</strong> — strong leading indicator out of the gate; PSA/MSP keyword set expanded for rapid compounding growth</li>
+        </ul>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--red);margin-bottom:10px;">✕ What's Not / In Progress</div>
+        <ul class="plan" style="margin:0">
+          <li><strong style="color:#fff;">Capacity ceiling</strong> — consultant capped; bots not yet trained to handle 100% of SEO work. More throughput needed.</li>
+          <li><strong style="color:#fff;">GEO still secondary</strong> — primary effort is SEO; brand citations for AI engines need acceleration</li>
+          <li><strong style="color:#fff;">Disjointed reporting</strong> — dynamic SEO/GEO dashboard in progress to surface real-time optimization signals in one place</li>
+          <li><strong style="color:#fff;">Third-party reviews thin</strong> — raving fans already tapped; need a broader customer advocate pipeline. Reliable review volume is a GEO fuel source.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Brand Citations -->
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;">Brand Citations — Fueling GEO</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:8px;padding:14px 16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--accent-bright);margin-bottom:8px;">📊 Analyst Mentions</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">MGI Research PSA Report + Canalys Global RMM &amp; PSA Leadership Matrix — <strong style="color:#fff;">in motion</strong></div>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:14px 16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--amber);margin-bottom:8px;">🏆 Awards</div>
+        <div style="font-size:13px;color:#fff;font-weight:700;margin-bottom:4px;">2026 TMC: MSP Today Product of the Year<br>2026 Forza: MSP Influencer Product of the Year</div>
+        <div style="font-size:12px;color:var(--muted);">Each win generates external links and AI-indexed mentions — direct GEO fuel.</div>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:14px 16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--accent-bright);margin-bottom:8px;">📈 Reviews — Rapidly Scaling</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">Raving fans already in campaigns. Next — building a repeatable customer advocate pipeline to drive high-volume reviews. High review volume is one of the strongest GEO signals and a direct accelerant for AI-indexed brand citations.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="lever4"></div><!-- Lever 4: Revii -->
+  <div class="lever">
+    <h3>Revii — Monetize the Agent. Own the Relationship.</h3>
+
+    <!-- Opportunity -->
+    <div style="background:rgba(108,99,255,0.08);border-left:4px solid #6c63ff;border-radius:0 8px 8px 0;padding:16px 18px;margin:14px 0 18px;">
+      <span style="font-weight:700;color:#fff;">Opportunity:</span> <span style="font-size:13px;color:var(--muted);line-height:1.7;"> MSPs stuck in long PSA contracts are unreachable through traditional sales — but they're not unreachable to an AI agent that overlays on whatever they're already running. Launching Revii as a standalone, PSA-agnostic product by end of Q2 creates a new revenue stream <em>and</em> the most powerful wedge strategy Rev.io has ever had: get into the account now, win them over, and convert to the full platform when the contract expires.</span>
+    </div>
+
+    <!-- Vision + Why it works side by side -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+      <div style="background:var(--navy-light);border:1px solid rgba(35,153,181,0.2);border-radius:8px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent-bright);margin-bottom:10px;">The Vision</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:10px;">An autonomous AI agent — <strong style="color:#fff;">Revii</strong> — that sits on top of any PSA platform (ConnectWise, Autotask, HaloPSA, Halo, SuperOps) and delivers intelligent automation: triage, dispatch, client communication, and workflow orchestration.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">Built by Rev.io, deeply integrated with Rev.io's billing and RMM DNA, and purpose-built to convert MSPs into full platform customers over time.</p>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(35,153,181,0.2);border-radius:8px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent-bright);margin-bottom:10px;">Why It Works as a Wedge</div>
+        <ul class="plan" style="margin:0">
+          <li>MSPs in 2–3 year PSA contracts are <strong style="color:#fff;">locked out of a traditional sale</strong> — Revii gets Rev.io in the door regardless</li>
+          <li>Daily product usage builds <strong style="color:#fff;">trust and dependency</strong> before the renewal conversation ever starts</li>
+          <li>When the contract expires, Rev.io isn't a cold pitch — it's <strong style="color:#fff;">the vendor they already use every day</strong></li>
+          <li>Generates <strong style="color:#fff;">standalone ARR</strong> immediately while the long-game PSA conversion plays out</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:8px;padding:12px 14px;text-align:center;">
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">Now → May</div>
+        <div style="font-size:13px;color:#fff;font-weight:600;">Define MVP</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;">What does Revii do standalone?</div>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(35,153,181,0.3);border-radius:8px;padding:12px 14px;text-align:center;">
+        <div style="font-size:10px;font-weight:700;color:var(--accent-bright);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">May → Jun</div>
+        <div style="font-size:13px;color:#fff;font-weight:600;">Build + Beta</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;">5–10 MSP partners</div>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid rgba(110,190,79,0.3);border-radius:8px;padding:12px 14px;text-align:center;">
+        <div style="font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">End of Q2</div>
+        <div style="font-size:13px;color:#fff;font-weight:600;">Soft Launch</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;">To channel partners</div>
+      </div>
+    </div>
+
+    <!-- The Number -->
+    <div style="background:rgba(35,153,181,0.07);border:1px solid rgba(35,153,181,0.25);border-radius:8px;padding:14px 18px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent-bright);margin-bottom:6px;">The Number</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7;">Every MSP running Revii on a competitor PSA is a warm lead with a contract expiry date. Standalone ARR from day one. Full PSA conversion at renewal. <strong style="color:#fff;">A wedge that pays for itself.</strong></div>
+    </div>
+  </div>
+
+  <div id="prospecting"></div><!-- ── INITIATIVE: AUTOMATED MSP PROSPECTING -->
+  <div style="background:var(--navy-mid);border:1px solid var(--divider);border-radius:12px;margin-bottom:16px;overflow:hidden;">
+
+    <!-- Header — teal accent bar -->
+    <div style="background:linear-gradient(135deg,#1a6b85,#1e3d63);border-bottom:1px solid rgba(35,153,181,0.3);padding:20px 24px;">
+      <div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:10px;">Automated MSP Prospecting at Scale</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <div style="background:rgba(255,255,255,0.15);border-radius:5px;padding:4px 12px;font-size:10.5px;font-weight:800;color:#fff;letter-spacing:0.3px;">📈 Expected Net Pipeline Increase: +20–30%</div>
+        <div style="background:rgba(35,153,181,0.25);border:1px solid rgba(35,153,181,0.4);border-radius:5px;padding:4px 12px;font-size:10px;font-weight:700;color:var(--accent-bright);letter-spacing:0.5px;text-transform:uppercase;">Tooling Investment</div>
+      </div>
+    </div>
+
+    <!-- Tool rows -->
+    <div style="padding:16px 24px;display:flex;flex-direction:column;gap:12px;">
+
+      <!-- Rox -->
+      <div style="background:var(--navy-light);border:1px solid rgba(35,153,181,0.2);border-radius:10px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="font-size:22px;flex-shrink:0;margin-top:2px;">🤖</div>
+        <div style="flex:1;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <span style="font-size:15px;font-weight:800;color:#fff;">Rox</span>
+            <span style="font-size:9px;font-weight:700;color:var(--accent-bright);background:rgba(35,153,181,0.1);padding:2px 8px;border-radius:3px;">~$50–70K/yr</span>
+          </div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px;">AI-native CRM — auto-researches accounts, surfaces buying signals, drafts personalized outreach so reps focus on selling.</div>
+          <span class="tag tag-blue" style="font-size:10px;">Account Intelligence</span>
+        </div>
+      </div>
+
+      <!-- Retell AI -->
+      <div style="background:var(--navy-light);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="font-size:22px;flex-shrink:0;margin-top:2px;">📞</div>
+        <div style="flex:1;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <span style="font-size:15px;font-weight:800;color:#fff;">Retell AI</span>
+            <span style="font-size:9px;font-weight:700;color:var(--muted);background:rgba(168,189,208,0.1);padding:2px 8px;border-radius:3px;">TBD</span>
+          </div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px;">AI voice agent for high-volume outbound — qualifies cold MSP leads before they hit an AE's calendar.</div>
+          <span class="tag" style="font-size:10px;background:rgba(110,190,79,0.12);color:var(--green);border:1px solid rgba(110,190,79,0.2);">Voice Prospecting</span>
+        </div>
+      </div>
+
+      <!-- Outreach Rev Agent -->
+      <div style="background:var(--navy-light);border:1px solid rgba(110,190,79,0.2);border-radius:10px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="font-size:22px;flex-shrink:0;margin-top:2px;">⚡</div>
+        <div style="flex:1;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <span style="font-size:15px;font-weight:800;color:#fff;">Outreach Rev Agent</span>
+            <span style="font-size:9px;font-weight:700;color:var(--green);background:rgba(110,190,79,0.1);padding:2px 8px;border-radius:3px;">$0 — negotiated into renewal</span>
+          </div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px;">AI layer on existing Outreach stack — auto-personalizes sequences using account data and MSP-specific triggers.</div>
+          <span class="tag tag-blue" style="font-size:10px;">Sequence Personalization</span>
+        </div>
+      </div>
+
+      <!-- Outcome -->
+      <div style="background:rgba(110,190,79,0.07);border:1px solid rgba(110,190,79,0.2);border-radius:10px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;">
+        <div style="font-size:20px;flex-shrink:0;">🎯</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">Goal: <strong style="color:#fff;">3× MSP outreach quality</strong> — every AE armed with fully researched, personalized sequences from day one.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="fieldintel"></div><!-- ── FIELD INTELLIGENCE -->
+  <div style="background:var(--navy-mid);border:1px solid var(--divider);border-radius:12px;margin-bottom:16px;overflow:hidden;">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#1a3d5c,#162e4a);border-bottom:1px solid rgba(255,255,255,0.1);padding:20px 24px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px;">Field Intelligence · 200+ MSP Conversations</div>
+      <div style="font-size:18px;font-weight:800;color:#fff;">What MSPs Are Responding To</div>
+    </div>
+
+    <!-- Resonance items -->
+    <div style="padding:20px 24px;display:flex;flex-direction:column;gap:10px;">
+
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(110,190,79,0.15);border:1px solid rgba(110,190,79,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--green);flex-shrink:0;margin-top:1px;">✓</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;">Full AI integration with transparency</div>
+          <div style="font-size:12px;color:var(--muted);">MSPs skeptical of vague AI claims — directness builds trust</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(110,190,79,0.15);border:1px solid rgba(110,190,79,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--green);flex-shrink:0;margin-top:1px;">✓</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;">Everything native in the PSA</div>
+          <div style="font-size:12px;color:var(--muted);">Projects, billing, invoicing, assets, configs — no tool-stitching</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(110,190,79,0.15);border:1px solid rgba(110,190,79,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--green);flex-shrink:0;margin-top:1px;">✓</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;">Mobile app built for field service</div>
+          <div style="font-size:12px;color:var(--muted);">Meaningful differentiator in a field-heavy industry</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(110,190,79,0.15);border:1px solid rgba(110,190,79,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--green);flex-shrink:0;margin-top:1px;">✓</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;">Month-to-month, no long-term contracts</div>
+          <div style="font-size:12px;color:var(--muted);">Comes up in almost every conversation — MSPs burned by CW/AT</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(110,190,79,0.15);border:1px solid rgba(110,190,79,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--green);flex-shrink:0;margin-top:1px;">✓</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;">CommerceHub — agnostic marketplace</div>
+          <div style="font-size:12px;color:var(--muted);">Procure software without leaving the PSA workflow — lands well once explained</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(110,190,79,0.15);border:1px solid rgba(110,190,79,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--green);flex-shrink:0;margin-top:1px;">✓</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;">Community built for partners, not just support</div>
+          <div style="font-size:12px;color:var(--muted);">Peer connection differentiates from transactional vendor relationships</div>
+        </div>
+      </div>
+
+      <!-- How we're using it -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;">
+        <div style="background:rgba(35,153,181,0.08);border:1px solid rgba(35,153,181,0.2);border-radius:8px;padding:14px 16px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--accent-bright);margin-bottom:8px;">→ Feeds Product</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.6;">Field signals are mapped directly to Apollo 3 and Viking scope. Product prioritizes based on what's showing up in 200+ real conversations — not guesses.</div>
+        </div>
+        <div style="background:rgba(110,190,79,0.07);border:1px solid rgba(110,190,79,0.2);border-radius:8px;padding:14px 16px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--green);margin-bottom:8px;">→ Feeds GTM</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.6;">Campaigns, ad copy, event messaging, and AE outreach sequences are rebuilt around what actually resonates — no-contract positioning, AI transparency, native-everything.</div>
+        </div>
+      </div>
+
+      <!-- Trajectory -->
+      <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:14px 16px;margin-top:2px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--amber);margin-bottom:6px;">Trajectory</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">Brand recognition moved from <strong style="color:#fff;">zero to unprompted awareness in under 60 days</strong>. Pipeline from first two mature events is converting. Four events from the past two weeks have not had time to develop. <strong style="color:#fff;">The ground assault strategy is working.</strong></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="pac"></div><!-- ── PARTNER ADVISORY COUNCIL -->
+  <div style="background:var(--navy-mid);border:1px solid var(--divider);border-radius:12px;margin-bottom:16px;overflow:hidden;">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#1d2e4a,#162e4a);border-bottom:1px solid rgba(255,255,255,0.1);padding:20px 24px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px;">Strategic Initiative</div>
+      <div style="font-size:18px;font-weight:800;color:#fff;">Partner Advisory Council (PAC)</div>
+    </div>
+
+    <div style="padding:20px 24px;display:flex;flex-direction:column;gap:12px;">
+
+      <!-- Why it matters callout -->
+      <div style="background:rgba(35,153,181,0.08);border:1px solid rgba(35,153,181,0.25);border-left:4px solid var(--accent-bright);border-radius:8px;padding:16px 18px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--accent-bright);margin-bottom:8px;">Why the PAC Matters — PSA Adoption</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7;">The single biggest barrier to PSA adoption among our comms client base is <strong style="color:#fff;">inertia</strong>. Operators on legacy systems won't migrate without a compelling reason and peer validation. The PAC creates both — senior decision-makers get a voice in shaping the roadmap, which <strong style="color:#fff;">directly accelerates their own adoption</strong>, and creates a peer network where migration decisions are validated laterally rather than sold top-down.</div>
+      </div>
+
+      <!-- Bullets -->
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:10px;font-size:13px;color:var(--muted);line-height:1.55;">
+          <span style="color:var(--accent-bright);font-weight:700;flex-shrink:0;">›</span>
+          <span>PAC structure in development — inaugural cohort being identified from existing client and partner base</span>
+        </div>
+        <div style="display:flex;gap:10px;font-size:13px;color:var(--muted);line-height:1.55;">
+          <span style="color:var(--accent-bright);font-weight:700;flex-shrink:0;">›</span>
+          <span>Focus: communications providers with legacy PSA dependencies who are evaluating or have expressed interest in Rev.io PSA</span>
+        </div>
+        <div style="display:flex;gap:10px;font-size:13px;color:var(--muted);line-height:1.55;">
+          <span style="color:var(--accent-bright);font-weight:700;flex-shrink:0;">›</span>
+          <span>Expected output: roadmap input, peer advocacy, and referral pipeline from a group with credibility in the market</span>
+        </div>
+      </div>
+
+      <!-- Strategic unlock -->
+      <div style="background:rgba(110,190,79,0.07);border:1px solid rgba(110,190,79,0.2);border-radius:8px;padding:14px 16px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--green);margin-bottom:6px;">The Strategic Unlock</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7;">This is how legacy PSA incumbents get displaced — <strong style="color:#fff;">not through feature comparisons, but through community trust.</strong> PAC members become internal champions and trusted referral sources for their peer networks.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="integrations"></div><!-- ── INTEGRATION ACCELERATION -->
+  <div style="background:var(--navy-mid);border:1px solid var(--divider);border-radius:12px;margin-bottom:16px;overflow:hidden;">
+
+    <!-- Header — purple accent -->
+    <div style="background:linear-gradient(135deg,#2a1a4a,#1e2a4a);border-bottom:1px solid rgba(139,92,246,0.25);padding:20px 24px;">
+      <div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;">Integration Acceleration</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:10px;">Equip SE team to build MSP integrations on demand — eliminate the #2 reason deals stall</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <div style="background:rgba(255,255,255,0.15);border-radius:5px;padding:4px 12px;font-size:10.5px;font-weight:800;color:#fff;letter-spacing:0.3px;">📈 Expected Net Pipeline Increase: +15–25%</div>
+        <div style="background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.35);border-radius:5px;padding:4px 12px;font-size:10px;font-weight:700;color:#c4b5fd;letter-spacing:0.5px;text-transform:uppercase;">Engineering Investment</div>
+      </div>
+    </div>
+
+    <div style="padding:20px 24px;display:flex;flex-direction:column;gap:12px;">
+
+      <div style="font-size:13px;color:var(--muted);line-height:1.65;">MSPs live in a stack — ConnectWise, Datto, Kaseya, IT Glue, Pax8. If Rev.io doesn't connect to their world out of the box, the deal dies. We fix that proactively.</div>
+
+      <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#a78bfa;margin-bottom:-4px;">What We're Building</div>
+
+      <!-- SE Integration Toolkit -->
+      <div style="background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.18);border-radius:8px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;">
+        <div style="font-size:20px;flex-shrink:0;">🔧</div>
+        <div>
+          <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:4px;">SE Integration Toolkit</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.55;">Standardized library of pre-built connectors, templates, and documentation — so SEs can configure custom integrations in days, not weeks.</div>
+        </div>
+      </div>
+
+      <!-- On-Demand Integration Commitment -->
+      <div style="background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.18);border-radius:8px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;">
+        <div style="font-size:20px;flex-shrink:0;">⚡</div>
+        <div>
+          <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:4px;">On-Demand Integration Commitment</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.55;">Sales can commit to specific integrations during the deal cycle — SEs fulfill with guaranteed turnaround, removing "we don't integrate with X" as a blocker.</div>
+        </div>
+      </div>
+
+      <!-- MSP Stack Mapping -->
+      <div style="background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.18);border-radius:8px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;">
+        <div style="font-size:20px;flex-shrink:0;">🗺️</div>
+        <div>
+          <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:4px;">MSP Stack Mapping</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.55;">Proactively document integration needs for every active opportunity — so no deal is lost to a surprise technical gap at the finish line.</div>
+        </div>
+      </div>
+
+      <!-- Outcome -->
+      <div style="background:rgba(110,190,79,0.07);border:1px solid rgba(110,190,79,0.2);border-radius:8px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;">
+        <div style="font-size:20px;flex-shrink:0;">🔌</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">Goal: <strong style="color:#fff;">zero deals lost to integration gaps</strong> — SEs turn technical objections into competitive differentiators.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="winback"></div><!-- ── APOLLO 2 WINBACK -->
+  <div style="background:var(--navy-mid);border:1px solid var(--divider);border-radius:12px;margin-bottom:16px;overflow:hidden;">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#1a2e4a,#162e4a);border-bottom:1px solid rgba(255,255,255,0.1);padding:20px 24px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px;">Re-engagement Campaign</div>
+      <div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;">Apollo 2 Winback</div>
+      <div style="font-size:13px;color:var(--muted);">64 accounts · $80,826 MRR at stake · Target: 45 opps created · Updated Apr 28, 2026</div>
+    </div>
+
+    <div style="padding:20px 24px;display:flex;flex-direction:column;gap:16px;">
+
+      <!-- 5 funnel cards -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+
+        <!-- Total Universe -->
+        <div style="background:var(--navy-light);border:1px solid var(--divider);border-top:3px solid var(--muted);border-radius:10px;padding:16px 14px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Total Universe</div>
+          <div style="font-size:30px;font-weight:800;color:var(--muted);font-family:'Montserrat',sans-serif;margin-bottom:4px;">64</div>
+          <div style="font-size:11px;color:rgba(168,189,208,0.5)">$80,826 MRR at stake</div>
+        </div>
+
+        <!-- Accounts Touched -->
+        <div style="background:var(--navy-light);border:1px solid var(--divider);border-top:3px solid var(--amber);border-radius:10px;padding:16px 14px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Accounts Touched</div>
+          <div style="font-size:30px;font-weight:800;color:var(--amber);font-family:'Montserrat',sans-serif;margin-bottom:8px;">64</div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;margin-bottom:5px;">
+            <div style="width:88%;height:100%;background:var(--amber);border-radius:4px;"></div>
+          </div>
+          <div style="font-size:10px;color:var(--muted);">64 of 73 target · <strong style="color:var(--amber)">88%</strong></div>
+        </div>
+
+        <!-- Opps Created -->
+        <div style="background:var(--navy-light);border:1px solid var(--divider);border-top:3px solid var(--accent-bright);border-radius:10px;padding:16px 14px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Opps Created</div>
+          <div style="font-size:30px;font-weight:800;color:var(--accent-bright);font-family:'Montserrat',sans-serif;margin-bottom:8px;">44</div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;margin-bottom:5px;">
+            <div style="width:98%;height:100%;background:var(--accent-bright);border-radius:4px;"></div>
+          </div>
+          <div style="font-size:10px;color:var(--muted);">44 of 45 target · <strong style="color:var(--accent-bright)">98%</strong></div>
+        </div>
+
+        <!-- Closed Won -->
+        <div style="background:var(--navy-light);border:1px solid var(--divider);border-top:3px solid var(--green);border-radius:10px;padding:16px 14px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Closed Won</div>
+          <div style="font-size:30px;font-weight:800;color:var(--green);font-family:'Montserrat',sans-serif;margin-bottom:8px;">4</div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;margin-bottom:5px;">
+            <div style="width:33%;height:100%;background:var(--green);border-radius:4px;"></div>
+          </div>
+          <div style="font-size:10px;color:var(--muted);">4 of 12 target · <strong style="color:var(--green)">33%</strong></div>
+        </div>
+
+        <!-- Revenue Recaptured -->
+        <div style="background:var(--navy-light);border:1px solid var(--divider);border-top:3px solid var(--green);border-radius:10px;padding:16px 14px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Revenue Recaptured</div>
+          <div style="font-size:26px;font-weight:800;color:var(--green);font-family:'Montserrat',sans-serif;margin-bottom:8px;">$4,475</div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;margin-bottom:5px;">
+            <div style="width:37%;height:100%;background:var(--green);border-radius:4px;"></div>
+          </div>
+          <div style="font-size:10px;color:var(--muted);">$4,475 of $12,000 target · <strong style="color:var(--green)">37%</strong></div>
+        </div>
+
+      </div>
+
+      <!-- What's Working / What's Not -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="background:var(--navy-light);border:1px solid rgba(110,190,79,0.2);border-left:4px solid var(--green);border-radius:8px;padding:16px 18px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--green);margin-bottom:10px;">✅ What's Working</div>
+          <div style="font-size:12px;color:rgba(168,189,208,0.5);font-style:italic;">Placeholder — add findings from the field here</div>
+        </div>
+        <div style="background:var(--navy-light);border:1px solid rgba(245,158,11,0.2);border-left:4px solid var(--amber);border-radius:8px;padding:16px 18px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--amber);margin-bottom:10px;">⚠️ What's Not</div>
+          <div style="font-size:12px;color:rgba(168,189,208,0.5);font-style:italic;">Placeholder — add blockers and friction points here</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="references"></div><!-- Lever: References (bottom) -->
+  <div class="lever">
+    <h3>Client References &amp; Advocacy — Let Customers Close for Us</h3>
+
+    <!-- Opportunity -->
+    <div style="background:rgba(108,99,255,0.07);border-left:4px solid #6c63ff;border-radius:0 8px 8px 0;padding:14px 18px;margin:14px 0 18px;">
+      <span style="font-weight:700;color:#fff;">Opportunity:</span> <span style="font-size:13px;color:var(--muted);line-height:1.7;"> No marketing channel closes faster or converts higher than a warm referral or a credible peer review. B2B buyers trust vendors less than ever — but they trust customers almost completely. A systematic advocacy engine turns satisfied clients into the most cost-effective sales force Rev.io has, while simultaneously fueling GEO with the third-party citations AI engines prioritize.</span>
+    </div>
+
+    <!-- 4 stats -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--divider);border-radius:10px;overflow:hidden;margin-bottom:18px;">
+      <div style="background:var(--navy-light);padding:16px 14px;text-align:center;">
+        <div style="font-size:26px;font-weight:800;color:var(--green);font-family:'Montserrat',sans-serif;">2—4×</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5;">Higher close rate on<br>referred opportunities</div>
+      </div>
+      <div style="background:var(--navy-light);padding:16px 14px;text-align:center;">
+        <div style="font-size:26px;font-weight:800;color:var(--green);font-family:'Montserrat',sans-serif;">16%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5;">Higher LTV vs.<br>non-referred customers</div>
+      </div>
+      <div style="background:var(--navy-light);padding:16px 14px;text-align:center;">
+        <div style="font-size:26px;font-weight:800;color:var(--green);font-family:'Montserrat',sans-serif;">92%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5;">B2B buyers trust peer<br>reviews over vendor claims</div>
+      </div>
+      <div style="background:var(--navy-mid);padding:16px 14px;text-align:center;border:1px solid rgba(245,158,11,0.2);">
+        <div style="font-size:26px;font-weight:800;color:var(--amber);font-family:'Montserrat',sans-serif;">2/24</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5;">Reviews from raving fans<br>tapped — need more pipeline</div>
+      </div>
+    </div>
+
+    <!-- Levers to Pull -->
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Levers to Pull</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:8px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="width:26px;height:26px;border-radius:50%;background:rgba(110,190,79,0.15);border:1px solid rgba(110,190,79,0.4);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--green);flex-shrink:0;">1</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Intelligence Hub → Auto-Draft Testimonials &amp; Case Studies</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">Leverage positive sentiment signals from Intelligence Hub to automatically draft a testimonial or case study — then route to the CSA for a final look before sending to the client. Templated approval request included. <strong style="color:var(--green);">Zero extra CSA effort until the draft lands in their inbox.</strong></div>
+        </div>
+      </div>
+
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:8px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="width:26px;height:26px;border-radius:50%;background:rgba(110,190,79,0.15);border:1px solid rgba(110,190,79,0.4);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--green);flex-shrink:0;">2</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Real-Time Call Capture → CSA-Triggered Advocacy</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;">When positive sentiment surfaces on a live client call, CSAs flag it in real time. Automation references the call recording, drafts a testimonial or case study, and delivers a ready-to-send message for CSA approval. <strong style="color:var(--amber);">Strike while the customer is warm.</strong></div>
+        </div>
+      </div>
+
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:8px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="width:26px;height:26px;border-radius:50%;background:rgba(110,190,79,0.15);border:1px solid rgba(110,190,79,0.4);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--green);flex-shrink:0;">3</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Advocacy Campaigns — G2, TrustRadius, Capterra, Software Advice</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:8px;">Structured campaigns to drive third-party reviews on the platforms buyers actually check before demoing. <strong style="color:var(--amber);">PSA reviews are the priority</strong> — underdeveloped relative to Billing.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+            <span style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:var(--white);font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px;">G2</span>
+            <span style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:var(--white);font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px;">TrustRadius</span>
+            <span style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:var(--white);font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px;">Capterra</span>
+            <span style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:var(--white);font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px;">Software Advice</span>
+            <span style="font-size:11px;color:var(--amber);">⚠️ Need: reliable power user / happy customer data set beyond raving fans</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Higher Close Rate & GEO callout -->
+    <div style="background:rgba(110,190,79,0.07);border:1px solid rgba(110,190,79,0.2);border-radius:8px;padding:14px 18px;margin-bottom:16px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--green);margin-bottom:6px;">Higher Close Rate &amp; GEO Benefit</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7;">Peer reviews and referrals carry a close rate 2–4× higher than cold channels — at near-zero incremental cost. Every review placed on G2 or Capterra is also a permanent GEO citation.</div>
+    </div>
+
+    <!-- Raving Fans -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:10px;padding:16px 18px;">
+        <div style="font-size:26px;font-weight:800;color:var(--green);font-family:'Montserrat',sans-serif;margin-bottom:4px;">24</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);">Raving Fans Q1</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">Q1 goal hit ✅</div>
+      </div>
+      <div style="background:var(--navy-light);border:1px solid var(--divider);border-radius:10px;padding:16px 18px;">
+        <div style="font-size:26px;font-weight:800;color:var(--accent-bright);font-family:'Montserrat',sans-serif;margin-bottom:4px;">75</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);">2026 Goal</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">By end of August</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ↑↑↑  END OF #dd2 INSERT — stop copying here  ↑↑↑
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<script>
+window.addEventListener('load', function() {
+  const months = ['Nov','Dec','Jan','Feb','Mar','Apr MTD'];
+  const gridColor = 'rgba(255,255,255,0.06)';
+  const tickColor = '#a8bdd0';
+  const tooltipStyle = {
+    backgroundColor: 'rgba(13,27,42,0.97)',
+    titleColor: '#E8E8EC',
+    bodyColor: '#a8bdd0',
+    borderColor: 'rgba(35,153,181,0.3)',
+    borderWidth: 1,
+    padding: 10
+  };
+
+  // Bookings stacked bar
+  new Chart(document.getElementById('dd2BookingsChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [
+        { label: 'PSA 2.0',  data: [11200,9800,4100,7200,14900,9800], backgroundColor: 'rgba(110,190,79,0.8)',  borderRadius: 3, stack: 'b' },
+        { label: 'Billing',  data: [4200,3600,1800,3100,5400,4300],   backgroundColor: 'rgba(35,153,181,0.75)', borderRadius: 3, stack: 'b' },
+        { label: 'Other',    data: [1100,800,400,600,1100,2300],       backgroundColor: 'rgba(245,158,11,0.6)',  borderRadius: 3, stack: 'b' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, labels: { color: tickColor, font: { size: 10 }, boxWidth: 10, padding: 10 } },
+        tooltip: { ...tooltipStyle, callbacks: { label: c => ` ${c.dataset.label}: $${Math.round(c.raw).toLocaleString()}` } }
+      },
+      scales: {
+        x: { stacked: true, grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 } } },
+        y: { stacked: true, grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 }, callback: v => '$'+Math.round(v/1000)+'K' }, beginAtZero: true }
+      }
+    }
+  });
+
+  // Win rate line
+  new Chart(document.getElementById('dd2WinrateChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: months,
+      datasets: [
+        {
+          label: 'Win Rate',
+          data: [14.2, 12.8, 7.7, 9.4, 10.1, 19.5],
+          borderColor: '#6EBE4F', backgroundColor: 'rgba(110,190,79,0.08)',
+          borderWidth: 2.5, fill: true, tension: 0.35,
+          pointRadius: 5, pointBackgroundColor: '#6EBE4F'
+        },
+        {
+          label: 'Target (15%)',
+          data: [15,15,15,15,15,15],
+          borderColor: 'rgba(245,158,11,0.5)', borderDash: [5,4],
+          borderWidth: 1.5, fill: false, pointRadius: 0, tension: 0
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, labels: { color: tickColor, font: { size: 10 }, boxWidth: 10, padding: 10 } },
+        tooltip: { ...tooltipStyle, callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } }
+      },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 } } },
+        y: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 }, callback: v => v+'%' }, beginAtZero: true, max: 25 }
+      }
+    }
+  });
+
+  // SEO Rankings stacked bar
+  new Chart(document.getElementById('dd2SeoChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Apr 7','Apr 9','Apr 11','Apr 13','Apr 15','Apr 17','Apr 19','Apr 21','Apr 23','Apr 25','Apr 27'],
+      datasets: [
+        { label: '#21–100', data: [53,40,50,50,50,52,48,50,55,58,60], backgroundColor: '#B8DDE6', borderRadius: 2, stack: 'kw' },
+        { label: '#11–20',  data: [20,22,22,22,20,20,20,20,18,18,20], backgroundColor: '#6BB8CC', borderRadius: 2, stack: 'kw' },
+        { label: '#4–10',   data: [30,35,20,20,22,20,20,22,22,22,24], backgroundColor: '#2399B5', borderRadius: 2, stack: 'kw' },
+        { label: '#1–3',    data: [62,75,75,75,75,75,75,75,76,78,80], backgroundColor: '#F5C518', borderRadius: 2, stack: 'kw' },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { ...tooltipStyle, callbacks: { label: c => ` ${c.dataset.label}: ${c.raw} keywords` } }
+      },
+      scales: {
+        x: { stacked: true, grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 }, maxRotation: 0 } },
+        y: { stacked: true, grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 } }, beginAtZero: true }
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
