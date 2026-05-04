@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-05-04T16:35:18.468Z",
+    "generated": "2026-05-04T17:00:34.685Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js"
   },
@@ -20,13 +20,13 @@
       },
       {
         "stage": "3 - Initial Product Demo",
-        "count": 21,
-        "mrr": 30675
+        "count": 22,
+        "mrr": 31795
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 32,
-        "mrr": 24689
+        "count": 31,
+        "mrr": 23569
       },
       {
         "stage": "4 - Proposal Sent",
@@ -44,7 +44,7 @@
         "mrr": 765
       }
     ],
-    "lastUpdated": "2026-05-04T16:35:18.996Z"
+    "lastUpdated": "2026-05-04T17:00:35.125Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
@@ -59,6 +59,12 @@
     ],
     "recentCalls": [
       {
+        "title": "Husam Zalmiyar - Joe Garetano",
+        "date": "2026-05-04",
+        "durationMin": 1,
+        "state": "ENDED"
+      },
+      {
         "title": "Ingrid Beard - Scott Springer",
         "date": "2026-05-04",
         "durationMin": 5,
@@ -69,15 +75,9 @@
         "date": "2026-05-04",
         "durationMin": 1,
         "state": "ENDED"
-      },
-      {
-        "title": "Ingrid Beard - Chris Fisk",
-        "date": "2026-05-04",
-        "durationMin": 1,
-        "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-05-04T16:35:22.330Z"
+    "lastUpdated": "2026-05-04T17:00:37.515Z"
   },
   "newBusiness": {
     "newDealsOpenedMtd": 15,
@@ -86,6 +86,12 @@
     "repliesThisWeek": 201,
     "meetingsBookedMtd": 16,
     "topSequences": [
+      {
+        "name": "Telecom Sequence Q2 2026",
+        "enrolled": 233,
+        "openRate": 0.513,
+        "replyRate": 0.004
+      },
       {
         "name": "Rev.io Cyber Protect (Billing Clients)",
         "enrolled": 28,
@@ -97,29 +103,23 @@
         "enrolled": 1624,
         "openRate": 0.525,
         "replyRate": 0.005
-      },
-      {
-        "name": "CBR Sequence - Q2'26",
-        "enrolled": 60,
-        "openRate": 0.532,
-        "replyRate": 0.025
       }
     ],
-    "lastUpdated": "2026-05-04T16:35:23.165Z"
+    "lastUpdated": "2026-05-04T17:00:38.192Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
-    "zendeskOpenTickets": 681,
-    "zendeskEscalated": 12,
+    "zendeskOpenTickets": 683,
+    "zendeskEscalated": 11,
     "psaOpenLast30": 47,
     "psaHighPriority": 12,
     "psaTotalLast30": 71,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-05-04T16:35:26.270Z"
+    "lastUpdated": "2026-05-04T17:00:42.013Z"
   },
   "agentHealth": {
     "cronJobsTotal": 6,
@@ -199,6 +199,6 @@
         "error": null
       }
     ],
-    "lastUpdated": "2026-05-04T16:35:26.271Z"
+    "lastUpdated": "2026-05-04T17:00:42.014Z"
   }
 }
