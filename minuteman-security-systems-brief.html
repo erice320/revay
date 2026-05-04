@@ -469,11 +469,11 @@
         </div>
         <div class="field">
           <label>Primary Client Contact <span class="req">*</span></label>
-          <input type="text" id="sb-contact" placeholder="Name + title" value="Gary Gordon" />
+          <input type="text" id="sb-contact" placeholder="Name + title" value="Chr Gordon" />
         </div>
         <div class="field">
           <label>Primary Contact Email</label>
-          <input type="email" id="sb-contact-email" placeholder="email@company.com" value="gglakers@gmail.com" />
+          <input type="email" id="sb-contact-email" placeholder="email@company.com" value="christopher.a.gordon1@gmail.com" />
         </div>
       </div>
 
@@ -525,13 +525,7 @@ Cc: christopher.a.gordon1@gmail.com <christopher.a.gordon1@gmail.com>; Michael R
 One more introduction coming your way — This is one of my favorites!
 I'd like to connect you with 
 
-Phone numbers found in email signatures: (864) 643-6282, (639) 129-9861, (949) 459-6372, (714) 401-8040
-
---- AE Update from Jaylin Bender (2026-04-30) ---
-Revay AI Main pain points and challenges Gary described
-
-
-Outdated PSA. Currently on CSS / Bryer Software Services (SQL-based). Gary called it an "elderly program" they've used for years — works, but doesn't scale or integrate with anything modern.Trust / responsiveness. Gary's been burned by being oversold before. He explicitly needs a single point of contact, fast phone responsiveness during transition, and recourse if things go wrong. The month-to-month contract was the deciding factor for him.E-signature replacement. A major value driver — he wants every customer signing a 2-page legal contract and service ticket digitally, not on paper. PandaDoc embedded in the platform is what tipped him over.Email coverage gap. Roughly 50% of his ~1,000 customers don't have an email on file. He's pl</textarea>
+Phone numbers found in email signatures: (864) 643-6282, (639) 129-9861, (949) 459-6372, (714) 401-8040</textarea>
       </div>
     </div>
 
@@ -773,9 +767,9 @@ Outdated PSA. Currently on CSS / Bryer Software Services (SQL-based). Gary calle
         </thead>
         <tbody id="rolesBody">
           <tr>
-            <td><input type="text" placeholder="Name" value="Gary Gordon" /></td>
+            <td><input type="text" placeholder="Name" value="Chr Gordon" /></td>
             <td><input type="text" placeholder="e.g. Owner" value="Owner" /></td>
-            <td><input type="email" placeholder="email@co.com" value="gglakers@gmail.com" /></td>
+            <td><input type="email" placeholder="email@co.com" value="christopher.a.gordon1@gmail.com" /></td>
             <td>
               <select>
                 <option value="">— Role —</option>
@@ -1350,11 +1344,10 @@ Outdated PSA. Currently on CSS / Bryer Software Services (SQL-based). Gary calle
     <div class="card">
       <div class="field">
         <label>Pre-Kickoff Open Items</label>
-        <textarea placeholder="..." style="min-height:120px;">• Bill Profile Questionnaire not sent — send to gglakers@gmail.com
+        <textarea placeholder="..." style="min-height:120px;">• Bill Profile Questionnaire not sent — send to christopher.a.gordon1@gmail.com
 • Company logo not collected
 • Accounting software and GL codes — confirm at kickoff
-• Payment processor — confirm before billing goes live
-• Only 1 SF contact — get full user/stakeholder list at kickoff</textarea>
+• Payment processor — confirm before billing goes live</textarea>
       </div>
       <hr class="field-divider" />
       <div class="field">
@@ -1368,9 +1361,7 @@ Outdated PSA. Currently on CSS / Bryer Software Services (SQL-based). Gary calle
       <hr class="field-divider" />
       <div class="field">
         <label>Red Flags / Risk Notes</label>
-        <textarea placeholder="Any concerns from the sales process — client readiness, data quality, complex requirements, unrealistic expectations, etc." style="min-height:80px;">⚠️ THIN CONTACT DATA: Only 1 SF contact. Full stakeholder/user map needed at kickoff.
-
-ℹ️ NO KAIA TRANSCRIPTS FOUND: No pre-close discovery calls found in Outreach for this account. All context is from SF fields and email threads.</textarea>
+        <textarea placeholder="Any concerns from the sales process — client readiness, data quality, complex requirements, unrealistic expectations, etc." style="min-height:80px;">ℹ️ NO KAIA TRANSCRIPTS FOUND: No pre-close discovery calls found in Outreach for this account. All context is from SF fields and email threads.</textarea>
       </div>
     </div>
 
@@ -1555,5 +1546,17 @@ Outdated PSA. Currently on CSS / Bryer Software Services (SQL-based). Gary calle
 
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  [{n:"Gary Gordon",t:"",e:"gglakers@gmail.com",p:"(949) 459-6372"}].forEach(function(u,i){
+    addRoleRow();
+    var r=document.getElementById('rolesBody').rows;
+    var row=r[r.length-1];
+    row.cells[0].querySelector('input').value=u.n;
+    row.cells[1].querySelector('input').value=u.t;
+    row.cells[2].querySelector('input').value=u.e;
+  });
+});
+</script>
 </body>
 </html>

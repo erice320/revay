@@ -415,6 +415,7 @@
   <div class="hero-actions">
     <button class="btn btn-primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
     
+    <button class="btn btn-primary" onclick="openQuestionnaire()" style="background:var(--accent2,#10b981);">📋 Pre-fill Questionnaire →</button>
   </div>
 </div>
 
@@ -430,7 +431,7 @@
       <div class="field-grid col2">
         <div class="field">
           <label>Company Name <span class="req">*</span></label>
-          <input type="text" placeholder="e.g. Losh Network Services" value="Alliance Communication & Technologies" />
+          <input type="text" id="sb-company" placeholder="e.g. Losh Network Services" value="Alliance Communication & Technologies" />
         </div>
         <div class="field">
           <label>Close Date <span class="req">*</span></label>
@@ -468,11 +469,11 @@
         </div>
         <div class="field">
           <label>Primary Client Contact <span class="req">*</span></label>
-          <input type="text" placeholder="Name + title" value="Tim Ahumuza — Operations Manager" />
+          <input type="text" id="sb-contact" placeholder="Name + title" value="Destiny Smith — Accounting" />
         </div>
         <div class="field">
           <label>Primary Contact Email</label>
-          <input type="email" placeholder="email@company.com" value="timahumuza@alliancecomtech.com" />
+          <input type="email" id="sb-contact-email" placeholder="email@company.com" value="destiny@alliancecomtech.com" />
         </div>
       </div>
 
@@ -777,9 +778,9 @@ Follow Up: </textarea>
         </thead>
         <tbody id="rolesBody">
           <tr>
-            <td><input type="text" placeholder="Name" value="Tim Ahumuza" /></td>
-            <td><input type="text" placeholder="e.g. Owner" value="Operations Manager" /></td>
-            <td><input type="email" placeholder="email@co.com" value="timahumuza@alliancecomtech.com" /></td>
+            <td><input type="text" placeholder="Name" value="Destiny Smith" /></td>
+            <td><input type="text" placeholder="e.g. Owner" value="Accounting" /></td>
+            <td><input type="email" placeholder="email@co.com" value="destiny@alliancecomtech.com" /></td>
             <td>
               <select>
                 <option value="">— Role —</option>
@@ -1217,6 +1218,42 @@ Follow Up: </textarea>
 
       <div class="card" style="margin-bottom:14px;">
         <div class="card-title">📬 Bill Profile Questionnaire</div>
+
+        <!-- Billing Cycle Config -->
+        <div class="field-grid col2" style="margin-bottom:14px;">
+          <div class="field">
+            <label>Billing Cycle Type <span class="req">*</span> <span class="tag tag-core">Pre-Config</span></label>
+            <div class="radio-group">
+              <label><input type="radio" name="cycle_type" value="cycle" /> Cycle-Based (1st / 15th)</label>
+              <label><input type="radio" name="cycle_type" value="anniversary" /> Anniversary Date</label>
+            </div>
+          </div>
+          <div class="field" id="field-cycle-dates">
+            <label>Billing Cycle Date(s) <span class="tag tag-core">Pre-Config</span></label>
+            <div class="check-group">
+              <label><input type="checkbox" name="cycle_date" value="1" /> 1st of month</label>
+              <label><input type="checkbox" name="cycle_date" value="15" /> 15th of month</label>
+              <label><input type="checkbox" name="cycle_date" value="both" /> Both (split billing)</label>
+            </div>
+            <input type="text" placeholder="Other — specify date(s)" style="margin-top:8px;" />
+          </div>
+          <div class="field">
+            <label>Bill in Arrears? <span class="req">*</span> <span class="tag tag-core">Pre-Config</span></label>
+            <div class="radio-group">
+              <label><input type="radio" name="bill_arrears" value="yes" /> Yes — bill after service period</label>
+              <label><input type="radio" name="bill_arrears" value="no" /> No — bill in advance</label>
+            </div>
+          </div>
+          <div class="field">
+            <label>Multiple Billing Profiles? <span class="tag tag-core">Pre-Config</span></label>
+            <div class="radio-group">
+              <label><input type="radio" name="multi_profile" value="yes" /> Yes — different terms per customer segment</label>
+              <label><input type="radio" name="multi_profile" value="no" /> No — single profile</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status + Policy -->
         <div class="field-grid col2">
           <div class="field">
             <label>Questionnaire Sent?</label>
@@ -1318,7 +1355,7 @@ Follow Up: </textarea>
     <div class="card">
       <div class="field">
         <label>Pre-Kickoff Open Items</label>
-        <textarea placeholder="..." style="min-height:120px;">• Bill Profile Questionnaire not sent — send to timahumuza@alliancecomtech.com
+        <textarea placeholder="..." style="min-height:120px;">• Bill Profile Questionnaire not sent — send to destiny@alliancecomtech.com
 • Company logo not collected
 • Accounting software and GL codes — confirm at kickoff
 • Payment processor — confirm before billing goes live</textarea>
@@ -1470,11 +1507,59 @@ Follow Up: </textarea>
     document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
     document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(el => el.checked = false);
   }
+
+  // ── Questionnaire Pre-fill Export ──────────────────────────────────
+  function openQuestionnaire() {
+    // Collect company info
+    const company   = (document.getElementById('sb-company') || {}).value || '';
+    const contact   = (document.getElementById('sb-contact') || {}).value || '';
+    const email     = (document.getElementById('sb-contact-email') || {}).value || '';
+
+    // Collect users from roles table
+    const users = [];
+    document.querySelectorAll('#rolesBody tr').forEach(row => {
+      const inputs = row.querySelectorAll('input[type="text"], input[type="email"]');
+      const sel    = row.querySelector('select');
+      const name   = inputs[0] ? inputs[0].value.trim() : '';
+      const title  = inputs[1] ? inputs[1].value.trim() : '';
+      const uemail = inputs[2] ? inputs[2].value.trim() : '';
+      const role   = sel ? sel.value : '';
+      if (name || uemail) users.push({ name, title, email: uemail, role });
+    });
+
+    // Billing config (Section 5)
+    const cycleTypeEl  = document.querySelector('input[name="cycle_type"]:checked');
+    const arrearsEl    = document.querySelector('input[name="bill_arrears"]:checked');
+    const multiProfEl  = document.querySelector('input[name="multi_profile"]:checked');
+    const cycleDates   = Array.from(document.querySelectorAll('input[name="cycle_date"]:checked')).map(el => el.value);
+
+    // Inventory
+    const inventoryEl  = document.querySelector('input[name="inventory"]:checked');
+
+    const data = {
+      company,
+      contact,
+      email,
+      users,
+      cycleType:  cycleTypeEl  ? cycleTypeEl.value  : '',
+      cycleDates,
+      arrears:    arrearsEl    ? arrearsEl.value    : '',
+      multiProfile: multiProfEl ? multiProfEl.value : '',
+      inventory:  inventoryEl  ? inventoryEl.value  : '',
+      _source: 'sales-brief',
+      _ts: new Date().toISOString()
+    };
+
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    const url = 'https://aiextucker.github.io/Onboarding-Automation-Project/psa-questionnaire.html#brief=' + encoded;
+    window.open(url, '_blank');
+  }
+
 </script>
 
 <script>
 document.addEventListener('DOMContentLoaded',function(){
-  [{n:"Matt Smith",t:"President",e:"matthew@alliancecomtech.com",p:"(307) 247-0763"}].forEach(function(u,i){
+  [{n:"Tim Ahumuza",t:"Operations Manager",e:"timahumuza@alliancecomtech.com",p:"(307) 333-6699"},{n:"Matt Smith",t:"President",e:"matthew@alliancecomtech.com",p:"(307) 247-0763"}].forEach(function(u,i){
     addRoleRow();
     var r=document.getElementById('rolesBody').rows;
     var row=r[r.length-1];
