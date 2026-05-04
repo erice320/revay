@@ -1,22 +1,22 @@
 {
   "_meta": {
-    "generated": "2026-05-04T16:14:05.486Z",
+    "generated": "2026-05-04T16:35:18.468Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js"
   },
   "pipeline": {
-    "openPipelineMrr": 116892,
-    "openDeals": 124,
-    "weightedMrr": 52601,
-    "closingThisMonth": 112,
-    "closingThisMonthMrr": 110495,
-    "avgDealMrr": 943,
-    "winRateMtd": 0.1,
+    "openPipelineMrr": 116392,
+    "openDeals": 123,
+    "weightedMrr": 52376,
+    "closingThisMonth": 111,
+    "closingThisMonthMrr": 109995,
+    "avgDealMrr": 946,
+    "winRateMtd": 0.09090909090909091,
     "stageBreakdown": [
       {
         "stage": "1- Discovery Scheduled",
-        "count": 57,
-        "mrr": 50362
+        "count": 56,
+        "mrr": 49862
       },
       {
         "stage": "3 - Initial Product Demo",
@@ -44,7 +44,7 @@
         "mrr": 765
       }
     ],
-    "lastUpdated": "2026-05-04T16:14:05.921Z"
+    "lastUpdated": "2026-05-04T16:35:18.996Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
@@ -59,64 +59,67 @@
     ],
     "recentCalls": [
       {
-        "title": "Jaylin Bender - Joe Winters",
+        "title": "Ingrid Beard - Scott Springer",
         "date": "2026-05-04",
-        "durationMin": 0,
+        "durationMin": 5,
         "state": "ENDED"
       },
       {
-        "title": "Abbey McIntosh - Danielle Duncan",
+        "title": "Ingrid Beard - John Brogan",
         "date": "2026-05-04",
-        "durationMin": 0,
+        "durationMin": 1,
         "state": "ENDED"
       },
       {
-        "title": "Ingrid Beard - Nae'A Hughes",
+        "title": "Ingrid Beard - Chris Fisk",
         "date": "2026-05-04",
         "durationMin": 1,
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-05-04T16:14:07.878Z"
+    "lastUpdated": "2026-05-04T16:35:22.330Z"
   },
   "newBusiness": {
     "newDealsOpenedMtd": 15,
     "sequencesActive": 32,
-    "newEnrollmentsThisWeek": 11896,
+    "newEnrollmentsThisWeek": 11897,
     "repliesThisWeek": 201,
     "meetingsBookedMtd": 16,
     "topSequences": [
       {
-        "name": "CBR Sequence - Q2'26",
-        "enrolled": 60,
-        "openRate": 0.519,
-        "replyRate": 0.025
-      },
-      {
-        "name": "Telecom Sequence Q2 2026",
-        "enrolled": 232,
-        "openRate": 0.513,
-        "replyRate": 0.004
+        "name": "Rev.io Cyber Protect (Billing Clients)",
+        "enrolled": 28,
+        "openRate": 0.479,
+        "replyRate": 0.042
       },
       {
         "name": "Q2'26 Security ",
         "enrolled": 1624,
-        "openRate": 0.523,
+        "openRate": 0.525,
         "replyRate": 0.005
+      },
+      {
+        "name": "CBR Sequence - Q2'26",
+        "enrolled": 60,
+        "openRate": 0.532,
+        "replyRate": 0.025
       }
     ],
-    "lastUpdated": "2026-05-04T16:14:08.389Z"
+    "lastUpdated": "2026-05-04T16:35:23.165Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
-    "zendeskOpenTickets": 678,
+    "zendeskOpenTickets": 681,
     "zendeskEscalated": 12,
+    "psaOpenLast30": 47,
+    "psaHighPriority": 12,
+    "psaTotalLast30": 71,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-05-04T16:14:10.132Z"
+    "lastUpdated": "2026-05-04T16:35:26.270Z"
   },
   "agentHealth": {
     "cronJobsTotal": 6,
@@ -130,7 +133,7 @@
       {
         "name": "Onboarding Intelligence",
         "id": "afc5c57b",
-        "lastError": "Last run 74h ago (expected <28h)",
+        "lastError": "Last run 75h ago (expected <28h)",
         "since": "2026-05-01"
       },
       {
@@ -165,7 +168,7 @@
         "id": "afc5c57b",
         "lastRun": "2026-05-01T14:02:50.797Z",
         "status": "stale",
-        "error": "Last run 74h ago (expected <28h)"
+        "error": "Last run 75h ago (expected <28h)"
       },
       {
         "name": "MSP Intel Brief",
@@ -196,6 +199,6 @@
         "error": null
       }
     ],
-    "lastUpdated": "2026-05-04T16:14:10.133Z"
+    "lastUpdated": "2026-05-04T16:35:26.271Z"
   }
 }
