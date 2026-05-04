@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-05-04T16:06:53.556Z",
+    "generated": "2026-05-04T16:14:05.486Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js"
   },
@@ -15,8 +15,8 @@
     "stageBreakdown": [
       {
         "stage": "1- Discovery Scheduled",
-        "count": 58,
-        "mrr": 51062
+        "count": 57,
+        "mrr": 50362
       },
       {
         "stage": "3 - Initial Product Demo",
@@ -25,8 +25,8 @@
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 31,
-        "mrr": 23989
+        "count": 32,
+        "mrr": 24689
       },
       {
         "stage": "4 - Proposal Sent",
@@ -44,11 +44,12 @@
         "mrr": 765
       }
     ],
-    "lastUpdated": "2026-05-04T16:06:53.962Z"
+    "lastUpdated": "2026-05-04T16:14:05.921Z"
   },
   "callIntelligence": {
-    "callsThisWeek": 3550,
-    "callsYesterday": 251,
+    "callsThisWeek": 100,
+    "callsYesterday": 100,
+    "lastRunProcessed": 10,
     "flaggedFollowUps": 0,
     "topThemes": [
       "Pricing objection",
@@ -58,67 +59,64 @@
     ],
     "recentCalls": [
       {
-        "account": "Unknown",
+        "title": "Jaylin Bender - Joe Winters",
         "date": "2026-05-04",
-        "direction": "outbound",
-        "duration": 0,
-        "outcome": null
+        "durationMin": 0,
+        "state": "ENDED"
       },
       {
-        "account": "Unknown",
+        "title": "Abbey McIntosh - Danielle Duncan",
         "date": "2026-05-04",
-        "direction": "outbound",
-        "duration": 0,
-        "outcome": null
+        "durationMin": 0,
+        "state": "ENDED"
       },
       {
-        "account": "Unknown",
+        "title": "Ingrid Beard - Nae'A Hughes",
         "date": "2026-05-04",
-        "direction": "outbound",
-        "duration": 0,
-        "outcome": null
+        "durationMin": 1,
+        "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-05-04T16:06:54.490Z"
+    "lastUpdated": "2026-05-04T16:14:07.878Z"
   },
   "newBusiness": {
     "newDealsOpenedMtd": 15,
     "sequencesActive": 32,
-    "newEnrollmentsThisWeek": 11895,
+    "newEnrollmentsThisWeek": 11896,
     "repliesThisWeek": 201,
     "meetingsBookedMtd": 16,
     "topSequences": [
       {
-        "name": "MSP Holy Grail 2026",
-        "enrolled": 251,
-        "openRate": 0.641,
-        "replyRate": 0.002
+        "name": "CBR Sequence - Q2'26",
+        "enrolled": 60,
+        "openRate": 0.519,
+        "replyRate": 0.025
+      },
+      {
+        "name": "Telecom Sequence Q2 2026",
+        "enrolled": 232,
+        "openRate": 0.513,
+        "replyRate": 0.004
       },
       {
         "name": "Q2'26 Security ",
         "enrolled": 1624,
-        "openRate": 0.524,
+        "openRate": 0.523,
         "replyRate": 0.005
-      },
-      {
-        "name": "ESX Sequence",
-        "enrolled": 147,
-        "openRate": 0.455,
-        "replyRate": 0.022
       }
     ],
-    "lastUpdated": "2026-05-04T16:06:54.961Z"
+    "lastUpdated": "2026-05-04T16:14:08.389Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
-    "zendeskOpenTickets": 2219,
-    "zendeskEscalated": 29,
+    "zendeskOpenTickets": 678,
+    "zendeskEscalated": 12,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-05-04T16:06:57.086Z"
+    "lastUpdated": "2026-05-04T16:14:10.132Z"
   },
   "agentHealth": {
     "cronJobsTotal": 6,
@@ -198,6 +196,6 @@
         "error": null
       }
     ],
-    "lastUpdated": "2026-05-04T16:06:57.086Z"
+    "lastUpdated": "2026-05-04T16:14:10.133Z"
   }
 }
