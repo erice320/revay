@@ -1,75 +1,203 @@
 {
   "_meta": {
-    "generated": "2026-05-04T07:00:00Z",
-    "status": "SAMPLE_DATA",
-    "note": "This is placeholder data. Real data populates after Ops Review cron is wired."
+    "generated": "2026-05-04T16:06:53.556Z",
+    "status": "LIVE",
+    "builder": "ops-snapshot-builder.js"
   },
   "pipeline": {
-    "openPipelineMrr": 184200,
-    "openDeals": 34,
-    "weightedMrr": 97600,
-    "closingThisMonth": 8,
-    "closingThisMonthMrr": 41500,
-    "avgDealMrr": 5418,
-    "winRateMtd": 0.483,
+    "openPipelineMrr": 116892,
+    "openDeals": 124,
+    "weightedMrr": 52601,
+    "closingThisMonth": 112,
+    "closingThisMonthMrr": 110495,
+    "avgDealMrr": 943,
+    "winRateMtd": 0.1,
     "stageBreakdown": [
-      { "stage": "Discovery", "count": 9, "mrr": 38400 },
-      { "stage": "Demo", "count": 11, "mrr": 52800 },
-      { "stage": "Proposal", "count": 8, "mrr": 61200 },
-      { "stage": "Negotiation", "count": 6, "mrr": 31800 }
+      {
+        "stage": "1- Discovery Scheduled",
+        "count": 58,
+        "mrr": 51062
+      },
+      {
+        "stage": "3 - Initial Product Demo",
+        "count": 21,
+        "mrr": 30675
+      },
+      {
+        "stage": "2 - Discovery Completed",
+        "count": 31,
+        "mrr": 23989
+      },
+      {
+        "stage": "4 - Proposal Sent",
+        "count": 7,
+        "mrr": 7137
+      },
+      {
+        "stage": "6 - Verbal Commit",
+        "count": 6,
+        "mrr": 3264
+      },
+      {
+        "stage": "5 - Product / Contract Validated",
+        "count": 1,
+        "mrr": 765
+      }
     ],
-    "lastUpdated": "2026-05-04T07:00:00Z"
+    "lastUpdated": "2026-05-04T16:06:53.962Z"
   },
   "callIntelligence": {
-    "callsThisWeek": 12,
-    "callsYesterday": 3,
-    "flaggedFollowUps": 2,
-    "topThemes": ["Pricing objection", "PSA migration timeline", "ConnectWise comparison", "Implementation scope"],
-    "recentCalls": [
-      { "account": "Frontline Communications", "rep": "AE1", "date": "2026-05-03", "sentiment": "positive", "flagged": false },
-      { "account": "NetWatch Systems", "rep": "AE2", "date": "2026-05-03", "sentiment": "mixed", "flagged": true, "flagReason": "Pricing concern — needs follow-up" },
-      { "account": "Viking Lock", "rep": "AE1", "date": "2026-05-02", "sentiment": "positive", "flagged": false }
+    "callsThisWeek": 3550,
+    "callsYesterday": 251,
+    "flaggedFollowUps": 0,
+    "topThemes": [
+      "Pricing objection",
+      "PSA migration timeline",
+      "ConnectWise comparison",
+      "Implementation scope"
     ],
-    "lastUpdated": "2026-05-04T07:00:00Z"
+    "recentCalls": [
+      {
+        "account": "Unknown",
+        "date": "2026-05-04",
+        "direction": "outbound",
+        "duration": 0,
+        "outcome": null
+      },
+      {
+        "account": "Unknown",
+        "date": "2026-05-04",
+        "direction": "outbound",
+        "duration": 0,
+        "outcome": null
+      },
+      {
+        "account": "Unknown",
+        "date": "2026-05-04",
+        "direction": "outbound",
+        "duration": 0,
+        "outcome": null
+      }
+    ],
+    "lastUpdated": "2026-05-04T16:06:54.490Z"
   },
   "newBusiness": {
-    "newDealsOpenedMtd": 11,
-    "sequencesActive": 847,
-    "newEnrollmentsThisWeek": 93,
-    "repliesThisWeek": 28,
-    "meetingsBookedMtd": 14,
+    "newDealsOpenedMtd": 15,
+    "sequencesActive": 32,
+    "newEnrollmentsThisWeek": 11895,
+    "repliesThisWeek": 201,
+    "meetingsBookedMtd": 16,
     "topSequences": [
-      { "name": "MSP Cold — Billing Pain", "enrolled": 312, "openRate": 0.41, "replyRate": 0.08 },
-      { "name": "PSA Competitive — CW", "enrolled": 218, "openRate": 0.38, "replyRate": 0.06 }
+      {
+        "name": "MSP Holy Grail 2026",
+        "enrolled": 251,
+        "openRate": 0.641,
+        "replyRate": 0.002
+      },
+      {
+        "name": "Q2'26 Security ",
+        "enrolled": 1624,
+        "openRate": 0.524,
+        "replyRate": 0.005
+      },
+      {
+        "name": "ESX Sequence",
+        "enrolled": 147,
+        "openRate": 0.455,
+        "replyRate": 0.022
+      }
     ],
-    "lastUpdated": "2026-05-04T07:00:00Z"
+    "lastUpdated": "2026-05-04T16:06:54.961Z"
   },
   "customerHealth": {
-    "onboardingActive": 7,
-    "onboardingAtRisk": 2,
-    "onboardingOverdue": 1,
-    "zendeskOpenTickets": 18,
-    "zendeskEscalated": 1,
-    "communityNewPosts": 5,
-    "communityUnanswered": 2,
-    "atRiskAccounts": [
-      { "account": "Keycom Technologies", "issue": "Week 3 — no login activity", "owner": "CSM1" },
-      { "account": "JD Telecom", "issue": "Billing config stuck", "owner": "CSM2" }
-    ],
-    "lastUpdated": "2026-05-04T07:00:00Z"
+    "onboardingActive": 0,
+    "onboardingAtRisk": 0,
+    "onboardingOverdue": 0,
+    "zendeskOpenTickets": 2219,
+    "zendeskEscalated": 29,
+    "communityNewPosts": 0,
+    "communityUnanswered": 0,
+    "atRiskAccounts": [],
+    "lastUpdated": "2026-05-04T16:06:57.086Z"
   },
   "agentHealth": {
-    "cronJobsTotal": 14,
-    "cronJobsHealthy": 12,
-    "cronJobsError": 2,
-    "lastKaiaRun": "2026-05-04T12:30:00Z",
+    "cronJobsTotal": 6,
+    "cronJobsHealthy": 2,
+    "cronJobsError": 1,
+    "lastKaiaRun": "2026-05-04T13:11:08.361Z",
     "lastKaiaStatus": "ok",
-    "lastBriefRun": "2026-05-04T07:00:00Z",
-    "lastBriefStatus": "ok",
+    "lastOnboardingRun": "2026-05-01T14:02:50.797Z",
+    "lastOnboardingStatus": "stale",
     "errorJobs": [
-      { "name": "PSA Reply Monitor", "id": "998f9cc4", "lastError": "Session cookie expired", "since": "2026-05-03" },
-      { "name": "Intel Deck Builder", "id": "81402d2e", "lastError": "SF token expired (auto-refresh added)", "since": "2026-05-01" }
+      {
+        "name": "Onboarding Intelligence",
+        "id": "afc5c57b",
+        "lastError": "Last run 74h ago (expected <28h)",
+        "since": "2026-05-01"
+      },
+      {
+        "name": "MSP Intel Brief",
+        "id": "msp-intel",
+        "lastError": "No run recorded",
+        "since": "unknown"
+      },
+      {
+        "name": "PSA Reply Monitor",
+        "id": "998f9cc4",
+        "lastError": "No run recorded",
+        "since": "unknown"
+      },
+      {
+        "name": "Circle Monitor",
+        "id": "circle-mon",
+        "lastError": "No run recorded",
+        "since": "unknown"
+      }
     ],
-    "lastUpdated": "2026-05-04T07:00:00Z"
+    "allJobs": [
+      {
+        "name": "Kaia Pipeline",
+        "id": "e7769928",
+        "lastRun": "2026-05-04T13:11:08.361Z",
+        "status": "ok",
+        "error": null
+      },
+      {
+        "name": "Onboarding Intelligence",
+        "id": "afc5c57b",
+        "lastRun": "2026-05-01T14:02:50.797Z",
+        "status": "stale",
+        "error": "Last run 74h ago (expected <28h)"
+      },
+      {
+        "name": "MSP Intel Brief",
+        "id": "msp-intel",
+        "lastRun": null,
+        "status": "no-data",
+        "error": "No run recorded"
+      },
+      {
+        "name": "PSA Reply Monitor",
+        "id": "998f9cc4",
+        "lastRun": null,
+        "status": "no-data",
+        "error": "No run recorded"
+      },
+      {
+        "name": "Circle Monitor",
+        "id": "circle-mon",
+        "lastRun": null,
+        "status": "no-data",
+        "error": "No run recorded"
+      },
+      {
+        "name": "X Intelligence",
+        "id": "x-monitor",
+        "lastRun": "2026-05-04T08:00:05.717Z",
+        "status": "ok",
+        "error": null
+      }
+    ],
+    "lastUpdated": "2026-05-04T16:06:57.086Z"
   }
 }
