@@ -1,0 +1,75 @@
+{
+  "_meta": {
+    "generated": "2026-05-04T07:00:00Z",
+    "status": "SAMPLE_DATA",
+    "note": "This is placeholder data. Real data populates after Ops Review cron is wired."
+  },
+  "pipeline": {
+    "openPipelineMrr": 184200,
+    "openDeals": 34,
+    "weightedMrr": 97600,
+    "closingThisMonth": 8,
+    "closingThisMonthMrr": 41500,
+    "avgDealMrr": 5418,
+    "winRateMtd": 0.483,
+    "stageBreakdown": [
+      { "stage": "Discovery", "count": 9, "mrr": 38400 },
+      { "stage": "Demo", "count": 11, "mrr": 52800 },
+      { "stage": "Proposal", "count": 8, "mrr": 61200 },
+      { "stage": "Negotiation", "count": 6, "mrr": 31800 }
+    ],
+    "lastUpdated": "2026-05-04T07:00:00Z"
+  },
+  "callIntelligence": {
+    "callsThisWeek": 12,
+    "callsYesterday": 3,
+    "flaggedFollowUps": 2,
+    "topThemes": ["Pricing objection", "PSA migration timeline", "ConnectWise comparison", "Implementation scope"],
+    "recentCalls": [
+      { "account": "Frontline Communications", "rep": "AE1", "date": "2026-05-03", "sentiment": "positive", "flagged": false },
+      { "account": "NetWatch Systems", "rep": "AE2", "date": "2026-05-03", "sentiment": "mixed", "flagged": true, "flagReason": "Pricing concern — needs follow-up" },
+      { "account": "Viking Lock", "rep": "AE1", "date": "2026-05-02", "sentiment": "positive", "flagged": false }
+    ],
+    "lastUpdated": "2026-05-04T07:00:00Z"
+  },
+  "newBusiness": {
+    "newDealsOpenedMtd": 11,
+    "sequencesActive": 847,
+    "newEnrollmentsThisWeek": 93,
+    "repliesThisWeek": 28,
+    "meetingsBookedMtd": 14,
+    "topSequences": [
+      { "name": "MSP Cold — Billing Pain", "enrolled": 312, "openRate": 0.41, "replyRate": 0.08 },
+      { "name": "PSA Competitive — CW", "enrolled": 218, "openRate": 0.38, "replyRate": 0.06 }
+    ],
+    "lastUpdated": "2026-05-04T07:00:00Z"
+  },
+  "customerHealth": {
+    "onboardingActive": 7,
+    "onboardingAtRisk": 2,
+    "onboardingOverdue": 1,
+    "zendeskOpenTickets": 18,
+    "zendeskEscalated": 1,
+    "communityNewPosts": 5,
+    "communityUnanswered": 2,
+    "atRiskAccounts": [
+      { "account": "Keycom Technologies", "issue": "Week 3 — no login activity", "owner": "CSM1" },
+      { "account": "JD Telecom", "issue": "Billing config stuck", "owner": "CSM2" }
+    ],
+    "lastUpdated": "2026-05-04T07:00:00Z"
+  },
+  "agentHealth": {
+    "cronJobsTotal": 14,
+    "cronJobsHealthy": 12,
+    "cronJobsError": 2,
+    "lastKaiaRun": "2026-05-04T12:30:00Z",
+    "lastKaiaStatus": "ok",
+    "lastBriefRun": "2026-05-04T07:00:00Z",
+    "lastBriefStatus": "ok",
+    "errorJobs": [
+      { "name": "PSA Reply Monitor", "id": "998f9cc4", "lastError": "Session cookie expired", "since": "2026-05-03" },
+      { "name": "Intel Deck Builder", "id": "81402d2e", "lastError": "SF token expired (auto-refresh added)", "since": "2026-05-01" }
+    ],
+    "lastUpdated": "2026-05-04T07:00:00Z"
+  }
+}

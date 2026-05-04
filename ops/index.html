@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RevOps Command Center</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #222638;
+      --border: #2e3248;
+      --text: #e8eaf6;
+      --text-muted: #8b8fa8;
+      --accent: #6c63ff;
+      --accent2: #00d4aa;
+      --danger: #ff5370;
+      --warning: #ffb74d;
+      --success: #00d4aa;
+      --pipeline: #6c63ff;
+      --calls: #00b4d8;
+      --newbiz: #a78bfa;
+      --health: #00d4aa;
+      --agent: #ff9f43;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .last-updated {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,212,170,0.1);
+      border: 1px solid rgba(0,212,170,0.25);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--success);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .sample-banner {
+      background: rgba(255,179,77,0.12);
+      border-bottom: 1px solid rgba(255,179,77,0.25);
+      color: var(--warning);
+      text-align: center;
+      padding: 8px 24px;
+      font-size: 12px;
+      display: none;
+    }
+
+    .sample-banner.visible { display: block; }
+
+    /* LAYOUT */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-top {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-mid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .grid-bottom {
+      grid-template-columns: 1fr;
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .card-icon {
+      font-size: 16px;
+    }
+
+    .card-freshness {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    /* PIPELINE */
+    .pipeline-title { color: var(--pipeline); }
+
+    .metric-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .metric {
+      flex: 1;
+      background: var(--surface2);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .metric-value.pipeline { color: var(--pipeline); }
+    .metric-value.success { color: var(--success); }
+    .metric-value.warning { color: var(--warning); }
+    .metric-value.danger { color: var(--danger); }
+    .metric-value.calls { color: var(--calls); }
+    .metric-value.newbiz { color: var(--newbiz); }
+
+    /* STAGE TABLE */
+    .stage-table { width: 100%; border-collapse: collapse; }
+    .stage-table th {
+      text-align: left;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0 0 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .stage-table th:last-child, .stage-table td:last-child { text-align: right; }
+
+    .stage-table td {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 13px;
+    }
+
+    .stage-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stage-bar {
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+      opacity: 0.6;
+    }
+
+    /* CALLS */
+    .calls-title { color: var(--calls); }
+
+    .call-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .call-item {
+      background: var(--surface2);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .call-account { font-weight: 500; font-size: 13px; }
+    .call-meta { font-size: 11px; color: var(--text-muted); }
+
+    .call-badges { display: flex; align-items: center; gap: 6px; }
+
+    .badge {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-weight: 500;
+    }
+
+    .badge-positive { background: rgba(0,212,170,0.15); color: var(--success); }
+    .badge-mixed { background: rgba(255,183,77,0.15); color: var(--warning); }
+    .badge-negative { background: rgba(255,83,112,0.15); color: var(--danger); }
+    .badge-flagged { background: rgba(255,83,112,0.2); color: var(--danger); border: 1px solid rgba(255,83,112,0.3); }
+
+    .themes-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .theme-tag {
+      background: rgba(0,180,216,0.12);
+      border: 1px solid rgba(0,180,216,0.2);
+      color: var(--calls);
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 8px;
+    }
+
+    /* NEW BIZ */
+    .newbiz-title { color: var(--newbiz); }
+
+    .seq-item {
+      background: var(--surface2);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+    }
+
+    .seq-name { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+
+    .seq-stats { display: flex; gap: 16px; }
+    .seq-stat { font-size: 12px; }
+    .seq-stat-label { color: var(--text-muted); }
+    .seq-stat-value { font-weight: 600; margin-left: 4px; }
+
+    /* CUSTOMER HEALTH */
+    .health-title { color: var(--health); }
+
+    .at-risk-item {
+      background: rgba(255,83,112,0.08);
+      border: 1px solid rgba(255,83,112,0.18);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+    }
+
+    .at-risk-account { font-size: 13px; font-weight: 500; color: var(--danger); }
+    .at-risk-issue { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* AGENT HEALTH */
+    .agent-title { color: var(--agent); }
+
+    .agent-overview {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .agent-metric {
+      flex: 1;
+      background: var(--surface2);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .cron-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .cron-item {
+      background: var(--surface2);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cron-name { font-size: 13px; font-weight: 500; }
+    .cron-id { font-size: 11px; color: var(--text-muted); font-family: monospace; }
+    .cron-error { font-size: 12px; color: var(--danger); margin-top: 2px; }
+    .cron-since { font-size: 11px; color: var(--text-muted); }
+
+    .health-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .health-bar-outer {
+      flex: 1;
+      height: 8px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .health-bar-inner {
+      height: 100%;
+      background: var(--success);
+      border-radius: 4px;
+      transition: width 0.8s ease;
+    }
+
+    .health-bar-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      min-width: 60px;
+      text-align: right;
+    }
+
+    /* SECTION SPACING */
+    .section-gap { height: 16px; }
+
+    /* LOADING */
+    .loading {
+      text-align: center;
+      padding: 60px;
+      color: var(--text-muted);
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ERROR */
+    .error-state {
+      text-align: center;
+      padding: 40px;
+      color: var(--danger);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) {
+      .grid-top, .grid-mid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 700px) {
+      .grid-top, .grid-mid { grid-template-columns: 1fr; }
+      main { padding: 12px; }
+    }
+
+    /* DIVIDER */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .section-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo">⚡</div>
+    <h1>RevOps Command Center</h1>
+  </div>
+  <div class="header-right">
+    <span class="last-updated" id="lastUpdated">Loading...</span>
+    <div class="status-badge" id="statusBadge">
+      <div class="status-dot"></div>
+      <span id="statusText">Live</span>
+    </div>
+  </div>
+</header>
+
+<div class="sample-banner" id="sampleBanner">
+  ⚠️ Showing sample data — Ops Review cron not yet connected. Real data will populate after Phase 2 wiring.
+</div>
+
+<main id="appRoot">
+  <div class="loading">
+    <div class="spinner"></div>
+    <div>Loading ops snapshot...</div>
+  </div>
+</main>
+
+<script>
+const fmt = {
+  mrr: v => '$' + (v >= 1000 ? (v/1000).toFixed(0) + 'K' : v.toLocaleString()),
+  pct: v => (v * 100).toFixed(1) + '%',
+  date: v => {
+    const d = new Date(v);
+    return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/Chicago' }) + ' CST';
+  },
+  shortDate: v => {
+    const d = new Date(v);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+};
+
+function freshness(iso) {
+  const diff = Date.now() - new Date(iso).getTime();
+  const h = Math.floor(diff / 3600000);
+  if (h < 1) return 'Just updated';
+  if (h < 24) return h + 'h ago';
+  return Math.floor(h/24) + 'd ago';
+}
+
+function sentimentBadge(s) {
+  const map = { positive: 'positive', mixed: 'mixed', negative: 'negative' };
+  return `<span class="badge badge-${map[s]||'mixed'}">${s}</span>`;
+}
+
+function render(d) {
+  const p = d.pipeline;
+  const c = d.callIntelligence;
+  const n = d.newBusiness;
+  const h = d.customerHealth;
+  const a = d.agentHealth;
+  const maxMrr = Math.max(...p.stageBreakdown.map(s => s.mrr));
+  const healthPct = Math.round((a.cronJobsHealthy / a.cronJobsTotal) * 100);
+
+  document.getElementById('lastUpdated').textContent = 'Updated ' + fmt.date(d._meta.generated);
+  if (d._meta.status === 'SAMPLE_DATA') {
+    document.getElementById('sampleBanner').classList.add('visible');
+    document.getElementById('statusText').textContent = 'Sample';
+    document.getElementById('statusBadge').style.background = 'rgba(255,183,77,0.1)';
+    document.getElementById('statusBadge').style.borderColor = 'rgba(255,183,77,0.25)';
+    document.getElementById('statusBadge').style.color = 'var(--warning)';
+    document.querySelector('.status-dot').style.background = 'var(--warning)';
+  }
+
+  document.getElementById('appRoot').innerHTML = `
+
+    <!-- ROW 1: Pipeline + Call Intelligence -->
+    <div class="grid grid-top">
+
+      <!-- PIPELINE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title pipeline-title"><span class="card-icon">📊</span> Pipeline</div>
+          <span class="card-freshness">${freshness(p.lastUpdated)}</span>
+        </div>
+        <div class="card-body">
+          <div class="metric-row">
+            <div class="metric">
+              <div class="metric-label">Open Pipeline</div>
+              <div class="metric-value pipeline">${fmt.mrr(p.openPipelineMrr)}</div>
+              <div class="metric-sub">${p.openDeals} deals</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Weighted MRR</div>
+              <div class="metric-value pipeline">${fmt.mrr(p.weightedMrr)}</div>
+              <div class="metric-sub">probability-adjusted</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Win Rate MTD</div>
+              <div class="metric-value success">${fmt.pct(p.winRateMtd)}</div>
+              <div class="metric-sub">Won ÷ (Won+Lost)</div>
+            </div>
+          </div>
+          <div class="metric-row" style="margin-bottom: 14px;">
+            <div class="metric">
+              <div class="metric-label">Closing This Month</div>
+              <div class="metric-value warning">${p.closingThisMonth}</div>
+              <div class="metric-sub">${fmt.mrr(p.closingThisMonthMrr)} at stake</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Avg Deal MRR</div>
+              <div class="metric-value">${fmt.mrr(p.avgDealMrr)}</div>
+              <div class="metric-sub">per deal</div>
+            </div>
+          </div>
+          <table class="stage-table">
+            <thead><tr>
+              <th>Stage</th>
+              <th>Deals</th>
+              <th style="text-align:right">MRR</th>
+            </tr></thead>
+            <tbody>
+              ${p.stageBreakdown.map(s => `
+                <tr>
+                  <td>
+                    <div class="stage-bar-wrap">
+                      <div class="stage-bar" style="width:${Math.round((s.mrr/maxMrr)*80)+10}px"></div>
+                      ${s.stage}
+                    </div>
+                  </td>
+                  <td>${s.count}</td>
+                  <td style="text-align:right;color:var(--pipeline)">${fmt.mrr(s.mrr)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CALL INTELLIGENCE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title calls-title"><span class="card-icon">📞</span> Call Intelligence</div>
+          <span class="card-freshness">${freshness(c.lastUpdated)}</span>
+        </div>
+        <div class="card-body">
+          <div class="metric-row">
+            <div class="metric">
+              <div class="metric-label">Calls This Week</div>
+              <div class="metric-value calls">${c.callsThisWeek}</div>
+              <div class="metric-sub">${c.callsYesterday} yesterday</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Flagged Follow-Ups</div>
+              <div class="metric-value ${c.flaggedFollowUps > 0 ? 'danger' : 'success'}">${c.flaggedFollowUps}</div>
+              <div class="metric-sub">need attention</div>
+            </div>
+          </div>
+          <div class="call-list">
+            ${c.recentCalls.map(r => `
+              <div class="call-item">
+                <div>
+                  <div class="call-account">${r.account}</div>
+                  <div class="call-meta">${fmt.shortDate(r.date)} · ${r.rep}</div>
+                  ${r.flagged ? `<div style="font-size:11px;color:var(--danger);margin-top:2px">⚑ ${r.flagReason}</div>` : ''}
+                </div>
+                <div class="call-badges">
+                  ${sentimentBadge(r.sentiment)}
+                  ${r.flagged ? '<span class="badge badge-flagged">Flagged</span>' : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="themes-list">
+            <div style="font-size:11px;color:var(--text-muted);width:100%;margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em">Top Themes</div>
+            ${c.topThemes.map(t => `<span class="theme-tag">${t}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-gap"></div>
+
+    <!-- ROW 2: New Business + Customer Health + Agent Health -->
+    <div class="grid grid-mid">
+
+      <!-- NEW BUSINESS -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title newbiz-title"><span class="card-icon">🚀</span> New Business</div>
+          <span class="card-freshness">${freshness(n.lastUpdated)}</span>
+        </div>
+        <div class="card-body">
+          <div class="metric-row">
+            <div class="metric">
+              <div class="metric-label">New Deals MTD</div>
+              <div class="metric-value newbiz">${n.newDealsOpenedMtd}</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Mtgs Booked MTD</div>
+              <div class="metric-value newbiz">${n.meetingsBookedMtd}</div>
+            </div>
+          </div>
+          <div class="metric-row" style="margin-bottom:14px">
+            <div class="metric">
+              <div class="metric-label">Active Sequences</div>
+              <div class="metric-value">${n.sequencesActive.toLocaleString()}</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Replies This Week</div>
+              <div class="metric-value success">${n.repliesThisWeek}</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Top Sequences</div>
+          ${n.topSequences.map(s => `
+            <div class="seq-item">
+              <div class="seq-name">${s.name}</div>
+              <div class="seq-stats">
+                <div class="seq-stat"><span class="seq-stat-label">Enrolled</span><span class="seq-stat-value">${s.enrolled}</span></div>
+                <div class="seq-stat"><span class="seq-stat-label">Open</span><span class="seq-stat-value" style="color:var(--newbiz)">${fmt.pct(s.openRate)}</span></div>
+                <div class="seq-stat"><span class="seq-stat-label">Reply</span><span class="seq-stat-value" style="color:var(--success)">${fmt.pct(s.replyRate)}</span></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- CUSTOMER HEALTH -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title health-title"><span class="card-icon">🏗️</span> Customer Health</div>
+          <span class="card-freshness">${freshness(h.lastUpdated)}</span>
+        </div>
+        <div class="card-body">
+          <div class="metric-row">
+            <div class="metric">
+              <div class="metric-label">Onboarding Active</div>
+              <div class="metric-value success">${h.onboardingActive}</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">At Risk</div>
+              <div class="metric-value ${h.onboardingAtRisk > 0 ? 'warning' : 'success'}">${h.onboardingAtRisk}</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Overdue</div>
+              <div class="metric-value ${h.onboardingOverdue > 0 ? 'danger' : 'success'}">${h.onboardingOverdue}</div>
+            </div>
+          </div>
+          <div class="metric-row" style="margin-bottom:14px">
+            <div class="metric">
+              <div class="metric-label">Zendesk Open</div>
+              <div class="metric-value">${h.zendeskOpenTickets}</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Escalated</div>
+              <div class="metric-value ${h.zendeskEscalated > 0 ? 'danger' : 'success'}">${h.zendeskEscalated}</div>
+            </div>
+          </div>
+          ${h.atRiskAccounts.length > 0 ? `
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">At-Risk Accounts</div>
+            ${h.atRiskAccounts.map(r => `
+              <div class="at-risk-item">
+                <div class="at-risk-account">${r.account}</div>
+                <div class="at-risk-issue">${r.issue} · ${r.owner}</div>
+              </div>
+            `).join('')}
+          ` : '<div style="color:var(--success);font-size:13px;text-align:center;padding:16px">✓ No at-risk accounts</div>'}
+          <div style="margin-top:12px;font-size:12px;color:var(--text-muted)">
+            Community: ${h.communityNewPosts} new posts · <span style="color:${h.communityUnanswered > 0 ? 'var(--warning)' : 'var(--success)'}">${h.communityUnanswered} unanswered</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGENT HEALTH -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title agent-title"><span class="card-icon">⚡</span> Agent Health</div>
+          <span class="card-freshness">${freshness(a.lastUpdated)}</span>
+        </div>
+        <div class="card-body">
+          <div class="health-bar-row">
+            <div style="font-size:12px;min-width:90px">Cron Health</div>
+            <div class="health-bar-outer">
+              <div class="health-bar-inner" style="width:${healthPct}%"></div>
+            </div>
+            <div class="health-bar-label" style="color:${healthPct === 100 ? 'var(--success)' : healthPct > 80 ? 'var(--warning)' : 'var(--danger)'}">${a.cronJobsHealthy}/${a.cronJobsTotal}</div>
+          </div>
+          <div class="metric-row" style="margin-bottom:14px">
+            <div class="metric">
+              <div class="metric-label">Kaia Pipeline</div>
+              <div class="metric-value ${a.lastKaiaStatus === 'ok' ? 'success' : 'danger'}">${a.lastKaiaStatus === 'ok' ? '✓' : '✗'}</div>
+              <div class="metric-sub">${freshness(a.lastKaiaRun)}</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Daily Brief</div>
+              <div class="metric-value ${a.lastBriefStatus === 'ok' ? 'success' : 'danger'}">${a.lastBriefStatus === 'ok' ? '✓' : '✗'}</div>
+              <div class="metric-sub">${freshness(a.lastBriefRun)}</div>
+            </div>
+          </div>
+          ${a.errorJobs.length > 0 ? `
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Errors</div>
+            <div class="cron-list">
+              ${a.errorJobs.map(j => `
+                <div class="cron-item">
+                  <div>
+                    <div class="cron-name">${j.name} <span class="cron-id">#${j.id}</span></div>
+                    <div class="cron-error">${j.lastError}</div>
+                  </div>
+                  <div class="cron-since" style="color:var(--danger)">Since ${j.since}</div>
+                </div>
+              `).join('')}
+            </div>
+          ` : '<div style="color:var(--success);font-size:13px;text-align:center;padding:16px">✓ All crons healthy</div>'}
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+async function init() {
+  try {
+    const res = await fetch('ops-snapshot.json?v=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    render(data);
+  } catch (e) {
+    document.getElementById('appRoot').innerHTML = `
+      <div class="error-state">
+        <div style="font-size:32px;margin-bottom:12px">⚠️</div>
+        <div style="font-weight:600;margin-bottom:8px">Could not load ops snapshot</div>
+        <div style="font-size:12px;color:var(--text-muted)">${e.message}</div>
+      </div>
+    `;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
