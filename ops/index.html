@@ -9,6 +9,7 @@
       --bg: #0f1117;
       --surface: #1a1d27;
       --surface2: #222638;
+      --surface3: #2a2e42;
       --border: #2e3248;
       --text: #e8eaf6;
       --text-muted: #8b8fa8;
@@ -22,6 +23,8 @@
       --newbiz: #a78bfa;
       --health: #00d4aa;
       --agent: #ff9f43;
+      --market: #f59e0b;
+      --tab-active-bg: rgba(108,99,255,0.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,110 +42,105 @@
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 16px 24px;
+      padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 200;
     }
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
 
     .logo {
-      width: 28px;
-      height: 28px;
+      width: 28px; height: 28px;
       background: var(--accent);
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700;
     }
 
-    h1 {
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
+    h1 { font-size: 16px; font-weight: 600; letter-spacing: 0.01em; }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .header-right { display: flex; align-items: center; gap: 16px; }
 
-    .last-updated {
-      color: var(--text-muted);
-      font-size: 12px;
-    }
+    .last-updated { color: var(--text-muted); font-size: 12px; }
 
     .status-badge {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      display: flex; align-items: center; gap: 6px;
       background: rgba(0,212,170,0.1);
       border: 1px solid rgba(0,212,170,0.25);
-      border-radius: 20px;
-      padding: 4px 10px;
-      font-size: 12px;
-      color: var(--success);
+      border-radius: 20px; padding: 4px 10px;
+      font-size: 12px; color: var(--success);
     }
 
     .status-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--success);
-      border-radius: 50%;
+      width: 6px; height: 6px;
+      background: var(--success); border-radius: 50%;
       animation: pulse 2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* TAB BAR */
+    .tab-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 53px;
+      z-index: 190;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+
+    .tab-bar-inner {
+      display: flex;
+      min-width: max-content;
+      padding: 0 16px;
     }
 
-    .sample-banner {
-      background: rgba(255,179,77,0.12);
-      border-bottom: 1px solid rgba(255,179,77,0.25);
-      color: var(--warning);
-      text-align: center;
-      padding: 8px 24px;
-      font-size: 12px;
-      display: none;
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      white-space: nowrap;
+      position: relative;
+      bottom: -1px;
     }
 
-    .sample-banner.visible { display: block; }
+    .tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.03); }
 
-    /* LAYOUT */
-    main {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 24px;
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      background: var(--tab-active-bg);
     }
 
-    .grid {
-      display: grid;
-      gap: 16px;
-    }
+    /* CONTENT */
+    main { max-width: 1400px; margin: 0 auto; padding: 24px; }
 
-    .grid-top {
-      grid-template-columns: 1fr 1fr;
-    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
-    .grid-mid {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    .grid-bottom {
-      grid-template-columns: 1fr;
-    }
+    /* GRID */
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .full { grid-column: 1 / -1; }
 
     /* CARDS */
     .card {
@@ -155,42 +153,21 @@
     .card-header {
       padding: 14px 18px;
       border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
     }
 
     .card-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 600;
+      letter-spacing: 0.02em; text-transform: uppercase;
     }
 
-    .card-icon {
-      font-size: 16px;
-    }
+    .card-freshness { font-size: 11px; color: var(--text-muted); }
 
-    .card-freshness {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
+    .card-body { padding: 18px; }
 
-    .card-body {
-      padding: 18px;
-    }
-
-    /* PIPELINE */
-    .pipeline-title { color: var(--pipeline); }
-
-    .metric-row {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
+    /* METRICS */
+    .metric-row { display: flex; gap: 12px; margin-bottom: 16px; }
 
     .metric {
       flex: 1;
@@ -200,24 +177,12 @@
     }
 
     .metric-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 4px;
+      font-size: 11px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;
     }
 
-    .metric-value {
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .metric-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
+    .metric-value { font-size: 22px; font-weight: 700; line-height: 1; }
+    .metric-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
     .metric-value.pipeline { color: var(--pipeline); }
     .metric-value.success { color: var(--success); }
@@ -225,233 +190,297 @@
     .metric-value.danger { color: var(--danger); }
     .metric-value.calls { color: var(--calls); }
     .metric-value.newbiz { color: var(--newbiz); }
+    .metric-value.agent { color: var(--agent); }
+
+    /* BOOKINGS PACING GAUGE */
+    .pacing-widget {
+      background: var(--surface2);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .pacing-arc-wrap {
+      position: relative;
+      width: 120px;
+      height: 70px;
+      flex-shrink: 0;
+    }
+
+    .pacing-arc-svg { width: 120px; height: 70px; }
+
+    .pacing-pct {
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .pacing-details { flex: 1; min-width: 0; }
+
+    .pacing-amounts {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .pacing-actual { font-size: 24px; font-weight: 700; }
+    .pacing-sep { color: var(--text-muted); font-size: 16px; }
+    .pacing-target { font-size: 18px; font-weight: 500; color: var(--text-muted); }
+
+    .pacing-footer { font-size: 12px; color: var(--text-muted); }
+
+    /* RECENT WINS STRIP */
+    .wins-strip {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 16px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    .win-card {
+      flex-shrink: 0;
+      background: var(--surface2);
+      border-left: 3px solid var(--accent2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      min-width: 160px;
+    }
+
+    .win-card-account { font-size: 13px; font-weight: 600; color: var(--accent2); }
+    .win-card-mrr { font-size: 18px; font-weight: 700; margin: 2px 0; }
+    .win-card-date { font-size: 11px; color: var(--text-muted); }
 
     /* STAGE TABLE */
     .stage-table { width: 100%; border-collapse: collapse; }
     .stage-table th {
-      text-align: left;
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0 0 8px;
-      border-bottom: 1px solid var(--border);
+      text-align: left; font-size: 11px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 0 0 8px; border-bottom: 1px solid var(--border);
     }
     .stage-table th:last-child, .stage-table td:last-child { text-align: right; }
-
     .stage-table td {
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      font-size: 13px;
+      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px;
     }
+    .stage-bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .stage-bar { height: 4px; background: var(--accent); border-radius: 2px; opacity: 0.6; }
 
-    .stage-bar-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .stage-bar {
-      height: 4px;
-      background: var(--accent);
-      border-radius: 2px;
-      opacity: 0.6;
-    }
-
-    /* CALLS */
-    .calls-title { color: var(--calls); }
-
-    .call-list { display: flex; flex-direction: column; gap: 8px; }
-
-    .call-item {
+    /* SPARKLINE */
+    .sparkline-wrap {
       background: var(--surface2);
       border-radius: 8px;
-      padding: 10px 12px;
+      padding: 14px;
+      margin-top: 16px;
+    }
+    .sparkline-label {
+      font-size: 11px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;
+    }
+    .sparkline-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 50px;
+    }
+    .sparkline-bar-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      height: 100%;
+    }
+    .sparkline-bar {
+      width: 100%;
+      background: var(--accent);
+      border-radius: 2px 2px 0 0;
+      opacity: 0.6;
+      min-height: 2px;
+      transition: opacity 0.2s;
+    }
+    .sparkline-bar:hover { opacity: 1; }
+    .sparkline-month { font-size: 9px; color: var(--text-muted); }
+
+    /* CSS BAR CHART */
+    .bar-chart-wrap { margin-top: 4px; }
+    .bar-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 8px;
+      margin-bottom: 7px;
     }
+    .bar-name {
+      font-size: 12px;
+      min-width: 140px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .bar-outer {
+      flex: 1;
+      height: 6px;
+      background: var(--surface3);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .bar-inner {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+    .bar-count { font-size: 11px; color: var(--text-muted); min-width: 30px; text-align: right; }
 
+    /* CALL INTELLIGENCE */
+    .call-list { display: flex; flex-direction: column; gap: 8px; }
+    .call-item {
+      background: var(--surface2); border-radius: 8px; padding: 10px 12px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
     .call-account { font-weight: 500; font-size: 13px; }
     .call-meta { font-size: 11px; color: var(--text-muted); }
 
-    .call-badges { display: flex; align-items: center; gap: 6px; }
-
-    .badge {
-      font-size: 11px;
-      padding: 2px 7px;
-      border-radius: 10px;
-      font-weight: 500;
-    }
-
-    .badge-positive { background: rgba(0,212,170,0.15); color: var(--success); }
-    .badge-mixed { background: rgba(255,183,77,0.15); color: var(--warning); }
-    .badge-negative { background: rgba(255,83,112,0.15); color: var(--danger); }
-    .badge-flagged { background: rgba(255,83,112,0.2); color: var(--danger); border: 1px solid rgba(255,83,112,0.3); }
-
-    .themes-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 12px;
-    }
-
+    .themes-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
     .theme-tag {
       background: rgba(0,180,216,0.12);
       border: 1px solid rgba(0,180,216,0.2);
       color: var(--calls);
-      font-size: 12px;
-      padding: 3px 8px;
-      border-radius: 8px;
+      font-size: 12px; padding: 3px 8px; border-radius: 8px;
     }
 
     /* NEW BIZ */
-    .newbiz-title { color: var(--newbiz); }
-
     .seq-item {
-      background: var(--surface2);
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
+      background: var(--surface2); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;
     }
-
     .seq-name { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-
     .seq-stats { display: flex; gap: 16px; }
     .seq-stat { font-size: 12px; }
     .seq-stat-label { color: var(--text-muted); }
     .seq-stat-value { font-weight: 600; margin-left: 4px; }
 
     /* CUSTOMER HEALTH */
-    .health-title { color: var(--health); }
-
     .at-risk-item {
-      background: rgba(255,83,112,0.08);
-      border: 1px solid rgba(255,83,112,0.18);
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
+      background: rgba(255,83,112,0.08); border: 1px solid rgba(255,83,112,0.18);
+      border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;
     }
-
     .at-risk-account { font-size: 13px; font-weight: 500; color: var(--danger); }
     .at-risk-issue { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
+    /* DEAL BRIEFS STATUS */
+    .brief-status-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface2); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px;
+    }
+    .brief-status-name { font-size: 13px; font-weight: 500; }
+    .brief-status-detail { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .freshness-badge {
+      font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500;
+    }
+    .freshness-fresh { background: rgba(0,212,170,0.15); color: var(--success); }
+    .freshness-ok { background: rgba(108,99,255,0.15); color: var(--accent); }
+    .freshness-stale { background: rgba(255,183,77,0.15); color: var(--warning); }
+    .freshness-unknown { background: rgba(139,143,168,0.15); color: var(--text-muted); }
+
+    /* TODAY TAB */
+    .meeting-item {
+      background: var(--surface2); border-radius: 8px; padding: 12px 14px; margin-bottom: 10px;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .meeting-time-block {
+      flex-shrink: 0; text-align: center; min-width: 52px;
+    }
+    .meeting-time { font-size: 15px; font-weight: 700; color: var(--accent); line-height: 1.2; }
+    .meeting-time-end { font-size: 11px; color: var(--text-muted); }
+    .meeting-body { flex: 1; min-width: 0; }
+    .meeting-subject { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .meeting-attendees { font-size: 12px; color: var(--text-muted); }
+    .meeting-link {
+      display: inline-block; margin-top: 6px; font-size: 11px;
+      color: var(--accent); text-decoration: none; padding: 2px 8px;
+      background: rgba(108,99,255,0.12); border-radius: 4px;
+    }
+    .meeting-link:hover { background: rgba(108,99,255,0.22); }
+
     /* AGENT HEALTH */
-    .agent-title { color: var(--agent); }
-
-    .agent-overview {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 16px;
+    .cron-group { margin-bottom: 16px; }
+    .cron-group-label {
+      font-size: 11px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 8px; padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
     }
-
-    .agent-metric {
-      flex: 1;
-      background: var(--surface2);
-      border-radius: 8px;
-      padding: 12px;
-      text-align: center;
-    }
-
-    .cron-list { display: flex; flex-direction: column; gap: 6px; }
-
     .cron-item {
-      background: var(--surface2);
-      border-radius: 8px;
-      padding: 10px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      background: var(--surface2); border-radius: 8px; padding: 9px 12px; margin-bottom: 6px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .cron-name { font-size: 12px; font-weight: 500; }
+    .cron-schedule { font-size: 10px; color: var(--text-muted); font-family: monospace; margin-top: 1px; }
+    .cron-error { font-size: 11px; color: var(--danger); margin-top: 2px; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cron-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .cron-age { font-size: 11px; color: var(--text-muted); }
+
+    .status-dot-sm {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .dot-ok { background: var(--success); }
+    .dot-error { background: var(--danger); animation: pulse 1.5s infinite; }
+    .dot-stale { background: var(--warning); }
+    .dot-disabled { background: var(--border); }
+    .dot-unknown, .dot-no-data { background: var(--surface3); border: 1px solid var(--border); }
+
+    .health-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .health-bar-outer { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+    .health-bar-inner { height: 100%; background: var(--success); border-radius: 4px; transition: width 0.8s ease; }
+    .health-bar-label { font-size: 12px; color: var(--text-muted); min-width: 60px; text-align: right; }
+
+    /* MARKET & PRODUCT */
+    .roadmap-placeholder {
+      background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2);
+      border-radius: 8px; padding: 16px; text-align: center; color: var(--market);
+      font-size: 13px;
     }
 
-    .cron-name { font-size: 13px; font-weight: 500; }
-    .cron-id { font-size: 11px; color: var(--text-muted); font-family: monospace; }
-    .cron-error { font-size: 12px; color: var(--danger); margin-top: 2px; }
-    .cron-since { font-size: 11px; color: var(--text-muted); }
-
-    .health-bar-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .health-bar-outer {
-      flex: 1;
-      height: 8px;
-      background: var(--surface2);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .health-bar-inner {
-      height: 100%;
-      background: var(--success);
-      border-radius: 4px;
-      transition: width 0.8s ease;
-    }
-
-    .health-bar-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      min-width: 60px;
-      text-align: right;
-    }
-
-    /* SECTION SPACING */
-    .section-gap { height: 16px; }
-
-    /* LOADING */
-    .loading {
-      text-align: center;
-      padding: 60px;
-      color: var(--text-muted);
-    }
-
+    /* LOADING / ERROR */
+    .loading { text-align: center; padding: 60px; color: var(--text-muted); }
     .spinner {
-      width: 32px;
-      height: 32px;
-      border: 3px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      width: 32px; height: 32px;
+      border: 3px solid var(--border); border-top-color: var(--accent);
+      border-radius: 50%; animation: spin 0.8s linear infinite;
       margin: 0 auto 16px;
     }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ERROR */
-    .error-state {
-      text-align: center;
-      padding: 40px;
-      color: var(--danger);
+    .error-state { text-align: center; padding: 40px; color: var(--danger); }
+    .placeholder-card {
+      background: var(--surface2); border-radius: 8px; padding: 24px;
+      text-align: center; color: var(--text-muted); font-size: 13px;
     }
+
+    /* SECTION LABELS */
+    .section-label {
+      font-size: 11px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 12px; margin-top: 20px;
+    }
+    .section-label:first-child { margin-top: 0; }
+    .section-divider { height: 1px; background: var(--border); margin: 16px 0; }
 
     /* RESPONSIVE */
     @media (max-width: 1100px) {
-      .grid-top, .grid-mid { grid-template-columns: 1fr 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
     }
-
     @media (max-width: 700px) {
-      .grid-top, .grid-mid { grid-template-columns: 1fr; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
       main { padding: 12px; }
-    }
-
-    /* DIVIDER */
-    .section-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 16px 0;
-    }
-
-    .section-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 12px;
-      margin-top: 20px;
+      .pacing-widget { flex-direction: column; }
     }
   </style>
 </head>
@@ -471,9 +500,17 @@
   </div>
 </header>
 
-<div class="sample-banner" id="sampleBanner">
-  ⚠️ Showing sample data — Ops Review cron not yet connected. Real data will populate after Phase 2 wiring.
-</div>
+<nav class="tab-bar">
+  <div class="tab-bar-inner" id="tabBarInner">
+    <button class="tab-btn" data-tab="today" onclick="switchTab('today')">📅 Today</button>
+    <button class="tab-btn" data-tab="pipeline" onclick="switchTab('pipeline')">📊 Pipeline</button>
+    <button class="tab-btn" data-tab="calls" onclick="switchTab('calls')">📞 Call Intel</button>
+    <button class="tab-btn" data-tab="newbiz" onclick="switchTab('newbiz')">🚀 New Business</button>
+    <button class="tab-btn" data-tab="health" onclick="switchTab('health')">🏗️ Customer Health</button>
+    <button class="tab-btn" data-tab="market" onclick="switchTab('market')">🏭 Market & Product</button>
+    <button class="tab-btn" data-tab="agents" onclick="switchTab('agents')">⚡ Agent Health</button>
+  </div>
+</nav>
 
 <main id="appRoot">
   <div class="loading">
@@ -483,296 +520,752 @@
 </main>
 
 <script>
+// ── Format helpers ────────────────────────────────────────────────────────────
 const fmt = {
-  mrr: v => '$' + (v >= 1000 ? (v/1000).toFixed(0) + 'K' : v.toLocaleString()),
-  pct: v => (v * 100).toFixed(1) + '%',
+  mrr: v => {
+    if (v == null || v === 0) return '$0';
+    return '$' + (v >= 1000 ? (v/1000).toFixed(0) + 'K' : v.toLocaleString());
+  },
+  pct: v => {
+    if (v == null) return '—';
+    return (typeof v === 'number' && v <= 1 ? (v * 100) : v).toFixed(1) + '%';
+  },
+  time: isoStr => {
+    if (!isoStr) return '—';
+    // Strip timezone info from Graph datetimes (they're in the user's timezone)
+    const raw = isoStr.replace('Z','');
+    const d = new Date(raw + (isoStr.endsWith('Z') ? '' : 'Z'));
+    return d.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/Chicago' });
+  },
   date: v => {
+    if (!v) return '—';
     const d = new Date(v);
-    return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/Chicago' }) + ' CST';
+    return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/Chicago' }) + ' CT';
   },
   shortDate: v => {
+    if (!v) return '—';
     const d = new Date(v);
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'America/Chicago' });
+  },
+  relTime: v => {
+    if (!v) return '—';
+    const diff = Date.now() - new Date(v).getTime();
+    const m = Math.floor(diff / 60000);
+    const h = Math.floor(m / 60);
+    const d = Math.floor(h / 24);
+    if (m < 2) return 'Just now';
+    if (h < 1) return m + 'm ago';
+    if (h < 24) return h + 'h ago';
+    if (d < 7) return d + 'd ago';
+    return Math.floor(d/7) + 'w ago';
   }
 };
 
 function freshness(iso) {
-  const diff = Date.now() - new Date(iso).getTime();
-  const h = Math.floor(diff / 3600000);
-  if (h < 1) return 'Just updated';
-  if (h < 24) return h + 'h ago';
-  return Math.floor(h/24) + 'd ago';
+  if (!iso) return 'No data';
+  return fmt.relTime(iso);
 }
 
-function sentimentBadge(s) {
-  const map = { positive: 'positive', mixed: 'mixed', negative: 'negative' };
-  return `<span class="badge badge-${map[s]||'mixed'}">${s}</span>`;
+// ── Tab switching ─────────────────────────────────────────────────────────────
+let currentTab = 'today';
+const TABS = ['today','pipeline','calls','newbiz','health','market','agents'];
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tab);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => {
+    c.classList.toggle('active', c.id === 'tab-' + tab);
+  });
+  history.replaceState(null, '', '#' + tab);
 }
 
-function render(d) {
-  const p = d.pipeline;
-  const c = d.callIntelligence;
-  const n = d.newBusiness;
-  const h = d.customerHealth;
-  const a = d.agentHealth;
-  const maxMrr = Math.max(...p.stageBreakdown.map(s => s.mrr));
-  const healthPct = Math.round((a.cronJobsHealthy / a.cronJobsTotal) * 100);
+function getInitialTab() {
+  const hash = location.hash.replace('#','');
+  return TABS.includes(hash) ? hash : 'today';
+}
 
-  document.getElementById('lastUpdated').textContent = 'Updated ' + fmt.date(d._meta.generated);
-  if (d._meta.status === 'SAMPLE_DATA') {
-    document.getElementById('sampleBanner').classList.add('visible');
-    document.getElementById('statusText').textContent = 'Sample';
-    document.getElementById('statusBadge').style.background = 'rgba(255,183,77,0.1)';
-    document.getElementById('statusBadge').style.borderColor = 'rgba(255,183,77,0.25)';
-    document.getElementById('statusBadge').style.color = 'var(--warning)';
-    document.querySelector('.status-dot').style.background = 'var(--warning)';
+// ── Arc gauge (SVG) ───────────────────────────────────────────────────────────
+function arcGauge(pct, color) {
+  const r = 50, cx = 60, cy = 60;
+  const startAngle = -180, endAngle = 0;
+  const toRad = a => a * Math.PI / 180;
+  const ang = startAngle + (pct / 100) * 180;
+  const x1 = cx + r * Math.cos(toRad(startAngle));
+  const y1 = cy + r * Math.sin(toRad(startAngle));
+  const x2 = cx + r * Math.cos(toRad(endAngle));
+  const y2 = cy + r * Math.sin(toRad(endAngle));
+  const ex = cx + r * Math.cos(toRad(ang));
+  const ey = cy + r * Math.sin(toRad(ang));
+  const largeArc = Math.min(pct, 100) > 50 ? 1 : 0;
+  return `<svg class="pacing-arc-svg" viewBox="0 0 120 65">
+    <path d="M ${x1} ${y1} A ${r} ${r} 0 1 1 ${x2} ${y2}" stroke="#2e3248" stroke-width="8" fill="none"/>
+    <path d="M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${ex} ${ey}" stroke="${color}" stroke-width="8" fill="none" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function pacingColor(pct) {
+  if (pct >= 90) return 'var(--success)';
+  if (pct >= 70) return 'var(--warning)';
+  return 'var(--danger)';
+}
+
+// ── Bar chart ─────────────────────────────────────────────────────────────────
+function barChart(items, color, maxVal) {
+  if (!items || items.length === 0) return '<div class="placeholder-card">No data available</div>';
+  const max = maxVal || Math.max(...items.map(i => i.count || 0), 1);
+  return `<div class="bar-chart-wrap">
+    ${items.map(item => `
+      <div class="bar-row">
+        <div class="bar-name" title="${item.name}">${item.name}</div>
+        <div class="bar-outer">
+          <div class="bar-inner" style="width:${Math.round((item.count/max)*100)}%;background:${color}"></div>
+        </div>
+        <div class="bar-count">${item.count}</div>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+// ── Status dot ────────────────────────────────────────────────────────────────
+function statusDot(status) {
+  const cls = {
+    ok: 'dot-ok', error: 'dot-error', stale: 'dot-stale',
+    disabled: 'dot-disabled', 'no-data': 'dot-no-data', unknown: 'dot-unknown'
+  }[status] || 'dot-unknown';
+  return `<div class="status-dot-sm ${cls}" title="${status}"></div>`;
+}
+
+function freshnessBadge(status) {
+  const map = {
+    fresh: ['freshness-fresh','✓ Fresh'],
+    ok: ['freshness-ok','Ok'],
+    stale: ['freshness-stale','Stale'],
+    unknown: ['freshness-unknown','Unknown'],
+  };
+  const [cls, label] = map[status] || map.unknown;
+  return `<span class="freshness-badge ${cls}">${label}</span>`;
+}
+
+// ── Render tabs ───────────────────────────────────────────────────────────────
+function renderToday(d) {
+  const today = d.today || {};
+  const meetings = today.meetings || [];
+  const error = today.error;
+
+  let meetingsHtml;
+  if (error && meetings.length === 0) {
+    meetingsHtml = `<div class="placeholder-card">
+      📅 Calendar data unavailable — refreshes at 6:30am CT M–F<br>
+      <span style="font-size:11px;margin-top:4px;display:block;color:var(--danger)">${error}</span>
+    </div>`;
+  } else if (meetings.length === 0) {
+    meetingsHtml = `<div class="placeholder-card">📅 No meetings found for today, or calendar hasn't refreshed yet.</div>`;
+  } else {
+    meetingsHtml = meetings.map(m => {
+      const startStr = m.startTime ? fmt.time(m.startTime) : '?';
+      const endStr = m.endTime ? fmt.time(m.endTime) : '';
+      const attendeeStr = m.attendees && m.attendees.length > 0
+        ? m.attendees.slice(0,3).join(', ') + (m.attendeeCount > 3 ? ` +${m.attendeeCount-3}` : '')
+        : `${m.attendeeCount || 0} attendees`;
+      return `<div class="meeting-item">
+        <div class="meeting-time-block">
+          <div class="meeting-time">${startStr}</div>
+          ${endStr ? `<div class="meeting-time-end">${endStr}</div>` : ''}
+        </div>
+        <div class="meeting-body">
+          <div class="meeting-subject">${m.subject}</div>
+          <div class="meeting-attendees">👥 ${attendeeStr}</div>
+          ${m.webLink ? `<a href="${m.webLink}" target="_blank" class="meeting-link">Join ↗</a>` : ''}
+        </div>
+      </div>`;
+    }).join('');
   }
 
-  document.getElementById('appRoot').innerHTML = `
+  const vipEmails = today.vipEmails || [];
+  const emailHtml = vipEmails.length > 0
+    ? `<div class="section-label">VIP Email Queue</div>
+       ${vipEmails.map(e => `<div class="brief-status-row"><div><div class="brief-status-name">${e.subject || e.from || 'Email'}</div><div class="brief-status-detail">${e.from || ''}</div></div></div>`).join('')}`
+    : '';
 
-    <!-- ROW 1: Pipeline + Call Intelligence -->
-    <div class="grid grid-top">
-
-      <!-- PIPELINE -->
-      <div class="card">
+  return `
+    <div class="grid grid-2">
+      <div class="card" style="grid-column:1/-1">
         <div class="card-header">
-          <div class="card-title pipeline-title"><span class="card-icon">📊</span> Pipeline</div>
-          <span class="card-freshness">${freshness(p.lastUpdated)}</span>
+          <div class="card-title" style="color:var(--accent)">📅 Today's Calendar</div>
+          <span class="card-freshness">${freshness(today.generatedAt)}</span>
         </div>
         <div class="card-body">
-          <div class="metric-row">
-            <div class="metric">
-              <div class="metric-label">Open Pipeline</div>
-              <div class="metric-value pipeline">${fmt.mrr(p.openPipelineMrr)}</div>
-              <div class="metric-sub">${p.openDeals} deals</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">Weighted MRR</div>
-              <div class="metric-value pipeline">${fmt.mrr(p.weightedMrr)}</div>
-              <div class="metric-sub">probability-adjusted</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">Win Rate MTD</div>
-              <div class="metric-value success">${fmt.pct(p.winRateMtd)}</div>
-              <div class="metric-sub">Won ÷ (Won+Lost)</div>
-            </div>
-          </div>
-          <div class="metric-row" style="margin-bottom: 14px;">
-            <div class="metric">
-              <div class="metric-label">Closing This Month</div>
-              <div class="metric-value warning">${p.closingThisMonth}</div>
-              <div class="metric-sub">${fmt.mrr(p.closingThisMonthMrr)} at stake</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">Avg Deal MRR</div>
-              <div class="metric-value">${fmt.mrr(p.avgDealMrr)}</div>
-              <div class="metric-sub">per deal</div>
-            </div>
-          </div>
-          <table class="stage-table">
-            <thead><tr>
-              <th>Stage</th>
-              <th>Deals</th>
-              <th style="text-align:right">MRR</th>
-            </tr></thead>
-            <tbody>
-              ${p.stageBreakdown.map(s => `
-                <tr>
-                  <td>
-                    <div class="stage-bar-wrap">
-                      <div class="stage-bar" style="width:${Math.round((s.mrr/maxMrr)*80)+10}px"></div>
-                      ${s.stage}
-                    </div>
-                  </td>
-                  <td>${s.count}</td>
-                  <td style="text-align:right;color:var(--pipeline)">${fmt.mrr(s.mrr)}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
+          ${meetingsHtml}
+          ${emailHtml}
         </div>
       </div>
+    </div>`;
+}
 
-      <!-- CALL INTELLIGENCE -->
+function renderPipeline(d) {
+  const p = d.pipeline || {};
+  const bp = p.bookingsPacing || {};
+  const wins = p.recentWins || [];
+  const stages = p.stageBreakdown || [];
+  const trends = p.monthlyTrends || [];
+
+  if (p.error) return `<div class="error-state">Pipeline data unavailable: ${p.error}</div>`;
+
+  const maxMrr = Math.max(...stages.map(s => s.mrr), 1);
+  const pct = bp.pacePct || 0;
+  const pColor = pacingColor(pct);
+
+  // Bookings pacing
+  const pacingHtml = bp.error
+    ? `<div class="placeholder-card">Bookings pacing unavailable: ${bp.error}</div>`
+    : `<div class="pacing-widget">
+        <div class="pacing-arc-wrap">
+          ${arcGauge(Math.min(pct, 100), pColor)}
+          <div class="pacing-pct" style="color:${pColor}">${pct}%</div>
+        </div>
+        <div class="pacing-details">
+          <div class="section-label" style="margin-top:0">Bookings Pacing — May</div>
+          <div class="pacing-amounts">
+            <span class="pacing-actual" style="color:${pColor}">${fmt.mrr(bp.actualMrr)}</span>
+            <span class="pacing-sep">/</span>
+            <span class="pacing-target">${fmt.mrr(bp.targetMrr)}</span>
+          </div>
+          <div class="pacing-footer">
+            ${bp.wonCount || 0} wins · ${bp.daysRemaining || 0} days remaining ·
+            Need <strong style="color:var(--accent)">${fmt.mrr(bp.requiredDailyRunRate)}/day</strong> to hit target
+          </div>
+        </div>
+      </div>`;
+
+  // Recent wins
+  const winsHtml = wins.length > 0
+    ? `<div class="section-label">Recent Wins</div>
+       <div class="wins-strip">
+         ${wins.map(w => `
+           <div class="win-card">
+             <div class="win-card-account">${w.accountName}</div>
+             <div class="win-card-mrr">${fmt.mrr(w.amount)}</div>
+             <div class="win-card-date">${fmt.shortDate(w.closeDate)}</div>
+           </div>`).join('')}
+       </div>`
+    : '';
+
+  // Sparkline
+  const maxMeetings = Math.max(...trends.map(t => t.meetings), 1);
+  const sparkHtml = trends.length > 0
+    ? `<div class="sparkline-wrap">
+        <div class="sparkline-label">Monthly Meeting Volume</div>
+        <div class="sparkline-bars">
+          ${trends.map(t => `
+            <div class="sparkline-bar-wrap">
+              <div class="sparkline-bar" style="height:${Math.round((t.meetings/maxMeetings)*46)+4}px" title="${t.label}: ${t.meetings} meetings"></div>
+              <div class="sparkline-month">${t.month.slice(5)}</div>
+            </div>`).join('')}
+        </div>
+      </div>`
+    : '';
+
+  return `
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header">
+        <div class="card-title" style="color:var(--pipeline)">📊 Pipeline</div>
+        <span class="card-freshness">${freshness(p.lastUpdated)}</span>
+      </div>
+      <div class="card-body">
+        ${pacingHtml}
+        <div class="metric-row">
+          <div class="metric">
+            <div class="metric-label">Open Pipeline</div>
+            <div class="metric-value pipeline">${fmt.mrr(p.openPipelineMrr)}</div>
+            <div class="metric-sub">${p.openDeals || 0} deals</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Weighted MRR</div>
+            <div class="metric-value pipeline">${fmt.mrr(p.weightedMrr)}</div>
+            <div class="metric-sub">probability-adjusted</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Win Rate MTD</div>
+            <div class="metric-value success">${fmt.pct(p.winRateMtd)}</div>
+            <div class="metric-sub">Won ÷ (Won+Lost)</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Closing This Mo</div>
+            <div class="metric-value warning">${p.closingThisMonth || 0}</div>
+            <div class="metric-sub">${fmt.mrr(p.closingThisMonthMrr)} at stake</div>
+          </div>
+        </div>
+        <div class="section-label">Stage Breakdown</div>
+        <table class="stage-table">
+          <thead><tr><th>Stage</th><th>Deals</th><th>MRR</th></tr></thead>
+          <tbody>
+            ${stages.map(s => `<tr>
+              <td><div class="stage-bar-wrap">
+                <div class="stage-bar" style="width:${Math.round((s.mrr/maxMrr)*80)+8}px"></div>
+                ${s.stage}
+              </div></td>
+              <td>${s.count}</td>
+              <td style="text-align:right;color:var(--pipeline)">${fmt.mrr(s.mrr)}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+        ${winsHtml}
+        ${sparkHtml}
+      </div>
+    </div>`;
+}
+
+function renderCalls(d) {
+  const c = d.callIntelligence || {};
+  const ci = d.competitorIntel || {};
+
+  if (c.error) return `<div class="error-state">Call intelligence unavailable: ${c.error}</div>`;
+
+  const competitors = ci.topCompetitors || [];
+  const features = ci.topFeatures || [];
+  const maxComp = Math.max(...competitors.map(x => x.count), 1);
+  const maxFeat = Math.max(...features.map(x => x.count), 1);
+
+  return `
+    <div class="grid grid-2" style="margin-bottom:16px">
       <div class="card">
         <div class="card-header">
-          <div class="card-title calls-title"><span class="card-icon">📞</span> Call Intelligence</div>
+          <div class="card-title" style="color:var(--calls)">📞 Call Volume</div>
           <span class="card-freshness">${freshness(c.lastUpdated)}</span>
         </div>
         <div class="card-body">
           <div class="metric-row">
             <div class="metric">
               <div class="metric-label">Calls This Week</div>
-              <div class="metric-value calls">${c.callsThisWeek}</div>
-              <div class="metric-sub">${c.callsYesterday} yesterday</div>
+              <div class="metric-value calls">${c.callsThisWeek || 0}</div>
+              <div class="metric-sub">${c.callsYesterday || 0} yesterday</div>
             </div>
             <div class="metric">
-              <div class="metric-label">Flagged Follow-Ups</div>
-              <div class="metric-value ${c.flaggedFollowUps > 0 ? 'danger' : 'success'}">${c.flaggedFollowUps}</div>
+              <div class="metric-label">Flagged</div>
+              <div class="metric-value ${(c.flaggedFollowUps||0) > 0 ? 'danger' : 'success'}">${c.flaggedFollowUps || 0}</div>
               <div class="metric-sub">need attention</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Processed</div>
+              <div class="metric-value">${c.lastRunProcessed || 0}</div>
+              <div class="metric-sub">last Kaia run</div>
             </div>
           </div>
           <div class="call-list">
-            ${c.recentCalls.map(r => `
+            ${(c.recentCalls || []).map(r => `
               <div class="call-item">
                 <div>
-                  <div class="call-account">${r.account}</div>
-                  <div class="call-meta">${fmt.shortDate(r.date)} · ${r.rep}</div>
-                  ${r.flagged ? `<div style="font-size:11px;color:var(--danger);margin-top:2px">⚑ ${r.flagReason}</div>` : ''}
+                  <div class="call-account">${r.title || r.account || 'Call'}</div>
+                  <div class="call-meta">${fmt.shortDate(r.date)} · ${r.durationMin || 0}m</div>
                 </div>
-                <div class="call-badges">
-                  ${sentimentBadge(r.sentiment)}
-                  ${r.flagged ? '<span class="badge badge-flagged">Flagged</span>' : ''}
-                </div>
-              </div>
-            `).join('')}
+                <span style="font-size:11px;padding:2px 7px;border-radius:10px;background:rgba(0,180,216,0.12);color:var(--calls)">${r.state || 'completed'}</span>
+              </div>`).join('')}
           </div>
           <div class="themes-list">
             <div style="font-size:11px;color:var(--text-muted);width:100%;margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em">Top Themes</div>
-            ${c.topThemes.map(t => `<span class="theme-tag">${t}</span>`).join('')}
+            ${(c.topThemes || []).map(t => `<span class="theme-tag">${t}</span>`).join('')}
           </div>
         </div>
       </div>
 
-    </div>
-
-    <div class="section-gap"></div>
-
-    <!-- ROW 2: New Business + Customer Health + Agent Health -->
-    <div class="grid grid-mid">
-
-      <!-- NEW BUSINESS -->
       <div class="card">
         <div class="card-header">
-          <div class="card-title newbiz-title"><span class="card-icon">🚀</span> New Business</div>
+          <div class="card-title" style="color:var(--calls)">🎯 Competitive Intelligence</div>
+          <span class="card-freshness">${freshness(ci.generatedAt)}</span>
+        </div>
+        <div class="card-body">
+          <div class="metric-row">
+            <div class="metric">
+              <div class="metric-label">Win Rate</div>
+              <div class="metric-value success">${ci.winPct || 0}%</div>
+              <div class="metric-sub">${ci.winCount || 0} wins</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Loss Rate</div>
+              <div class="metric-value danger">${ci.lossPct || 0}%</div>
+              <div class="metric-sub">${ci.lossCount || 0} losses</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Tier 1 Calls</div>
+              <div class="metric-value calls">${(ci.totalTier1 || 0).toLocaleString()}</div>
+              <div class="metric-sub">analyzed</div>
+            </div>
+          </div>
+          <div class="section-label">Competitor Mentions</div>
+          ${barChart(competitors, '#00b4d8', maxComp)}
+          <div class="section-label">Top Features Requested</div>
+          ${barChart(features, '#a78bfa', maxFeat)}
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderNewBiz(d) {
+  const n = d.newBusiness || {};
+  const db = d.dealBriefs || {};
+
+  if (n.error) return `<div class="error-state">New business data unavailable: ${n.error}</div>`;
+
+  return `
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title" style="color:var(--newbiz)">🚀 New Business</div>
           <span class="card-freshness">${freshness(n.lastUpdated)}</span>
         </div>
         <div class="card-body">
           <div class="metric-row">
             <div class="metric">
               <div class="metric-label">New Deals MTD</div>
-              <div class="metric-value newbiz">${n.newDealsOpenedMtd}</div>
+              <div class="metric-value newbiz">${n.newDealsOpenedMtd || 0}</div>
             </div>
             <div class="metric">
               <div class="metric-label">Mtgs Booked MTD</div>
-              <div class="metric-value newbiz">${n.meetingsBookedMtd}</div>
+              <div class="metric-value newbiz">${n.meetingsBookedMtd || 0}</div>
             </div>
           </div>
           <div class="metric-row" style="margin-bottom:14px">
             <div class="metric">
               <div class="metric-label">Active Sequences</div>
-              <div class="metric-value">${n.sequencesActive.toLocaleString()}</div>
+              <div class="metric-value">${(n.sequencesActive||0).toLocaleString()}</div>
             </div>
             <div class="metric">
               <div class="metric-label">Replies This Week</div>
-              <div class="metric-value success">${n.repliesThisWeek}</div>
+              <div class="metric-value success">${n.repliesThisWeek || 0}</div>
             </div>
           </div>
-          <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Top Sequences</div>
-          ${n.topSequences.map(s => `
+          <div class="section-label">Top Sequences</div>
+          ${(n.topSequences || []).map(s => `
             <div class="seq-item">
               <div class="seq-name">${s.name}</div>
               <div class="seq-stats">
-                <div class="seq-stat"><span class="seq-stat-label">Enrolled</span><span class="seq-stat-value">${s.enrolled}</span></div>
-                <div class="seq-stat"><span class="seq-stat-label">Open</span><span class="seq-stat-value" style="color:var(--newbiz)">${fmt.pct(s.openRate)}</span></div>
-                <div class="seq-stat"><span class="seq-stat-label">Reply</span><span class="seq-stat-value" style="color:var(--success)">${fmt.pct(s.replyRate)}</span></div>
+                <div class="seq-stat"><span class="seq-stat-label">Enrolled</span><span class="seq-stat-value">${s.enrolled || 0}</span></div>
+                ${s.openRate != null ? `<div class="seq-stat"><span class="seq-stat-label">Open</span><span class="seq-stat-value" style="color:var(--newbiz)">${fmt.pct(s.openRate)}</span></div>` : ''}
+                ${s.replyRate != null ? `<div class="seq-stat"><span class="seq-stat-label">Reply</span><span class="seq-stat-value" style="color:var(--success)">${fmt.pct(s.replyRate)}</span></div>` : ''}
               </div>
-            </div>
-          `).join('')}
+            </div>`).join('')}
         </div>
       </div>
 
-      <!-- CUSTOMER HEALTH -->
       <div class="card">
         <div class="card-header">
-          <div class="card-title health-title"><span class="card-icon">🏗️</span> Customer Health</div>
+          <div class="card-title" style="color:var(--newbiz)">📋 Deal Briefs</div>
+          <span class="card-freshness">${freshness(db.lastUpdated)}</span>
+        </div>
+        <div class="card-body">
+          <div class="metric-row">
+            <div class="metric">
+              <div class="metric-label">PSA Briefs</div>
+              <div class="metric-value newbiz">${db.totalPsaProcessed || 0}</div>
+              <div class="metric-sub">total generated</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Billing Briefs</div>
+              <div class="metric-value newbiz">${db.totalBillingProcessed || 0}</div>
+              <div class="metric-sub">total generated</div>
+            </div>
+          </div>
+          <div class="section-label">Brief Generator Status</div>
+          <div class="brief-status-row">
+            <div>
+              <div class="brief-status-name">PSA Auto-Brief</div>
+              <div class="brief-status-detail">Last run: ${db.lastPsaRun ? fmt.date(db.lastPsaRun) : 'Never'} · ${db.lastPsaCount || 0} briefs</div>
+            </div>
+            ${freshnessBadge(db.psaStatus || 'unknown')}
+          </div>
+          <div class="brief-status-row">
+            <div>
+              <div class="brief-status-name">Billing Auto-Brief</div>
+              <div class="brief-status-detail">Last run: ${db.lastBillingRun ? fmt.date(db.lastBillingRun) : 'Never'}</div>
+            </div>
+            ${freshnessBadge(db.billingStatus || 'unknown')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderHealth(d) {
+  const h = d.customerHealth || {};
+  if (h.error) return `<div class="error-state">Customer health unavailable: ${h.error}</div>`;
+
+  return `
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title" style="color:var(--health)">🏗️ Onboarding</div>
           <span class="card-freshness">${freshness(h.lastUpdated)}</span>
         </div>
         <div class="card-body">
           <div class="metric-row">
             <div class="metric">
-              <div class="metric-label">Onboarding Active</div>
-              <div class="metric-value success">${h.onboardingActive}</div>
+              <div class="metric-label">Active</div>
+              <div class="metric-value success">${h.onboardingActive || 0}</div>
             </div>
             <div class="metric">
               <div class="metric-label">At Risk</div>
-              <div class="metric-value ${h.onboardingAtRisk > 0 ? 'warning' : 'success'}">${h.onboardingAtRisk}</div>
+              <div class="metric-value ${(h.onboardingAtRisk||0) > 0 ? 'warning' : 'success'}">${h.onboardingAtRisk || 0}</div>
             </div>
             <div class="metric">
               <div class="metric-label">Overdue</div>
-              <div class="metric-value ${h.onboardingOverdue > 0 ? 'danger' : 'success'}">${h.onboardingOverdue}</div>
+              <div class="metric-value ${(h.onboardingOverdue||0) > 0 ? 'danger' : 'success'}">${h.onboardingOverdue || 0}</div>
             </div>
           </div>
-          <div class="metric-row" style="margin-bottom:14px">
+          ${(h.atRiskAccounts||[]).length > 0
+            ? `<div class="section-label">At-Risk Accounts</div>
+               ${h.atRiskAccounts.map(r => `
+                 <div class="at-risk-item">
+                   <div class="at-risk-account">${r.account}</div>
+                   <div class="at-risk-issue">${r.issue} · ${r.owner}</div>
+                 </div>`).join('')}`
+            : '<div style="color:var(--success);font-size:13px;text-align:center;padding:16px">✓ No at-risk accounts</div>'
+          }
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title" style="color:var(--health)">🎫 Support</div>
+        </div>
+        <div class="card-body">
+          <div class="section-label">Zendesk (Last 30 Days)</div>
+          <div class="metric-row">
             <div class="metric">
-              <div class="metric-label">Zendesk Open</div>
-              <div class="metric-value">${h.zendeskOpenTickets}</div>
+              <div class="metric-label">Open Tickets</div>
+              <div class="metric-value">${h.zendeskOpenTickets || 0}</div>
             </div>
             <div class="metric">
               <div class="metric-label">Escalated</div>
-              <div class="metric-value ${h.zendeskEscalated > 0 ? 'danger' : 'success'}">${h.zendeskEscalated}</div>
+              <div class="metric-value ${(h.zendeskEscalated||0) > 0 ? 'danger' : 'success'}">${h.zendeskEscalated || 0}</div>
             </div>
           </div>
-          ${h.atRiskAccounts.length > 0 ? `
-            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">At-Risk Accounts</div>
-            ${h.atRiskAccounts.map(r => `
-              <div class="at-risk-item">
-                <div class="at-risk-account">${r.account}</div>
-                <div class="at-risk-issue">${r.issue} · ${r.owner}</div>
-              </div>
-            `).join('')}
-          ` : '<div style="color:var(--success);font-size:13px;text-align:center;padding:16px">✓ No at-risk accounts</div>'}
-          <div style="margin-top:12px;font-size:12px;color:var(--text-muted)">
-            Community: ${h.communityNewPosts} new posts · <span style="color:${h.communityUnanswered > 0 ? 'var(--warning)' : 'var(--success)'}">${h.communityUnanswered} unanswered</span>
+          <div class="section-label">PSA Support (Last 30 Days)</div>
+          <div class="metric-row">
+            <div class="metric">
+              <div class="metric-label">Open</div>
+              <div class="metric-value">${h.psaOpenLast30 || 0}</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">High Priority</div>
+              <div class="metric-value ${(h.psaHighPriority||0) > 0 ? 'warning' : 'success'}">${h.psaHighPriority || 0}</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Total</div>
+              <div class="metric-value">${h.psaTotalLast30 || 0}</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- AGENT HEALTH -->
       <div class="card">
         <div class="card-header">
-          <div class="card-title agent-title"><span class="card-icon">⚡</span> Agent Health</div>
-          <span class="card-freshness">${freshness(a.lastUpdated)}</span>
+          <div class="card-title" style="color:var(--health)">🌐 Community</div>
         </div>
         <div class="card-body">
-          <div class="health-bar-row">
-            <div style="font-size:12px;min-width:90px">Cron Health</div>
-            <div class="health-bar-outer">
-              <div class="health-bar-inner" style="width:${healthPct}%"></div>
-            </div>
-            <div class="health-bar-label" style="color:${healthPct === 100 ? 'var(--success)' : healthPct > 80 ? 'var(--warning)' : 'var(--danger)'}">${a.cronJobsHealthy}/${a.cronJobsTotal}</div>
-          </div>
-          <div class="metric-row" style="margin-bottom:14px">
+          <div class="metric-row">
             <div class="metric">
-              <div class="metric-label">Kaia Pipeline</div>
-              <div class="metric-value ${a.lastKaiaStatus === 'ok' ? 'success' : 'danger'}">${a.lastKaiaStatus === 'ok' ? '✓' : '✗'}</div>
-              <div class="metric-sub">${freshness(a.lastKaiaRun)}</div>
+              <div class="metric-label">New Posts (24h)</div>
+              <div class="metric-value success">${h.communityNewPosts || 0}</div>
             </div>
             <div class="metric">
-              <div class="metric-label">Daily Brief</div>
-              <div class="metric-value ${a.lastBriefStatus === 'ok' ? 'success' : 'danger'}">${a.lastBriefStatus === 'ok' ? '✓' : '✗'}</div>
-              <div class="metric-sub">${freshness(a.lastBriefRun)}</div>
+              <div class="metric-label">Unanswered</div>
+              <div class="metric-value ${(h.communityUnanswered||0) > 0 ? 'warning' : 'success'}">${h.communityUnanswered || 0}</div>
             </div>
           </div>
-          ${a.errorJobs.length > 0 ? `
-            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Errors</div>
-            <div class="cron-list">
-              ${a.errorJobs.map(j => `
-                <div class="cron-item">
-                  <div>
-                    <div class="cron-name">${j.name} <span class="cron-id">#${j.id}</span></div>
-                    <div class="cron-error">${j.lastError}</div>
-                  </div>
-                  <div class="cron-since" style="color:var(--danger)">Since ${j.since}</div>
-                </div>
-              `).join('')}
+          <div style="font-size:12px;color:var(--text-muted);margin-top:8px">
+            Community activity from Circle Monitor. Updated every 4h.
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderMarket(d) {
+  const ci = d.competitorIntel || {};
+  const mp = d.marketProduct || {};
+  const allFeatures = ci.allTopFeatures || ci.topFeatures || [];
+  const topComps = ci.topCompetitors || [];
+  const maxComp = Math.max(...topComps.map(x => x.count), 1);
+  const maxFeat = Math.max(...allFeatures.map(x => x.count), 1);
+
+  return `
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title" style="color:var(--market)">🏭 Competitive Landscape</div>
+          <span class="card-freshness">${freshness(ci.generatedAt)}</span>
+        </div>
+        <div class="card-body">
+          <div class="metric-row">
+            <div class="metric">
+              <div class="metric-label">Win Rate</div>
+              <div class="metric-value success">${ci.winPct || 0}%</div>
+              <div class="metric-sub">${ci.winCount || 0} wins · ${ci.totalTier1 || 0} analyzed</div>
             </div>
-          ` : '<div style="color:var(--success);font-size:13px;text-align:center;padding:16px">✓ All crons healthy</div>'}
+            <div class="metric">
+              <div class="metric-label">Loss Rate</div>
+              <div class="metric-value danger">${ci.lossPct || 0}%</div>
+              <div class="metric-sub">${ci.lossCount || 0} losses</div>
+            </div>
+          </div>
+          <div class="section-label">Competitor Mentions (All Time)</div>
+          ${barChart(topComps, '#00b4d8', maxComp)}
         </div>
       </div>
 
-    </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title" style="color:var(--market)">🔧 Feature Demand</div>
+          <span class="card-freshness">${freshness(ci.generatedAt)}</span>
+        </div>
+        <div class="card-body">
+          <div class="section-label">Top Requested Features (All Time)</div>
+          ${barChart(allFeatures, '#a78bfa', maxFeat)}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title" style="color:var(--market)">📰 MSP Intel</div>
+          <span class="card-freshness">${freshness(mp.mspLastRun)}</span>
+        </div>
+        <div class="card-body">
+          <div class="brief-status-row">
+            <div>
+              <div class="brief-status-name">MSP Competitor Brief</div>
+              <div class="brief-status-detail">Last run: ${mp.mspLastRun ? fmt.date(mp.mspLastRun) : 'No recent run'}</div>
+            </div>
+            ${freshnessBadge(mp.mspLastRun ? 'ok' : 'unknown')}
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:8px">
+            Runs M/W/F at 6am CT · Competitor news, product announcements, pricing changes
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title" style="color:var(--market)">🗺️ Roadmap</div>
+        </div>
+        <div class="card-body">
+          <div class="roadmap-placeholder">
+            📋 Roadmap: Check <strong>#product</strong> for the latest weekly digest<br>
+            <span style="font-size:12px;margin-top:6px;display:block">Roadmap Keywords Refresh · Sundays 3am</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderAgents(d) {
+  const a = d.agentHealth || {};
+  const byCategory = a.byCategory || {};
+  const healthPct = a.cronJobsEnabled > 0
+    ? Math.round((a.cronJobsHealthy / a.cronJobsEnabled) * 100)
+    : 0;
+
+  const categoryOrder = ['Infrastructure', 'Intelligence', 'Delivery', 'System'];
+
+  return `
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header">
+        <div class="card-title" style="color:var(--agent)">⚡ Agent Health</div>
+        <span class="card-freshness">${freshness(a.lastUpdated)}</span>
+      </div>
+      <div class="card-body">
+        <div class="health-bar-row">
+          <div style="font-size:12px;min-width:100px">Cron Health</div>
+          <div class="health-bar-outer">
+            <div class="health-bar-inner" style="width:${healthPct}%;background:${healthPct===100?'var(--success)':healthPct>80?'var(--warning)':'var(--danger)'}"></div>
+          </div>
+          <div class="health-bar-label" style="color:${healthPct===100?'var(--success)':healthPct>80?'var(--warning)':'var(--danger)'}">${a.cronJobsHealthy}/${a.cronJobsEnabled} enabled</div>
+        </div>
+        <div class="metric-row" style="margin-bottom:16px">
+          <div class="metric">
+            <div class="metric-label">Total Crons</div>
+            <div class="metric-value agent">${a.cronJobsTotal || 0}</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Enabled</div>
+            <div class="metric-value success">${a.cronJobsEnabled || 0}</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Healthy</div>
+            <div class="metric-value success">${a.cronJobsHealthy || 0}</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Issues</div>
+            <div class="metric-value ${(a.cronJobsError||0) > 0 ? 'danger' : 'success'}">${a.cronJobsError || 0}</div>
+          </div>
+        </div>
+
+        ${(a.errorJobs||[]).length > 0
+          ? `<div class="section-label" style="color:var(--danger)">⚠ Issues</div>
+             <div class="cron-group">
+               ${a.errorJobs.map(j => `
+                 <div class="cron-item" style="border-left:3px solid var(--danger)">
+                   <div>
+                     <div class="cron-name">${j.name}</div>
+                     <div class="cron-error">${j.lastError || j.status}</div>
+                   </div>
+                   <div class="cron-right">
+                     ${statusDot('error')}
+                   </div>
+                 </div>`).join('')}
+             </div>`
+          : ''
+        }
+
+        ${categoryOrder.map(cat => {
+          const jobs = byCategory[cat] || [];
+          if (jobs.length === 0) return '';
+          return `<div class="cron-group">
+            <div class="cron-group-label">${cat}</div>
+            ${jobs.map(j => `
+              <div class="cron-item" style="opacity:${j.enabled ? 1 : 0.5}">
+                <div>
+                  <div class="cron-name">${j.name}</div>
+                  <div class="cron-schedule">${j.schedule}</div>
+                  ${j.lastError && j.status === 'error' ? `<div class="cron-error">${j.lastError}</div>` : ''}
+                </div>
+                <div class="cron-right">
+                  <div class="cron-age">${j.enabled ? fmt.relTime(j.lastRunAt) : 'disabled'}</div>
+                  ${statusDot(j.status)}
+                </div>
+              </div>`).join('')}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+// ── Main render ───────────────────────────────────────────────────────────────
+function renderAll(data) {
+  document.getElementById('lastUpdated').textContent = 'Updated ' + fmt.date(data._meta.generated);
+
+  if (data._meta.status !== 'LIVE') {
+    const badge = document.getElementById('statusBadge');
+    badge.style.background = 'rgba(255,183,77,0.1)';
+    badge.style.borderColor = 'rgba(255,183,77,0.25)';
+    badge.style.color = 'var(--warning)';
+    badge.querySelector('.status-dot').style.background = 'var(--warning)';
+    document.getElementById('statusText').textContent = data._meta.status;
+  }
+
+  const root = document.getElementById('appRoot');
+  root.innerHTML = `
+    <div id="tab-today" class="tab-content">${renderToday(data)}</div>
+    <div id="tab-pipeline" class="tab-content">${renderPipeline(data)}</div>
+    <div id="tab-calls" class="tab-content">${renderCalls(data)}</div>
+    <div id="tab-newbiz" class="tab-content">${renderNewBiz(data)}</div>
+    <div id="tab-health" class="tab-content">${renderHealth(data)}</div>
+    <div id="tab-market" class="tab-content">${renderMarket(data)}</div>
+    <div id="tab-agents" class="tab-content">${renderAgents(data)}</div>
   `;
+
+  switchTab(getInitialTab());
 }
 
 async function init() {
@@ -780,7 +1273,7 @@ async function init() {
     const res = await fetch('ops-snapshot.json?v=' + Date.now());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-    render(data);
+    renderAll(data);
   } catch (e) {
     document.getElementById('appRoot').innerHTML = `
       <div class="error-state">
