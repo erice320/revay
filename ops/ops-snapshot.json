@@ -1,37 +1,37 @@
 {
   "_meta": {
-    "generated": "2026-05-04T17:00:34.685Z",
+    "generated": "2026-05-05T17:00:25.105Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js"
   },
   "pipeline": {
-    "openPipelineMrr": 116392,
-    "openDeals": 123,
-    "weightedMrr": 52376,
-    "closingThisMonth": 111,
-    "closingThisMonthMrr": 109995,
-    "avgDealMrr": 946,
-    "winRateMtd": 0.09090909090909091,
+    "openPipelineMrr": 106812,
+    "openDeals": 119,
+    "weightedMrr": 48065,
+    "closingThisMonth": 107,
+    "closingThisMonthMrr": 100415,
+    "avgDealMrr": 898,
+    "winRateMtd": 0.08695652173913043,
     "stageBreakdown": [
       {
         "stage": "1- Discovery Scheduled",
-        "count": 56,
-        "mrr": 49862
+        "count": 50,
+        "mrr": 45102
       },
       {
         "stage": "3 - Initial Product Demo",
         "count": 22,
-        "mrr": 31795
+        "mrr": 29420
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 31,
-        "mrr": 23569
+        "count": 34,
+        "mrr": 24124
       },
       {
         "stage": "4 - Proposal Sent",
-        "count": 7,
-        "mrr": 7137
+        "count": 6,
+        "mrr": 4137
       },
       {
         "stage": "6 - Verbal Commit",
@@ -44,7 +44,7 @@
         "mrr": 765
       }
     ],
-    "lastUpdated": "2026-05-04T17:00:35.125Z"
+    "lastUpdated": "2026-05-05T17:00:26.000Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
@@ -59,83 +59,77 @@
     ],
     "recentCalls": [
       {
-        "title": "Husam Zalmiyar - Joe Garetano",
-        "date": "2026-05-04",
-        "durationMin": 1,
+        "title": "(Discovery Call) MMO Techno & Rev.io PSA",
+        "date": "2026-05-05",
+        "durationMin": 0,
+        "state": "STARTED"
+      },
+      {
+        "title": "Emily Petraglia - Edgar Rene",
+        "date": "2026-05-05",
+        "durationMin": 0,
         "state": "ENDED"
       },
       {
-        "title": "Ingrid Beard - Scott Springer",
-        "date": "2026-05-04",
-        "durationMin": 5,
-        "state": "ENDED"
-      },
-      {
-        "title": "Ingrid Beard - John Brogan",
-        "date": "2026-05-04",
-        "durationMin": 1,
+        "title": "Emily Petraglia - Edgar Rene",
+        "date": "2026-05-05",
+        "durationMin": 0,
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-05-04T17:00:37.515Z"
+    "lastUpdated": "2026-05-05T17:00:30.185Z"
   },
   "newBusiness": {
-    "newDealsOpenedMtd": 15,
-    "sequencesActive": 32,
-    "newEnrollmentsThisWeek": 11897,
-    "repliesThisWeek": 201,
-    "meetingsBookedMtd": 16,
+    "newDealsOpenedMtd": 24,
+    "sequencesActive": 31,
+    "newEnrollmentsThisWeek": 11178,
+    "repliesThisWeek": 197,
+    "meetingsBookedMtd": 27,
     "topSequences": [
       {
-        "name": "Telecom Sequence Q2 2026",
-        "enrolled": 233,
-        "openRate": 0.513,
-        "replyRate": 0.004
-      },
-      {
-        "name": "Rev.io Cyber Protect (Billing Clients)",
-        "enrolled": 28,
-        "openRate": 0.479,
-        "replyRate": 0.042
-      },
-      {
         "name": "Q2'26 Security ",
-        "enrolled": 1624,
-        "openRate": 0.525,
+        "enrolled": 1673,
+        "openRate": 0.535,
         "replyRate": 0.005
+      },
+      {
+        "name": "ESX Sequence",
+        "enrolled": 153,
+        "openRate": 0.436,
+        "replyRate": 0.018
+      },
+      {
+        "name": "CBR Sequence - Q2'26",
+        "enrolled": 63,
+        "openRate": 0.549,
+        "replyRate": 0.037
       }
     ],
-    "lastUpdated": "2026-05-04T17:00:38.192Z"
+    "lastUpdated": "2026-05-05T17:00:30.670Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
-    "zendeskOpenTickets": 683,
-    "zendeskEscalated": 11,
+    "zendeskOpenTickets": 703,
+    "zendeskEscalated": 13,
     "psaOpenLast30": 47,
     "psaHighPriority": 12,
     "psaTotalLast30": 71,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-05-04T17:00:42.013Z"
+    "lastUpdated": "2026-05-05T17:00:35.239Z"
   },
   "agentHealth": {
     "cronJobsTotal": 6,
-    "cronJobsHealthy": 2,
-    "cronJobsError": 1,
-    "lastKaiaRun": "2026-05-04T13:11:08.361Z",
+    "cronJobsHealthy": 3,
+    "cronJobsError": 0,
+    "lastKaiaRun": "2026-05-05T12:03:41.403Z",
     "lastKaiaStatus": "ok",
-    "lastOnboardingRun": "2026-05-01T14:02:50.797Z",
-    "lastOnboardingStatus": "stale",
+    "lastOnboardingRun": "2026-05-05T14:02:28.379Z",
+    "lastOnboardingStatus": "ok",
     "errorJobs": [
-      {
-        "name": "Onboarding Intelligence",
-        "id": "afc5c57b",
-        "lastError": "Last run 75h ago (expected <28h)",
-        "since": "2026-05-01"
-      },
       {
         "name": "MSP Intel Brief",
         "id": "msp-intel",
@@ -159,16 +153,16 @@
       {
         "name": "Kaia Pipeline",
         "id": "e7769928",
-        "lastRun": "2026-05-04T13:11:08.361Z",
+        "lastRun": "2026-05-05T12:03:41.403Z",
         "status": "ok",
         "error": null
       },
       {
         "name": "Onboarding Intelligence",
         "id": "afc5c57b",
-        "lastRun": "2026-05-01T14:02:50.797Z",
-        "status": "stale",
-        "error": "Last run 75h ago (expected <28h)"
+        "lastRun": "2026-05-05T14:02:28.379Z",
+        "status": "ok",
+        "error": null
       },
       {
         "name": "MSP Intel Brief",
@@ -194,11 +188,11 @@
       {
         "name": "X Intelligence",
         "id": "x-monitor",
-        "lastRun": "2026-05-04T08:00:05.717Z",
+        "lastRun": "2026-05-05T08:00:07.419Z",
         "status": "ok",
         "error": null
       }
     ],
-    "lastUpdated": "2026-05-04T17:00:42.014Z"
+    "lastUpdated": "2026-05-05T17:00:35.240Z"
   }
 }
