@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-05-05T19:59:57.531Z",
+    "generated": "2026-05-05T20:02:01.517Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js v2"
   },
@@ -99,8 +99,8 @@
     ],
     "meetingCount": 9,
     "vipEmails": [],
-    "generatedAt": "2026-05-05T19:59:58.250Z",
-    "lastUpdated": "2026-05-05T19:59:58.250Z"
+    "generatedAt": "2026-05-05T20:02:01.956Z",
+    "lastUpdated": "2026-05-05T20:02:01.956Z"
   },
   "pipeline": {
     "openPipelineMrr": 108992,
@@ -143,8 +143,14 @@
       }
     ],
     "bookingsPacing": {
-      "error": "HTTP 400 GET https://rev-io.my.salesforce.com/services/data/v59.0/query?q=%0A%20%20%20%20%20%20SELECT%20COUNT(Id)%20cnt%2C%20SUM(Amount)%20total%0A%20%20%20%20%20%20FROM%20Opportunity%0A%20%20%20%20%20%20WHERE%20IsClosed%20%3D%20true%20AND%20StageName%20%3D%20'Closed%20Won'%0A%20%20%20%20%20%20AND%20CloseDate%20%3E%3D%202026-05-01T00%3A00%3A00Z%20AND%20Amount%20%3E%200%0A%20%20%20%20: [{\"message\":\"\\n      AND CloseDate >= 2026-05-01T00:00:00Z\\n          ^\\nERROR at Row:4:Column:11\\nvalue of filter criterion for field 'CloseDate' must be of type date and should not be enclosed in qu",
-      "lastUpdated": "2026-05-05T19:59:58.850Z"
+      "actualMrr": 870,
+      "targetMrr": 75000,
+      "pacePct": 1,
+      "daysIntoMonth": 5,
+      "daysRemaining": 26,
+      "requiredDailyRunRate": 2851,
+      "wonCount": 2,
+      "lastUpdated": "2026-05-05T20:02:02.796Z"
     },
     "recentWins": [
       {
@@ -221,7 +227,7 @@
         "winRate": null
       }
     ],
-    "lastUpdated": "2026-05-05T19:59:58.851Z"
+    "lastUpdated": "2026-05-05T20:02:02.796Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
@@ -236,6 +242,12 @@
     ],
     "recentCalls": [
       {
+        "title": "Ptah Robinson - Dave Leonard",
+        "date": "2026-05-05",
+        "durationMin": 1,
+        "state": "ENDED"
+      },
+      {
         "title": "Patrick Davies - Chris Lam",
         "date": "2026-05-05",
         "durationMin": 0,
@@ -246,26 +258,20 @@
         "date": "2026-05-05",
         "durationMin": 0,
         "state": "ENDED"
-      },
-      {
-        "title": "Patrick Davies - Chris Lam",
-        "date": "2026-05-05",
-        "durationMin": 0,
-        "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-05-05T20:00:00.919Z"
+    "lastUpdated": "2026-05-05T20:02:04.882Z"
   },
   "newBusiness": {
     "newDealsOpenedMtd": 26,
     "sequencesActive": 30,
-    "newEnrollmentsThisWeek": 9315,
+    "newEnrollmentsThisWeek": 9318,
     "repliesThisWeek": 181,
     "meetingsBookedMtd": 29,
     "topSequences": [
       {
         "name": "Q2'26 Security ",
-        "enrolled": 1710,
+        "enrolled": 1713,
         "openRate": 0.53,
         "replyRate": 0.005
       },
@@ -282,25 +288,25 @@
         "replyRate": 0.003
       }
     ],
-    "lastUpdated": "2026-05-05T20:00:01.478Z"
+    "lastUpdated": "2026-05-05T20:02:05.262Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
     "zendeskOpenTickets": 704,
-    "zendeskEscalated": 16,
+    "zendeskEscalated": 15,
     "psaOpenLast30": 47,
     "psaHighPriority": 12,
     "psaTotalLast30": 71,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-05-05T20:00:06.328Z"
+    "lastUpdated": "2026-05-05T20:02:09.917Z"
   },
   "agentHealth": {
-    "cronJobsTotal": 55,
-    "cronJobsEnabled": 46,
+    "cronJobsTotal": 56,
+    "cronJobsEnabled": 47,
     "cronJobsHealthy": 31,
     "cronJobsError": 13,
     "lastKaiaRun": "2026-05-05T12:00:00.010Z",
@@ -543,7 +549,7 @@
         "name": "Win Card Generator",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-05-04T20:00:00.014Z",
+        "lastRunAt": "2026-05-05T20:00:00.008Z",
         "lastError": null,
         "schedule": "0 15 * * 1-5",
         "category": "Intelligence"
@@ -883,7 +889,7 @@
         "name": "Cloudflared Tunnel Watchdog",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-05-05T19:56:41.618Z",
+        "lastRunAt": "2026-05-05T20:01:41.630Z",
         "lastError": null,
         "schedule": "every",
         "category": "Infrastructure"
@@ -936,6 +942,16 @@
         "lastRunAt": "2026-05-05T17:00:16.151Z",
         "lastError": null,
         "schedule": "0 12 * * 1-5",
+        "category": "Delivery"
+      },
+      {
+        "id": "b31d4f94",
+        "name": "Ops Command Center Morning Refresh",
+        "enabled": true,
+        "status": "no-data",
+        "lastRunAt": null,
+        "lastError": null,
+        "schedule": "30 6 * * 1-5",
         "category": "Delivery"
       }
     ],
@@ -1168,7 +1184,7 @@
           "name": "Win Card Generator",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-05-04T20:00:00.014Z",
+          "lastRunAt": "2026-05-05T20:00:00.008Z",
           "lastError": null,
           "schedule": "0 15 * * 1-5",
           "category": "Intelligence"
@@ -1424,6 +1440,16 @@
           "lastError": null,
           "schedule": "0 12 * * 1-5",
           "category": "Delivery"
+        },
+        {
+          "id": "b31d4f94",
+          "name": "Ops Command Center Morning Refresh",
+          "enabled": true,
+          "status": "no-data",
+          "lastRunAt": null,
+          "lastError": null,
+          "schedule": "30 6 * * 1-5",
+          "category": "Delivery"
         }
       ],
       "Infrastructure": [
@@ -1472,7 +1498,7 @@
           "name": "Cloudflared Tunnel Watchdog",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-05-05T19:56:41.618Z",
+          "lastRunAt": "2026-05-05T20:01:41.630Z",
           "lastError": null,
           "schedule": "every",
           "category": "Infrastructure"
@@ -1499,7 +1525,7 @@
         }
       ]
     },
-    "lastUpdated": "2026-05-05T20:00:06.330Z"
+    "lastUpdated": "2026-05-05T20:02:09.918Z"
   },
   "competitorIntel": {
     "topCompetitors": [
@@ -1594,7 +1620,7 @@
     "lossCount": 174,
     "totalTier1": 602,
     "generatedAt": "2026-05-05T19:00:43.181Z",
-    "lastUpdated": "2026-05-05T20:00:06.331Z"
+    "lastUpdated": "2026-05-05T20:02:09.919Z"
   },
   "dealBriefs": {
     "lastPsaRun": "2026-05-05T18:15:07.218Z",
@@ -1604,7 +1630,7 @@
     "totalBillingProcessed": 5,
     "psaStatus": "fresh",
     "billingStatus": "fresh",
-    "lastUpdated": "2026-05-05T20:00:06.331Z"
+    "lastUpdated": "2026-05-05T20:02:09.919Z"
   },
   "marketProduct": {
     "mspLastRun": null,
@@ -1616,6 +1642,6 @@
       "topCompetitor": "QuickBooks",
       "topCompetitorCount": 409
     },
-    "lastUpdated": "2026-05-05T20:00:06.331Z"
+    "lastUpdated": "2026-05-05T20:02:09.919Z"
   }
 }
