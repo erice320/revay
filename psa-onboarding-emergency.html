@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PSA Onboarding Emergency Brief · Rev.io</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzBmMTExNyIvPjx0ZXh0IHg9IjE2IiB5PSIyNCIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiPuKaqTwvdGV4dD48L3N2Zz4=">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080E1A;--surface:rgba(15,33,56,.68);--surface2:#111d31;--border:rgba(255,255,255,.1);--text:#fff;--muted:#a1b0cb;--cyan:#00E5FF;--green:#69F0AE;--amber:#FFB74D;--red:#FF5252;--orange:#FF8A65;--purple:#A78BFA;--font-display:'Cabinet Grotesk',system-ui,sans-serif;--font-body:'Satoshi',system-ui,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 20% 10%,rgba(0,229,255,.14),transparent 32%),radial-gradient(circle at 80% 0%,rgba(105,240,174,.10),transparent 28%),var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.58}a{color:var(--cyan)}
+.nav{position:sticky;top:0;z-index:20;background:rgba(8,14,26,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}.navin{max-width:1320px;margin:auto;padding:12px 28px;display:flex;gap:16px;align-items:center;overflow:auto}.brand{font-family:var(--font-display);font-weight:800;color:var(--green);white-space:nowrap}.nav a{font-size:13px;color:var(--muted);text-decoration:none;white-space:nowrap}.nav a:hover{color:white}
+.hero{max-width:1320px;margin:auto;padding:70px 28px 40px}.eyebrow{color:var(--green);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:12px}h1{font-family:var(--font-display);font-size:clamp(38px,6vw,78px);line-height:.98;margin:14px 0 18px;letter-spacing:-.04em}.grad{background:linear-gradient(135deg,#fff,var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}.sub{max-width:850px;color:var(--muted);font-size:18px}.meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.chip{border:1px solid var(--border);background:rgba(255,255,255,.04);border-radius:999px;padding:7px 12px;color:var(--muted);font-size:13px}.chip strong{color:white}
+main{max-width:1320px;margin:auto;padding:20px 28px 70px}section{margin:42px 0}.section-head{display:flex;align-items:end;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:18px;gap:20px}h2{font-family:var(--font-display);font-size:28px;margin:0}.note{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.kpi{grid-column:span 3;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:0 20px 70px rgba(0,0,0,.18)}.num{font-family:var(--font-display);font-size:42px;font-weight:800;line-height:1}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.09em;margin-top:8px}.red{color:var(--red)}.amber{color:var(--amber)}.green{color:var(--green)}.cyan{color:var(--cyan)}.purple{color:var(--purple)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px}.span6{grid-column:span 6}.span4{grid-column:span 4}.span8{grid-column:span 8}.span12{grid-column:span 12}.card h3{font-family:var(--font-display);font-size:20px;margin:0 0 10px}.card p{margin:8px 0;color:#dfe7f8}.muted,.small{color:var(--muted)}.small{font-size:12px}ul{padding-left:20px;margin:8px 0}li{margin:7px 0}
+.bars{display:grid;gap:10px}.bar{display:grid;grid-template-columns:170px 1fr 50px;gap:12px;align-items:center;font-size:14px}.track{height:12px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--red),var(--amber),var(--green));border-radius:99px}
+.call-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px}.call-card{background:linear-gradient(180deg,rgba(20,42,70,.84),rgba(10,20,35,.74));border:1px solid var(--border);border-radius:18px;padding:18px}.call-card.crit{border-color:rgba(255,82,82,.35)}.call-card.high{border-color:rgba(255,138,101,.32)}.call-top{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px;margin-bottom:10px;flex-wrap:wrap}.risk{border-radius:999px;padding:2px 8px;font-weight:800;text-transform:uppercase;font-size:11px}.risk.crit{background:rgba(255,82,82,.18);color:#ff9b9b}.risk.high{background:rgba(255,138,101,.16);color:#ffc2ad}.risk.med{background:rgba(255,183,77,.16);color:#ffd59b}.risk.low{background:rgba(105,240,174,.13);color:var(--green)}.call-card h3{font-family:var(--font-display);font-size:21px;margin:0 0 2px}.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.tags span,.pill{border:1px solid rgba(0,229,255,.2);background:rgba(0,229,255,.07);color:#bff7ff;border-radius:999px;padding:3px 8px;font-size:12px}blockquote{margin:10px 0 0;padding:10px 12px;border-left:3px solid var(--cyan);background:rgba(0,0,0,.18);color:#dce9f7;border-radius:0 10px 10px 0;font-size:13px}
+table{width:100%;border-collapse:separate;border-spacing:0 8px}th{text-align:left;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em;padding:0 12px}td{background:rgba(255,255,255,.045);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px;vertical-align:top;font-size:14px}td:first-child{border-left:1px solid var(--border);border-radius:12px 0 0 12px}td:last-child{border-right:1px solid var(--border);border-radius:0 12px 12px 0}.footer{color:var(--muted);font-size:12px;margin-top:45px;border-top:1px solid var(--border);padding-top:20px}
+@media(max-width:900px){.kpi,.span4,.span6,.span8{grid-column:span 12}.bar{grid-template-columns:1fr}td,th{font-size:12px}.hero{padding-top:42px}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="navin"><div class="brand">⚡ Revay</div><a href="#read">Executive read</a><a href="#patterns">Root causes</a><a href="#triage">Forecast triage</a><a href="#calls">Call evidence</a><a href="/library.html">Library</a></div></nav>
+<header class="hero">
+  <div class="eyebrow">PSA Onboarding Emergency Brief · May 2026</div>
+  <h1>Forecast says graduation.<br><span class="grad">Calls say blocked.</span></h1>
+  <p class="sub">Live-data working brief on why PSA onboarding is pacing far below forecast. Built from Fireflies transcripts, Notion call intelligence, and the PSA client dashboard. No synthetic data; source counts and caveats are stated below.</p>
+  <div class="meta"><span class="chip"><strong>Generated:</strong> 2026-05-20 UTC</span><span class="chip"><strong>Scope:</strong> May MTD PSA onboarding</span><span class="chip"><strong>Status:</strong> working executive brief</span></div>
+</header>
+<main>
+<section id="read">
+  <div class="section-head"><h2>Executive read</h2><div class="note">Verified source counts from live pulls</div></div>
+  <div class="grid">
+    <div class="kpi"><div class="num cyan">361</div><div class="label">May transcripts in range</div></div>
+    <div class="kpi"><div class="num purple">269</div><div class="label">Onboarding-like calls</div></div>
+    <div class="kpi"><div class="num amber">26</div><div class="label">May forecasted PSA grads</div></div>
+    <div class="kpi"><div class="num red">0</div><div class="label">Actual May grad dates recorded</div></div>
+    <div class="card span8"><h3>What is happening</h3><p>This does not look primarily like an SA effort problem. The failure mode is system-level conversion failure: the forecast is still counting accounts as graduation candidates while call evidence shows configuration churn, integration/data blockers, billing/QB issues, unclear ownership, and client readiness gaps.</p><p>The stage mix is the clearest signal: <strong>123 of 171 analyzed May calls are still in Configuration</strong>, while only <strong>12</strong> are Fundamentals, <strong>7</strong> are Pre-Graduation, and <strong>3</strong> are Graduated.</p></div>
+    <div class="card span4"><h3>Data integrity</h3><ul><li>Fireflies pages returned HTTP 200.</li><li>Notion call analysis returned HTTP 200.</li><li>PSA dashboard loaded 201 client rows.</li><li>Bad/missing transcripts are flagged as recording integrity issues, not normal evidence.</li></ul></div>
+  </div>
+</section>
+<section id="patterns">
+  <div class="section-head"><h2>Root-cause pattern counts</h2><div class="note">35 highest-risk analyzed calls</div></div>
+  <div class="grid">
+    <div class="card span6"><h3>Pattern prevalence</h3><div class="bars">
+      <div class="bar"><div>Product Gap</div><div class="track"><div class="fill" style="width:97%"></div></div><strong>34/35</strong></div><div class="bar"><div>Data Migration</div><div class="track"><div class="fill" style="width:89%"></div></div><strong>31/35</strong></div><div class="bar"><div>Billing Qb</div><div class="track"><div class="fill" style="width:83%"></div></div><strong>29/35</strong></div><div class="bar"><div>Forecast Hygiene</div><div class="track"><div class="fill" style="width:83%"></div></div><strong>29/35</strong></div><div class="bar"><div>Ownership Process</div><div class="track"><div class="fill" style="width:77%"></div></div><strong>27/35</strong></div><div class="bar"><div>Stakeholder Readiness</div><div class="track"><div class="fill" style="width:69%"></div></div><strong>24/35</strong></div>
+    </div></div>
+    <div class="card span6"><h3>Interpretation</h3><ul><li><strong>Product/platform blockers</strong> are nearly universal in the worst calls.</li><li><strong>Data migration/import</strong> is repeatedly delaying quote, billing, inventory, and ticket workflow readiness.</li><li><strong>Billing/QB/payment/tax</strong> is a core launch blocker, not an edge issue.</li><li><strong>Forecast hygiene</strong> is failing because operational blockers are not automatically disqualifying accounts from May graduation.</li><li><strong>Ownership ambiguity</strong> leaves SAs relaying dependencies without an accountable unblocker/SLA.</li></ul></div>
+  </div>
+</section>
+<section id="triage">
+  <div class="section-head"><h2>May forecast triage</h2><div class="note">Classification logic from dashboard + call evidence; no CRM writes made</div></div>
+  <div class="grid">
+    <div class="kpi"><div class="num green">4</div><div class="label">Likely saveable</div></div>
+    <div class="kpi"><div class="num amber">7</div><div class="label">Exec intervention</div></div>
+    <div class="kpi"><div class="num red">12</div><div class="label">Remove / recovery</div></div>
+    <div class="kpi"><div class="num cyan">3</div><div class="label">Graduated, missing date</div></div>
+    <div class="card span12"><h3>Likely saveable / closest to graduation</h3><table><thead><tr><th>Client</th><th>Forecast</th><th>SA</th><th>Milestones</th><th>Calls</th><th>Evidence / concern</th></tr></thead><tbody>
+        <tr>
+          <td><strong>Fire Team Security, Inc.</strong><div class="small">In Progress · Healthy · Forecast Healthy</div></td>
+          <td>2026-05-29</td>
+          <td>Kegan Ehlers</td>
+          <td><span class="pill">95%</span></td>
+          <td>2</td>
+          <td>Client must clean up Tiger Paw customer and product data before database backup and import, which is a time-intensive manual process that could delay go-live.</td>
+        </tr>
+
+        <tr>
+          <td><strong>Mule Security</strong><div class="small">In Progress · Healthy · Forecast Healthy</div></td>
+          <td>2026-05-29</td>
+          <td>Mark Kephart</td>
+          <td><span class="pill">86%</span></td>
+          <td>2</td>
+          <td>Critical product data import gaps remain unfilled (missing categories, vendor fields, manufacturer data) despite initial spreadsheet submission, delaying inventory and billing setup; payment processor approval is imminent but data cleanup is blocking full configuration progress.</td>
+        </tr>
+
+        <tr>
+          <td><strong>Fuse.Cloud</strong><div class="small">In Progress · Healthy · Forecast Healthy</div></td>
+          <td>2026-05-29</td>
+          <td>Mark Kephart</td>
+          <td><span class="pill">89%</span></td>
+          <td>2</td>
+          <td>Email-to-ticket creation is completely broken due to misconfiguration of the email connector, and SLA timers are not decrementing—both are critical blockers to core PSA functionality.</td>
+        </tr>
+
+        <tr>
+          <td><strong>American Security Devices</strong><div class="small">In Progress · Healthy · Forecast Healthy</div></td>
+          <td>2026-05-28</td>
+          <td>Jeremy Adams</td>
+          <td><span class="pill">89%</span></td>
+          <td></td>
+          <td>Need to confirm cutover of recurring billing from TP to PSA. Need to enable Pick Ticket function. Need receipts for payment received.</td>
+        </tr></tbody></table></div>
+    <div class="card span12"><h3>Needs executive intervention / possible but not clean</h3><table><thead><tr><th>Client</th><th>Forecast</th><th>SA</th><th>Milestones</th><th>Calls</th><th>Evidence / concern</th></tr></thead><tbody>
+        <tr>
+          <td><strong>Franklin Electric Co Inc.</strong><div class="small">In Progress · Healthy · 30-day Forecast At Risk</div></td>
+          <td>2026-05-29</td>
+          <td>Mark Kephart</td>
+          <td><span class="pill">68%</span></td>
+          <td>2</td>
+          <td>Client is actively testing bulk import workflows and has identified missing fields in the import tool; several system bugs (packages, calendar migration) are blocking full configuration, but client is engaged and willing to work around limitations with manual data submission.</td>
+        </tr>
+
+        <tr>
+          <td><strong>VIA Technology</strong><div class="small">In Progress · Healthy · Forecast Healthy</div></td>
+          <td>2026-05-22</td>
+          <td>Nicole Hills</td>
+          <td><span class="pill">100%</span></td>
+          <td>2</td>
+          <td>Call was entirely derailed by a key stakeholder (Mike) missing due to a job site visit; no configuration or training occurred, and the critical quoting discussion could not proceed.</td>
+        </tr>
+
+        <tr>
+          <td><strong>C1st Technologies</strong><div class="small">In Progress · Healthy · Forecast Healthy</div></td>
+          <td>2026-05-29</td>
+          <td>Mark Kephart</td>
+          <td><span class="pill">82%</span></td>
+          <td>2</td>
+          <td>ConnectWise API integration architecture was clarified and API keys are being recreated; significant data migration and billing configuration work remains dependent on successful API credential handoff.</td>
+        </tr>
+
+        <tr>
+          <td><strong>DMC Systems</strong><div class="small">In Progress · Healthy · 30-day Forecast At Risk</div></td>
+          <td>2026-05-27</td>
+          <td>Mark Kephart</td>
+          <td><span class="pill">68%</span></td>
+          <td>1</td>
+          <td>Customer data import and billing setup are blocked by unresponsive billing contact (Ingrid) and missing TRX platform access, delaying the entire recurring billing workflow by at least one week.</td>
+        </tr>
+
+        <tr>
+          <td><strong>Rel Comm Inc</strong><div class="small">In Progress · Healthy · 30-day Forecast At Risk</div></td>
+          <td>2026-05-29</td>
+          <td>Mark Kephart</td>
+          <td><span class="pill">50%</span></td>
+          <td>1</td>
+          <td>Critical account structure decision pending: client needs confirmation on whether parent-child account consolidation supports multiple bill-to addresses for special billing scenarios (e.g., school districts + BOCES), or if separate accounts per location must be maintained as they currently operate.</td>
+        </tr>
+
+        <tr>
+          <td><strong>Frontline Security</strong><div class="small">In Progress · Healthy · 30-day Forecast At Risk</div></td>
+          <td>2026-05-26</td>
+          <td>Kegan Ehlers</td>
+          <td><span class="pill">59%</span></td>
+          <td>4</td>
+          <td>The call recording contains no discussion of PSA/Rev.io configuration, training, or onboarding; the entire content is unrelated podcast/culinary discussion, indicating either a wrong recording, failed call, or severe engagement/execution issue.</td>
+        </tr>
+
+        <tr>
+          <td><strong>Troy Security Systems</strong><div class="small">In Progress · Healthy · 30-day Forecast At Risk</div></td>
+          <td>2026-05-29</td>
+          <td>Halle Taylor</td>
+          <td><span class="pill">78%</span></td>
+          <td>2</td>
+          <td>Client is actively configuring recurring quarterly billing with 30-day advance invoicing, but faces multiple system limitations (dispatch board clutter, manual email subject lines, bulk printing gaps) that require technical intervention before full production rollout.</td>
+        </tr></tbody></table></div>
+    <div class="card span12"><h3>Should likely leave May forecast or be treated as recovery</h3><table><thead><tr><th>Client</th><th>Forecast</th><th>SA</th><th>Milestones</th><th>Calls</th><th>Evidence / concern</th></tr></thead><tbody>
+        <tr>
+          <td><strong>Silent Knight Security</strong><div class="small">In Progress · Healthy · 30-day Forecast At Risk</div></td>
+          <td>2026-05-29</td>
+          <td>Jessica Cochran, Jeremy Adams</td>
+          <td><span class="pill">5%</span></td>
+          <td>2</td>
+          <td>Silent Knight is progressing through initial system setup with clear ownership of data migration tasks (CSV exports from Alarm Biller) and will use mock data for training before importing real data.</td>
+        </tr>
+
+        <tr>
+          <td><strong>SmartCom Home Technologies, Inc.</strong><div class="small">In Progress · At Risk · 30-day Forecast At Risk</div></td>
+          <td>2026-05-29</td>
+          <td>Mark Kephart</td>
+          <td><span class="pill">73%</span></td>
+          <td></td>
+          <td>Franklin Electric and SmartComm are both run by Kim and Tommy. Ready to get started as soon as possible.</td>
+        </tr>
+
+        <tr>
+          <td><strong>Integrated Technologies</strong><div class="small">RTS - Functionality · At Risk · 30-day Forecast At Risk</div></td>
+          <td>2026-05-29</td>
+          <td>Mark Kephart</td>
+          <td><span class="pill">32%</span></td>
+          <td></td>
+          <td>Wants to work with us but not until later in the summer - 8/1 - probably divesting copier part of his company to concentrate on other initiatives. Using both E-Automate and Connectwise, and needs to move to a system that can handle everything that&#x27;s being done in both + needed a better support team…</td>
+        </tr>
+
+        <tr>
+          <td><strong>QuickCopper</strong><div class="small">In Progress · At Risk · Forecast Healthy</div></td>
+          <td>2026-05-29</td>
+          <td>Mark Kephart</td>
+          <td><span class="pill">95%</span></td>
+          <td></td>
+          <td>Project Managment, Mobile Application</td>
+        </tr>
+
+        <tr>
+          <td><strong>Total Temp</strong><div class="small">In Progress · Healthy · 30-day Forecast At Risk</div></td>
+          <td>2026-05-26</td>
+          <td>Kegan Ehlers</td>
+          <td><span class="pill">64%</span></td>
+          <td></td>
+          <td>Covered ticketing. Going through Billing next week - only some info from HCP but Josh is working on it.</td>
+        </tr>
+
+        <tr>
+          <td><strong>Atlantic Companies</strong><div class="small">RTS - Client Bandwidth · At Risk · Forecast Healthy</div></td>
+          <td>2026-05-28</td>
+          <td>Kegan Ehlers</td>
+          <td><span class="pill">%</span></td>
+          <td>9</td>
+          <td>No transcript content available to assess call quality, outcomes, or client engagement.</td>
+        </tr>
+
+        <tr>
+          <td><strong>BankTec South</strong><div class="small">Off Track · At Risk · Forecast Healthy</div></td>
+          <td>2026-05-22</td>
+          <td>Jeremy Adams</td>
+          <td><span class="pill">100%</span></td>
+          <td></td>
+          <td>Waiting on User Group functionality and has questions around contracts</td>
+        </tr>
+
+        <tr>
+          <td><strong>CSI Video Security</strong><div class="small">In Progress · Healthy · 30-day Forecast At Risk</div></td>
+          <td>2026-05-27</td>
+          <td>Nicole Hills</td>
+          <td><span class="pill">67%</span></td>
+          <td></td>
+          <td>No matched May call analysis</td>
+        </tr>
+
+        <tr>
+          <td><strong>JFM-Prestige</strong><div class="small">In Progress · Healthy · 30-day Forecast At Risk</div></td>
+          <td>2026-05-28</td>
+          <td>Halle Taylor</td>
+          <td><span class="pill">77%</span></td>
+          <td></td>
+          <td>05/12- Will finish walkthrough this week. Next call will be reporting, mobile app, and final Q&amp;A.</td>
+        </tr>
+
+        <tr>
+          <td><strong>Digital Market POS</strong><div class="small">In Progress · Healthy · 30-day Forecast At Risk</div></td>
+          <td>2026-05-29</td>
+          <td>Halle Taylor</td>
+          <td><span class="pill">40%</span></td>
+          <td>1</td>
+          <td>Client successfully transitioned to one-hour focused training sessions with clear four-day schedule to June 1st graduation deadline; payment setup remains blocked pending missing account statements.</td>
+        </tr>
+
+        <tr>
+          <td><strong>MAPS Security</strong><div class="small">Off Track · At Risk · Forecast Healthy</div></td>
+          <td>2026-05-15</td>
+          <td>Jeremy Adams</td>
+          <td><span class="pill">40%</span></td>
+          <td></td>
+          <td>Waiting on PO enhancements. Amanda has information needed to add token to invoice template - need to follow up.</td>
+        </tr>
+
+        <tr>
+          <td><strong>Input Group</strong><div class="small">RTS - Ghosting · At Risk · Forecast Healthy</div></td>
+          <td>2026-05-29</td>
+          <td>Kegan Ehlers</td>
+          <td><span class="pill">%</span></td>
+          <td></td>
+          <td>non responsive</td>
+        </tr></tbody></table></div>
+  </div>
+</section>
+<section id="calls">
+  <div class="section-head"><h2>Highest-risk call evidence</h2><div class="note">Excerpted from Fireflies transcripts + analyzed call records</div></div>
+  <div class="call-grid">
+      <article class="call-card crit">
+        <div class="call-top"><span>2026-05-07</span><span class="risk crit">Critical</span><span>Score </span></div>
+        <h3>Atlantic Companies</h3>
+        <p class="muted">SA: Kegan Ehlers</p>
+        <p><strong>Finding:</strong> No transcript content available to assess call quality, outcomes, or client engagement.</p>
+        <p><strong>Blockers:</strong> No transcript data available; unable to identify actual blockers or dependencies</p>
+        <div class="tags"><span>data migration</span></div>
+        
+      </article>
+      <article class="call-card crit">
+        <div class="call-top"><span>2026-05-05</span><span class="risk crit">Critical</span><span>Score </span></div>
+        <h3>CloudLi</h3>
+        <p class="muted">SA: Jason Conner</p>
+        <p><strong>Finding:</strong> No transcript data available; call occurred but substance cannot be evaluated.</p>
+        <p><strong>Blockers:</strong> No transcript or summary available to assess blockers</p>
+        <div class="tags"><span>product gap</span><span>stakeholder readiness</span></div>
+        
+      </article>
+      <article class="call-card crit">
+        <div class="call-top"><span>2026-05-18</span><span class="risk crit">Critical</span><span>Score 5</span></div>
+        <h3>Frontline Security</h3>
+        <p class="muted">SA: Kegan Ehlers</p>
+        <p><strong>Finding:</strong> The call recording contains no discussion of PSA/Rev.io configuration, training, or onboarding; the entire content is unrelated podcast/culinary discussion, indicating either a wrong recording, failed call, or severe engagement/execution issue.</p>
+        <p><strong>Blockers:</strong> Unclear if client is even engaged; no contact confirmation post-close; call recording integrity questionable</p>
+        <div class="tags"><span>product gap</span><span>billing qb</span><span>data migration</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Speaker 1: Podcasts generally in my party, for some reason, there&#x27;s a real allergy to taking risk because we&#x27;re afraid of saying something wrong or saying something that&#x27;s going to get twisted and used against us.</blockquote><blockquote>Speaker 1: Especially these really podcasts that go an hour, 2, 3.</blockquote><blockquote>Speaker 1: It is physically impossible to be on talking points for that.</blockquote><blockquote>Speaker 1: So you&#x27;re going to come off your talking points, and if you&#x27;re not comfortable with who you are in those moments in between the things that you and your staff are doing and the things you&#x27;re going to say, you&#x27;re going to say, then of course, that would be technical.</blockquote></div>
+      </article>
+      <article class="call-card crit">
+        <div class="call-top"><span>2026-05-04</span><span class="risk crit">Critical</span><span>Score 5</span></div>
+        <h3>IN-Telecom</h3>
+        <p class="muted">SA: Unknown - conners@rev.io (first/last name not provided in transcript)</p>
+        <p><strong>Finding:</strong> No transcript content provided; unable to assess call substance, progress, or client readiness.</p>
+        <p><strong>Blockers:</strong> Missing transcript data prevents assessment of technical or organizational blockers</p>
+        <div class="tags"><span>product gap</span></div>
+        
+      </article>
+      <article class="call-card high">
+        <div class="call-top"><span>2026-05-12</span><span class="risk high">High</span><span>Score 9</span></div>
+        <h3>VIA Technology</h3>
+        <p class="muted">SA: Nicole Hills</p>
+        <p><strong>Finding:</strong> Call was entirely derailed by a key stakeholder (Mike) missing due to a job site visit; no configuration or training occurred, and the critical quoting discussion could not proceed.</p>
+        <p><strong>Blockers:</strong> Mike unavailable (at job site); Mike&#x27;s presence is essential for quoting discussion and configuration. No PSA ticket data or Salesforce deal exists for this client.</p>
+        <div class="tags"><span>product gap</span><span>stakeholder readiness</span></div>
+        <div class="quotes"><blockquote>Patty  Ramon: He had to go out to a job site, so.</blockquote><blockquote>Nicole Hills: We did some Potting.</blockquote><blockquote>Nicole Hills: I got a couple other pots planted for the back porch, but they&#x27;re like right in the dog&#x27;s alley, like where they run out.</blockquote><blockquote>Nicole Hills: Because they&#x27;re really, like, finding their way and testing their limits and testing their vocal enhancements that they have learned.</blockquote></div>
+      </article>
+      <article class="call-card crit">
+        <div class="call-top"><span>2026-05-04</span><span class="risk crit">Critical</span><span>Score 19</span></div>
+        <h3>Cloudli</h3>
+        <p class="muted">SA: Marshall Harris</p>
+        <p><strong>Finding:</strong> Rev.io is creating duplicate charges during refund/chargeback transactions, causing revenue to be double-booked in NetSuite, forcing Cloudli to manually delete 23+ invoices and halt chargeback processing entirely due to fear of compounding the error.</p>
+        <p><strong>Blockers:</strong> Critical: Rev.io platform behavior of creating charges on refunds is a design/configuration issue that requires Connor (Rev.io) to investigate and resolve; Cloudli unable to process chargebacks safely until resolved; Product item linking issues in credit memos preventing NetSuite sync; Missing tax data on credit memos blocks accurate revenue recognition</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>data migration</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Suha Fraij: How Rev IO is dealing with refunds and chargebacks.</blockquote><blockquote>Suha Fraij: It&#x27;s still sending an invoice to NetSuite inflating the revenue.</blockquote><blockquote>Suha Fraij: This is revenue that was already recognized.</blockquote><blockquote>Suha Fraij: The payment was refunded for some reason or charged back or whatever problem happened.</blockquote></div>
+      </article>
+      <article class="call-card high">
+        <div class="call-top"><span>2026-05-18</span><span class="risk high">High</span><span>Score 35</span></div>
+        <h3>RyTel</h3>
+        <p class="muted">SA: Halle Taylor</p>
+        <p><strong>Finding:</strong> A system-wide platform outage (504 Gateway error) prevented the scheduled configuration session from occurring, requiring immediate rescheduling and creating a critical dependency on infrastructure stability for onboarding completion.</p>
+        <p><strong>Blockers:</strong> Platform outage (504 Gateway error) - entire system inaccessible; onboarding cannot proceed without instance access; client has not yet successfully logged in to instance since creation</p>
+        <div class="tags"><span>product gap</span><span>data migration</span></div>
+        <div class="quotes"><blockquote>Halle Taylor: 504 Gateway.</blockquote><blockquote>Jeff Compton: Gateway.</blockquote></div>
+      </article>
+      <article class="call-card crit">
+        <div class="call-top"><span>2026-05-14</span><span class="risk crit">Critical</span><span>Score 41</span></div>
+        <h3>White Label Communications / Grupo NGN</h3>
+        <p class="muted">SA: Tim Smith</p>
+        <p><strong>Finding:</strong> Multiple unresolved blockers (provider importer delays, Sansei platform shutdown end of May, inconsistent multi-instance standardization) are preventing billing configuration and comparative reports from completion, creating urgent June 1st rollout risk.</p>
+        <p><strong>Blockers:</strong> Critical: Importer delays from Horizon and unnamed provider (promised delivery by week&#x27;s end but historically delayed); Sansei billing platform shutdown end of May; Heavenly&#x27;s MRC comparative report must complete before configuration changes; lack of standardized product catalog and agent/commission setup across multiple instances creates training/scaling impossibility for external contract data entry staff</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>data migration</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Tim Smith: Commissions.</blockquote><blockquote>Tim Smith: I think we set that up for what Warren sent me, but I think Javier is supposed to have his own agents.</blockquote><blockquote>Thomas Ford: One things I discussed with Warren yesterday was Groupo is sort of set up differently than the other.</blockquote><blockquote>Stephanie Okada: I was explaining to Tim about the inventory.</blockquote></div>
+      </article>
+      <article class="call-card crit">
+        <div class="call-top"><span>2026-05-11</span><span class="risk crit">Critical</span><span>Score 41</span></div>
+        <h3>Bridge Comm</h3>
+        <p class="muted">SA: Kegan Ehlers</p>
+        <p><strong>Finding:</strong> Bridge Comm is caught in a dual-system workflow (Tiger Paw and PSA simultaneously) with unclear cutover timing, incomplete data migrations, and unexecuted configuration tasks, creating confusion and risk of lost work.</p>
+        <p><strong>Blockers:</strong> 1. Analytics database migration pending—no confirmation of completion; blocks analytics training demonstration 2. Tiger Paw service orders not yet pulled into PSA; final data extraction still in backlog 3. Tax codes not yet applied to products; quotes may not calculate accurately 4. Unclear system cutover timing causing dual-entry confusion and workflow delays 5. Customer billing/infrastructure tags incomplete; only…</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>data migration</span><span>stakeholder readiness</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Doug Dassow: Reporting and dashboards will be available once your setup is completed.</blockquote><blockquote>Kegan Ehlers: And they said server migration.</blockquote><blockquote>Lauren Otts: They mentioned that in order to enable analytics for your instance, we will need to move the database for bridge column to a different server on our side.</blockquote><blockquote>Lauren Otts: This will cause a brief period of inaccessibility.</blockquote></div>
+      </article>
+      <article class="call-card high">
+        <div class="call-top"><span>2026-05-06</span><span class="risk high">High</span><span>Score 43</span></div>
+        <h3>Hy-Vee</h3>
+        <p class="muted">SA: Kegan Ehlers</p>
+        <p><strong>Finding:</strong> Client&#x27;s database was deleted and requires restoration before any training can proceed; last system access was August of previous year, necessitating a complete restart of training from fundamentals.</p>
+        <p><strong>Blockers:</strong> Database restoration in progress—not ready for this session (expected this afternoon); client cannot access system until restoration complete. No baseline documentation from previous training sessions (notes are limited).</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>data migration</span><span>stakeholder readiness</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Kegan Ehlers: So I apologize on that.</blockquote><blockquote>Laib, Cory: Keegan, just as you&#x27;re kind of setting up there, Laura and I got to the point where we have the app downloaded, but.</blockquote><blockquote>Kegan Ehlers: He&#x27;s one of our Tiger Paw guys.</blockquote><blockquote>Kegan Ehlers: Your setup and everything, and he said that your guys&#x27;s database, actually.</blockquote></div>
+      </article>
+      <article class="call-card high">
+        <div class="call-top"><span>2026-05-05</span><span class="risk high">High</span><span>Score 44</span></div>
+        <h3>Unknown - Internal Rev.io Meeting</h3>
+        <p class="muted">SA: Jeremy Adams (absent), Shane Frost (facilitating)</p>
+        <p><strong>Finding:</strong> This is an internal Rev.io team working session, not a client onboarding call; the team is managing a complex transition from Zendesk to internal PSA ticketing while addressing multiple unresolved technical blockers affecting client implementations.</p>
+        <p><strong>Blockers:</strong> PSA ticket notification automations not yet built; 403 access errors on PSA instance (resolved with refresh); QuickBooks integration API limitations blocking Virtue payments; fax call misclassification affecting reporting; cross-path billing errors; project status confusion between PSA prospect status and billing activation</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>data migration</span><span>stakeholder readiness</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Conner Sharp: I know, but like, compared to like the Grinch or like Christmas vacation, it&#x27;s.</blockquote><blockquote>Lauren Swygert: Everybody knows that PSA support is all happening through our internal PSA instance, correct?</blockquote><blockquote>Conner Sharp: What via pop3 or however they&#x27;re submitting,.</blockquote><blockquote>Lauren Swygert: It&#x27;s not going through billing, it&#x27;s going through psa.</blockquote></div>
+      </article>
+      <article class="call-card crit">
+        <div class="call-top"><span>2026-05-13</span><span class="risk crit">Critical</span><span>Score 47</span></div>
+        <h3>Cloudli</h3>
+        <p class="muted">SA: Marshall Harris</p>
+        <p><strong>Finding:</strong> A production configuration change (enabling internationalization module on 3/25) broke CPSI surcharge billing for 2+ months, causing $10K in lost reseller revenue and exposing systemic gaps in Rev.io&#x27;s internal communication and billing validation processes.</p>
+        <p><strong>Blockers:</strong> Bulk upload execution depends on Justin Ryder obtaining complete service ID data from Jason Bunch and Conner Sharp; lack of formalized billing validation process post-production changes; unclear ownership of billing impact detection</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>data migration</span><span>stakeholder readiness</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Marshall Harris: Jason, did you see my response this morning?</blockquote><blockquote>Marshall Harris: We can basically just put them on the unposted tab and they would just show up on the next bill that is created for the client.</blockquote><blockquote>Jason Bunch: So the option presented to us is to bulk action upload those accounts that missed from 327 through last night.</blockquote><blockquote>Marshall Harris: I wanted to very quickly also show you guys the monthly billing report.</blockquote></div>
+      </article>
+      <article class="call-card high">
+        <div class="call-top"><span>2026-05-12</span><span class="risk high">High</span><span>Score 48</span></div>
+        <h3>Automated Telecom</h3>
+        <p class="muted">SA: Lex Ligon</p>
+        <p><strong>Finding:</strong> Critical QuickBooks integration gaps exist around refund/void transaction handling and payment sync, requiring manual reconciliation workarounds and blocking clean accounting period closure.</p>
+        <p><strong>Blockers:</strong> QuickBooks integration does not automatically sync refunds/voids; manual corrections required post-batch. Canceled accounts with unposted charges still appear in create bill queue. April accounting periods not yet closed. Billing data audit ongoing due to product bundle, pricing plan, and discount complexities.</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>data migration</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Lex Ligon: I&#x27;m ready.</blockquote><blockquote>Lex Ligon: Because I know I will not be able to answer any of the QuickBooks questions, but we can go over some of the other things.</blockquote><blockquote>Lex Ligon: I know you had a few questions about QuickBooks and Andrew&#x27;s gonna have to lead that issue for commissions.</blockquote><blockquote>Lex Ligon: And then for accounting periods, before we get into the QuickBooks issues for accounting periods, we still have not closed out for April.</blockquote></div>
+      </article>
+      <article class="call-card high">
+        <div class="call-top"><span>2026-05-07</span><span class="risk high">High</span><span>Score 48</span></div>
+        <h3>Minutemen Security Systems</h3>
+        <p class="muted">SA: Nicole Hills</p>
+        <p><strong>Finding:</strong> Client self-assessed understanding at 3/10 despite watching videos; experiencing difficulty connecting PSA terminology to their legacy 30-year-old system; IT resources are critical dependency for data migration but not yet coordinated.</p>
+        <p><strong>Blockers:</strong> Client laptop/hardware failure on call day; IT resource availability not yet confirmed for critical data onboarding sessions; potential environment rebuild needed (misspelled URL); decision on dual vs. comparative billing approach pending Nicole&#x27;s feasibility check</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>data migration</span><span>stakeholder readiness</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Nicole Hills: I just wanted to confirm about like the time zones because you responded to 11:30 yesterday that your guy would be available.</blockquote><blockquote>Nicole Hills: I apologize if there was any miscommunication on my part on that one.</blockquote><blockquote>Gary Gordon: I apologize, but I thought the meeting was 11am my time to 1pm I don&#x27;t know how it changed to 10, but we&#x27;re here, so.</blockquote><blockquote>Nicole Hills: That one&#x27;s already in your inbox.</blockquote></div>
+      </article>
+      <article class="call-card high">
+        <div class="call-top"><span>2026-05-04</span><span class="risk high">High</span><span>Score 48</span></div>
+        <h3>Bridge Comm</h3>
+        <p class="muted">SA: Kegan Ehlers</p>
+        <p><strong>Finding:</strong> Critical inventory data upload has stalled—1,937 item product list sent 10 days ago was never imported, blocking quote and ticket workflow training.</p>
+        <p><strong>Blockers:</strong> Inventory upload did not complete despite being submitted 10 days ago; data engineer has not yet actioned the request. Current PSA system shows 8-9k items instead of the 1,937 items in the new product list. Unable to proceed with quote training until inventory is corrected.</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>data migration</span><span>stakeholder readiness</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Doug Dassow: I think Mark wanted to go through a quote, but we were waiting for the inventory to be our inventory.</blockquote><blockquote>Doug Dassow: And it still doesn&#x27;t look like the new file I sent to you and then to that other person when you were sick got uploaded.</blockquote><blockquote>Kegan Ehlers: So I apologize on that.</blockquote><blockquote>Kegan Ehlers: Getting this where you need to import the new one within there and then any existing ones within there that have service need to be updated.</blockquote></div>
+      </article>
+      <article class="call-card high">
+        <div class="call-top"><span>2026-05-18</span><span class="risk high">High</span><span>Score 50</span></div>
+        <h3>PTCOA</h3>
+        <p class="muted">SA: Shane Frost</p>
+        <p><strong>Finding:</strong> Welcome emails are incorrectly triggering on account closure due to missing customer status filters in email templates, and the system is preventing the team from adding the necessary &#x27;status change to open&#x27; filter.</p>
+        <p><strong>Blockers:</strong> System technical limitation: unable to add required filter to email template configuration; unclear why the filter addition is failing</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Heavenly Burdette: Is that under reports there?</blockquote><blockquote>Speaker 1: Did it come from billing or from golf?</blockquote></div>
+      </article>
+      <article class="call-card high">
+        <div class="call-top"><span>2026-05-13</span><span class="risk high">High</span><span>Score 50</span></div>
+        <h3>Zultys</h3>
+        <p class="muted">SA: Lex Ligon</p>
+        <p><strong>Finding:</strong> Data upload delays have compressed the UAT window from 10 workdays to 7, and critical billing functionality gaps (prorated charge reversals) lack automation, requiring manual workarounds that are error-prone and labor-intensive.</p>
+        <p><strong>Blockers:</strong> Data upload delays (3+ days) blocking UAT; sandbox data cleared, limiting ability to troubleshoot historical issues; lack of automated API for prorated charge reversal is blocking clean billing workflow</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>data migration</span><span>stakeholder readiness</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Lex Ligon: He&#x27;s still working hard on that, so as soon as it&#x27;s ready, we&#x27;ll get that over to you.</blockquote><blockquote>Lex Ligon: Of course, while we&#x27;re waiting on Tim, I did want to get a little bit of clarification on our steps for activation.</blockquote><blockquote>Lex Ligon: So I know we discussed inserting the migrate about 100, possibly 200 customers over for the initial bill out.</blockquote><blockquote>Lex Ligon: We have an internal meeting as well to discuss it because I know you guys have a large number of customers, so we want to avoid like a ton of data migrations.</blockquote></div>
+      </article>
+      <article class="call-card high">
+        <div class="call-top"><span>2026-05-13</span><span class="risk high">High</span><span>Score 50</span></div>
+        <h3>DFW Security</h3>
+        <p class="muted">SA: Nicole Hills</p>
+        <p><strong>Finding:</strong> DFW Security is in a trial evaluation phase, not full onboarding, and has identified critical gaps in inventory mass-restock workflows and data access blockers that are slowing progress.</p>
+        <p><strong>Blockers:</strong> Remote desktop access to Sedona for API data pull blocked; weighted average inventory costing verification incomplete; mass SKU transfer functionality not available in current system; export permissions lack granularity</p>
+        <div class="tags"><span>forecast hygiene</span><span>product gap</span><span>billing qb</span><span>data migration</span><span>stakeholder readiness</span><span>ownership process</span></div>
+        <div class="quotes"><blockquote>Nicole Hills: Are we waiting on anybody else today or just gonna be you guys?</blockquote><blockquote>DFW Security: I haven&#x27;t gotten a response yet, so I would say we just go ahead without him.</blockquote><blockquote>DFW Security: They were running some experiments on the inventory to figure out the average costing thing.</blockquote><blockquote>Jeremy Adams: I think I spoke to a guy a few weeks ago, just kind of talking about onboarding up to this point.</blockquote></div>
+      </article></div>
+</section>
+<section id="actions">
+  <div class="section-head"><h2>Immediate operating recommendations</h2><div class="note">Actionable next steps</div></div>
+  <div class="grid">
+    <div class="card span12"><ol><li><strong>Freeze the May forecast today:</strong> no account remains forecast-healthy unless it has a named graduation date, client-confirmed readiness, no unresolved P0/P1 product/data blockers, and a single accountable owner.</li><li><strong>Create a war-room list for all forecasted accounts:</strong> unblocker, SLA, next client-facing milestone, and whether graduation is real this month.</li><li><strong>Split blockers into executive escalation lanes:</strong> Product/Engineering, Data Migration, Billing/QB/Payments/Tax, Client Readiness, and SA execution.</li><li><strong>Stop counting Configuration progress as graduation probability:</strong> Fundamentals/Pre-Graduation evidence should be the gate.</li><li><strong>Fix actual graduation date hygiene immediately:</strong> status-graduated without actual date cannot be used for forecast management.</li></ol></div>
+  </div>
+  <div class="footer">Source artifacts: /tmp/onboarding_mtd_catalog.json, /tmp/onboarding_notion_mtd.json, /tmp/may_forecast_call_join.json, /tmp/psa-onboarding-deep-dive-rows.json. Published by Revay.</div>
+</section>
+</main>
+</body></html>
