@@ -1,440 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzBmMTExNyIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyNCIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiPuKaoTwvdGV4dD4KPC9zdmc+">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rev.io Market Intelligence Report</title>
-  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
-  <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #080E1A; --surface: rgba(15,33,56,0.55); --surface-solid: #142A46;
-  --border: rgba(255,255,255,0.08); --border-cyan: rgba(0,229,255,0.3);
-  --cyan: #00BCD4; --cyan-bright: #00E5FF; --green: #4CAF50; --green-bright: #69F0AE;
-  --text-1: #FFFFFF; --text-2: #A1B0CB; --eyebrow: #00BCD4;
-  --font-display: 'Cabinet Grotesk', system-ui, sans-serif;
-  --font-body: 'Satoshi', system-ui, sans-serif;
-  --spring: cubic-bezier(0.16, 1, 0.3, 1);
-  /* Compatibility aliases used by chart/bar code */
-  --accent: #00BCD4; --accent2: #69F0AE; --danger: #FF6E6E; --warning: #FFD54F; --muted: #A1B0CB;
-}
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 72px; }
-body { font-family: var(--font-body); background: var(--bg); color: var(--text-1); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io Intelligence Report — May 21, 2026</title>
+<style>
+  :root {
+    --green: #00ff88; --cyan: #00e5ff; --purple: #bf5af2;
+    --red: #ff4444; --yellow: #ffd700;
+    --bg: #020408; --surface: #060d14; --border: #0a2a1a; --border2: #0d1f2d;
+    --text: #c8f0dc; --muted: #5a8a6a; --muted-dark: #2a5a3a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, monospace; background: var(--bg); color: var(--text); }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: linear-gradient(rgba(0,255,136,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.025) 1px,transparent 1px);
+    background-size: 40px 40px; pointer-events: none; z-index: 0;
+  }
 
-/* Canvas background */
-#bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+  /* COVER */
+  .cover { background: linear-gradient(135deg,#010204 0%,#020408 60%,#030a06 100%); padding: 80px 60px 64px; border-bottom: 1px solid var(--border); position: relative; z-index:1; }
+  .cover .label { font-size:10px; text-transform:uppercase; letter-spacing:3px; color:var(--muted-dark); margin-bottom:16px; font-weight:700; }
+  .cover h1 { font-size:42px; font-weight:900; line-height:1.1; margin-bottom:12px; color:#fff; letter-spacing:-1px; }
+  .cover h1 span { color:var(--green); text-shadow:0 0 30px rgba(0,255,136,.6); }
+  .cover .sub { font-size:15px; color:var(--muted); margin-bottom:40px; line-height:1.6; }
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; max-width:780px; }
+  .kpi { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:18px 16px; }
+  .kpi .val { font-size:28px; font-weight:900; color:var(--green); text-shadow:0 0 16px rgba(0,255,136,.3); line-height:1; }
+  .kpi .val.cyan { color:var(--cyan); text-shadow:0 0 16px rgba(0,229,255,.3); }
+  .kpi .val.red { color:var(--red); text-shadow:0 0 16px rgba(255,68,68,.3); }
+  .kpi .val.warn { color:var(--yellow); }
+  .kpi .lbl { font-size:10px; color:var(--muted-dark); text-transform:uppercase; letter-spacing:1px; margin-top:6px; }
+  .cover .date { margin-top:36px; font-size:11px; color:var(--muted-dark); letter-spacing:1px; }
 
-/* Hero */
-.hero { position: relative; min-height: 44vh; display: flex; align-items: center; border-bottom: 1px solid var(--border); z-index: 1; background: radial-gradient(ellipse at 20% 50%, rgba(0,188,212,.06) 0%, transparent 60%); }
-.hero-inner { position: relative; z-index: 2; width: 100%; max-width: 1200px; margin: 0 auto; padding: clamp(3rem,8vh,5rem) clamp(1.5rem,4vw,3rem); }
-.hero-eyebrow { font-family: var(--font-body); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; color: var(--eyebrow); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--cyan-bright); }
-.hero-title { font-family: var(--font-display); font-size: clamp(2rem,4vw+.5rem,3.4rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 14px; }
-.hero-title .gradient { background: linear-gradient(135deg, var(--cyan-bright) 0%, #7B9FFF 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.hero-sub { font-size: clamp(.9rem,1.5vw,1.05rem); color: var(--text-2); max-width: 520px; margin-bottom: 32px; }
-.hero-stats { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-.hero-stat { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--text-2); }
-.hero-stat-num { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--cyan-bright); }
-.hero-divider { width: 1px; height: 32px; background: var(--border-cyan); }
+  /* NAV */
+  .toc { background:#010204; border-bottom:1px solid var(--border); padding:0 60px; display:flex; gap:0; overflow-x:auto; position:sticky; top:0; z-index:100; scrollbar-width:none; }
+  .toc::-webkit-scrollbar { display:none; }
+  .toc a { display:block; padding:13px 16px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted-dark); text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent; transition:.2s; }
+  .toc a:hover { color:var(--green); border-bottom-color:var(--green); }
 
-/* Sticky nav */
-.sticky-nav { position: sticky; top: 0; z-index: 50; background: rgba(8,14,26,.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 12px clamp(1.5rem,4vw,3rem); }
-.sticky-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
-.sticky-nav-inner::-webkit-scrollbar { display: none; }
-.nav-brand { font-family: var(--font-display); font-weight: 800; font-size: 1rem; color: var(--text-1); white-space: nowrap; flex-shrink: 0; margin-right: 8px; }
-.nav-brand span { color: var(--cyan-bright); }
-.nav-links { display: flex; gap: 4px; align-items: center; }
-.nav-links a { color: var(--text-2); text-decoration: none; padding: 6px 12px; border-radius: 8px; font-size: .8rem; font-weight: 500; transition: all .2s; white-space: nowrap; }
-.nav-links a:hover { color: var(--text-1); background: rgba(255,255,255,.06); }
+  /* SECTIONS */
+  .section { padding:64px 60px; border-bottom:1px solid var(--border2); position:relative; z-index:1; }
+  .section-label { font-size:10px; text-transform:uppercase; letter-spacing:3px; color:var(--muted-dark); font-weight:700; margin-bottom:8px; }
+  .section h2 { font-size:30px; font-weight:900; color:#fff; letter-spacing:-0.5px; margin-bottom:12px; }
+  .section h2 span { color:var(--green); }
+  .section-intro { color:var(--muted); font-size:14px; line-height:1.7; margin-bottom:36px; max-width:700px; }
 
-/* Main layout */
-.main { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: clamp(1.5rem,4vw,2.5rem) clamp(1.5rem,4vw,3rem); }
-.section-block { margin-bottom: 3.5rem; }
-.section-hdr { display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
-.section-label { font-family: var(--font-display); font-size: clamp(.95rem,1.5vw,1.1rem); font-weight: 700; color: var(--text-1); }
-.section-sub { font-size: .85rem; color: var(--text-2); margin-bottom: 20px; line-height: 1.6; }
+  /* FEATURE TABLE */
+  .feat-table { width:100%; border-collapse:collapse; }
+  .feat-table td { padding:10px 8px; border-bottom:1px solid var(--border2); }
+  .feat-table .rank { width:36px; font-weight:900; font-size:13px; }
+  .feat-table .fname { font-size:14px; color:#fff; }
+  .feat-table .fbar { width:40%; padding:10px 16px; }
+  .feat-table .fcount { width:60px; text-align:right; font-weight:700; color:var(--cyan); font-size:13px; }
+  .bar-track { height:6px; background:var(--surface); border-radius:3px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:3px; transition:width .3s; }
+  .badge-risk { display:inline-block; background:rgba(255,215,0,.1); border:1px solid rgba(255,215,0,.3); color:var(--yellow); font-size:9px; padding:1px 6px; border-radius:3px; margin-left:8px; vertical-align:middle; }
 
-/* Cards */
-.deck-card { background: var(--surface); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 14px; padding: 22px; transition: border-color .3s, transform .3s var(--spring); }
-.deck-card:hover { border-color: var(--border-cyan); transform: translateY(-2px); }
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media(max-width:900px){ .two-col { grid-template-columns: 1fr; } }
+  /* COMPETITOR CHIPS */
+  .comp-grid { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; }
+  .comp-chip { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:10px 16px; font-size:13px; font-weight:600; display:flex; align-items:center; gap:10px; }
+  .comp-chip .cnt { font-size:18px; font-weight:900; color:var(--green); }
 
-/* KPI strip */
-.kpi-strip { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 2rem; }
-.kpi-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; flex: 1; min-width: 140px; }
-.kpi-item .kpi-lbl { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-2); margin-bottom: 8px; }
-.kpi-item .kpi-val { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--cyan-bright); line-height: 1; }
-.kpi-item .kpi-sub { font-size: .75rem; color: var(--text-2); margin-top: 4px; }
+  /* WIN/LOSS CARDS */
+  .quote-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:700px) { .quote-grid { grid-template-columns:1fr; } }
+  .quote-card { background:var(--surface); border-radius:8px; padding:18px 20px; }
+  .quote-card.green { border-left:3px solid var(--green); }
+  .quote-card.red { border-left:3px solid var(--red); }
+  .quote-card .qtext { font-size:14px; color:#fff; line-height:1.5; margin-bottom:8px; }
+  .quote-card .qmeta { font-size:11px; color:var(--muted); }
 
-/* Tables */
-.tbl-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 16px; }
-table { width: 100%; border-collapse: collapse; }
-thead tr { background: rgba(255,255,255,.04); }
-th { padding: 10px 16px; text-align: left; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-2); border-bottom: 1px solid var(--border); white-space: nowrap; }
-tbody tr { border-bottom: 1px solid rgba(255,255,255,.04); transition: background .15s; }
-tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: rgba(0,229,255,.03); }
-td { padding: 10px 16px; color: var(--text-1); font-size: .9rem; }
+  /* TWO-COL */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+  @media(max-width:800px) { .two-col { grid-template-columns:1fr; } }
 
-/* Bars */
-.bar-row { display: flex; align-items: center; }
-.bar-track { flex: 1; height: 5px; background: rgba(255,255,255,.06); border-radius: 3px; }
-.bar-fill { height: 100%; border-radius: 3px; }
+  /* SIGNAL BOXES */
+  .signal-box { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:24px; }
+  .signal-box h4 { font-size:12px; text-transform:uppercase; letter-spacing:2px; margin-bottom:16px; }
+  .signal-box.win h4 { color:var(--green); }
+  .signal-box.loss h4 { color:var(--red); }
+  .signal-item { padding:10px 0; border-bottom:1px solid var(--border2); font-size:13px; line-height:1.5; }
+  .signal-item:last-child { border-bottom:none; }
+  .signal-item .company { color:var(--cyan); font-size:11px; margin-top:3px; }
 
-/* Badges */
-.pill { display: inline-block; padding: 2px 10px; border-radius: 100px; font-size: .7rem; font-weight: 700; white-space: nowrap; }
-.pill-c { background: rgba(0,229,255,.1); color: var(--cyan-bright); border: 1px solid rgba(0,229,255,.2); }
-.pill-g { background: rgba(105,240,174,.1); color: #69F0AE; border: 1px solid rgba(105,240,174,.2); }
-.pill-w { background: rgba(255,200,87,.1); color: #FFD54F; border: 1px solid rgba(255,200,87,.2); }
-.pill-r { background: rgba(255,107,107,.1); color: #FF8A80; border: 1px solid rgba(255,107,107,.2); }
-.pill-m { background: rgba(161,176,203,.1); color: var(--text-2); border: 1px solid rgba(161,176,203,.2); }
-
-/* Signal cards */
-.sig-card { background: rgba(0,229,255,.04); border-left: 3px solid var(--cyan-bright); border-radius: 0 10px 10px 0; padding: 11px 14px; margin-bottom: 8px; }
-.sig-card.loss { background: rgba(255,107,107,.04); border-left-color: #FF8A80; }
-.sig-card .sig-text { font-size: .88rem; line-height: 1.5; color: var(--text-1); }
-.sig-card .sig-meta { font-size: .75rem; color: var(--text-2); margin-top: 4px; }
-
-/* Insight grid */
-.insight-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 14px; margin-top: 20px; }
-.insight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
-.insight-card .ins-lbl { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--cyan); margin-bottom: 6px; }
-.insight-card p { font-size: .85rem; color: var(--text-2); line-height: 1.5; }
-
-.empty-state { color: var(--text-2); font-size: .85rem; font-style: italic; padding: 20px 0; opacity: .6; }
-
-
-.month-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px; }
-.month-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
-.month-card .mc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.month-card .mc-label { font-family: var(--font-display); font-weight: 700; font-size: .95rem; }
-.month-card .mc-source { font-size: .7rem; }
-.month-card .mc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-.month-card .mc-stat { text-align: center; padding: 8px; background: rgba(255,255,255,.03); border-radius: 8px; }
-.month-card .mc-stat-val { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--cyan-bright); }
-.month-card .mc-stat-lbl { font-size: .65rem; color: var(--text-2); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
-.month-card .mc-features { font-size: .78rem; color: var(--text-2); line-height: 1.5; }
-.month-card .mc-features strong { color: var(--text-1); }
-footer { border-top: 1px solid var(--border); padding: 32px clamp(1.5rem,4vw,3rem); text-align: center; color: var(--text-2); font-size: .8rem; margin-top: 32px; position: relative; z-index: 1; }
-footer a { color: var(--cyan-bright); text-decoration: none; }
-  </style>
+  /* FOOTER */
+  .footer { padding:40px 60px; text-align:center; color:var(--muted-dark); font-size:11px; letter-spacing:1px; }
+  .footer a { color:var(--muted); text-decoration:none; }
+</style>
 </head>
 <body>
 
-<canvas id="bgCanvas"></canvas>
-
-<header class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Rev.io Intelligence Hub</div>
-    <h1 class="hero-title">Market <span class="gradient">Intelligence</span> Report</h1>
-    <p class="hero-sub">Rolling 45-day market intelligence — primary view is <strong style="color:var(--cyan-bright);">Apr 6 – May 21</strong>. Rebuilt daily from Kaia meeting analysis + prospecting call data.</p>
-    <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">335</span><span>meetings this period</span></div>
-      <div class="hero-divider"></div>
-      <div class="hero-stat"><span class="hero-stat-num">1268</span><span>prospecting calls</span></div>
-      <div class="hero-divider"></div>
-      <div class="hero-stat"><span class="hero-stat-num">5.0%</span><span>first-touch conversion</span></div>
-      <div class="hero-divider"></div>
-      <div class="hero-stat"><span class="hero-stat-num">8</span><span>competitors tracked</span></div>
-      <div class="hero-divider"></div><div class="hero-stat"><span class="hero-stat-num">13.7%</span><span>meeting-to-win rate</span></div>
-    </div>
-    <p style="font-size:.75rem;color:var(--text-2);margin-top:20px;">Data: Apr 6 – May 21 · Prior: Feb 20 – Apr 6 · Generated Thursday, May 21, 2026 at 01:31 PM CDT</p>
+<!-- COVER -->
+<div class="cover" id="top">
+  <div class="label">Rev.io · Kaia Intelligence Report</div>
+  <h1>Market Intelligence<br><span>from the Field</span></h1>
+  <p class="sub">Market signals · Product demand · Competitive landscape · GTM strategy<br>
+    Synthesized from 602 Tier 1 Kaia recordings — Nov 2025 – Apr 2026</p>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="val">602</div><div class="lbl">Tier 1 Calls Analyzed</div></div>
+    <div class="kpi"><div class="val">361</div><div class="lbl">Win Signals (60%)</div></div>
+    <div class="kpi"><div class="val red">174</div><div class="lbl">Loss Risks (29%)</div></div>
+    <div class="kpi"><div class="val cyan">10</div><div class="lbl">Competitors Tracked</div></div>
   </div>
-</header>
+  <div class="date">Auto-generated May 21, 2026 · Updated daily after Kaia analysis</div>
+</div>
 
-<nav class="sticky-nav">
-  <div class="sticky-nav-inner">
-    <div class="nav-brand">&#9889; <span>Revay</span></div>
-    <div class="nav-links">
-      <a href="#period-comparison" style="color:var(--cyan-bright);">45-Day Signal ⚡</a>
-      <a href="#features">Feature Demand</a>
-      <a href="#competitors">Competitive</a>
-      <a href="#signals">Win / Loss</a>
-      <a href="#prospecting">Prospecting</a>
-      <a href="#correlation">Correlation</a>
-      <a href="#trends">Monthly Trends</a>
-    </div>
-  </div>
+<!-- NAV -->
+<nav class="toc">
+  <a href="#features">Feature Demand</a>
+  <a href="#competitors">Competitive Intel</a>
+  <a href="#signals">Win/Loss Signals</a>
+  <a href="#gtm">GTM Angles</a>
 </nav>
 
-<div class="main">
+<!-- FEATURE DEMAND -->
+<section class="section" id="features">
+  <div class="section-label">Product Intelligence</div>
+  <h2>Feature <span>Demand</span></h2>
+  <p class="section-intro">Ranked by frequency across all 602 Tier 1 calls. This is the product backlog as your market sees it.</p>
+  <table class="feat-table">
+    <tbody>
+      
+      <tr>
+        <td class="rank" style="color:var(--green)">1</td>
+        <td class="fname">Enhanced Customer Portal</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--green)"></div></div>
+        </td>
+        <td class="fcount">402</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--green)">2</td>
+        <td class="fname">QuickBooks Online</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--green)"></div></div>
+        </td>
+        <td class="fcount">400</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--green)">3</td>
+        <td class="fname">Serialized Inventory Management</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:94%;background:var(--green)"></div></div>
+        </td>
+        <td class="fcount">379</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--cyan)">4</td>
+        <td class="fname">User Management/Authentication <span class="badge-risk">⚠ At Risk A2</span></td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:88%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">355</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--cyan)">5</td>
+        <td class="fname">GPS Tracking in PSA/Map in dispatch board</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:71%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">285</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--cyan)">6</td>
+        <td class="fname">Dispatch Board</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:67%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">271</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--cyan)">7</td>
+        <td class="fname">Time Tracking on Tickets</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:63%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">253</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--cyan)">8</td>
+        <td class="fname">SLA Management <span class="badge-risk">⚠ At Risk A2</span></td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:58%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">234</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--muted)">9</td>
+        <td class="fname">PSA Mobile App (Foundation)</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:48%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">191</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--muted)">10</td>
+        <td class="fname">Internationalization</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:33%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">132</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--muted)">11</td>
+        <td class="fname">Agents &amp; Commissions <span class="badge-risk">⚠ At Risk A2</span></td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:33%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">131</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--muted)">12</td>
+        <td class="fname">Bulk Import / Export Engine <span class="badge-risk">⚠ At Risk A2</span></td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:27%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">109</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--muted)">13</td>
+        <td class="fname">Google Calendar Integration</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:22%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">90</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--muted)">14</td>
+        <td class="fname">PAX8 Integration</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">82</td>
+      </tr>
+      <tr>
+        <td class="rank" style="color:var(--muted)">15</td>
+        <td class="fname">D-Tools Integration- Phase I</td>
+        <td class="fbar">
+          <div class="bar-track"><div class="bar-fill" style="width:14%;background:var(--cyan)"></div></div>
+        </td>
+        <td class="fcount">55</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
 
-  <!-- KPI STRIP -->
-  <div class="kpi-grid" style="margin-bottom:32px;">
-    <div class="kpi-item">
-      <div class="kpi-lbl">Meetings This Period</div>
-      <div class="kpi-val">335</div>
-      <div class="kpi-sub" style="color:var(--green-bright)">▲ +47 vs prior period</div>
+<!-- COMPETITIVE INTEL -->
+<section class="section" id="competitors">
+  <div class="section-label">Competitive Intelligence</div>
+  <h2>Competitor <span>Landscape</span></h2>
+  <p class="section-intro">Competitor mentions across all 602 Tier 1 calls — who we're replacing and who we're competing against.</p>
+  <div class="comp-grid">
+    <div class="comp-chip"><span class="cnt">409</span> QuickBooks</div>
+      <div class="comp-chip"><span class="cnt">130</span> ConnectWise</div>
+      <div class="comp-chip"><span class="cnt">45</span> Autotask/Kaseya</div>
+      <div class="comp-chip"><span class="cnt">22</span> Syncro</div>
+      <div class="comp-chip"><span class="cnt">15</span> NinjaOne</div>
+      <div class="comp-chip"><span class="cnt">9</span> SuperOps</div>
+      <div class="comp-chip"><span class="cnt">7</span> HaloPSA</div>
+      <div class="comp-chip"><span class="cnt">5</span> iPoint</div>
+      <div class="comp-chip"><span class="cnt">1</span> ServiceTrade</div>
+      <div class="comp-chip"><span class="cnt">1</span> BuildOPS</div>
+  </div>
+  <div class="two-col">
+    <div class="signal-box">
+      <h4 style="color:var(--cyan)">🏆 QuickBooks (409 mentions)</h4>
+      <p class="signal-item">Most common system prospects are replacing. 399 QB integration requests alongside 408 competitor mentions — these are the same conversations. The feature gap is real, and QB's complexity ceiling is the wedge.</p>
     </div>
-    <div class="kpi-item">
-      <div class="kpi-lbl">Prospecting Calls</div>
-      <div class="kpi-val" style="color:var(--accent);">1268</div>
-      <div class="kpi-sub" style="color:var(--green-bright)">▲ +215 vs prior period</div>
-    </div>
-    <div class="kpi-item">
-      <div class="kpi-lbl">Meetings Booked</div>
-      <div class="kpi-val">64</div>
-      <div class="kpi-sub" style="color:var(--green-bright)">▲ +16 vs prior</div>
-    </div>
-    <div class="kpi-item">
-      <div class="kpi-lbl">Conversion Rate</div>
-      <div class="kpi-val" style="color:var(--accent2);">5.0%</div>
-      <div class="kpi-sub" style="color:var(--green-bright)">▲ vs 4.6% prior</div>
-    </div>
-    <div class="kpi-item">
-      <div class="kpi-lbl">Competitors Tracked</div>
-      <div class="kpi-val" style="color:var(--accent);">8</div>
-      <div class="kpi-sub">across both layers</div>
-    </div>
-    <div class="kpi-item">
-      <div class="kpi-lbl">Top Objection</div>
-      <div class="kpi-val" style="font-size:14px;color:var(--warning);">Satisfied with Current Platform</div>
-      <div class="kpi-sub">260 instances this period</div>
-    </div>
-    <div class="kpi-item">
-      <div class="kpi-lbl">Meeting-to-Win Rate</div>
-      <div class="kpi-val" style="color:var(--green-bright);">13.7%</div>
-      <div class="kpi-sub">SF Closed Won (90d) ÷ meetings</div>
+    <div class="signal-box">
+      <h4 style="color:var(--purple)">⚔️ ConnectWise (130 mentions)</h4>
+      <p class="signal-item">Primary structured PSA competitor. Price and complexity are the wedge. 8+ confirmed displacement wins create social proof for a campaign. Build the comparison page and customer escape-hatch offer.</p>
     </div>
   </div>
+</section>
 
-  <!-- ROLLING 45-DAY COMPARISON — PRIMARY DECISION VIEW -->
-  <div class="section-block" id="period-comparison" style="margin-bottom:3.5rem;">
-    <div class="section-hdr">
-      <span class="section-label">⚡ Rolling 45-Day Market Signal</span>
-      <span class="pill pill-c" style="margin-left:8px;">Primary Decision View</span>
-    </div>
-    <p class="section-sub">What the market is telling us right now vs. the prior 45 days. Use this to make product and GTM decisions — not the historical averages below.</p>
-
-    <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
-      <div style="padding:8px 16px;background:rgba(0,229,255,.08);border:1px solid var(--border-cyan);border-radius:8px;font-size:.8rem;">
-        <strong style="color:var(--cyan-bright);">This Period:</strong> <span style="color:var(--text-2);">Apr 6 – May 21</span>
-        <span style="color:var(--text-2);margin-left:8px;">335 meetings · 1268 prospecting</span>
+<!-- WIN/LOSS SIGNALS -->
+<section class="section" id="signals">
+  <div class="section-label">Deal Intelligence</div>
+  <h2>Win / Loss <span>Signals</span></h2>
+  <p class="section-intro">361 of 602 calls (60%) had a positive buying signal. 174 (29%) showed risk language.</p>
+  <div class="two-col" style="margin-bottom:32px;">
+    <div class="signal-box win">
+      <h4>✅ Win Signal Examples</h4>
+      
+      <div class="signal-item">
+        "looks great"
+        <div class="company">Reminder: (Follow-up Discussion / Contract Review) 805 VoIP / Rev.io · Customer · 2025-11-14</div>
       </div>
-      <div style="padding:8px 16px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;font-size:.8rem;">
-        <strong style="color:var(--text-2);">Prior Period:</strong> <span style="color:var(--text-2);">Feb 20 – Apr 6</span>
-        <span style="color:var(--text-2);margin-left:8px;">288 meetings · 1053 prospecting</span>
+      <div class="signal-item">
+        "love it"
+        <div class="company">(Contract Review) Automated Telecom / Rev.io · Prospect · 2025-11-14</div>
       </div>
-    </div>
-
-    <div class="two-col">
-      <div>
-        <h3 style="margin-bottom:12px;font-size:.85rem;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;">Feature Demand Shift</h3>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th>Feature</th>
-              <th style="text-align:right;">Now</th>
-              <th style="text-align:right;">Prior</th>
-              <th style="text-align:right;">Δ</th>
-            </tr></thead>
-            <tbody>
-              <tr><td style="font-size:.85rem;">QuickBooks Desktop</td><td style="text-align:right;font-weight:700;color:var(--accent2);">4</td><td style="text-align:right;color:var(--text-2);">1</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▲+3</td></tr><tr><td style="font-size:.85rem;">QuickBooks Online</td><td style="text-align:right;font-weight:700;color:var(--accent2);">3</td><td style="text-align:right;color:var(--text-2);">29</td><td style="text-align:right;font-weight:700;color:var(--danger);">▼-26</td></tr><tr><td style="font-size:.85rem;">Inventory tracking</td><td style="text-align:right;font-weight:700;color:var(--accent2);">3</td><td style="text-align:right;color:var(--text-2);">1</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▲+2</td></tr><tr><td style="font-size:.85rem;">Offline mobile caching</td><td style="text-align:right;font-weight:700;color:var(--accent2);">2</td><td style="text-align:right;color:var(--text-2);">—</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▲+2</td></tr><tr><td style="font-size:.85rem;">Inventory management</td><td style="text-align:right;font-weight:700;color:var(--accent2);">2</td><td style="text-align:right;color:var(--text-2);">—</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▲+2</td></tr><tr><td style="font-size:.85rem;">Mobile functionality for field techs</td><td style="text-align:right;font-weight:700;color:var(--accent2);">2</td><td style="text-align:right;color:var(--text-2);">—</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▲+2</td></tr><tr><td style="font-size:.85rem;">GPS and geo-tracking for technicians</td><td style="text-align:right;font-weight:700;color:var(--accent2);">1</td><td style="text-align:right;color:var(--text-2);">—</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▲+1</td></tr><tr><td style="font-size:.85rem;">Shared database integration</td><td style="text-align:right;font-weight:700;color:var(--accent2);">1</td><td style="text-align:right;color:var(--text-2);">—</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▲+1</td></tr><tr><td style="font-size:.85rem;">Manitou Central Station Integration</td><td style="text-align:right;font-weight:700;color:var(--accent2);">1</td><td style="text-align:right;color:var(--text-2);">—</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▲+1</td></tr><tr><td style="font-size:.85rem;">Alarm.com Integration</td><td style="text-align:right;font-weight:700;color:var(--accent2);">1</td><td style="text-align:right;color:var(--text-2);">—</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▲+1</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="signal-item">
+        "sign up"
+        <div class="company">(Contract Review) Evolve Technologies / Rev.io · Prospect · 2025-11-17</div>
       </div>
-      <div>
-        <h3 style="margin-bottom:12px;font-size:.85rem;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;">Competitive Footprint Shift</h3>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th>Competitor</th>
-              <th style="text-align:right;">Now</th>
-              <th style="text-align:right;">Prior</th>
-              <th style="text-align:right;">Δ</th>
-            </tr></thead>
-            <tbody>
-              <tr><td style="font-size:.85rem;">ConnectWise</td><td style="text-align:right;font-weight:700;color:var(--accent);">37</td><td style="text-align:right;color:var(--text-2);">25</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+12</td></tr><tr><td style="font-size:.85rem;">Kaseya</td><td style="text-align:right;font-weight:700;color:var(--accent);">35</td><td style="text-align:right;color:var(--text-2);">4</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+31</td></tr><tr><td style="font-size:.85rem;">Autotask</td><td style="text-align:right;font-weight:700;color:var(--accent);">23</td><td style="text-align:right;color:var(--text-2);">8</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+15</td></tr><tr><td style="font-size:.85rem;">Workhorse</td><td style="text-align:right;font-weight:700;color:var(--accent);">9</td><td style="text-align:right;color:var(--text-2);">2</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+7</td></tr><tr><td style="font-size:.85rem;">House Call Pro</td><td style="text-align:right;font-weight:700;color:var(--accent);">9</td><td style="text-align:right;color:var(--text-2);">—</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+9</td></tr><tr><td style="font-size:.85rem;">Micro Key</td><td style="text-align:right;font-weight:700;color:var(--accent);">8</td><td style="text-align:right;color:var(--text-2);">3</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+5</td></tr><tr><td style="font-size:.85rem;">DataGate</td><td style="text-align:right;font-weight:700;color:var(--accent);">8</td><td style="text-align:right;color:var(--text-2);">3</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+5</td></tr><tr><td style="font-size:.85rem;">Service Fusion</td><td style="text-align:right;font-weight:700;color:var(--accent);">6</td><td style="text-align:right;color:var(--text-2);">1</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+5</td></tr><tr><td style="font-size:.85rem;">Halo</td><td style="text-align:right;font-weight:700;color:var(--accent);">6</td><td style="text-align:right;color:var(--text-2);">5</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+1</td></tr><tr><td style="font-size:.85rem;">Tiger Paw</td><td style="text-align:right;font-weight:700;color:var(--accent);">6</td><td style="text-align:right;color:var(--text-2);">7</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▼-1</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <h3 style="margin-top:16px;margin-bottom:10px;font-size:.85rem;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;">In-Meeting Competitors Shift</h3><div class="tbl-wrap"><table><thead><tr><th>Competitor</th><th style="text-align:right;">Now</th><th style="text-align:right;">Prior</th><th style="text-align:right;">Δ</th></tr></thead><tbody><tr><td style="font-size:.85rem;">Other</td><td style="text-align:right;font-weight:700;color:var(--danger);">65</td><td style="text-align:right;color:var(--text-2);">32</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+33</td></tr><tr><td style="font-size:.85rem;">ConnectWise</td><td style="text-align:right;font-weight:700;color:var(--danger);">25</td><td style="text-align:right;color:var(--text-2);">24</td><td style="text-align:right;font-weight:700;color:var(--danger);">▲+1</td></tr><tr><td style="font-size:.85rem;">Autotask</td><td style="text-align:right;font-weight:700;color:var(--danger);">9</td><td style="text-align:right;color:var(--text-2);">10</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▼-1</td></tr><tr><td style="font-size:.85rem;">Salesforce</td><td style="text-align:right;font-weight:700;color:var(--danger);">2</td><td style="text-align:right;color:var(--text-2);">2</td><td style="text-align:right;font-weight:700;color:var(--text-2);">—</td></tr><tr><td style="font-size:.85rem;">Syncro</td><td style="text-align:right;font-weight:700;color:var(--danger);">2</td><td style="text-align:right;color:var(--text-2);">5</td><td style="text-align:right;font-weight:700;color:var(--green-bright);">▼-3</td></tr></tbody></table></div>
+      <div class="signal-item">
+        "let's do it"
+        <div class="company">Reminder: (Contract Review) 805 VoIP/Cal-Tec Computers and Rev.io · Prospect · 2025-11-20</div>
+      </div>
+      <div class="signal-item">
+        "this is exactly"
+        <div class="company">(Contract Review) Xclutel / Rev.io · Prospect · 2025-11-21</div>
       </div>
     </div>
-  </div>
-
-  <!-- FEATURE DEMAND -->
-  <div class="section-block" id="features">
-    <div class="section-hdr"><span class="section-label">Feature Demand</h2>
-    <p class="subtitle" style="margin-bottom:20px;">Feature requests from 335 analyzed meetings in the current 45-day period (Apr 6 – May 21). Compare to prior period in the ⚡ Rolling Signal section above.</p>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Feature</th><th>Frequency</th><th style="text-align:right;">Count</th></tr></thead>
-        <tbody><tr><td>QuickBooks Desktop</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">4</td></tr><tr><td>QuickBooks Online</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:75%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">3</td></tr><tr><td>Inventory tracking</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:75%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">3</td></tr><tr><td>Offline mobile caching</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:50%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">2</td></tr><tr><td>Inventory management</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:50%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">2</td></tr><tr><td>Mobile functionality for field techs</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:50%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">2</td></tr><tr><td>GPS and geo-tracking for technicians</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">1</td></tr><tr><td>Shared database integration</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">1</td></tr><tr><td>Manitou Central Station Integration</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">1</td></tr><tr><td>Alarm.com Integration</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">1</td></tr><tr><td>Email parsing workflow automation</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">1</td></tr><tr><td>QuickBooks replacement for P&amp;L/GL</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">1</td></tr><tr><td>Serial number tracking</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">1</td></tr><tr><td>Central station integration with Dynamark/Becklar</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;color:var(--accent2);font-weight:700;">1</td></tr></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- COMPETITIVE INTEL -->
-  <div class="section-block" id="competitors">
-    <div class="section-hdr"><span class="section-label">Competitive Intelligence</h2>
-    <p class="subtitle" style="margin-bottom:20px;">Competitors surfacing in meetings (deep evaluation) and prospecting calls (first touch). Both layers together tell a more complete story than either alone.</p>
-    <div class="two-col">
-      <div>
-        <h3>Named in Meetings</h3>
-        <p class="subtitle" style="margin-bottom:12px;">Platforms in play during active evaluation</p>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr><th>Competitor</th><th>Frequency</th><th style="text-align:right;">Count</th></tr></thead>
-            <tbody><tr><td>ConnectWise</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">25 <span style="font-size:10px;color:#FF8A80;font-weight:700;">▼-12</span></td></tr><tr><td>Autotask</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:36%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">9</td></tr><tr><td>Salesforce</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">2</td></tr><tr><td>Syncro</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">2</td></tr><tr><td>Simpro</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:8%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">2</td></tr><tr><td>Tiger Paw</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">1</td></tr><tr><td>TigerPaw</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">1</td></tr><tr><td>SuperOps</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--danger);"></div></div></div></td><td style="text-align:right;color:var(--danger);font-weight:700;">1</td></tr></tbody>
-          </table>
-        </div>
+    <div class="signal-box loss">
+      <h4>❌ Loss Risk Patterns</h4>
+      
+      <div class="signal-item">
+        no show
+        <div class="company">Reminder: (Follow-up Discussion / Contract Review) 805 VoIP / Rev.io · Customer · 2025-11-14</div>
       </div>
-      <div>
-        <h3>Named at First Touch</h3>
-        <p class="subtitle" style="margin-bottom:12px;">Platforms prospects name in the first 90 seconds</p>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr><th>Competitor</th><th>Frequency</th><th style="text-align:right;">Count</th></tr></thead>
-            <tbody><tr><td>ConnectWise</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">37</td></tr><tr><td>Kaseya</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:95%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">35 <span style="font-size:10px;color:#69F0AE;font-weight:700;">▲+17</span></td></tr><tr><td>Autotask</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:62%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">23 <span style="font-size:10px;color:#69F0AE;font-weight:700;">▲+3</span></td></tr><tr><td>Workhorse</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:24%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">9</td></tr><tr><td>House Call Pro</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:24%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">9</td></tr><tr><td>Micro Key</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:22%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">8</td></tr><tr><td>DataGate</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:22%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">8</td></tr><tr><td>Service Fusion</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:16%;background:var(--accent);"></div></div></div></td><td style="text-align:right;color:var(--accent);font-weight:700;">6</td></tr></tbody>
-          </table>
-        </div>
+      <div class="signal-item">
+        locked in
+        <div class="company">(Contract Review) Automated Telecom / Rev.io · Prospect · 2025-11-14</div>
       </div>
-    </div>
-    <h3 style="margin-top:24px;">Key Findings from Meetings</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;"><span class="pill pill-c">Integration Gap ×71</span><span class="pill pill-c">Billing / Revenue Operations ×65</span><span class="pill pill-c">Workflow / Efficiency ×59</span><span class="pill pill-c">Field Ops / Mobile ×50</span><span class="pill pill-c">Platform Migration / Competitor Pain ×47</span><span class="pill pill-c">Growth / Scale ×22</span></div><div class="sig-card"><div class="sig-text">This is an expansion deal with an existing billing customer who previously halted PSA adoption due to manual sync requirements - the shared database architecture is the critical unlock, and mobile capabilities for field techs are the second major buying criterion.</div><div class="sig-meta">BroadStar</div></div><div class="sig-card"><div class="sig-text">This is a boomerang opportunity where the prospect evaluated Rev.io 10 months ago when product was immature, and is now returning due to catastrophic billing failures at current vendor Workhorse, but success depends on proving the email workflow automation issues from the previous trial have been resolved.</div><div class="sig-meta">Trails Country Security</div></div><div class="sig-card"><div class="sig-text">Prospect's primary driver is replacing QuickBooks due to security issues, but Rev.io cannot replace the accounting/GL side - only the operational FSM side - creating fundamental misalignment between buyer need and product capability</div><div class="sig-meta">Aegis Security</div></div><div class="sig-card"><div class="sig-text">This security alarm company has a non-negotiable requirement for self-service custom contract management with auto-population across multiple service types (burglar, fire, cameras) - a capability they view as a dealbreaker that has caused them to abandon multiple PSA implementations in the past six months.</div><div class="sig-meta">Scheer Security Alarm Systems</div></div>
-  </div>
-
-  <!-- WIN / LOSS SIGNALS -->
-  <div class="section-block" id="signals">
-    <div class="section-hdr"><span class="section-label">Win / Loss Signals</h2>
-    <p class="subtitle" style="margin-bottom:20px;">Surfaced directly from meeting transcripts across all analyzed calls. Both surfaces update daily as new recordings are processed.</p>
-    <div class="two-col">
-      <div>
-        <h3>Win Signals</h3>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;"><span class="pill pill-c" style="font-size:.75rem;">Integration Need ×5</span><span class="pill pill-c" style="font-size:.75rem;">Field Ops / Security ×2</span><span class="pill pill-c" style="font-size:.75rem;">Platform Migration ×1</span></div><p style="font-size:.75rem;color:var(--accent2);margin-bottom:10px;">&#10003; Signals from Closed Won accounts (last 90 days)</p><div class="sig-card"><div class="sig-text">Customer brought controller (Melissa) to deep-dive call specifically for QuickBooks discussion</div><div class="sig-meta">Jake Borah · Alarmco Integrated Systems · <span style="color:var(--accent2);font-weight:600;">2026-05-19</span></div></div><div class="sig-card"><div class="sig-text">76-minute demo indicates high engagement and interest</div><div class="sig-meta">Jake Borah · Alarmco Integrated Systems · <span style="color:var(--accent2);font-weight:600;">2026-05-15</span></div></div><div class="sig-card"><div class="sig-text">Customer explicitly stated 'I think Rev IO kind of offers' centralized hub they need</div><div class="sig-meta">Jamie Butler · All Serve Communications · <span style="color:var(--accent2);font-weight:600;">2026-05-05</span></div></div><div class="sig-card"><div class="sig-text">Prospect is actively shopping and comparing multiple vendors</div><div class="sig-meta">Jamie Butler · JD Telecom · <span style="color:var(--accent2);font-weight:600;">2026-04-28</span></div></div><div class="sig-card"><div class="sig-text">Customer already uses Rev.io billing platform (installed base)</div><div class="sig-meta">Jamie Butler · RyTel · <span style="color:var(--accent2);font-weight:600;">2026-04-27</span></div></div><div class="sig-card"><div class="sig-text">Demo focused on specific needs: opportunities, quoting, project management</div><div class="sig-meta">Connor Flynn · KeyCom · <span style="color:var(--accent2);font-weight:600;">2026-04-15</span></div></div>
+      <div class="signal-item">
+        reach back out
+        <div class="company">(Contract Review) Evolve Technologies / Rev.io · Prospect · 2025-11-17</div>
       </div>
-      <div>
-        <h3>Loss Risks <span style="font-size:.75rem;font-weight:400;color:var(--text-2);">— SF Closed Lost (90d)</span></h3>
-        <div style="margin-bottom:8px;font-size:.75rem;color:var(--text-2);">Last 90 days · 383 closed lost deals</div><div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px;"><span style="color:var(--text-2);">Discovery No Show</span><span style="font-weight:700;color:var(--danger);">102</span></div><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--danger);"></div></div></div><div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px;"><span style="color:var(--text-2);">Not the Right Time</span><span style="font-weight:700;color:#A1B0CB;">73</span></div><div class="bar-track"><div class="bar-fill" style="width:72%;background:#A1B0CB;"></div></div></div><div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px;"><span style="color:var(--text-2);">Software Missing Capabilities</span><span style="font-weight:700;color:var(--warning);">54</span></div><div class="bar-track"><div class="bar-fill" style="width:53%;background:var(--warning);"></div></div></div><div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px;"><span style="color:var(--text-2);">Lack of Decision Maker Involvement</span><span style="font-weight:700;color:#A1B0CB;">43</span></div><div class="bar-track"><div class="bar-fill" style="width:42%;background:#A1B0CB;"></div></div></div><div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px;"><span style="color:var(--text-2);">No Business Issue</span><span style="font-weight:700;color:#A1B0CB;">40</span></div><div class="bar-track"><div class="bar-fill" style="width:39%;background:#A1B0CB;"></div></div></div><div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px;"><span style="color:var(--text-2);">Price</span><span style="font-weight:700;color:#A1B0CB;">29</span></div><div class="bar-track"><div class="bar-fill" style="width:28%;background:#A1B0CB;"></div></div></div><div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px;"><span style="color:var(--text-2);">In existing contract</span><span style="font-weight:700;color:#A1B0CB;">28</span></div><div class="bar-track"><div class="bar-fill" style="width:27%;background:#A1B0CB;"></div></div></div><div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:4px;"><span style="color:var(--text-2);">Not Right Customer Type</span><span style="font-weight:700;color:#A1B0CB;">9</span></div><div class="bar-track"><div class="bar-fill" style="width:9%;background:#A1B0CB;"></div></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PROSPECTING PULSE -->
-  <div class="section-block" id="prospecting">
-    <div class="section-hdr"><span class="section-label">Prospecting Call Pulse</h2>
-    <p class="subtitle" style="margin-bottom:20px;">1268 short outbound prospecting calls (45s–2 min, Contact dispositions) — what the market says before they decide to care. Cumulative across all processed calls.</p>
-
-    <div class="two-col" style="margin-bottom:20px;">
-      <div>
-        <h3>Call Outcomes</h3>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr><th>Outcome</th><th>Frequency</th><th style="text-align:right;">Count</th><th style="text-align:right;">%</th></tr></thead>
-            <tbody><tr><td>Satisfied with Current Platform</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--danger);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--danger)">260</td><td style="text-align:right;color:var(--muted);">21%</td></tr><tr><td>Not Interested - No Reason Given</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:74%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--accent2)">193</td><td style="text-align:right;color:var(--muted);">15%</td></tr><tr><td>Not the Right Time</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:72%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">188</td><td style="text-align:right;color:var(--muted);">15%</td></tr><tr><td>Send Information</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:43%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">111</td><td style="text-align:right;color:var(--muted);">9%</td></tr><tr><td>Referred to Another Contact</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:35%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">92</td><td style="text-align:right;color:var(--muted);">7%</td></tr><tr><td>Current Opportunity</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:33%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--accent2)">85</td><td style="text-align:right;color:var(--muted);">7%</td></tr><tr><td>Too Small</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:23%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">60</td><td style="text-align:right;color:var(--muted);">5%</td></tr><tr><td>Client</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">52</td><td style="text-align:right;color:var(--muted);">4%</td></tr><tr><td>Interested - Follow Up Later</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--accent2);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--accent2)">51</td><td style="text-align:right;color:var(--muted);">4%</td></tr><tr><td>Do Not Contact</td><td><div class="bar-row"><div class="bar-track"><div class="bar-fill" style="width:19%;background:var(--warning);"></div></div></div></td><td style="text-align:right;font-weight:700;color:var(--warning)">50</td><td style="text-align:right;color:var(--muted);">4%</td></tr></tbody>
-          </table>
-        </div>
-        <div class="kpi-item" style="margin-top:16px;">
-          <div class="kpi-lbl">Meetings Booked</div>
-          <div class="kpi-val">64</div>
-          <div class="kpi-sub">from 1268 contact calls · 5.0% conversion</div>
-        </div>
-      </div>
-      <div>
-        <h3>Product Areas at First Touch</h3>
-        <div class="kpi-grid" style="grid-template-columns: 1fr 1fr;"><div class="kpi-item"><div class="kpi-lbl">PSA</div><div class="kpi-val">970</div><div class="kpi-sub">mentions</div></div><div class="kpi-item"><div class="kpi-lbl">Billing</div><div class="kpi-val">562</div><div class="kpi-sub">mentions</div></div><div class="kpi-item"><div class="kpi-lbl">General Platform</div><div class="kpi-val">322</div><div class="kpi-sub">mentions</div></div><div class="kpi-item"><div class="kpi-lbl">Payments</div><div class="kpi-val">169</div><div class="kpi-sub">mentions</div></div><div class="kpi-item"><div class="kpi-lbl">Communications</div><div class="kpi-val">1</div><div class="kpi-sub">mentions</div></div><div class="kpi-item"><div class="kpi-lbl">Operations</div><div class="kpi-val">1</div><div class="kpi-sub">mentions</div></div></div>
-        <h3 style="margin-top:24px;">Buying Signals</h3>
-        <div class="sig-card"><div class="sig-text">Prospect agreed to review information and indicated openness to scheduling a call next week.</div><div class="sig-meta">Emily Petraglia</div></div><div class="sig-card"><div class="sig-text">Prospect confirmed a 2:00 PM meeting time and agreed to extend it to 45 minutes, with plans to include a team member (Sergei) who handles field service work.</div><div class="sig-meta">Husam Zalmiyar</div></div><div class="sig-card"><div class="sig-text">Prospect agreed to serve as a reference and be introduced to other prospects.</div><div class="sig-meta">Jamie Butler</div></div><div class="sig-card"><div class="sig-text">Prospect agreed to a follow-up conversation in a couple months before their renewal, indicating openness to evaluate Rev.io.</div><div class="sig-meta">Abbey McIntosh</div></div><div class="sig-card"><div class="sig-text">Prospect agreed to a callback in two weeks when back in the office.</div><div class="sig-meta">Husam Zalmiyar</div></div><div class="sig-card"><div class="sig-text">Prospect agreed to a callback on Tuesday to continue the conversation.</div><div class="sig-meta">Ptah Robinson</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SIGNAL CORRELATION -->
-  <div class="section-block" id="correlation">
-    <div class="section-hdr"><span class="section-label">Signal Correlation</h2>
-    <p class="subtitle" style="margin-bottom:20px;">What the market says at first touch vs. what engaged prospects say during evaluation. Agreement = high-confidence signal. Divergence = where assumptions need testing.</p>
-
-    <h3>Competitive Footprint — Both Layers</h3>
-    <div class="tbl-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Competitor</th>
-            <th style="text-align:center;">Prospecting</th>
-            <th style="text-align:center;">Meetings</th>
-            <th style="text-align:center;">MoM</th>
-          </tr>
-        </thead>
-        <tbody><tr><td><strong>ConnectWise</strong> <span class="pill pill-c" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×37</td><td style="text-align:center;">×25</td><td style="text-align:center;"> <span style="font-size:10px;color:#FF8A80;font-weight:700;">▼-12</span></td></tr><tr><td><strong>Kaseya</strong></td><td style="text-align:center;">×35</td><td style="text-align:center;">—</td><td style="text-align:center;"> <span style="font-size:10px;color:#69F0AE;font-weight:700;">▲+22</span></td></tr><tr><td><strong>Autotask</strong> <span class="pill pill-c" style="font-size:9px">BOTH</span></td><td style="text-align:center;">×23</td><td style="text-align:center;">×9</td><td style="text-align:center;"> <span style="font-size:10px;color:#69F0AE;font-weight:700;">▲+3</span></td></tr><tr><td><strong>Workhorse</strong></td><td style="text-align:center;">×9</td><td style="text-align:center;">—</td><td style="text-align:center;"></td></tr><tr><td><strong>House Call Pro</strong></td><td style="text-align:center;">×9</td><td style="text-align:center;">—</td><td style="text-align:center;"></td></tr><tr><td><strong>Micro Key</strong></td><td style="text-align:center;">×8</td><td style="text-align:center;">—</td><td style="text-align:center;"></td></tr><tr><td><strong>DataGate</strong></td><td style="text-align:center;">×8</td><td style="text-align:center;">—</td><td style="text-align:center;"></td></tr></tbody>
-      </table>
-    </div>
-
-    <h3 style="margin-top:28px;">Correlation Insights</h3>
-    <div style="margin-bottom:8px;padding:14px 18px;background:rgba(0,229,255,.06);border:1px solid var(--border-cyan);border-radius:12px;font-size:.875rem;color:var(--text-2);">
-      <strong style="color:var(--cyan-bright);">&#127808; QuickBooks = Greenfield Opportunity:</strong> 20 prospecting calls where QuickBooks was the ONLY platform named — these prospects have <em>no PSA yet</em>. Pure greenfield. Lead with the integration story, not displacement. Filtered from competitor tables below.
-    </div>
-    <h3 style="color:var(--cyan-bright);margin:24px 0 12px;">&#9889; Turn Intel Into Action</h3>
-    <div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--cyan-bright);border-radius:0 12px 12px 0;padding:16px 18px;margin-bottom:12px;"><div style="font-size:.8rem;font-weight:700;color:var(--cyan-bright);margin-bottom:6px;">📋 Rev.io + QuickBooks Positioning</div><div style="font-size:.875rem;color:var(--text-2);line-height:1.6;">QuickBooks was the ONLY platform named in 20 prospecting calls — pure greenfield prospects with no PSA yet. Lead with “Rev.io works alongside QuickBooks” messaging. Build a co-sell one-pager: “Still using QB? Here’s how Rev.io fills what it can’t do.”</div></div><div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--warning);border-radius:0 12px 12px 0;padding:16px 18px;margin-bottom:12px;"><div style="font-size:.8rem;font-weight:700;color:var(--warning);margin-bottom:6px;">⏳ Re-Engage the &quot;Not Right Time&quot; Pipeline</div><div style="font-size:.875rem;color:var(--text-2);line-height:1.6;">188 calls this period logged &quot;Not Right Time&quot; — most are mid-contract. Build a 90-day re-engagement sequence specifically tagged to ConnectWise and Kaseya accounts. Catch them at renewal when the pain is freshest.</div></div><div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent2);border-radius:0 12px 12px 0;padding:16px 18px;margin-bottom:12px;"><div style="font-size:.8rem;font-weight:700;color:var(--accent2);margin-bottom:6px;">⚡ Rising Feature Demand — What The Market Wants Right Now</div><div style="font-size:.875rem;color:var(--text-2);line-height:1.6;">↑ Rising this period: QuickBooks Desktop (+3), Offline mobile caching (+2), Inventory management (+2). ↓ Easing: Serialized Inventory Management (-27), QuickBooks Online (-26). Top this period: QuickBooks Desktop (×4), QuickBooks Online (×3), Inventory tracking (×3). Align product comms and battlecards to rising requests.</div></div><div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--green-bright);border-radius:0 12px 12px 0;padding:16px 18px;margin-bottom:12px;"><div style="font-size:.8rem;font-weight:700;color:var(--green-bright);margin-bottom:6px;">🏹 ConnectWise/Kaseya Displacement Window</div><div style="font-size:.875rem;color:var(--text-2);line-height:1.6;">ConnectWise and Kaseya are appearing heavily at first touch (×95 this period). These prospects are in-market. Map their contract renewal cycles — most MSP agreements are 1–3 year terms. A targeted outbound sequence timed to renewal windows converts significantly higher than cold outreach.</div></div><div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--green-bright);border-radius:0 12px 12px 0;padding:16px 18px;margin-bottom:12px;"><div style="font-size:.8rem;font-weight:700;color:var(--green-bright);margin-bottom:6px;">📈 Conversion Rate Is Improving — Find the Driver</div><div style="font-size:.875rem;color:var(--text-2);line-height:1.6;">First-touch conversion rate improved +1.2% vs. last month. Something is working — identify which reps, sequences, or talk tracks are driving the lift and standardize them across the team. Don’t let this be accidental.</div></div>
-    
-
-    <div class="insight-grid" style="margin-top:24px;">
-      <div class="insight-card">
-        <div class="insight-label"><span class="pill pill-c">Total Signal</span></div>
-        <p>335 meetings + 1268 prospecting calls = 1603 analyzed interactions. Data compounds daily.</p>
-      </div>
-      <div class="insight-card">
-        <div class="insight-label"><span class="pill pill-w">Top First-Touch Objection</span></div>
-        <p>"Satisfied with Current Platform" — 260 times (21% of contact calls).</p>
-      </div>
-      <div class="insight-card">
-        <div class="insight-label"><span class="pill pill-m">Most-Tracked Competitor</span></div>
-        <p>QuickBooks — ×29 prospecting + ×45 meetings = ×74 total.</p>
-      </div>
-      <div class="insight-card">
-        <div class="insight-label"><span class="pill pill-c">Top Feature Request</span></div>
-        <p>"QuickBooks Desktop" — mentioned ×4. Runner-up: "QuickBooks Online" (×3).</p>
+      <div class="signal-item">
+        locked in
+        <div class="company">Reminder: (Contract Review) 805 VoIP/Cal-Tec Computers and Rev.io · Prospect · 2025-11-20</div>
       </div>
     </div>
   </div>
+</section>
 
+<!-- GTM ANGLES -->
+<section class="section" id="gtm">
+  <div class="section-label">Go-to-Market</div>
+  <h2>GTM <span>Content Angles</span></h2>
+  <p class="section-intro">Three high-signal content angles derived directly from call volume and competitor patterns.</p>
+  <div class="two-col">
+    <div class="signal-box">
+      <h4 style="color:var(--green)">🔄 "Replacing QuickBooks" Campaign</h4>
+      <p class="signal-item">409 QB mentions · 400 QuickBooks integration asks. 70% of prospects still on QuickBooks. Angle: <em>"When QuickBooks stops scaling with your MSP."</em></p>
+    </div>
+    <div class="signal-box">
+      <h4 style="color:var(--cyan)">⚔️ The ConnectWise Switcher</h4>
+      <p class="signal-item">130 ConnectWise mentions. Social proof from confirmed displacement wins is the hook. Build the comparison page + "escape hatch" offer.</p>
+    </div>
+    <div class="signal-box">
+      <h4 style="color:var(--purple)">🔧 Field Ops / Security Integrator Vertical</h4>
+      <p class="signal-item">Inventory, GPS tracking, and Mobile App features cluster together — security integrators are a distinct buyer persona with a specific feature set. Build a vertical-specific landing page.</p>
+    </div>
+    <div class="signal-box">
+      <h4 style="color:var(--yellow)">⚠️ At-Risk Apollo 2 Features</h4>
+      <p class="signal-item">User Mgmt/Auth, SLA Management, Bulk Import/Export are all At Risk in Apollo 2 — and all show high market demand. Delays are visible to prospects in active deals.</p>
+    </div>
+  </div>
+</section>
 
+<div class="footer">
+  <p>Rev.io Intelligence Hub · Kaia Analysis Pipeline · Auto-updated daily</p>
+  <p style="margin-top:6px;">Source: 602 Kaia Tier 1 Recordings · Salesforce · <a href="https://www.notion.so/319a59b7e7b2814f98ceed22d752d815">Notion Intelligence Hub →</a></p>
+  <p style="margin-top:6px;color:#1a3a2a;">Generated May 21, 2026</p>
 </div>
 
-<div class="container" id="trends">
-  <section style="margin-bottom:56px;scroll-margin-top:68px;">
-    <h2 style="font-size:20px;font-weight:600;color:var(--text);margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--border);">6. Monthly Trends</h2>
-    <p class="subtitle" style="margin-bottom:24px;">Month-over-month trends from real per-month Notion data — <strong style="color:var(--warning);">Live data starts March 2026.</strong> Nov–Feb entries are pre-pipeline Kaia recording <em>volume counts only</em> — feature/competitor breakdowns are not per-month and should not be used for trend analysis. Use the ⚡ Rolling Signal above for actual market shifts.</p>
-    <div class="month-grid"><div class="month-card" style=""><div class="mc-header"><span class="mc-label">April 2026</span><span class="pill pill-c">Live</span></div><div class="mc-stats"><div class="mc-stat"><div class="mc-stat-val">165</div><div class="mc-stat-lbl">Meetings</div></div><div class="mc-stat"><div class="mc-stat-val">6%</div><div class="mc-stat-lbl">Conv. Rate</div></div></div><div class="mc-features"><strong>Top Features:</strong> QuickBooks Online Integration, QuickBooks Desktop Integration, Inventory Tracking<br><strong>Top Comps:</strong> QuickBooks, ConnectWise</div></div><div class="month-card" style=""><div class="mc-header"><span class="mc-label">March 2026</span><span class="pill pill-c">Live</span></div><div class="mc-stats"><div class="mc-stat"><div class="mc-stat-val">249</div><div class="mc-stat-lbl">Meetings</div></div><div class="mc-stat"><div class="mc-stat-val">4.8%</div><div class="mc-stat-lbl">Conv. Rate</div></div></div><div class="mc-features"><strong>Top Features:</strong> Serialized Inventory Management, QuickBooks Online, Enhanced Customer Portal<br><strong>Top Comps:</strong> ConnectWise, Tiger Paw / Tigerpaw</div></div><div class="month-card" style="opacity:.45;filter:grayscale(.4);"><div class="mc-header"><span class="mc-label">February 2026</span><span class="pill pill-m" title="Pre-pipeline data: volume only, feature/competitor counts are NOT per-month">Volume Only ⚠</span></div><div class="mc-stats"><div class="mc-stat"><div class="mc-stat-val">186</div><div class="mc-stat-lbl">Meetings</div></div><div class="mc-stat"><div class="mc-stat-val">4.6%</div><div class="mc-stat-lbl">Conv. Rate</div></div></div><div class="mc-features"><strong>Top Features:</strong> <em style="color:var(--text-2);opacity:.5;">Pre-pipeline — not per-month</em></div></div><div class="month-card" style="opacity:.45;filter:grayscale(.4);"><div class="mc-header"><span class="mc-label">January 2026</span><span class="pill pill-m" title="Pre-pipeline data: volume only, feature/competitor counts are NOT per-month">Volume Only ⚠</span></div><div class="mc-stats"><div class="mc-stat"><div class="mc-stat-val">110</div><div class="mc-stat-lbl">Meetings</div></div><div class="mc-stat"><div class="mc-stat-val">—</div><div class="mc-stat-lbl">Conv. Rate</div></div></div><div class="mc-features"><strong>Top Features:</strong> <em style="color:var(--text-2);opacity:.5;">Pre-pipeline — not per-month</em></div></div><div class="month-card" style="opacity:.45;filter:grayscale(.4);"><div class="mc-header"><span class="mc-label">December 2025</span><span class="pill pill-m" title="Pre-pipeline data: volume only, feature/competitor counts are NOT per-month">Volume Only ⚠</span></div><div class="mc-stats"><div class="mc-stat"><div class="mc-stat-val">165</div><div class="mc-stat-lbl">Meetings</div></div><div class="mc-stat"><div class="mc-stat-val">—</div><div class="mc-stat-lbl">Conv. Rate</div></div></div><div class="mc-features"><strong>Top Features:</strong> <em style="color:var(--text-2);opacity:.5;">Pre-pipeline — not per-month</em></div></div><div class="month-card" style="opacity:.45;filter:grayscale(.4);"><div class="mc-header"><span class="mc-label">November 2025</span><span class="pill pill-m" title="Pre-pipeline data: volume only, feature/competitor counts are NOT per-month">Volume Only ⚠</span></div><div class="mc-stats"><div class="mc-stat"><div class="mc-stat-val">122</div><div class="mc-stat-lbl">Meetings</div></div><div class="mc-stat"><div class="mc-stat-val">—</div><div class="mc-stat-lbl">Conv. Rate</div></div></div><div class="mc-features"><strong>Top Features:</strong> <em style="color:var(--text-2);opacity:.5;">Pre-pipeline — not per-month</em></div></div></div><div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:12px 16px;font-size:13px;color:var(--text);"><strong style="color:var(--accent2);">Key Trend: </strong>▲ +1.4% conversion rate from February 2026 to April 2026</div>
-  </div>
-</div>
-
-<div class="container">
-</div>
-
-<footer>
-  <p>Rev.io Intelligence Hub · Kaia Meeting Pipeline · Prospecting Call Intelligence · Rebuilt daily from Notion</p>
-  <p style="margin-top:6px;">Source: 335 Kaia Meetings · 1268 Prospecting Calls · <a href="https://www.notion.so/319a59b7e7b2814f98ceed22d752d815">Notion Intelligence Hub &#8594;</a> · <a href="https://erice320.github.io/revay/library.html">Library &#8594;</a></p>
-  <p style="margin-top:6px;">Generated Thursday, May 21, 2026 at 01:31 PM CDT</p>
-</footer>
-
-
-<script>
-(function(){
-  const c = document.getElementById('bgCanvas');
-  if (!c) return;
-  const ctx = c.getContext('2d');
-  let W, H, dots = [];
-  function resize() { W = c.width = innerWidth; H = c.height = innerHeight; }
-  function mkDot() { return { x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.2+.3, vx: (Math.random()-.5)*.15, vy: (Math.random()-.5)*.15, a: Math.random()*.4+.05 }; }
-  function init() { resize(); dots = Array.from({length:80}, mkDot); }
-  function draw() {
-    ctx.clearRect(0,0,W,H);
-    for (const d of dots) {
-      ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
-      ctx.fillStyle = 'rgba(0,188,212,'+d.a+')'; ctx.fill();
-      d.x+=d.vx; d.y+=d.vy;
-      if(d.x<0||d.x>W) d.vx*=-1;
-      if(d.y<0||d.y>H) d.vy*=-1;
-    }
-    requestAnimationFrame(draw);
-  }
-  window.addEventListener('resize', resize);
-  init(); draw();
-})();
-</script>
 </body>
 </html>
