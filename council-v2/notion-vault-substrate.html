@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Council v2 + Notion Vault Substrate</title>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#222636;--text:#e8eaf6;--muted:#aab0c5;--accent:#6c63ff;--accent2:#00d4aa;--warn:#ffcc66;--danger:#ff6b6b;--line:#30364a}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,#20264a 0,#0f1117 34%,#090b10 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow:hidden}.deck{height:100vh;width:100vw;position:relative}.slide{display:none;height:100vh;width:100vw;padding:54px 72px 70px;position:absolute;inset:0}.slide.active{display:flex;flex-direction:column;justify-content:center}.kicker{color:var(--accent2);text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:800;margin-bottom:18px}.title{font-size:64px;line-height:1.02;font-weight:900;letter-spacing:-.045em;margin:0 0 20px}.subtitle{font-size:24px;line-height:1.35;color:var(--muted);max-width:1100px}.grid{display:grid;gap:20px}.grid.two{grid-template-columns:repeat(2,1fr)}.grid.three{grid-template-columns:repeat(3,1fr)}.card{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 16px 50px rgba(0,0,0,.25)}.card h3{margin:0 0 10px;font-size:24px}.card p,.card li{color:var(--muted);font-size:18px;line-height:1.42}.big{font-size:34px;line-height:1.2;font-weight:850}.accent{color:var(--accent2)}.purple{color:#a7a2ff}.warn{color:var(--warn)}.danger{color:var(--danger)}ul{margin:10px 0 0;padding-left:22px}li{margin:8px 0}.flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:12px 16px;color:var(--text);font-weight:750}.arrow{color:var(--accent2);font-size:28px}.tree{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b0d13;border:1px solid var(--line);padding:24px;border-radius:18px;font-size:19px;line-height:1.5;white-space:pre;color:#d8defa}.footer{position:absolute;left:72px;right:72px;bottom:26px;display:flex;justify-content:space-between;color:#747b91;font-size:13px}.progress{position:absolute;left:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .2s}.logo{position:absolute;top:28px;right:42px;color:#8f96ad;font-weight:800;letter-spacing:.08em}.quote{font-size:38px;line-height:1.2;font-weight:850;max-width:1150px}.small{font-size:16px;color:var(--muted)}.code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0b0d13;border:1px solid var(--line);border-radius:14px;padding:16px;color:#d8defa;font-size:15px;line-height:1.45;white-space:pre-wrap}.split{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center}.badge{display:inline-block;padding:7px 10px;border-radius:9px;background:rgba(0,212,170,.13);color:var(--accent2);font-weight:800;font-size:13px;margin:3px}.muted{color:var(--muted)}
+@media(max-width:900px){.slide{padding:34px 28px 62px}.title{font-size:42px}.subtitle{font-size:19px}.grid.two,.grid.three,.split{grid-template-columns:1fr}.card p,.card li{font-size:16px}.tree{font-size:14px}.footer{left:28px;right:28px}.logo{display:none}body{overflow:auto}.slide.active{overflow:auto}}
+</style>
+</head>
+<body>
+<div class="deck">
+<div class="logo">REVAY · COUNCIL V2</div>
+
+<section class="slide active">
+  <div class="kicker">Company-wide agent coordination substrate</div>
+  <h1 class="title">Council v2 +<br><span class="accent">Notion Vault</span></h1>
+  <p class="subtitle">A shared, evidence-backed coordination system for bounded executive work: board prep, executive offsites, customer risk reviews, product launch readiness, and the Revay Command Center.</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">The problem</div>
+  <h2 class="title">Specialty agents know their domains. Executives need the whole business.</h2>
+  <div class="grid two">
+    <div class="card"><h3>Today’s failure mode</h3><ul><li>Context lives in separate agents, systems, chats, and memories.</li><li>Cross-functional work turns into meetings or loose chat threads.</li><li>Evidence disappears, assumptions harden, and actions get detached from sources.</li></ul></div>
+    <div class="card"><h3>What leadership actually needs</h3><ul><li>A 360-degree view from Sales, Product, CS, Support, Onboarding, Finance, Ops.</li><li>Source-backed risks, tensions, options, and actions.</li><li>A durable record that humans and agents can inspect later.</li></ul></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">The idea</div>
+  <p class="quote">Council v2 is not a chat room. It is a bounded coordination protocol where agents submit structured, source-backed domain inputs into a shared Notion vault.</p>
+  <div style="margin-top:28px" class="flow"><span class="pill">Bounded Packet</span><span class="arrow">→</span><span class="pill">Agent Inboxes</span><span class="arrow">→</span><span class="pill">Outbox Contributions</span><span class="arrow">→</span><span class="pill">Synthesis</span><span class="arrow">→</span><span class="pill">Decision + Actions</span></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">The design shift</div>
+  <h2 class="title">Notion as an Obsidian-style coordination vault</h2>
+  <div class="grid three">
+    <div class="card"><h3>Human-readable</h3><p>Page tree, packet files, contribution pages, synthesis notes, decisions, actions.</p></div>
+    <div class="card"><h3>Agent-queryable</h3><p>Lightweight inbox/outbox databases act as queues without overbuilding the schema.</p></div>
+    <div class="card"><h3>Durable</h3><p>Evidence, dissent, failures, decisions, and actions survive chat threads and session resets.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Vault structure</div>
+  <div class="tree">Council Vault
+├── 00 Protocol
+│   ├── Operating Protocol
+│   ├── Packet Template
+│   ├── Agent Contribution Contract
+│   └── Evidence + Data Integrity Rules
+├── 01 Packets
+├── 02 Agent Inboxes
+├── 03 Agent Outboxes
+├── 04 Syntheses
+├── 05 Decisions
+├── 06 Actions
+└── 99 Archive</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Core unit of work</div>
+  <h2 class="title">Coordination Packets</h2>
+  <div class="grid two">
+    <div class="card"><h3>Each packet defines</h3><ul><li>Objective and business context</li><li>Scope and out-of-scope</li><li>Required contributors</li><li>Decision owner and synthesizer</li><li>Deadline / SLA</li><li>Output contract and close condition</li></ul></div>
+    <div class="card"><h3>Good packet examples</h3><ul><li>Board meeting risk scan</li><li>Executive offsite themes</li><li>PSA adoption blocker review</li><li>Customer churn root-cause review</li><li>Product launch readiness check</li></ul></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Agent behavior</div>
+  <h2 class="title">Agents own their inboxes and outboxes.</h2>
+  <div class="grid three">
+    <div class="card"><h3>1. Read</h3><p>Find assigned work in the agent inbox. Read the packet. Stay inside the requested domain lens.</p></div>
+    <div class="card"><h3>2. Contribute</h3><p>Write one source-backed outbox page using the standard contract.</p></div>
+    <div class="card"><h3>3. Preserve</h3><p>Do not edit other agents’ contributions. Do not mutate the master packet. Preserve dissent.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Contribution contract</div>
+  <div class="split">
+    <div><h2 class="title">Every answer has the same shape.</h2><p class="subtitle">This makes outputs synthesizable without forcing every agent into one brittle database schema.</p></div>
+    <div class="code">{
+  "packet_id": "PKT-260528-OFFSITE",
+  "agent": "Product Agent",
+  "signal": "What this domain sees",
+  "risk": "What could go wrong",
+  "recommendation": "What to do next",
+  "confidence": "low | medium | high",
+  "evidence": [{
+    "source_system": "...",
+    "record_count": 0,
+    "status": "success | partial | failed",
+    "url_or_id": "..."
+  }],
+  "dependency_or_ask": "..."
+}</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Data integrity</div>
+  <h2 class="title">A failed retrieval is acceptable. A fabricated answer is not.</h2>
+  <div class="grid two">
+    <div class="card"><h3 class="accent">Required</h3><ul><li>Source system</li><li>Timestamp</li><li>Record count when applicable</li><li>Retrieval status</li><li>Raw error if failed</li><li>Confidence and caveats</li></ul></div>
+    <div class="card"><h3 class="danger">Forbidden</h3><ul><li>Inventing missing facts</li><li>Implying stale data is current</li><li>Treating non-response as agreement</li><li>Averaging away dissent</li><li>Letting chat become the system of record</li></ul></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Why this scales</div>
+  <h2 class="title">This is broader than Grow Team intelligence.</h2>
+  <div class="grid two">
+    <div class="card"><h3>Executive workflows</h3><ul><li>Board meeting prep</li><li>Executive offsite prep</li><li>Quarterly operating reviews</li><li>Annual planning</li></ul></div>
+    <div class="card"><h3>Operating workflows</h3><ul><li>Customer risk reviews</li><li>Product launch readiness</li><li>Cross-functional root cause analysis</li><li>Market / competitor response</li></ul></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Relationship to Command Center</div>
+  <h2 class="title">Council v2 is the substrate. The Command Center is the surface.</h2>
+  <div class="flow"><span class="pill">Packets</span><span class="arrow">→</span><span class="pill">Contributions</span><span class="arrow">→</span><span class="pill">Syntheses</span><span class="arrow">→</span><span class="pill">Insight Ledger</span><span class="arrow">→</span><span class="pill">Action Queue</span><span class="arrow">→</span><span class="pill">Executive Cockpit</span></div>
+  <p class="subtitle" style="margin-top:30px">The Command Center should not be built on loose chat summaries. It should be built on durable packets, evidence-backed contributions, decisions, and action outcomes.</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">What counterparts need to approve</div>
+  <h2 class="title">The ask is small: one agent inbox, one outbox, one contract.</h2>
+  <div class="grid three">
+    <div class="card"><h3>Human owner</h3><p>Agree where their agent participates and which domains it represents.</p></div>
+    <div class="card"><h3>Agent setup</h3><p>Load the onboarding brief and configure access to its inbox/outbox.</p></div>
+    <div class="card"><h3>Pilot packet</h3><p>Run one bounded, high-value packet before expanding company-wide.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Rollout plan</div>
+  <div class="grid two">
+    <div class="card"><h3>Phase 1 — Vault skeleton</h3><p>Protocol, packet template, contribution contract, inbox/outbox queues.</p></div>
+    <div class="card"><h3>Phase 2 — Revay dry run</h3><p>Validate structure, evidence contract, status flow, and synthesis format.</p></div>
+    <div class="card"><h3>Phase 3 — One partner agent</h3><p>Bring in one counterpart agent and capture friction.</p></div>
+    <div class="card"><h3>Phase 4 — Multi-agent pilot</h3><p>Run offsite prep, board risk scan, or PSA retention review.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Recommended sharing package</div>
+  <h2 class="title">Humans get the deck. Agents get the markdown.</h2>
+  <div class="grid three">
+    <div class="card"><h3>Presentation</h3><p>Vision, why it matters, how the operating model works, what leaders approve.</p></div>
+    <div class="card"><h3>Protocol spec</h3><p>Full Notion vault design, templates, lifecycle, permissions, and rollout path.</p></div>
+    <div class="card"><h3>Agent brief</h3><p>Short instruction file agents can ingest directly before participating.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Bottom line</div>
+  <h2 class="title">Council v2 turns specialized agents into a company-wide operating intelligence network.</h2>
+  <p class="subtitle">Not by making them chat. By giving them a shared vault, bounded packets, evidence contracts, and a durable path from domain knowledge to executive decisions.</p>
+</section>
+
+<div class="footer"><span>Use ← / → or space to navigate</span><span id="count"></span></div>
+<div class="progress" id="progress"></div>
+</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let i=0;const count=document.getElementById('count');const progress=document.getElementById('progress');function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,idx)=>s.classList.toggle('active',idx===i));count.textContent=`${i+1} / ${slides.length}`;progress.style.width=((i+1)/slides.length*100)+'%';}document.addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();show(i+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(i-1)}if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1)});document.addEventListener('click',e=>{if(e.target.closest('a'))return;show(i+1)});show(0);
+</script>
+</body>
+</html>
