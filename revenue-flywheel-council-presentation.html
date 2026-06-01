@@ -3,192 +3,469 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Revenue Flywheel Council Presentation</title>
+<title>Revenue Flywheel Operating Diagnosis</title>
 <style>
-:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#222636;--text:#e8eaf6;--muted:#aab0c5;--line:#30364a;--accent:#6c63ff;--green:#00d4aa;--yellow:#ffd166;--red:#ff6b6b;--blue:#4ea1ff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 12% 0,#242951 0,#0f1117 36%,#090b10 100%) fixed;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow-x:hidden}
-.deck{width:100%;max-width:1220px;margin:0 auto;padding:26px 22px 70px}.slide{display:flex;min-height:620px;flex-direction:column;justify-content:center;margin:0 0 28px;padding:44px 48px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,rgba(26,29,39,.96),rgba(15,17,23,.94));box-shadow:0 22px 70px rgba(0,0,0,.35);position:relative;overflow:hidden}.slide:before{content:"";position:absolute;right:-160px;top:-160px;width:420px;height:420px;background:radial-gradient(circle,rgba(108,99,255,.18),transparent 65%);pointer-events:none}.slide>*{position:relative}.brand{position:fixed;top:18px;right:24px;color:#8f96ad;font-size:12px;font-weight:850;letter-spacing:.14em;text-transform:uppercase;z-index:5}.kicker{color:var(--green);text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:850;margin-bottom:18px}.title{font-size:56px;line-height:1.02;font-weight:920;letter-spacing:-.035em;margin:0 0 20px;max-width:1120px}.subtitle{font-size:22px;line-height:1.36;color:var(--muted);max-width:1080px}.quote{font-size:36px;line-height:1.18;font-weight:850;letter-spacing:-.018em;max-width:1080px}.grid{display:grid;gap:18px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}.card{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 16px 48px rgba(0,0,0,.25)}.card h3{margin:0 0 10px;font-size:22px;letter-spacing:-.015em}.card p,.card li{color:var(--muted);font-size:17px;line-height:1.42}.card b{color:var(--text)}ul,ol{margin:10px 0 0;padding-left:22px}li{margin:8px 0}.metric{font-size:43px;line-height:1;font-weight:930;letter-spacing:-.025em;margin:5px 0}.label{color:#858da5;text-transform:uppercase;letter-spacing:.09em;font-weight:800;font-size:12px}.accent{color:var(--green)}.purple{color:#a7a2ff}.yellow{color:var(--yellow)}.red{color:var(--red)}.blue{color:var(--blue)}.muted{color:var(--muted)}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:999px;padding:9px 12px;color:var(--text);font-size:13px;font-weight:800}.pill.green{border-color:rgba(0,212,170,.45);background:rgba(0,212,170,.11);color:var(--green)}.pill.yellow{border-color:rgba(255,209,102,.45);background:rgba(255,209,102,.1);color:var(--yellow)}.pill.red{border-color:rgba(255,107,107,.5);background:rgba(255,107,107,.1);color:var(--red)}.flow{display:grid;grid-template-columns:1.1fr .9fr 1fr .95fr;gap:14px;align-items:stretch}.flow .step{border:1px solid var(--line);background:#141823;border-radius:14px;padding:18px;min-height:120px}.step strong{display:block;font-size:18px;margin-bottom:8px}.step span{display:block;color:var(--muted);font-size:15px;line-height:1.35}.split{display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:center}.table{display:grid;gap:10px}.tr{display:grid;grid-template-columns:1.05fr .95fr 1fr;gap:10px;align-items:stretch}.cell{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:12px;padding:13px;color:var(--muted);font-size:15px;line-height:1.35}.cell.head{color:var(--text);font-weight:850;background:rgba(108,99,255,.15)}.note{border-left:4px solid var(--accent);background:rgba(108,99,255,.09);border-radius:10px;padding:16px 18px;color:var(--muted);font-size:17px;line-height:1.42}.small{font-size:14px;color:var(--muted);line-height:1.4}.source{font-size:13px;color:#858da5;line-height:1.35}.divider{height:1px;background:var(--line);margin:22px 0}.statline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}.stat{border:1px solid var(--line);border-radius:14px;padding:18px;background:rgba(255,255,255,.035)}
-@media(max-width:900px){.deck{padding:18px 14px 44px}.slide{min-height:auto;margin-bottom:18px;padding:30px 22px;border-radius:14px}.title{font-size:38px}.subtitle{font-size:18px}.quote{font-size:28px}.grid.two,.grid.three,.grid.four,.split,.flow,.tr,.statline{grid-template-columns:1fr}.brand{display:none}.card p,.card li{font-size:15px}.metric{font-size:36px}}
+:root{
+  --bg:#0f1117;
+  --panel:#1a1d27;
+  --panel2:#222636;
+  --text:#e8eaf6;
+  --muted:#aab0c5;
+  --soft:#7d859e;
+  --line:#30364a;
+  --accent:#6c63ff;
+  --green:#00d4aa;
+  --yellow:#ffd166;
+  --red:#ff6b6b;
+  --blue:#4ea1ff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(0deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent 76%);
+}
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:20;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 22px;
+  background:rgba(15,17,23,.86);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(48,54,74,.75);
+}
+.brand{font-weight:900;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#d8dcf2}
+.meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  min-height:28px;
+  padding:6px 10px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,255,255,.045);
+  color:var(--text);
+  font-size:12px;
+  font-weight:800;
+  line-height:1;
+  white-space:nowrap;
+}
+.pill.green{color:var(--green);border-color:rgba(0,212,170,.45);background:rgba(0,212,170,.1)}
+.pill.yellow{color:var(--yellow);border-color:rgba(255,209,102,.45);background:rgba(255,209,102,.1)}
+.pill.red{color:var(--red);border-color:rgba(255,107,107,.45);background:rgba(255,107,107,.1)}
+.pill.blue{color:var(--blue);border-color:rgba(78,161,255,.45);background:rgba(78,161,255,.1)}
+.rail{
+  position:fixed;
+  top:72px;
+  left:18px;
+  bottom:18px;
+  width:44px;
+  z-index:12;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  align-items:center;
+}
+.rail a{
+  width:30px;
+  min-height:26px;
+  border:1px solid rgba(48,54,74,.85);
+  border-radius:8px;
+  color:var(--soft);
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  font-weight:900;
+  background:rgba(26,29,39,.75);
+}
+.rail a:hover{color:var(--text);border-color:var(--accent)}
+main{width:100%;max-width:1240px;margin:0 auto;padding:78px 24px 72px 78px}
+.slide{
+  min-height:calc(100vh - 100px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  margin:0 0 22px;
+  padding:44px 48px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:linear-gradient(180deg,rgba(26,29,39,.96),rgba(18,21,31,.97));
+  box-shadow:0 20px 55px rgba(0,0,0,.32);
+  position:relative;
+  overflow:hidden;
+}
+.slide:after{
+  content:attr(data-num);
+  position:absolute;
+  right:28px;
+  bottom:18px;
+  color:rgba(170,176,197,.16);
+  font-size:74px;
+  line-height:1;
+  font-weight:950;
+}
+.kicker{
+  color:var(--green);
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-size:13px;
+  font-weight:900;
+  margin-bottom:16px;
+}
+h1,h2,h3,p{margin-top:0}
+h1{
+  font-size:64px;
+  line-height:.98;
+  letter-spacing:0;
+  margin-bottom:22px;
+  max-width:1040px;
+}
+h2{
+  font-size:46px;
+  line-height:1.04;
+  letter-spacing:0;
+  margin-bottom:22px;
+  max-width:980px;
+}
+h3{
+  font-size:21px;
+  line-height:1.15;
+  letter-spacing:0;
+  margin-bottom:8px;
+}
+.lead{
+  color:var(--muted);
+  font-size:23px;
+  line-height:1.35;
+  max-width:1010px;
+}
+.quote{
+  font-size:34px;
+  line-height:1.2;
+  font-weight:850;
+  max-width:1050px;
+}
+.small{font-size:14px;line-height:1.45;color:var(--soft)}
+.grid{display:grid;gap:16px}
+.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid.five{grid-template-columns:repeat(5,minmax(0,1fr))}
+.card{
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:20px;
+  min-height:122px;
+}
+.card p,.card li{color:var(--muted);font-size:16px;line-height:1.42}
+.metric{font-size:42px;line-height:1;font-weight:950;margin:6px 0 8px}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.11em;color:var(--soft);font-weight:900}
+.tag{
+  display:inline-flex;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.045);
+  border-radius:6px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  padding:5px 8px;
+  margin-bottom:10px;
+}
+.tag.measured{color:var(--green);border-color:rgba(0,212,170,.45);background:rgba(0,212,170,.1)}
+.tag.hypothesis{color:var(--yellow);border-color:rgba(255,209,102,.45);background:rgba(255,209,102,.1)}
+.tag.unproven{color:var(--red);border-color:rgba(255,107,107,.45);background:rgba(255,107,107,.1)}
+ul,ol{margin:10px 0 0;padding-left:22px}
+li{margin:8px 0;color:var(--muted);font-size:18px;line-height:1.35}
+.number-list{counter-reset:item;display:grid;gap:12px;margin-top:24px}
+.number-row{
+  display:grid;
+  grid-template-columns:54px 1fr auto;
+  gap:16px;
+  align-items:center;
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:rgba(255,255,255,.04);
+}
+.num{
+  width:38px;
+  height:38px;
+  border-radius:8px;
+  background:rgba(108,99,255,.18);
+  color:#c9c6ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+}
+.number-row strong{display:block;font-size:18px;margin-bottom:3px}
+.number-row span{display:block;color:var(--muted);font-size:14px;line-height:1.35}
+.spine{
+  display:grid;
+  grid-template-columns:repeat(9,minmax(0,1fr));
+  gap:8px;
+  margin-top:24px;
+}
+.spine div{
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border:1px solid rgba(108,99,255,.38);
+  border-radius:8px;
+  background:rgba(108,99,255,.09);
+  color:#d7d5ff;
+  font-size:13px;
+  font-weight:850;
+  line-height:1.2;
+  padding:8px;
+}
+.callout{
+  border-left:4px solid var(--accent);
+  border-radius:8px;
+  background:rgba(108,99,255,.095);
+  padding:18px 20px;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.42;
+}
+.action-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:24px}
+.action{
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:16px;
+  background:rgba(255,255,255,.04);
+}
+.action strong{display:block;font-size:16px;margin-bottom:8px}
+.action span{display:block;color:var(--muted);font-size:13px;line-height:1.35}
+.raci{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.owner{
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:14px;
+  align-items:center;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:15px 16px;
+  background:rgba(255,255,255,.04);
+}
+.owner b{font-size:16px}
+.owner span{color:var(--muted);font-size:14px;line-height:1.35}
+.appendix .slide{min-height:auto}
+.appendix h2{font-size:38px}
+.footer-note{margin-top:24px;color:var(--soft);font-size:13px;line-height:1.4}
+@media(max-width:980px){
+  .topbar{position:sticky}
+  .rail{display:none}
+  main{padding:18px 14px 48px}
+  .slide{min-height:auto;padding:28px 22px;margin-bottom:16px}
+  .slide:after{font-size:42px;right:18px;bottom:14px}
+  h1{font-size:40px}
+  h2{font-size:31px}
+  .lead{font-size:18px}
+  .quote{font-size:25px}
+  .grid.two,.grid.three,.grid.five,.action-grid,.raci,.spine{grid-template-columns:1fr}
+  .number-row{grid-template-columns:44px 1fr}
+  .number-row .tag{grid-column:2}
+  .owner{grid-template-columns:1fr}
+  .meta{display:none}
+}
 </style>
 </head>
 <body>
-<main class="deck">
-<div class="brand">Revay Council</div>
-
-<section class="slide active">
-  <div class="kicker">Revenue Flywheel Council Synthesis</div>
-  <h1 class="title">The constraint is not raw demand. It is profitable value realization.</h1>
-  <p class="subtitle">Board-facing synthesis from 8 Council contributors: Alfred, Claudio, Jarvis, Remi, Robin, Romer, Rosie, and Simon. Revin is intentionally excluded from this presentation.</p>
-  <div class="statline">
-    <div class="stat"><div class="label">Vault retrieval</div><div class="metric accent">HTTP 200</div><div class="small">Notion page and block fetch verified live.</div></div>
-    <div class="stat"><div class="label">Packet pages searched</div><div class="metric">136</div><div class="small">Round 2 source pull at 2026-05-30 01:10 UTC.</div></div>
-    <div class="stat"><div class="label">Contributors used</div><div class="metric yellow">8 of 9</div><div class="small">Revin missing and excluded.</div></div>
-    <div class="stat"><div class="label">Confidence posture</div><div class="metric purple">Partial</div><div class="small">Strong enough for direction; not enough for ROI allocation.</div></div>
+<header class="topbar">
+  <div class="brand">Rev.io Revenue Flywheel</div>
+  <div class="meta">
+    <span class="pill green">11/11 diagnoses</span>
+    <span class="pill yellow">9/11 critiques</span>
+    <span class="pill blue">Opus 4.8 reviewed</span>
+    <span class="pill">Vertical board deck</span>
   </div>
-</section>
+</header>
+<nav class="rail" aria-label="Slide navigation">
+  <a href="#s1">1</a><a href="#s2">2</a><a href="#s3">3</a><a href="#s4">4</a><a href="#s5">5</a><a href="#s6">6</a><a href="#s7">7</a><a href="#s8">8</a><a href="#s9">9</a><a href="#s10">10</a><a href="#s11">11</a><a href="#s12">12</a><a href="#s13">13</a><a href="#app">A</a>
+</nav>
+<main>
+  <section class="slide" id="s1" data-num="01">
+    <div class="kicker">Revenue Flywheel Operating Diagnosis</div>
+    <h1>From demand volume to retained-margin conversion.</h1>
+    <p class="lead">Final board structure reviewed by Opus 4.8. Built from Round 3 operating diagnoses and synthesis critiques in the Council Vault.</p>
+    <div class="grid three" style="margin-top:28px">
+      <div class="card"><div class="label">Operating diagnoses</div><div class="metric" style="color:var(--green)">11/11</div><p>All Round 3 domain contributions retrieved.</p></div>
+      <div class="card"><div class="label">Synthesis critiques</div><div class="metric" style="color:var(--yellow)">9/11</div><p>Marvin and Remi outstanding at cutoff; Evan approved proceeding.</p></div>
+      <div class="card"><div class="label">Claim posture</div><div class="metric">Partial</div><p>No complete source-to-margin join exists yet.</p></div>
+    </div>
+  </section>
 
-<section class="slide">
-  <div class="kicker">Executive Answer</div>
-  <p class="quote">Rev.io needs to prove and realize value in PSA/product-led growth paths while fixing the measurement layer that tells us which growth motions create retained gross profit.</p>
-  <div class="grid three" style="margin-top:30px">
-    <div class="card"><h3>What the evidence supports</h3><p>PSA value realization plus instrumentation is the center of gravity.</p></div>
-    <div class="card"><h3>What it does not support yet</h3><p>A broad claim that more demand spend, one channel, or one department is the answer.</p></div>
-    <div class="card"><h3>What the board should hear</h3><p>The growth system has connected constraints across product proof, onboarding, support, roadmap execution, and source hygiene.</p></div>
+  <section class="slide" id="s2" data-num="02">
+    <div class="kicker">Executive Thesis</div>
+    <p class="quote">Rev.io's constraint is not demand. It is the absence of a measured system that proves which sources, products, customer profiles, and sales motions convert into live, retained, margin-positive customers.</p>
+    <div class="callout" style="margin-top:28px">The strongest retrieved evidence points to won-to-live value realization, especially PSA, as the measured operating constraint. Source quality remains a major hypothesis until joined to onboarding, support, retention, expansion, and margin.</div>
+  </section>
+
+  <section class="slide" id="s3" data-num="03">
+    <div class="kicker">Board-Level Risk</div>
+    <h2>Rev.io can create pipeline and bookings while still missing profitable growth.</h2>
+    <p class="lead">The risk is scaling unproven cohorts before proving which motions become qualified, implementable, live, low-support, referenceable, retained-margin revenue.</p>
+    <div class="grid two" style="margin-top:26px">
+      <div class="card"><h3>Board-safe claim</h3><p>Closed Won MRR is not the same as implemented, retained, profitable revenue.</p></div>
+      <div class="card"><h3>Decision risk</h3><p>Scaling demand before the conversion spine exists can reward volume while hiding value-realization and cost-to-serve failures.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="s4" data-num="04">
+    <div class="kicker">Board Ask</div>
+    <h2>Approve a 90-day Profitable Revenue Conversion Program.</h2>
+    <p class="lead">Owned by Evan with Finance, RevOps, Sales, Marketing, Channel, Onboarding, Product, CS/Support, and Security.</p>
+    <div class="callout" style="margin-top:26px">The first decision is not "increase demand" or "ship more product." The first decision is to stand up a weekly retained-margin conversion spine, then use it to decide what to scale, narrow, fix, reprice, or stop.</div>
+  </section>
+
+  <section class="slide" id="s5" data-num="05">
+    <div class="kicker">Diagnosis</div>
+    <h2>Five conversion gaps are visible.</h2>
+    <div class="number-list">
+      <div class="number-row"><div class="num">1</div><div><strong>Retained-margin conversion spine missing</strong><span>Rev.io lacks the weekly control system from source to margin.</span></div><div class="tag measured">Measured gap</div></div>
+      <div class="number-row"><div class="num">2</div><div><strong>PSA value realization and onboarding conversion</strong><span>The strongest retrieved operating constraint.</span></div><div class="tag measured">Measured</div></div>
+      <div class="number-row"><div class="num">3</div><div><strong>Qualified pipeline, ICP, proof, and source visibility</strong><span>Important, but not yet proven as the company-wide root cause.</span></div><div class="tag hypothesis">Hypothesis</div></div>
+      <div class="number-row"><div class="num">4</div><div><strong>Product proof and roadmap-to-revenue linkage</strong><span>Roadmap activity is not yet tied to revenue outcomes.</span></div><div class="tag measured">Data gap</div></div>
+      <div class="number-row"><div class="num">5</div><div><strong>Support, adoption, and trust readiness</strong><span>Proof and cost-to-serve gates, not standalone revenue proof.</span></div><div class="tag hypothesis">Gate</div></div>
+    </div>
+  </section>
+
+  <section class="slide" id="s6" data-num="06">
+    <div class="kicker">Strongest Measured Constraint</div>
+    <h2>PSA value realization is where won revenue starts proving, stalling, or leaking.</h2>
+    <div class="grid two" style="margin-top:20px">
+      <div class="card"><h3>What the evidence points to</h3><ul><li>Kickoff can happen quickly.</li><li>Graduation/go-live takes too long or fails too often.</li><li>Canceled, RTS, on-hold, NKO, aged, and missing-milestone accounts need management action.</li></ul></div>
+      <div class="card"><h3>Immediate implication</h3><p>Launch a PSA rescue and prevention board. Repeated blockers should become sales qualification gates or roadmap proof decisions.</p><p class="small">RTS = return to sales. NKO = not kicked off.</p></div>
+    </div>
+  </section>
+
+  <section class="slide" id="s7" data-num="07">
+    <div class="kicker">Missing Conversion Spine</div>
+    <h2>The company has fragments. It needs the joined operating view.</h2>
+    <p class="lead">Rev.io can see demand, bookings, onboarding fragments, support fragments, product activity, roadmap activity, and finance signals. It cannot yet reliably join them into a weekly view from source to retained-margin revenue.</p>
+    <div class="spine" aria-label="Conversion spine">
+      <div>Source</div><div>Product motion</div><div>ICP</div><div>Opportunity</div><div>Win/Loss</div><div>Go-live</div><div>Support load</div><div>Renewal / expansion</div><div>Margin</div>
+    </div>
+  </section>
+
+  <section class="slide" id="s8" data-num="08">
+    <div class="kicker">30-Day Build</div>
+    <h2>Build five connected workstreams.</h2>
+    <div class="action-grid">
+      <div class="action"><strong>Conversion bridge</strong><span>Owner: Finance + RevOps</span></div>
+      <div class="action"><strong>PSA rescue board</strong><span>Owner: Onboarding + Product + CS/Support</span></div>
+      <div class="action"><strong>Pipeline / ICP / proof bridge</strong><span>Owner: Sales + Marketing + Channel</span></div>
+      <div class="action"><strong>Revenue Evidence Ledger</strong><span>Owner: Product + Product Ops</span></div>
+      <div class="action"><strong>Revenue Friction Watchlist</strong><span>Owner: CS/Support + Security + Product Ops</span></div>
+    </div>
+    <div class="callout" style="margin-top:24px">Rule: missing source, product, ICP, loss reason, go-live, support, retention, or margin data is not "unknown." It is a managed defect with an owner and SLA.</div>
+  </section>
+
+  <section class="slide" id="s9" data-num="09">
+    <div class="kicker">Sequenced Outcomes</div>
+    <h2>What changes by day 60 and day 90.</h2>
+    <div class="grid two">
+      <div class="card"><div class="tag measured">60 days</div><ul><li>Enforce qualification gates by product motion.</li><li>Produce first retained-revenue bridges for key cohorts.</li><li>Classify top capability gaps into operating dispositions.</li><li>Build deal-ready trust proof using verified claims.</li></ul></div>
+      <div class="card"><div class="tag measured">90 days</div><ul><li>Reallocate effort toward cohorts with strongest evidence.</li><li>Narrow or reject low-fit demand earlier.</li><li>Run monthly revenue product review.</li><li>Tie reference eligibility to usage, support health, onboarding quality, renewal posture, and revenue tier.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="slide" id="s10" data-num="10">
+    <div class="kicker">Stop Doing</div>
+    <h2>Stop rewarding volume before value is proven.</h2>
+    <div class="grid two">
+      <div class="card"><ul><li>Treating raw opportunity creation as proof of growth.</li><li>Treating event volume or campaign activity as proof of profitable growth.</li><li>Treating Closed Won MRR as implemented revenue.</li><li>Mixing PSA, Billing, Payments, Channel, CommerceHub, add-ons, and Cyber Protect into one generic funnel.</li></ul></div>
+      <div class="card"><ul><li>Using roadmap volume as proof of strategy.</li><li>Using references without customer health, usage, support, renewal, and onboarding validation.</li><li>Making margin, CAC, payback, retention, expansion, or source ROI claims from partial data.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="slide" id="s11" data-num="11">
+    <div class="kicker">Immediate Owners</div>
+    <h2>A cross-functional operating cadence, not a department-only project.</h2>
+    <div class="raci">
+      <div class="owner"><b>Finance + RevOps</b><span>Conversion bridge and field-definition controls.</span></div>
+      <div class="owner"><b>Onboarding + Product + CS/Support</b><span>PSA rescue and prevention.</span></div>
+      <div class="owner"><b>Sales + Marketing + Channel</b><span>Qualified pipeline, ICP, proof, and source/product visibility.</span></div>
+      <div class="owner"><b>Product + Product Ops</b><span>Revenue Evidence Ledger.</span></div>
+      <div class="owner"><b>Security + CS/Support</b><span>Trust readiness and Revenue Friction Watchlist inputs.</span></div>
+      <div class="owner"><b>Evan</b><span>Cross-functional cadence and final tradeoff decisions.</span></div>
+    </div>
+  </section>
+
+  <section class="slide" id="s12" data-num="12">
+    <div class="kicker">Data Integrity</div>
+    <h2>What this deck does not claim yet.</h2>
+    <div class="grid two">
+      <div class="card"><h3>Not claimed</h3><ul><li>CAC or payback.</li><li>Source ROI.</li><li>Customer-level gross margin.</li><li>Retention, churn, or expansion causality.</li><li>Roadmap feature count as revenue proof.</li><li>Support ticket count as revenue impact.</li></ul></div>
+      <div class="card"><h3>Open dependencies</h3><ul><li>Confirm Salesforce Amount/MRR field semantics.</li><li>Confirm official PSA cohort boundary.</li><li>Build the source-to-margin spine.</li><li>Human-review blocker categories.</li><li>Define reference-readiness criteria.</li><li>Separate verified trust proof from aspirational security readiness.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="slide" id="s13" data-num="13">
+    <div class="kicker">Closing</div>
+    <h2>The next 90 days should prove which motions deserve scale.</h2>
+    <p class="lead">The board should approve the operating program, not a premature budget answer.</p>
+    <div class="callout" style="margin-top:24px">Once the weekly conversion spine exists, Rev.io can decide what to scale, narrow, fix, reprice, or stop with evidence rather than belief.</div>
+  </section>
+
+  <div class="appendix" id="app">
+    <section class="slide" data-num="A">
+      <div class="kicker">Appendix A</div>
+      <h2>Breakpoint detail.</h2>
+      <div class="grid three">
+        <div class="card"><div class="tag hypothesis">Hypothesis</div><h3>Qualified pipeline</h3><p>Source quality, ICP, proof, and early-stage conversion are high-priority hypotheses, not a proven company-wide root cause.</p></div>
+        <div class="card"><div class="tag measured">Data gap</div><h3>Product proof</h3><p>Roadmap counts require ties to opportunity loss, onboarding blockers, support themes, adoption, retention, and cost-to-serve.</p></div>
+        <div class="card"><div class="tag hypothesis">Gate</div><h3>Support + trust</h3><p>Operational pressure and proof readiness are visible, but revenue and margin causality still require account-level joins.</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-num="B">
+      <div class="kicker">Appendix B</div>
+      <h2>30-day build detail.</h2>
+      <div class="grid two">
+        <div class="card"><h3>Conversion bridge</h3><p>Source/campaign/partner, product motion, ICP, opportunity, loss reason, Closed Won basis, kickoff/go-live, support load, retention/expansion, margin or cost-to-serve proxy, and missing-data SLA.</p></div>
+        <div class="card"><h3>PSA rescue board</h3><p>Canceled, RTS, on-hold, NKO, aged, off-track, and missing-milestone PSA accounts with blocker, owner, exposure, save/close/qualify-out decision, and next action.</p></div>
+        <div class="card"><h3>Pipeline / proof bridge</h3><p>Source, campaign, product motion, ICP, stage, owner, early-stage loss reason, proof gap, decision-maker signal, and missing-feature signal.</p></div>
+        <div class="card"><h3>Evidence + friction</h3><p>Top blockers and repeated support drivers tied to revenue exposure, roadmap item, support theme, renewal/reference status, owner, and disposition.</p></div>
+      </div>
+    </section>
+
+    <section class="slide" data-num="C">
+      <div class="kicker">Appendix C</div>
+      <h2>Data boundary.</h2>
+      <div class="grid two">
+        <div class="card"><h3>Coverage</h3><ul><li>Round 3 Operating Diagnosis: 11 of 11.</li><li>Round 3 Synthesis Critique: 9 of 11.</li><li>Missing at cutoff: Marvin and Remi.</li><li>Evan approved proceeding.</li></ul></div>
+        <div class="card"><h3>Integrity posture</h3><ul><li>No quantitative claim depends on the two missing critiques.</li><li>No complete source-to-margin join exists yet.</li><li>Opus 4.8 reviewed and compressed the final presentation structure.</li></ul></div>
+      </div>
+      <p class="footer-note">Prepared from Council Vault evidence. Material work belongs in Notion; this site is the published presentation surface.</p>
+    </section>
   </div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Board-Ready Evidence</div>
-  <h2 class="title">PSA underperformance is real, and the unit economics are weak.</h2>
-  <div class="grid four">
-    <div class="card"><div class="label">March PSA MRR</div><div class="metric">$710,056</div><p>Subtotal PSA March MRR from finance workbook rows.</p></div>
-    <div class="card"><div class="label">Below March budget</div><div class="metric red">$93,377</div><p>Validated by Romer.</p></div>
-    <div class="card"><div class="label">Below YTD budget</div><div class="metric red">$190,682</div><p>Validated by Romer.</p></div>
-    <div class="card"><div class="label">PSA LTV/CAC</div><div class="metric yellow">1.17x</div><p>Versus Billing at 6.81x.</p></div>
-  </div>
-  <div class="note" style="margin-top:24px">Investor KPI rows show PSA gross retention at 79.1% versus Billing gross retention at 92.4%.</div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Product Proof Friction</div>
-  <h2 class="title">Pre-sale losses and post-sale statuses point to value-realization friction.</h2>
-  <div class="grid three">
-    <div class="card"><div class="label">Closed Lost with missing capabilities</div><div class="metric red">315</div><p>Salesforce count validated by Robin.</p></div>
-    <div class="card"><div class="label">PSA 2.0 subset</div><div class="metric red">242</div><p>Closed Lost tied to Software Missing Capabilities.</p></div>
-    <div class="card"><div class="label">Visible PSA clients</div><div class="metric">205</div><p>Notion PSA Clients records returned.</p></div>
-  </div>
-  <div class="grid two" style="margin-top:18px">
-    <div class="card"><h3>Post-sale statuses</h3><p>Notion PSA Clients included <b>Canceled - Functionality 50</b> and <b>RTS - Functionality 10</b>.</p></div>
-    <div class="card"><h3>Green River dashboard</h3><p>HTTP 200 with active total 41, at-risk 13, on-hold 8, RTS 18, canceled 81.</p></div>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Support Pressure</div>
-  <h2 class="title">Support friction is material, but not yet revenue-joined.</h2>
-  <div class="grid four">
-    <div class="card"><div class="label">Billing tickets</div><div class="metric">2,206</div><p>Zendesk Search API HTTP 200.</p></div>
-    <div class="card"><div class="label">Billing unsolved</div><div class="metric yellow">182</div><p>Validated by Jarvis.</p></div>
-    <div class="card"><div class="label">PSA tickets</div><div class="metric">1,050</div><p>Zendesk Search API HTTP 200.</p></div>
-    <div class="card"><div class="label">PSA unsolved</div><div class="metric yellow">98</div><p>Validated by Jarvis.</p></div>
-  </div>
-  <div class="note" style="margin-top:24px">High/urgent pressure across Billing + PSA was 534 priority-labeled cases. This proves operational pressure, not ARR causality.</div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Instrumentation Gap</div>
-  <h2 class="title">Attribution hygiene is itself a revenue operating constraint.</h2>
-  <div class="grid two">
-    <div class="card"><h3>Marketing source fields are incomplete</h3><ul><li>HubSpot: 5,013 retrieved deals lacked populated UTM/campaign fields.</li><li>HubSpot: 9,862 of 10,000 contacts lacked UTM fields.</li></ul></div>
-    <div class="card"><h3>Salesforce source fields are not decision-ready</h3><ul><li>2,998 last-12-month created opportunities.</li><li>Opportunity_Source__c populated on 0.</li><li>LeadSource populated on 7.</li><li>Marketing_Source__c populated on 2,950.</li></ul></div>
-  </div>
-  <div class="note" style="margin-top:24px">Marketing_Source__c may be useful, but it is not yet joined to spend, close quality, retention, or margin.</div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Roadmap And Product Execution</div>
-  <h2 class="title">Execution risk is real; revenue mapping is incomplete.</h2>
-  <div class="grid two">
-    <div class="card"><h3>Products Roadmap DB</h3><div class="row"><span class="pill green">HTTP 200</span><span class="pill">691 records</span><span class="pill yellow">20 Delivery At Risk</span><span class="pill">84 On Track</span><span class="pill">245 Delivered</span><span class="pill red">342 blank</span></div><p>Viking 1 had 73 Not Started records in Rosie's validation.</p></div>
-    <div class="card"><h3>Pod Dashboard</h3><div class="row"><span class="pill green">HTTP 200</span><span class="pill">477 features</span><span class="pill red">160 not started</span><span class="pill yellow">19 at risk</span></div><p>Viking 1 had 136 total, 1 completed, and 129 not started in Simon's validation.</p></div>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Risk Queues, Not Capital Allocation</div>
-  <h2 class="title">Usage and security evidence should guide de-risking, not final spend allocation.</h2>
-  <div class="grid three">
-    <div class="card"><div class="label">Pendo accounts</div><div class="metric">130</div><p>Aggregated by Simon.</p></div>
-    <div class="card"><div class="label">At-risk tracked accounts</div><div class="metric yellow">70</div><p>Concentrated strategic adoption.</p></div>
-    <div class="card"><div class="label">SOC 2 controls</div><div class="metric">208</div><p>Operating status evidence validated.</p></div>
-  </div>
-  <div class="grid two" style="margin-top:18px">
-    <div class="card"><h3>SOC 2 status concentration</h3><p>Not Verified 177, Operating 20, Operating Effectively 9, Operating - Needs Improvement 1, Evidence Collected 1.</p></div>
-    <div class="card"><h3>Interpretation</h3><p>This is a de-risking queue for product proof, referenceability, and buyer confidence. It does not yet answer CAC/payback/channel allocation.</p></div>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="kicker">People And Cadence</div>
-  <h2 class="title">HR evidence points to operating cadence gaps, not a proven binding constraint.</h2>
-  <div class="grid three">
-    <div class="card"><div class="label">Started headcount</div><div class="metric">143</div><p>Validated by Remi.</p></div>
-    <div class="card"><div class="label">Active recruiting roles</div><div class="metric">2</div><p>No retrieved active VP Onboarding / Implementation-type role.</p></div>
-    <div class="card"><div class="label">Confidence read</div><div class="metric yellow">Partial</div><p>Uneven internal mobility, March survey watchpoints, incomplete manager/SOP cadence.</p></div>
-  </div>
-  <div class="note" style="margin-top:24px">This matters operationally, but the evidence does not prove HR is the binding revenue constraint.</div>
-</section>
-
-<section class="slide">
-  <div class="kicker">What Not To Claim</div>
-  <h2 class="title">These claims are not board-ready yet.</h2>
-  <div class="grid two">
-    <div class="card"><h3>Do not overstate ROI</h3><ul><li>No paid-channel ROI, CAC, payback, or channel reallocation until paid activity, campaign/source fields, outcomes, retained revenue, and margin are joined.</li><li>No Salesforce Amount or broad MRR/ARR claims without RevOps/Finance field-semantics confirmation.</li></ul></div>
-    <div class="card"><h3>Do not overstate causality</h3><ul><li>ICP discipline is plausible, not proven as the single binding constraint.</li><li>Product gaps alone did not cause PSA underperformance without feature-specific ARR exposure and implementation causality.</li><li>Revin's view is absent and should not be inferred.</li></ul></div>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Recommended Board Narrative</div>
-  <p class="quote">Rev.io's most evidenced near-term growth constraint is profitable value realization: selecting the right opportunities, proving the product and onboarding path, delivering roadmap and security proof for higher-quality buyers, and instrumenting the funnel so leadership can see which motions create retained gross profit.</p>
-  <div class="divider"></div>
-  <div class="row"><span class="pill green">Evidence-backed</span><span class="pill yellow">Measurement gap visible</span><span class="pill red">ROI allocation not yet supported</span></div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Operating Model</div>
-  <h2 class="title">Fix the flywheel as a connected system.</h2>
-  <div class="flow">
-    <div class="step"><strong>1. Select</strong><span>Right opportunities, segments, buyer readiness, and decision process.</span></div>
-    <div class="step"><strong>2. Prove</strong><span>Product proof, roadmap confidence, security evidence, and referenceable accounts.</span></div>
-    <div class="step"><strong>3. Realize</strong><span>Onboarding, support root-cause reduction, account health, and retained value.</span></div>
-    <div class="step"><strong>4. Instrument</strong><span>Source to outcome to retained margin, with Finance and RevOps definitions.</span></div>
-  </div>
-  <p class="subtitle" style="margin-top:28px">The flywheel does not accelerate cleanly until value realization and measurement are connected.</p>
-</section>
-
-<section class="slide">
-  <div class="kicker">30-Day Action Set</div>
-  <h2 class="title">Five moves to put in motion now.</h2>
-  <div class="grid two">
-    <div class="card"><h3>1. Revenue Evidence Ledger</h3><p>Join source/campaign to opportunity outcome, product/segment, onboarding status, support friction, retained revenue, and margin.</p></div>
-    <div class="card"><h3>2. PSA Value Realization tiger team</h3><p>Rank canceled/functionality, RTS, on-hold, at-risk accounts, missing-capability losses, support themes, and roadmap blockers by exposure.</p></div>
-    <div class="card"><h3>3. Freeze broad ROI-based paid expansion</h3><p>Continue tactical campaigns, but do not tell the board channel ROI is known.</p></div>
-    <div class="card"><h3>4. De-risk product proof surfaces</h3><p>Identity/access, onboarding-critical roadmap items, PSA integration/functionality proof, SOC 2 readiness, and referenceable account health.</p></div>
-    <div class="card"><h3>5. Validate only the missing joins</h3><p>Next pass should be evidence retrieval, not another opinion round.</p></div>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Missing Joins</div>
-  <h2 class="title">The next validation pass is narrow and factual.</h2>
-  <div class="table">
-    <div class="tr"><div class="cell head">Join</div><div class="cell head">Decision it unlocks</div><div class="cell head">Current status</div></div>
-    <div class="tr"><div class="cell">Finance / RevOps field semantics</div><div class="cell">What MRR/ARR and Amount claims can be used externally or at board level.</div><div class="cell">Not board-ready without confirmation.</div></div>
-    <div class="tr"><div class="cell">Campaign/source to opportunity and retained revenue</div><div class="cell">Paid ROI, CAC, payback, channel reallocation.</div><div class="cell">Not joined.</div></div>
-    <div class="tr"><div class="cell">PSA client records to Salesforce accounts/opportunities</div><div class="cell">Feature friction exposure and retention impact.</div><div class="cell">Missing.</div></div>
-    <div class="tr"><div class="cell">Support tickets to account/revenue</div><div class="cell">ARR causality and account-level intervention priority.</div><div class="cell">Operational pressure proven; revenue causality not proven.</div></div>
-    <div class="tr"><div class="cell">Pendo to retention/reference eligibility</div><div class="cell">Which adoption patterns indicate durable value or expansion readiness.</div><div class="cell">Risk queue only.</div></div>
-  </div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Source Coverage</div>
-  <h2 class="title">Evidence used and exclusions.</h2>
-  <div class="grid two">
-    <div class="card"><h3>Included contributors</h3><div class="row"><span class="pill">Alfred</span><span class="pill">Claudio</span><span class="pill">Jarvis</span><span class="pill">Remi</span><span class="pill">Robin</span><span class="pill">Romer</span><span class="pill">Rosie</span><span class="pill">Simon</span></div><p>All material facts in the synthesis are sourced from Round 2 contribution pages pulled via Notion API.</p></div>
-    <div class="card"><h3>Excluded contributor</h3><div class="row"><span class="pill red">Revin missing</span></div><p>Evan approved proceeding without Revin on 2026-05-30 01:09 UTC. This deck does not infer Revin's view.</p></div>
-  </div>
-  <div class="note" style="margin-top:24px">Retrieval status: Retrieved/Partial. Live Vault check for this build returned HTTP 200 for the synthesis page and HTTP 200 for 33 top-level blocks on 2026-05-30 16:21 UTC.</div>
-</section>
-
-<section class="slide">
-  <div class="kicker">Bottom Line</div>
-  <h2 class="title">The board-ready move is disciplined acceleration, not louder demand.</h2>
-  <p class="subtitle">Prove PSA value realization, clean the evidence ledger, rank the product/onboarding/support blockers by revenue exposure, and only then make capital-allocation claims about demand channels, CAC, payback, and ROI.</p>
-  <div class="row" style="margin-top:28px"><span class="pill green">Act now</span><span class="pill yellow">Keep caveats visible</span><span class="pill red">Do not invent joins</span></div>
-</section>
-
 </main>
 </body>
 </html>
