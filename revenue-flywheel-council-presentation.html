@@ -8,75 +8,80 @@
 :root{--bg:#0f1117;--panel:#1a1d27;--panel2:#222636;--text:#e8eaf6;--muted:#aab0c5;--soft:#7d859e;--line:#30364a;--accent:#6c63ff;--green:#00d4aa;--yellow:#ffd166;--red:#ff6b6b;--blue:#4ea1ff}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:#0f1117;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent 76%)}
-.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;background:rgba(15,17,23,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(48,54,74,.75)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.72),transparent 76%)}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;background:rgba(15,17,23,.9);backdrop-filter:blur(14px);border-bottom:1px solid rgba(48,54,74,.75)}
 .brand{font-weight:900;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#d8dcf2}
 .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .pill{display:inline-flex;align-items:center;min-height:28px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.045);color:var(--text);font-size:12px;font-weight:800;line-height:1;white-space:nowrap}
 .pill.green{color:var(--green);border-color:rgba(0,212,170,.45);background:rgba(0,212,170,.1)}
 .pill.yellow{color:var(--yellow);border-color:rgba(255,209,102,.45);background:rgba(255,209,102,.1)}
 .pill.blue{color:var(--blue);border-color:rgba(78,161,255,.45);background:rgba(78,161,255,.1)}
-.pill.red{color:var(--red);border-color:rgba(255,107,107,.45);background:rgba(255,107,107,.1)}
-.rail{position:fixed;top:72px;left:18px;bottom:18px;width:44px;z-index:12;display:flex;flex-direction:column;gap:7px;align-items:center}
-.rail a{width:30px;min-height:26px;border:1px solid rgba(48,54,74,.85);border-radius:8px;color:var(--soft);text-decoration:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;background:rgba(26,29,39,.75)}
+.rail{position:fixed;top:72px;left:18px;bottom:18px;width:44px;z-index:12;display:flex;flex-direction:column;gap:6px;align-items:center}
+.rail a{width:30px;min-height:24px;border:1px solid rgba(48,54,74,.85);border-radius:8px;color:var(--soft);text-decoration:none;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;background:rgba(26,29,39,.75)}
 .rail a:hover{color:var(--text);border-color:var(--accent)}
 main{width:100%;max-width:1240px;margin:0 auto;padding:78px 24px 72px 78px}
-.slide{min-height:calc(100vh - 100px);display:flex;flex-direction:column;justify-content:center;margin:0 0 22px;padding:44px 48px;border:1px solid var(--line);border-radius:8px;background:linear-gradient(180deg,rgba(26,29,39,.97),rgba(18,21,31,.98));box-shadow:0 20px 55px rgba(0,0,0,.32);position:relative;overflow:hidden}
-.slide:after{content:attr(data-num);position:absolute;right:28px;bottom:18px;color:rgba(170,176,197,.16);font-size:74px;line-height:1;font-weight:950}
-.kicker{color:var(--green);text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:900;margin-bottom:16px}
+.slide{min-height:calc(100vh - 100px);display:flex;flex-direction:column;justify-content:center;margin:0 0 22px;padding:42px 46px;border:1px solid var(--line);border-radius:8px;background:linear-gradient(180deg,rgba(26,29,39,.97),rgba(18,21,31,.98));box-shadow:0 20px 55px rgba(0,0,0,.32);position:relative;overflow:hidden}
+.slide:after{content:attr(data-num);position:absolute;right:26px;bottom:16px;color:rgba(170,176,197,.16);font-size:70px;line-height:1;font-weight:950}
+.kicker{color:var(--green);text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:900;margin-bottom:14px}
 h1,h2,h3,p{margin-top:0}
-h1{font-size:68px;line-height:.97;letter-spacing:0;margin-bottom:22px;max-width:1080px}
-h2{font-size:46px;line-height:1.04;letter-spacing:0;margin-bottom:22px;max-width:1010px}
-h3{font-size:21px;line-height:1.15;letter-spacing:0;margin-bottom:8px}
-.lead{color:var(--muted);font-size:23px;line-height:1.35;max-width:1030px}
-.quote{font-size:34px;line-height:1.2;font-weight:850;max-width:1080px}
-.grid{display:grid;gap:16px}
+h1{font-size:66px;line-height:.97;letter-spacing:0;margin-bottom:22px;max-width:1080px}
+h2{font-size:42px;line-height:1.05;letter-spacing:0;margin-bottom:20px;max-width:1050px}
+h3{font-size:20px;line-height:1.15;letter-spacing:0;margin-bottom:8px}
+.lead{color:var(--muted);font-size:22px;line-height:1.35;max-width:1050px}
+.quote{font-size:33px;line-height:1.2;font-weight:850;max-width:1080px}
+.grid{display:grid;gap:15px}
 .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
-.card{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:8px;padding:20px;min-height:122px}
-.card p,.card li{color:var(--muted);font-size:16px;line-height:1.42}
-.metric{font-size:42px;line-height:1;font-weight:950;margin:6px 0 8px}
-.label{font-size:12px;text-transform:uppercase;letter-spacing:.11em;color:var(--soft);font-weight:900}
-ul,ol{margin:10px 0 0;padding-left:22px}
-li{margin:8px 0;color:var(--muted);font-size:18px;line-height:1.35}
-.callout{border-left:4px solid var(--accent);border-radius:8px;background:rgba(108,99,255,.095);padding:18px 20px;color:var(--muted);font-size:18px;line-height:1.42}
-.stage{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:22px}
-.stage .card{min-height:190px}
+.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:8px;padding:18px;min-height:112px}
+.card p,.card li{color:var(--muted);font-size:15.5px;line-height:1.4}
+.metric{font-size:38px;line-height:1;font-weight:950;margin:6px 0 8px}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:.11em;color:var(--soft);font-weight:900}
+ul,ol{margin:8px 0 0;padding-left:21px}
+li{margin:7px 0;color:var(--muted);font-size:17px;line-height:1.34}
+.callout{border-left:4px solid var(--accent);border-radius:8px;background:rgba(108,99,255,.095);padding:17px 19px;color:var(--muted);font-size:17px;line-height:1.42}
+.proof{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.proof .card{min-height:128px}
+.proof .card:first-child{border-color:rgba(0,212,170,.42)}
+.proof .card:last-child{border-color:rgba(255,209,102,.42)}
+.stage{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:18px}
+.stage .card{min-height:176px}
 .stage .card:nth-child(1){border-color:rgba(0,212,170,.38)}
 .stage .card:nth-child(2){border-color:rgba(255,209,102,.42)}
 .stage .card:nth-child(3){border-color:rgba(78,161,255,.42)}
-.tag{display:inline-flex;border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:6px;color:var(--muted);font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;padding:5px 8px;margin-bottom:10px}
+.tag{display:inline-flex;border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:6px;color:var(--muted);font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;padding:5px 8px;margin-bottom:9px}
 .tag.green{color:var(--green);border-color:rgba(0,212,170,.45);background:rgba(0,212,170,.1)}
 .tag.yellow{color:var(--yellow);border-color:rgba(255,209,102,.45);background:rgba(255,209,102,.1)}
 .tag.blue{color:var(--blue);border-color:rgba(78,161,255,.45);background:rgba(78,161,255,.1)}
-.life{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;margin-top:26px}
-.life div{min-height:82px;display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid rgba(108,99,255,.38);border-radius:8px;background:rgba(108,99,255,.09);color:#d7d5ff;font-size:13px;font-weight:850;line-height:1.2;padding:8px}
-.action{display:grid;grid-template-columns:70px 1fr;gap:16px;align-items:start;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.04);padding:17px;margin:10px 0}
-.num{width:48px;height:48px;border-radius:8px;background:rgba(108,99,255,.18);color:#c9c6ff;display:flex;align-items:center;justify-content:center;font-weight:950;font-size:20px}
+.tag.red{color:var(--red);border-color:rgba(255,107,107,.45);background:rgba(255,107,107,.1)}
+.life{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;margin-top:24px}
+.life div{min-height:78px;display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid rgba(108,99,255,.38);border-radius:8px;background:rgba(108,99,255,.09);color:#d7d5ff;font-size:13px;font-weight:850;line-height:1.2;padding:8px}
+.action{display:grid;grid-template-columns:60px 1fr;gap:15px;align-items:start;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.04);padding:16px;margin:9px 0}
+.num{width:46px;height:46px;border-radius:8px;background:rgba(108,99,255,.18);color:#c9c6ff;display:flex;align-items:center;justify-content:center;font-weight:950;font-size:19px}
 .action strong{font-size:18px;display:block;margin-bottom:4px}
 .action span{color:var(--muted);font-size:15px;line-height:1.4}
 .small{font-size:14px;line-height:1.45;color:var(--soft)}
-@media(max-width:980px){.topbar{position:sticky}.rail{display:none}main{padding:18px 14px 48px}.slide{min-height:auto;padding:28px 22px;margin-bottom:16px}.slide:after{font-size:42px;right:18px;bottom:14px}h1{font-size:40px}h2{font-size:31px}.lead{font-size:18px}.quote{font-size:25px}.grid.two,.grid.three,.stage,.life{grid-template-columns:1fr}.meta{display:none}}
+@media(max-width:980px){.topbar{position:sticky}.rail{display:none}main{padding:18px 14px 48px}.slide{min-height:auto;padding:28px 22px;margin-bottom:16px}.slide:after{font-size:42px;right:18px;bottom:14px}h1{font-size:40px}h2{font-size:30px}.lead{font-size:18px}.quote{font-size:24px}.grid.two,.grid.three,.grid.four,.stage,.life,.proof{grid-template-columns:1fr}.meta{display:none}}
 </style>
 </head>
 <body>
 <header class="topbar">
   <div class="brand">From Booked To Kept</div>
-  <div class="meta"><span class="pill green">Lifecycle narrative</span><span class="pill yellow">9/11 critiques</span><span class="pill blue">90-day plan</span><span class="pill">Vertical board deck</span></div>
+  <div class="meta"><span class="pill green">Lifecycle board story</span><span class="pill yellow">Evidence threaded</span><span class="pill blue">Detailed 30-day plan</span></div>
 </header>
 <nav class="rail" aria-label="Slide navigation">
-  <a href="#s1">1</a><a href="#s2">2</a><a href="#s3">3</a><a href="#s4">4</a><a href="#s5">5</a><a href="#s6">6</a><a href="#s7">7</a><a href="#s8">8</a><a href="#s9">9</a><a href="#s10">10</a><a href="#s11">11</a><a href="#s12">12</a><a href="#s13">13</a><a href="#s14">14</a><a href="#s15">15</a>
+  <a href="#s1">1</a><a href="#s2">2</a><a href="#s3">3</a><a href="#s4">4</a><a href="#s5">5</a><a href="#s6">6</a><a href="#s7">7</a><a href="#s8">8</a><a href="#s9">9</a><a href="#s10">10</a><a href="#s11">11</a><a href="#s12">12</a><a href="#s13">13</a><a href="#s14">14</a><a href="#s15">15</a><a href="#s16">16</a><a href="#s17">17</a><a href="#s18">18</a><a href="#s19">19</a><a href="#s20">20</a>
 </nav>
 <main>
 <section class="slide" id="s1" data-num="01">
   <div class="kicker">Revenue Flywheel Lifecycle Review</div>
   <h1>From Booked To Kept.</h1>
-  <p class="lead">Where Rev.io wins, where revenue leaks, and the 90-day plan to grow profitably.</p>
+  <p class="lead">Where Rev.io wins, where revenue leaks, and the 90-day operating plan to grow profitably.</p>
   <div class="grid three" style="margin-top:28px">
-    <div class="card"><div class="label">Operating diagnoses</div><div class="metric" style="color:var(--green)">11/11</div><p>All Round 3 domain contributions retrieved.</p></div>
-    <div class="card"><div class="label">Critiques included</div><div class="metric" style="color:var(--yellow)">9/11</div><p>Marvin and Remi outstanding at cutoff; Evan approved proceeding.</p></div>
-    <div class="card"><div class="label">Deck posture</div><div class="metric">Story</div><p>Product to GTM to Onboarding to Support lifecycle, with actions tied to profitable growth.</p></div>
+    <div class="card"><div class="label">Storyline</div><div class="metric">Lifecycle</div><p>Product promise to GTM proof to onboarding value realization to support, trust, retention, and margin.</p></div>
+    <div class="card"><div class="label">Evidence posture</div><div class="metric" style="color:var(--green)">Threaded</div><p>Each major data reference is tied to what it proves and what it does not yet prove.</p></div>
+    <div class="card"><div class="label">Decision horizon</div><div class="metric" style="color:var(--yellow)">30/90</div><p>Detailed first 30 days, then day-90 decisions on what to scale, fix, narrow, qualify out, or stop.</p></div>
   </div>
 </section>
 
@@ -88,18 +93,22 @@ li{margin:8px 0;color:var(--muted);font-size:18px;line-height:1.35}
 
 <section class="slide" id="s3" data-num="03">
   <div class="kicker">Lifecycle Map</div>
-  <h2>Manage profitable growth as one lifecycle.</h2>
+  <h2>Manage profitable growth as one connected lifecycle.</h2>
   <div class="life"><div>Product promise</div><div>GTM proof</div><div>Qualified sale</div><div>Implementation readiness</div><div>Quality go-live</div><div>Support health</div><div>Renewal / expansion</div><div>Margin</div></div>
   <p class="lead" style="margin-top:28px">The current pattern: product and GTM activity exist, onboarding starts fast enough, but the middle of implementation is where value realization breaks and complexity lands in Support.</p>
 </section>
 
 <section class="slide" id="s4" data-num="04">
   <div class="kicker">Demand And GTM</div>
-  <h2>We create pipeline, but lose too much early.</h2>
+  <h2>We create pipeline, but lose too much before value is proven.</h2>
   <div class="stage">
-    <div class="card"><div class="tag green">Success</div><p>Demand volume exists: 683 marketing-sourced leads, 423 marketing-created opportunities, 62 Closed Won totaling $44,128, plus 467 channel/partner events.</p></div>
-    <div class="card"><div class="tag yellow">Challenge</div><p>Closed Lost clustered before or at demo: 156 Discovery Scheduled, 86 Discovery Completed, 71 Initial Product Demo. Loss patterns point to timing, proof, decision-maker, product-fit, price, and non-response issues.</p></div>
+    <div class="card"><div class="tag green">Data reference</div><p>Marketing evidence: 683 marketing-sourced leads, 423 marketing-created opportunities, 62 Closed Won totaling $44,128, and 350 Closed Lost totaling $322,421.90. Channel evidence: 467 channel/partner events and 30 CommerceHub-related closed-won opportunities.</p></div>
+    <div class="card"><div class="tag yellow">Lifecycle signal</div><p>Closed Lost clustered before or at demo: 156 Discovery Scheduled, 86 Discovery Completed, and 71 Initial Product Demo. Loss patterns include timing, no-shows, missing capabilities, lack of decision-maker, no business issue, price, and non-response.</p></div>
     <div class="card"><div class="tag blue">Action</div><p>Build a weekly source/product/ICP bookings bridge to shift from more pipeline to more qualified, provable, implementable pipeline.</p></div>
+  </div>
+  <div class="proof">
+    <div class="card"><div class="tag green">What this proves</div><p>Rev.io is generating demand and converting some of it into opportunities and wins. Early-stage loss volume is meaningful enough to manage qualification, buyer readiness, product proof, and fit as one system.</p></div>
+    <div class="card"><div class="tag yellow">What this does not prove</div><p>It does not prove Marketing is the root cause. It does not prove source ROI, CAC, payback, or profitable retained revenue by channel because source spend, onboarding, support, retention, and margin are not yet joined.</p></div>
   </div>
 </section>
 
@@ -107,9 +116,13 @@ li{margin:8px 0;color:var(--muted);font-size:18px;line-height:1.35}
   <div class="kicker">The Win</div>
   <h2>Closed Won is progress, not money in the bank.</h2>
   <div class="stage">
-    <div class="card"><div class="tag green">Success</div><p>Rev.io is winning PSA/PSA 2.0 business: 173 Closed Won PSA/PSA 2.0 opportunities totaling $119,044 MRR since 2025-07-01. PSA 2.0 produced $6,300 of $6,461 May closed-won marketing MRR.</p></div>
-    <div class="card"><div class="tag yellow">Challenge</div><p>Bookings are below plan: April closed-won bookings were $20,059 MRR versus $60,074.75 budget MRR; May-to-date was $10,850 versus $62,725.50 budget MRR.</p></div>
-    <div class="card"><div class="tag blue">Action</div><p>Report wins by product motion and lifecycle status. Do not treat booked MRR as implemented, retained, profitable revenue.</p></div>
+    <div class="card"><div class="tag green">Data reference</div><p>PSA evidence: 173 Closed Won PSA/PSA 2.0 opportunities totaling $119,044 MRR for opportunities closing since 2025-07-01. Recent marketing evidence showed PSA 2.0 at $6,300 of $6,461 May closed-won marketing MRR.</p></div>
+    <div class="card"><div class="tag yellow">Lifecycle signal</div><p>Finance evidence showed April closed-won bookings of $20,059 MRR versus $60,074.75 budget MRR, or 33.4% attainment, and May-to-date $10,850 versus $62,725.50, or 17.3% in the prior run.</p></div>
+    <div class="card"><div class="tag blue">Action</div><p>Report wins by product motion and lifecycle status. Require RevOps/Finance confirmation of Amount/MRR field semantics before using totals as final board financial facts.</p></div>
+  </div>
+  <div class="proof">
+    <div class="card"><div class="tag green">What this proves</div><p>There is real PSA/PSA 2.0 win activity, but total booked MRR is under plan. Product motion matters: PSA 2.0 shows recent marketing-sourced win strength while other motions need diagnosis.</p></div>
+    <div class="card"><div class="tag yellow">What this does not prove</div><p>It does not prove PSA 2.0 is the best profitable growth engine until onboarding, support, retention, and margin are joined. It does not prove Billing or Cyber Protect are weak products; it proves recent conversion underperformed forecast.</p></div>
   </div>
 </section>
 
@@ -117,9 +130,13 @@ li{margin:8px 0;color:var(--muted);font-size:18px;line-height:1.35}
   <div class="kicker">Onboarding Value Realization</div>
   <h2>The strongest measured leak is after the win.</h2>
   <div class="stage">
-    <div class="card"><div class="tag green">Success</div><p>Close-to-kickoff is not the main measured problem: median 7 days, p75 13 days.</p></div>
-    <div class="card"><div class="tag yellow">Challenge</div><p>Kickoff-to-graduation median is 79 days, p75 134, with only 35 graduation records. There are 98 active records lacking graduation, 29 return-to-sales/on-hold, and 36 missing milestones. PSA Web cancellations represent $37,379 booked MRR / $448,548 ARR.</p></div>
+    <div class="card"><div class="tag green">Data reference</div><p>Close-to-kickoff is not the main measured problem: median 7 days, p75 13. Kickoff-to-actual graduation is the concern: median 79 days, p75 134, with only 35 actual graduation records.</p></div>
+    <div class="card"><div class="tag yellow">Lifecycle signal</div><p>Onboarding evidence found 98 active records lacking graduation, 29 return-to-sales/on-hold, 36 with no milestones, and 7 kickoff-before-close data issues. Green River data showed 81 canceled, 18 return-to-sales, 13 at risk, and 8 on hold. PSA Web cancellations represented $37,379 booked MRR / $448,548 ARR.</p></div>
     <div class="card"><div class="tag blue">Action</div><p>Launch a PSA Rescue and Prevention Board with owner, blocker, exposure, save/close/qualify-out decision, next action, due date, and escalation.</p></div>
+  </div>
+  <div class="proof">
+    <div class="card"><div class="tag green">What this proves</div><p>The strongest measured lifecycle leak is not getting customers started; it is converting started/won PSA customers into quality go-live and durable revenue. Canceled/stalled PSA Web exposure is a board-level growth issue.</p></div>
+    <div class="card"><div class="tag yellow">What this does not prove</div><p>It does not yet quantify margin impact, churn causality, or support-cost drag by blocker type. Automated blocker categories still need human review before becoming leadership metrics.</p></div>
   </div>
 </section>
 
@@ -127,31 +144,43 @@ li{margin:8px 0;color:var(--muted);font-size:18px;line-height:1.35}
   <div class="kicker">Support, Adoption, And Trust</div>
   <h2>Complexity lands in Support when it is not prevented upstream.</h2>
   <div class="stage">
-    <div class="card"><div class="tag green">Success</div><p>Usage exists: Pendo critique retrieval found 125 accounts, 152,468 events, 82 strategic adopters, and 22 newly tracked accounts.</p></div>
-    <div class="card"><div class="tag yellow">Challenge</div><p>Billing and PSA support pressure is material: Billing last 30 days 701, Billing unsolved 201; PSA last 30 days 270, PSA unsolved 99. SOC 2 also remains a trust gate: 177 of 208 controls Not Verified.</p></div>
-    <div class="card"><div class="tag blue">Action</div><p>Create a Revenue Friction Watchlist and deal-ready verified trust packet. Define reference readiness using usage, support health, onboarding quality, renewal posture, and customer outcome.</p></div>
+    <div class="card"><div class="tag green">Data reference</div><p>Usage evidence: 125 accounts, 152,468 events, 82 strategic adopters, and 22 newly tracked accounts. Support evidence: Billing created since 2026-02-28 = 2,243, unsolved = 201, last 30 days = 701; PSA created = 1,056, unsolved = 99, last 30 days = 270.</p></div>
+    <div class="card"><div class="tag yellow">Lifecycle signal</div><p>Trust readiness is a separate sales-confidence gate. SOC 2 evidence showed 208 controls: 177 Not Verified, 20 Operating, 9 Operating Effectively, 1 Operating Needs Improvement, and 1 Evidence Collected.</p></div>
+    <div class="card"><div class="tag blue">Action</div><p>Create a Revenue Friction Watchlist and deal-ready verified trust packet. Define reference readiness using usage, support health, onboarding quality, renewal posture, account owner validation, and customer outcome.</p></div>
+  </div>
+  <div class="proof">
+    <div class="card"><div class="tag green">What this proves</div><p>Support pressure is material enough to include in the revenue lifecycle, especially for Billing and PSA. Trust readiness can become sales diligence friction. Usage signals can help identify strategic adopters and at-risk tracked accounts.</p></div>
+    <div class="card"><div class="tag yellow">What this does not prove</div><p>It does not prove support tickets caused churn, margin leakage, or expansion loss. It does not prove usage equals reference readiness, or that SOC 2 accelerates sales until deal-critical controls and response SLAs are verified.</p></div>
   </div>
 </section>
 
 <section class="slide" id="s8" data-num="08">
-  <div class="kicker">Product As Multiplier</div>
+  <div class="kicker">Product As The Lifecycle Multiplier</div>
   <h2>Product activity exists. The revenue linkage does not.</h2>
   <div class="stage">
-    <div class="card"><div class="tag green">Success</div><p>Product work is happening: 704 roadmap records with 262 Delivered and 67 On Track; Pod Dashboard critique pass showed 490 features, 278 available, and 42 in progress.</p></div>
-    <div class="card"><div class="tag yellow">Challenge</div><p>Visible roadmap relations to customer, onboarding, and feedback links returned zero linked records. Repeated missing-capability themes appear in PSA/PSA 2.0 losses, but revenue prioritization still needs the join.</p></div>
-    <div class="card"><div class="tag blue">Action</div><p>Build a Product Revenue Evidence Ledger for the top 25 PSA/value-realization blockers, classified as sell-around, qualify-out, roadmap-commit, workaround, enablement fix, or stop-selling-until-fixed.</p></div>
+    <div class="card"><div class="tag green">Data reference</div><p>Roadmap evidence: 704 records, including 262 Delivered, 67 On Track, and 20 At Risk. Pod dashboard evidence: 490 total features, 278 available, 42 in progress, 170 not started, 20 at risk, and 77 on track.</p></div>
+    <div class="card"><div class="tag yellow">Lifecycle signal</div><p>Visible roadmap relations to customer, onboarding, and feedback links returned zero linked records. Missing-capability themes appear in PSA/PSA 2.0 loss evidence: project management, mobile/GPS, job costing, progressive billing, integrations, and sales opportunities.</p></div>
+    <div class="card"><div class="tag blue">Action</div><p>Build a Product Revenue Evidence Ledger for the top 25 PSA/value-realization blockers. Classify each blocker as sell-around, qualify-out, roadmap-commit, workaround, enablement fix, price/scope change, or stop-selling-until-fixed.</p></div>
+  </div>
+  <div class="proof">
+    <div class="card"><div class="tag green">What this proves</div><p>Product delivery is active, but roadmap activity is not yet tied to customer lifecycle outcomes. Rev.io has enough product, loss, onboarding, and support evidence to build a revenue-prioritized blocker ledger.</p></div>
+    <div class="card"><div class="tag yellow">What this does not prove</div><p>It does not prove shipping more features alone will improve growth. It does not prove which roadmap items create the most retained revenue until blockers are joined to opportunity, go-live, support, retention, and margin.</p></div>
   </div>
 </section>
 
 <section class="slide" id="s9" data-num="09">
   <div class="kicker">Retention And Margin Guardrails</div>
   <h2>The urgency is profitable growth, not activity.</h2>
-  <div class="grid three">
-    <div class="card"><div class="label">Gross retention</div><div class="metric">87.9%</div><p>Total company T12M, cited by Penny as a guardrail.</p></div>
+  <div class="grid four">
+    <div class="card"><div class="label">Gross retention</div><div class="metric">87.9%</div><p>Total company T12M, cited as a guardrail.</p></div>
+    <div class="card"><div class="label">Net retention</div><div class="metric">98.3%</div><p>Total company net retention.</p></div>
     <div class="card"><div class="label">PSA seats</div><div class="metric" style="color:var(--yellow)">-11.7%</div><p>PSA seats down from 10,992 to 9,700.</p></div>
     <div class="card"><div class="label">Payments residual</div><div class="metric" style="color:var(--red)">-23.4%</div><p>April payments residual down $50,204 from March.</p></div>
   </div>
-  <div class="callout" style="margin-top:24px">These are guardrails, not causal claims. They show why booked revenue must become live, retained, low-support, referenceable revenue.</div>
+  <div class="proof">
+    <div class="card"><div class="tag green">What this proves</div><p>Rev.io can book revenue and still miss profitable growth if wins do not become live, retained, low-support, referenceable customers.</p></div>
+    <div class="card"><div class="tag yellow">What this does not prove</div><p>These guardrails do not prove causality by source, product, onboarding blocker, support load, or margin. They set the standard for the lifecycle operating plan.</p></div>
+  </div>
 </section>
 
 <section class="slide" id="s10" data-num="10">
@@ -163,24 +192,78 @@ li{margin:8px 0;color:var(--muted);font-size:18px;line-height:1.35}
 </section>
 
 <section class="slide" id="s11" data-num="11">
-  <div class="kicker">30-Day Action Plan</div>
-  <h2>Four workstreams, clear owners.</h2>
-  <div class="action"><div class="num">1</div><div><strong>Product Revenue Evidence Ledger</strong><span>Owner: Product + Product Ops. Output: top 25 blockers classified into sell-around, qualify-out, roadmap-commit, workaround, enablement, or stop-selling-until-fixed.</span></div></div>
-  <div class="action"><div class="num">2</div><div><strong>Source/Product/ICP Bookings Bridge</strong><span>Owner: Sales + Marketing + Channel + RevOps. Output: weekly view of which demand is qualified, provable, and implementable.</span></div></div>
-  <div class="action"><div class="num">3</div><div><strong>PSA Rescue And Prevention Board</strong><span>Owner: Onboarding + Product + CS/Support. Output: owner, blocker, save/close decision, next action, and due date for at-risk PSA accounts.</span></div></div>
-  <div class="action"><div class="num">4</div><div><strong>Revenue Friction Watchlist</strong><span>Owner: CS/Support + Product + Security. Output: repeated Billing/PSA drivers and trust gaps tied to owners and dispositions.</span></div></div>
+  <div class="kicker">30-Day Action Plan Overview</div>
+  <h2>The first 30 days should create an operating cadence, not a research project.</h2>
+  <div class="grid two">
+    <div class="card"><div class="tag green">Weekly meeting</div><p><strong>Owner:</strong> Evan.<br><strong>Participants:</strong> Finance, RevOps, Sales, Marketing, Channel, Product, Onboarding, CS/Support, and Security.</p></div>
+    <div class="card"><div class="tag blue">Weekly output</div><p>What to scale, what to fix, what to qualify out, what to stop, and which data defect has an owner/SLA.</p></div>
+  </div>
+  <div class="grid four" style="margin-top:16px">
+    <div class="card"><h3>Product Revenue Evidence Ledger</h3><p>Product + Product Ops.</p></div>
+    <div class="card"><h3>Source/Product/ICP Bookings Bridge</h3><p>Sales + Marketing + Channel + RevOps.</p></div>
+    <div class="card"><h3>PSA Rescue and Prevention Board</h3><p>Onboarding + Product + CS/Support.</p></div>
+    <div class="card"><h3>Revenue Friction + Trust Watchlist</h3><p>CS/Support + Product + Security.</p></div>
+  </div>
 </section>
 
 <section class="slide" id="s12" data-num="12">
+  <div class="kicker">Workstream 1</div>
+  <h2>Product Revenue Evidence Ledger.</h2>
+  <div class="grid two">
+    <div class="card"><div class="tag green">Build in first 30 days</div><ul><li>Start with top 25 PSA/value-realization blockers.</li><li>Capture missing capability/workflow, related losses, roadmap item, onboarding blocker, support theme, ARR/MRR exposure if available, owner, and next decision.</li><li>Classify each blocker as sell-around, qualify-out, roadmap-commit, workaround, enablement fix, price/scope change, or stop-selling-until-fixed.</li></ul></div>
+    <div class="card"><div class="tag blue">Decisions enabled</div><ul><li>Which product promises Sales can safely make now.</li><li>Which blockers need roadmap commitment.</li><li>Which gaps should be sold around or qualified out.</li><li>Which roadmap work should be deprioritized because it is not tied to revenue friction.</li></ul></div>
+  </div>
+</section>
+
+<section class="slide" id="s13" data-num="13">
+  <div class="kicker">Workstream 2</div>
+  <h2>Source/Product/ICP Bookings Bridge.</h2>
+  <div class="grid two">
+    <div class="card"><div class="tag green">Build in first 30 days</div><ul><li>Bridge source/campaign/partner, product motion, ICP/segment, stage, owner, loss reason, proof gap, decision-maker status, missing-feature signal, Closed Won amount/MRR field basis, and next action.</li><li>Separate PSA 2.0, Billing, Payments, Cyber Protect, Channel/CommerceHub, add-ons, and other motions.</li><li>Treat missing source, product motion, ICP, or loss reason as named defects with owner and SLA.</li></ul></div>
+    <div class="card"><div class="tag blue">Decisions enabled</div><ul><li>Which sources and motions deserve more effort.</li><li>Which early losses are fixable through proof, qualification, or decision-maker access.</li><li>Which demand should be rejected before it creates onboarding/support drag.</li></ul></div>
+  </div>
+</section>
+
+<section class="slide" id="s14" data-num="14">
+  <div class="kicker">Workstream 3</div>
+  <h2>PSA Rescue And Prevention Board.</h2>
+  <div class="grid two">
+    <div class="card"><div class="tag green">Build in first 30 days</div><ul><li>Start with canceled, return-to-sales, on-hold, not-kicked-off, aged, off-track, and missing-milestone PSA accounts.</li><li>Each row needs account, product motion, source/rep if available, booked MRR/ARR if available, current state, blocker, blocker class, owner, decision, next action, due date, and escalation path.</li><li>Add a pre-kickoff readiness gate for migration, integrations, billing/payment complexity, unsupported workflow acceptance, client bandwidth, and product-blocker disposition.</li></ul></div>
+    <div class="card"><div class="tag blue">Decisions enabled</div><ul><li>Which accounts can be saved.</li><li>Which should be closed out or reset.</li><li>Which blockers should change sales qualification.</li><li>Which blockers need product or support escalation.</li></ul></div>
+  </div>
+</section>
+
+<section class="slide" id="s15" data-num="15">
+  <div class="kicker">Workstream 4</div>
+  <h2>Revenue Friction + Trust Watchlist.</h2>
+  <div class="grid two">
+    <div class="card"><div class="tag green">Build in first 30 days</div><ul><li>Create a watchlist for top Billing and PSA support drivers, repeated accounts, unsolved/aged/high/urgent signals, onboarding stage, account owner, product owner, MRR/ARR where available, renewal/reference status, and next action.</li><li>Add usage/adoption signals for strategic adopters and at-risk tracked accounts, labeled as usage signals, not retention proof.</li><li>Create a deal-ready trust packet for verified SOC 2/security claims with owner SLA for sales diligence responses.</li></ul></div>
+    <div class="card"><div class="tag blue">Decisions enabled</div><ul><li>Which support drivers need product fixes, enablement, workflow changes, or qualification changes.</li><li>Which accounts are not reference-ready.</li><li>Which trust gaps may block enterprise sales conversations.</li></ul></div>
+  </div>
+</section>
+
+<section class="slide" id="s16" data-num="16">
+  <div class="kicker">30-Day Cadence And Deliverables</div>
+  <h2>The month ends with decisions, not a longer question list.</h2>
+  <div class="grid four">
+    <div class="card"><div class="tag green">Week 1</div><p>Confirm owners, cadence, source systems, and first data fields. Select first 25 PSA/value-realization blockers and first at-risk PSA account list.</p></div>
+    <div class="card"><div class="tag blue">Week 2</div><p>Review first Product Evidence Ledger, Bookings Bridge, PSA Rescue Board, and Friction Watchlist. Assign owner/SLA for missing fields.</p></div>
+    <div class="card"><div class="tag yellow">Week 3</div><p>Make first operating decisions: qualify-out rules, sell-around guidance, rescue actions, support/product escalations, and trust-response owners.</p></div>
+    <div class="card"><div class="tag red">Week 4</div><p>Present first lifecycle scorecard: what moved, what was fixed, what was stopped, what still lacks evidence, and which decisions need Evan/board escalation.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s17" data-num="17">
   <div class="kicker">By Day 90</div>
   <h2>What leaders should be able to decide.</h2>
   <div class="grid two">
     <div class="card"><ul><li>Which product promises we can confidently sell.</li><li>Which sources and product motions create qualified, implementable opportunities.</li><li>Which deals should be qualified out before they hurt onboarding and support.</li></ul></div>
     <div class="card"><ul><li>Which implementation blockers need product, enablement, pricing, or process intervention.</li><li>Which customers are healthy enough to become references.</li><li>Which motions are creating retained, profitable revenue or the best available cost-to-serve proxy.</li></ul></div>
   </div>
+  <div class="callout" style="margin-top:24px">This does not require perfect data. It requires a weekly operating cadence where gaps have owners and actions.</div>
 </section>
 
-<section class="slide" id="s13" data-num="13">
+<section class="slide" id="s18" data-num="18">
   <div class="kicker">Data Integrity</div>
   <h2>What not to overclaim.</h2>
   <div class="grid two">
@@ -190,17 +273,19 @@ li{margin:8px 0;color:var(--muted);font-size:18px;line-height:1.35}
   <p class="lead" style="margin-top:24px">The recommendation does not depend on those claims. It depends on the visible lifecycle pattern and the need to manage it directly.</p>
 </section>
 
-<section class="slide" id="s14" data-num="14">
+<section class="slide" id="s19" data-num="19">
   <div class="kicker">Board Ask</div>
   <h2>Approve a 90-day Product-to-GTM-to-Onboarding-to-Support lifecycle program.</h2>
-  <p class="lead">The board is not being asked to approve a premature budget answer. It is being asked to approve the operating system that will show what to scale, fix, narrow, reprice, qualify out, or stop.</p>
+  <p class="lead">The program should be owned by Evan and operated weekly with Finance, RevOps, Sales, Marketing, Channel, Product, Onboarding, CS/Support, and Security.</p>
+  <div class="callout" style="margin-top:24px">The board is not being asked to approve a premature budget answer. It is being asked to approve the operating system that will show what to scale, fix, narrow, reprice, qualify out, or stop.</div>
 </section>
 
-<section class="slide" id="s15" data-num="15">
+<section class="slide" id="s20" data-num="20">
   <div class="kicker">Closing</div>
   <h2>Scale what can be sold, implemented, supported, referenced, and retained profitably.</h2>
-  <p class="lead">The growth engine has raw material: demand, product activity, wins, onboarding starts, usage, support signals, and customer proof opportunities. Everything that does not convert should be fixed, narrowed, repriced, qualified out, or stopped.</p>
-  <p class="small" style="margin-top:28px">Data boundary: 11/11 Round 3 operating diagnoses, 9/11 critiques included, Marvin and Remi missing at cutoff, Evan approved proceeding. No complete source-to-margin join exists yet.</p>
+  <p class="lead">The growth engine has raw material: demand, product activity, wins, onboarding starts, usage, support signals, and customer proof opportunities.</p>
+  <p class="lead">The work now is to convert that raw material into a disciplined lifecycle. Everything that does not convert should be fixed, narrowed, repriced, qualified out, or stopped.</p>
+  <p class="small" style="margin-top:28px">Data boundary: Round 3 operating diagnoses 11 of 11; synthesis critiques 9 of 11; Marvin and Remi missing at cutoff; proceeding approved. No complete source-to-margin join exists yet.</p>
 </section>
 </main>
 </body>
