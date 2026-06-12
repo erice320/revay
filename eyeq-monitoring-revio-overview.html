@@ -210,6 +210,56 @@
 
     .signal span { color: var(--quiet); font-size: 9px; line-height: 1.2; }
 
+    .visual-strip {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .site-shot {
+      position: relative;
+      min-height: 190px;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #080a0f;
+    }
+
+    .site-shot img {
+      width: 100%;
+      height: 100%;
+      min-height: 190px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .site-shot.home img { object-position: center 28%; }
+    .site-shot.soc img { object-position: center 18%; }
+
+    .shot-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 30px 13px 12px;
+      background: linear-gradient(180deg, transparent, rgba(8,10,15,.9));
+      color: #fff;
+    }
+
+    .shot-caption b {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+      line-height: 1.1;
+    }
+
+    .shot-caption span {
+      color: rgba(232,234,246,.78);
+      font-size: 9px;
+      line-height: 1.2;
+    }
+
     .main-grid {
       display: grid;
       grid-template-columns: 1.04fr .96fr;
@@ -345,6 +395,7 @@
       .top,
       .main-grid,
       .value-band,
+      .visual-strip,
       .quote-row,
       .footer {
         grid-template-columns: 1fr;
@@ -392,6 +443,23 @@
           <div class="signal"><b>QTC</b><span>Contracts, recurring charges, payments, collections</span></div>
         </div>
       </div>
+    </section>
+
+    <section class="visual-strip">
+      <figure class="site-shot home">
+        <img src="assets/eyeq/homepage-hero.png" alt="EyeQ Monitoring website showing AI monitoring for business properties">
+        <figcaption class="shot-caption">
+          <b>EyeQ positioning</b>
+          <span>AI monitoring, virtual guard, and business intelligence messaging from the public site.</span>
+        </figcaption>
+      </figure>
+      <figure class="site-shot soc">
+        <img src="assets/eyeq/soc-page.png" alt="EyeQ Monitoring SOC article showing security operations center monitors">
+        <figcaption class="shot-caption">
+          <b>Operational proof point</b>
+          <span>SOC-oriented service model, response workflows, and monitoring-center operations.</span>
+        </figcaption>
+      </figure>
     </section>
 
     <section class="main-grid">
