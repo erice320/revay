@@ -78,11 +78,9 @@
     }
 
     .logo {
-      color: #fff;
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: -.02em;
-      text-transform: none;
+      display: block;
+      width: 106px;
+      height: auto;
     }
 
     h1 {
@@ -224,12 +222,14 @@
       overflow: hidden;
       border: 1px solid var(--line);
       background: #080a0f;
+      display: flex;
+      flex-direction: column;
     }
 
     .site-shot img {
       width: 100%;
-      height: 100%;
-      min-height: 190px;
+      height: 190px;
+      min-height: 0;
       display: block;
       object-fit: cover;
     }
@@ -238,13 +238,11 @@
     .site-shot.soc img { object-position: center 18%; }
 
     .shot-caption {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 30px 13px 12px;
-      background: linear-gradient(180deg, transparent, rgba(8,10,15,.9));
+      position: static;
+      padding: 9px 12px 10px;
+      background: #080a0f;
       color: #fff;
+      border-top: 1px solid var(--line);
     }
 
     .shot-caption b {
@@ -414,7 +412,7 @@
       <div class="hero">
         <div>
           <div class="brand">
-            <span class="logo">Rev.io</span>
+            <img class="logo" src="assets/revio-logo-white.png" alt="Rev.io">
             <span>Tailored overview for EyeQ Monitoring</span>
           </div>
           <h1>Revenue operations for AI-enabled monitoring providers.</h1>
