@@ -336,6 +336,83 @@
       gap: 10px;
     }
 
+    .library-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .library-header p {
+      max-width: 860px;
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .library-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .filter-row button {
+      border: 1px solid var(--line);
+      background: rgba(8, 11, 18, 0.48);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+
+    .filter-row button.active,
+    .filter-row button:hover {
+      color: var(--text);
+      border-color: var(--gold-dim);
+      background: rgba(215, 181, 109, 0.1);
+    }
+
+    .library-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .truth-card {
+      border: 1px solid var(--line);
+      background: rgba(8, 11, 18, 0.48);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .truth-card h4 {
+      margin: 8px 0 7px;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .truth-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .truth-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
     .field {
       border: 1px solid var(--line);
       background: rgba(8, 11, 18, 0.48);
@@ -454,7 +531,9 @@
         border-right: 0;
         border-bottom: 1px solid var(--line);
       }
-      .court-rail, .grid, .ruling-board, .controls { grid-template-columns: 1fr; }
+      .court-rail, .grid, .ruling-board, .controls, .library-list { grid-template-columns: 1fr; }
+      .library-header { display: grid; }
+      .library-stats { justify-content: flex-start; }
       .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
@@ -484,6 +563,7 @@
       <nav class="nav">
         <a href="#truth">Glass Dais</a>
         <a href="#owners">Council Seats</a>
+        <a href="#library">Truth Library</a>
         <a href="#gaps">Case Docket</a>
       </nav>
       <div class="seal-note">
@@ -547,9 +627,33 @@
         </div>
       </section>
 
+      <section class="panel" id="library" style="margin-top:16px;">
+        <div class="library-header">
+          <div>
+            <div class="eyebrow">Glass Library</div>
+            <h3>Truths, Canonical Procedures, Definitions</h3>
+            <p>The library is the court record for reusable Glass knowledge. Draft and blocked entries are visible, but not treated as board-safe until owner, source, freshness, permission scope, and conflict review are explicit.</p>
+          </div>
+          <div class="library-stats">
+            <span class="badge gold" id="library-count">0 records</span>
+            <span class="badge partial">Draft visible</span>
+            <span class="badge blocked">Blocked guarded</span>
+          </div>
+        </div>
+        <div class="filter-row" id="library-filters" aria-label="Library filters">
+          <button type="button" class="active" data-filter="all">All</button>
+          <button type="button" data-filter="Truth">Truths</button>
+          <button type="button" data-filter="Procedure">Procedures</button>
+          <button type="button" data-filter="Definition">Definitions</button>
+          <button type="button" data-filter="Source Rule">Source Rules</button>
+          <button type="button" data-filter="Retrieval Contract">Retrieval Contracts</button>
+        </div>
+        <div class="library-list" id="library-list"></div>
+      </section>
+
       <div class="controls">
-        <input id="search" type="search" placeholder="Search the docket by owner, evidence gap, blocker, next motion, or sealed claim">
-        <div class="hint">Each case shows owner, blocker, next motion, admissible evidence, and claims still under seal.</div>
+        <input id="search" type="search" placeholder="Search the Glass Library and case docket by owner, definition, source, blocker, next motion, or sealed claim">
+        <div class="hint">Integrated search covers library records and active docket cases. Filters apply to the library; docket search always stays global.</div>
       </div>
 
       <section class="gap-list" id="gaps"></section>
@@ -631,13 +735,186 @@
       }
     ];
 
+    const truthLibrary = [
+      {
+        id: 'CT-REVIO-GLASS-001',
+        type: 'Truth',
+        status: 'Draft',
+        title: 'Rev.io Glass definition',
+        body: "Rev.io Glass is Rev.io's shared-consciousness layer: humans and agents should work from the same vetted truths, with provenance, freshness, permissions, and correction history.",
+        source: 'docs/revio-glass-current-agent-instructions.md; Vault section 07 Common Truth',
+        owner: 'Council Vault',
+        linkedCase: 'Glass core'
+      },
+      {
+        id: 'PROC-PACKET-WORKFLOW',
+        type: 'Procedure',
+        status: 'Canonical v0',
+        title: 'How to work a Council packet',
+        body: 'Open the assigned inbox ask, read the linked packet, check applicable Glass sections and retrieval contracts, retrieve source evidence, then write/update the agent outbox contribution.',
+        source: 'Rev.io Glass Current-Agent Instructions',
+        owner: 'Council protocol',
+        linkedCase: 'All packets'
+      },
+      {
+        id: 'PROC-CONTRIB-CONTRACT',
+        type: 'Procedure',
+        status: 'Canonical v0',
+        title: 'Required contribution contract',
+        body: 'Every contribution must carry packet ID, agent/domain, submitted time, retrieval status, retrieved and missing context, signal, risk, recommendation, confidence, evidence/source links, and dependency/ask.',
+        source: 'Rev.io Glass Current-Agent Instructions',
+        owner: 'Council protocol',
+        linkedCase: 'All outboxes'
+      },
+      {
+        id: 'DEF-COMMON-TRUTH',
+        type: 'Definition',
+        status: 'Draft',
+        title: 'Common Truth',
+        body: 'Reusable promoted or draft shared truths. Common Truth is not private memory and should not contain raw sensitive data, guesses, or unsupported customer/finance/security detail.',
+        source: 'Rev.io Glass Current-Agent Instructions; current-agent onboarding',
+        owner: 'Council Vault',
+        linkedCase: '07 Common Truth'
+      },
+      {
+        id: 'DEF-CORRECTION-LEDGER',
+        type: 'Definition',
+        status: 'Draft',
+        title: 'Correction Ledger',
+        body: 'Durable future-action rules created from human or agent corrections, so the same mistake is not repeated in later packets or summaries.',
+        source: 'Rev.io Glass Current-Agent Instructions',
+        owner: 'Council Vault',
+        linkedCase: '09 Correction Ledger'
+      },
+      {
+        id: 'DEF-GLOSSARY-ONTOLOGY',
+        type: 'Definition',
+        status: 'Draft',
+        title: 'Glossary + Ontology',
+        body: 'Controlled business definitions plus entity and metric relationships. Terms remain Draft until canonical source, formula/calculation, and owner are verified.',
+        source: 'Rev.io Glass Current-Agent Instructions; current-agent onboarding',
+        owner: 'Council Vault',
+        linkedCase: '10 Glossary + Ontology'
+      },
+      {
+        id: 'SRC-NOTION-VAULT',
+        type: 'Source Rule',
+        status: 'Canonical v0',
+        title: 'Notion Vault is the operating source of truth',
+        body: 'Chat is for notifications and clarification. Material packet context, contributions, decisions, and actions must live in the Council Vault.',
+        source: 'Rev.io Glass & Council Vault skill; current-agent instructions',
+        owner: 'Council protocol',
+        linkedCase: 'All Council work'
+      },
+      {
+        id: 'RC-REVIO-GLASS-FEEDBACK-V0',
+        type: 'Retrieval Contract',
+        status: 'Draft',
+        title: 'Agent feedback packet contract',
+        body: 'For Glass feedback packets, agents must distinguish friction, blocking status, missing truth, proposed truth/correction candidates, owners, visibility limits, permission concerns, and evidence basis.',
+        source: 'Vault section 11 Retrieval Contracts; current-agent instructions',
+        owner: 'Council Vault',
+        linkedCase: 'Glass feedback packets'
+      },
+      {
+        id: 'TRUTH-J02',
+        type: 'Truth',
+        status: 'Blocked',
+        title: 'Finance retained-margin spine is not claim-safe',
+        body: 'Revenue by customer/product can be supplied, but customer/product gross margin and cost-to-serve are not built; closed-won cohort and SF field semantics still need owner signoff.',
+        source: 'GET /api/glass-truth-gaps HTTP 200; J02',
+        owner: 'Lisa / Finance + Billy / Claudio',
+        linkedCase: 'J02'
+      },
+      {
+        id: 'TRUTH-J03',
+        type: 'Truth',
+        status: 'Partial',
+        title: 'Source-to-won is proxy-only until campaign economics unblock',
+        body: 'Salesforce source/subsource is usable as a booking proxy, but HubSpot campaign metadata is blocked by HTTP 403 MISSING_SCOPES and canonical source definitions need owner approval.',
+        source: 'GET /api/glass-truth-gaps HTTP 200; J03',
+        owner: 'Billy / Claudio',
+        linkedCase: 'J03'
+      },
+      {
+        id: 'TRUTH-J06',
+        type: 'Truth',
+        status: 'Blocked',
+        title: 'Product Impact Spine is not yet source-backed',
+        body: 'No owner-backed product-to-revenue/account key, product analytics export, Salesforce product mapping, or joined revenue evidence has been retrieved.',
+        source: 'GET /api/glass-truth-gaps HTTP 200; J06',
+        owner: 'Rosie / Leslie or Rupert / Serge + Billy / Claudio',
+        linkedCase: 'J06'
+      },
+      {
+        id: 'RC-PRODUCT-IMPACT-SPINE',
+        type: 'Retrieval Contract',
+        status: 'Needed',
+        title: 'Product Impact Spine retrieval contract',
+        body: 'Required before promoting product-to-revenue truth: source system, account/customer key, roadmap/product key, support/onboarding link, revenue/margin allowed-use label, and Salesforce field path.',
+        source: 'GET /api/glass-truth-gaps HTTP 200; J06 next motion',
+        owner: 'Product + RevOps + Finance',
+        linkedCase: 'J06'
+      }
+    ];
+
     const list = document.getElementById('gaps');
+    const libraryList = document.getElementById('library-list');
+    const libraryCount = document.getElementById('library-count');
+    const libraryFilters = document.getElementById('library-filters');
     const search = document.getElementById('search');
+    let currentLibraryFilter = 'all';
+
+    function esc(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+    }
 
     function statusClass(status) {
       if (status.includes('blocked')) return 'blocked';
       if (status.includes('partial')) return 'partial';
       return 'open';
+    }
+
+    function libraryStatusClass(status) {
+      const normalized = status.toLowerCase();
+      if (normalized.includes('blocked') || normalized.includes('needed')) return 'blocked';
+      if (normalized.includes('draft') || normalized.includes('partial')) return 'partial';
+      return 'open';
+    }
+
+    function renderLibrary(query = '') {
+      const q = query.trim().toLowerCase();
+      const visible = truthLibrary.filter((item) => {
+        const matchesFilter = currentLibraryFilter === 'all' || item.type === currentLibraryFilter;
+        const matchesQuery = !q || Object.values(item).join(' ').toLowerCase().includes(q);
+        return matchesFilter && matchesQuery;
+      });
+      libraryCount.textContent = `${visible.length} / ${truthLibrary.length} records`;
+      libraryList.innerHTML = visible.map((item) => {
+        const cls = libraryStatusClass(item.status);
+        return `
+          <article class="truth-card">
+            <div class="truth-meta">
+              <span class="badge gold">${esc(item.id)}</span>
+              <span class="badge">${esc(item.type)}</span>
+              <span class="badge ${cls}">${esc(item.status)}</span>
+            </div>
+            <h4>${esc(item.title)}</h4>
+            <p>${esc(item.body)}</p>
+            <div class="truth-meta" style="margin-top:10px;">
+              <span class="badge">Owner: ${esc(item.owner)}</span>
+              <span class="badge">Source: ${esc(item.source)}</span>
+              <span class="badge">Link: ${esc(item.linkedCase)}</span>
+            </div>
+          </article>
+        `;
+      }).join('');
     }
 
     function render(query = '') {
@@ -649,24 +926,32 @@
           <article class="gap ${cls}">
             <div class="gap-head">
               <div class="gap-title">
-                <span class="badge gold">${gap.id}</span>
-                <b>${gap.area}</b>
+                <span class="badge gold">${esc(gap.id)}</span>
+                <b>${esc(gap.area)}</b>
               </div>
-              <span class="badge ${cls}">${gap.status}</span>
+              <span class="badge ${cls}">${esc(gap.status)}</span>
             </div>
             <div class="grid">
-              <div class="field"><label>Seat Holder</label><p>${gap.owner}</p></div>
-              <div class="field warn"><label>Evidence Obstruction</label><p>${gap.blocker}</p></div>
-              <div class="field"><label>Next Motion</label><p>${gap.next}</p></div>
-              <div class="field"><label>Admissible Now</label><p>${gap.allowed}</p></div>
-              <div class="field danger"><label>Claim Under Seal</label><p>${gap.prohibited}</p></div>
+              <div class="field"><label>Seat Holder</label><p>${esc(gap.owner)}</p></div>
+              <div class="field warn"><label>Evidence Obstruction</label><p>${esc(gap.blocker)}</p></div>
+              <div class="field"><label>Next Motion</label><p>${esc(gap.next)}</p></div>
+              <div class="field"><label>Admissible Now</label><p>${esc(gap.allowed)}</p></div>
+              <div class="field danger"><label>Claim Under Seal</label><p>${esc(gap.prohibited)}</p></div>
             </div>
           </article>
         `;
       }).join('');
+      renderLibrary(query);
     }
 
     search.addEventListener('input', () => render(search.value));
+    libraryFilters.addEventListener('click', (event) => {
+      const button = event.target.closest('button[data-filter]');
+      if (!button) return;
+      currentLibraryFilter = button.dataset.filter;
+      libraryFilters.querySelectorAll('button').forEach((item) => item.classList.toggle('active', item === button));
+      render(search.value);
+    });
     render();
   </script>
 </body>
