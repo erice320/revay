@@ -230,6 +230,10 @@
       min-width: 0;
     }
 
+    .command-surface.with-query {
+      grid-template-columns: minmax(420px, 1fr) minmax(360px, 0.85fr) minmax(360px, 0.9fr);
+    }
+
     .command-card {
       border: 1px solid var(--line);
       background: var(--surface);
@@ -241,6 +245,11 @@
     .command-card.primary {
       border-color: rgba(255, 107, 107, 0.35);
       background: linear-gradient(180deg, rgba(255, 107, 107, 0.08), rgba(26, 29, 39, 0.98));
+    }
+
+    .command-card.answer {
+      border-color: rgba(0, 212, 170, 0.32);
+      background: linear-gradient(180deg, rgba(0, 212, 170, 0.08), rgba(26, 29, 39, 0.98));
     }
 
     .command-card h2 {
@@ -310,6 +319,38 @@
     }
 
     .push-item button {
+      margin-top: 8px;
+      padding: 6px 8px;
+      font-size: 12px;
+    }
+
+    .answer-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .answer-item {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 9px;
+      min-width: 0;
+    }
+
+    .answer-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.25;
+      margin-bottom: 5px;
+    }
+
+    .answer-item p {
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .answer-item button {
       margin-top: 8px;
       padding: 6px 8px;
       font-size: 12px;
@@ -762,6 +803,11 @@
       margin-bottom: 12px;
     }
 
+    .panel-card.answer {
+      border-color: rgba(0, 212, 170, 0.32);
+      background: linear-gradient(180deg, rgba(0, 212, 170, 0.08), rgba(26, 29, 39, 0.98));
+    }
+
     .inspector h2 {
       margin: 0 0 10px;
       font-size: 20px;
@@ -929,7 +975,7 @@
     <main>
       <div class="topbar">
         <div class="search-wrap">
-          <input id="search" type="search" placeholder="Search packets, contributions, truth, decisions, actions, sources..." autocomplete="off">
+          <input id="search" type="search" placeholder="Ask a truth question, challenge an assumption, or search packets, owners, sources..." autocomplete="off">
         </div>
         <div class="sync-status" id="sync-status">Loading local graph data...</div>
       </div>
@@ -981,11 +1027,11 @@
         <p>Search or click the graph to inspect provenance, freshness, status, confidence, source links, and related nodes.</p>
       </div>
       <div class="panel-card proposal">
-        <div class="small-label" style="margin-top:0">Proposal Draft</div>
+        <div class="small-label" style="margin-top:0">Propose To Council</div>
         <input id="proposal-title" placeholder="Idea or project title">
         <textarea id="proposal-body" rows="5" placeholder="Question, business objective, why now, expected Council output..."></textarea>
         <div id="proposal-overlap"></div>
-        <button id="proposal-button" type="button">Stage Draft Locally</button>
+        <button id="proposal-button" type="button">Stage Council Draft</button>
         <p id="proposal-note" style="margin-top:10px">v0 stages draft metadata locally in the browser. Notion routing stays approval-gated.</p>
       </div>
       <div id="proposal-queue-card"></div>
@@ -1411,6 +1457,137 @@
               <button type="button" data-gap-search="${escapeHtml(item.owner)}">Inspect owner gaps</button>
             </div>
           `).join('')}
+        </div>
+      `;
+    }
+
+    function gapPriorityScore(gap) {
+      let score = 0;
+      if (/blocked/i.test(gap.status)) score += 30;
+      if (/partial/i.test(gap.status)) score += 18;
+      if (/open/i.test(gap.status)) score += 16;
+      if (/Billy|Claudio/i.test(gap.owner)) score += 12;
+      if (/margin|gross margin|source|Salesforce|support|product|usage|trust|Revin/i.test(`${gap.area} ${gap.blocker} ${gap.prohibited}`)) score += 8;
+      return score;
+    }
+
+    function topActionableGaps(limit = 5) {
+      return [...glassTruthGaps]
+        .sort((a, b) => gapPriorityScore(b) - gapPriorityScore(a) || a.id.localeCompare(b.id))
+        .slice(0, limit);
+    }
+
+    function classifyQuery(value) {
+      const q = String(value || '').toLowerCase();
+      if (!q.trim()) return 'overview';
+      if (/\?|assum|can we claim|is it true|prove|evidence|why|how do we know|what source|validated|source-backed/.test(q)) return 'assumption';
+      if (/action|next|owner|block|blocked|who|follow up|push|do now|priority/.test(q)) return 'action';
+      if (/truth|guardrail|allowed|blocked claim|do not claim|shared knowledge/.test(q)) return 'truth';
+      return 'search';
+    }
+
+    function queryMatchingGaps(value) {
+      const terms = tokenize(value);
+      const q = String(value || '').toLowerCase();
+      const matches = glassTruthGaps
+        .map(gap => {
+          const haystack = `${gap.id} ${gap.area} ${gap.status} ${gap.owner} ${gap.blocker} ${gap.next} ${gap.allowed} ${gap.prohibited} ${gap.source}`.toLowerCase();
+          let score = 0;
+          if (q && haystack.includes(q)) score += 30;
+          terms.forEach(term => { if (haystack.includes(term)) score += 5; });
+          if (/margin|profit|cac|payback|roi/.test(q) && /margin|profit|cac|payback|roi/i.test(gap.prohibited)) score += 20;
+          if (/source|campaign|marketing|won|booking/.test(q) && /source|campaign|marketing|won|Salesforce/i.test(`${gap.area} ${gap.blocker} ${gap.next}`)) score += 20;
+          if (/support|ticket|friction/.test(q) && /support|Zendesk|friction/i.test(`${gap.area} ${gap.blocker}`)) score += 20;
+          if (/product|roadmap|usage|adoption|trust|pendo|soc2/.test(q) && /product|roadmap|usage|Pendo|SOC2|trust/i.test(`${gap.area} ${gap.blocker}`)) score += 20;
+          return { gap, score };
+        })
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score || gapPriorityScore(b.gap) - gapPriorityScore(a.gap))
+        .map(item => item.gap);
+      return matches.length ? matches.slice(0, 5) : topActionableGaps(3);
+    }
+
+    function queryAnswerMarkup() {
+      const query = state.query.trim();
+      if (!query) return '';
+      const mode = classifyQuery(query);
+      const docs = rankedDocuments().slice(0, 6);
+      const gaps = queryMatchingGaps(query);
+      const topGap = gaps[0];
+      const guardrailText = gaps.map(gap => gap.prohibited).filter(Boolean).join(' ');
+      const canAnswer = docs.length || gaps.length;
+      const modeLabel = {
+        assumption: 'Assumption Check',
+        action: 'Action Finder',
+        truth: 'Shared Truth Lookup',
+        search: 'Knowledge Search',
+        overview: 'Overview'
+      }[mode] || 'Knowledge Search';
+      const headline = !canAnswer
+        ? 'No shared knowledge match in this local sync.'
+        : mode === 'assumption'
+          ? 'Treat this as not proven until the listed source or owner clears it.'
+          : mode === 'action'
+            ? 'The actionable path is owner/source closure, not more graph browsing.'
+            : mode === 'truth'
+              ? 'Current shared truth is constrained by these guardrails.'
+              : 'Closest shared-knowledge matches are below.';
+      return `
+        <div class="command-card answer">
+          <div class="badges" style="margin-bottom:8px">
+            <span class="badge good">${escapeHtml(modeLabel)}</span>
+            <span class="badge">${escapeHtml(docs.length)} matched docs</span>
+            <span class="badge ${gaps.length ? 'warn' : ''}">${escapeHtml(gaps.length)} related blockers</span>
+          </div>
+          <h2>${escapeHtml(headline)}</h2>
+          ${topGap ? `
+            <p><strong>So what:</strong> ${escapeHtml(topGap.area)} is the main constraint. ${escapeHtml(workflowStateForGap(topGap))}. The next useful move is: ${escapeHtml(topGap.next)}</p>
+            <p style="margin-top:8px"><strong>Do not overclaim:</strong> ${escapeHtml(guardrailText || topGap.prohibited)}</p>
+          ` : '<p>Use a more specific packet, owner, source, account, claim, or assumption.</p>'}
+          <div class="answer-list">
+            ${gaps.slice(0, 3).map(gap => `
+              <div class="answer-item">
+                <strong>${escapeHtml(gap.id)} · ${escapeHtml(gap.area)}</strong>
+                <div class="badges">
+                  <span class="badge ${badgeClass(gap.status)}">${escapeHtml(gap.status)}</span>
+                  <span class="badge">${escapeHtml(gap.owner)}</span>
+                </div>
+                <p>${escapeHtml(gap.blocker)}</p>
+                <button type="button" data-gap-node="${escapeHtml(gapNodeId(gap.id))}">Inspect evidence and next step</button>
+              </div>
+            `).join('')}
+          </div>
+          <div class="command-actions">
+            ${topGap ? `<button type="button" data-stage-gap="${escapeHtml(topGap.id)}">Draft council/owner follow-up</button>` : ''}
+            <button type="button" data-test-query="${escapeHtml(query)}">Refresh ranked evidence</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function humanSummaryMarkup() {
+      const actions = topActionableGaps(4);
+      return `
+        <div class="command-card">
+          <h2>Human Read</h2>
+          <p><strong>So what:</strong> the Command Center is showing that the Revenue Flywheel story is useful but still constrained. We can discuss operating signals, but not board-level retained-margin conversion claims until the missing joins close.</p>
+          <div class="answer-list">
+            <div class="answer-item">
+              <strong>1. The decision risk</strong>
+              <p>Board/Product/GTM language can accidentally imply margin, source ROI, churn causality, or product ROI that the retrieved evidence does not support yet.</p>
+            </div>
+            <div class="answer-item">
+              <strong>2. The action path</strong>
+              <p>Close source/owner joins with Billy / Claudio, Lisa, Will / Jarvis, Rosie/Leslie or Rupert/Serge, Ray, and Ray/Matt for Revin coverage.</p>
+            </div>
+            <div class="answer-item">
+              <strong>3. The Council use case</strong>
+              <p>Use “Propose to Council” for questions where the evidence is incomplete, disputed, cross-functional, or needs owner-source validation.</p>
+            </div>
+          </div>
+          <div class="command-actions">
+            ${actions.slice(0, 3).map(gap => `<button type="button" data-gap-node="${escapeHtml(gapNodeId(gap.id))}">${escapeHtml(gap.id)} next step</button>`).join('')}
+          </div>
         </div>
       `;
     }
@@ -1845,19 +2022,19 @@
       const partial = glassTruthGaps.filter(gap => /partial/i.test(gap.status)).length;
       const open = glassTruthGaps.filter(gap => /open/i.test(gap.status)).length;
       const topOwners = executiveOwnerQueue().slice(0, 6);
-      const topGaps = ['J02', 'J03', 'J05', 'J06', 'J07', 'J12']
-        .map(id => glassTruthGaps.find(gap => gap.id === id))
-        .filter(Boolean);
+      const topGaps = topActionableGaps(6);
+      const queryAnswer = queryAnswerMarkup();
       return `
-        <div class="command-surface">
+        <div class="command-surface ${state.query.trim() ? 'with-query' : ''}">
+          ${queryAnswer}
           <div class="command-card primary">
             <div class="badges" style="margin-bottom:8px">
               <span class="badge bad">Not board-ready</span>
               <span class="badge warn">Notion writes disabled</span>
               <span class="badge">PKT-260602</span>
             </div>
-            <h2>Missing joins are still blocking universal Glass truth.</h2>
-            <p>The useful read is not the graph count. It is which source-backed joins are still blocked, who owns them, and which claims must stay out of board/product/GTM language until owner evidence arrives.</p>
+            <h2>What matters now: close the joins that decide what we are allowed to claim.</h2>
+            <p>The useful read is not the graph count. It is which source-backed joins are blocked, who owns them, what we can safely say today, and what must go to Council or an owner before it becomes shared Glass truth.</p>
             <div class="decision-grid">
               <div class="decision-tile"><strong>${escapeHtml(glassTruthGaps.length)}</strong><span>truth blockers</span></div>
               <div class="decision-tile"><strong>${escapeHtml(blocked)}</strong><span>blocked</span></div>
@@ -1871,13 +2048,15 @@
             <div class="command-actions">
               <button type="button" data-gap-search="Billy / Claudio">Push Billy / Claudio</button>
               <button type="button" data-gap-search="blocked">Show blocked joins</button>
+              <button type="button" data-test-query="Can we claim retained margin conversion?">Question retained margin</button>
               <button type="button" data-test-query="PKT-260602">Open packet</button>
               <a href="/api/glass-truth-gaps/export.md" target="_blank" rel="noopener">Export gap brief</a>
             </div>
           </div>
+          ${state.query.trim() ? '' : humanSummaryMarkup()}
           <div class="command-card">
-            <h2>This Week’s Owner Push</h2>
-            <p>Use this as the operating list. Every row needs source/export path, field definition, delegate, due date, or explicit exclusion from claims.</p>
+            <h2>Actionable Queue</h2>
+            <p>Use this as the operating list. Every row needs a source/export path, field definition, delegate, due date, or explicit exclusion from claims.</p>
             <div class="push-list">
               ${topOwners.map(item => {
                 const firstGap = item.gaps[0];
@@ -1896,7 +2075,7 @@
             </div>
           </div>
           <div class="command-card">
-            <h2>Closure Board</h2>
+            <h2>Assumptions To Challenge</h2>
             <div class="push-list">
               ${topGaps.map(gap => `
                 <div class="push-item">
@@ -1908,6 +2087,7 @@
                   <p><strong>Next:</strong> ${escapeHtml(gap.next)}</p>
                   <p><strong>Blocked claim:</strong> ${escapeHtml(gap.prohibited)}</p>
                   <button type="button" data-gap-node="${escapeHtml(gapNodeId(gap.id))}">Inspect gap</button>
+                  <button type="button" data-test-query="${escapeHtml(`Can we claim ${gap.prohibited}?`)}">Question assumption</button>
                 </div>
               `).join('')}
             </div>
@@ -1924,6 +2104,7 @@
             <div class="command-actions">
               <button type="button" data-test-query="missing joins">Search missing joins</button>
               <button type="button" data-test-query="Revenue Flywheel">Search Revenue Flywheel</button>
+              <button type="button" data-test-query="What can we safely say about source to won?">Ask source-to-won</button>
             </div>
           </div>
         </div>
@@ -1939,6 +2120,9 @@
       });
       target.querySelectorAll('[data-gap-search]').forEach(button => {
         button.addEventListener('click', () => applyGapSearch(button.dataset.gapSearch));
+      });
+      target.querySelectorAll('[data-stage-gap]').forEach(button => {
+        button.addEventListener('click', () => stageGapFollowup(button.dataset.stageGap));
       });
       target.querySelectorAll('[data-test-query]').forEach(button => {
         button.addEventListener('click', () => {
@@ -2209,6 +2393,38 @@
       return scored.reasons.length ? scored.reasons.join(' · ') : 'Selected item is related to the current filtered result set.';
     }
 
+    function nodeSoWhatMarkup(node, doc, selectedGap = null) {
+      if (selectedGap) {
+        return `
+          <div class="panel-card answer">
+            <div class="small-label" style="margin-top:0">So What</div>
+            <p><strong>Meaning:</strong> ${escapeHtml(selectedGap.area)} is not universal Glass truth yet. Related claims must stay caveated or excluded.</p>
+            <p><strong>Now:</strong> ${escapeHtml(selectedGap.next)}</p>
+            <p><strong>Safe:</strong> ${escapeHtml(selectedGap.allowed)}</p>
+            <p><strong>Blocked:</strong> ${escapeHtml(selectedGap.prohibited)}</p>
+          </div>
+        `;
+      }
+      if ((node?.packet_id || doc?.packet_id) === packetVerticalSliceId) {
+        return `
+          <div class="panel-card answer">
+            <div class="small-label" style="margin-top:0">So What</div>
+            <p><strong>Meaning:</strong> this is part of the current missing-joins sprint. It matters only if it helps close a source join, clarify an owner, downgrade an unsupported claim, or prepare a Council ask.</p>
+            <p><strong>Now:</strong> inspect the same-packet trail, then use the proposal box if the question needs Council synthesis or owner validation.</p>
+          </div>
+        `;
+      }
+      if (['synthesis', 'decision', 'action', 'packet', 'packet-key'].includes(node?.type)) {
+        return `
+          <div class="panel-card answer">
+            <div class="small-label" style="margin-top:0">So What</div>
+            <p><strong>Meaning:</strong> this is a higher-level Council artifact. Use it as a starting point, then verify source links, retrieval status, and any claim guardrails before acting on it.</p>
+          </div>
+        `;
+      }
+      return '';
+    }
+
     function selectNode(nodeId) {
       state.selectedNodeId = nodeId;
       const node = state.data.nodes.find(item => item.id === nodeId);
@@ -2236,6 +2452,8 @@
           </div>
           <p style="margin-top:12px">${escapeHtml(node.summary || doc?.snippet || 'No summary available.')}</p>
         </div>
+
+        ${nodeSoWhatMarkup(node, doc, selectedGap)}
 
         <div class="panel-card">
           <div class="small-label" style="margin-top:0">Why This Appears</div>
@@ -2300,11 +2518,11 @@
         </div>
 
         <div class="panel-card proposal">
-          <div class="small-label" style="margin-top:0">Proposal Draft</div>
+          <div class="small-label" style="margin-top:0">Propose To Council</div>
           <input id="proposal-title" placeholder="Idea or project title" value="${escapeHtml(node.packet_id ? `Follow-up on ${node.packet_id}` : '')}">
           <textarea id="proposal-body" rows="5" placeholder="Question, business objective, why now, expected Council output..."></textarea>
           <div id="proposal-overlap"></div>
-          <button id="proposal-button" type="button">Stage Draft Locally</button>
+          <button id="proposal-button" type="button">Stage Council Draft</button>
           <p id="proposal-note" style="margin-top:10px">Linked context: ${escapeHtml(node.title)}</p>
         </div>
         ${proposalQueueMarkup()}
