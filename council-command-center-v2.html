@@ -1,0 +1,2875 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Council Intelligence Command Center</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface-2: #202536;
+      --surface-3: #252b3d;
+      --text: #e8eaf6;
+      --muted: #aab0c5;
+      --line: #33394d;
+      --accent: #6c63ff;
+      --accent-2: #00d4aa;
+      --warn: #f0b84a;
+      --danger: #ff6b6b;
+      --blue: #4aa8ff;
+      --magenta: #d86cff;
+      --shadow: rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+      min-height: 100vh;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    button:hover, button.active {
+      border-color: var(--accent-2);
+      color: #ffffff;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 248px minmax(520px, 1fr) 370px;
+      height: 100vh;
+      min-height: 720px;
+    }
+
+    aside {
+      border-right: 1px solid var(--line);
+      background: #11141d;
+      padding: 18px 16px;
+      overflow: auto;
+    }
+
+    .brand {
+      margin-bottom: 22px;
+    }
+
+    .brand h1 {
+      font-size: 21px;
+      line-height: 1.12;
+      margin: 0 0 8px;
+      font-weight: 780;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    nav {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    nav button {
+      text-align: left;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .small-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 760;
+      margin: 18px 0 8px;
+    }
+
+    .metric {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 8px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    main {
+      display: grid;
+      grid-template-rows: auto auto auto 1fr;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      background: #121620;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 11px 12px;
+      outline: none;
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--accent-2);
+    }
+
+    .sync-status {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+      max-width: 420px;
+      line-height: 1.35;
+    }
+
+    .sync-status b {
+      color: var(--text);
+    }
+
+    .filters {
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr)) minmax(130px, 0.8fr) auto auto;
+      gap: 10px;
+      padding: 12px 18px;
+      background: #131722;
+      overflow-x: auto;
+    }
+
+    .filters select,
+    .filters button {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 10px;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .filters button {
+      width: auto;
+      white-space: nowrap;
+    }
+
+    .workbench {
+      border-bottom: 1px solid var(--line);
+      background: #10141e;
+      padding: 14px 18px;
+      display: block;
+      overflow: auto;
+    }
+
+    .workbench-card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 13px;
+      min-width: 0;
+    }
+
+    .workbench-card h2 {
+      margin: 0 0 7px;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .workbench-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.42;
+      margin: 0 0 10px;
+    }
+
+    .command-surface {
+      display: grid;
+      grid-template-columns: minmax(420px, 1.1fr) minmax(360px, 0.9fr);
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .command-card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 15px;
+      min-width: 0;
+    }
+
+    .command-card.primary {
+      border-color: rgba(255, 107, 107, 0.35);
+      background: linear-gradient(180deg, rgba(255, 107, 107, 0.08), rgba(26, 29, 39, 0.98));
+    }
+
+    .command-card h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .command-card h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .command-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+      margin: 0;
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .decision-tile {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 10px;
+      min-width: 0;
+    }
+
+    .decision-tile strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1.05;
+    }
+
+    .decision-tile span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .push-list {
+      display: grid;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .push-item {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 10px;
+      min-width: 0;
+    }
+
+    .push-item p {
+      font-size: 12px;
+      overflow-wrap: anywhere;
+      margin-top: 7px;
+    }
+
+    .push-item button {
+      margin-top: 8px;
+      padding: 6px 8px;
+      font-size: 12px;
+    }
+
+    .guardrail-strip {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .guardrail-item {
+      border: 1px solid rgba(255, 107, 107, 0.28);
+      background: rgba(255, 107, 107, 0.07);
+      border-radius: 8px;
+      padding: 9px;
+      min-width: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .command-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .command-actions button,
+    .command-actions a {
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 7px 9px;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .quick-tests {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .quick-tests button {
+      font-size: 12px;
+      padding: 6px 9px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .mini-stat {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 9px;
+      min-width: 0;
+    }
+
+    .mini-stat strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .mini-stat span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .gap-summary {
+      display: grid;
+      gap: 8px;
+      max-height: 186px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 2px;
+    }
+
+    .gap-row {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 9px;
+      min-width: 0;
+    }
+
+    .gap-row strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.25;
+      margin-bottom: 5px;
+    }
+
+    .gap-row p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.38;
+      overflow-wrap: anywhere;
+    }
+
+    .gap-row .badge,
+    .gap-detail .badge {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .gap-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 9px;
+    }
+
+    .gap-actions button,
+    .gap-actions a {
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 12px;
+      line-height: 1.2;
+      text-decoration: none;
+    }
+
+    .claim-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .claim-box {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 9px;
+      min-width: 0;
+    }
+
+    .claim-box strong {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .claim-box p {
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .gap-card {
+      border-color: rgba(240, 184, 74, 0.34);
+      background: linear-gradient(180deg, rgba(240, 184, 74, 0.07), rgba(26, 29, 39, 0.96));
+    }
+
+    .gap-detail-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .gap-detail {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 10px;
+      min-width: 0;
+    }
+
+    .gap-detail h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .gap-detail p {
+      margin-top: 7px;
+      font-size: 12px;
+    }
+
+    .work {
+      display: grid;
+      grid-template-columns: 390px minmax(420px, 1fr);
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .results {
+      overflow: auto;
+      border-right: 1px solid var(--line);
+      padding: 14px;
+      background: #10131b;
+    }
+
+    .result {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .result:hover, .result.active {
+      border-color: var(--accent-2);
+      background: #1d2331;
+    }
+
+    .result h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      line-height: 1.22;
+    }
+
+    .result-group {
+      margin: 0 0 14px;
+    }
+
+    .result-group h2 {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 12px 2px 8px;
+    }
+
+    mark {
+      background: rgba(240, 184, 74, 0.24);
+      color: var(--text);
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+
+    .result p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      gap: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 7px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .badge.type { color: #ffffff; border-color: rgba(108, 99, 255, 0.55); background: rgba(108, 99, 255, 0.16); }
+    .badge.good { color: var(--accent-2); border-color: rgba(0, 212, 170, 0.45); }
+    .badge.warn { color: var(--warn); border-color: rgba(240, 184, 74, 0.45); }
+    .badge.bad { color: var(--danger); border-color: rgba(255, 107, 107, 0.45); }
+
+    .map-panel {
+      min-width: 0;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+        #0f1117;
+      background-size: 28px 28px;
+    }
+
+    .map-head {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .map-title {
+      border: 1px solid var(--line);
+      background: rgba(26, 29, 39, 0.92);
+      border-radius: 8px;
+      padding: 9px 10px;
+      box-shadow: 0 10px 26px var(--shadow);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .map-title b { color: var(--text); }
+
+    .map-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .depth-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--line);
+      background: rgba(26, 29, 39, 0.92);
+      border-radius: 8px;
+      padding: 5px 7px;
+      font-size: 12px;
+      color: var(--muted);
+      box-shadow: 0 10px 26px var(--shadow);
+    }
+
+    .depth-control button {
+      padding: 3px 7px;
+      border-radius: 6px;
+      line-height: 1;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .summary-tile {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 9px;
+      min-width: 0;
+    }
+
+    .summary-tile strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.1;
+    }
+
+    .summary-tile span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .action-list {
+      display: grid;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .action-list button {
+      width: 100%;
+      text-align: left;
+      font-size: 12px;
+    }
+
+    .owner-queue,
+    .freshness-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .owner-item,
+    .freshness-item {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 9px;
+      min-width: 0;
+    }
+
+    .owner-item strong,
+    .freshness-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.25;
+      margin-bottom: 5px;
+    }
+
+    .owner-item p,
+    .freshness-item p {
+      font-size: 12px;
+      margin-top: 6px;
+      overflow-wrap: anywhere;
+    }
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+    }
+
+    .edge {
+      stroke: #44506b;
+      stroke-width: 1.2;
+      opacity: 0.62;
+    }
+
+    .node-circle {
+      stroke: #dfe6ff;
+      stroke-width: 1;
+      cursor: pointer;
+    }
+
+    .node-circle.selected {
+      stroke: var(--accent-2);
+      stroke-width: 3;
+    }
+
+    .node-label {
+      fill: var(--text);
+      font-size: 11px;
+      pointer-events: none;
+    }
+
+    .inspector {
+      background: #11141d;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 18px;
+    }
+
+    .panel-card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .inspector h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      line-height: 1.18;
+    }
+
+    .inspector p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .field {
+      display: grid;
+      grid-template-columns: 116px 1fr;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 12px;
+      min-width: 0;
+    }
+
+    .field:last-child { border-bottom: 0; }
+    .field span:first-child { color: var(--muted); }
+    .field span { min-width: 0; }
+    .field span:last-child { overflow-wrap: anywhere; word-break: break-word; }
+    .field a { color: var(--accent-2); text-decoration: none; }
+
+    .proposal textarea,
+    .proposal input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #0f1117;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 9px 10px;
+      margin-bottom: 8px;
+      resize: vertical;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 20px;
+    }
+
+    .draft-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .draft-item {
+      border: 1px solid var(--line);
+      background: #151924;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .draft-item h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .draft-item p {
+      margin-top: 6px;
+    }
+
+    .related-work {
+      display: grid;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .related-work-item {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 9px;
+      font-size: 12px;
+    }
+
+    .related-work-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.25;
+      margin-bottom: 5px;
+    }
+
+    .warning-list {
+      border: 1px solid rgba(240, 184, 74, 0.35);
+      background: rgba(240, 184, 74, 0.08);
+      border-radius: 8px;
+      color: var(--warn);
+      font-size: 12px;
+      line-height: 1.35;
+      padding: 9px 10px;
+      margin: 10px 0;
+    }
+
+    .provenance-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .provenance-item {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #151924;
+      border-radius: 8px;
+      padding: 9px;
+      font-size: 12px;
+    }
+
+    .provenance-item strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .provenance-item a {
+      color: var(--accent-2);
+      text-decoration: none;
+    }
+
+    @media (max-width: 1100px) {
+      .app { grid-template-columns: 1fr; height: auto; min-height: 100vh; }
+      aside, .inspector { border: 0; }
+      .work { grid-template-columns: 1fr; }
+      .workbench { grid-template-columns: 1fr; }
+      .filters { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .map-panel { min-height: 560px; }
+      .topbar { grid-template-columns: 1fr; }
+      .sync-status { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="brand">
+        <h1>Council Intelligence Command Center</h1>
+        <p>Search-first map of Rev.io Glass & Council Vault intelligence.</p>
+      </div>
+      <nav>
+        <button class="active" data-view="overview">Overview <span id="count-overview">0</span></button>
+        <button data-view="packets">Packets <span id="count-packets">0</span></button>
+        <button data-view="truth">Common Truth <span id="count-truth">0</span></button>
+        <button data-view="evidence">Evidence <span id="count-evidence">0</span></button>
+        <button data-view="actions">Actions <span id="count-actions">0</span></button>
+      </nav>
+
+      <div class="small-label">System</div>
+      <div class="metric"><strong id="metric-nodes">0</strong><span>nodes</span></div>
+      <div class="metric"><strong id="metric-docs">0</strong><span>searchable documents</span></div>
+      <div class="metric"><strong id="metric-edges">0</strong><span>relationships</span></div>
+
+      <div class="small-label">Access</div>
+      <div class="metric"><strong id="metric-tenant">revio</strong><span>tenant</span></div>
+      <div class="metric"><strong id="metric-user">evan</strong><span>v0 user</span></div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div class="search-wrap">
+          <input id="search" type="search" placeholder="Search packets, contributions, truth, decisions, actions, sources..." autocomplete="off">
+        </div>
+        <div class="sync-status" id="sync-status">Loading local graph data...</div>
+      </div>
+
+      <div class="filters">
+        <select id="section-filter"><option value="">All sections</option></select>
+        <select id="type-filter"><option value="">All types</option></select>
+        <select id="agent-filter"><option value="">All agents</option></select>
+        <select id="status-filter"><option value="">All statuses</option></select>
+        <select id="retrieval-filter"><option value="">All retrieval statuses</option></select>
+        <select id="saved-view-select"><option value="">Saved views</option></select>
+        <button id="save-view-button" type="button">Save View</button>
+        <button id="reset-button" type="button">Reset</button>
+      </div>
+
+      <section class="workbench" id="workbench">
+        <div id="executive-command-surface">
+          <div class="command-card">
+            <h2>Loading Command Center...</h2>
+            <p>Preparing owner blockers, claim guardrails, and next actions.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="work">
+        <section class="results" id="results"></section>
+        <section class="map-panel">
+          <div class="map-head">
+            <div class="map-title"><b id="map-view-name">Overview</b> · <span id="map-count">0 visible nodes</span></div>
+            <div class="map-actions">
+              <div class="depth-control" title="Neighborhood depth for focused graph">
+                <span>Depth</span>
+                <button id="depth-minus-button" type="button">-</button>
+                <strong id="depth-value">1</strong>
+                <button id="depth-plus-button" type="button">+</button>
+              </div>
+              <button id="clear-focus-button" type="button" hidden>Clear focus</button>
+              <button id="fit-button" type="button">Fit</button>
+            </div>
+          </div>
+          <svg id="graph" role="img" aria-label="Council intelligence graph"></svg>
+        </section>
+      </div>
+    </main>
+
+    <aside class="inspector" id="inspector">
+      <div class="panel-card">
+        <h2>Select a node</h2>
+        <p>Search or click the graph to inspect provenance, freshness, status, confidence, source links, and related nodes.</p>
+      </div>
+      <div class="panel-card proposal">
+        <div class="small-label" style="margin-top:0">Proposal Draft</div>
+        <input id="proposal-title" placeholder="Idea or project title">
+        <textarea id="proposal-body" rows="5" placeholder="Question, business objective, why now, expected Council output..."></textarea>
+        <div id="proposal-overlap"></div>
+        <button id="proposal-button" type="button">Stage Draft Locally</button>
+        <p id="proposal-note" style="margin-top:10px">v0 stages draft metadata locally in the browser. Notion routing stays approval-gated.</p>
+      </div>
+      <div id="proposal-queue-card"></div>
+    </aside>
+  </div>
+
+  <script>
+    const DATA_URL = '../data/council-command-center/index.json';
+    const state = {
+      data: null,
+      libraryRecords: [],
+      docketRecords: [],
+      apiSearchAvailable: false,
+      proposalDrafts: [],
+      proposalDraftSource: 'not loaded',
+      registryChecks: new Map(),
+      view: 'overview',
+      selectedNodeId: null,
+      neighborhoodNodeId: null,
+      neighborhoodDepth: 1,
+      savedViews: [],
+      query: '',
+      section: '',
+      type: '',
+      agent: '',
+      status: '',
+      retrieval: ''
+    };
+
+    const els = {
+      search: document.getElementById('search'),
+      sectionFilter: document.getElementById('section-filter'),
+      typeFilter: document.getElementById('type-filter'),
+      agentFilter: document.getElementById('agent-filter'),
+      statusFilter: document.getElementById('status-filter'),
+      retrievalFilter: document.getElementById('retrieval-filter'),
+      savedViewSelect: document.getElementById('saved-view-select'),
+      saveViewButton: document.getElementById('save-view-button'),
+      resetButton: document.getElementById('reset-button'),
+      results: document.getElementById('results'),
+      graph: document.getElementById('graph'),
+      inspector: document.getElementById('inspector'),
+      syncStatus: document.getElementById('sync-status'),
+      mapViewName: document.getElementById('map-view-name'),
+      mapCount: document.getElementById('map-count'),
+      clearFocusButton: document.getElementById('clear-focus-button'),
+      depthMinusButton: document.getElementById('depth-minus-button'),
+      depthPlusButton: document.getElementById('depth-plus-button'),
+      depthValue: document.getElementById('depth-value')
+    };
+
+    const packetVerticalSliceId = 'PKT-260602-REVENUE-FLYWHEEL-MISSING-JOINS-V01';
+    const groupLabels = {
+      packet: 'Packets',
+      'packet-key': 'Packets',
+      ask: 'Asks',
+      contribution: 'Contributions',
+      synthesis: 'Syntheses',
+      decision: 'Decisions',
+      action: 'Actions',
+      'truth-gap': 'Truth Gaps',
+      'docket-case': 'Case Docket',
+      definition: 'Glass Library',
+      'canonical-procedure': 'Glass Library',
+      'source-rule': 'Glass Library',
+      source: 'Sources',
+      correction: 'Corrections',
+      'common-truth': 'Common Truth',
+      'retrieval-contract': 'Retrieval Contracts'
+    };
+    const groupOrder = ['packet', 'packet-key', 'synthesis', 'decision', 'action', 'truth-gap', 'ask', 'contribution', 'source', 'correction', 'common-truth', 'retrieval-contract'];
+    let glassTruthGaps = [
+      {
+        id: 'J02',
+        area: 'Finance retained-margin spine',
+        status: 'blocked',
+        owner: 'Lisa / Finance + Billy / Claudio for RevOps/SF',
+        blocker: 'Revenue by customer/product can be supplied, but customer/product gross margin and cost-to-serve are not built; closed-won cohort and SF field semantics still need owner signoff.',
+        next: 'Lisa provides available revenue/product exports; Billy / Claudio define Opportunity.Amount, closed-won cohort, AccountId/OppId field dictionary, and source/campaign/partner fields.',
+        allowed: 'Revenue-by-customer/product and aggregate/product spend only after export.',
+        prohibited: 'Customer-level profitability, product/customer gross margin, CAC/payback, source ROI.',
+        source: 'PKT-260602 tracker; Lisa clarification; Evan owner correction 2026-06-15.'
+      },
+      {
+        id: 'J03',
+        area: 'Marketing source-to-won bridge',
+        status: 'partial / SF proxy owner-certified',
+        owner: 'Billy / Claudio',
+        blocker: 'Billy confirmed Salesforce as the system of truth for week-one marketing source. Campaign metadata/member associations, CAC/payback, retained revenue/margin, and downstream lifecycle joins are still not source-backed.',
+        next: 'Build Salesforce-first source-to-won proxy extract from Contact + Opportunity using marketing source, marketing subsource, marketing subsource detail, recent conversion date, product type, Opportunity Amount, AccountId/OpportunityId, and Contact status.',
+        allowed: 'Salesforce marketing source/subsource/subsource detail, recent conversion date, product type, Opportunity Amount, and Contact status as source-to-booking proxy with caveats.',
+        prohibited: 'Campaign ROI, CAC/payback, retained margin, churn/source causality.',
+        source: 'Claudio/RevItUp PKT-260602 contributions; raw HubSpot blocker HTTP 403 MISSING_SCOPES; Evan relayed Billy owner answer in #council on 2026-06-16.'
+      },
+      {
+        id: 'J05',
+        area: 'Support friction to revenue',
+        status: 'blocked',
+        owner: 'Will / Jarvis + Billy / Claudio for SF joins',
+        blocker: 'Zendesk support burden exists, but there is no authoritative Zendesk org/account to PSA/Billing/SF crosswalk or ARR/MRR/lifecycle owner fields.',
+        next: 'Jarvis routes Will owner ask; Will/Jarvis provide crosswalk/export path and name RevOps/Data, Finance, and Onboarding/CS Ops delegates.',
+        allowed: '25-account support friction watchlist as non-authoritative proxy.',
+        prohibited: 'Revenue exposure, renewal risk, churn, margin, retained revenue, support-to-revenue causality.',
+        source: 'Jarvis PKT-260602 contributions; Zendesk HTTP 200 and PSA endpoint failures recorded.'
+      },
+      {
+        id: 'J06',
+        area: 'Product Impact Spine',
+        status: 'blocked',
+        owner: 'Rosie/Leslie or Rupert/Serge + Billy / Claudio for SF product fields',
+        blocker: 'Roadmap and standup evidence exists, but no owner-backed Product Impact Spine, product-to-revenue/account key, product analytics export, Salesforce product mapping, or joined revenue evidence has been retrieved.',
+        next: 'Produce retrieval contract with owner, source system, account/customer key, roadmap/product key, support/onboarding link, revenue/margin allowed-use label, and SF field path.',
+        allowed: 'Roadmap/customer-request/support-product narratives as friction signals and taxonomy.',
+        prohibited: 'Revenue exposure, retained margin, product ROI, churn/expansion causality, adoption causality.',
+        source: 'Rosie/Rupert PKT-260602 contributions; Rupert 2026-06-15 watcher edit remains Retrieved-Partial.'
+      },
+      {
+        id: 'J07',
+        area: 'Usage/trust identity bridge',
+        status: 'partial / joins blocked',
+        owner: 'Ray Bargas + Billy / Claudio for SF fields',
+        blocker: 'Pendo and SOC2 facts are retrieved, but Pendo accountId is not validated to canonical customer/SF/support/CS keys; Ray offered an API path but no credential/export is logged.',
+        next: 'Ray delivers API/export path; Simon validates 10 sample accounts across Pendo, Salesforce AccountId, support org, CS/renewal fields; Billy / Claudio confirm SF opportunity/renewal/security-review fields.',
+        allowed: 'Adoption breadth/intensity and SOC2 readiness as proxy operating signals.',
+        prohibited: 'Renewal/reference readiness, blocked/accelerated revenue, churn, margin, support health causality.',
+        source: 'Simon PKT-260602 contributions; Teams owner response recorded but no export delivered.'
+      },
+      {
+        id: 'J08',
+        area: 'Channel influence and CommerceHub economics',
+        status: 'partial / economics blocked',
+        owner: 'Usman / Channel + Billy / Claudio for SF reproduction',
+        blocker: 'Channel influence is relationship coverage via Account.Networking_Associations__c, not direct referral attribution; CommerceHub has no transactions/invoices yet.',
+        next: 'Billy / Claudio reproduce Closed Won query where Account.Networking_Associations__c is not blank; Usman routes CommerceHub instrumentation owner/delegate.',
+        allowed: 'Channel-influenced relationship coverage with caveats.',
+        prohibited: 'Direct referral causality, retained revenue, CommerceHub economics, CAC/payback, margin.',
+        source: 'Marvin PKT-260602 contribution and Usman clarification.'
+      },
+      {
+        id: 'J12',
+        area: 'Revin coverage gap',
+        status: 'open',
+        owner: 'Ray / Matt while Revin is offline',
+        blocker: 'Watcher reports 13/13 missing-joins contributions but also says Revin is still waiting while Merple appears as extra; no clean Council coverage claim is allowed.',
+        next: 'Evan/Ray/Matt provide product-platform/source feasibility coverage or explicit packet exclusion; log response/delegate in the Vault.',
+        allowed: 'Roster/action gap only.',
+        prohibited: 'Full 13/13 Council closure claim.',
+        source: 'Live watcher HTTP 200 at 2026-06-15 18:06 UTC.'
+      }
+    ];
+
+    const typeColors = {
+      'vault': '#6c63ff',
+      'packet': '#6c63ff',
+      'packet-key': '#6c63ff',
+      'ask': '#4aa8ff',
+      'contribution': '#00a7b5',
+      'synthesis': '#d86cff',
+      'decision': '#f0b84a',
+      'action': '#ff6b6b',
+      'truth-gap': '#f0b84a',
+      'docket-case': '#f0b84a',
+      'definition': '#00d4aa',
+      'canonical-procedure': '#6c63ff',
+      'source-rule': '#a7a2ff',
+      'common-truth': '#00d4aa',
+      'correction': '#f0b84a',
+      'source': '#aab0c5',
+      'glossary-term': '#a7a2ff',
+      'retrieval-contract': '#00d4aa',
+      'agent': '#00a7b5'
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[ch]);
+    }
+
+    function escapeRegExp(value) {
+      return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function highlightText(value, terms) {
+      let html = escapeHtml(value || '');
+      const usable = terms.filter(term => term.length > 2).slice(0, 8);
+      usable.forEach(term => {
+        html = html.replace(new RegExp(`(${escapeRegExp(escapeHtml(term))})`, 'ig'), '<mark>$1</mark>');
+      });
+      return html;
+    }
+
+    function asDate(value) {
+      if (!value) return 'unknown';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      return date.toISOString().slice(0, 16).replace('T', ' UTC ');
+    }
+
+    function badgeClass(value) {
+      const text = String(value || '').toLowerCase();
+      if (['not retrieved', 'not checked', 'partial', 'failed', 'blocked', 'downgraded', 'unsupported'].some(v => text.includes(v))) return text.includes('failed') || text.includes('blocked') ? 'bad' : 'warn';
+      if (['active', 'submitted', 'retrieved', 'high'].some(v => text.includes(v))) return 'good';
+      if (['draft', 'partial', 'medium', 'stale', 'unknown', 'not checked'].some(v => text.includes(v))) return 'warn';
+      if (['failed', 'disputed', 'low', 'blocked'].some(v => text.includes(v))) return 'bad';
+      return '';
+    }
+
+    function visibleTypesForView(view) {
+      if (view === 'packets') return new Set(['vault', 'packet-section', 'packet', 'packet-key', 'ask', 'contribution', 'synthesis', 'decision', 'action', 'agent', 'docket-case']);
+      if (view === 'truth') return new Set(['vault', 'truth-section', 'common-truth', 'truth-gap', 'docket-case', 'definition', 'canonical-procedure', 'source-rule', 'correction-section', 'correction', 'source-section', 'source', 'glossary-section', 'glossary-term', 'retrieval-contract-section', 'retrieval-contract', 'agent']);
+      if (view === 'evidence') return new Set(['source-section', 'source', 'contribution', 'synthesis', 'synthesis-section', 'common-truth', 'truth-gap', 'docket-case', 'correction', 'retrieval-contract', 'source-rule', 'agent', 'packet-key']);
+      if (view === 'actions') return new Set(['action-section', 'action', 'truth-gap', 'docket-case', 'canonical-procedure', 'decision-section', 'decision', 'synthesis', 'packet', 'packet-key', 'agent']);
+      return null;
+    }
+
+    function gapNodeId(gapId) {
+      return `truth-gap:${gapId}`;
+    }
+
+    function nodeIdFromHash() {
+      const raw = decodeURIComponent(window.location.hash.replace(/^#/, '') || '');
+      if (!raw) return '';
+      if (raw.startsWith('LIB-') || raw.startsWith('RC-')) return libraryNodeId(raw);
+      if (/^J\d+$/i.test(raw)) return gapNodeId(raw.toUpperCase());
+      if (/^PKT-/i.test(raw)) {
+        const doc = state.data?.documents?.find(item => item.packet_id === raw.toUpperCase());
+        return doc?.node_id || '';
+      }
+      return raw;
+    }
+
+    function gapFromNodeId(nodeId) {
+      const match = String(nodeId || '').match(/^truth-gap:(.+)$/);
+      if (!match) return null;
+      return glassTruthGaps.find(gap => gap.id === match[1]) || null;
+    }
+
+    function gapOwners() {
+      return [...new Set(glassTruthGaps.flatMap(gap =>
+        gap.owner.split(/\s+\+\s+|,\s*/).map(owner => owner.trim()).filter(Boolean)
+      ))].sort();
+    }
+
+    function splitGapOwners(value) {
+      return [...new Set(String(value || '')
+        .split(/\s+\+\s+|,\s*|\/\s*/)
+        .map(owner => owner.trim())
+        .filter(Boolean))];
+    }
+
+    function ownerQueue() {
+      const owners = new Map();
+      glassTruthGaps.forEach(gap => {
+        splitGapOwners(gap.owner).forEach(owner => {
+          if (!owners.has(owner)) {
+            owners.set(owner, {
+              owner,
+              gapCount: 0,
+              blockedCount: 0,
+              partialCount: 0,
+              openCount: 0,
+              gaps: []
+            });
+          }
+          const item = owners.get(owner);
+          item.gapCount += 1;
+          if (/blocked/i.test(gap.status)) item.blockedCount += 1;
+          if (/partial/i.test(gap.status)) item.partialCount += 1;
+          if (/open/i.test(gap.status)) item.openCount += 1;
+          item.gaps.push(gap);
+        });
+      });
+      return [...owners.values()].sort((a, b) =>
+        b.blockedCount - a.blockedCount ||
+        b.gapCount - a.gapCount ||
+        a.owner.localeCompare(b.owner)
+      );
+    }
+
+    function executiveOwnerQueue() {
+      const owners = new Map();
+      glassTruthGaps.forEach(gap => {
+        const owner = gap.owner;
+        if (!owners.has(owner)) {
+          owners.set(owner, {
+            owner,
+            gaps: [],
+            blockedCount: 0,
+            partialCount: 0,
+            openCount: 0
+          });
+        }
+        const item = owners.get(owner);
+        item.gaps.push(gap);
+        if (/blocked/i.test(gap.status)) item.blockedCount += 1;
+        if (/partial/i.test(gap.status)) item.partialCount += 1;
+        if (/open/i.test(gap.status)) item.openCount += 1;
+      });
+      return [...owners.values()].sort((a, b) =>
+        b.blockedCount - a.blockedCount ||
+        b.gaps.length - a.gaps.length ||
+        a.owner.localeCompare(b.owner)
+      );
+    }
+
+    function workflowStateForGap(gap) {
+      if (/blocked/i.test(gap.status)) return 'Owner-blocked / claims excluded';
+      if (/partial/i.test(gap.status)) return 'Partial evidence / narrow claims only';
+      if (/open/i.test(gap.status)) return 'Open roster/action gap';
+      return 'Review required';
+    }
+
+    function libraryNodeId(id) {
+      return `library:${id}`;
+    }
+
+    function docketNodeId(id) {
+      return gapNodeId(id);
+    }
+
+    function selectedRecord(nodeId) {
+      if (String(nodeId || '').startsWith('library:')) {
+        const id = String(nodeId).replace(/^library:/, '');
+        return state.libraryRecords.find(record => record.id === id) || null;
+      }
+      const gap = gapFromNodeId(nodeId);
+      if (gap) return {
+        ...gap,
+        title: gap.area,
+        type: 'docket-case',
+        body: `${gap.blocker}\n\nNext: ${gap.next}`,
+        sensitivity: gap.sensitivity || 'restricted',
+        related_library_ids: gap.related_library_ids || []
+      };
+      return null;
+    }
+
+    function clerkRecommendationsForRecord(record) {
+      if (!record) return [];
+      const recommendations = [];
+      const relatedLibraryIds = record.related_library_ids || record.related_docket_ids || [];
+      relatedLibraryIds.forEach(id => {
+        const library = state.libraryRecords.find(item => item.id === id);
+        if (library) {
+          recommendations.push({
+            strength: library.status === 'active' ? 'strong rule' : 'supporting rule',
+            title: library.title,
+            body: library.summary,
+            nodeId: libraryNodeId(library.id)
+          });
+        }
+      });
+      if (/J03/.test(record.id || '') || /marketing source/i.test(`${record.title || ''} ${record.area || ''}`)) {
+        recommendations.push({
+          strength: 'strong rule',
+          title: 'Run Salesforce source-to-won extract next',
+          body: 'Use Billy’s Salesforce-first field guidance, then verify exact API field names and record counts before making any campaign or retained-margin claims.',
+          nodeId: libraryNodeId('RC-SF-MARKETING-SOURCE-V0')
+        });
+      }
+      if (/blocked/i.test(record.status || '')) {
+        recommendations.push({
+          strength: 'supporting rule',
+          title: 'Keep prohibited claims excluded',
+          body: record.prohibited || record.blocked_use || 'Blocked claims remain excluded until source evidence clears.',
+          nodeId: null
+        });
+      }
+      return recommendations.slice(0, 3);
+    }
+
+    function clerkRecommendationMarkup(record) {
+      const recs = clerkRecommendationsForRecord(record);
+      if (!recs.length) return '';
+      return `
+        <div class="panel-card">
+          <div class="small-label" style="margin-top:0">Glass Clerk</div>
+          <div class="provenance-list">
+            ${recs.map(rec => `
+              <div class="provenance-item">
+                <div class="badges"><span class="badge ${rec.strength === 'strong rule' ? 'good' : 'warn'}">${escapeHtml(rec.strength)}</span></div>
+                <strong>${escapeHtml(rec.title)}</strong>
+                <p style="margin-top:7px">${escapeHtml(rec.body)}</p>
+                ${rec.nodeId ? `<button type="button" data-related-node="${escapeHtml(rec.nodeId)}">Inspect recommendation</button>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function guardrailWarningsForText(value) {
+      const text = String(value || '').toLowerCase();
+      const claimTerms = [
+        ['margin', /margin|gross margin|retained margin|profitability|cost-to-serve/i],
+        ['source ROI', /source roi|campaign roi|cac|payback|referral causality/i],
+        ['churn or renewal causality', /churn|renewal risk|retention causality|support-to-revenue causality/i],
+        ['product ROI', /product roi|adoption causality|expansion causality/i]
+      ];
+      const matchedKinds = claimTerms
+        .filter(([, pattern]) => pattern.test(text))
+        .map(([label]) => label);
+      if (!matchedKinds.length) return [];
+      return glassTruthGaps
+        .filter(gap => matchedKinds.some(kind => gap.prohibited.toLowerCase().includes(kind.split(' ')[0])))
+        .slice(0, 5)
+        .map(gap => `Glass guardrail ${gap.id}: do not claim ${gap.prohibited} until owner/source evidence clears.`);
+    }
+
+    function ownerQueueMarkup(limit = 6) {
+      const owners = ownerQueue().slice(0, limit);
+      return `
+        <div class="owner-queue">
+          ${owners.map(item => `
+            <div class="owner-item">
+              <strong>${escapeHtml(item.owner)}</strong>
+              <div class="badges">
+                <span class="badge ${item.blockedCount ? 'bad' : 'warn'}">${escapeHtml(item.blockedCount)} blocked</span>
+                <span class="badge">${escapeHtml(item.gapCount)} gap${item.gapCount === 1 ? '' : 's'}</span>
+              </div>
+              <p>${escapeHtml(item.gaps.map(gap => `${gap.id}: ${workflowStateForGap(gap)}`).join(' · '))}</p>
+              <button type="button" data-gap-search="${escapeHtml(item.owner)}">Inspect owner gaps</button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function freshnessSummary() {
+      const now = Date.now();
+      const out = {
+        recent: 0,
+        watch: 0,
+        stale: 0,
+        unknown: 0,
+        weak: 0
+      };
+      (state.data?.documents || []).forEach(doc => {
+        if (/(partial|failed|not retrieved|not checked|owner-blocked)/i.test(doc.retrieval_status || '')) out.weak += 1;
+        const raw = doc.last_verified_at;
+        if (!raw) {
+          out.unknown += 1;
+          return;
+        }
+        const time = new Date(raw).getTime();
+        if (Number.isNaN(time)) {
+          out.unknown += 1;
+          return;
+        }
+        const ageDays = (now - time) / 86400000;
+        if (ageDays <= 3) out.recent += 1;
+        else if (ageDays <= 14) out.watch += 1;
+        else out.stale += 1;
+      });
+      return out;
+    }
+
+    function sourceFreshnessMarkup() {
+      const summary = freshnessSummary();
+      return `
+        <div class="panel-card">
+          <div class="small-label" style="margin-top:0">Source Freshness</div>
+          <div class="summary-grid">
+            <div class="summary-tile"><strong>${escapeHtml(summary.recent)}</strong><span>0-3 days</span></div>
+            <div class="summary-tile"><strong>${escapeHtml(summary.watch)}</strong><span>4-14 days</span></div>
+            <div class="summary-tile"><strong>${escapeHtml(summary.stale)}</strong><span>15+ days</span></div>
+            <div class="summary-tile"><strong>${escapeHtml(summary.unknown)}</strong><span>unknown</span></div>
+          </div>
+          <p style="margin-top:10px">${escapeHtml(summary.weak)} documents carry partial, failed, not-checked, not-retrieved, or owner-blocked retrieval status.</p>
+        </div>
+      `;
+    }
+
+    function currentViewState() {
+      return {
+        view: state.view,
+        query: state.query,
+        section: state.section,
+        type: state.type,
+        agent: state.agent,
+        status: state.status,
+        retrieval: state.retrieval,
+        neighborhoodNodeId: state.neighborhoodNodeId,
+        neighborhoodDepth: state.neighborhoodDepth
+      };
+    }
+
+    function applyViewState(viewState) {
+      state.view = viewState.view || 'overview';
+      state.query = viewState.query || '';
+      state.section = viewState.section || '';
+      state.type = viewState.type || '';
+      state.agent = viewState.agent || '';
+      state.status = viewState.status || '';
+      state.retrieval = viewState.retrieval || '';
+      state.neighborhoodNodeId = viewState.neighborhoodNodeId || null;
+      state.neighborhoodDepth = Math.max(1, Math.min(3, Number(viewState.neighborhoodDepth || 1)));
+      els.search.value = state.query;
+      els.sectionFilter.value = state.section;
+      els.typeFilter.value = state.type;
+      els.agentFilter.value = state.agent;
+      els.statusFilter.value = state.status;
+      els.retrievalFilter.value = state.retrieval;
+      document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.view === state.view));
+    }
+
+    function resetView() {
+      applyViewState({ view: 'overview', neighborhoodDepth: 1 });
+      renderAll();
+      const first = filterDocuments()[0];
+      if (first) selectNode(first.node_id);
+      els.search.focus();
+    }
+
+    function savedViewsKey() {
+      return 'council-command-center-saved-views';
+    }
+
+    function loadSavedViews() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(savedViewsKey()) || '[]');
+        state.savedViews = Array.isArray(saved) ? saved.filter(view => view?.name && view?.state).slice(0, 20) : [];
+      } catch {
+        state.savedViews = [];
+      }
+    }
+
+    function persistSavedViews() {
+      localStorage.setItem(savedViewsKey(), JSON.stringify(state.savedViews.slice(0, 20)));
+    }
+
+    function renderSavedViews() {
+      if (!els.savedViewSelect) return;
+      els.savedViewSelect.innerHTML = '<option value="">Saved views</option>' + state.savedViews.map((view, index) =>
+        `<option value="${index}">${escapeHtml(view.name)}</option>`
+      ).join('');
+    }
+
+    function saveCurrentView() {
+      const base = [
+        state.query || state.view,
+        state.section,
+        state.type,
+        state.agent,
+        state.status,
+        state.retrieval
+      ].filter(Boolean).join(' / ');
+      const name = base || `View ${state.savedViews.length + 1}`;
+      state.savedViews = [
+        { name: name.slice(0, 80), state: currentViewState(), saved_at: new Date().toISOString() },
+        ...state.savedViews.filter(view => view.name !== name)
+      ].slice(0, 20);
+      persistSavedViews();
+      renderSavedViews();
+    }
+
+    function applyGapSearch(value) {
+      state.query = value;
+      els.search.value = value;
+      state.section = 'Glass Truth Gaps';
+      els.sectionFilter.value = 'Glass Truth Gaps';
+      state.type = '';
+      els.typeFilter.value = '';
+      state.view = 'overview';
+      state.neighborhoodNodeId = null;
+      document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.view === 'overview'));
+      renderAll();
+      const first = filterDocuments()[0];
+      if (first) selectNode(first.node_id);
+    }
+
+    function enrichDataWithGlassRecords() {
+      if (!state.data || state.data._glassRecordsInjected) return;
+      const packetNode = state.data.nodes.find(node =>
+        node.packet_id === packetVerticalSliceId && ['packet', 'packet-key'].includes(node.type)
+      ) || state.data.nodes.find(node => node.packet_id === packetVerticalSliceId);
+      glassTruthGaps.forEach(gap => {
+        const nodeId = gapNodeId(gap.id);
+        if (state.data.nodes.some(node => node.id === nodeId)) return;
+        const text = [
+          gap.id,
+          gap.area,
+          gap.status,
+          gap.owner,
+          gap.blocker,
+          gap.next,
+          gap.allowed,
+          gap.prohibited,
+          gap.source,
+          gap.sensitivity,
+          packetVerticalSliceId
+        ].join('\n');
+        state.data.nodes.push({
+          id: nodeId,
+          title: `${gap.id} · ${gap.area}`,
+          type: 'truth-gap',
+          section: 'Glass Truth Gaps',
+          status: gap.status,
+          retrieval_status: 'owner-blocked',
+          packet_id: packetVerticalSliceId,
+          agent: '',
+          summary: gap.blocker,
+          tenant_id: state.data.report?.tenant_id || 'revio',
+          permission_scope: gap.sensitivity || 'restricted',
+          confidence: 'source-backed blocker',
+          last_verified_at: gap.last_verified_at || '2026-06-15T18:06:57.629Z',
+          source: {
+            system: 'local docket JSON',
+            page_id: gap.id,
+            url: ''
+          }
+        });
+        state.data.documents.push({
+          node_id: nodeId,
+          title: `${gap.id} · ${gap.area}`,
+          type: 'truth-gap',
+          section: 'Glass Truth Gaps',
+          packet_id: packetVerticalSliceId,
+          agent: '',
+          status: gap.status,
+          retrieval_status: 'owner-blocked',
+          snippet: `${gap.owner}: ${gap.next}`,
+          text,
+          source_url: '',
+          source_page_id: gap.id,
+          sensitivity: gap.sensitivity || 'restricted',
+          last_verified_at: gap.last_verified_at || '2026-06-15T18:06:57.629Z'
+        });
+        if (packetNode) {
+          state.data.edges.push({
+            id: `${nodeId}->blocks_truth_for->${packetNode.id}`,
+            from: nodeId,
+            to: packetNode.id,
+            label: 'blocks_truth_for'
+          });
+        }
+      });
+      state.libraryRecords.forEach(record => {
+        const nodeId = libraryNodeId(record.id);
+        if (state.data.nodes.some(node => node.id === nodeId)) return;
+        const type = record.type || 'library-record';
+        const text = [
+          record.id,
+          record.title,
+          record.type,
+          record.status,
+          record.owner,
+          record.summary,
+          record.body,
+          record.allowed_use,
+          record.blocked_use,
+          record.source_basis,
+          record.sensitivity,
+          ...(record.tags || [])
+        ].join('\n');
+        state.data.nodes.push({
+          id: nodeId,
+          title: record.title,
+          type,
+          section: 'Glass Library',
+          status: record.status,
+          retrieval_status: 'local-json',
+          packet_id: '',
+          agent: record.owner,
+          summary: record.summary,
+          tenant_id: state.data.report?.tenant_id || 'revio',
+          permission_scope: record.sensitivity,
+          confidence: record.status === 'active' ? 'strong rule' : 'supporting rule',
+          last_verified_at: record.last_verified_at,
+          source: {
+            system: 'local library JSON',
+            page_id: record.id,
+            url: record.source_url || ''
+          }
+        });
+        state.data.documents.push({
+          node_id: nodeId,
+          title: record.title,
+          type,
+          section: 'Glass Library',
+          packet_id: '',
+          agent: record.owner,
+          status: record.status,
+          retrieval_status: 'local-json',
+          snippet: record.summary,
+          text,
+          source_url: record.source_url || '',
+          source_page_id: record.id,
+          sensitivity: record.sensitivity,
+          last_verified_at: record.last_verified_at
+        });
+        (record.related_docket_ids || []).forEach(docketId => {
+          const docketNode = docketNodeId(docketId);
+          state.data.edges.push({
+            id: `${nodeId}->supports->${docketNode}`,
+            from: nodeId,
+            to: docketNode,
+            label: 'supports'
+          });
+        });
+      });
+      state.data._glassRecordsInjected = true;
+    }
+
+    function getDocumentForNode(nodeId) {
+      return state.data.documents.find(doc => doc.node_id === nodeId);
+    }
+
+    function getNode(nodeId) {
+      return state.data.nodes.find(node => node.id === nodeId);
+    }
+
+    function neighborhoodNodeIds(nodeId, depth = state.neighborhoodDepth) {
+      const ids = new Set([nodeId]);
+      let frontier = new Set([nodeId]);
+      for (let level = 0; level < Math.max(1, Math.min(3, depth)); level += 1) {
+        const next = new Set();
+        state.data.edges.forEach(edge => {
+          if (frontier.has(edge.from) && !ids.has(edge.to)) next.add(edge.to);
+          if (frontier.has(edge.to) && !ids.has(edge.from)) next.add(edge.from);
+        });
+        next.forEach(id => ids.add(id));
+        frontier = next;
+        if (!frontier.size) break;
+      }
+      return ids;
+    }
+
+    function filterNodes() {
+      if (!state.data) return [];
+      const viewTypes = visibleTypesForView(state.view);
+      const q = state.query.trim().toLowerCase();
+      const terms = searchTerms();
+      const focusIds = state.neighborhoodNodeId ? neighborhoodNodeIds(state.neighborhoodNodeId) : null;
+      return state.data.nodes.filter(node => {
+        const doc = getDocumentForNode(node.id);
+        const haystack = `${node.title || ''} ${node.summary || ''} ${doc?.text || ''} ${node.packet_id || ''} ${node.agent || ''}`.toLowerCase();
+        if (focusIds && !focusIds.has(node.id)) return false;
+        if (viewTypes && !viewTypes.has(node.type)) return false;
+        if (state.section && node.section !== state.section) return false;
+        if (state.type && node.type !== state.type) return false;
+        if (state.agent && node.agent !== state.agent && node.title !== state.agent) return false;
+        if (state.status && node.status !== state.status) return false;
+        if (state.retrieval && node.retrieval_status !== state.retrieval) return false;
+        if (q && !haystack.includes(q) && !terms.some(term => haystack.includes(term))) return false;
+        return true;
+      });
+    }
+
+    function filterDocuments() {
+      return rankedDocuments();
+    }
+
+    function populateFilters() {
+      const nodes = state.data.nodes;
+      const fill = (select, values) => {
+        const first = select.querySelector('option').outerHTML;
+        select.innerHTML = first + values.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+      };
+      fill(els.typeFilter, [...new Set(nodes.map(n => n.type).filter(Boolean))].sort());
+      fill(els.sectionFilter, [...new Set(nodes.map(n => n.section).filter(Boolean))].sort());
+      fill(els.agentFilter, [...new Set(nodes.map(n => n.agent || (n.type === 'agent' ? n.title : '')).filter(Boolean))].sort());
+      fill(els.statusFilter, [...new Set(nodes.map(n => n.status).filter(Boolean))].sort());
+      fill(els.retrievalFilter, [...new Set(nodes.map(n => n.retrieval_status).filter(Boolean))].sort());
+    }
+
+    function renderGlassTruthGaps() {
+      const target = document.getElementById('glass-gaps-card');
+      if (!target) return;
+      const priority = glassTruthGaps.filter(gap => ['blocked', 'open'].some(word => gap.status.includes(word))).slice(0, 5);
+      const owners = gapOwners().filter(owner => /Billy|Claudio|Will|Jarvis|Ray|Matt|Lisa|Rosie|Leslie|Rupert|Serge/.test(owner)).slice(0, 8);
+      target.innerHTML = `
+        <h2>Universal Glass Truth Gaps</h2>
+        <p>${escapeHtml(glassTruthGaps.length)} source-backed blockers are preventing promotion to universal Glass truth. Owners and next steps are explicit; unsupported claims stay blocked.</p>
+        <div class="gap-actions">
+          ${owners.map(owner => `<button type="button" data-gap-search="${escapeHtml(owner)}">${escapeHtml(owner)}</button>`).join('')}
+          <button type="button" data-gap-search="blocked">Blocked</button>
+          <a href="/api/glass-truth-gaps/export.md" target="_blank" rel="noopener">Export</a>
+        </div>
+        <div class="gap-summary">
+          ${priority.map(gap => `
+            <div class="gap-row">
+              <strong>${escapeHtml(gap.id)} · ${escapeHtml(gap.area)}</strong>
+              <div class="badges">
+                <span class="badge ${badgeClass(gap.status)}">${escapeHtml(gap.status)}</span>
+                <span class="badge">${escapeHtml(gap.owner)}</span>
+              </div>
+              <p>${escapeHtml(gap.next)}</p>
+              <button type="button" data-gap-node="${escapeHtml(gapNodeId(gap.id))}">Inspect gap</button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      target.querySelectorAll('[data-gap-node]').forEach(button => {
+        button.addEventListener('click', () => selectNode(button.dataset.gapNode));
+      });
+      target.querySelectorAll('[data-gap-search]').forEach(button => {
+        button.addEventListener('click', () => applyGapSearch(button.dataset.gapSearch));
+      });
+    }
+
+    function claimGuardrailMarkup(gaps) {
+      if (!gaps.length) return '';
+      return `
+        <div class="panel-card">
+          <div class="small-label" style="margin-top:0">Claim Guardrails</div>
+          <div class="claim-grid">
+            ${gaps.map(gap => `
+              <div class="claim-box">
+                <strong>${escapeHtml(gap.id)} · ${escapeHtml(gap.area)}</strong>
+                <p><span class="badge good">Allowed</span> ${escapeHtml(gap.allowed)}</p>
+                <p style="margin-top:6px"><span class="badge bad">Blocked</span> ${escapeHtml(gap.prohibited)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function glassTruthGapMarkup(packetId = '', focusGap = null) {
+      if (packetId !== packetVerticalSliceId) return '';
+      const gaps = focusGap ? [focusGap] : glassTruthGaps;
+      return `
+        <div class="panel-card gap-card">
+          <div class="small-label" style="margin-top:0">Universal Glass Truth Gaps</div>
+          <p>These blockers must close, be owner-certified as excluded, or be downgraded before related claims become shared Glass truth.</p>
+          <div class="gap-detail-list" style="margin-top:10px">
+            ${gaps.map(gap => `
+              <div class="gap-detail">
+                <h3>${escapeHtml(gap.id)} · ${escapeHtml(gap.area)}</h3>
+                <div class="badges">
+                  <span class="badge ${badgeClass(gap.status)}">${escapeHtml(gap.status)}</span>
+                  <span class="badge">${escapeHtml(gap.owner)}</span>
+                </div>
+                <p><strong>Blocker:</strong> ${escapeHtml(gap.blocker)}</p>
+                <p><strong>Workflow state:</strong> ${escapeHtml(workflowStateForGap(gap))}</p>
+                <p><strong>Next step:</strong> ${escapeHtml(gap.next)}</p>
+                <p><strong>Allowed now:</strong> ${escapeHtml(gap.allowed)}</p>
+                <p><strong>Do not claim:</strong> ${escapeHtml(gap.prohibited)}</p>
+                <p><strong>Basis:</strong> ${escapeHtml(gap.source)}</p>
+                <div class="gap-actions">
+                  <button type="button" data-stage-gap="${escapeHtml(gap.id)}">Draft owner follow-up</button>
+                  <button type="button" data-gap-search="${escapeHtml(gap.owner)}">Find owner context</button>
+                  <a href="/api/glass-truth-gaps/export.md" target="_blank" rel="noopener">Export all gaps</a>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        ${claimGuardrailMarkup(gaps)}
+      `;
+    }
+
+    function executiveCommandMarkup(report, freshness) {
+      const blocked = glassTruthGaps.filter(gap => /blocked/i.test(gap.status)).length;
+      const partial = glassTruthGaps.filter(gap => /partial/i.test(gap.status)).length;
+      const open = glassTruthGaps.filter(gap => /open/i.test(gap.status)).length;
+      const topOwners = executiveOwnerQueue().slice(0, 6);
+      const topGaps = ['J02', 'J03', 'J05', 'J06', 'J07', 'J12']
+        .map(id => glassTruthGaps.find(gap => gap.id === id))
+        .filter(Boolean);
+      return `
+        <div class="command-surface">
+          <div class="command-card primary">
+            <div class="badges" style="margin-bottom:8px">
+              <span class="badge bad">Not board-ready</span>
+              <span class="badge warn">Notion writes disabled</span>
+              <span class="badge">PKT-260602</span>
+            </div>
+            <h2>Missing joins are still blocking universal Glass truth.</h2>
+            <p>The useful read is not the graph count. It is which source-backed joins are still blocked, who owns them, and which claims must stay out of board/product/GTM language until owner evidence arrives.</p>
+            <div class="decision-grid">
+              <div class="decision-tile"><strong>${escapeHtml(glassTruthGaps.length)}</strong><span>truth blockers</span></div>
+              <div class="decision-tile"><strong>${escapeHtml(blocked)}</strong><span>blocked</span></div>
+              <div class="decision-tile"><strong>${escapeHtml(partial)}</strong><span>partial/proxy only</span></div>
+              <div class="decision-tile"><strong>${escapeHtml(open)}</strong><span>roster gap</span></div>
+            </div>
+            <div class="guardrail-strip">
+              <div class="guardrail-item"><strong>Do not claim:</strong> customer/product gross margin, retained margin, source ROI, CAC/payback, churn/source causality, product ROI, or support-to-revenue causality.</div>
+              <div class="guardrail-item"><strong>Allowed now:</strong> proxy operating signals with caveats: source-to-booking, support friction watchlist, Pendo/SOC2 readiness, roadmap/product friction, channel relationship coverage.</div>
+            </div>
+            <div class="command-actions">
+              <button type="button" data-gap-search="Billy / Claudio">Push Billy / Claudio</button>
+              <button type="button" data-gap-search="blocked">Show blocked joins</button>
+              <button type="button" data-test-query="PKT-260602">Open packet</button>
+              <a href="/api/glass-truth-gaps/export.md" target="_blank" rel="noopener">Export gap brief</a>
+            </div>
+          </div>
+          <div class="command-card">
+            <h2>This Week’s Owner Push</h2>
+            <p>Use this as the operating list. Every row needs source/export path, field definition, delegate, due date, or explicit exclusion from claims.</p>
+            <div class="push-list">
+              ${topOwners.map(item => {
+                const firstGap = item.gaps[0];
+                return `
+                <div class="push-item">
+                  <h3>${escapeHtml(item.owner)}</h3>
+                  <div class="badges">
+                    <span class="badge ${item.blockedCount ? 'bad' : 'warn'}">${escapeHtml(item.blockedCount)} blocked</span>
+                    <span class="badge">${escapeHtml(item.gaps.map(gap => gap.id).join(', '))}</span>
+                  </div>
+                  <p><strong>Ask:</strong> ${escapeHtml(firstGap.next)}</p>
+                  ${item.gaps.length > 1 ? `<p><strong>Also blocks:</strong> ${escapeHtml(item.gaps.slice(1).map(gap => `${gap.id} ${gap.area}`).join('; '))}</p>` : ''}
+                  <button type="button" data-gap-search="${escapeHtml(item.owner)}">Inspect ${escapeHtml(item.owner)}</button>
+                </div>
+              `}).join('')}
+            </div>
+          </div>
+          <div class="command-card">
+            <h2>Closure Board</h2>
+            <div class="push-list">
+              ${topGaps.map(gap => `
+                <div class="push-item">
+                  <h3>${escapeHtml(gap.id)} · ${escapeHtml(gap.area)}</h3>
+                  <div class="badges">
+                    <span class="badge ${badgeClass(gap.status)}">${escapeHtml(gap.status)}</span>
+                    <span class="badge">${escapeHtml(gap.owner)}</span>
+                  </div>
+                  <p><strong>Next:</strong> ${escapeHtml(gap.next)}</p>
+                  <p><strong>Blocked claim:</strong> ${escapeHtml(gap.prohibited)}</p>
+                  <button type="button" data-gap-node="${escapeHtml(gapNodeId(gap.id))}">Inspect gap</button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div class="command-card">
+            <h2>Evidence Health</h2>
+            <div class="decision-grid">
+              <div class="decision-tile"><strong>${escapeHtml(freshness.recent)}</strong><span>fresh</span></div>
+              <div class="decision-tile"><strong>${escapeHtml(freshness.watch)}</strong><span>watch</span></div>
+              <div class="decision-tile"><strong>${escapeHtml(freshness.stale)}</strong><span>stale</span></div>
+              <div class="decision-tile"><strong>${escapeHtml(freshness.weak)}</strong><span>weak retrieval</span></div>
+            </div>
+            <p style="margin-top:12px">Local sync: ${escapeHtml(report.pageCount ?? state.data.documents.length)} pages, ${escapeHtml(state.data.documents.length)} docs, ${escapeHtml(asDate(report.retrievedAt))}. This hosted view is still read-only; Notion is canonical.</p>
+            <div class="command-actions">
+              <button type="button" data-test-query="missing joins">Search missing joins</button>
+              <button type="button" data-test-query="Revenue Flywheel">Search Revenue Flywheel</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderExecutiveCommand(report, freshness) {
+      const target = document.getElementById('executive-command-surface');
+      if (!target) return;
+      target.innerHTML = executiveCommandMarkup(report, freshness);
+      target.querySelectorAll('[data-gap-node]').forEach(button => {
+        button.addEventListener('click', () => selectNode(button.dataset.gapNode));
+      });
+      target.querySelectorAll('[data-gap-search]').forEach(button => {
+        button.addEventListener('click', () => applyGapSearch(button.dataset.gapSearch));
+      });
+      target.querySelectorAll('[data-test-query]').forEach(button => {
+        button.addEventListener('click', () => {
+          state.query = button.dataset.testQuery;
+          els.search.value = state.query;
+          state.view = 'overview';
+          state.neighborhoodNodeId = null;
+          document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.view === 'overview'));
+          renderAll();
+          const first = filterDocuments()[0];
+          if (first) selectNode(first.node_id);
+        });
+      });
+    }
+
+    function renderMetrics() {
+      const report = state.data.report || {};
+      const retrieved = state.data.documents.filter(doc => /retrieved/i.test(doc.retrieval_status || '')).length;
+      const gaps = state.data.documents.filter(doc => /(partial|failed|not retrieved)/i.test(doc.retrieval_status || '')).length;
+      const sections = [...new Set(state.data.nodes.map(node => node.section).filter(Boolean))];
+      document.getElementById('metric-nodes').textContent = state.data.nodes.length;
+      document.getElementById('metric-docs').textContent = state.data.documents.length;
+      document.getElementById('metric-edges').textContent = state.data.edges.length;
+      document.getElementById('metric-tenant').textContent = report.tenant_id || 'revio';
+      document.getElementById('metric-user').textContent = report.user_id || 'evan';
+      document.getElementById('count-overview').textContent = state.data.nodes.length;
+      document.getElementById('count-packets').textContent = state.data.nodes.filter(n => ['packet', 'packet-key', 'ask', 'contribution'].includes(n.type)).length;
+      document.getElementById('count-truth').textContent = state.data.nodes.filter(n => ['truth-section', 'common-truth', 'truth-gap', 'correction-section', 'correction', 'source-section', 'source', 'glossary-section', 'glossary-term', 'retrieval-contract-section', 'retrieval-contract'].includes(n.type)).length;
+      document.getElementById('count-evidence').textContent = state.data.nodes.filter(n => ['source-section', 'source', 'truth-gap', 'contribution', 'synthesis', 'synthesis-section'].includes(n.type)).length;
+      document.getElementById('count-actions').textContent = state.data.nodes.filter(n => ['action-section', 'action', 'truth-gap', 'decision-section', 'decision'].includes(n.type)).length;
+      els.syncStatus.innerHTML = `
+        <b>${report.ok ? 'Sync OK' : 'Sync has errors'}</b> · ${escapeHtml(report.source || 'local JSON')}
+        · ${escapeHtml(report.pageCount ?? state.data.documents.length)} pages
+        · ${escapeHtml(report.httpCalls ?? 0)} HTTP calls
+        · ${escapeHtml(asDate(report.retrievedAt))}
+      `;
+      const freshness = freshnessSummary();
+      renderExecutiveCommand(report, freshness);
+    }
+
+    function renderResults() {
+      const docs = filterDocuments();
+      if (!docs.length) {
+        els.results.innerHTML = '<div class="empty">No matching documents. Clear filters or run the sync script.</div>';
+        return;
+      }
+      const grouped = new Map();
+      docs.slice(0, 120).forEach(doc => {
+        const group = groupLabels[doc.type] || doc.type || 'Other';
+        if (!grouped.has(group)) grouped.set(group, []);
+        grouped.get(group).push(doc);
+      });
+      els.results.innerHTML = [...grouped.entries()].map(([group, groupDocs]) => `
+        <div class="result-group">
+          <h2>${escapeHtml(group)} · ${escapeHtml(groupDocs.length)}</h2>
+          ${groupDocs.map(doc => `
+            <article class="result ${state.selectedNodeId === doc.node_id ? 'active' : ''}" data-node-id="${escapeHtml(doc.node_id)}">
+              <h3>${highlightText(doc.title, doc._terms || [])}</h3>
+              <div class="badges">
+                <span class="badge type">${escapeHtml(doc.type)}</span>
+                ${doc.agent ? `<span class="badge">${escapeHtml(doc.agent)}</span>` : ''}
+                ${doc.packet_id ? `<span class="badge">${highlightText(doc.packet_id, doc._terms || [])}</span>` : ''}
+                <span class="badge ${badgeClass(doc.status)}">${escapeHtml(doc.status || 'unknown')}</span>
+                <span class="badge ${badgeClass(doc.retrieval_status)}">${escapeHtml(doc.retrieval_status || 'not checked')}</span>
+                ${doc._score ? `<span class="badge">score ${escapeHtml(Math.round(doc._score))}</span>` : ''}
+              </div>
+              <p>${highlightText(doc.snippet || 'No excerpt available.', doc._terms || [])}</p>
+              ${doc._reasons?.length ? `<p>Why: ${escapeHtml(doc._reasons.join(' · '))}</p>` : ''}
+            </article>
+          `).join('')}
+        </div>
+      `).join('');
+      els.results.querySelectorAll('.result').forEach(item => {
+        item.addEventListener('click', () => selectNode(item.dataset.nodeId));
+      });
+    }
+
+    function graphNodesFromFiltered(filtered) {
+      const hasExplicitFocus = state.query || state.section || state.type || state.agent || state.status || state.retrieval;
+      if (hasExplicitFocus) return filtered.slice(0, 140);
+      const sectionTypes = new Set([
+        'packet-section', 'inbox-section', 'outbox-section', 'synthesis-section', 'decision-section', 'action-section',
+        'truth-section', 'source-section', 'correction-section', 'glossary-section', 'retrieval-contract-section', 'protocol'
+      ]);
+      if (state.view === 'overview') {
+        const preferred = filtered.filter(node => node.type === 'vault' || sectionTypes.has(node.type) || node.type === 'agent' || node.type === 'packet-key' || node.type === 'truth-gap');
+        return preferred.slice(0, 120);
+      }
+      if (state.view === 'packets') {
+        const preferred = filtered.filter(node => ['packet-section', 'packet-key', 'packet', 'ask', 'contribution', 'synthesis', 'decision', 'action', 'agent'].includes(node.type));
+        return preferred.slice(0, 140);
+      }
+      return filtered.slice(0, 140);
+    }
+
+    function nodePosition(node, index, total, width, height, groupIndex, groupCount, indexInGroup, groupSize) {
+      if (node.type === 'vault') return { x: width / 2, y: height / 2 };
+      const marginX = Math.max(58, width * 0.07);
+      const marginY = Math.max(70, height * 0.12);
+      const columnWidth = groupCount <= 1 ? 0 : (width - marginX * 2) / (groupCount - 1);
+      const x = groupCount <= 1 ? width / 2 : marginX + groupIndex * columnWidth;
+      const usableY = height - marginY * 2;
+      const y = marginY + ((indexInGroup + 1) / (groupSize + 1)) * usableY;
+      const wobble = ((indexInGroup % 2) - 0.5) * 18;
+      return { x: Math.max(28, Math.min(width - 28, x + wobble)), y };
+    }
+
+    function renderGraph() {
+      const filtered = filterNodes();
+      const nodes = graphNodesFromFiltered(filtered);
+      const nodeIds = new Set(nodes.map(n => n.id));
+      const edges = state.data.edges.filter(edge => nodeIds.has(edge.from) && nodeIds.has(edge.to)).slice(0, 260);
+      const width = els.graph.clientWidth || 800;
+      const height = els.graph.clientHeight || 600;
+      els.graph.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      const focusNode = state.neighborhoodNodeId ? state.data.nodes.find(node => node.id === state.neighborhoodNodeId) : null;
+      els.mapViewName.textContent = focusNode ? `Focused: ${focusNode.title}` : state.view[0].toUpperCase() + state.view.slice(1);
+      els.mapCount.textContent = `${nodes.length} mapped · ${filtered.length} matched`;
+      els.clearFocusButton.hidden = !state.neighborhoodNodeId;
+      els.depthValue.textContent = state.neighborhoodDepth;
+
+      const positions = new Map();
+      const groupNames = [...new Set(nodes.map(node => node.section || node.type || 'Other'))].sort();
+      const groups = new Map(groupNames.map(name => [name, nodes.filter(node => (node.section || node.type || 'Other') === name)]));
+      nodes.forEach((node, index) => {
+        const groupName = node.section || node.type || 'Other';
+        const group = groups.get(groupName) || nodes;
+        positions.set(node.id, nodePosition(
+          node,
+          index,
+          nodes.length,
+          width,
+          height,
+          groupNames.indexOf(groupName),
+          groupNames.length,
+          group.indexOf(node),
+          group.length
+        ));
+      });
+      const edgeMarkup = edges.map(edge => {
+        const a = positions.get(edge.from);
+        const b = positions.get(edge.to);
+        if (!a || !b) return '';
+        return `<line class="edge" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"></line>`;
+      }).join('');
+      const nodeMarkup = nodes.map(node => {
+        const pos = positions.get(node.id);
+        const color = typeColors[node.type] || '#aab0c5';
+        const radius = node.type === 'vault' ? 15 : node.type === 'agent' ? 11 : node.type.includes('section') ? 8 : 9;
+        const selected = state.selectedNodeId === node.id ? 'selected' : '';
+        const showLabel = selected || node.type === 'vault' || node.type === 'agent' || node.type === 'packet-key';
+        const label = node.title.length > 24 ? `${node.title.slice(0, 23)}…` : node.title;
+        return `
+          <g data-node-id="${escapeHtml(node.id)}">
+            <title>${escapeHtml(node.title)} · ${escapeHtml(node.type)}${node.section ? ` · ${escapeHtml(node.section)}` : ''}</title>
+            <circle class="node-circle ${selected}" cx="${pos.x}" cy="${pos.y}" r="${radius}" fill="${color}"></circle>
+            ${showLabel ? `<text class="node-label" x="${pos.x + radius + 5}" y="${pos.y + 4}">${escapeHtml(label)}</text>` : ''}
+          </g>
+        `;
+      }).join('');
+      els.graph.innerHTML = edgeMarkup + nodeMarkup;
+      els.graph.querySelectorAll('g[data-node-id]').forEach(group => {
+        group.addEventListener('click', () => selectNode(group.dataset.nodeId));
+      });
+    }
+
+    function relatedNodes(nodeId) {
+      const byId = new Map(state.data.nodes.map(node => [node.id, node]));
+      return state.data.edges
+        .filter(edge => edge.from === nodeId || edge.to === nodeId)
+        .slice(0, 16)
+        .map(edge => {
+          const otherId = edge.from === nodeId ? edge.to : edge.from;
+          return { edge, node: byId.get(otherId) };
+        })
+        .filter(item => item.node);
+    }
+
+    function packetFamilyItems(packetId, excludeNodeId = '') {
+      if (!packetId) return [];
+      return state.data.documents
+        .filter(doc => doc.packet_id === packetId && doc.node_id !== excludeNodeId)
+        .sort((a, b) => {
+          const ai = groupOrder.includes(a.type) ? groupOrder.indexOf(a.type) : 99;
+          const bi = groupOrder.includes(b.type) ? groupOrder.indexOf(b.type) : 99;
+          return ai - bi || String(a.title).localeCompare(String(b.title));
+        })
+        .slice(0, 28);
+    }
+
+    function provenanceMarkup(items) {
+      if (!items.length) return '<p>No same-packet provenance items in the current local sync.</p>';
+      const grouped = new Map();
+      items.forEach(item => {
+        const group = groupLabels[item.type] || item.type || 'Other';
+        if (!grouped.has(group)) grouped.set(group, []);
+        grouped.get(group).push(item);
+      });
+      return [...grouped.entries()].map(([group, docs]) => `
+        <div class="small-label">${escapeHtml(group)}</div>
+        <div class="provenance-list">
+          ${docs.map(doc => `
+            <div class="provenance-item">
+              <strong>${escapeHtml(doc.title)}</strong>
+              <div class="badges">
+                <span class="badge type">${escapeHtml(doc.type)}</span>
+                <span class="badge">${escapeHtml(doc.section || 'unknown section')}</span>
+                <span class="badge ${badgeClass(doc.retrieval_status)}">${escapeHtml(doc.retrieval_status || 'not checked')}</span>
+                <span class="badge ${badgeClass(doc.status)}">${escapeHtml(doc.status || 'unknown')}</span>
+              </div>
+              ${doc.source_url ? `<p style="margin-top:7px"><a href="${escapeHtml(doc.source_url)}" target="_blank" rel="noopener">Open in Notion</a></p>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      `).join('');
+    }
+
+    function packetSummaryMarkup(packetId, excludeNodeId = '') {
+      if (!packetId) return '';
+      const items = state.data.documents.filter(doc => doc.packet_id === packetId && doc.node_id !== excludeNodeId);
+      if (!items.length) return '';
+      const typeCounts = items.reduce((acc, item) => {
+        const label = groupLabels[item.type] || item.type || 'Other';
+        acc[label] = (acc[label] || 0) + 1;
+        return acc;
+      }, {});
+      const retrieved = items.filter(item => /retrieved/i.test(item.retrieval_status || '')).length;
+      const weakRetrieval = items.filter(item => /(partial|failed|not retrieved|not checked|owner-blocked)/i.test(item.retrieval_status || '')).length;
+      const openActions = items.filter(item => ['action', 'truth-gap'].includes(item.type) || /(open|blocked|partial|pending)/i.test(`${item.status || ''} ${item.retrieval_status || ''}`)).slice(0, 6);
+      const gapCount = packetId === packetVerticalSliceId ? glassTruthGaps.length : 0;
+      return `
+        <div class="panel-card">
+          <div class="small-label" style="margin-top:0">Packet Summary</div>
+          <div class="summary-grid">
+            <div class="summary-tile"><strong>${escapeHtml(items.length)}</strong><span>same-packet docs</span></div>
+            <div class="summary-tile"><strong>${escapeHtml(retrieved)}</strong><span>retrieved docs</span></div>
+            <div class="summary-tile"><strong>${escapeHtml(weakRetrieval)}</strong><span>weak retrieval / blockers</span></div>
+            <div class="summary-tile"><strong>${escapeHtml(gapCount || '0')}</strong><span>Glass truth gaps</span></div>
+          </div>
+          <div class="badges" style="margin-top:10px">
+            ${Object.entries(typeCounts).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([label, count]) =>
+              `<span class="badge">${escapeHtml(label)} · ${escapeHtml(count)}</span>`
+            ).join('')}
+          </div>
+          ${openActions.length ? `
+            <div class="action-list">
+              ${openActions.map(item => `
+                <button type="button" data-summary-node="${escapeHtml(item.node_id)}">
+                  ${escapeHtml(item.type)} · ${escapeHtml(item.title)}
+                </button>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function matchReasonForNode(node, doc) {
+      const terms = searchTerms();
+      if (node?.type === 'truth-gap') {
+        return 'Universal Glass truth blocker: this gap must close, be owner-certified as excluded, or be downgraded before related claims are promoted.';
+      }
+      if ((node?.packet_id || doc?.packet_id) === packetVerticalSliceId && !state.query.trim()) {
+        return 'Default local test slice: this packet is being used to prove search, provenance, actions, asks, and duplicate detection end to end.';
+      }
+      if (!state.query.trim()) return 'Selected from the local Vault sync.';
+      const scored = scoreDocument(doc || {}, node, terms);
+      return scored.reasons.length ? scored.reasons.join(' · ') : 'Selected item is related to the current filtered result set.';
+    }
+
+    function selectNode(nodeId) {
+      state.selectedNodeId = nodeId;
+      const node = state.data.nodes.find(item => item.id === nodeId);
+      const doc = getDocumentForNode(nodeId);
+      if (!node) return;
+      const sourceUrl = node.source?.url || doc?.source_url || '';
+      const related = relatedNodes(nodeId);
+      const packetItems = packetFamilyItems(node.packet_id || doc?.packet_id, nodeId);
+      const selectedPacketId = node.packet_id || doc?.packet_id || '';
+      const selectedGap = gapFromNodeId(nodeId);
+      const record = selectedRecord(nodeId);
+      const reason = matchReasonForNode(node, doc);
+      const hashId = record?.id || node.packet_id || node.id;
+      if (hashId && window.location.hash !== `#${encodeURIComponent(hashId)}`) {
+        history.replaceState(null, '', `#${encodeURIComponent(hashId)}`);
+      }
+      els.inspector.innerHTML = `
+        <div class="panel-card">
+          <h2>${escapeHtml(node.title)}</h2>
+          <div class="badges">
+            <span class="badge type">${escapeHtml(node.type)}</span>
+            ${node.packet_id ? `<span class="badge">${escapeHtml(node.packet_id)}</span>` : ''}
+            ${node.agent ? `<span class="badge">${escapeHtml(node.agent)}</span>` : ''}
+            <span class="badge ${badgeClass(node.status)}">${escapeHtml(node.status || 'unknown')}</span>
+          </div>
+          <p style="margin-top:12px">${escapeHtml(node.summary || doc?.snippet || 'No summary available.')}</p>
+        </div>
+
+        <div class="panel-card">
+          <div class="small-label" style="margin-top:0">Why This Appears</div>
+          <p>${escapeHtml(reason)}</p>
+        </div>
+
+        <div class="panel-card">
+          <div class="small-label" style="margin-top:0">Provenance</div>
+          ${field('Section', node.section || doc?.section || 'unknown')}
+          ${field('Packet', node.packet_id || doc?.packet_id || 'none')}
+          ${field('Status', node.status || doc?.status || 'unknown')}
+          ${field('Retrieval', node.retrieval_status || doc?.retrieval_status || 'not checked')}
+          ${field('Tenant', node.tenant_id)}
+          ${field('Permission', node.permission_scope)}
+          ${field('Sensitivity', record?.sensitivity || doc?.sensitivity || node.permission_scope || 'unknown')}
+          ${field('Source', node.source?.system || 'local')}
+          ${field('Page ID', node.source?.page_id || doc?.source_page_id || 'unknown')}
+          ${field('Source Link', sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener">Open in Notion</a>` : 'unknown', true)}
+          ${field('Last Verified', asDate(node.last_verified_at || doc?.last_verified_at))}
+          ${field('Retrieval', node.retrieval_status || 'not checked')}
+          ${field('Confidence', node.confidence || 'unknown')}
+        </div>
+
+        ${record ? `
+          <div class="panel-card">
+            <div class="small-label" style="margin-top:0">Operating Rules</div>
+            ${record.body ? `<p>${escapeHtml(record.body)}</p>` : ''}
+            ${record.allowed || record.allowed_use ? `<p><strong>Allowed:</strong> ${escapeHtml(record.allowed || record.allowed_use)}</p>` : ''}
+            ${record.prohibited || record.blocked_use ? `<p><strong>Blocked:</strong> ${escapeHtml(record.prohibited || record.blocked_use)}</p>` : ''}
+            ${record.source_basis || record.source ? `<p><strong>Basis:</strong> ${escapeHtml(record.source_basis || record.source)}</p>` : ''}
+          </div>
+        ` : ''}
+
+        ${clerkRecommendationMarkup(record)}
+
+        ${packetSummaryMarkup(selectedPacketId, nodeId)}
+        ${sourceFreshnessMarkup()}
+
+        <div class="panel-card">
+          <div class="small-label" style="margin-top:0">Same-Packet Trail</div>
+          ${provenanceMarkup(packetItems)}
+        </div>
+
+        ${glassTruthGapMarkup(selectedPacketId, selectedGap)}
+
+        <div class="panel-card">
+          <div class="small-label" style="margin-top:0">Owner Follow-Up Queue</div>
+          <p>Grouped from the current Glass truth gaps. These are local draft queues until owner-channel outreach is explicitly sent and recorded in the Vault.</p>
+          ${ownerQueueMarkup()}
+        </div>
+
+        <div class="panel-card">
+          <div class="small-label" style="margin-top:0">Related</div>
+          <button style="width:100%;text-align:left;margin-bottom:8px" id="focus-node-button" type="button">
+            Focus neighborhood
+          </button>
+          ${related.length ? related.map(item => `
+            <button style="width:100%;text-align:left;margin-bottom:6px" data-related-node="${escapeHtml(item.node.id)}">
+              ${escapeHtml(item.edge.label)} · ${escapeHtml(item.node.title)}
+            </button>
+          `).join('') : '<p>No related nodes in current graph.</p>'}
+        </div>
+
+        <div class="panel-card proposal">
+          <div class="small-label" style="margin-top:0">Proposal Draft</div>
+          <input id="proposal-title" placeholder="Idea or project title" value="${escapeHtml(node.packet_id ? `Follow-up on ${node.packet_id}` : '')}">
+          <textarea id="proposal-body" rows="5" placeholder="Question, business objective, why now, expected Council output..."></textarea>
+          <div id="proposal-overlap"></div>
+          <button id="proposal-button" type="button">Stage Draft Locally</button>
+          <p id="proposal-note" style="margin-top:10px">Linked context: ${escapeHtml(node.title)}</p>
+        </div>
+        ${proposalQueueMarkup()}
+      `;
+      els.inspector.querySelectorAll('[data-related-node]').forEach(button => {
+        button.addEventListener('click', () => selectNode(button.dataset.relatedNode));
+      });
+      els.inspector.querySelectorAll('[data-summary-node]').forEach(button => {
+        button.addEventListener('click', () => selectNode(button.dataset.summaryNode));
+      });
+      document.getElementById('focus-node-button')?.addEventListener('click', () => {
+        state.neighborhoodNodeId = node.id;
+        renderAll();
+      });
+      els.inspector.querySelectorAll('[data-gap-search]').forEach(button => {
+        button.addEventListener('click', () => applyGapSearch(button.dataset.gapSearch));
+      });
+      els.inspector.querySelectorAll('[data-stage-gap]').forEach(button => {
+        button.addEventListener('click', () => stageGapFollowup(button.dataset.stageGap, node));
+      });
+      wireProposalButton(node);
+      renderResults();
+      renderGraph();
+    }
+
+    function field(label, value, html = false) {
+      return `<div class="field"><span>${escapeHtml(label)}</span><span>${html ? value : escapeHtml(value ?? 'unknown')}</span></div>`;
+    }
+
+    function tokenize(value) {
+      const stop = new Set(['the', 'and', 'for', 'with', 'from', 'that', 'this', 'into', 'what', 'when', 'where', 'why', 'how', 'are', 'our', 'should', 'could', 'would', 'about', 'revio', 'council', 'glass']);
+      return String(value || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, ' ')
+        .split(/\s+/)
+        .map(token => token.trim())
+        .filter(token => token.length > 2 && !stop.has(token));
+    }
+
+    function searchTerms() {
+      const raw = state.query.trim();
+      const packetMatches = raw.match(/\bPKT-\d{6}-[A-Z0-9-]+(?:-V\d+)?\b/ig) || [];
+      return [...new Set([...packetMatches.map(item => item.toLowerCase()), ...tokenize(raw)])];
+    }
+
+    function scoreDocument(doc, node, terms) {
+      const q = state.query.trim().toLowerCase();
+      const title = String(doc.title || '').toLowerCase();
+      const packetId = String(doc.packet_id || node?.packet_id || '').toLowerCase();
+      const section = String(doc.section || node?.section || '').toLowerCase();
+      const text = String(doc.text || doc.snippet || '').toLowerCase();
+      let score = 0;
+      const reasons = [];
+      if (!q) {
+        score += String(doc.last_verified_at || '').startsWith('2026-') ? 1 : 0;
+        if (doc.packet_id === packetVerticalSliceId) {
+          score += 20;
+          reasons.push('part of PKT-260602 test slice');
+        }
+      }
+      if (q && packetId === q) {
+        score += 120;
+        reasons.push('exact packet ID match');
+      } else if (q && packetId.includes(q)) {
+        score += 80;
+        reasons.push('packet ID contains query');
+      }
+      if (/^pkt-\d{6}/i.test(q) && ['packet', 'packet-key'].includes(doc.type) && packetId.includes(q)) {
+        score += 70;
+        reasons.push('packet record for packet-ID query');
+      }
+      if (q && title.includes(q)) {
+        score += 55;
+        reasons.push('title contains query');
+      }
+      if (q && section.includes(q)) {
+        score += 16;
+        reasons.push('section contains query');
+      }
+      terms.forEach(term => {
+        if (packetId.includes(term)) score += 30;
+        if (title.includes(term)) score += 12;
+        if (section.includes(term)) score += 5;
+        if (text.includes(term)) score += 2;
+      });
+      const titleTokenHits = terms.filter(term => title.includes(term)).length;
+      const bodyTokenHits = terms.filter(term => text.includes(term)).length;
+      if (titleTokenHits) reasons.push(`${titleTokenHits} title term${titleTokenHits === 1 ? '' : 's'}`);
+      if (bodyTokenHits) reasons.push(`${bodyTokenHits} body term${bodyTokenHits === 1 ? '' : 's'}`);
+      if (['packet', 'packet-key', 'synthesis', 'decision', 'action'].includes(doc.type)) score += 10;
+      if (doc.retrieval_status && !/retrieved/i.test(doc.retrieval_status)) reasons.push(`retrieval: ${doc.retrieval_status}`);
+      return { score, reasons: [...new Set(reasons)].slice(0, 4) };
+    }
+
+    function rankedDocuments() {
+      if (!state.data) return [];
+      const visibleNodeIds = new Set(filterNodes().map(node => node.id));
+      const terms = searchTerms();
+      const q = state.query.trim();
+      return state.data.documents
+        .filter(doc => visibleNodeIds.has(doc.node_id))
+        .map(doc => {
+          const node = getNode(doc.node_id);
+          const scored = scoreDocument(doc, node, terms);
+          return { ...doc, _score: scored.score, _reasons: scored.reasons, _terms: terms };
+        })
+        .filter(doc => !q || doc._score > 0)
+        .sort((a, b) => b._score - a._score || groupOrder.indexOf(a.type) - groupOrder.indexOf(b.type) || String(b.last_verified_at || '').localeCompare(String(a.last_verified_at || '')));
+    }
+
+    function findProposalOverlap(title, body, contextNode = null) {
+      if (!state.data?.documents?.length) {
+        return { related: [], duplicateWarnings: [], conflictWarnings: [] };
+      }
+      const queryTokens = new Set(tokenize(`${title} ${body}`));
+      const rawProposal = `${title} ${body}`;
+      const explicitPacketIds = [...new Set((rawProposal.match(/\bPKT-\d{6}-[A-Z0-9-]+(?:-V\d+)?\b/ig) || []).map(item => item.toUpperCase()))];
+      if (!queryTokens.size) {
+        return { related: [], duplicateWarnings: [], conflictWarnings: [] };
+      }
+      const contextPacket = contextNode?.packet_id || '';
+      const scored = state.data.documents.map(doc => {
+        const docTokens = new Set(tokenize(`${doc.title} ${doc.snippet} ${doc.text || ''} ${doc.packet_id || ''}`));
+        let overlap = 0;
+        queryTokens.forEach(token => { if (docTokens.has(token)) overlap += 1; });
+        const titleHit = tokenize(doc.title).filter(token => queryTokens.has(token)).length;
+        const packetBonus = contextPacket && doc.packet_id === contextPacket ? 4 : 0;
+        const typeBonus = ['packet', 'packet-key', 'synthesis', 'decision', 'action', 'common-truth', 'correction'].includes(doc.type) ? 2 : 0;
+        const score = overlap + titleHit * 2 + packetBonus + typeBonus;
+        return { doc, score };
+      })
+        .filter(item => item.score >= 3)
+        .sort((a, b) => b.score - a.score || String(b.doc.last_verified_at || '').localeCompare(String(a.doc.last_verified_at || '')));
+
+      const related = scored.slice(0, 5).map(item => ({
+        title: item.doc.title,
+        type: item.doc.type,
+        section: item.doc.section,
+        status: item.doc.status,
+        packet_id: item.doc.packet_id,
+        source_url: item.doc.source_url,
+        score: item.score
+      }));
+      const explicitDuplicateWarnings = explicitPacketIds
+        .filter(packetId => state.data.documents.some(doc => doc.packet_id === packetId))
+        .map(packetId => `Exact packet ID already exists in local sync: ${packetId}. Stage only if this is a follow-up contribution/action, not a new packet.`);
+      const duplicateWarnings = [...explicitDuplicateWarnings, ...related
+        .filter(item => item.score >= 8 || String(item.title || '').toLowerCase().includes(String(title || '').toLowerCase().slice(0, 24)))
+        .slice(0, 3)
+        .map(item => `Possible overlap with ${item.title}${item.packet_id ? ` (${item.packet_id})` : ''}.`)]
+        .filter((item, index, arr) => arr.indexOf(item) === index);
+      const conflictTerms = ['correction', 'disputed', 'anti-bias', 'blocked', 'failed', 'downgraded', 'unsupported'];
+      const conflictWarnings = related
+        .filter(item => conflictTerms.some(term => `${item.title} ${item.type} ${item.status}`.toLowerCase().includes(term)))
+        .slice(0, 3)
+        .map(item => `Check conflict/guardrail context in ${item.title}.`);
+      return { related, duplicateWarnings, conflictWarnings: [...conflictWarnings, ...guardrailWarningsForText(rawProposal)] };
+    }
+
+    function proposalOverlapMarkup(overlap) {
+      if (!overlap.related.length && !overlap.duplicateWarnings.length && !overlap.conflictWarnings.length) {
+        return '<p>No related Council work found from the local sync.</p>';
+      }
+      const warnings = [...overlap.duplicateWarnings, ...overlap.conflictWarnings];
+      return `
+        ${warnings.length ? `<div class="warning-list">${warnings.map(item => `<div>${escapeHtml(item)}</div>`).join('')}</div>` : ''}
+        <div class="related-work">
+          ${overlap.related.map(item => `
+            <div class="related-work-item">
+              <strong>${escapeHtml(item.title)}</strong>
+              <div class="badges">
+                <span class="badge type">${escapeHtml(item.type || 'document')}</span>
+                ${item.packet_id ? `<span class="badge">${escapeHtml(item.packet_id)}</span>` : ''}
+                <span class="badge ${badgeClass(item.status)}">${escapeHtml(item.status || 'unknown')}</span>
+                <span class="badge">score ${escapeHtml(item.score)}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function updateProposalOverlap(contextNode = null) {
+      const target = document.getElementById('proposal-overlap');
+      if (!target) return { related: [], duplicateWarnings: [], conflictWarnings: [] };
+      const title = document.getElementById('proposal-title')?.value.trim() || '';
+      const body = document.getElementById('proposal-body')?.value.trim() || '';
+      const overlap = findProposalOverlap(title, body, contextNode);
+      target.innerHTML = title || body ? proposalOverlapMarkup(overlap) : '<p>Related prior work appears here before staging.</p>';
+      return overlap;
+    }
+
+    function gapFollowupDraft(gap, contextNode = null) {
+      return {
+        title: `${gap.id} owner follow-up: ${gap.area}`,
+        body: [
+          `Packet: ${packetVerticalSliceId}`,
+          `Gap: ${gap.id} - ${gap.area}`,
+          `Owner: ${gap.owner}`,
+          `Current status: ${gap.status}`,
+          '',
+          `Blocker: ${gap.blocker}`,
+          '',
+          `Next step: ${gap.next}`,
+          '',
+          `Allowed now: ${gap.allowed}`,
+          `Do not claim: ${gap.prohibited}`,
+          '',
+          `Evidence basis: ${gap.source}`,
+          '',
+          'Requested owner response: confirm source/export path, field definitions, due date, delegate if needed, and fallback proxy if not cleared.'
+        ].join('\n'),
+        linked_node_id: contextNode?.id || gapNodeId(gap.id),
+        linked_node_title: contextNode?.title || `${gap.id} · ${gap.area}`
+      };
+    }
+
+    async function stageGapFollowup(gapId, contextNode = null) {
+      const gap = glassTruthGaps.find(item => item.id === gapId);
+      if (!gap) return;
+      const titleInput = document.getElementById('proposal-title');
+      const bodyInput = document.getElementById('proposal-body');
+      const note = document.getElementById('proposal-note');
+      const draftContent = gapFollowupDraft(gap, contextNode);
+      if (titleInput) titleInput.value = draftContent.title;
+      if (bodyInput) bodyInput.value = draftContent.body;
+      updateProposalOverlap(contextNode);
+      if (note) note.textContent = 'Owner follow-up draft prefilled. Review and stage locally when ready.';
+      titleInput?.focus();
+    }
+
+    function proposalQueueMarkup() {
+      const drafts = state.proposalDrafts || [];
+      const exportLink = state.proposalDraftSource === 'server'
+        ? '<a href="/api/proposals/export.md" target="_blank" rel="noopener">Export Markdown</a>'
+        : 'Export available when served locally';
+      const routeStatus = state.proposalDraftSource === 'server'
+        ? '<a href="/api/proposals/route/status" target="_blank" rel="noopener">Route Gate Status</a>'
+        : 'Route gate available when served locally';
+      return `
+        <div class="panel-card" id="proposal-queue-card">
+          <div class="small-label" style="margin-top:0">Draft Queue</div>
+          ${field('Drafts', drafts.length)}
+          ${field('Source', state.proposalDraftSource)}
+          ${field('Export', exportLink, true)}
+          ${field('Route Gate', routeStatus, true)}
+          <div class="draft-list" style="margin-top:10px">
+            ${drafts.length ? drafts.slice().reverse().slice(0, 5).map(draft => `
+              <div class="draft-item">
+                <h3>${escapeHtml(draft.title || 'Untitled draft')}</h3>
+                <div class="badges">
+                  <span class="badge ${badgeClass(draft.status)}">${escapeHtml(draft.status || 'local-draft')}</span>
+                  <span class="badge">${escapeHtml(draft.sensitivity || 'evan-only-v0')}</span>
+                  ${draft.related_prior_work?.length ? `<span class="badge">${escapeHtml(draft.related_prior_work.length)} related</span>` : ''}
+                </div>
+                <p>${escapeHtml(draft.body || '').slice(0, 220)}${String(draft.body || '').length > 220 ? '...' : ''}</p>
+                ${registryCheckMarkup(draft)}
+                ${state.proposalDraftSource === 'server' && draft.id ? `
+                  <div class="badges" style="margin-top:8px">
+                    <a class="badge good" href="/api/proposals/packet.md?id=${encodeURIComponent(draft.id)}" target="_blank" rel="noopener">Packet Markdown</a>
+                    <a class="badge" href="/api/proposals/packet.json?id=${encodeURIComponent(draft.id)}" target="_blank" rel="noopener">Packet JSON</a>
+                    <button class="badge bad" type="button" data-registry-check="${escapeHtml(draft.id)}">Check Registry</button>
+                    <a class="badge warn" href="/api/proposals/dedupe?id=${encodeURIComponent(draft.id)}" target="_blank" rel="noopener">Dedupe Check</a>
+                  </div>
+                ` : ''}
+              </div>
+            `).join('') : '<p>No staged proposal drafts yet.</p>'}
+          </div>
+        </div>
+      `;
+    }
+
+    function registryCheckMarkup(draft) {
+      const result = draft?.id ? state.registryChecks.get(draft.id) : null;
+      if (!result) {
+        return '<p>Registry readiness: not checked. Notion writes remain disabled.</p>';
+      }
+      const tone = result.registry_match_count > 0 || result.safe_to_write === false ? 'warn' : 'good';
+      return `
+        <div class="warning-list">
+          <div><strong>Registry readiness:</strong> ${escapeHtml(result.summary)}</div>
+          <div class="badges" style="margin-top:7px">
+            ${result.packet_id ? `<span class="badge">${escapeHtml(result.packet_id)}</span>` : ''}
+            <span class="badge ${tone}">${escapeHtml(result.safe_to_write === false ? 'safe_to_write:false' : 'safe_to_write:unknown')}</span>
+            ${Number.isFinite(result.registry_match_count) ? `<span class="badge ${result.registry_match_count ? 'bad' : 'good'}">${escapeHtml(result.registry_match_count)} registry match${result.registry_match_count === 1 ? '' : 'es'}</span>` : ''}
+            <span class="badge ${badgeClass(result.status_label)}">${escapeHtml(result.status_label)}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    async function checkDraftRegistry(draftId) {
+      const res = await fetch(`/api/proposals/registry?id=${encodeURIComponent(draftId)}`, { cache: 'no-store' });
+      const data = await res.json().catch(() => ({}));
+      state.registryChecks.set(draftId, {
+        ...data,
+        status_label: `HTTP ${res.status}`,
+        summary: data.safe_to_write_reason || data.error || (res.ok ? 'No registry duplicate found, but writes remain disabled.' : 'Registry check failed closed.')
+      });
+      renderProposalQueue();
+    }
+
+    async function loadProposalDrafts() {
+      try {
+        const res = await fetch('/api/proposals', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`Proposal API HTTP ${res.status}`);
+        const data = await res.json();
+        state.proposalDrafts = Array.isArray(data.drafts) ? data.drafts : [];
+        state.proposalDraftSource = 'server';
+      } catch {
+        state.proposalDrafts = JSON.parse(localStorage.getItem('council-command-center-proposal-drafts') || '[]');
+        state.proposalDraftSource = 'browser localStorage';
+      }
+    }
+
+    function renderProposalQueue() {
+      const target = document.getElementById('proposal-queue-card');
+      if (target) target.outerHTML = proposalQueueMarkup();
+      document.querySelectorAll('[data-registry-check]').forEach(button => {
+        button.addEventListener('click', async () => {
+          button.disabled = true;
+          const original = button.textContent;
+          button.textContent = 'Checking...';
+          try {
+            await checkDraftRegistry(button.dataset.registryCheck);
+          } finally {
+            button.disabled = false;
+            button.textContent = original;
+          }
+        });
+      });
+    }
+
+    function stageProposalFallback(draft) {
+      const drafts = JSON.parse(localStorage.getItem('council-command-center-proposal-drafts') || '[]');
+      drafts.push(draft);
+      localStorage.setItem('council-command-center-proposal-drafts', JSON.stringify(drafts));
+      return drafts.length;
+    }
+
+    async function postProposalDraft(draft) {
+      const res = await fetch('/api/proposals', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(draft)
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.ok === false) {
+        throw new Error(data.error || `Proposal API HTTP ${res.status}`);
+      }
+      return data;
+    }
+
+    function wireProposalButton(contextNode = null) {
+      const button = document.getElementById('proposal-button');
+      if (!button) return;
+      const titleInput = document.getElementById('proposal-title');
+      const bodyInput = document.getElementById('proposal-body');
+      [titleInput, bodyInput].forEach(input => {
+        input?.addEventListener('input', () => updateProposalOverlap(contextNode));
+      });
+      updateProposalOverlap(contextNode);
+      button.addEventListener('click', async () => {
+        const title = document.getElementById('proposal-title')?.value.trim();
+        const body = document.getElementById('proposal-body')?.value.trim();
+        const note = document.getElementById('proposal-note');
+        if (!title || !body) {
+          note.textContent = 'Add a title and proposal body before staging.';
+          return;
+        }
+        const overlap = updateProposalOverlap(contextNode);
+        const draft = {
+          tenant_id: state.data.report?.tenant_id || 'revio',
+          creator_user_id: state.data.report?.user_id || 'evan',
+          created_at: new Date().toISOString(),
+          title,
+          body,
+          sensitivity: 'evan-only-v0',
+          status: 'local-draft',
+          linked_node_id: contextNode?.id || null,
+          linked_node_title: contextNode?.title || null,
+          intended_audience: 'Evan / Revay',
+          related_prior_work: overlap.related,
+          duplicate_warnings: overlap.duplicateWarnings,
+          conflict_warnings: overlap.conflictWarnings
+        };
+        button.disabled = true;
+        note.textContent = 'Staging proposal draft...';
+        try {
+          const saved = await postProposalDraft(draft);
+          note.textContent = `Draft staged to local file: ${saved.id}`;
+          await loadProposalDrafts();
+          renderProposalQueue();
+          await checkDraftRegistry(saved.id);
+        } catch (err) {
+          const count = stageProposalFallback(draft);
+          note.textContent = `Server draft failed (${err.message}). Fallback saved in browser localStorage. ${count} local draft(s).`;
+          await loadProposalDrafts();
+          renderProposalQueue();
+        } finally {
+          button.disabled = false;
+        }
+      });
+    }
+
+    function renderAll() {
+      renderMetrics();
+      renderResults();
+      renderGraph();
+    }
+
+    function wireEvents() {
+      document.querySelectorAll('nav button').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+          button.classList.add('active');
+          state.view = button.dataset.view;
+          renderAll();
+        });
+      });
+      els.search.addEventListener('input', event => {
+        state.query = event.target.value;
+        renderAll();
+      });
+      els.typeFilter.addEventListener('change', event => { state.type = event.target.value; renderAll(); });
+      els.sectionFilter.addEventListener('change', event => { state.section = event.target.value; renderAll(); });
+      els.agentFilter.addEventListener('change', event => { state.agent = event.target.value; renderAll(); });
+      els.statusFilter.addEventListener('change', event => { state.status = event.target.value; renderAll(); });
+      els.retrievalFilter.addEventListener('change', event => { state.retrieval = event.target.value; renderAll(); });
+      els.resetButton.addEventListener('click', resetView);
+      els.saveViewButton.addEventListener('click', saveCurrentView);
+      els.savedViewSelect.addEventListener('change', event => {
+        const saved = state.savedViews[Number(event.target.value)];
+        if (!saved) return;
+        applyViewState(saved.state);
+        renderAll();
+        const first = filterDocuments()[0];
+        if (first) selectNode(first.node_id);
+        event.target.value = '';
+      });
+      els.clearFocusButton.addEventListener('click', () => {
+        state.neighborhoodNodeId = null;
+        renderAll();
+      });
+      els.depthMinusButton.addEventListener('click', () => {
+        state.neighborhoodDepth = Math.max(1, state.neighborhoodDepth - 1);
+        renderAll();
+      });
+      els.depthPlusButton.addEventListener('click', () => {
+        state.neighborhoodDepth = Math.min(3, state.neighborhoodDepth + 1);
+        renderAll();
+      });
+      document.getElementById('fit-button').addEventListener('click', renderGraph);
+      document.querySelectorAll('[data-test-query]').forEach(button => {
+        button.addEventListener('click', () => {
+          state.query = button.dataset.testQuery;
+          els.search.value = state.query;
+          state.view = 'overview';
+          state.neighborhoodNodeId = null;
+          document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.view === 'overview'));
+          renderAll();
+          const first = filterDocuments()[0];
+          if (first) selectNode(first.node_id);
+        });
+      });
+      wireProposalButton();
+      window.addEventListener('resize', () => window.requestAnimationFrame(renderGraph));
+      document.addEventListener('keydown', event => {
+        const tag = document.activeElement?.tagName?.toLowerCase();
+        const isTyping = ['input', 'textarea', 'select'].includes(tag);
+        if (event.key === '/' && !isTyping) {
+          event.preventDefault();
+          els.search.focus();
+          return;
+        }
+        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+          event.preventDefault();
+          els.search.focus();
+          els.search.select();
+          return;
+        }
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          if (isTyping) document.activeElement.blur();
+          resetView();
+          return;
+        }
+        if ((event.key === 'r' || event.key === 'R') && !isTyping) {
+          resetView();
+        }
+      });
+    }
+
+    function docketRecordToGap(record) {
+      return {
+        id: record.id,
+        area: record.title,
+        status: record.status,
+        owner: record.owner,
+        blocker: record.blocker,
+        next: record.next,
+        allowed: record.allowed,
+        prohibited: record.prohibited,
+        source: record.source_basis,
+        sensitivity: record.sensitivity,
+        urgency: record.urgency,
+        packet_id: record.packet_id,
+        last_verified_at: record.last_verified_at,
+        related_library_ids: record.related_library_ids || []
+      };
+    }
+
+    async function loadJsonApi(path) {
+      const res = await fetch(path, { cache: 'no-store' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.ok === false) {
+        throw new Error(data.error || `${path} HTTP ${res.status}`);
+      }
+      return data;
+    }
+
+    async function loadCommandCenterApis() {
+      try {
+        const [library, docket, search] = await Promise.all([
+          loadJsonApi('/api/library'),
+          loadJsonApi('/api/docket'),
+          loadJsonApi('/api/search?q=J03&limit=5')
+        ]);
+        state.libraryRecords = Array.isArray(library.records) ? library.records : [];
+        state.docketRecords = Array.isArray(docket.records) ? docket.records : [];
+        glassTruthGaps = state.docketRecords.map(docketRecordToGap);
+        state.apiSearchAvailable = search.ok === true;
+      } catch (err) {
+        state.libraryRecords = [];
+        state.docketRecords = [];
+        state.apiSearchAvailable = false;
+        console.warn('Command Center API hydration unavailable:', err.message);
+      }
+    }
+
+    async function load() {
+      try {
+        const res = await fetch(DATA_URL, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        state.data = await res.json();
+        await loadCommandCenterApis();
+        enrichDataWithGlassRecords();
+        await loadProposalDrafts();
+        populateFilters();
+        loadSavedViews();
+        renderSavedViews();
+        wireEvents();
+        renderAll();
+        renderProposalQueue();
+        const initialNodeId = nodeIdFromHash() || gapNodeId('J03');
+        if (state.data.nodes.some(node => node.id === initialNodeId)) selectNode(initialNodeId);
+        else selectNode(gapNodeId('J03'));
+      } catch (err) {
+        els.syncStatus.innerHTML = `<b>Data unavailable</b> · ${escapeHtml(err.message)} · run <code>node scripts/council-command-center-sync.js</code>`;
+        els.results.innerHTML = '<div class="empty">No graph data found yet. Run the sync script from the workspace root, then serve this file from a local web server.</div>';
+        wireEvents();
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
