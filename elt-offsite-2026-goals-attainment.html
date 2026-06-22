@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ELT Offsite 2026 Goal Attainment</title>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#202432;--text:#e8eaf6;--muted:#a8adbd;--line:rgba(255,255,255,.13);--accent:#6c63ff;--accent2:#00d4aa;--warn:#ffb84d;--bad:#ff5c7a;--unknown:#95a0b8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.45}
+body:before{content:"";position:fixed;inset:0;background:linear-gradient(135deg,rgba(108,99,255,.18),transparent 38%),linear-gradient(315deg,rgba(0,212,170,.12),transparent 34%);pointer-events:none}
+main{position:relative;max-width:1320px;margin:0 auto;padding:34px 26px 72px}
+.hero{min-height:420px;display:grid;align-content:end;padding:44px 0 30px;border-bottom:1px solid var(--line)}
+.eyebrow,.section-head p{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent2);font-weight:800;margin:0 0 12px}
+h1{font-size:clamp(42px,7vw,84px);line-height:.95;letter-spacing:0;margin:0 0 18px;max-width:980px}
+.subtitle{font-size:20px;color:var(--muted);max-width:920px;margin:0}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.chip{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:999px;padding:8px 11px;color:var(--muted);font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:28px 0}
+.kpi{background:rgba(26,29,39,.9);border:1px solid var(--line);border-radius:8px;padding:18px;min-height:130px}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}.num{font-size:34px;font-weight:850;margin-top:10px}.kpi p{margin:8px 0 0;color:var(--muted);font-size:13px}
+.band{padding:32px 0;border-bottom:1px solid var(--line)}.section-head h2{font-size:32px;margin:0 0 20px}
+.goal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.goal-card{background:rgba(26,29,39,.92);border:1px solid var(--line);border-radius:8px;padding:18px;min-height:214px;display:flex;flex-direction:column}.goal-card.good{border-color:rgba(0,212,170,.45)}.goal-card.warn{border-color:rgba(255,184,77,.45)}.goal-card.bad{border-color:rgba(255,92,122,.48)}
+.card-top{display:flex;justify-content:flex-end}.status,.pill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:850}.status.good,.pill.good{background:rgba(0,212,170,.14);color:var(--accent2)}.status.warn,.pill.warn{background:rgba(255,184,77,.13);color:var(--warn)}.status.bad,.pill.bad{background:rgba(255,92,122,.13);color:var(--bad)}.status.unknown,.pill.unknown{background:rgba(149,160,184,.13);color:var(--unknown)}
+.goal-card h3{font-size:19px;line-height:1.2;margin:14px 0 8px}.goal-card p{color:var(--text);margin:0 0 16px}.source{margin-top:auto;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:12px}
+table{width:100%;border-collapse:separate;border-spacing:0 8px}th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:0 10px}td{background:rgba(255,255,255,.045);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 10px;font-size:14px}td:first-child{border-left:1px solid var(--line);border-radius:8px 0 0 8px}td:last-child{border-right:1px solid var(--line);border-radius:0 8px 8px 0}
+.personal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.personal-card{background:rgba(32,36,50,.9);border:1px solid var(--line);border-radius:8px;padding:18px}.personal-card h3{margin:0 0 10px}.personal-card p{color:var(--muted)}
+.foot{color:var(--muted);font-size:12px;margin-top:24px}
+@media(max-width:950px){.kpis,.goal-grid,.personal{grid-template-columns:1fr}.hero{min-height:auto;padding-top:24px}h1{font-size:42px}table,thead,tbody,tr,td{display:block;width:100%}thead{display:none}tr{border:1px solid var(--line);border-radius:8px;margin:0 0 10px;padding:8px;background:rgba(255,255,255,.04)}td,td:first-child,td:last-child{border:0;background:transparent;border-radius:0}td:before{content:attr(data-label);display:block;color:var(--muted);font-size:10px;text-transform:uppercase}}
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="eyebrow">ELT Offsite Prep · Working Visual</div>
+    <h1>2026 goals: promise, proof, and gaps</h1>
+    <p class="subtitle">A visual checkpoint of every goal extracted from the prior offsite presentation, paired with current source-backed evidence where available. Not final ELT slide copy.</p>
+    <div class="meta">
+      <span class="chip">Generated 2026-06-22</span>
+      <span class="chip">Prior deck: H1_2026_ELTOffsite_ERice</span>
+      <span class="chip">Salesforce HTTP 200 · 169 records</span>
+      <span class="chip">Evidence labels preserved</span>
+    </div>
+  </section>
+  <section class="kpis">
+    <div class="kpi"><div class="label">Direct bookings attainment</div><div class="num">36.4%</div><p>$105,901 vs $290,842 pace</p></div>
+    <div class="kpi"><div class="label">H1 direct target attainment</div><div class="num">34.3%</div><p>$105,901 vs $309,154</p></div>
+    <div class="kpi"><div class="label">Marketing bookings read</div><div class="num">97.8%</div><p>$48,429 vs $49.5k H1 target; needs definition certification</p></div>
+    <div class="kpi"><div class="label">Known unsafe claims</div><div class="num">7</div><p>Retention, CommerceHub, GA status, release commitment, RTS cohort, incentive, transaction goal</p></div>
+  </section>
+  
+  <section class="band">
+    <div class="section-head">
+      <p>Q1 2026</p>
+      <h2>Q1 2026 Goal Status</h2>
+    </div>
+    <div class="goal-grid">
+      
+        <article class="goal-card bad">
+          <div class="card-top">
+            <span class="status bad">behind / source-backed</span>
+          </div>
+          <h3>Sales bookings by product line</h3>
+          <p>Closed. Current replay says bookings were below target; use refreshed YTD view for deck.</p>
+          <div class="source">Prior deck Q1 goal 1; slide 15/16 monthly tables</div>
+        </article>
+      
+        <article class="goal-card warn">
+          <div class="card-top">
+            <span class="status warn">partial</span>
+          </div>
+          <h3>Marketing website leads, opps, bookings</h3>
+          <p>Marketing bookings can be checked in Salesforce; lead target still needs HubSpot/website source.</p>
+          <div class="source">SmartArt data1.xml: 8 PSA inbound leads/month, 148 marketing opps, $21.9k bookings</div>
+        </article>
+      
+        <article class="goal-card unknown">
+          <div class="card-top">
+            <span class="status unknown">unknown</span>
+          </div>
+          <h3>Security / AV barriers GA</h3>
+          <p>No source-owned GA evidence retrieved yet.</p>
+          <div class="source">SmartArt data2.xml Q1 goal 3</div>
+        </article>
+      
+        <article class="goal-card unknown">
+          <div class="card-top">
+            <span class="status unknown">unknown</span>
+          </div>
+          <h3>Goal 4 blank</h3>
+          <p>Extracted goal slot contains only “4.”</p>
+          <div class="source">SmartArt data2.xml Q1 slot 4</div>
+        </article>
+      
+        <article class="goal-card warn">
+          <div class="card-top">
+            <span class="status warn">needs certification</span>
+          </div>
+          <h3>Apollo 1 on scope and on time</h3>
+          <p>Roadmap proxy exists, but Product needs to certify committed baseline and GA/shipped status.</p>
+          <div class="source">SmartArt data2.xml Q1 goal 5</div>
+        </article>
+      
+        <article class="goal-card bad">
+          <div class="card-top">
+            <span class="status bad">miss / stale source-backed</span>
+          </div>
+          <h3>Graduate 50+ PSA clients</h3>
+          <p>Alfred pull: Q1 actual PSA graduations = 15. Needs current refresh before final.</p>
+          <div class="source">SmartArt data2.xml Q1 goal 6</div>
+        </article>
+      
+        <article class="goal-card unknown">
+          <div class="card-top">
+            <span class="status unknown">unknown</span>
+          </div>
+          <h3>Q1 retention and growth goals</h3>
+          <p>Finance contribution says current May retention KPI cells appear broken; do not use without cleanup.</p>
+          <div class="source">SmartArt data2.xml Q1 goal 7</div>
+        </article>
+      
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="section-head">
+      <p>H1 2026</p>
+      <h2>H1 2026 Goal Status</h2>
+    </div>
+    <div class="goal-grid">
+      
+        <article class="goal-card bad">
+          <div class="card-top">
+            <span class="status bad">behind / source-backed</span>
+          </div>
+          <h3>Sales bookings by product line</h3>
+          <p>$105,901 vs $309,154 H1 target; 34.3% attainment.</p>
+          <div class="source">Prior deck H1 goal 1; slide 15/16 monthly tables</div>
+        </article>
+      
+        <article class="goal-card warn">
+          <div class="card-top">
+            <span class="status warn">near target / needs certification</span>
+          </div>
+          <h3>Marketing website leads, opps, bookings</h3>
+          <p>Salesforce Marketing_Source__c excluding Sales/blank: $48,429 closed-won, 97.8% of H1 bookings target. Opp/lead definitions need certification.</p>
+          <div class="source">SmartArt data1.xml: 15 PSA inbound/month, 292 marketing opps, $49.5k bookings</div>
+        </article>
+      
+        <article class="goal-card warn">
+          <div class="card-top">
+            <span class="status warn">needs certification</span>
+          </div>
+          <h3>90%+ committed items for each H1 Named Release</h3>
+          <p>Product roadmap proxy: 235/324 Apollo 1-3 rows delivered+available; not proof until committed baseline is certified.</p>
+          <div class="source">SmartArt data2.xml H1 goal 3</div>
+        </article>
+      
+        <article class="goal-card unknown">
+          <div class="card-top">
+            <span class="status unknown">unknown</span>
+          </div>
+          <h3>CommerceHub Phase 2 touchless provisioning and billing</h3>
+          <p>No source-owned CommerceHub Phase 2 evidence retrieved yet.</p>
+          <div class="source">SmartArt data2.xml H1 goal 4</div>
+        </article>
+      
+        <article class="goal-card bad">
+          <div class="card-top">
+            <span class="status bad">behind / stale source-backed</span>
+          </div>
+          <h3>Graduate 100+ PSA clients</h3>
+          <p>Alfred pull through 2026-06-17: 55/100 PSA graduations.</p>
+          <div class="source">SmartArt data2.xml H1 goal 5</div>
+        </article>
+      
+        <article class="goal-card unknown">
+          <div class="card-top">
+            <span class="status unknown">unknown</span>
+          </div>
+          <h3>H1 retention and growth goals</h3>
+          <p>Finance refresh needed; current retention KPI cells not safe.</p>
+          <div class="source">SmartArt data2.xml H1 goal 6</div>
+        </article>
+      
+        <article class="goal-card unknown">
+          <div class="card-top">
+            <span class="status unknown">unknown</span>
+          </div>
+          <h3>Company incentive targets for H1</h3>
+          <p>Finance refresh needed.</p>
+          <div class="source">SmartArt data2.xml H1 goal 7</div>
+        </article>
+      
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="section-head">
+      <p>Full-Year 2026</p>
+      <h2>Full-Year 2026 Goal Status</h2>
+    </div>
+    <div class="goal-grid">
+      
+        <article class="goal-card bad">
+          <div class="card-top">
+            <span class="status bad">behind / source-backed</span>
+          </div>
+          <h3>Sales bookings by product line</h3>
+          <p>$105,901 vs $290,842 budget pace through 2026-06-22; 36.4% attainment.</p>
+          <div class="source">Prior deck FY goal 1; slide 15/16 monthly tables</div>
+        </article>
+      
+        <article class="goal-card warn">
+          <div class="card-top">
+            <span class="status warn">partial</span>
+          </div>
+          <h3>Marketing website leads, opps, bookings</h3>
+          <p>Salesforce supports a partial bookings/opps read; lead source and last-touch definition need Marketing/RevOps certification.</p>
+          <div class="source">SmartArt data1.xml: 25 PSA inbound/month, 855+ opps, $129k bookings, 80% run-rate last touch</div>
+        </article>
+      
+        <article class="goal-card warn">
+          <div class="card-top">
+            <span class="status warn">partial / stale</span>
+          </div>
+          <h3>$10k+ primary product fee deals for Billing, PSA, RMM</h3>
+          <p>Prior query found 1 Billing deal at $13,250 and zero PSA/RMM in that query; rerun needed for final.</p>
+          <div class="source">SmartArt data2.xml FY goal 3</div>
+        </article>
+      
+        <article class="goal-card unknown">
+          <div class="card-top">
+            <span class="status unknown">unknown</span>
+          </div>
+          <h3>CommerceHub launched, order to payment transaction placed</h3>
+          <p>No source-owned order-to-payment transaction evidence retrieved yet.</p>
+          <div class="source">SmartArt data2.xml FY goal 4</div>
+        </article>
+      
+        <article class="goal-card unknown">
+          <div class="card-top">
+            <span class="status unknown">unknown</span>
+          </div>
+          <h3>Less than 10% RTS cancel rate across all offerings</h3>
+          <p>PSA dashboard exposure exists, but denominator/cohort is not Finance-approved.</p>
+          <div class="source">SmartArt data2.xml FY goal 5</div>
+        </article>
+      
+        <article class="goal-card unknown">
+          <div class="card-top">
+            <span class="status unknown">unknown</span>
+          </div>
+          <h3>Over 100% net and 90% gross retention</h3>
+          <p>Finance retention refresh needed.</p>
+          <div class="source">SmartArt data2.xml FY goal 6</div>
+        </article>
+      
+        <article class="goal-card unknown">
+          <div class="card-top">
+            <span class="status unknown">unknown</span>
+          </div>
+          <h3>Close or be in confirmatory diligence for 6x+ top-line MRR transaction</h3>
+          <p>Needs Evan/Brent/Finance owner confirmation.</p>
+          <div class="source">SmartArt data2.xml FY goal 7</div>
+        </article>
+      
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="section-head"><p>Bookings Detail</p><h2>Salesforce Attainment By Product</h2></div>
+    <table>
+      <thead><tr><th>Product</th><th>Actual MRR</th><th>Budget Pace</th><th>Attainment</th><th>Records</th><th>H1 Target</th></tr></thead>
+      <tbody>
+  <tr>
+    <td><strong>PSA</strong></td>
+    <td>$55,498</td>
+    <td>$154,867</td>
+    <td><span class="pill bad">35.8%</span></td>
+    <td>74</td>
+    <td>$165,000</td>
+  </tr>
+
+  <tr>
+    <td><strong>Billing</strong></td>
+    <td>$39,310</td>
+    <td>$56,508</td>
+    <td><span class="pill warn">69.6%</span></td>
+    <td>39</td>
+    <td>$59,392</td>
+  </tr>
+
+  <tr>
+    <td><strong>Payments</strong></td>
+    <td>$10,493</td>
+    <td>$56,536</td>
+    <td><span class="pill bad">18.6%</span></td>
+    <td>48</td>
+    <td>$59,480</td>
+  </tr>
+
+  <tr>
+    <td><strong>RMM / Cyber Protect</strong></td>
+    <td>$600</td>
+    <td>$17,530</td>
+    <td><span class="pill bad">3.4%</span></td>
+    <td>2</td>
+    <td>$19,050</td>
+  </tr>
+
+  <tr>
+    <td><strong>Odin</strong></td>
+    <td>$0</td>
+    <td>$5,401</td>
+    <td><span class="pill bad">0%</span></td>
+    <td>2</td>
+    <td>$6,232</td>
+  </tr>
+
+  <tr>
+    <td><strong>CommerceHub</strong></td>
+    <td>$0</td>
+    <td>$7,201</td>
+    <td><span class="pill bad">0%</span></td>
+    <td>4</td>
+    <td>$8,001</td>
+  </tr>
+</tbody>
+    </table>
+  </section>
+  <section class="band">
+    <div class="section-head"><p>Personal Goals</p><h2>Self-Report Needed</h2></div>
+    <div class="personal">
+      <article class="personal-card"><h3>Q1 personal</h3><p>325 workout points; family ski trip; couples weekend x1; Amber father affairs settled</p><div class="source">Needs Evan self-report or authorized source lookup.</div></article><article class="personal-card"><h3>H1 personal</h3><p>650 workout points; school event for each boy; family beach trip somewhere new</p><div class="source">Needs Evan self-report or authorized source lookup.</div></article><article class="personal-card"><h3>Full-year personal</h3><p>1300 workout points; Austin/Ian activity individually once per quarter; couples trip x2, at least one Amber picks</p><div class="source">Needs Evan self-report or authorized source lookup.</div></article>
+    </div>
+    <p class="foot">Sources: goal labels from ppt/diagrams/data2.xml; numeric marketing details from ppt/diagrams/data1.xml; direct/channel targets from slides 15 and 16; current bookings from Salesforce API HTTP 200 on 2026-06-22.</p>
+  </section>
+</main>
+</body>
+</html>
