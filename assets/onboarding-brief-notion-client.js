@@ -560,8 +560,14 @@
         .notion-brief-editor-head { display: block; }
         .notion-brief-actions { justify-content: flex-start; margin-top: 14px; }
       }
+      body.notion-brief-connected .container > .section {
+        display: none;
+      }
       @media print {
         .notion-brief-editor { display: none; }
+        body.notion-brief-connected .container > .section {
+          display: block;
+        }
       }
     ` }));
   }
@@ -588,6 +594,7 @@
   }
 
   ready(() => {
+    document.body.classList.add('notion-brief-connected');
     installStyles();
     insertEditorShell();
     wireExistingSaveButton();

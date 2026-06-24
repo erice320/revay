@@ -425,7 +425,7 @@
   <p class="hero-sub">Auto-generated from Salesforce · Close date 2026-06-23 · Patrick Davies → SA Handoff</p>
   <div class="hero-actions">
     
-    <button class="btn btn-primary" type="button" onclick="saveBriefEdits()" data-brief-save-control>Save Updated Data</button>
+    <button class="btn btn-primary" type="button" onclick="saveBriefEdits()" data-brief-save-control>Save to Notion</button>
     <button class="btn btn-secondary" type="button" onclick="window.print()">Print / Save as PDF</button>
     <div id="briefSaveStatus" class="save-status" aria-live="polite"></div>
   <button class="btn btn-primary" onclick="openQuestionnaire()" style="background:var(--accent2,#10b981);">📋 Pre-fill Questionnaire →</button>
@@ -1792,72 +1792,6 @@ Follow Up: </textarea>
 </script>
 
 
-<script>
-(function(){
-  const BRIEF_SAVE_KEY = 'revay:psa:brief:' + location.pathname;
-
-  function editableScope() {
-    return document.querySelector('.content') || document.querySelector('.container') || document.body;
-  }
-
-  function setStatus(message) {
-    const status = document.getElementById('briefSaveStatus');
-    if (status) status.textContent = message || '';
-  }
-
-  function syncFormDom(scope) {
-    scope.querySelectorAll('input').forEach(function(input) {
-      if (input.type === 'checkbox' || input.type === 'radio') {
-        if (input.checked) input.setAttribute('checked', 'checked');
-        else input.removeAttribute('checked');
-      } else {
-        input.setAttribute('value', input.value || '');
-      }
-    });
-    scope.querySelectorAll('textarea').forEach(function(textarea) {
-      textarea.textContent = textarea.value || '';
-    });
-    scope.querySelectorAll('select').forEach(function(select) {
-      Array.from(select.options).forEach(function(option) {
-        if (option.selected) option.setAttribute('selected', 'selected');
-        else option.removeAttribute('selected');
-      });
-    });
-  }
-
-  window.saveBriefEdits = function saveBriefEdits() {
-    const scope = editableScope();
-    syncFormDom(scope);
-    const payload = {
-      savedAt: new Date().toISOString(),
-      title: document.title,
-      path: location.pathname,
-      html: scope.innerHTML
-    };
-    try {
-      localStorage.setItem(BRIEF_SAVE_KEY, JSON.stringify(payload));
-      setStatus('Saved locally ' + new Date(payload.savedAt).toLocaleString() + '. PDF export is separate.');
-    } catch (err) {
-      setStatus('Save failed: ' + err.message);
-    }
-  };
-
-  window.restoreBriefEdits = function restoreBriefEdits() {
-    try {
-      const raw = localStorage.getItem(BRIEF_SAVE_KEY);
-      if (!raw) return;
-      const payload = JSON.parse(raw);
-      if (!payload || !payload.html) return;
-      editableScope().innerHTML = payload.html;
-      setStatus('Restored saved edits from ' + new Date(payload.savedAt).toLocaleString() + '.');
-    } catch (err) {
-      setStatus('Saved edits could not be restored: ' + err.message);
-    }
-  };
-
-  document.addEventListener('DOMContentLoaded', window.restoreBriefEdits);
-})();
-</script>
 <script src="assets/onboarding-brief-notion-client.js" data-page-id="389a59b7-e7b2-81fc-a0ae-f2baf36b9817" data-brief-type="PSA" defer></script>
 </body>
 </html>
