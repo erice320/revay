@@ -415,6 +415,14 @@
     }
   
   </style>
+<style id="notionBriefCriticalStyles">
+    html[data-notion-page-id] .container > .section { display: none; }
+    html[data-notion-page-id] #notionBriefEditor { display: block; }
+    @media print {
+      html[data-notion-page-id] .container > .section { display: block; }
+      html[data-notion-page-id] #notionBriefEditor { display: none !important; }
+    }
+  </style>
 </head>
 <body>
 
@@ -1785,6 +1793,6 @@ Follow Up: </textarea>
 </script>
 
 
-<script src="assets/onboarding-brief-notion-client.js?v=20260624-2" data-page-id="389a59b7-e7b2-81d5-894a-cd9297bd8c22" data-brief-type="PSA" defer></script>
+<script src="assets/onboarding-brief-notion-client.js?v=20260624-3" data-page-id="389a59b7-e7b2-81d5-894a-cd9297bd8c22" data-brief-type="PSA" defer></script>
 </body>
 </html>

@@ -102,6 +102,14 @@
     }
   
   </style>
+<style id="notionBriefCriticalStyles">
+    html[data-notion-page-id] .container > .section { display: none; }
+    html[data-notion-page-id] #notionBriefEditor { display: block; }
+    @media print {
+      html[data-notion-page-id] .container > .section { display: block; }
+      html[data-notion-page-id] #notionBriefEditor { display: none !important; }
+    }
+  </style>
 </head>
 <body>
 
@@ -118,6 +126,9 @@
 </div>
 
 <div class="container">
+<div id="notionBriefEditor" class="notion-brief-editor">
+    <div id="notionBriefEditorStatus" class="notion-brief-status" aria-live="polite">Loading Notion-backed editor...</div>
+  </div>
 
   <!-- ═════════════════════════════════════════��═════════ -->
   <!-- SECTION 1: CLIENT & DEAL INFO -->
@@ -896,6 +907,6 @@ function clearForm() {
 </script>
 
 
-<script src="assets/onboarding-brief-notion-client.js?v=20260624-2" data-page-id="389a59b7-e7b2-81cf-9173-f106fdc5119a" data-brief-type="Billing" defer></script>
+<script src="assets/onboarding-brief-notion-client.js?v=20260624-3" data-page-id="389a59b7-e7b2-81cf-9173-f106fdc5119a" data-brief-type="Billing" defer></script>
 </body>
 </html>
