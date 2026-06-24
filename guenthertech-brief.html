@@ -404,6 +404,17 @@
     @media (max-width: 600px) {
       .field-grid.col2, .field-grid.col3 { grid-template-columns: 1fr; }
     }
+  
+    .save-status {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 10px;
+      min-height: 16px;
+    }
+    @media print {
+      .save-status { display: none; }
+    }
+  
   </style>
 </head>
 <body>
@@ -414,8 +425,10 @@
   <h1><span>Sales Brief</span> — GuentherTech</h1>
   <p class="hero-sub">Pre-filled from Salesforce + Kaia intelligence · Close date 3/6/2026 · Cameron Sharpe / Joseph Abarno → SA Handoff</p>
   <div class="hero-actions">
-    <button class="btn btn-primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
     
+    <button class="btn btn-primary" type="button" onclick="saveBriefEdits()" data-brief-save-control>Save Updated Data</button>
+    <button class="btn btn-secondary" type="button" onclick="window.print()">Print / Save as PDF</button>
+    <div id="briefSaveStatus" class="save-status" aria-live="polite"></div>
   </div>
 </div>
 
@@ -1523,6 +1536,73 @@ document.addEventListener('DOMContentLoaded', function(){
   for(var i=0;i<sel2.options.length;i++){if(sel2.options[i].text==='Pricing Addendum'){sel2.selectedIndex=i;break;}}
   b.querySelector('textarea').value='Per Cameron Sharpe email 3/6/2026: monthly billables AND one-time setup/migration fees were both pushed back at close.\n\nSA Action: Confirm exact billing start date with Finance BEFORE kickoff. Ensure client receives no invoice until the deferred date. Get the specific deferred start date documented — it is not currently in Salesforce.';
 });
+</script>
+
+<script>
+(function(){
+  const BRIEF_SAVE_KEY = 'revay:psa:brief:' + location.pathname;
+
+  function editableScope() {
+    return document.querySelector('.content') || document.querySelector('.container') || document.body;
+  }
+
+  function setStatus(message) {
+    const status = document.getElementById('briefSaveStatus');
+    if (status) status.textContent = message || '';
+  }
+
+  function syncFormDom(scope) {
+    scope.querySelectorAll('input').forEach(function(input) {
+      if (input.type === 'checkbox' || input.type === 'radio') {
+        if (input.checked) input.setAttribute('checked', 'checked');
+        else input.removeAttribute('checked');
+      } else {
+        input.setAttribute('value', input.value || '');
+      }
+    });
+    scope.querySelectorAll('textarea').forEach(function(textarea) {
+      textarea.textContent = textarea.value || '';
+    });
+    scope.querySelectorAll('select').forEach(function(select) {
+      Array.from(select.options).forEach(function(option) {
+        if (option.selected) option.setAttribute('selected', 'selected');
+        else option.removeAttribute('selected');
+      });
+    });
+  }
+
+  window.saveBriefEdits = function saveBriefEdits() {
+    const scope = editableScope();
+    syncFormDom(scope);
+    const payload = {
+      savedAt: new Date().toISOString(),
+      title: document.title,
+      path: location.pathname,
+      html: scope.innerHTML
+    };
+    try {
+      localStorage.setItem(BRIEF_SAVE_KEY, JSON.stringify(payload));
+      setStatus('Saved locally ' + new Date(payload.savedAt).toLocaleString() + '. PDF export is separate.');
+    } catch (err) {
+      setStatus('Save failed: ' + err.message);
+    }
+  };
+
+  window.restoreBriefEdits = function restoreBriefEdits() {
+    try {
+      const raw = localStorage.getItem(BRIEF_SAVE_KEY);
+      if (!raw) return;
+      const payload = JSON.parse(raw);
+      if (!payload || !payload.html) return;
+      editableScope().innerHTML = payload.html;
+      setStatus('Restored saved edits from ' + new Date(payload.savedAt).toLocaleString() + '.');
+    } catch (err) {
+      setStatus('Saved edits could not be restored: ' + err.message);
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', window.restoreBriefEdits);
+})();
 </script>
 </body>
 </html>
