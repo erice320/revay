@@ -413,12 +413,12 @@
     root.append(
       el('div', { class: 'notion-brief-editor-head' }, [
         el('div', {}, [
-          el('div', { class: 'notion-brief-kicker', text: 'Editable source-of-record fields' }),
-          el('h2', { text: 'Edit this brief in Notion-backed fields' }),
+          el('div', { class: 'notion-brief-kicker', text: 'Editable brief fields' }),
+          el('h2', { text: 'Edit this brief' }),
           el('p', { text: 'These fields save directly to the Onboarding Brief record. The section order mirrors the HTML/PDF brief.' }),
         ]),
         el('div', { class: 'notion-brief-actions' }, [
-          el('button', { type: 'button', class: 'btn btn-primary', onclick: saveNotionBrief, text: 'Save to Notion' }),
+          el('button', { type: 'button', class: 'btn btn-primary', onclick: saveNotionBrief, text: 'Save Brief' }),
           el('button', { type: 'button', class: 'btn btn-secondary', onclick: loadBrief, text: 'Reload' }),
         ]),
       ]),
@@ -456,24 +456,24 @@
 
   async function loadBrief() {
     if (!pageId) {
-      setStatus('Missing Notion page ID on this brief.', 'error');
+      setStatus('Missing backend record ID on this brief.', 'error');
       return;
     }
-    setStatus('Loading Notion fields...');
+    setStatus('Loading brief fields...');
     const res = await fetch(CONFIG.workerUrl + '/brief?pageId=' + encodeURIComponent(pageId), { cache: 'no-store' });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Load failed');
     renderEditor(data.fields);
-    setStatus('Loaded from Notion.', 'ok');
+    setStatus('Brief fields loaded.', 'ok');
   }
 
   async function saveNotionBrief() {
     if (!pageId) {
-      setStatus('Missing Notion page ID on this brief.', 'error');
+      setStatus('Missing backend record ID on this brief.', 'error');
       return;
     }
     const fields = collectFields();
-    setStatus('Saving to Notion...');
+    setStatus('Saving brief...');
     const res = await fetch(CONFIG.workerUrl + '/brief', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -481,7 +481,7 @@
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Save failed');
-    setStatus('Saved to Notion: ' + data.updatedFields.length + ' fields.', 'ok');
+    setStatus('Saved brief: ' + data.updatedFields.length + ' fields.', 'ok');
     await loadBrief();
   }
 
@@ -577,7 +577,7 @@
     const container = document.querySelector('.container') || document.querySelector('.content') || document.body;
     const anchor = container.querySelector('.actions') || container.firstElementChild;
     const editor = el('div', { id: 'notionBriefEditor', class: 'notion-brief-editor' }, [
-      el('div', { class: 'notion-brief-status', text: 'Loading Notion-backed editor...' }),
+      el('div', { class: 'notion-brief-status', text: 'Loading editable brief fields...' }),
     ]);
     if (anchor && anchor.nextSibling) container.insertBefore(editor, anchor.nextSibling);
     else container.prepend(editor);
@@ -586,7 +586,7 @@
   function wireExistingSaveButton() {
     const button = document.querySelector('[data-brief-save-control]');
     if (!button) return;
-    button.textContent = 'Save to Notion';
+    button.textContent = 'Save Brief';
     button.onclick = function(event) {
       event.preventDefault();
       saveNotionBrief().catch(err => setStatus('Save failed: ' + err.message, 'error'));
