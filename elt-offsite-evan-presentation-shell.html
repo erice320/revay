@@ -8,6 +8,14 @@
 <style>
 :root{--bg:#080E1A;--surface:rgba(15,33,56,.58);--surface-solid:#142A46;--border:rgba(255,255,255,.09);--border-cyan:rgba(0,229,255,.30);--cyan:#00BCD4;--cyan-bright:#00E5FF;--green:#69F0AE;--green-dim:#4CAF50;--amber:#FFB74D;--red:#FF5252;--purple:#A78BFA;--blue:#7B9FFF;--text-1:#fff;--text-2:#A1B0CB;--eyebrow:#00BCD4;--font-display:'Cabinet Grotesk',system-ui,sans-serif;--font-body:'Satoshi',system-ui,sans-serif;--spring:cubic-bezier(.16,1,.3,1);--text:var(--text-1);--muted:var(--text-2);--line:var(--border);--accent:var(--cyan);--accent2:var(--cyan-bright);--warn:var(--amber);--bad:var(--red);--missing:#8f99af}
 *,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}body{margin:0;background:radial-gradient(circle at 20% 0%,rgba(0,229,255,.12),transparent 32%),radial-gradient(circle at 80% 10%,rgba(123,159,255,.10),transparent 36%),var(--bg);color:var(--text-1);font-family:var(--font-body);line-height:1.45;overflow-x:hidden;-webkit-font-smoothing:antialiased}body:before{content:"";position:fixed;inset:0;background:linear-gradient(135deg,rgba(0,229,255,.06),transparent 38%);pointer-events:none}a{color:inherit}.nav{position:sticky;top:0;z-index:50;display:flex;gap:8px;align-items:center;flex-wrap:wrap;overflow:visible;padding:12px clamp(1rem,3vw,2rem);background:rgba(8,14,26,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}.brand{font-family:var(--font-display);font-weight:800;color:var(--cyan-bright);white-space:nowrap;margin-right:8px}.nav a{font-size:.86rem;color:var(--text-2);text-decoration:none;white-space:nowrap;border:1px solid var(--border);background:rgba(15,33,56,.55);border-radius:99px;padding:7px 12px;transition:.25s var(--spring)}.nav a:hover{color:var(--cyan-bright);border-color:var(--border-cyan);background:rgba(0,229,255,.08)}.wrap{position:relative;max-width:1220px;margin:auto;padding:0 clamp(1rem,3vw,2rem) 44px}.hero{min-height:68vh;display:grid;align-content:center;padding:54px 0 40px;border-bottom:1px solid var(--border)}.eyebrow,.kicker,.section-kicker{font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--eyebrow);font-weight:800;display:flex;align-items:center;gap:10px}.eyebrow:before,.kicker:before,.section-kicker:before{content:"";width:24px;height:1px;background:var(--cyan-bright);flex:0 0 24px}.hero h1{font-family:var(--font-display);font-size:clamp(2.9rem,7vw,6rem);line-height:.96;margin:12px 0 14px;letter-spacing:0;max-width:1040px;background:linear-gradient(135deg,var(--cyan-bright) 0%,#7B9FFF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.sub{font-size:clamp(1.05rem,2vw,1.35rem);color:var(--text-2);max-width:940px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.chip{border:1px solid var(--border);border-radius:999px;padding:6px 10px;color:var(--text-2);background:rgba(15,33,56,.55);font-size:.82rem}.decision-frame{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:30px}.decision-frame div{border:1px solid var(--border);border-radius:14px;background:var(--surface);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:16px}.decision-frame b{display:block;font-family:var(--font-display);font-size:1.05rem}.decision-frame span{display:block;color:var(--text-2);font-size:.88rem;margin-top:5px}.slide{position:relative;min-height:720px;border:1px solid var(--border);background:linear-gradient(135deg,rgba(20,42,70,.70),rgba(8,14,26,.78));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:24px;margin:28px 0;padding:clamp(1.5rem,4vw,3rem);box-shadow:0 24px 80px rgba(0,0,0,.36);overflow:hidden;display:grid;align-content:center}.slide::before{content:"";position:absolute;inset:0;border-radius:24px;padding:1px;background:radial-gradient(520px circle at 85% 8%,rgba(0,229,255,.42),transparent 45%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}.slide>*{position:relative;z-index:1}.slide-number{position:absolute;top:24px;right:28px;color:rgba(161,176,203,.18);font-family:var(--font-display);font-size:50px;font-weight:800}.slide h2,.goals-head h2,.appendix h2{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);line-height:1.05;margin:10px 0 14px;letter-spacing:0;max-width:940px}.point{font-size:1.15rem;color:#cbd6ee;max-width:900px}.slide-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:20px}.card{border:1px solid var(--border);border-radius:14px;background:var(--surface);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:22px;transition:border-color .3s,transform .3s var(--spring)}.card.visual{background:rgba(20,42,70,.68)}.card h3{margin:0 0 10px;font-family:var(--font-display);font-size:1rem;color:var(--cyan-bright);text-transform:uppercase;letter-spacing:.08em}.card ul{margin:0;padding-left:19px}.card li{margin:8px 0;color:#d9e2f7}.card code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:5px}.lifecycle,.promise-proof{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:18px}.lifecycle span,.promise-proof div{border:1px solid var(--border);border-radius:14px;background:var(--surface);padding:12px;text-align:center;font-weight:800}.promise-proof{grid-template-columns:1fr 1fr}.promise-proof b{display:block;color:var(--cyan-bright);font-family:var(--font-display);font-size:1.4rem}.promise-proof span{display:block;color:var(--text-2);font-size:.9rem;margin-top:6px}.goals-section{padding:38px 0;border-bottom:1px solid var(--border)}.goals-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:16px}.goals-head p{color:var(--text-2);max-width:760px}.open-link{border:1px solid var(--border-cyan);border-radius:99px;padding:10px 14px;text-decoration:none;color:var(--cyan-bright);font-weight:800;font-size:.86rem;white-space:nowrap;background:rgba(0,229,255,.08)}.goals-embed{border:1px solid var(--border);border-radius:18px;background:rgba(8,14,26,.62);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.28)}.goals-embed .goals-hero{padding:22px 20px 18px;border-bottom:1px solid var(--border);background:rgba(15,33,56,.35)}.goals-embed .goals-period{padding:22px 20px 10px;border-bottom:1px solid var(--border)}.goals-embed h1{font-family:var(--font-display);font-size:32px;line-height:1.05;margin:8px 0;letter-spacing:0}.goals-embed h2{font-family:var(--font-display);font-size:23px;margin:2px 0 0;letter-spacing:0}.goals-embed .subtitle{font-size:14px;color:var(--text-2);max-width:940px}.goals-embed .goals{display:grid;grid-template-columns:1fr;gap:8px}.goals-embed .goal{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--missing);border-radius:14px;padding:12px}.goals-embed .goal.good{border-left-color:var(--green)}.goals-embed .goal.warn,.goals-embed .goal.partial{border-left-color:var(--amber)}.goals-embed .goal.bad{border-left-color:var(--red)}.goals-embed .goal-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:start}.goals-embed .goal-head>div:first-child{display:flex;gap:9px;align-items:flex-start}.goals-embed .num{width:22px;height:22px;display:inline-grid;place-items:center;flex:0 0 22px;border-radius:6px;background:rgba(255,255,255,.07);color:var(--text-2);font-weight:850;font-size:12px}.goals-embed h3{font-family:var(--font-display);font-size:15px;line-height:1.25;margin:1px 0 0;letter-spacing:0}.goals-embed .summary{display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:12px;white-space:nowrap}.goals-embed .summary b{color:var(--text-1);font-size:13px}.goals-embed .badge{border-radius:999px;padding:3px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:850}.goals-embed .badge.good{background:rgba(105,240,174,.1);color:var(--green)}.goals-embed .badge.warn,.goals-embed .badge.partial{background:rgba(255,183,77,.13);color:var(--amber)}.goals-embed .badge.bad{background:rgba(255,82,82,.13);color:var(--red)}.goals-embed .badge.missing{background:rgba(143,153,175,.14);color:var(--missing)}.goals-embed .metric-header,.goals-embed .metric{display:grid;grid-template-columns:minmax(210px,1.25fr) minmax(112px,.55fr) minmax(112px,.55fr) minmax(76px,.35fr);gap:10px;align-items:center}.goals-embed .metric-header{margin-top:9px;padding:6px 9px;color:var(--text-2);font-size:10px;text-transform:uppercase;letter-spacing:.08em;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}.goals-embed .metric{padding:7px 9px;font-size:12px;border-bottom:1px solid rgba(255,255,255,.07)}.goals-embed .metric:last-child{border-bottom:0}.goals-embed .metric-name{font-weight:800}.goals-embed .metric-name span{display:block;color:var(--text-2);font-weight:500;font-size:11px;margin-top:2px}.goals-embed .metric-val{color:var(--text-1)}.goals-embed .metric-pct{font-weight:900}.goals-embed .metric.good .metric-pct{color:var(--green)}.goals-embed .metric.warn .metric-pct,.goals-embed .metric.partial .metric-pct{color:var(--amber)}.goals-embed .metric.bad .metric-pct{color:var(--red)}.goals-embed .metric.missing .metric-pct{color:var(--missing)}.goals-embed .note,.goals-embed .source{margin-top:7px;color:var(--text-2);font-size:11px}.goals-embed .source summary{cursor:pointer;color:#c3d7ee}.goals-embed .source p{margin:5px 0 0}.goals-embed .personal-block{margin-top:10px;background:rgba(20,42,70,.5);border:1px solid var(--border);border-radius:14px;padding:12px}.goals-embed .personal-title{font-size:13px;font-weight:900;margin-bottom:8px}.goals-embed .personal-title span{font-weight:500;color:var(--text-2);font-size:11px;margin-left:8px}.goals-embed .personal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}.goals-embed .mini{min-height:64px;border:1px solid var(--border);border-radius:12px;background:rgba(8,14,26,.45);padding:8px}.goals-embed .mini-name{font-size:12px;font-weight:850;margin-bottom:5px}.goals-embed .mini-result{display:flex;flex-wrap:wrap;gap:5px;align-items:baseline;font-size:12px;color:var(--text-2)}.goals-embed .mini-result b{color:var(--text-1)}.goals-embed .mini-result strong{font-size:13px}.goals-embed .mini.good strong{color:var(--green)}.goals-embed .mini.warn strong,.goals-embed .mini.partial strong{color:var(--amber)}.goals-embed .mini.bad strong{color:var(--red)}.goals-embed .mini.missing strong{color:var(--missing)}.goals-embed .mini-note{font-size:10px;color:var(--text-2);margin-top:4px}.appendix{padding:38px 0}.appendix-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.footer{font-size:12px;color:var(--text-2);padding:24px 0 6px;border-top:1px solid var(--border)}@media(max-width:860px){.nav{display:block;white-space:normal}.brand{display:block;margin:0 0 8px}.nav a{display:inline-block;margin:3px 3px 3px 0;font-size:.78rem;padding:6px 9px}.wrap{padding:0 14px 34px}.hero{min-height:64vh}.slide{min-height:auto;padding:46px 18px}.slide-grid,.decision-frame,.appendix-grid{grid-template-columns:1fr}.lifecycle{grid-template-columns:repeat(2,minmax(0,1fr))}.promise-proof{grid-template-columns:1fr}.goals-head{display:block}.open-link{display:inline-block;margin-top:8px}.goals-embed .goal-head{grid-template-columns:1fr}.goals-embed .summary{white-space:normal}.goals-embed .metric-header{display:none}.goals-embed .metric{grid-template-columns:1fr 1fr;gap:4px 10px}.goals-embed .metric-name{grid-column:1/-1}}
+  .edit-toolbar{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:8px;max-width:min(92vw,720px);padding:10px;border:1px solid var(--border);border-radius:14px;background:rgba(8,14,26,.92);box-shadow:0 18px 60px rgba(0,0,0,.38);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .edit-toolbar button{appearance:none;border:1px solid var(--border);border-radius:10px;background:rgba(20,42,70,.92);color:var(--text-1);font:800 12px var(--font-body);padding:9px 11px;cursor:pointer;white-space:nowrap}
+  .edit-toolbar button:hover,.edit-toolbar button.active{border-color:var(--border-cyan);color:var(--cyan-bright);background:rgba(0,229,255,.1)}
+  .edit-toolbar button:disabled{cursor:not-allowed;opacity:.45}
+  .edit-status{min-width:220px;color:var(--text-2);font-size:12px;line-height:1.25}
+  .copy-editing [data-edit-key]{outline:1px dashed rgba(0,229,255,.45);outline-offset:4px;border-radius:6px}
+  .copy-editing [data-edit-key]:focus{outline:2px solid var(--cyan-bright);background:rgba(0,229,255,.08)}
+  @media(max-width:860px){.edit-toolbar{left:10px;right:10px;bottom:10px;flex-wrap:wrap}.edit-status{min-width:100%;order:5}}
 </style>
 </head>
 <body>
@@ -556,6 +564,162 @@
     </div>
   </section>
   <p class="footer">Working shell generated from reports/elt-offsite-evan-presentation-shell-2026-06-23.md and reports/elt-offsite-2026-goals-attainment-visual.html. Evidence rule: unsupported claims stay labeled until retrieved or owner-confirmed.</p>
+  <div class="edit-toolbar" aria-label="ELT copy editor">
+    <button type="button" id="editCopyToggle">Edit Copy</button>
+    <button type="button" id="saveCopyButton">Save Copy</button>
+    <button type="button" id="reloadCopyButton">Reload Copy</button>
+    <span class="edit-status" id="editCopyStatus">Editable copy is loading.</span>
+  </div>
 </main>
+<script>
+(function(){
+  const API_URL = 'https://org.revioai.bot/api/elt-offsite-copy';
+  const statusEl = document.getElementById('editCopyStatus');
+  const editButton = document.getElementById('editCopyToggle');
+  const saveButton = document.getElementById('saveCopyButton');
+  const reloadButton = document.getElementById('reloadCopyButton');
+  const selectors = [
+    '.hero .eyebrow',
+    '.hero h1',
+    '.hero .sub',
+    '.goals-head .section-kicker',
+    '.goals-head h2',
+    '.goals-head p',
+    '.goals-embed h1',
+    '.goals-embed h2',
+    '.goals-embed h3',
+    '.goals-embed .subtitle',
+    '.goals-embed .summary b',
+    '.goals-embed .metric-name',
+    '.goals-embed .metric-name span',
+    '.goals-embed .metric-val',
+    '.goals-embed .metric-pct',
+    '.goals-embed .note',
+    '.goals-embed .source p',
+    '.goals-embed .personal-title',
+    '.goals-embed .mini-name',
+    '.goals-embed .mini-result b',
+    '.goals-embed .mini-result strong',
+    '.goals-embed .mini-note',
+    '.slide .kicker',
+    '.slide h2',
+    '.slide .point',
+    '.slide .card h3',
+    '.slide .card li',
+    '.appendix .kicker',
+    '.appendix h2',
+    '.appendix .card h3',
+    '.appendix .card li'
+  ];
+
+  function setStatus(message) {
+    statusEl.textContent = message;
+  }
+
+  function slug(value) {
+    return (value || 'copy').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80) || 'copy';
+  }
+
+  function markEditableCopy() {
+    const seen = new Map();
+    selectors.forEach(selector => {
+      document.querySelectorAll(selector).forEach(el => {
+        if (el.dataset.editKey) return;
+        const section = el.closest('.slide,.goals-section,.hero,.appendix');
+        const sectionId = section?.id || section?.classList?.[0] || 'deck';
+        const local = `${sectionId}:${selector}:${slug(el.textContent)}`;
+        const count = seen.get(local) || 0;
+        seen.set(local, count + 1);
+        el.dataset.editKey = count ? `${local}:${count + 1}` : local;
+      });
+    });
+  }
+
+  function editableNodes() {
+    return Array.from(document.querySelectorAll('[data-edit-key]'));
+  }
+
+  function setEditing(enabled) {
+    document.body.classList.toggle('copy-editing', enabled);
+    editableNodes().forEach(el => {
+      el.contentEditable = enabled ? 'true' : 'false';
+      el.spellcheck = true;
+    });
+    editButton.classList.toggle('active', enabled);
+    editButton.textContent = enabled ? 'Done Editing' : 'Edit Copy';
+    setStatus(enabled ? 'Edit text directly in highlighted copy, then Save Copy.' : 'Copy editing is off.');
+  }
+
+  function collectOverrides() {
+    const overrides = {};
+    editableNodes().forEach(el => {
+      overrides[el.dataset.editKey] = el.textContent.replace(/\s+/g, ' ').trim();
+    });
+    return overrides;
+  }
+
+  function applyOverrides(overrides) {
+    let applied = 0;
+    editableNodes().forEach(el => {
+      if (Object.prototype.hasOwnProperty.call(overrides, el.dataset.editKey)) {
+        el.textContent = overrides[el.dataset.editKey];
+        applied += 1;
+      }
+    });
+    return applied;
+  }
+
+  async function loadCopy() {
+    reloadButton.disabled = true;
+    setStatus('Loading saved copy from Notion.');
+    try {
+      const res = await fetch(API_URL, { method: 'GET' });
+      const text = await res.text();
+      let payload = {};
+      try { payload = text ? JSON.parse(text) : {}; } catch {}
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${text}`);
+      const applied = applyOverrides(payload.overrides || {});
+      setStatus(payload.found ? `Loaded ${applied} saved edits from Notion.` : 'No saved copy edits yet.');
+    } catch (err) {
+      setStatus(`Save API unavailable: ${err.message || err}`);
+    } finally {
+      reloadButton.disabled = false;
+    }
+  }
+
+  async function saveCopy() {
+    saveButton.disabled = true;
+    setStatus('Saving copy to Notion.');
+    try {
+      const body = {
+        htmlUrl: window.location.href,
+        savedBy: 'ELT offsite HTML editor',
+        overrides: collectOverrides()
+      };
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const text = await res.text();
+      let payload = {};
+      try { payload = text ? JSON.parse(text) : {}; } catch {}
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${text}`);
+      setEditing(false);
+      setStatus(`Saved ${payload.overrideCount || 0} copy fields to Notion.`);
+    } catch (err) {
+      setStatus(`Save failed: ${err.message || err}`);
+    } finally {
+      saveButton.disabled = false;
+    }
+  }
+
+  markEditableCopy();
+  editButton.addEventListener('click', () => setEditing(!document.body.classList.contains('copy-editing')));
+  saveButton.addEventListener('click', saveCopy);
+  reloadButton.addEventListener('click', loadCopy);
+  loadCopy();
+})();
+</script>
 </body>
 </html>
