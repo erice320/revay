@@ -57,7 +57,7 @@
     "P: Business Vertical": "rich_text",
     "P: Existing Rev.io Billing Client": "checkbox",
     "P: Go-Live Complexity Tier": "select",
-    "P: SA Assigned": "rich_text",
+    "P: OC Assigned": "select",
     "P: Additional Integrations": "multi_select",
     "P: Integration Notes": "rich_text",
     "P: Billing / Finance Contact": "rich_text",
@@ -128,6 +128,25 @@
       "Medium",
       "High",
       "TBD"
+    ],
+    "P: OC Assigned": [
+      "- Assign OC -",
+      "Andrew Millington",
+      "JD Caulkins",
+      "Lex Ligon",
+      "Stephanie Okada",
+      "Tim Smith",
+      "Francesca Thayer",
+      "Marshall Harris",
+      "Jessica Cochran",
+      "Gabby Davis",
+      "Nicole Hills",
+      "Halle Taylor",
+      "Jeremy Adams",
+      "Connor Sharp",
+      "Shane Frost",
+      "Lauren Swygert",
+      "Mark Kephart"
     ],
     "P: Additional Integrations": [
       "PandaDoc",
@@ -229,7 +248,7 @@
           "MRR",
           "Contract Term",
           "AE",
-          "P: SA Assigned",
+          "P: OC Assigned",
           "Primary Contact",
           "Contact Email",
           "P: Existing Rev.io Billing Client",
@@ -290,7 +309,7 @@
         ]
       },
       {
-        "title": "6 - Open Items & SA Flags",
+        "title": "6 - Open Items & OC Flags",
         "fields": [
           "Open Items Before Kickoff",
           "Project Flags / Risks",
