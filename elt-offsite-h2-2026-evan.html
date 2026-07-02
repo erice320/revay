@@ -30,14 +30,14 @@
 </nav>
 <main class="wrap">
   <section class="hero">
-    <div class="eyebrow">ELT Offsite · Evan Sections · Working Shell</div>
+    <div class="eyebrow">ELT Offsite · Evan Sections</div>
     <h1>From the Moon to Mars.</h1>
     <p class="sub">H2 execution alignment for turning the right bookings into live, referenceable, low-friction customers.</p>
     <div class="meta">
       <span class="chip">Created 2026-06-23</span>
-      <span class="chip">Source-backed claims only</span>
+      <span class="chip">Salesforce refreshed 2026-07-01</span>
       <span class="chip">Goals section embedded</span>
-      <span class="chip">Not final ELT slide copy</span>
+      <span class="chip">Metrics locked from copy editor</span>
     </div>
   </section>
   <section class="goals-section" id="goals-scorecard">
@@ -55,10 +55,10 @@
     <h1>H1 2026 goals: attainment / target = result</h1>
     <p class="subtitle">Q1 and H1 goals are grouped to mirror the prior offsite structure, with each measurable target itemized in a compact results grid. Full-year goals are intentionally excluded from this first-half view.</p>
     <div class="chips">
-      <span class="chip">Generated 2026-06-22</span>
+      <span class="chip">Generated 2026-07-01</span>
       <span class="chip">Salesforce HTTP 200</span>
-      <span class="chip">Q1 closed-won records: 98</span>
-      <span class="chip">YTD closed-won records: 169</span>
+      <span class="chip">Q1 closed-won records: 102</span>
+      <span class="chip">YTD closed-won records: 226</span>
       <span class="chip">Marketing workbook loaded</span>
     </div>
   </section>
@@ -79,10 +79,15 @@
     <div class="metric-val">$63,000</div>
     <div class="metric-pct">50.2%</div>
   </div><div class="metric good">
-    <div class="metric-name">Billing &amp; Odin</div>
+    <div class="metric-name">Billing</div>
     <div class="metric-val">$28,700</div>
     <div class="metric-val">$23,750</div>
     <div class="metric-pct">120.8%</div>
+  </div><div class="metric missing">
+    <div class="metric-name">Odin<span>Tracked separately; no Q1 target in source table.</span></div>
+    <div class="metric-val">$0</div>
+    <div class="metric-val">$0</div>
+    <div class="metric-pct">N/A</div>
   </div><div class="metric bad">
     <div class="metric-name">Payments</div>
     <div class="metric-val">$6,511</div>
@@ -95,7 +100,7 @@
     <div class="metric-pct">16%</div>
   </div></div>
     
-    <details class="source"><summary>Sources</summary><p>Target: prior deck slide 15 direct table, reported with Billing &amp; Odin combined to match bookings pacing dashboard convention. Attainment: Salesforce Opportunity HTTP 200, Q1 closed-won product query, 102 records refreshed 2026-07-01; displayed direct-product MRR is unchanged from the prior Q1 extract.</p></details>
+    <details class="source"><summary>Sources</summary><p>Target: prior deck slide 15 direct table. Attainment: Salesforce Opportunity HTTP 200, Q1 closed-won product query, 102 records refreshed 2026-07-01. Billing and Odin are shown separately to avoid masking Odin's $0 actual.</p></details>
   </article><article class="goal partial">
     <div class="goal-head">
       <div><span class="num">2</span><h3>Meet or exceed Q1 Marketing Website Lead, Opps and Bookings Targets</h3></div>
@@ -232,10 +237,15 @@
     <div class="metric-val">$165,000</div>
     <div class="metric-pct">43.3%</div>
   </div><div class="metric bad">
-    <div class="metric-name">Billing &amp; Odin</div>
+    <div class="metric-name">Billing</div>
     <div class="metric-val">$40,810</div>
-    <div class="metric-val">$65,624</div>
-    <div class="metric-pct">62.2%</div>
+    <div class="metric-val">$59,392</div>
+    <div class="metric-pct">68.7%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Odin<span>Separated from Billing; zero actual needs owner confirmation as real vs mapping issue.</span></div>
+    <div class="metric-val">$0</div>
+    <div class="metric-val">$6,232</div>
+    <div class="metric-pct">0%</div>
   </div><div class="metric bad">
     <div class="metric-name">Payments</div>
     <div class="metric-val">$10,918</div>
@@ -248,7 +258,8 @@
     <div class="metric-pct">3.1%</div>
   </div></div>
     
-    <details class="source"><summary>Sources</summary><p>Target: prior deck slide 15 direct table, reported with Billing &amp; Odin combined to match bookings pacing dashboard convention. Attainment: Salesforce Opportunity HTTP 200, H1 closed-won product query, 226 records through 2026-06-30; refreshed 2026-07-01. Billing & Odin actual combines Billing $40,810 and Odin $0 against combined H1 target $65,624.</p></details>
+    <div class="note">H2 target proper is $496,338 (FY target $805,492 minus H1 target $309,154). Because H1 actual was $123,827, total remaining to hit the FY target is $681,665.</div>
+    <details class="source"><summary>Sources</summary><p>Target: prior deck slide 15 direct table. Attainment: Salesforce Opportunity HTTP 200, H1 closed-won product query, 226 records through 2026-06-30; refreshed 2026-07-01. Billing and Odin are separated; Odin is $0 actual against $6,232 H1 target.</p></details>
   </article><article class="goal partial">
     <div class="goal-head">
       <div><span class="num">2</span><h3>Meet or exceed H1 Marketing Website Leads, Opps and Bookings Targets</h3></div>
@@ -423,8 +434,8 @@
     <h2>Lessons Learned</h2>
     <p class="point">The right question moved from &quot;how do we sell more?&quot; to &quot;how do we sell more of what we can implement, retain, and turn into fans?&quot;</p>
     <div class="slide-grid">
-      <article class="card "><h3>Working Copy</h3><ul><li>Bookings are not the finish line.</li><li>Product activity is not automatically revenue strategy.</li><li>Missing joins are operating defects, not reporting inconvenience.</li><li>ICP must become operational, not aspirational.</li><li>Cross-functional decisions need one lifecycle view.</li></ul></article>
-      <article class="card visual"><h3>Visual Direction</h3><ul><li>Five short lesson cards around one center phrase: Promise -&gt; Proof.</li></ul></article>
+      <article class="card "><h3>Thesis</h3><ul><li>Bookings are not the finish line.</li><li>Product activity is not automatically revenue strategy.</li><li>Missing joins are operating defects, not reporting inconvenience.</li><li>ICP must become operational, not aspirational.</li><li>Cross-functional decisions need one lifecycle view.</li></ul></article>
+      <article class="card visual"><h3>Executive Read</h3><ul><li>H1 is not just behind pace; it shows where the portfolio can and cannot yet convert demand into retained revenue.</li></ul></article>
     </div>
     
   </section>
@@ -452,9 +463,9 @@
     <div class="slide-number">04</div>
     <div class="kicker">Start / Stop / Continue</div>
     <h2>Continue</h2>
-    <p class="point">Continue the foundations that still matter: mission, channel focus, and close client relationships.</p>
+    <p class="point">Continue the foundations that still produce durable revenue: mission clarity, channel focus, and close client relationships.</p>
     <div class="slide-grid" style="grid-template-columns:1fr">
-      <article class="card "><h3>Actuals</h3><ul><li>Building toward our mission and vision.</li><li>Push into the IT channel with established providers.</li><li>Intimate relationships with clients.</li></ul></article>
+      <article class="card "><h3>Actuals</h3><ul><li>Translate mission and vision into proof-backed GTM promises.</li><li>Push into the IT channel with established providers.</li><li>Use intimate client relationships to validate fit, readiness, and reference potential.</li></ul></article>
     </div>
     
   </section>
@@ -464,8 +475,8 @@
     <h2>ICP Is A Fit System, Not A Persona</h2>
     <p class="point">ICP should define where Rev.io can win, implement, retain, and create advocates now.</p>
     <div class="slide-grid">
-      <article class="card "><h3>Working Copy</h3><ul><li>Best-fit now.</li><li>Win with controlled roadmap commitment.</li><li>Delay / narrow.</li><li>Stop selling until readiness changes.</li></ul></article>
-      <article class="card visual"><h3>Visual Direction</h3><ul><li>Four-zone matrix: Win now, Win with commitment, Narrow, Stop.</li><li>Use examples only after owner/source confirmation.</li></ul></article>
+      <article class="card "><h3>Decision Frame</h3><ul><li>Win now: PSA and Billing, where H1 bookings are proven.</li><li>Remediate: Payments and RMM need proof, enablement, and conversion review.</li><li>Diagnose: Odin and CommerceHub show $0 MRR with records; confirm real zero vs mapping issue.</li><li>Gate: do not make broad GTM promises until readiness is certified.</li></ul></article>
+      <article class="card visual"><h3>Counter-Case</h3><ul><li>Low bookings may reflect enablement, packaging, or data mapping rather than lack of demand.</li><li>ELT should decide concentration with the counter-case visible.</li></ul></article>
     </div>
     
   </section>
@@ -475,8 +486,8 @@
     <h2>Value Planning By Segment</h2>
     <p class="point">Planning should connect customer value, Rev.io proof, implementation readiness, and economic outcome.</p>
     <div class="slide-grid">
-      <article class="card "><h3>Working Copy</h3><ul><li>Customer pain / urgency.</li><li>Rev.io proof and differentiation.</li><li>Implementation readiness.</li><li>Required product / Revii commitments.</li><li>Renewal / expansion / fan path.</li></ul></article>
-      <article class="card visual"><h3>Visual Direction</h3><ul><li>One-page planning canvas.</li><li>Leave empty cells for workshop completion.</li></ul></article>
+      <article class="card "><h3>Planning Test</h3><ul><li>Customer pain and urgency.</li><li>Rev.io proof and differentiation.</li><li>Implementation readiness.</li><li>Required product / Revii commitments.</li><li>Renewal, expansion, and reference path.</li></ul></article>
+      <article class="card visual"><h3>Decision Output</h3><ul><li>Each segment leaves with an owner, allowed promise, blocked promise, and next proof gap.</li></ul></article>
     </div>
     
   </section>
@@ -486,8 +497,8 @@
     <h2>Position Around Operating Leverage</h2>
     <p class="point">Marketing should position Rev.io as the platform for sophisticated MSP / communications operators that need revenue operations leverage.</p>
     <div class="slide-grid">
-      <article class="card "><h3>Working Copy</h3><ul><li>Billing + PSA + payments + security + Revii.</li><li>Competitive replacement where operational complexity is the pain.</li><li>Proof assets by ICP, product, and objection.</li><li>Message discipline around what GTM can safely promise.</li></ul></article>
-      <article class="card visual"><h3>Visual Direction</h3><ul><li>Message architecture pyramid: category, ICP pain, proof points, offers.</li></ul></article>
+      <article class="card "><h3>Safe Promise</h3><ul><li>Lead with PSA and Billing proof where implementation and retention paths are clearest.</li><li>Position Rev.io around operating leverage for sophisticated MSP / communications operators.</li><li>Keep Payments, RMM, Odin, and CommerceHub claims gated by proof and product readiness.</li><li>Make Revii a client-facing advantage only where the workflow proof exists.</li></ul></article>
+      <article class="card visual"><h3>Needed Decision</h3><ul><li>Approve the H2 primary promise set and name which claims are not safe yet.</li></ul></article>
     </div>
     
   </section>
@@ -497,8 +508,8 @@
     <h2>Campaigns Need Proof Gaps Closed</h2>
     <p class="point">Demand generation should be gated by proof quality, not only lead volume.</p>
     <div class="slide-grid">
-      <article class="card "><h3>Working Copy</h3><ul><li>Campaign by source / ICP / product motion.</li><li>Objection and proof coverage.</li><li>Content gaps.</li><li>Allowed claims vs. not-yet-safe claims.</li><li>Feedback loop from closed-lost, onboarding, and support.</li></ul></article>
-      <article class="card visual"><h3>Visual Direction</h3><ul><li>Campaign-to-proof checklist.</li><li>Include Needs RevOps / Billy certification where source definitions are pending.</li></ul></article>
+      <article class="card "><h3>Channel Reality</h3><ul><li>Tradeshow and Website produced meaningful closed-won MRR.</li><li>Paid Media created 72 H1 opportunities but only 6 H1 closed-won records; review cost and conversion before calling it broken.</li><li>30 H1 closed-won records have blank marketing source; RevOps needs an attribution owner.</li><li>Marketing closed-won count needs definition reconciliation: workbook shows 81; Salesforce marketing-source ex Sales/blank shows 95.</li></ul></article>
+      <article class="card visual"><h3>Needed Decision</h3><ul><li>Assign attribution cleanup and decide whether Paid Media is a fix, cut, or continue-with-measurement motion.</li></ul></article>
     </div>
     
   </section>
@@ -549,11 +560,11 @@
 <section class="slide" id="slide-13">
     <div class="slide-number">13</div>
     <div class="kicker">Retention / Creating Fans</div>
-    <h2>Define Fan Readiness</h2>
-    <p class="point">Rev.io needs an operating definition for when a customer is likely to renew, expand, reference, and advocate.</p>
+    <h2>Retention Data We Can And Cannot Certify</h2>
+    <p class="point">The retention conversation should start with what is certified, what is owner-confirmed, and what still needs Finance / CS source validation.</p>
     <div class="slide-grid">
-      <article class="card "><h3>Working Copy</h3><ul><li>Quality go-live.</li><li>Usage depth.</li><li>Low support friction.</li><li>Clear value realization.</li><li>Account-owner validation.</li><li>Renewal / expansion posture.</li><li>Reference willingness.</li></ul></article>
-      <article class="card visual"><h3>Visual Direction</h3><ul><li>Fan-readiness gauge or lifecycle ladder.</li><li>Avoid anecdotal examples until account owners confirm.</li></ul></article>
+      <article class="card "><h3>Needs Certification</h3><ul><li>Gross and net retention actuals: owner-confirmed, not Finance-certified in this deck.</li><li>PSA graduation count: owner-confirmed 68; definition must stay explicit.</li><li>RTS cancel rate, 6x MRR threshold, and Tigerpaw status need owner/date before scorecard use.</li></ul></article>
+      <article class="card visual"><h3>Needed Decision</h3><ul><li>Assign Finance / CS certification owners and deadlines before these become final ELT scorecard claims.</li></ul></article>
     </div>
     
   </section>
@@ -563,8 +574,8 @@
     <h2>Lead-To-Fan Conversion System</h2>
     <p class="point">Retention starts before renewal; it begins with the quality of the customer Rev.io chooses to sell, onboard, and support.</p>
     <div class="slide-grid">
-      <article class="card "><h3>Working Copy</h3><ul><li>Qualify for fit and readiness.</li><li>Set proof-backed expectations.</li><li>Implement with rescue triggers.</li><li>Monitor usage / support / value.</li><li>Create reference moments intentionally.</li><li>Feed lessons back into ICP, marketing, sales, and product.</li></ul></article>
-      <article class="card visual"><h3>Visual Direction</h3><ul><li>Full lifecycle loop from Lead to Fan with feedback arrows.</li></ul></article>
+      <article class="card "><h3>Operating Loop</h3><ul><li>Qualify for fit and readiness.</li><li>Set proof-backed expectations.</li><li>Implement with rescue triggers.</li><li>Monitor usage, support friction, and value realization.</li><li>Create reference moments intentionally.</li><li>Feed lessons back into ICP, marketing, sales, and product.</li></ul></article>
+      <article class="card visual"><h3>Why It Matters</h3><ul><li>Retention starts before renewal; it begins with the quality of the customer Rev.io chooses to sell.</li></ul></article>
     </div>
     
   </section>
@@ -574,8 +585,8 @@
     <h2>Account Review And Tigerpaw Acceleration</h2>
     <p class="point">Retention needs a repeatable account review model and focused acceleration plan for priority migration paths.</p>
     <div class="slide-grid">
-      <article class="card "><h3>Working Copy</h3><ul><li>Account health review cadence.</li><li>Save / grow / reference / learn categorization.</li><li>Tigerpaw migration blockers.</li><li>Owner, next action, date.</li><li>Product / onboarding / CS dependency.</li></ul></article>
-      <article class="card visual"><h3>Visual Direction</h3><ul><li>Operating board layout.</li><li>Show columns, not dense narrative.</li></ul></article>
+      <article class="card "><h3>Decision System</h3><ul><li>Account health review cadence.</li><li>Save / grow / reference / learn categorization.</li><li>Tigerpaw migration blockers.</li><li>Owner, next action, date.</li><li>Product / onboarding / CS dependency.</li></ul></article>
+      <article class="card visual"><h3>Needed Decision</h3><ul><li>Name a Tigerpaw acceleration owner and define the unblock list before this becomes a committed H2 plan.</li></ul></article>
     </div>
     
   </section>
@@ -588,7 +599,7 @@
       <article class="card "><h3>Parking Lot</h3><ul><li>Topics outside the owned sections.</li><li>Items outside the evidence boundary.</li><li>Questions needing owner confirmation.</li></ul></article>
     </div>
   </section>
-  <p class="footer">Working shell generated from reports/elt-offsite-evan-presentation-shell-2026-06-23.md and reports/elt-offsite-2026-goals-attainment-visual.html. Evidence rule: unsupported claims stay labeled until retrieved or owner-confirmed.</p>
+  <p class="footer">Generated from reports/elt-offsite-evan-presentation-shell-2026-06-23.md and reports/elt-offsite-2026-goals-attainment-visual.html. Evidence rule: unsupported claims stay labeled until retrieved or owner-confirmed. Scorecard metrics are locked out of copy editing.</p>
   <div class="edit-toolbar" aria-label="ELT copy editor">
     <button type="button" id="editCopyToggle">Edit Copy</button>
     <button type="button" id="saveCopyButton">Save Copy</button>
@@ -614,13 +625,6 @@
     '.goals-embed h2',
     '.goals-embed h3',
     '.goals-embed .subtitle',
-    '.goals-embed .summary b',
-    '.goals-embed .metric-name',
-    '.goals-embed .metric-name span',
-    '.goals-embed .metric-val',
-    '.goals-embed .metric-pct',
-    '.goals-embed .note',
-    '.goals-embed .source p',
     '.goals-embed .personal-title',
     '.goals-embed .mini-name',
     '.goals-embed .mini-result b',
@@ -672,7 +676,7 @@
     });
     editButton.classList.toggle('active', enabled);
     editButton.textContent = enabled ? 'Done Editing' : 'Edit Copy';
-    setStatus(enabled ? 'Edit text directly in highlighted copy, then Save Copy.' : 'Copy editing is off.');
+    setStatus(enabled ? 'Edit highlighted narrative copy, then Save Copy. Scorecard metrics are locked.' : 'Copy editing is off.');
   }
 
   function collectOverrides() {
