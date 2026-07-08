@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-notion-page-id="397a59b7-e7b2-8196-9011-ea047a9644fe" data-brief-type="PSA">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -415,6 +415,14 @@
     }
   
   </style>
+<style id="notionBriefCriticalStyles">
+    html[data-notion-page-id] .container > .section { display: none; }
+    html[data-notion-page-id] #notionBriefEditor { display: block; }
+    @media print {
+      html[data-notion-page-id] .container > .section { display: block; }
+      html[data-notion-page-id] #notionBriefEditor { display: none !important; }
+    }
+  </style>
 </head>
 <body>
 
@@ -422,10 +430,10 @@
 <div class="hero">
   <div class="hero-eyebrow">⚡ Rev.io PSA — Sales to SA Handoff</div>
   <h1><span>Sales Brief</span> — Elite Connect</h1>
-  <p class="hero-sub">Auto-generated from Salesforce · Close date 2026-05-05 · Jake Borah → SA Handoff</p>
+  <p class="hero-sub">Auto-generated from Salesforce · Close date 2026-07-08 · Justin Lee → SA Handoff</p>
   <div class="hero-actions">
     
-    <button class="btn btn-primary" type="button" onclick="saveBriefEdits()" data-brief-save-control>Save Updated Data</button>
+    <button class="btn btn-primary" type="button" onclick="saveBriefEdits()" data-brief-save-control>Save Brief</button>
     <button class="btn btn-secondary" type="button" onclick="window.print()">Print / Save as PDF</button>
     <div id="briefSaveStatus" class="save-status" aria-live="polite"></div>
   <button class="btn btn-primary" onclick="openQuestionnaire()" style="background:var(--accent2,#10b981);">📋 Pre-fill Questionnaire →</button>
@@ -448,11 +456,11 @@
         </div>
         <div class="field">
           <label>Close Date <span class="req">*</span></label>
-          <input type="date" value="2026-05-05" />
+          <input type="date" value="2026-07-08" />
         </div>
         <div class="field">
           <label>Monthly Recurring Revenue (MRR)</label>
-          <input type="text" placeholder="e.g. $1,004" value="$575/mo" />
+          <input type="text" placeholder="e.g. $1,004" value="$50/mo" />
         </div>
         <div class="field">
           <label>Contract Term</label>
@@ -467,7 +475,7 @@
         </div>
         <div class="field">
           <label>Sales Rep <span class="req">*</span></label>
-          <input type="text" placeholder="Full name" value="Jake Borah" />
+          <input type="text" placeholder="Full name" value="Justin Lee" />
         </div>
         <div class="field">
           <label>SA Assigned</label>
@@ -520,20 +528,8 @@
 
       <div class="field">
         <label>Brief — Key Context for SA</label>
-        <textarea placeholder="Anything from the sales calls the SA should know going in — client personality, key pain points, specific promises made, red flags, champions, etc.">VA · Security Integrator · Sales rep: Jake Borah
+        <textarea placeholder="Anything from the sales calls the SA should know going in — client personality, key pain points, specific promises made, red flags, champions, etc.">Virginia Beach, VA · Security Integrator · Sales rep: Justin Lee
 
-
-Email thread intelligence:
-I did put my card on file for a one time payment I plan to change the card for next months payment.
-Elite Connect LLC
-Phone: 804-445-9674  Mobile: 757-729-2288
-5300 Kempsriver Dr Suite 114-50 Vriginia Beach, VA 23464
-Web: www.eliteconnectva.com<http://www.eliteconnectva.com/>
-Email: matt.cox@eliteconnectva.com<mailto:matt.cox@eliteconnectva.com>
-DCJS # 11-20830<https://lotus.dcjs.virginia.gov/Print-Credential/?id=41c109e3-5eb6-ef11-b8e9-001dd804eb05>
-CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
-
-Phone numbers found in email signatures: (804) 445-9674, (757) 729-2288
 
 ⚠️ QB DESKTOP: No direct Rev.io integration. Agree on export/workaround process at kickoff.</textarea>
       </div>
@@ -562,7 +558,7 @@ Phone numbers found in email signatures: (804) 445-9674, (757) 729-2288
         </div>
         <div class="field">
           <label>Go-Live Target Date</label>
-          <input type="date" value="2026-05-06" />
+          <input type="date" value="2026-07-09" />
           <p class="hint">Based on complexity tier above. Simple clients: 1 week from kickoff.</p>
         </div>
       </div>
@@ -653,7 +649,7 @@ Phone numbers found in email signatures: (804) 445-9674, (757) 729-2288
         <div class="field">
           <label>GL Codes Ready?</label>
           <div class="radio-group">
-            <label><input type="radio" name="gl_codes" value="yes" /> Yes — chart of accounts ready</label>
+            <label><input type="radio" name="gl_codes" value="yes" /> Yes ��� chart of accounts ready</label>
             <label><input type="radio" name="gl_codes" value="no" checked /> No — accountant needs to provide</label>
           </div>
         </div>
@@ -1106,7 +1102,7 @@ Phone numbers found in email signatures: (804) 445-9674, (757) 729-2288
         </div>
         <div class="field">
           <label>Contract End Date</label>
-          <input type="date" value="2026-05-13" />
+          <input type="date" value="2026-07-16" />
         </div>
         <div class="field">
           <label>Auto-Renew?</label>
@@ -1117,7 +1113,7 @@ Phone numbers found in email signatures: (804) 445-9674, (757) 729-2288
         </div>
         <div class="field">
           <label>Base MRR</label>
-          <input type="text" placeholder="e.g. $1,004/mo" value="$575/mo" />
+          <input type="text" placeholder="e.g. $1,004/mo" value="$50/mo" />
         </div>
         <div class="field">
           <label>Onboarding Fee</label>
@@ -1515,6 +1511,23 @@ Phone numbers found in email signatures: (804) 445-9674, (757) 729-2288
 
   // ── Questionnaire Pre-fill Export ──────────────────────────────────
   function openQuestionnaire() {
+    function fieldByLabel(labelText) {
+      const labels = document.querySelectorAll('label');
+      for (const l of labels) {
+        if (l.textContent.trim().startsWith(labelText)) return l.closest('.field');
+      }
+      return null;
+    }
+    function valueByLabel(labelText) {
+      const field = fieldByLabel(labelText);
+      const el = field ? field.querySelector('select, input[type="text"], input[type="email"], textarea') : null;
+      return el ? el.value.trim() : '';
+    }
+    function radioValue(name) {
+      const el = document.querySelector('input[name="' + name + '"]:checked');
+      return el ? el.value : '';
+    }
+
     // Collect company info
     const company   = (document.getElementById('sb-company') || {}).value || '';
     const contact   = (document.getElementById('sb-contact') || {}).value || '';
@@ -1541,6 +1554,10 @@ Phone numbers found in email signatures: (804) 445-9674, (757) 729-2288
     // Inventory
     const inventoryEl  = document.querySelector('input[name="inventory"]:checked');
 
+    const sureTaxMap = { existing: 'existing', new: 'new', exempt: 'not-needed', tbd: 'unsure' };
+    const invoiceMap = { yes: 'continue', no: 'new' };
+    const smsMap = { yes: 'yes', no: 'no', later: 'unsure' };
+
     const data = {
       company,
       contact,
@@ -1550,6 +1567,15 @@ Phone numbers found in email signatures: (804) 445-9674, (757) 729-2288
       cycleDates,
       arrears:    arrearsEl    ? arrearsEl.value    : '',
       multiProfile: multiProfEl ? multiProfEl.value : '',
+      priorPsa: valueByLabel('Current / Prior PSA') || valueByLabel('If Other'),
+      accountingSoftware: valueByLabel('Accounting Software'),
+      rmmTool: valueByLabel('RMM Tool'),
+      paymentProcessor: valueByLabel('Current Payment Processor'),
+      sureTaxStatus: sureTaxMap[radioValue('suretax')] || '',
+      invoiceContinuity: invoiceMap[radioValue('invoice_cont')] || '',
+      businessHours: valueByLabel('Business Hours'),
+      holidayCalendar: valueByLabel('Holiday Calendar'),
+      smsEnabled: smsMap[radioValue('sms')] || '',
       inventory:  inventoryEl  ? inventoryEl.value  : '',
       _source: 'sales-brief',
       _ts: new Date().toISOString()
@@ -1749,71 +1775,6 @@ Phone numbers found in email signatures: (804) 445-9674, (757) 729-2288
 </script>
 
 
-<script>
-(function(){
-  const BRIEF_SAVE_KEY = 'revay:psa:brief:' + location.pathname;
-
-  function editableScope() {
-    return document.querySelector('.content') || document.querySelector('.container') || document.body;
-  }
-
-  function setStatus(message) {
-    const status = document.getElementById('briefSaveStatus');
-    if (status) status.textContent = message || '';
-  }
-
-  function syncFormDom(scope) {
-    scope.querySelectorAll('input').forEach(function(input) {
-      if (input.type === 'checkbox' || input.type === 'radio') {
-        if (input.checked) input.setAttribute('checked', 'checked');
-        else input.removeAttribute('checked');
-      } else {
-        input.setAttribute('value', input.value || '');
-      }
-    });
-    scope.querySelectorAll('textarea').forEach(function(textarea) {
-      textarea.textContent = textarea.value || '';
-    });
-    scope.querySelectorAll('select').forEach(function(select) {
-      Array.from(select.options).forEach(function(option) {
-        if (option.selected) option.setAttribute('selected', 'selected');
-        else option.removeAttribute('selected');
-      });
-    });
-  }
-
-  window.saveBriefEdits = function saveBriefEdits() {
-    const scope = editableScope();
-    syncFormDom(scope);
-    const payload = {
-      savedAt: new Date().toISOString(),
-      title: document.title,
-      path: location.pathname,
-      html: scope.innerHTML
-    };
-    try {
-      localStorage.setItem(BRIEF_SAVE_KEY, JSON.stringify(payload));
-      setStatus('Saved locally ' + new Date(payload.savedAt).toLocaleString() + '. PDF export is separate.');
-    } catch (err) {
-      setStatus('Save failed: ' + err.message);
-    }
-  };
-
-  window.restoreBriefEdits = function restoreBriefEdits() {
-    try {
-      const raw = localStorage.getItem(BRIEF_SAVE_KEY);
-      if (!raw) return;
-      const payload = JSON.parse(raw);
-      if (!payload || !payload.html) return;
-      editableScope().innerHTML = payload.html;
-      setStatus('Restored saved edits from ' + new Date(payload.savedAt).toLocaleString() + '.');
-    } catch (err) {
-      setStatus('Saved edits could not be restored: ' + err.message);
-    }
-  };
-
-  document.addEventListener('DOMContentLoaded', window.restoreBriefEdits);
-})();
-</script>
+<script src="assets/onboarding-brief-notion-client.js?v=20260624-3" data-page-id="397a59b7-e7b2-8196-9011-ea047a9644fe" data-brief-type="PSA" defer></script>
 </body>
 </html>
