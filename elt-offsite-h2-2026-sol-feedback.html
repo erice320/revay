@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rev.io ELT Offsite - Sol Feedback Decision Deck</title>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#202535;--line:rgba(255,255,255,.13);--text:#e8eaf6;--muted:#a4abc0;--accent:#00d4aa;--blue:#6c63ff;--warn:#ffb84d;--bad:#ff5c7a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 18% 0,rgba(0,212,170,.14),transparent 32%),var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,sans-serif;line-height:1.45}nav{position:sticky;top:0;z-index:10;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 24px;background:rgba(15,17,23,.94);border-bottom:1px solid var(--line)}nav b{color:var(--accent);margin-right:8px}nav a{color:var(--muted);text-decoration:none;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 10px}.deck{max-width:1260px;margin:auto;padding:30px}.hero{min-height:70vh;display:grid;align-content:center;border-bottom:1px solid var(--line);padding:44px 0}.eyebrow,.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:850}.hero h1{font-size:clamp(42px,7vw,84px);line-height:.96;margin:12px 0;letter-spacing:0;max-width:1100px}.hero p,.subtitle{color:var(--muted);font-size:20px;max-width:980px}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.chip{border:1px solid var(--line);border-radius:999px;color:var(--muted);padding:6px 10px;font-size:12px}.slide{position:relative;min-height:760px;margin:30px 0;padding:44px;border:1px solid var(--line);border-radius:8px;background:linear-gradient(145deg,var(--surface),#141824);display:grid;align-content:center;overflow:hidden}.slide-num{position:absolute;right:30px;top:22px;color:rgba(255,255,255,.14);font-size:56px;font-weight:900}.slide h2{font-size:clamp(32px,4.4vw,56px);line-height:1.04;letter-spacing:0;margin:10px 0 12px;max-width:1020px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:20px}.card,.metric{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:18px}.card{grid-column:span 6}.card.third{grid-column:span 4}.card.wide{grid-column:span 12}.card h3{margin:0 0 8px;color:var(--accent);font-size:13px;letter-spacing:.09em;text-transform:uppercase}.card ul{margin:0;padding-left:18px}.card li{margin:7px 0}.metric{grid-column:span 3}.metric b{font-size:34px;display:block}.metric span,.card p{color:var(--muted)}.bad{color:var(--bad)!important}.warn{color:var(--warn)!important}.good{color:var(--accent)!important}.table{grid-column:span 12;overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface2)}.row{display:grid;grid-template-columns:1.1fr 1fr 1.2fr .8fr}.row>div{padding:11px 12px;border-bottom:1px solid var(--line)}.row.head{color:var(--muted);font-weight:850;letter-spacing:.08em;text-transform:uppercase;font-size:12px;background:rgba(255,255,255,.04)}.quote{border-left:4px solid var(--accent);padding:16px 18px;background:rgba(0,212,170,.08);border-radius:0 8px 8px 0;font-size:22px}.footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);font-size:12px}@media(max-width:900px){.deck{padding:14px}.slide{min-height:auto;padding:30px 18px}.card,.card.third,.metric{grid-column:span 12}.row{grid-template-columns:1fr}.row.head{display:none}.row>div:before{content:attr(data-label);display:block;color:var(--muted);font-size:10px;text-transform:uppercase}}
+</style>
+</head>
+<body>
+<nav><b>Sol Feedback Deck</b><a href="#slide-1">Verdict</a><a href="#slide-2">P0</a><a href="#slide-3">Math</a><a href="#slide-5">ICP</a><a href="#slide-10">Build</a></nav>
+<main class="deck">
+<section class="hero">
+  <div class="eyebrow">Separate presentation - original deck untouched</div>
+  <h1>Sol 5.6 Review: Turn The ELT Deck Into A Decision Deck</h1>
+  <p>This presentation summarizes Sol's board-level feedback and translates it into a rebuild plan. It is intentionally separate from the original ELT offsite deck.</p>
+  <div class="chips"><span class="chip">Generated 2026-07-09T23:40:01.257Z</span><span class="chip">Source: Sol 5.6 board review</span><span class="chip">New URL / separate artifact</span></div>
+</section>
+<section class="slide" id="slide-1">
+    <div class="slide-num">01</div>
+    <div class="kicker">Executive verdict</div>
+    <h2>The strategic thesis is right; the deck is not yet decision-grade.</h2>
+    <p class="subtitle">Sol agrees the strongest idea is optimizing for durable, implemented, referenceable revenue instead of bookings alone.</p>
+    <div class="grid">
+  <article class="card "><h3>What works</h3><ul><li>Cancellation analysis turns implementation pain into strategic evidence.</li><li>Implementation-readiness gates are directionally right.</li><li>Certified-claims concept is a strong governance control.</li><li>The shift from bookings to durable customer outcomes is the right H2 frame.</li></ul></article>
+  <article class="card "><h3>Why it is not ready</h3><ul><li>It combines scorecard, workshop shell, marketing plan, retrieval log, and brainstorm.</li><li>It lacks one reconciled financial story, one ICP, one competitive motion, one operating plan, and a short list of decisions.</li><li>Metric conflicts would undermine confidence in every number.</li></ul></article>
+  <div class="quote wide">Recommendation: do not replace the original deck in place. Build a new decision-grade version after locking metrics and choices.</div>
+</div>
+  </section>
+<section class="slide" id="slide-2">
+    <div class="slide-num">02</div>
+    <div class="kicker">P0 issues</div>
+    <h2>Lock the metric source of truth before any design work.</h2>
+    <p class="subtitle">Sol flags conflicting active-deck and live-copy values as the presentation-stopping problem.</p>
+    <div class="grid">
+  <div class="table">
+    <div class="row head"><div data-label="Item">Metric</div><div data-label="Current">Active deck</div><div data-label="Required">Live copy override</div><div data-label="Owner">Problem</div></div>
+    <div class="row "><div data-label="Item">H1 direct bookings</div><div data-label="Current">$123,827</div><div data-label="Required">$105,901</div><div data-label="Owner">Materially different performance result</div></div>
+    <div class="row "><div data-label="Item">H1 marketing MRR</div><div data-label="Current">$62,034</div><div data-label="Required">$47,679</div><div data-label="Owner">Materially different attainment result</div></div>
+    <div class="row "><div data-label="Item">H1 total leads</div><div data-label="Current">859</div><div data-label="Required">785</div><div data-label="Owner">Different funnel denominator</div></div>
+    <div class="row "><div data-label="Item">H1 opportunities</div><div data-label="Current">517</div><div data-label="Required">473</div><div data-label="Owner">Different conversion denominator</div></div>
+    <div class="row "><div data-label="Item">H1 pipeline value</div><div data-label="Current">$526,353</div><div data-label="Required">$409,271</div><div data-label="Owner">More than $117K difference</div></div>
+    <div class="row "><div data-label="Item">H1 closed-won count</div><div data-label="Current">81</div><div data-label="Required">67</div><div data-label="Owner">Different sales outcome</div></div>
+    <div class="row "><div data-label="Item">H1 PSA graduations</div><div data-label="Current">68</div><div data-label="Required">61</div><div data-label="Owner">Different implementation result</div></div>
+  </div>
+  <article class="card "><h3>Control file needed</h3><ul><li>Metric name, exact definition, unit, period.</li><li>Source system, query/report, as-of date.</li><li>Metric owner, certification status, value approved for presentation.</li></ul></article>
+  <article class="card "><h3>Certification owners</h3><ul><li>Finance: bookings, revenue, GRR, NRR, churn.</li><li>RevOps: funnel and attribution.</li><li>Implementation/CS: graduations, backlog, cancellations.</li><li>Product: release outcomes and claim readiness.</li></ul></article>
+</div>
+  </section>
+<section class="slide" id="slide-3">
+    <div class="slide-num">03</div>
+    <div class="kicker">H2 math</div>
+    <h2>The H2 requirement is 4.0x to 5.5x H1 pace, not a generic 2x story.</h2>
+    <p class="subtitle">The deck must force an explicit executive choice: hold full-year target, hold H2 budget, or reforecast.</p>
+    <div class="grid">
+  <div class="metric warn"><b>$496K</b><span>Original H2 budget target: about $82.7K/month.</span></div>
+  <div class="metric bad"><b>$682K</b><span>Catch-up needed to hit full-year target: about $113.6K/month.</span></div>
+  <div class="metric warn"><b>4.0x</b><span>Multiple of H1 actual pace required for H2 budget.</span></div>
+  <div class="metric bad"><b>5.5x</b><span>Multiple of H1 actual pace required for full-year catch-up.</span></div>
+  <article class="card "><h3>Decision options</h3><ul><li>Hold the full-year target and present a credible 5.5x pace plan.</li><li>Hold the H2 budget and explicitly accept missing the full-year target.</li><li>Reforecast the year and reset investment, cash, hiring, and operating expectations.</li></ul></article>
+  <article class="card "><h3>Bridge required</h3><ul><li>Starting recurring revenue.</li><li>New-logo MRR and expansion MRR.</li><li>Payments contribution.</li><li>Contraction, churn, implementation cancellations.</li><li>Ending recurring revenue.</li></ul></article>
+</div>
+  </section>
+<section class="slide" id="slide-4">
+    <div class="slide-num">04</div>
+    <div class="kicker">Strategic contradiction</div>
+    <h2>Do not market broad PSA replacement while the internal evidence says replacement is unsafe in key workflows.</h2>
+    <p class="subtitle">Sol recommends separating the H2 default motion from targeted replacement.</p>
+    <div class="grid">
+  <article class="card "><h3>Motion A - H2 default</h3><ul><li>Revenue operating layer for complex billing, payments, reconciliation, usage, and multi-service monetization.</li><li>Coexist with incumbent PSA/RMM/security/accounting when full replacement is unnecessary or not certified.</li></ul></article>
+  <article class="card "><h3>Motion B - targeted replacement</h3><ul><li>Full PSA replacement only when workflow and migration gates pass.</li><li>Tigerpaw migrations and select billing-led, field-service, security-integrator, or hybrid MSP/CSP archetypes may fit.</li></ul></article>
+  <article class="card wide"><h3>Motion C - aspiration</h3><ul><li>Broad unified-suite competition is a long-term aspiration, not H2 default.</li><li>Do not make replace-everything claims until workflow parity, migration safety, capacity, and references are proven.</li></ul></article>
+</div>
+  </section>
+<section class="slide" id="slide-5">
+    <div class="slide-num">05</div>
+    <div class="kicker">ICP choice</div>
+    <h2>The current deck has a market map, not one ICP.</h2>
+    <p class="subtitle">Sol recommends one primary segment, explicit secondary segments, and no-go criteria.</p>
+    <div class="grid">
+  <article class="card "><h3>Primary</h3><ul><li>Established hybrid MSP/CSP/security or field-service providers.</li><li>Complex recurring, usage, device, project, payment, and billing workflows.</li><li>Lead with revenue operations, billing, payments, and supported integrations.</li></ul></article>
+  <article class="card "><h3>Secondary</h3><ul><li>Tigerpaw installed-base accounts with validated migration readiness.</li><li>General MSPs only when acute PSA pain and supported workflow pattern are certified.</li></ul></article>
+  <article class="card wide"><h3>Stop / defer</h3><ul><li>Low-complexity MSPs seeking low-cost unified PSA/RMM bundle.</li><li>Unsupported custom workflows, no data owner, no transition event, or no attach path.</li></ul></article>
+</div>
+  </section>
+<section class="slide" id="slide-6">
+    <div class="slide-num">06</div>
+    <div class="kicker">Revenue leakage</div>
+    <h2>The H1 aggregate hides Q2 deterioration and lifecycle leakage.</h2>
+    <p class="subtitle">Sol says the final deck must show where revenue is lost across demand, win, kickoff, live, retained, expanded, and referenceable stages.</p>
+    <div class="grid">
+  <div class="metric bad"><b>57% -&gt; 29.5%</b><span>Direct bookings attainment from Q1 to implied Q2.</span></div>
+  <div class="metric bad"><b>57.6% -&gt; 37.6%</b><span>Marketing MRR attainment from Q1 to Q2.</span></div>
+  <div class="metric bad"><b>86.9% -&gt; 48.1%</b><span>Marketing opportunity attainment from Q1 to Q2.</span></div>
+  <div class="metric bad"><b>65.1% -&gt; 41.2%</b><span>Marketing closed-won count attainment from Q1 to Q2.</span></div>
+  <article class="card wide"><h3>Lifecycle loss tree needed</h3><ul><li>Demand -&gt; qualified opportunity -&gt; win -&gt; kickoff -&gt; live -&gt; retained -&gt; expanded -&gt; referenceable.</li><li>Show conversion, elapsed time, and MRR loss at each stage.</li><li>Mark unknown joins visibly instead of smoothing over them.</li></ul></article>
+</div>
+  </section>
+<section class="slide" id="slide-7">
+    <div class="slide-num">07</div>
+    <div class="kicker">Cancelled onboarding</div>
+    <h2>The cancelled PSA cohort is the strongest section, but it needs a denominator and Pareto.</h2>
+    <p class="subtitle">Sol calls the $27.9K cancelled-MRR cohort economically material enough to treat onboarding as a growth constraint.</p>
+    <div class="grid">
+  <div class="metric "><b>20</b><span>Cancelled PSA onboarding accounts reviewed.</span></div>
+  <div class="metric bad"><b>$27.9K</b><span>Cancelled MRR in the reviewed cohort.</span></div>
+  <div class="metric bad"><b>$334.8K</b><span>Annualized recurring revenue equivalent.</span></div>
+  <div class="metric warn"><b>12 / 20</b><span>Accounts with usable sentence-level transcript evidence.</span></div>
+  <article class="card wide"><h3>Pareto categories</h3><ul><li>Wrong ICP / unsupported workflow.</li><li>Sales expectation mismatch.</li><li>Data and migration failure.</li><li>Integration failure.</li><li>Product gap.</li><li>Implementation execution/capacity.</li><li>Customer change-readiness, commercial issue, or unknown.</li></ul></article>
+</div>
+  </section>
+<section class="slide" id="slide-8">
+    <div class="slide-num">08</div>
+    <div class="kicker">Marketing and channel</div>
+    <h2>Convert the marketing activity list into an investment case.</h2>
+    <p class="subtitle">Sol says the marketing plan should be proof-first and tied to expected MRR, not a list of tactics.</p>
+    <div class="grid">
+  <article class="card "><h3>Proof-first priority order</h3><ul><li>Customer and migration proof.</li><li>Competitive-specific proof for the primary ICP.</li><li>Payments economics and workflow proof.</li><li>Implementation timeline and readiness proof.</li><li>High-intent demand capture.</li><li>Advocacy and reviews.</li></ul></article>
+  <article class="card "><h3>Every motion needs</h3><ul><li>Target segment and buyer.</li><li>Offer, budget, owner.</li><li>Expected leads, qualified opportunities, wins, and MRR.</li><li>Time to impact, proof asset, kill/continue threshold.</li></ul></article>
+  <article class="card wide"><h3>Channel strategy decision</h3><ul><li>Technology alliance-led.</li><li>Marketplace/distribution-led.</li><li>Referral/co-sell-led.</li><li>Direct-led with ecosystem support.</li><li>Do not call a list of integrations a channel strategy.</li></ul></article>
+</div>
+  </section>
+<section class="slide" id="slide-9">
+    <div class="slide-num">09</div>
+    <div class="kicker">Main-deck architecture</div>
+    <h2>Limit the core deck to ten decision slides.</h2>
+    <p class="subtitle">Everything else belongs in appendices or workshop materials.</p>
+    <div class="grid">
+  <article class="card "><h3>Slides 1-5</h3><ul><li>H1 outcome and H2 consequence.</li><li>Where revenue is being lost.</li><li>The H2 financial choice.</li><li>Primary ICP and stop-pursuing rules.</li><li>GTM motion: revenue layer first, replacement when certified.</li></ul></article>
+  <article class="card "><h3>Slides 6-10</h3><ul><li>Offer, pricing, and expansion model.</li><li>Top five product and implementation commitments.</li><li>Retention and activation operating system.</li><li>H2 demand and channel plan.</li><li>Decisions, owners, and 90-day commitments.</li></ul></article>
+  <article class="card wide"><h3>Appendices</h3><ul><li>Certified H1 scorecard.</li><li>Metric dictionary/source register.</li><li>Q1-to-Q2 funnel analysis.</li><li>Cancelled onboarding Pareto.</li><li>Claims certification register.</li><li>Tigerpaw economics.</li><li>Decision log.</li></ul></article>
+</div>
+  </section>
+<section class="slide" id="slide-10">
+    <div class="slide-num">10</div>
+    <div class="kicker">Agent build plan</div>
+    <h2>Build this as a separate decision deck, then integrate only after metric lock.</h2>
+    <p class="subtitle">This is the safe path: keep the original intact, publish the Sol-feedback interpretation separately, and use it to drive the next rebuild.</p>
+    <div class="grid">
+  <article class="card "><h3>P0 deliverables</h3><ul><li>metrics-lock-h1-2026.md</li><li>claims-certification-register.md</li><li>h2-financial-bridge.md</li><li>cancelled-onboarding-pareto.md</li><li>decision-log-h2-2026.md</li></ul></article>
+  <article class="card "><h3>Narrative deliverables</h3><ul><li>10-slide decision deck.</li><li>Appendix package.</li><li>Q2 deterioration analysis.</li><li>Revenue-layer vs replacement GTM decision.</li><li>Lifecycle scorecard and rescue triggers.</li></ul></article>
+  <div class="quote wide">Suggested strategy: In H2, Rev.io will focus on established service providers whose revenue complexity is underserved by generic PSA/RMM suites, landing with billing, payments, and revenue operations, and pursuing full PSA replacement only where workflow and migration fit are certified.</div>
+</div>
+  </section>
+<p class="footer">Separate artifact generated 2026-07-09T23:40:01.257Z from Sol 5.6 board-review feedback. Original deck URL remains unchanged.</p>
+</main>
+</body>
+</html>
