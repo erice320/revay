@@ -3,171 +3,788 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rev.io H2 2026 ELT Offsite - Decision Deck</title>
+<title>H2 2026 ELT Offsite · Evan</title>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#202535;--text:#e8eaf6;--muted:#a4abc0;--line:rgba(255,255,255,.13);--accent:#6c63ff;--accent2:#00d4aa;--warn:#ffb84d;--bad:#ff5c7a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,sans-serif;line-height:1.45}nav{position:sticky;top:0;z-index:10;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 24px;background:rgba(15,17,23,.94);border-bottom:1px solid var(--line)}nav b{margin-right:10px;color:var(--accent2)}nav a{color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px}.deck{max-width:1240px;margin:auto;padding:28px}.hero{min-height:72vh;display:grid;align-content:center;border-bottom:1px solid var(--line);padding:40px 0}.eyebrow,.kicker{color:var(--accent2);font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:850}.hero h1{font-size:clamp(42px,7vw,86px);line-height:.96;margin:12px 0;letter-spacing:0}.hero p,.subtitle{color:var(--muted);font-size:20px;max-width:980px}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.chip{border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:var(--muted);font-size:12px}.slide{position:relative;min-height:760px;margin:28px 0;padding:44px;border:1px solid var(--line);border-radius:8px;background:linear-gradient(145deg,var(--surface),#141824);display:grid;align-content:center;overflow:hidden}.num{position:absolute;right:30px;top:22px;color:rgba(255,255,255,.14);font-size:54px;font-weight:900}.slide h2{font-size:clamp(32px,4vw,54px);line-height:1.04;margin:10px 0 12px;letter-spacing:0;max-width:980px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:20px}.card,.metric,.decision{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:18px}.card{grid-column:span 6}.metric{grid-column:span 3}.wide{grid-column:span 12}.third{grid-column:span 4}.metric b{font-size:34px;display:block}.metric span,.card p,.decision span{color:var(--muted)}.card h3{margin:0 0 8px;color:var(--accent2);font-size:13px;text-transform:uppercase;letter-spacing:.1em}.card ul{margin:0;padding-left:18px}.card li{margin:7px 0}.bad{color:var(--bad)!important}.warn{color:var(--warn)!important}.good{color:var(--accent2)!important}.decision{grid-column:span 6;display:grid;gap:6px}.decision b{font-size:18px}.table{grid-column:span 12;overflow:auto;border:1px solid var(--line);border-radius:8px}.row{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.1fr}.row>div{padding:10px 12px;border-bottom:1px solid var(--line)}.row.head{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;background:rgba(255,255,255,.04)}.footer{color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding:18px 0 40px}@media(max-width:900px){.deck{padding:14px}.slide{min-height:auto;padding:28px 18px}.card,.metric,.third,.decision{grid-column:span 12}.row{grid-template-columns:1fr}.row.head{display:none}.row>div:before{content:attr(data-label);display:block;color:var(--muted);font-size:10px;text-transform:uppercase}}
+:root{--bg:#080E1A;--surface:rgba(15,33,56,.58);--surface-solid:#142A46;--border:rgba(255,255,255,.09);--border-cyan:rgba(0,229,255,.30);--cyan:#00BCD4;--cyan-bright:#00E5FF;--green:#69F0AE;--green-dim:#4CAF50;--amber:#FFB74D;--red:#FF5252;--purple:#A78BFA;--blue:#7B9FFF;--text-1:#fff;--text-2:#A1B0CB;--eyebrow:#00BCD4;--font-display:'Cabinet Grotesk',system-ui,sans-serif;--font-body:'Satoshi',system-ui,sans-serif;--spring:cubic-bezier(.16,1,.3,1);--text:var(--text-1);--muted:var(--text-2);--line:var(--border);--accent:var(--cyan);--accent2:var(--cyan-bright);--warn:var(--amber);--bad:var(--red);--missing:#8f99af}
+*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}body{margin:0;background:radial-gradient(circle at 20% 0%,rgba(0,229,255,.12),transparent 32%),radial-gradient(circle at 80% 10%,rgba(123,159,255,.10),transparent 36%),var(--bg);color:var(--text-1);font-family:var(--font-body);line-height:1.45;overflow-x:hidden;-webkit-font-smoothing:antialiased}body:before{content:"";position:fixed;inset:0;background:linear-gradient(135deg,rgba(0,229,255,.06),transparent 38%);pointer-events:none}a{color:inherit}.nav{position:sticky;top:0;z-index:50;display:flex;gap:8px;align-items:center;flex-wrap:wrap;overflow:visible;padding:12px clamp(1rem,3vw,2rem);background:rgba(8,14,26,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}.brand{font-family:var(--font-display);font-weight:800;color:var(--cyan-bright);white-space:nowrap;margin-right:8px}.nav a{font-size:.86rem;color:var(--text-2);text-decoration:none;white-space:nowrap;border:1px solid var(--border);background:rgba(15,33,56,.55);border-radius:99px;padding:7px 12px;transition:.25s var(--spring)}.nav a:hover{color:var(--cyan-bright);border-color:var(--border-cyan);background:rgba(0,229,255,.08)}.wrap{position:relative;max-width:1220px;margin:auto;padding:0 clamp(1rem,3vw,2rem) 44px}.hero{min-height:68vh;display:grid;align-content:center;padding:54px 0 40px;border-bottom:1px solid var(--border)}.eyebrow,.kicker,.section-kicker{font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--eyebrow);font-weight:800;display:flex;align-items:center;gap:10px}.eyebrow:before,.kicker:before,.section-kicker:before{content:"";width:24px;height:1px;background:var(--cyan-bright);flex:0 0 24px}.hero h1{font-family:var(--font-display);font-size:clamp(2.9rem,7vw,6rem);line-height:.96;margin:12px 0 14px;letter-spacing:0;max-width:1040px;background:linear-gradient(135deg,var(--cyan-bright) 0%,#7B9FFF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.sub{font-size:clamp(1.05rem,2vw,1.35rem);color:var(--text-2);max-width:940px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.chip{border:1px solid var(--border);border-radius:999px;padding:6px 10px;color:var(--text-2);background:rgba(15,33,56,.55);font-size:.82rem}.decision-frame{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:30px}.decision-frame div{border:1px solid var(--border);border-radius:14px;background:var(--surface);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:16px}.decision-frame b{display:block;font-family:var(--font-display);font-size:1.05rem}.decision-frame span{display:block;color:var(--text-2);font-size:.88rem;margin-top:5px}.slide{position:relative;min-height:720px;border:1px solid var(--border);background:linear-gradient(135deg,rgba(20,42,70,.70),rgba(8,14,26,.78));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:24px;margin:28px 0;padding:clamp(1.5rem,4vw,3rem);box-shadow:0 24px 80px rgba(0,0,0,.36);overflow:hidden;display:grid;align-content:center}.slide::before{content:"";position:absolute;inset:0;border-radius:24px;padding:1px;background:radial-gradient(520px circle at 85% 8%,rgba(0,229,255,.42),transparent 45%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}.slide>*{position:relative;z-index:1}.slide-number{position:absolute;top:24px;right:28px;color:rgba(161,176,203,.18);font-family:var(--font-display);font-size:50px;font-weight:800}.slide h2,.goals-head h2,.appendix h2{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);line-height:1.05;margin:10px 0 14px;letter-spacing:0;max-width:940px}.point{font-size:1.15rem;color:#cbd6ee;max-width:900px}.slide-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:20px}.card{border:1px solid var(--border);border-radius:14px;background:var(--surface);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:22px;transition:border-color .3s,transform .3s var(--spring)}.card.visual{background:rgba(20,42,70,.68)}.card h3{margin:0 0 10px;font-family:var(--font-display);font-size:1rem;color:var(--cyan-bright);text-transform:uppercase;letter-spacing:.08em}.card ul{margin:0;padding-left:19px}.card li{margin:8px 0;color:#d9e2f7}.card code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:5px}.lifecycle,.promise-proof{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:18px}.lifecycle span,.promise-proof div{border:1px solid var(--border);border-radius:14px;background:var(--surface);padding:12px;text-align:center;font-weight:800}.promise-proof{grid-template-columns:1fr 1fr}.promise-proof b{display:block;color:var(--cyan-bright);font-family:var(--font-display);font-size:1.4rem}.promise-proof span{display:block;color:var(--text-2);font-size:.9rem;margin-top:6px}.goals-section{padding:38px 0;border-bottom:1px solid var(--border)}.goals-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:16px}.goals-head p{color:var(--text-2);max-width:760px}.open-link{border:1px solid var(--border-cyan);border-radius:99px;padding:10px 14px;text-decoration:none;color:var(--cyan-bright);font-weight:800;font-size:.86rem;white-space:nowrap;background:rgba(0,229,255,.08)}.marketing-deck-card{display:grid;gap:16px;align-content:center;min-height:220px}.marketing-deck-card p{margin:0;color:#cbd6ee}.deck-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:max-content;max-width:100%;border:1px solid rgba(0,229,255,.48);border-radius:12px;padding:13px 18px;background:linear-gradient(135deg,rgba(0,229,255,.22),rgba(123,159,255,.18));color:var(--text-1);font-weight:900;text-decoration:none;box-shadow:0 14px 36px rgba(0,229,255,.10);transition:transform .2s var(--spring),border-color .2s var(--spring),background .2s var(--spring)}.deck-button:hover{transform:translateY(-1px);border-color:rgba(0,229,255,.78);background:linear-gradient(135deg,rgba(0,229,255,.30),rgba(123,159,255,.24))}.deck-button:after{content:"->";color:var(--cyan-bright);font-weight:900}.goals-embed{border:1px solid var(--border);border-radius:18px;background:rgba(8,14,26,.62);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.28)}.goals-embed .goals-hero{padding:22px 20px 18px;border-bottom:1px solid var(--border);background:rgba(15,33,56,.35)}.goals-embed .goals-period{padding:22px 20px 10px;border-bottom:1px solid var(--border)}.goals-embed h1{font-family:var(--font-display);font-size:32px;line-height:1.05;margin:8px 0;letter-spacing:0}.goals-embed h2{font-family:var(--font-display);font-size:23px;margin:2px 0 0;letter-spacing:0}.goals-embed .subtitle{font-size:14px;color:var(--text-2);max-width:940px}.goals-embed .goals{display:grid;grid-template-columns:1fr;gap:8px}.goals-embed .goal{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--missing);border-radius:14px;padding:12px}.goals-embed .goal.good{border-left-color:var(--green)}.goals-embed .goal.warn,.goals-embed .goal.partial{border-left-color:var(--amber)}.goals-embed .goal.bad{border-left-color:var(--red)}.goals-embed .goal-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:start}.goals-embed .goal-head>div:first-child{display:flex;gap:9px;align-items:flex-start}.goals-embed .num{width:22px;height:22px;display:inline-grid;place-items:center;flex:0 0 22px;border-radius:6px;background:rgba(255,255,255,.07);color:var(--text-2);font-weight:850;font-size:12px}.goals-embed h3{font-family:var(--font-display);font-size:15px;line-height:1.25;margin:1px 0 0;letter-spacing:0}.goals-embed .summary{display:flex;align-items:center;gap:8px;color:var(--text-2);font-size:12px;white-space:nowrap}.goals-embed .summary b{color:var(--text-1);font-size:13px}.goals-embed .badge{border-radius:999px;padding:3px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:850}.goals-embed .badge.good{background:rgba(105,240,174,.1);color:var(--green)}.goals-embed .badge.warn,.goals-embed .badge.partial{background:rgba(255,183,77,.13);color:var(--amber)}.goals-embed .badge.bad{background:rgba(255,82,82,.13);color:var(--red)}.goals-embed .badge.missing{background:rgba(143,153,175,.14);color:var(--missing)}.goals-embed .metric-header,.goals-embed .metric{display:grid;grid-template-columns:minmax(210px,1.25fr) minmax(112px,.55fr) minmax(112px,.55fr) minmax(76px,.35fr);gap:10px;align-items:center}.goals-embed .metric-header{margin-top:9px;padding:6px 9px;color:var(--text-2);font-size:10px;text-transform:uppercase;letter-spacing:.08em;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}.goals-embed .metric{padding:7px 9px;font-size:12px;border-bottom:1px solid rgba(255,255,255,.07)}.goals-embed .metric:last-child{border-bottom:0}.goals-embed .metric-name{font-weight:800}.goals-embed .metric-name span{display:block;color:var(--text-2);font-weight:500;font-size:11px;margin-top:2px}.goals-embed .metric-val{color:var(--text-1)}.goals-embed .metric-pct{font-weight:900}.goals-embed .metric.good .metric-pct{color:var(--green)}.goals-embed .metric.warn .metric-pct,.goals-embed .metric.partial .metric-pct{color:var(--amber)}.goals-embed .metric.bad .metric-pct{color:var(--red)}.goals-embed .metric.missing .metric-pct{color:var(--missing)}.goals-embed .note,.goals-embed .source{margin-top:7px;color:var(--text-2);font-size:11px}.goals-embed .source summary{cursor:pointer;color:#c3d7ee}.goals-embed .source p{margin:5px 0 0}.goals-embed .personal-block{margin-top:10px;background:rgba(20,42,70,.5);border:1px solid var(--border);border-radius:14px;padding:12px}.goals-embed .personal-title{font-size:13px;font-weight:900;margin-bottom:8px}.goals-embed .personal-title span{font-weight:500;color:var(--text-2);font-size:11px;margin-left:8px}.goals-embed .personal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}.goals-embed .mini{min-height:64px;border:1px solid var(--border);border-radius:12px;background:rgba(8,14,26,.45);padding:8px}.goals-embed .mini-name{font-size:12px;font-weight:850;margin-bottom:5px}.goals-embed .mini-result{display:flex;flex-wrap:wrap;gap:5px;align-items:baseline;font-size:12px;color:var(--text-2)}.goals-embed .mini-result b{color:var(--text-1)}.goals-embed .mini-result strong{font-size:13px}.goals-embed .mini.good strong{color:var(--green)}.goals-embed .mini.warn strong,.goals-embed .mini.partial strong{color:var(--amber)}.goals-embed .mini.bad strong{color:var(--red)}.goals-embed .mini.missing strong{color:var(--missing)}.goals-embed .mini-note{font-size:10px;color:var(--text-2);margin-top:4px}.appendix{padding:38px 0}.appendix-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.footer{font-size:12px;color:var(--text-2);padding:24px 0 6px;border-top:1px solid var(--border)}@media(max-width:860px){.nav{display:block;white-space:normal}.brand{display:block;margin:0 0 8px}.nav a{display:inline-block;margin:3px 3px 3px 0;font-size:.78rem;padding:6px 9px}.wrap{padding:0 14px 34px}.hero{min-height:64vh}.slide{min-height:auto;padding:46px 18px}.slide-grid,.decision-frame,.appendix-grid{grid-template-columns:1fr}.lifecycle{grid-template-columns:repeat(2,minmax(0,1fr))}.promise-proof{grid-template-columns:1fr}.goals-head{display:block}.open-link{display:inline-block;margin-top:8px}.deck-button{width:100%;white-space:normal;text-align:center}.goals-embed .goal-head{grid-template-columns:1fr}.goals-embed .summary{white-space:normal}.goals-embed .metric-header{display:none}.goals-embed .metric{grid-template-columns:1fr 1fr;gap:4px 10px}.goals-embed .metric-name{grid-column:1/-1}}
+  .feature-slide{align-content:start}.feature-slide h2{font-size:clamp(1.85rem,3.3vw,2.85rem)}.feature-slide .point{font-size:1rem;max-width:1040px}.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}.feature-card{border:1px solid var(--border);border-radius:14px;background:var(--surface);padding:16px}.feature-card h3{margin:0 0 8px;font-family:var(--font-display);font-size:.86rem;color:var(--cyan-bright);text-transform:uppercase;letter-spacing:.08em}.feature-card ul{margin:0;padding-left:17px}.feature-card li{margin:6px 0;color:#d9e2f7;font-size:.88rem;line-height:1.34}.feature-card .acct{display:block;margin-top:8px;color:var(--text-2);font-size:.76rem;line-height:1.25}.feature-callout{margin-top:14px;border:1px solid var(--border-cyan);background:rgba(0,229,255,.07);border-radius:14px;padding:14px;color:#d9e2f7;font-weight:800}.feature-callout span{color:var(--cyan-bright)}@media(max-width:860px){.feature-grid{grid-template-columns:1fr}.feature-card li{font-size:.92rem}}
+  .edit-toolbar{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:8px;max-width:min(92vw,720px);padding:10px;border:1px solid var(--border);border-radius:14px;background:rgba(8,14,26,.92);box-shadow:0 18px 60px rgba(0,0,0,.38);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .edit-toolbar button{appearance:none;border:1px solid var(--border);border-radius:10px;background:rgba(20,42,70,.92);color:var(--text-1);font:800 12px var(--font-body);padding:9px 11px;cursor:pointer;white-space:nowrap}
+  .edit-toolbar button:hover,.edit-toolbar button.active{border-color:var(--border-cyan);color:var(--cyan-bright);background:rgba(0,229,255,.1)}
+  .edit-toolbar button:disabled{cursor:not-allowed;opacity:.45}
+  .edit-status{min-width:220px;color:var(--text-2);font-size:12px;line-height:1.25}
+  .copy-editing [data-edit-key]{outline:1px dashed rgba(0,229,255,.45);outline-offset:4px;border-radius:6px}
+  .copy-editing [data-edit-key]:focus{outline:2px solid var(--cyan-bright);background:rgba(0,229,255,.08)}
+  @media(max-width:860px){.edit-toolbar{left:10px;right:10px;bottom:10px;flex-wrap:wrap}.edit-status{min-width:100%;order:5}}
 </style>
 </head>
 <body>
-<nav><b>Rev.io H2 ELT</b><a href="#slide-1">Outcome</a><a href="#slide-3">H2 Choice</a><a href="#slide-4">ICP</a><a href="#slide-5">GTM Motion</a><a href="#slide-10">Decisions</a></nav>
-<main class="deck">
-<section class="hero">
-  <div class="eyebrow">Decision Deck - rebuilt from Sol 5.6 feedback</div>
-  <h1>From Bookings To Durable Revenue</h1>
-  <p>H2 operating choices to improve fit, go-live conversion, retention, expansion, and advocacy. This deck disables the old live copy override path and keeps uncertified values visibly labeled.</p>
-  <div class="chips"><span class="chip">Generated 2026-07-09T23:28:58.128Z</span><span class="chip">Rollback: reports/rollback/elt-offsite-20260709T232429Z</span><span class="chip">Metrics need owner certification where marked</span></div>
-</section>
-<section class="slide" id="slide-1">
-    <div class="num">01</div>
-    <div class="kicker">H1 outcome and H2 consequence</div>
-    <h2>H1 missed, Q2 weakened, and booked revenue is leaking before value realization.</h2>
-    <p class="subtitle">The offsite should not ask only how to create more demand. It should decide how Rev.io will win, activate, retain, and expand the right revenue.</p>
-    <div class="grid">
-  <div class="metric"><b class="bad">40.1%</b><span>H1 direct bookings: $123,827 / $309,154. Finance certification required.</span></div>
-  <div class="metric"><b class="bad">44.9%</b><span>H1 marketing MRR: $62,034 / $138,102. RevOps certification required.</span></div>
-  <div class="metric"><b class="warn">99.1%</b><span>H1 NRR owner-confirmed; Finance certification required before final use.</span></div>
-  <div class="metric"><b class="bad">$27,900</b><span>Cancelled PSA onboarding MRR in reviewed cohort; 12 of 20 accounts had usable transcript evidence.</span></div>
-  <article class="card"><h3>What changed the story</h3><ul><li>Q2 direct bookings fell to roughly 29.5% of Q2 target, down from 57% in Q1.</li><li>Marketing weakened across MRR, lead, opportunity, pipeline, and closed-won attainment.</li><li>Cancelled onboarding MRR is material enough to treat activation as a growth constraint.</li></ul></article>
-  <article class="card"><h3>Decision implication</h3><ul><li>More top-of-funnel alone is insufficient.</li><li>H2 must improve acquisition quality, implementation fit, time-to-live, retention, expansion, and reference readiness.</li><li>The deck should close operating choices, not collect every function plan.</li></ul></article>
+<nav class="nav">
+  <span class="brand">Rev.io ELT Offsite · Evan</span>
+  <a href="#goals-scorecard">Scorecard</a>
+  <a href="#slide-2">Start / Stop / Continue</a>
+  <a href="#slide-5">ICP</a>
+  <a href="#slide-7">Marketing</a>
+  <a href="#slide-8">Sales</a>
+  <a href="#slide-11">Fans</a>
+  <a href="#slide-17">Decisions</a>
+</nav>
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">ELT Offsite · Evan Sections</div>
+    <h1>From the Moon to Mars.</h1>
+    <p class="sub">H2 execution alignment for turning the right bookings into live, referenceable, low-friction customers.</p>
+    <div class="meta">
+      <span class="chip">Created 2026-06-23</span>
+      <span class="chip">Salesforce refreshed 2026-07-01</span>
+      <span class="chip">Goals section embedded</span>
+      <span class="chip">Metrics locked from copy editor</span>
+    </div>
+  </section>
+  <section class="goals-section" id="goals-scorecard">
+    <div class="goals-head">
+      <div>
+        <div class="section-kicker">Goals &amp; Lessons Learned</div>
+        <h2>Objective Goals Scorecard</h2>
+        <p>This is the existing scorecard artifact added directly into the shell. It preserves evidence labels, missing-source flags, and generated-source notes from the prior goals work.</p>
+      </div>
+      <a class="open-link" href="/elt-goals/">Open standalone scorecard</a>
+    </div>
+    <div class="goals-embed">
+  <section class="goals-hero">
+    <div class="eyebrow">ELT Offsite Prep · Objective Scorecard</div>
+    <h1>H1 2026 goals: attainment / target = result</h1>
+    <p class="subtitle">Q1 and H1 goals are grouped to mirror the prior offsite structure, with each measurable target itemized in a compact results grid. Full-year goals are intentionally excluded from this first-half view.</p>
+    <div class="chips">
+      <span class="chip">Generated 2026-07-01</span>
+      <span class="chip">Salesforce HTTP 200</span>
+      <span class="chip">Q1 closed-won records: 102</span>
+      <span class="chip">YTD closed-won records: 226</span>
+      <span class="chip">Marketing workbook loaded</span>
+    </div>
+  </section>
+  <section class="goals-period"><div class="period-head"><div><div class="section-kicker">Q1 2026</div><h2>Q1 2026 Goals</h2></div></div><div class="goals"><article class="goal bad">
+    <div class="goal-head">
+      <div><span class="num">1</span><h3>Meet or exceed Q1 Budget Sales Bookings Targets by Product Line</h3></div>
+      <div class="summary"><b>$67,455 / $118,240 = 57%</b><span class="badge bad">Behind</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric bad">
+    <div class="metric-name">Total direct bookings</div>
+    <div class="metric-val">$67,455</div>
+    <div class="metric-val">$118,240</div>
+    <div class="metric-pct">57%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">PSA</div>
+    <div class="metric-val">$31,644</div>
+    <div class="metric-val">$63,000</div>
+    <div class="metric-pct">50.2%</div>
+  </div><div class="metric good">
+    <div class="metric-name">Billing</div>
+    <div class="metric-val">$28,700</div>
+    <div class="metric-val">$23,750</div>
+    <div class="metric-pct">120.8%</div>
+  </div><div class="metric missing">
+    <div class="metric-name">Odin<span>Tracked separately; no Q1 target in source table.</span></div>
+    <div class="metric-val">$0</div>
+    <div class="metric-val">$0</div>
+    <div class="metric-pct">N/A</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Payments</div>
+    <div class="metric-val">$6,511</div>
+    <div class="metric-val">$27,740</div>
+    <div class="metric-pct">23.5%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">RMM</div>
+    <div class="metric-val">$600</div>
+    <div class="metric-val">$3,750</div>
+    <div class="metric-pct">16%</div>
+  </div></div>
+
+    <details class="source"><summary>Sources</summary><p>Target: prior deck slide 15 direct table. Attainment: Salesforce Opportunity HTTP 200, Q1 closed-won product query, 102 records refreshed 2026-07-01. Billing and Odin are shown separately to avoid masking Odin's $0 actual.</p></details>
+  </article><article class="goal partial">
+    <div class="goal-head">
+      <div><span class="num">2</span><h3>Meet or exceed Q1 Marketing Website Lead, Opps and Bookings Targets</h3></div>
+      <div class="summary"><b>$29,008 / $50,344 marketing MRR = 57.6%</b><span class="badge partial">Partial</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric bad">
+    <div class="metric-name">Marketing MRR</div>
+    <div class="metric-val">$29,008</div>
+    <div class="metric-val">$50,344</div>
+    <div class="metric-pct">57.6%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Total leads</div>
+    <div class="metric-val">414</div>
+    <div class="metric-val">617</div>
+    <div class="metric-pct">67.1%</div>
+  </div><div class="metric missing">
+    <div class="metric-name">Website leads</div>
+    <div class="metric-val">98</div>
+    <div class="metric-val">Missing target</div>
+    <div class="metric-pct">Missing</div>
+  </div><div class="metric warn">
+    <div class="metric-name">Total opps</div>
+    <div class="metric-val">285</div>
+    <div class="metric-val">328</div>
+    <div class="metric-pct">86.9%</div>
+  </div><div class="metric warn">
+    <div class="metric-name">Pipeline value</div>
+    <div class="metric-val">$240,512</div>
+    <div class="metric-val">$261,020</div>
+    <div class="metric-pct">92.1%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Closed-won count</div>
+    <div class="metric-val">41</div>
+    <div class="metric-val">63</div>
+    <div class="metric-pct">65.1%</div>
+  </div></div>
+    <div class="note">Website-lead actual is present in the workbook, but the workbook does not include an explicit website-lead target cell.</div>
+    <details class="source"><summary>Sources</summary><p>Target and attainment: Evan-uploaded SLT tracker workbook “Marketing_KPIs_7.1.26”, sheet “Marketing KPIs 2026”, direct XLSX XML extraction on 2026-07-01. Original goal label: prior deck SmartArt data1.xml/data2.xml.</p></details>
+  </article><article class="goal bad">
+    <div class="goal-head">
+      <div><span class="num">3</span><h3>All barriers to onboarding Security / AV clients to new Rev.io released and Generally Available</h3></div>
+      <div class="summary"><b>No / GA = not met</b><span class="badge bad">No</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric bad">
+    <div class="metric-name">Security / AV onboarding barriers</div>
+    <div class="metric-val">No</div>
+    <div class="metric-val">Generally Available</div>
+    <div class="metric-pct">Not met</div>
+  </div></div>
+    <div class="note">Result: no missing integrations around alarm monitoring.</div>
+    <details class="source"><summary>Sources</summary><p>Target: prior deck SmartArt data2.xml. Attainment: Evan owner-confirmed in Discord on 2026-06-30.</p></details>
+  </article><article class="goal partial">
+    <div class="goal-head">
+      <div><span class="num">4</span><h3>Apollo 1 (2/1) Release on Scope and On Time</h3></div>
+      <div class="summary"><b>90% / 100% = 90%</b><span class="badge partial">90%</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric partial">
+    <div class="metric-name">Apollo 1 release</div>
+    <div class="metric-val">90%</div>
+    <div class="metric-val">100%</div>
+    <div class="metric-pct">90%</div>
+  </div></div>
+
+    <details class="source"><summary>Sources</summary><p>Target: prior deck SmartArt data2.xml. Attainment: Evan owner-confirmed in Discord on 2026-06-30.</p></details>
+  </article><article class="goal bad">
+    <div class="goal-head">
+      <div><span class="num">5</span><h3>Graduate 50+ PSA clients</h3></div>
+      <div class="summary"><b>15 / 50 = 30%</b><span class="badge bad">Behind</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric bad">
+    <div class="metric-name">PSA client graduations</div>
+    <div class="metric-val">15</div>
+    <div class="metric-val">50</div>
+    <div class="metric-pct">30%</div>
+  </div></div>
+    <div class="note">Stale; needs refresh before final ELT use.</div>
+    <details class="source"><summary>Sources</summary><p>Target: prior deck SmartArt data2.xml. Attainment: Notion PSA Clients database HTTP 200 across 3 pages, 240 records returned on 2026-07-01; 15 clients have Actual Graduation Date in Q1 2026.</p></details>
+  </article><article class="goal good">
+    <div class="goal-head">
+      <div><span class="num">6</span><h3>Q1 Retention and Growth Goals</h3></div>
+      <div class="summary"><b>Gross 97.3% / 90%+; Net 101.5% / 100%+</b><span class="badge good">On target</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric good">
+    <div class="metric-name">Gross Retention</div>
+    <div class="metric-val">97.3%</div>
+    <div class="metric-val">90%+</div>
+    <div class="metric-pct">On target</div>
+  </div><div class="metric good">
+    <div class="metric-name">Net Retention</div>
+    <div class="metric-val">101.5%</div>
+    <div class="metric-val">100%+</div>
+    <div class="metric-pct">On target</div>
+  </div></div>
+
+    <details class="source"><summary>Sources</summary><p>Target label: prior deck SmartArt data2.xml. Target values and attainment: Evan owner-confirmed in Discord on 2026-06-30.</p></details>
+  </article></div><aside class="personal-block">
+    <div class="personal-title">Q1 2026 Personal Goals <span>Evan self-report · 2026-06-22</span></div>
+    <div class="personal-grid"><div class="mini good">
+    <div class="mini-name">Workout points</div>
+    <div class="mini-result"><b>331.3</b><span>/</span><b>325</b><span>=</span><strong>101.9%</strong></div>
+
+  </div><div class="mini good">
+    <div class="mini-name">Family ski trip</div>
+    <div class="mini-result"><b>1</b><span>/</span><b>1</b><span>=</span><strong>100%</strong></div>
+
+  </div><div class="mini good">
+    <div class="mini-name">Couples weekend</div>
+    <div class="mini-result"><b>1</b><span>/</span><b>1</b><span>=</span><strong>100%</strong></div>
+
+  </div><div class="mini warn">
+    <div class="mini-name">Estate affairs</div>
+    <div class="mini-result"><b>70%</b><span>/</span><b>100%</b><span>=</span><strong>70%</strong></div>
+
+  </div></div>
+  </aside></section><section class="goals-period"><div class="period-head"><div><div class="section-kicker">H1 2026</div><h2>H1 2026 Goals</h2></div></div><div class="goals"><article class="goal bad">
+    <div class="goal-head">
+      <div><span class="num">1</span><h3>Meet or exceed H1 Budget Sales Bookings Targets by Product Line</h3></div>
+      <div class="summary"><b>$123,827 / $309,154 = 40.1%</b><span class="badge bad">Behind</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric bad">
+    <div class="metric-name">Total direct bookings</div>
+    <div class="metric-val">$123,827</div>
+    <div class="metric-val">$309,154</div>
+    <div class="metric-pct">40.1%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">PSA</div>
+    <div class="metric-val">$71,499</div>
+    <div class="metric-val">$165,000</div>
+    <div class="metric-pct">43.3%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Billing</div>
+    <div class="metric-val">$40,810</div>
+    <div class="metric-val">$59,392</div>
+    <div class="metric-pct">68.7%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Odin<span>Separated from Billing; zero actual needs owner confirmation as real vs mapping issue.</span></div>
+    <div class="metric-val">$0</div>
+    <div class="metric-val">$6,232</div>
+    <div class="metric-pct">0%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Payments</div>
+    <div class="metric-val">$10,918</div>
+    <div class="metric-val">$59,480</div>
+    <div class="metric-pct">18.4%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">RMM</div>
+    <div class="metric-val">$600</div>
+    <div class="metric-val">$19,050</div>
+    <div class="metric-pct">3.1%</div>
+  </div></div>
+
+    <div class="note">H2 target proper is $496,338 (FY target $805,492 minus H1 target $309,154). Because H1 actual was $123,827, total remaining to hit the FY target is $681,665.</div>
+    <details class="source"><summary>Sources</summary><p>Target: prior deck slide 15 direct table. Attainment: Salesforce Opportunity HTTP 200, H1 closed-won product query, 226 records through 2026-06-30; refreshed 2026-07-01. Billing and Odin are separated; Odin is $0 actual against $6,232 H1 target.</p></details>
+  </article><article class="goal partial">
+    <div class="goal-head">
+      <div><span class="num">2</span><h3>Meet or exceed H1 Marketing Website Leads, Opps and Bookings Targets</h3></div>
+      <div class="summary"><b>$62,034 / $138,102 marketing MRR = 44.9%</b><span class="badge partial">Partial</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric bad">
+    <div class="metric-name">Marketing MRR</div>
+    <div class="metric-val">$62,034</div>
+    <div class="metric-val">$138,102</div>
+    <div class="metric-pct">44.9%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Total leads</div>
+    <div class="metric-val">859</div>
+    <div class="metric-val">1,464</div>
+    <div class="metric-pct">58.7%</div>
+  </div><div class="metric missing">
+    <div class="metric-name">Website leads<span>Actual calculated from monthly workbook cells.</span></div>
+    <div class="metric-val">171</div>
+    <div class="metric-val">Missing target</div>
+    <div class="metric-pct">Missing</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Total opps</div>
+    <div class="metric-val">517</div>
+    <div class="metric-val">810</div>
+    <div class="metric-pct">63.8%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Pipeline value</div>
+    <div class="metric-val">$526,353</div>
+    <div class="metric-val">$685,909</div>
+    <div class="metric-pct">76.7%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Closed-won count</div>
+    <div class="metric-val">81</div>
+    <div class="metric-val">160</div>
+    <div class="metric-pct">50.6%</div>
+  </div></div>
+    <div class="note">Website-lead H1 actual is calculated from workbook monthly actual cells; no explicit website-lead target cell is present.</div>
+    <details class="source"><summary>Sources</summary><p>Target and attainment: Evan-uploaded SLT tracker workbook “Marketing_KPIs_7.1.26”, sheet “Marketing KPIs 2026”, direct XLSX XML extraction on 2026-07-01. Original goal label: prior deck SmartArt data1.xml/data2.xml.</p></details>
+  </article><article class="goal partial">
+    <div class="goal-head">
+      <div><span class="num">3</span><h3>Release 90%+ of all committed items for each H1 Named Release</h3></div>
+      <div class="summary"><b>2 of 3 named releases met 90%+; 285 / 309 total features delivered = 92.2%.</b><span class="badge partial">Partial</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric good">
+    <div class="metric-name">Apollo 1</div>
+    <div class="metric-val">66 / 66 delivered</div>
+    <div class="metric-val">90%+</div>
+    <div class="metric-pct">100%</div>
+  </div><div class="metric warn">
+    <div class="metric-name">Apollo 2</div>
+    <div class="metric-val">89 / 104 delivered</div>
+    <div class="metric-val">90%+</div>
+    <div class="metric-pct">86%</div>
+  </div><div class="metric good">
+    <div class="metric-name">Apollo 3</div>
+    <div class="metric-val">130 / 139 delivered</div>
+    <div class="metric-val">90%+</div>
+    <div class="metric-pct">94%</div>
+  </div></div>
+    <div class="note">Apollo 2 missed the 90% named-release threshold; Apollo 1 and Apollo 3 met it. Across the three releases: 285 delivered, 19 in progress, 5 not started.</div>
+    <details class="source"><summary>Sources</summary><p>Target: prior deck SmartArt data2.xml. Attainment: Evan-provided Apollo 1, Apollo 2, and Apollo 3 release screenshots in Discord on 2026-06-30.</p></details>
+  </article><article class="goal bad">
+    <div class="goal-head">
+      <div><span class="num">4</span><h3>Launch at least one CommerceHub Phase 2 offering with touchless provisioning and billing</h3></div>
+      <div class="summary"><b>0 / 1 offerings launched = 0%</b><span class="badge bad">Behind</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric bad">
+    <div class="metric-name">CommerceHub Phase 2 launch</div>
+    <div class="metric-val">0 offerings launched</div>
+    <div class="metric-val">1 offering launched</div>
+    <div class="metric-pct">0%</div>
+  </div></div>
+
+    <details class="source"><summary>Sources</summary><p>Target: prior deck SmartArt data2.xml. Attainment: Evan owner-confirmed in Discord on 2026-06-30.</p></details>
+  </article><article class="goal bad">
+    <div class="goal-head">
+      <div><span class="num">5</span><h3>Graduate 100+ PSA clients and convert onboarding backlog into budgeted value</h3></div>
+      <div class="summary"><b>68 / 100 graduated; budget performance mixed: Billing +$15.8K, PSA Web -$86.7K, Payments -$35.1K</b><span class="badge bad">Behind</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric bad">
+    <div class="metric-name">Total PSA clients graduated</div>
+    <div class="metric-val">68</div>
+    <div class="metric-val">100</div>
+    <div class="metric-pct">68%</div>
+  </div><div class="metric good">
+    <div class="metric-name">Billing onboarding budget performance<span>Actual to date and supplied YTD variance.</span></div>
+    <div class="metric-val">$81,770 actual</div>
+    <div class="metric-val">$124,778 FY budget</div>
+    <div class="metric-pct">+$15,752</div>
+  </div><div class="metric bad">
+    <div class="metric-name">PSA Web onboarding budget performance<span>Actual to date and supplied YTD variance.</span></div>
+    <div class="metric-val">$51,173 actual</div>
+    <div class="metric-val">$427,910 FY budget</div>
+    <div class="metric-pct">-$86,737</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Payments onboarding budget performance<span>Actual to date and supplied YTD variance.</span></div>
+    <div class="metric-val">$7,511 actual</div>
+    <div class="metric-val">$95,389 FY budget</div>
+    <div class="metric-pct">-$35,058</div>
+  </div></div>
+    <div class="note">Note: Evan owner-confirmed the H1 PSA graduation count is now 68 on 2026-07-01; this supersedes the prior 61-row Notion pull for presentation count. Uploaded budget-performance CSV supplied populated actual-to-date/YTD variance rows for Billing, PSA Web, and Payments; blank subcategory and Cyber Protect actual-to-date cells were not inferred as zero.</div>
+    <details class="source"><summary>Sources</summary><p>Graduation target: prior deck SmartArt data2.xml, clarified by Evan on 2026-06-22 as total graduated clients by end of June, not only 2026 graduations. Graduation attainment: Evan owner-confirmed 68 H1 PSA graduations in Discord on 2026-07-01; prior Notion PSA Onboarding Dashboard pull returned HTTP 200 across 3 pages, 215 records on 2026-06-22, with 61 records then marked Status = Graduated. Budget performance: Evan-uploaded CSV "slt-budget-performance-2026" in Discord on 2026-07-01; parsed locally from 11 CSV rows.</p></details>
+  </article><article class="goal partial">
+    <div class="goal-head">
+      <div><span class="num">6</span><h3>H1 Retention and Growth Goals</h3></div>
+      <div class="summary"><b>Gross 94.9% / 90%+; Net 99.1% / 100%+</b><span class="badge partial">Partial</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric good">
+    <div class="metric-name">Gross Retention</div>
+    <div class="metric-val">94.9%</div>
+    <div class="metric-val">90%+</div>
+    <div class="metric-pct">On target</div>
+  </div><div class="metric warn">
+    <div class="metric-name">Net Retention</div>
+    <div class="metric-val">99.1%</div>
+    <div class="metric-val">100%+</div>
+    <div class="metric-pct">99.1%</div>
+  </div></div>
+
+    <details class="source"><summary>Sources</summary><p>Target label: prior deck SmartArt data2.xml. Target values and attainment: Evan owner-confirmed in Discord on 2026-06-30.</p></details>
+  </article><article class="goal partial">
+    <div class="goal-head">
+      <div><span class="num">7</span><h3>Hit the Company Incentive Targets for H1’26</h3></div>
+      <div class="summary"><b>$3.23M / $3.54M run-rate MRT = 91.2%; cross-sell and Client Fans behind.</b><span class="badge partial">Partial</span></div>
+    </div>
+    <div class="metric-header"><span>Measure</span><span>Attainment</span><span>Target</span><span>Result</span></div>
+    <div class="metrics"><div class="metric bad">
+    <div class="metric-name">Cross-sell deals</div>
+    <div class="metric-val">13</div>
+    <div class="metric-val">55</div>
+    <div class="metric-pct">23.6%</div>
+  </div><div class="metric bad">
+    <div class="metric-name">Client Fans</div>
+    <div class="metric-val">13</div>
+    <div class="metric-val">75</div>
+    <div class="metric-pct">17.3%</div>
+  </div><div class="metric warn">
+    <div class="metric-name">Run-rate MRT</div>
+    <div class="metric-val">$3.23M</div>
+    <div class="metric-val">$3.54M</div>
+    <div class="metric-pct">91.2%</div>
+  </div></div>
+
+    <details class="source"><summary>Sources</summary><p>Target: prior deck SmartArt data2.xml. Sub-goal targets and attainment: Evan self-report in Discord, 2026-06-22; Client Fans updated by Evan in Discord on 2026-06-30. Need Finance/source-system confirmation for final ELT use.</p></details>
+  </article></div><aside class="personal-block">
+    <div class="personal-title">H1 2026 Personal Goals <span>Evan self-report · 2026-06-30</span></div>
+    <div class="personal-grid"><div class="mini good">
+    <div class="mini-name">Workout points</div>
+    <div class="mini-result"><b>674</b><span>/</span><b>650</b><span>=</span><strong>103.7%</strong></div>
+    <div class="mini-note">Exceeded H1 target.</div>
+  </div><div class="mini bad">
+    <div class="mini-name">School events</div>
+    <div class="mini-result"><b>1</b><span>/</span><b>2</b><span>=</span><strong>50%</strong></div>
+    <div class="mini-note">Ian done; Austin missed.</div>
+  </div><div class="mini partial">
+    <div class="mini-name">Beach trip</div>
+    <div class="mini-result"><b>Scheduled</b><span>/</span><b>1 trip</b><span>=</span><strong>On track</strong></div>
+    <div class="mini-note">Costa Rica scheduled for July; not completed during H1 as of 2026-06-22.</div>
+  </div></div>
+  </aside></section>
+  <p class="footer">Goal text sources: prior deck SmartArt data2.xml; target detail sources: prior deck SmartArt data1.xml and slide 15/16 embedded tables. Working artifact only; Finance/Product/Marketing/Onboarding certification still required where marked.</p>
 </div>
+  </section>
+  <section class="slide" id="slide-1">
+    <div class="slide-number">01</div>
+    <div class="kicker">Goals And Lessons Learned</div>
+    <h2>Lessons Learned</h2>
+    <p class="point">The right question moved from &quot;how do we sell more?&quot; to &quot;how do we sell more of what we can implement, retain, and turn into fans?&quot;</p>
+    <div class="slide-grid" style="grid-template-columns:1fr">
+      <article class="card "><h3>Lessons learned</h3><ul><li>Bookings are not the finish line.</li><li>Product activity is not automatically revenue strategy.</li><li>Missing joins are operating defects, not reporting inconvenience.</li><li>ICP must become operational, not aspirational.</li><li>Cross-functional decisions need one lifecycle view.</li></ul></article>
+    </div>
+
   </section>
 <section class="slide" id="slide-2">
-    <div class="num">02</div>
-    <div class="kicker">Where revenue is being lost</div>
-    <h2>The lifecycle problem is bigger than demand generation.</h2>
-    <p class="subtitle">The immediate operating system should inspect loss from demand through reference readiness, with unknown joins shown as unknown instead of filled with estimates.</p>
-    <div class="grid">
-  <div class="table">
-    <div class="row head"><div>Stage</div><div>Known signal</div><div>Current gap</div><div>Needed owner</div></div>
-    <div class="row"><div data-label="Stage">Demand to opportunity</div><div data-label="Known signal">H1 859 leads, 517 opps</div><div data-label="Current gap">Q2 deterioration and attribution quality</div><div data-label="Needed owner">RevOps + Marketing</div></div>
-    <div class="row"><div data-label="Stage">Opportunity to win</div><div data-label="Known signal">81 marketing closed-won count in workbook</div><div data-label="Current gap">Definition conflict vs source-system pulls</div><div data-label="Needed owner">RevOps + Sales</div></div>
-    <div class="row"><div data-label="Stage">Win to live</div><div data-label="Known signal">68 PSA graduations owner-confirmed</div><div data-label="Current gap">Denominator, elapsed time, and avoidability</div><div data-label="Needed owner">Implementation + CS</div></div>
-    <div class="row"><div data-label="Stage">Live to retained</div><div data-label="Known signal">GRR 94.9%, NRR 99.1%</div><div data-label="Current gap">Product/cohort drivers not certified</div><div data-label="Needed owner">Finance + CS</div></div>
-    <div class="row"><div data-label="Stage">Retained to referenceable</div><div data-label="Known signal">13 Client Fans vs 75 target</div><div data-label="Current gap">No operational stage definition</div><div data-label="Needed owner">CS + Marketing</div></div>
-  </div>
-  <article class="card"><h3>Non-negotiable data rule</h3><ul><li>HTTP 200 and record count prove retrieval, not business interpretation.</li><li>Owner-confirmed Discord values are usable only when labeled as owner-confirmed.</li><li>Finance, RevOps, Product, Implementation, and CS must certify their respective metrics before final board use.</li></ul></article>
-  <article class="card"><h3>Appendix requirement</h3><ul><li>Certified H1 scorecard</li><li>Metric dictionary and source register</li><li>Q1-to-Q2 funnel analysis</li><li>Cancelled-onboarding cohort analysis</li></ul></article>
-</div>
+    <div class="slide-number">02</div>
+    <div class="kicker">Start / Stop / Continue</div>
+    <h2>Start</h2>
+    <p class="point">Start focusing the system around the right buyers, the right message, and Revii as a client-facing advantage.</p>
+    <div class="slide-grid" style="grid-template-columns:1fr">
+      <article class="card "><h3>Actuals</h3><ul><li>Focusing go-to-market efforts on a new definition of qualified buyer.</li><li>New messaging that aligns with who we are.</li><li>Expecting Revii to be on par with internal agents and evangelizing it with clients.</li><li>Lorem ipsum start placeholder one.</li><li>Lorem ipsum start placeholder two.</li><li>Lorem ipsum start placeholder three.</li></ul></article>
+    </div>
+
   </section>
 <section class="slide" id="slide-3">
-    <div class="num">03</div>
-    <div class="kicker">The H2 financial choice</div>
-    <h2>The H2 requirement is 4.0x to 5.5x H1 actual pace, not a generic 2x sales story.</h2>
-    <p class="subtitle">The ELT should explicitly choose whether to hold the full-year target, hold only the H2 budget, or reforecast.</p>
-    <div class="grid">
-  <div class="metric"><b>$496,338</b><span>Original H2 budget target. Requires $82,723/month.</span></div>
-  <div class="metric"><b>$681,665</b><span>Remaining amount needed to hit full-year target. Requires $113,611/month.</span></div>
-  <div class="metric"><b class="warn">4.0x</b><span>Multiple of H1 actual monthly pace required to hit H2 budget.</span></div>
-  <div class="metric"><b class="bad">5.5x</b><span>Multiple of H1 actual monthly pace required to catch up full-year target.</span></div>
-  <article class="card"><h3>Management recommendation to decide</h3><ul><li>Do not use 2x language unless the target is formally reset.</li><li>Present a full-year hold, H2-budget hold, and reforecast case.</li><li>Tie each case to pipeline, implementation capacity, retention, expansion, hiring, and cash implications.</li></ul></article>
-  <article class="card"><h3>Bridge still needed</h3><ul><li>Starting recurring revenue</li><li>New-logo MRR</li><li>Expansion MRR</li><li>Payments contribution</li><li>Contraction and churn</li><li>Implementation cancellations</li><li>Ending recurring revenue</li></ul></article>
-</div>
+    <div class="slide-number">03</div>
+    <div class="kicker">Start / Stop / Continue</div>
+    <h2>Stop</h2>
+    <p class="point">Stop tolerating short-term behavior and disconnected systems that weaken execution.</p>
+    <div class="slide-grid" style="grid-template-columns:1fr">
+      <article class="card "><h3>Actuals</h3><ul><li>Chasing the number / short-term mindset.</li><li>System issues with no logging or proactive communication.</li><li>Disjointed functionality that does not flow together in a cohesive end-to-end workflow.</li><li>Lorem ipsum stop placeholder one.</li><li>Lorem ipsum stop placeholder two.</li><li>Lorem ipsum stop placeholder three.</li></ul></article>
+    </div>
+
   </section>
 <section class="slide" id="slide-4">
-    <div class="num">04</div>
-    <div class="kicker">Primary ICP and no-go rules</div>
-    <h2>Choose one H2 growth bet and make other segments explicitly secondary.</h2>
-    <p class="subtitle">Use the revenue-complexity wedge first; use full PSA replacement only where workflow and migration fit are certified.</p>
-    <div class="grid">
-  <article class="card"><h3>Primary</h3><ul><li>Established hybrid MSP/CSP/security or field-service providers.</li><li>Complex recurring, usage, device, project, billing, payment, and service workflows.</li><li>Launch MRR at or above $1,000 with credible 12-month expansion path.</li><li>Known buyer, implementation owner, data owner, supported integrations, and transition event.</li></ul></article>
-  <article class="card"><h3>Secondary</h3><ul><li>Tigerpaw installed-base accounts with validated migration readiness.</li><li>Billing-led or field-service/security workflow patterns where Rev.io has proof.</li><li>Accounts where revenue operations value is clear even if full replacement is not required.</li></ul></article>
-  <article class="card"><h3>Controlled replacement</h3><ul><li>General MSPs with acute PSA pain only after six-gate certification.</li><li>Replacement claims require customer signoff on gaps, workarounds, owners, and dates.</li></ul></article>
-  <article class="card"><h3>Stop / defer</h3><ul><li>Low-complexity MSPs seeking low-cost PSA/RMM bundle.</li><li>Unsupported custom workflows or no data owner.</li><li>No attach path, no transition event, or implementation economics that do not work.</li></ul></article>
-</div>
+    <div class="slide-number">04</div>
+    <div class="kicker">Start / Stop / Continue</div>
+    <h2>Continue</h2>
+    <p class="point">Continue the foundations that still matter: mission, channel focus, and close client relationships.</p>
+    <div class="slide-grid" style="grid-template-columns:1fr">
+      <article class="card "><h3>Actuals</h3><ul><li>Building toward our mission and vision.</li><li>Push into the IT channel with established providers.</li><li>Intimate relationships with clients.</li><li>Lorem ipsum continue placeholder one.</li><li>Lorem ipsum continue placeholder two.</li><li>Lorem ipsum continue placeholder three.</li></ul></article>
+    </div>
+
   </section>
 <section class="slide" id="slide-5">
-    <div class="num">05</div>
-    <div class="kicker">GTM motion</div>
-    <h2>Lead with revenue-layer value; replace the PSA only when certified.</h2>
-    <p class="subtitle">This resolves the contradiction between the cancellation evidence and broad displacement language.</p>
-    <div class="grid">
-  <article class="card"><h3>Motion A - H2 default</h3><ul><li>Land as the revenue operating layer: billing, usage, payments, reconciliation, contract-to-invoice accuracy, and multi-service monetization.</li><li>Coexist with incumbent PSA/RMM/security/accounting stacks when full replacement is unnecessary or not certified.</li></ul></article>
-  <article class="card"><h3>Motion B - targeted replacement</h3><ul><li>Use full PSA replacement only for prospects passing the six workflow/migration gates.</li><li>Best candidates may include Tigerpaw migration and specific billing-led, field-service, security-integrator, or hybrid MSP/CSP archetypes.</li></ul></article>
-  <div class="table">
-    <div class="row head"><div>Gate</div><div>Required check</div><div>Failure mode prevented</div><div>Owner</div></div>
-    <div class="row"><div data-label="Gate">1</div><div data-label="Required check">Quoting / CPQ / sales workflow</div><div data-label="Failure mode prevented">Expectation mismatch</div><div data-label="Owner">Sales + Solutions</div></div>
-    <div class="row"><div data-label="Gate">2</div><div data-label="Required check">Contract, package, billing, tax, invoice logic</div><div data-label="Failure mode prevented">Billing go-live risk</div><div data-label="Owner">Product + Implementation</div></div>
-    <div class="row"><div data-label="Gate">3</div><div data-label="Required check">Time, payroll, utilization, reporting</div><div data-label="Failure mode prevented">Operational replacement gap</div><div data-label="Owner">Solutions</div></div>
-    <div class="row"><div data-label="Gate">4</div><div data-label="Required check">Projects, dispatch, field service, mobile</div><div data-label="Failure mode prevented">Daily workflow failure</div><div data-label="Owner">Product + Implementation</div></div>
-    <div class="row"><div data-label="Gate">5</div><div data-label="Required check">Data migration and historical access</div><div data-label="Failure mode prevented">Unsafe transition</div><div data-label="Owner">Implementation</div></div>
-    <div class="row"><div data-label="Gate">6</div><div data-label="Required check">Required integrations and system-of-record design</div><div data-label="Failure mode prevented">Parallel-system failure</div><div data-label="Owner">Solutions + Product</div></div>
-  </div>
-</div>
+    <div class="slide-number">05</div>
+    <div class="kicker">ICP And Value Planning</div>
+    <h2>ICP Is A Fit System, Not A Persona</h2>
+    <p class="point">Prioritize operators with scale, attach potential, operational volume, and implementation readiness.</p>
+    <div class="slide-grid">
+      <article class="card "><h3>Fit Screen</h3><ul><li>$3M-$100M revenue or clear operating scale; employee count is context, not the gate.</li><li>$1,000+ launch MRR with credible path to $2,000+ in 12 months.</li><li>Enough invoice, payment, ticket, service, usage, or dispatch volume to create retained value.</li><li>Named buyer, implementation owner, data cleanup owner, source systems, required integrations, and transition event.</li></ul></article>
+      <article class="card visual"><h3>Lanes And Gate</h3><ul><li>Three lanes: Billing-led CSP, security / field-service PSA, and MSP / IT services workflow pain.</li><li>Expansion path: Payments, PSA, usage, automation, Revii, and add-ons.</li><li>Revii fit requires clean customer, ticket, billing, payment, workflow, integration, and permission data.</li><li>Walk away under $1,000 launch MRR when there is no attach path, urgent pain, owner, buyer, data readiness, or supported workflow.</li></ul></article>
+    </div>
+
   </section>
 <section class="slide" id="slide-6">
-    <div class="num">06</div>
-    <div class="kicker">Offer, pricing, expansion</div>
-    <h2>A minimum MRR rule is not enough; H2 needs a productized offer architecture.</h2>
-    <p class="subtitle">Package complexity should be visible before close instead of absorbed silently by implementation.</p>
-    <div class="grid">
-  <article class="card"><h3>Offer architecture to approve</h3><ul><li>Entry offer for revenue-operations wedge.</li><li>Core billing/service operations package.</li><li>Payments attach model with verified economics.</li><li>Revii/AI offer only where workflow proof exists.</li><li>Implementation and migration tiers: Standard, Advanced, Complex.</li></ul></article>
-  <article class="card"><h3>Pricing principles</h3><ul><li>Keep $1,000 launch MRR floor as a screen, not the full ICP.</li><li>Add expected 12-month expansion and cost-to-serve to qualification.</li><li>Reconsider unsupported no-consultants/no-implementation-fee claims for complex accounts.</li><li>Define discount authority and expansion triggers.</li></ul></article>
-  <article class="card"><h3>Payments case required</h3><ul><li>Eligible installed-base accounts</li><li>Attach rate and payment volume</li><li>Net take rate and gross margin</li><li>Implementation effort and support burden</li><li>Verified fee/workflow comparison before using savings claims</li></ul></article>
-  <article class="card"><h3>AI monetization status</h3><ul><li>Treat AI billing as design-partner motion until referenceable customers exist.</li><li>Do not make AI token billing the core H2 revenue answer without demand, metering, product, pricing, and margin proof.</li></ul></article>
-</div>
+    <div class="slide-number">06</div>
+    <div class="kicker">ICP And Value Planning</div>
+    <h2>Value Planning By Segment</h2>
+    <p class="point">Planning should connect customer value, Rev.io proof, implementation readiness, and economic outcome.</p>
+    <div class="slide-grid">
+      <article class="card "><h3>Planning Test</h3><ul><li>Customer pain and urgency.</li><li>Rev.io proof and differentiation.</li><li>Implementation readiness.</li><li>Required product / Revii commitments.</li><li>Renewal, expansion, and reference path.</li></ul></article>
+      <article class="card visual"><h3>Decision Output</h3><ul><li>Each segment leaves with an owner, allowed promise, blocked promise, and next proof gap.</li></ul></article>
+    </div>
+
   </section>
 <section class="slide" id="slide-7">
-    <div class="num">07</div>
-    <div class="kicker">Top commitments</div>
-    <h2>Prioritize the five product and implementation commitments with the largest revenue and retention impact.</h2>
-    <p class="subtitle">Avoid roadmap-by-deal. Rank by qualified deals affected, MRR, retention risk, segment relevance, implementation cost avoided, effort, and support burden.</p>
-    <div class="grid">
-  <div class="table">
-    <div class="row head"><div>Commitment</div><div>Segment unlocked</div><div>Impact hypothesis</div><div>Status</div></div>
-    <div class="row"><div data-label="Commitment">Workflow-fit certification</div><div data-label="Segment">Replacement deals</div><div data-label="Impact">Reduce expectation mismatch and cancelled onboarding MRR</div><div data-label="Status">Needs owner/date</div></div>
-    <div class="row"><div data-label="Commitment">Migration and history readiness</div><div data-label="Segment">Tigerpaw + replacement</div><div data-label="Impact">Increase go-live confidence and referenceability</div><div data-label="Status">Needs sizing</div></div>
-    <div class="row"><div data-label="Commitment">Billing/package/invoice proof</div><div data-label="Segment">Revenue-complexity ICP</div><div data-label="Impact">Enable revenue-layer positioning and reduce go-live risk</div><div data-label="Status">Needs Product certification</div></div>
-    <div class="row"><div data-label="Commitment">Payments attach playbook</div><div data-label="Segment">Installed base + new deals</div><div data-label="Impact">Expansion and stickiness</div><div data-label="Status">Needs economic case</div></div>
-    <div class="row"><div data-label="Commitment">Implementation observability</div><div data-label="Segment">All H2 deals</div><div data-label="Impact">Earlier rescue triggers and forecast quality</div><div data-label="Status">Needs operating owner</div></div>
-  </div>
-  <article class="card"><h3>Certified claim enabled</h3><ul><li>Each commitment should explicitly say which public, sales, or campaign claim becomes safe when completed.</li><li>Unsafe claims stay out of website, campaigns, sales decks, demos, and contracts.</li></ul></article>
-</div>
+    <div class="slide-number">07</div>
+    <div class="kicker">Marketing Positioning</div>
+    <h2>Billy Owns The Marketing Plan</h2>
+    <p class="point">Use Billy's presentation as the source of truth for positioning, campaigns, and proof assets; this deck should only frame the handoff back to ICP and value planning.</p>
+    <div class="slide-grid">
+      <article class="card "><h3>What Evan Needs From This Session</h3><ul><li>Positioning that reinforces the ICP and value-planning decisions from Day 1.</li><li>Competitive plays tied to proof assets, owner, segment, and next campaign motion.</li><li>Clear start / stop / continue calls for demand generation and source attribution.</li></ul></article>
+      <article class="card visual marketing-deck-card"><h3>Billy's Deck</h3><p>Open the dedicated marketing strategy deck.</p><a class="deck-button" href="https://billyrevio.github.io/rev-io-pages/leadership-offsite-marketing-strategy.html" target="_blank" rel="noopener">Open Billy's Presentation</a></article>
+    </div>
+
   </section>
 <section class="slide" id="slide-8">
-    <div class="num">08</div>
-    <div class="kicker">Activation and retention operating system</div>
-    <h2>Define healthy, expansion-ready, and reference-ready customers as lifecycle stages.</h2>
-    <p class="subtitle">Client Fans becomes useful only when the denominator, elapsed time, and stage rules are explicit.</p>
-    <div class="grid">
-  <div class="table">
-    <div class="row head"><div>Stage</div><div>Definition</div><div>Metric</div><div>Owner</div></div>
-    <div class="row"><div data-label="Stage">Qualified</div><div data-label="Definition">Fit, buyer, urgency, workflow, data owner known</div><div data-label="Metric">Qualified-to-win rate</div><div data-label="Owner">Sales</div></div>
-    <div class="row"><div data-label="Stage">Kickoff complete</div><div data-label="Definition">Implementation owner and success definition confirmed</div><div data-label="Metric">Close-to-kickoff elapsed time</div><div data-label="Owner">Implementation</div></div>
-    <div class="row"><div data-label="Stage">Live</div><div data-label="Definition">Required workflows operating in production</div><div data-label="Metric">Close-to-live conversion and days</div><div data-label="Owner">Implementation</div></div>
-    <div class="row"><div data-label="Stage">First value realized</div><div data-label="Definition">Customer validates intended business outcome</div><div data-label="Metric">Time to first value</div><div data-label="Owner">CS</div></div>
-    <div class="row"><div data-label="Stage">Reference-ready</div><div data-label="Definition">Live period met, adoption achieved, no critical issue, positive renewal posture, permission to reference</div><div data-label="Metric">Reference-ready conversion</div><div data-label="Owner">CS + Marketing</div></div>
-  </div>
-  <article class="card"><h3>Rescue triggers</h3><ul><li>Red/yellow workflow gate after close.</li><li>Data migration delay.</li><li>No implementation sponsor.</li><li>Missed go-live milestone.</li><li>Critical expectation mismatch.</li><li>No first-value event by target date.</li></ul></article>
-</div>
+    <div class="slide-number">08</div>
+    <div class="kicker">Direct Sales</div>
+    <h2>Sales-To-Implementation Handoff Standard</h2>
+    <p class="point">Ryan owns the pipeline motion; Evan's ask is a shared standard for what qualifies as forecastable, implementable, and worth carrying into H2.</p>
+    <div class="slide-grid">
+      <article class="card "><h3>Pipeline Quality Gates</h3><ul><li>ICP / segment fit and specific buyer urgency.</li><li>Replacement, referral, expansion, or competitor-contract trigger.</li><li>Proof asset, allowed promise, and unresolved product gap.</li><li>Implementation readiness: owner, data, integrations, transition event, and date.</li></ul></article>
+      <article class="card visual"><h3>Decision Needed</h3><ul><li>Ratify these gates as the sales-to-implementation contract.</li><li>Name the weekly forecast fields Ryan owns.</li><li>Separate "not now" from "not relevant" in pipeline inspection.</li></ul></article>
+    </div>
+
   </section>
 <section class="slide" id="slide-9">
-    <div class="num">09</div>
-    <div class="kicker">H2 demand and channel plan</div>
-    <h2>Approve only the three highest-return motions and make channel strategy explicit.</h2>
-    <p class="subtitle">Marketing tactics should be funded by expected MRR contribution, proof asset readiness, and kill thresholds.</p>
-    <div class="grid">
-  <article class="card"><h3>Motion 1 - Proof-first demand capture</h3><ul><li>Audience: primary revenue-complexity ICP.</li><li>Offer: workflow-fit assessment and revenue-operations diagnostic.</li><li>Proof asset: complex billing/payment implementation proof.</li><li>Kill threshold: qualified opp and MRR conversion by source.</li></ul></article>
-  <article class="card"><h3>Motion 2 - Tigerpaw migration economics</h3><ul><li>Audience: validated Tigerpaw installed base.</li><li>Offer: migration readiness review.</li><li>Proof asset: migration case and timeline.</li><li>Kill threshold: migration capacity, close-to-live, and expansion MRR.</li></ul></article>
-  <article class="card"><h3>Motion 3 - Payments expansion</h3><ul><li>Audience: customers billing through Rev.io but collecting elsewhere.</li><li>Offer: reconciliation and payment economics review.</li><li>Proof asset: verified workflow and fee comparison.</li><li>Kill threshold: attach rate, payment volume, and gross margin.</li></ul></article>
-  <article class="card"><h3>Route-to-market decision</h3><ul><li>Choose H2 ecosystem strategy: technology-alliance-led, marketplace/distribution-led, referral/co-sell-led, or direct-led with ecosystem support.</li><li>Do not call integrations a channel strategy until partner economics, enablement, targets, and conflict rules are defined.</li></ul></article>
-</div>
+    <div class="slide-number">09</div>
+    <div class="kicker">GTM To 2x Sales</div>
+    <h2>GTM Can Only Scale Certified Claims</h2>
+    <p class="point">The GTM plan should accelerate bookings and retention only where Product, AI, Operations, and Finance can support the promise.</p>
+    <div class="slide-grid">
+      <article class="card "><h3>Allowed Claim Test</h3><ul><li>Message: what we can safely say to the market.</li><li>Proof: what evidence or reference supports it.</li><li>Commitment: what Product / Revii / Operations must deliver.</li><li>Measurement: which scorecard proves it is working.</li></ul></article>
+      <article class="card visual"><h3>Output From Day 2</h3><ul><li>Top GTM-critical product asks.</li><li>Owner, date, accepted tradeoff, and blocked promise.</li><li>Weekly scorecard input for bookings, win rate, payments attach, and retention.</li></ul></article>
+    </div>
+
   </section>
 <section class="slide" id="slide-10">
-    <div class="num">10</div>
-    <div class="kicker">Decisions and 90-day commitments</div>
-    <h2>Close five choices, owners, metrics, and accepted risks.</h2>
-    <p class="subtitle">The offsite should confirm or change these decisions, not invent the operating structure live.</p>
-    <div class="grid">
-  <div class="decision"><b>H2 target posture</b><span><strong>Recommend:</strong> Choose full-year hold, H2 budget hold, or reforecast.</span><span><strong>Tradeoff:</strong> Changes hiring, cash, GTM investment, and board narrative.</span><span><strong>Owner:</strong> CEO + Finance</span><span><strong>Measure:</strong> Monthly bookings, expansion, GRR/NRR, implementation capacity</span></div>
-  <div class="decision"><b>Primary ICP and no-go rules</b><span><strong>Recommend:</strong> Primary focus on established service providers with revenue complexity.</span><span><strong>Tradeoff:</strong> Stop chasing unsupported low-complexity or high-custom-workflow deals.</span><span><strong>Owner:</strong> Sales + Marketing + Product</span><span><strong>Measure:</strong> Win rate, launch MRR, time-to-live, gross margin</span></div>
-  <div class="decision"><b>GTM motion</b><span><strong>Recommend:</strong> Revenue-layer wedge first; certified replacement only when gates pass.</span><span><strong>Tradeoff:</strong> Limits broad all-in-one displacement language.</span><span><strong>Owner:</strong> GTM + Product</span><span><strong>Measure:</strong> Certified claims, qualified pipeline, close-to-live</span></div>
-  <div class="decision"><b>Top commitments</b><span><strong>Recommend:</strong> Approve top five product/implementation commitments by revenue and retention impact.</span><span><strong>Tradeoff:</strong> Defer lower-impact roadmap asks.</span><span><strong>Owner:</strong> Product + Implementation</span><span><strong>Measure:</strong> MRR unlocked, cancellations reduced, claim status</span></div>
-  <div class="decision"><b>Lifecycle operating model</b><span><strong>Recommend:</strong> Adopt activation-to-reference scorecard and rescue triggers.</span><span><strong>Tradeoff:</strong> Requires weekly inspection and cross-functional ownership.</span><span><strong>Owner:</strong> CS + Implementation + RevOps</span><span><strong>Measure:</strong> Live conversion, first value, 90-day retention, reference readiness</span></div>
-  <article class="card"><h3>Next 90 days</h3><ul><li>Publish certified metric lock.</li><li>Finish Q2 deterioration analysis.</li><li>Run cancelled-onboarding Pareto with denominator.</li><li>Populate claims register and remove unsafe public claims.</li><li>Build weekly decision/action register.</li></ul></article>
-</div>
+    <div class="slide-number">10</div>
+    <div class="kicker">GTM To 2x Sales</div>
+    <h2>Product + Revii Dependencies For GTM</h2>
+    <p class="point">This is not Evan's roadmap slide; it is the dependency register Billy, Ryan, Ray, and Josh need to close so GTM knows what is safe to promise.</p>
+    <div class="slide-grid">
+      <article class="card "><h3>Dependency Fields</h3><ul><li>GTM claim requested.</li><li>Product / Revii / Commerce Hub dependency.</li><li>Customer segment unlocked.</li><li>Implementation or support constraint.</li><li>Certification owner and date.</li></ul></article>
+      <article class="card visual"><h3>Decision Rule</h3><ul><li>Ready: safe to use in H2 GTM.</li><li>Needs owner: promising only after owner/date is named.</li><li>Not safe yet: blocked from campaign and sales talk tracks.</li></ul></article>
+    </div>
+
   </section>
-<p class="footer">Generated 2026-07-09T23:28:58.128Z. Values are draft presentation-lock candidates from current ELT artifacts and Sol 5.6 review; use the accompanying metrics lock and certification registers before final board/executive use.</p>
+<section class="slide" id="slide-11">
+    <div class="slide-number">11</div>
+    <div class="kicker">Retention / Creating Fans</div>
+    <h2>Retention Data We Can And Cannot Certify</h2>
+    <p class="point">The retention conversation should start with what is certified, what is owner-confirmed, and what still needs Finance / CS source validation.</p>
+    <div class="slide-grid">
+      <article class="card "><h3>Needs Certification</h3><ul><li>Gross and net retention actuals: owner-confirmed, not Finance-certified in this deck.</li><li>PSA graduation count: owner-confirmed 68; definition must stay explicit.</li><li>RTS cancel rate, 6x MRR threshold, and Tigerpaw status need owner/date before scorecard use.</li></ul></article>
+      <article class="card visual"><h3>Needed Decision</h3><ul><li>Assign Finance / CS certification owners and deadlines before these become final ELT scorecard claims.</li></ul></article>
+    </div>
+
+  </section>
+<section class="slide" id="slide-12">
+    <div class="slide-number">12</div>
+    <div class="kicker">Retention / Creating Fans</div>
+    <h2>Why The Cancelled PSA Accounts Matter</h2>
+    <p class="point">The $800+ MRR cancelled cohort shows retention risk forming before go-live, when product-fit gaps, data complexity, and unclear expectations collide during onboarding.</p>
+    <div class="decision-frame">
+      <div><b>20</b><span>Cancelled PSA onboarding accounts reviewed.</span></div>
+      <div><b>$27.9K</b><span>Cancelled MRR in the reviewed cohort.</span></div>
+      <div><b>12 / 20</b><span>Had usable sentence-level transcript evidence.</span></div>
+      <div><b>8</b><span>Remain source gaps or weak transcript-coverage accounts.</span></div>
+    </div>
+    <div class="slide-grid">
+      <article class="card "><h3>What We Learned</h3><ul><li>These were not all bad-fit or low-value accounts; many were operationally complex MSP, security, and service businesses Rev.io should want to win.</li><li>The largest failure pattern was value-realization friction: implementation exposed product gaps, data limits, reporting gaps, and workarounds before customers felt live value.</li><li>Sales expectation mismatch appeared in clear cases: POS, Newport, and Global Data expected capabilities or timelines that onboarding could not make real quickly enough.</li><li>Data and integration complexity showed up as a retention risk across Global Data, Newport, HELP, CPT, and similar accounts.</li></ul></article>
+      <article class="card visual"><h3>What Must Change</h3><ul><li>Qualify implementation fit before close.</li><li>Create a risk handoff from Sales to Onboarding.</li><li>Define product-dependent onboarding gates.</li><li>Treat onboarding as retention creation, not project administration.</li><li>Close the evidence loop back into ICP, sales talk tracks, product, and implementation playbooks.</li></ul></article>
+    </div>
+    <div class="lifecycle">
+      <span>Qualify</span><span>Promise</span><span>Handoff</span><span>Implement</span><span>Realize Value</span><span>Create Fan</span>
+    </div>
+
+  </section>
+<section class="slide feature-slide" id="slide-13">
+    <div class="slide-number">13</div>
+    <div class="kicker">Retention / Creating Fans</div>
+    <h2>Feature-Level Pattern 1: Workflow Replacement Broke In Specific Places</h2>
+    <p class="point">The cancellations were not just “platform concerns.” Customers hit concrete blockers in the workflows they expected Rev.io PSA to replace on day one.</p>
+    <div class="feature-grid">
+      <article class="feature-card"><h3>Quoting, CPQ, Sales Workflow</h3><ul><li>Hide/remove pricing on quotes was not available or incomplete.</li><li>Quote recipients could not adjust quantities or make quote changes after send.</li><li>Sales rep tracking and sales funnel visibility were manual or unclear.</li><li>Quote-to-ticket and quote-to-invoice flow did not feel operationally complete.</li><li>External proposal tools like Quote Valet and HubSpot workflows were not cleanly replaced.</li></ul><span class="acct">Seen in: POS Innovation, NetWatch, CMJ/Securco, HELP, Obera, Security Vision.</span></article>
+      <article class="feature-card"><h3>Billing, Packages, Invoice Logic</h3><ul><li>Package quantity and child-product masking did not support required quote-to-invoice behavior.</li><li>Parent-child billing rollups and multi-location billing blocked operational workflows.</li><li>Proration, pricing automation, invoice behavior, tax mapping, and GL handling needed workarounds.</li><li>Customers needed sales/use-tax and QuickBooks reconciliation reports they could trust.</li><li>Comparative billing expectations were not consistently defined before implementation.</li></ul><span class="acct">Seen in: Global Data, Newport, ITR, CPT, Losh.</span></article>
+      <article class="feature-card"><h3>Time, Payroll, Utilization</h3><ul><li>Hourly employees needed time entry outside ticket work.</li><li>Clock-in/out vs. ticket time separation was confusing for customers.</li><li>Billable and non-billable code classification affected billing and payroll confidence.</li><li>Time rounding and utilization reporting were viewed as inaccurate or hard to operationalize.</li><li>Customers needed payroll-ready exports, not just activity capture.</li></ul><span class="acct">Seen in: Hiscall, Newport.</span></article>
+    </div>
+    <div class="feature-callout"><span>Readout:</span> These are workflow replacement failures. The buyer expected PSA to become the daily operating system, not a partially configured tool that required parallel spreadsheets, legacy systems, or manual reconciliation.</div>
+
+  </section>
+<section class="slide feature-slide" id="slide-14">
+    <div class="slide-number">14</div>
+    <div class="kicker">Retention / Creating Fans</div>
+    <h2>Feature-Level Pattern 2: Migration, Field Ops, And Integrations Made Go-Live Feel Unsafe</h2>
+    <p class="point">The second cluster was not one feature. It was the customer asking, “Can I run my company from this system without losing history, field execution, or integration continuity?”</p>
+    <div class="feature-grid">
+      <article class="feature-card"><h3>Project Management, Dispatch, Field Ops</h3><ul><li>Labor forecasting, live dashboards, capacity planning, and project management depth were not where customers expected.</li><li>Dispatch, scheduling, and ticket workflows required extra training and still felt incomplete for some operators.</li><li>Mobile readiness and field usage concerns appeared in at-risk accounts.</li><li>GPS expectation mismatch surfaced: mobile-device tracking vs. vehicle-based tracking in low-signal environments.</li><li>Customers needed the field workflow to be proven before go-live, not discovered during training.</li></ul><span class="acct">Seen in: NetWatch, CMJ/Securco, ITR, Newport.</span></article>
+      <article class="feature-card"><h3>Data Migration And History</h3><ul><li>Customers wanted to start with real operating data, not a demo database.</li><li>Product lists, customer lists, legacy tickets, documents, customer numbers, and historical records became go-live blockers.</li><li>Limited historical migration created fear of losing searchable operating history.</li><li>Incomplete or failed data pulls slowed implementation trust.</li><li>Quote training and template setup could not be meaningful without accurate product/customer data.</li></ul><span class="acct">Seen in: POS Innovation, Security Vision, HELP, CPT, ITR.</span></article>
+      <article class="feature-card"><h3>External System Fit</h3><ul><li>QuickBooks/QBO, HubSpot, Quote Valet, monitoring systems, package/order APIs, and custom data flows mattered to daily operations.</li><li>Customers needed Rev.io to become the system of record, not another tool beside legacy systems.</li><li>Warranty lookup, MAC-address/device lookup, support-to-sales handoff, and monitoring-to-ticket flow showed up as operational needs.</li><li>Integration requirements were often discovered in onboarding instead of qualified before close.</li><li>When integration fit was unclear, customers treated go-live as unsafe.</li></ul><span class="acct">Seen in: Newport, Obera, HELP, Loricca, Global Data.</span></article>
+    </div>
+    <div class="feature-callout"><span>Offsite implication:</span> Add a pre-close PSA workflow-fit check for quoting, billing/package model, payroll/time, field/mobile, data migration, and required integrations. If any item is product-dependent, it needs an owner, date, and accepted workaround before the deal is treated as implementation-ready.</div>
+
+  </section>
+<section class="slide" id="slide-15">
+    <div class="slide-number">15</div>
+    <div class="kicker">Retention / Creating Fans</div>
+    <h2>Lead-To-Fan Conversion System</h2>
+    <p class="point">Retention starts before renewal; it begins with the quality of the customer Rev.io chooses to sell, onboard, and support.</p>
+    <div class="slide-grid">
+      <article class="card "><h3>Operating Loop</h3><ul><li>Qualify for fit and readiness.</li><li>Set proof-backed expectations.</li><li>Implement with rescue triggers.</li><li>Monitor usage, support friction, and value realization.</li><li>Create reference moments intentionally.</li><li>Feed lessons back into ICP, marketing, sales, and product.</li></ul></article>
+      <article class="card visual"><h3>Why It Matters</h3><ul><li>Retention starts before renewal; it begins with the quality of the customer Rev.io chooses to sell.</li></ul></article>
+    </div>
+
+  </section>
+<section class="slide" id="slide-16">
+    <div class="slide-number">16</div>
+    <div class="kicker">Retention / Creating Fans</div>
+    <h2>Account Review And Tigerpaw Acceleration</h2>
+    <p class="point">Retention needs a repeatable account review model and focused acceleration plan for priority migration paths.</p>
+    <div class="slide-grid">
+      <article class="card "><h3>Decision System</h3><ul><li>Account health review cadence.</li><li>Save / grow / reference / learn categorization.</li><li>Tigerpaw migration blockers.</li><li>Owner, next action, date.</li><li>Product / onboarding / CS dependency.</li></ul></article>
+      <article class="card visual"><h3>Needed Decision</h3><ul><li>Name a Tigerpaw acceleration owner and define the unblock list before this becomes a committed H2 plan.</li></ul></article>
+    </div>
+
+  </section>
+<section class="slide" id="slide-17">
+    <div class="slide-number">17</div>
+    <div class="kicker">Wrap-Up Commitments</div>
+    <h2>Board-Ready Action Register</h2>
+    <p class="point">The offsite should end with decisions that can be inspected weekly and carried into board-level recap without reinterpreting the conversation.</p>
+    <div class="slide-grid">
+      <article class="card "><h3>Capture Each Commitment</h3><ul><li>Decision or tradeoff.</li><li>Executive owner.</li><li>Metric / scorecard input.</li><li>Due date and weekly follow-up forum.</li><li>Blocked dependency or accepted risk.</li></ul></article>
+      <article class="card visual"><h3>Feeds The Live Agenda</h3><ul><li>Confirm H2 priority and success measures.</li><li>Confirm GTM plan owners and scorecard inputs.</li><li>Confirm Product / AI / Commerce Hub deliverables and dates.</li><li>Confirm retention and onboarding recovery commitments.</li></ul></article>
+    </div>
+
+  </section>
+  <section class="appendix" id="appendix">
+    <div class="kicker">Appendix Shell</div>
+    <h2>Evidence, Decisions, Parking Lot</h2>
+    <div class="appendix-grid">
+      <article class="card "><h3>Evidence Register</h3><ul><li>Claim.</li><li>Source.</li><li>Retrieval date.</li><li>HTTP / retrieval status.</li><li>Record count.</li><li>Owner certification.</li><li>Safe to present? Yes / No / Pending.</li></ul></article>
+      <article class="card "><h3>Decision Log</h3><ul><li>Decision.</li><li>Owner.</li><li>Due date.</li><li>Dependencies.</li><li>Follow-up forum.</li><li>Status.</li></ul></article>
+      <article class="card "><h3>Parking Lot</h3><ul><li>Topics outside the owned sections.</li><li>Items outside the evidence boundary.</li><li>Questions needing owner confirmation.</li></ul></article>
+    </div>
+  </section>
+  <p class="footer">Generated from reports/elt-offsite-evan-presentation-shell-2026-06-23.md and reports/elt-offsite-2026-goals-attainment-visual.html. Evidence rule: unsupported claims stay labeled until retrieved or owner-confirmed. Scorecard metrics are locked out of copy editing.</p>
+  <div class="edit-toolbar" aria-label="ELT copy editor">
+    <button type="button" id="editCopyToggle">Edit Copy</button>
+    <button type="button" id="saveCopyButton">Save Copy</button>
+    <button type="button" id="reloadCopyButton">Reload Copy</button>
+    <span class="edit-status" id="editCopyStatus">Editable copy is loading.</span>
+  </div>
 </main>
+<script>
+(function(){
+  const API_URL = 'https://org.revioai.bot/api/elt-offsite-copy';
+  const statusEl = document.getElementById('editCopyStatus');
+  const editButton = document.getElementById('editCopyToggle');
+  const saveButton = document.getElementById('saveCopyButton');
+  const reloadButton = document.getElementById('reloadCopyButton');
+  const selectors = [
+    '.hero .eyebrow',
+    '.hero h1',
+    '.hero .sub',
+    '.goals-head .section-kicker',
+    '.goals-head h2',
+    '.goals-head p',
+    '.goals-embed h1',
+    '.goals-embed h2',
+    '.goals-embed h3',
+    '.goals-embed .subtitle',
+    '.goals-embed .personal-title',
+    '.goals-embed .mini-name',
+    '.goals-embed .mini-result b',
+    '.goals-embed .mini-result strong',
+    '.goals-embed .mini-note',
+    '.slide .kicker',
+    '.slide h2',
+    '.slide .point',
+    '.slide .card h3',
+    '.slide .card li',
+    '.appendix .kicker',
+    '.appendix h2',
+    '.appendix .card h3',
+    '.appendix .card li'
+  ];
+
+  function setStatus(message) {
+    statusEl.textContent = message;
+  }
+
+  function slug(value) {
+    return (value || 'copy').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80) || 'copy';
+  }
+
+  function markEditableCopy() {
+    const seen = new Map();
+    selectors.forEach(selector => {
+      document.querySelectorAll(selector).forEach(el => {
+        if (el.dataset.editKey) return;
+        const section = el.closest('.slide,.goals-section,.hero,.appendix');
+        const sectionId = section?.id || section?.classList?.[0] || 'deck';
+        const local = `${sectionId}:${selector}:${slug(el.textContent)}`;
+        const count = seen.get(local) || 0;
+        seen.set(local, count + 1);
+        el.dataset.editKey = count ? `${local}:${count + 1}` : local;
+      });
+    });
+  }
+
+  function editableNodes() {
+    return Array.from(document.querySelectorAll('[data-edit-key]'));
+  }
+
+  function setEditing(enabled) {
+    document.body.classList.toggle('copy-editing', enabled);
+    editableNodes().forEach(el => {
+      el.contentEditable = enabled ? 'true' : 'false';
+      el.spellcheck = true;
+    });
+    editButton.classList.toggle('active', enabled);
+    editButton.textContent = enabled ? 'Done Editing' : 'Edit Copy';
+    setStatus(enabled ? 'Edit highlighted narrative copy, then Save Copy. Scorecard metrics are locked.' : 'Copy editing is off.');
+  }
+
+  function collectOverrides() {
+    const overrides = {};
+    editableNodes().forEach(el => {
+      overrides[el.dataset.editKey] = el.textContent.replace(/\s+/g, ' ').trim();
+    });
+    return overrides;
+  }
+
+  function applyOverrides(overrides) {
+    let applied = 0;
+    editableNodes().forEach(el => {
+      if (Object.prototype.hasOwnProperty.call(overrides, el.dataset.editKey)) {
+        el.textContent = overrides[el.dataset.editKey];
+        applied += 1;
+      }
+    });
+    return applied;
+  }
+
+  async function loadCopy() {
+    reloadButton.disabled = true;
+    setStatus('Loading saved copy from Notion.');
+    try {
+      const res = await fetch(API_URL, { method: 'GET' });
+      const text = await res.text();
+      let payload = {};
+      try { payload = text ? JSON.parse(text) : {}; } catch {}
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${text}`);
+      const applied = applyOverrides(payload.overrides || {});
+      setStatus(payload.found ? `Loaded ${applied} saved edits from Notion.` : 'No saved copy edits yet.');
+    } catch (err) {
+      setStatus(`Save API unavailable: ${err.message || err}`);
+    } finally {
+      reloadButton.disabled = false;
+    }
+  }
+
+  async function saveCopy() {
+    saveButton.disabled = true;
+    setStatus('Saving copy to Notion.');
+    try {
+      const body = {
+        htmlUrl: window.location.href,
+        savedBy: 'ELT offsite HTML editor',
+        overrides: collectOverrides()
+      };
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const text = await res.text();
+      let payload = {};
+      try { payload = text ? JSON.parse(text) : {}; } catch {}
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${text}`);
+      setEditing(false);
+      setStatus(`Saved ${payload.overrideCount || 0} copy fields to Notion.`);
+    } catch (err) {
+      setStatus(`Save failed: ${err.message || err}`);
+    } finally {
+      saveButton.disabled = false;
+    }
+  }
+
+  markEditableCopy();
+  editButton.addEventListener('click', () => setEditing(!document.body.classList.contains('copy-editing')));
+  saveButton.addEventListener('click', saveCopy);
+  reloadButton.addEventListener('click', loadCopy);
+  loadCopy();
+})();
+</script>
 </body>
 </html>
