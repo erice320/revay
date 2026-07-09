@@ -9,6 +9,12 @@
     "Setup / One-time Fees": "rich_text",
     "Billing Start / Deferral Terms": "rich_text",
     "Specific Commitments": "rich_text",
+    "SF Business Issue": "rich_text",
+    "SF Business Issue Details": "rich_text",
+    "SF Business Issue Picklist": "rich_text",
+    "SF Problems": "rich_text",
+    "SF Solutions": "rich_text",
+    "SF Value": "rich_text",
     "Kickoff Target Date": "date",
     "Kickoff Target Time": "rich_text",
     "Go-Live Target Date": "date",
@@ -179,6 +185,17 @@
         ]
       },
       {
+        "title": "Salesforce Value Planner",
+        "fields": [
+          "SF Business Issue",
+          "SF Business Issue Details",
+          "SF Business Issue Picklist",
+          "SF Problems",
+          "SF Solutions",
+          "SF Value"
+        ]
+      },
+      {
         "title": "2 - Core Requirements",
         "fields": [
           "B: Current Billing Platform",
@@ -258,6 +275,17 @@
           "Kickoff Target Time",
           "P: Go-Live Complexity Tier",
           "Go-Live Target Date"
+        ]
+      },
+      {
+        "title": "Salesforce Value Planner",
+        "fields": [
+          "SF Business Issue",
+          "SF Business Issue Details",
+          "SF Business Issue Picklist",
+          "SF Problems",
+          "SF Solutions",
+          "SF Value"
         ]
       },
       {
