@@ -15,6 +15,9 @@
     "SF Problems": "rich_text",
     "SF Solutions": "rich_text",
     "SF Value": "rich_text",
+    "SF Power": "rich_text",
+    "SF Plan": "rich_text",
+    "SF Risk / Mitigation Plan": "rich_text",
     "Kickoff Target Date": "date",
     "Kickoff Target Time": "rich_text",
     "Go-Live Target Date": "date",
@@ -192,7 +195,10 @@
           "SF Business Issue Picklist",
           "SF Problems",
           "SF Solutions",
-          "SF Value"
+          "SF Value",
+          "SF Power",
+          "SF Plan",
+          "SF Risk / Mitigation Plan"
         ]
       },
       {
@@ -285,7 +291,10 @@
           "SF Business Issue Picklist",
           "SF Problems",
           "SF Solutions",
-          "SF Value"
+          "SF Value",
+          "SF Power",
+          "SF Plan",
+          "SF Risk / Mitigation Plan"
         ]
       },
       {
