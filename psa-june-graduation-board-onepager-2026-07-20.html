@@ -117,7 +117,7 @@
     .panel-inner { position: relative; z-index: 1; padding: 18px; height: 100%; }
     .wide { grid-column: span 7; min-height: 292px; }
     .side { grid-column: span 5; min-height: 292px; }
-    .half { grid-column: span 6; min-height: 310px; }
+    .half { grid-column: span 6; min-height: 370px; }
     .title-row {
       display: flex;
       justify-content: space-between;
@@ -306,41 +306,48 @@
             <h2>July Projection: Path to 12</h2>
             <div class="micro">As of Jul 20</div>
           </div>
-          <svg viewBox="0 0 640 270" role="img" aria-label="July projection bridge showing 19 total forecast projects, 1 activated account, 11 in progress, and 7 not expected">
+          <svg viewBox="0 0 640 340" role="img" aria-label="July projection bridge showing 20 original forecast projects, 1 graduated, 11 still in play, 8 pushed out, and pushout reasons">
             <text x="54" y="43" class="big green">5%</text>
             <text x="151" y="41" class="label">attainment so far</text>
-            <text x="466" y="38" class="medium blue">19</text>
-            <text x="501" y="38" class="label">forecast projects</text>
+            <text x="455" y="38" class="medium blue">20</text>
+            <text x="493" y="38" class="label">original forecast</text>
 
             <rect x="58" y="72" width="524" height="46" rx="10" class="bar-bg"/>
-            <rect x="58" y="72" width="28" height="46" rx="10" fill="rgba(0,229,255,.82)"/>
-            <rect x="86" y="72" width="303" height="46" fill="rgba(105,240,174,.75)"/>
-            <rect x="389" y="72" width="193" height="46" rx="10" fill="rgba(255,82,82,.66)"/>
-            <line x1="86" y1="64" x2="86" y2="126" stroke="rgba(255,255,255,.36)" stroke-width="2"/>
-            <line x1="389" y1="64" x2="389" y2="126" stroke="rgba(255,255,255,.48)" stroke-width="2"/>
+            <rect x="58" y="72" width="26" height="46" rx="10" fill="rgba(0,229,255,.82)"/>
+            <rect x="84" y="72" width="288" height="46" fill="rgba(105,240,174,.75)"/>
+            <rect x="372" y="72" width="210" height="46" rx="10" fill="rgba(255,82,82,.66)"/>
+            <line x1="84" y1="64" x2="84" y2="126" stroke="rgba(255,255,255,.36)" stroke-width="2"/>
+            <line x1="372" y1="64" x2="372" y2="126" stroke="rgba(255,255,255,.48)" stroke-width="2"/>
             <text x="100" y="103" class="label-strong">12 projected finish</text>
-            <text x="454" y="103" class="label-strong">7 won't make it</text>
+            <text x="443" y="103" class="label-strong">8 pushed out</text>
 
             <rect x="76" y="146" width="220" height="74" rx="12" fill="rgba(105,240,174,.10)" stroke="rgba(105,240,174,.32)"/>
             <rect x="98" y="164" width="32" height="12" rx="3" fill="var(--cyan)"/>
-            <text x="142" y="175" class="label-strong cyan">1 activated</text>
+            <text x="142" y="175" class="label-strong cyan">1 graduated</text>
             <rect x="98" y="190" width="32" height="12" rx="3" fill="var(--green)"/>
-            <text x="142" y="201" class="label-strong green">11 In Progress</text>
+            <text x="142" y="201" class="label-strong green">11 still in play</text>
 
             <rect x="344" y="146" width="220" height="74" rx="12" fill="rgba(255,82,82,.09)" stroke="rgba(255,82,82,.30)"/>
             <rect x="366" y="164" width="32" height="12" rx="3" fill="var(--red)"/>
-            <text x="410" y="175" class="label-strong red">4 RTS</text>
+            <text x="410" y="175" class="label-strong red">4 RTS / canceled</text>
             <rect x="366" y="190" width="32" height="12" rx="3" fill="var(--amber)"/>
-            <text x="410" y="201" class="label-strong amber">3 Off Track</text>
+            <text x="410" y="201" class="label-strong amber">4 pushed to Aug</text>
 
-            <text x="70" y="252" class="label">Forecast MRR: $16.7K · Path to 12 = VanRan activated plus 11 In Progress projects</text>
+            <text x="76" y="245" class="label-strong">Pushout drivers</text>
+            <rect x="76" y="260" width="228" height="10" rx="4" fill="rgba(167,139,250,.80)"/>
+            <rect x="76" y="282" width="171" height="10" rx="4" fill="rgba(255,183,77,.86)"/>
+            <rect x="76" y="304" width="57" height="10" rx="4" fill="rgba(123,159,255,.88)"/>
+            <text x="316" y="270" class="label">4 missing functionality</text>
+            <text x="316" y="292" class="label">3 QBO / QBD readiness</text>
+            <text x="316" y="314" class="label">1 engagement</text>
+            <text x="76" y="333" class="label">Missing functions: catalog automation · customer portal · invoices · time/search · complex quoting</text>
           </svg>
         </div>
       </article>
     </section>
 
     <footer>
-      <div>Sources: Notion PSA client dashboard, Notion snapshot ledger, onboarding call analysis, Salesforce closed-won PSA support pull; VanRan July graduation owner-confirmed.</div>
+      <div>Sources: Notion PSA client dashboard, Notion snapshot ledger, onboarding call analysis, Salesforce closed-won PSA support pull; July pushout context owner-provided 2026-07-20.</div>
       <div>Generated 2026-07-20 · Revay Library theme</div>
     </footer>
   </main>
