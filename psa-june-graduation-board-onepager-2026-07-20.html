@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PSA Graduation Board One-Pager · June 2026</title>
+  <style>
+    :root {
+      --bg: #080E1A;
+      --surface: rgba(15,33,56,.66);
+      --surface2: rgba(20,42,70,.72);
+      --border: rgba(255,255,255,.10);
+      --border-cyan: rgba(0,229,255,.28);
+      --cyan: #00E5FF;
+      --blue: #7B9FFF;
+      --green: #69F0AE;
+      --amber: #FFB74D;
+      --red: #FF5252;
+      --purple: #A78BFA;
+      --text: #FFFFFF;
+      --muted: #A1B0CB;
+      --font-display: "Cabinet Grotesk", "Inter", system-ui, sans-serif;
+      --font-body: "Satoshi", "Inter", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
+    body {
+      font-family: var(--font-body);
+      line-height: 1.35;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(0,229,255,.13), transparent 30%),
+        radial-gradient(circle at 86% 6%, rgba(123,159,255,.12), transparent 34%),
+        var(--bg);
+    }
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(0,229,255,.045), transparent 42%);
+    }
+    .page {
+      position: relative;
+      max-width: 1440px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 26px 30px 22px;
+    }
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: end;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .eyebrow:before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--cyan);
+    }
+    h1 {
+      margin: 9px 0 0;
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4.2vw, 64px);
+      line-height: .95;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stamp {
+      min-width: 260px;
+      border: 1px solid var(--border);
+      background: rgba(15,33,56,.55);
+      border-radius: 14px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .stamp b { color: var(--text); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .panel {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(20,42,70,.72), rgba(8,14,26,.78));
+      box-shadow: 0 22px 70px rgba(0,0,0,.30);
+      overflow: hidden;
+    }
+    .panel:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(420px circle at 86% 0%, rgba(0,229,255,.17), transparent 48%);
+      pointer-events: none;
+    }
+    .panel-inner { position: relative; z-index: 1; padding: 18px; height: 100%; }
+    .wide { grid-column: span 7; min-height: 292px; }
+    .side { grid-column: span 5; min-height: 292px; }
+    .half { grid-column: span 6; min-height: 310px; }
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+    h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+    .micro {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .10em;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    svg { display: block; width: 100%; height: auto; }
+    .axis { stroke: rgba(255,255,255,.13); stroke-width: 1; }
+    .gridline { stroke: rgba(255,255,255,.09); stroke-width: 1; }
+    .label { fill: var(--muted); font-size: 11px; font-family: var(--font-body); }
+    .label-strong { fill: var(--text); font-size: 13px; font-weight: 850; font-family: var(--font-body); }
+    .big { fill: var(--text); font-size: 42px; font-weight: 900; font-family: var(--font-display); }
+    .medium { fill: var(--text); font-size: 22px; font-weight: 900; font-family: var(--font-display); }
+    .cyan { fill: var(--cyan); }
+    .blue { fill: var(--blue); }
+    .green { fill: var(--green); }
+    .amber { fill: var(--amber); }
+    .red { fill: var(--red); }
+    .purple { fill: var(--purple); }
+    .bar-bg { fill: rgba(255,255,255,.08); }
+    .note {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .note div {
+      border: 1px solid var(--border);
+      background: rgba(15,33,56,.45);
+      border-radius: 10px;
+      padding: 8px 10px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .note b {
+      display: block;
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.05;
+      margin-bottom: 2px;
+    }
+    footer {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+    @media (max-width: 1000px) {
+      .page { padding: 18px 14px; }
+      header { grid-template-columns: 1fr; align-items: start; }
+      .stamp { min-width: 0; }
+      .wide, .side, .half { grid-column: span 12; }
+      .note { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      footer { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <div class="eyebrow">Board view · PSA graduations</div>
+        <h1>June missed volume. Duration improved.</h1>
+      </div>
+      <div class="stamp">
+        <b>Live retrieval:</b> Notion PSA clients HTTP 200 / 251 records<br>
+        <b>Ledger:</b> June snapshots HTTP 200 / 5 runs · July snapshots HTTP 200 / 2 runs
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="panel wide">
+        <div class="panel-inner">
+          <div class="title-row">
+            <h2>June Commitment Attainment</h2>
+            <div class="micro">Target 19 · Actual 9</div>
+          </div>
+          <svg viewBox="0 0 760 220" role="img" aria-label="June commitment attainment chart showing 9 graduations against a target of 19, 47 percent attainment">
+            <line x1="70" y1="144" x2="690" y2="144" class="axis"/>
+            <rect x="70" y="94" width="620" height="54" rx="8" class="bar-bg"/>
+            <rect x="70" y="94" width="294" height="54" rx="8" fill="url(#attainGrad)"/>
+            <line x1="690" y1="78" x2="690" y2="164" stroke="var(--amber)" stroke-width="3"/>
+            <text x="70" y="78" class="label">0</text>
+            <text x="676" y="72" class="label-strong amber">19 target</text>
+            <text x="366" y="127" class="label-strong">9 actual</text>
+            <text x="70" y="46" class="big red">47%</text>
+            <text x="184" y="44" class="label">attainment</text>
+            <text x="608" y="194" class="medium red">-10</text>
+            <text x="660" y="194" class="label">gap</text>
+            <defs>
+              <linearGradient id="attainGrad" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0" stop-color="#00E5FF"/>
+                <stop offset="1" stop-color="#7B9FFF"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="note">
+            <div><b>9</b>June graduates</div>
+            <div><b>19</b>active commit</div>
+            <div><b>$5.9K</b>graduated MRR</div>
+            <div><b>8 / 19</b>original active cohort graduated</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel side">
+        <div class="panel-inner">
+          <div class="title-row">
+            <h2>Original June Ledger Disposition</h2>
+            <div class="micro">25 ledger rows</div>
+          </div>
+          <svg viewBox="0 0 560 236" role="img" aria-label="Stacked disposition bar for original June ledger">
+            <rect x="34" y="44" width="448" height="42" rx="8" fill="rgba(255,255,255,.08)"/>
+            <rect x="34" y="44" width="143.4" height="42" rx="8" fill="var(--green)"/>
+            <rect x="177.4" y="44" width="107.5" height="42" fill="var(--blue)"/>
+            <rect x="284.9" y="44" width="71.7" height="42" fill="var(--red)"/>
+            <rect x="356.6" y="44" width="89.6" height="42" fill="var(--amber)"/>
+            <rect x="446.2" y="44" width="17.9" height="42" fill="var(--purple)"/>
+            <rect x="464.1" y="44" width="17.9" height="42" rx="8" fill="var(--cyan)"/>
+            <text x="34" y="125" class="label-strong green">8 Graduated in June</text>
+            <text x="34" y="151" class="label-strong blue">6 Still active / slipped</text>
+            <text x="34" y="177" class="label-strong red">4 RTS</text>
+            <text x="292" y="125" class="label-strong amber">5 Canceled</text>
+            <text x="292" y="151" class="label-strong purple">1 Outside June</text>
+            <text x="292" y="177" class="label-strong cyan">1 No actual date</text>
+            <text x="34" y="218" class="label">June 1 snapshot stored 25 total rows; 19 were clean In Progress.</text>
+          </svg>
+        </div>
+      </article>
+
+      <article class="panel half">
+        <div class="panel-inner">
+          <div class="title-row">
+            <h2>90-Day Graduation Volume + Duration</h2>
+            <div class="micro">Apr-Jun 2026</div>
+          </div>
+          <svg viewBox="0 0 640 270" role="img" aria-label="April through June chart showing graduation count down and median days down">
+            <line x1="64" y1="214" x2="594" y2="214" class="axis"/>
+            <line x1="64" y1="46" x2="64" y2="214" class="axis"/>
+            <line x1="64" y1="158" x2="594" y2="158" class="gridline"/>
+            <line x1="64" y1="102" x2="594" y2="102" class="gridline"/>
+            <rect x="118" y="58" width="62" height="156" rx="7" fill="rgba(0,229,255,.72)"/>
+            <rect x="292" y="142" width="62" height="72" rx="7" fill="rgba(0,229,255,.50)"/>
+            <rect x="466" y="160" width="62" height="54" rx="7" fill="rgba(0,229,255,.38)"/>
+            <polyline points="149,58 323,86.9 497,166.7" fill="none" stroke="var(--green)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="149" cy="58" r="6" fill="var(--green)"/>
+            <circle cx="323" cy="86.9" r="6" fill="var(--green)"/>
+            <circle cx="497" cy="166.7" r="6" fill="var(--green)"/>
+            <text x="124" y="48" class="label-strong cyan">26</text>
+            <text x="298" y="132" class="label-strong cyan">12</text>
+            <text x="476" y="150" class="label-strong cyan">9</text>
+            <text x="164" y="55" class="label-strong green">111d</text>
+            <text x="338" y="84" class="label-strong green">92d</text>
+            <text x="512" y="164" class="label-strong green">48d</text>
+            <text x="133" y="239" class="label-strong">Apr</text>
+            <text x="307" y="239" class="label-strong">May</text>
+            <text x="481" y="239" class="label-strong">Jun</text>
+            <text x="64" y="34" class="label cyan">bars = graduations</text>
+            <text x="430" y="34" class="label green">line = median KO-to-grad</text>
+          </svg>
+        </div>
+      </article>
+
+      <article class="panel half">
+        <div class="panel-inner">
+          <div class="title-row">
+            <h2>July Forecast: Attainment + Duration Projection</h2>
+            <div class="micro">As of Jul 20</div>
+          </div>
+          <svg viewBox="0 0 640 270" role="img" aria-label="July forecast chart showing zero actual graduations so far, 19 forecast, projected 59 day median if all graduate">
+            <line x1="70" y1="206" x2="574" y2="206" class="axis"/>
+            <rect x="126" y="58" width="88" height="148" rx="8" fill="rgba(123,159,255,.36)"/>
+            <rect x="278" y="206" width="88" height="0" rx="8" fill="var(--green)"/>
+            <rect x="430" y="58" width="88" height="148" rx="8" fill="rgba(105,240,174,.70)"/>
+            <line x1="102" y1="134" x2="542" y2="134" stroke="var(--amber)" stroke-width="3" stroke-dasharray="8 7"/>
+            <text x="132" y="46" class="label-strong blue">19</text>
+            <text x="288" y="196" class="label-strong red">0</text>
+            <text x="436" y="46" class="label-strong green">19</text>
+            <text x="112" y="233" class="label-strong">Forecast</text>
+            <text x="270" y="233" class="label-strong">Actual so far</text>
+            <text x="420" y="233" class="label-strong">If all close</text>
+            <text x="64" y="30" class="big red">0%</text>
+            <text x="156" y="29" class="label">attainment so far</text>
+            <text x="384" y="126" class="medium amber">59d</text>
+            <text x="384" y="151" class="label">projected median duration</text>
+            <text x="384" y="171" class="label">if all July forecast projects graduate</text>
+            <text x="70" y="256" class="label">Forecast MRR: $16.7K · Current July forecast: 19 · Actual July grad dates retrieved: 0</text>
+          </svg>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <div>Sources: Notion PSA client dashboard, Notion snapshot ledger, onboarding call analysis, Salesforce closed-won PSA support pull. All source calls returned HTTP 200 in-session.</div>
+      <div>Generated 2026-07-20 · Revay Library theme</div>
+    </footer>
+  </main>
+</body>
+</html>
