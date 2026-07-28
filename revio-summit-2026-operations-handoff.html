@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io Summit 2026 Operations Handoff · Revay Deck Library</title>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#080E1A; --surface:rgba(15,33,56,.72); --surface2:#101D31; --line:rgba(255,255,255,.1);
+ --text:#F8FBFF; --muted:#A1B0CB; --soft:#D7E2F5; --cyan:#00BCD4; --cyan2:#00E5FF;
+ --green:#69F0AE; --amber:#FFB74D; --amberbg:rgba(255,183,77,.12); --okbg:rgba(105,240,174,.12);
+ --ok:#69F0AE; --night:#080E1A; --paper:var(--bg); --mist:rgba(255,255,255,.05); --ink:var(--text);
+ --grad:linear-gradient(135deg,var(--cyan2),#7B9FFF);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:'Satoshi',system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:
+ radial-gradient(900px 520px at 15% -10%,rgba(0,229,255,.13),transparent 55%),
+ radial-gradient(760px 460px at 96% 4%,rgba(105,240,174,.09),transparent 54%),
+ var(--bg);line-height:1.55;font-size:16px;min-height:100vh}
+h1,h2,h3,.display{font-family:'Cabinet Grotesk',system-ui,sans-serif;letter-spacing:0}
+.mono,.dl{font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
+a{color:var(--cyan2);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--green)}
+.gradbar{height:4px;background:var(--grad)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+:focus-visible{outline:2px solid var(--cyan2);outline-offset:3px}
+header.hero{padding:clamp(42px,7vw,72px) 0 28px;background:transparent;border-bottom:1px solid var(--line)}
+.eyebrow,.sec-eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan2);font-weight:800}
+header.hero h1{font-size:clamp(34px,5vw,64px);font-weight:800;line-height:1.04;margin:10px 0 14px}
+header.hero h1 .tealdot{color:var(--cyan2)}
+header.hero p.lede,.sec-intro{max-width:76ch;color:var(--muted);font-size:17px}
+.source-note{margin-top:18px;max-width:860px;border:1px solid rgba(0,229,255,.22);background:rgba(0,188,212,.08);border-radius:8px;padding:12px 14px;color:var(--soft);font-size:13px}
+.statline,.quicklinks{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.stat,.quicklinks a{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:12px 14px;text-decoration:none}
+.stat .n{font-family:'Cabinet Grotesk',system-ui,sans-serif;font-weight:800;font-size:24px;color:var(--cyan2)}
+.stat .l{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800}
+nav.tabs,nav.top{position:sticky;top:0;background:rgba(8,14,26,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);z-index:50}
+nav.tabs .wrap,nav.top .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px clamp(18px,4vw,40px);-webkit-overflow-scrolling:touch}
+nav.tabs button,nav.top a{appearance:none;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;font-size:13px;font-weight:800;text-decoration:none;padding:8px 12px;border-radius:999px}
+nav.tabs button:hover,nav.top a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+nav.tabs button.active{color:var(--cyan2);border-color:rgba(0,229,255,.28);background:rgba(0,229,255,.1)}
+section.tab,section{padding:38px 0 18px}
+section.tab{display:none}
+section.tab.active{display:block}
+section.tab h2,section>.wrap>h2{font-size:clamp(25px,3vw,34px);font-weight:800;margin:6px 0 8px}
+.card,.placeholder,.runway,details.show{border:1px solid var(--line);border-radius:8px;background:var(--surface);box-shadow:0 18px 48px -28px rgba(0,229,255,.22)}
+.card,.placeholder{padding:20px 22px;margin-bottom:16px}
+.card h3,.placeholder h3{font-size:18px;font-weight:800;margin-bottom:9px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+ul.tight{padding-left:20px;margin:7px 0}
+ul.tight li{margin:6px 0;font-size:14.5px;color:var(--soft)}
+p,li,td,dd{color:var(--soft)}
+.tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:3px 9px;border-radius:999px;vertical-align:middle}
+.tag.open{background:var(--amberbg);color:var(--amber)}
+.tag.done{background:var(--okbg);color:var(--ok)}
+.tag.info{background:rgba(0,229,255,.1);color:var(--cyan2)}
+.dl{font-size:13px;font-weight:800;color:var(--cyan2);white-space:nowrap}
+table.t,table.deadlines{width:100%;border-collapse:separate;border-spacing:0 8px;font-size:13.5px;margin-top:6px}
+table.t th,table.deadlines th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 10px 2px}
+table.t td,table.deadlines td{padding:10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.045);vertical-align:top}
+table.t td:first-child,table.deadlines td:first-child{border-left:1px solid var(--line);border-radius:8px 0 0 8px}
+table.t td:last-child,table.deadlines td:last-child{border-right:1px solid var(--line);border-radius:0 8px 8px 0}
+table.t tr.total td{font-weight:800;border-color:rgba(0,229,255,.28)}
+.faq dt{font-weight:800;font-size:15px;margin-top:14px;color:var(--text)}
+.faq dd{margin:4px 0 0;color:var(--soft);font-size:14.5px}
+.faq h3{margin-top:22px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan2)}
+.placeholder{border-style:dashed;color:var(--soft)}
+.runway{margin:34px 0 8px;overflow:hidden}
+.runway .rw-head{display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:16px 18px 0}
+.runway h2{font-size:17px;font-weight:800}
+.runway .rw-key{font-size:11.5px;color:var(--muted)}
+.rw-scroll{display:flex;gap:0;overflow-x:auto;padding:18px 12px 20px;-webkit-overflow-scrolling:touch}
+.rw-stop{position:relative;min-width:132px;padding:0 10px}
+.rw-stop::before{content:'';position:absolute;top:7px;left:0;right:0;height:2px;background:var(--line)}
+.rw-stop:first-child::before{left:50%}.rw-stop:last-child::before{right:50%}
+.rw-dot{position:relative;width:14px;height:14px;border-radius:50%;margin:0 auto 8px;border:3px solid var(--bg);box-shadow:0 0 0 1px var(--line)}
+.seg-msp .rw-dot{background:var(--cyan2)}.seg-sec .rw-dot{background:#7B9FFF}.seg-tel .rw-dot{background:var(--green)}.seg-av .rw-dot{background:#A1B0CB}
+.rw-stop a{display:block;text-align:center;text-decoration:none;color:var(--text)}
+.rw-date{display:block;font-size:11px;color:var(--muted)}
+.rw-name{display:block;font-size:12.5px;font-weight:800;line-height:1.25;margin-top:2px}
+details.show{margin-bottom:14px;overflow:hidden}
+details.show[open]{border-color:rgba(0,229,255,.22)}
+details.show>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:16px 20px}
+details.show>summary::-webkit-details-marker{display:none}
+details.show>summary:hover{background:rgba(255,255,255,.04)}
+.show-when{font-size:12.5px;font-weight:800;color:var(--cyan2);min-width:118px}
+.show-name{font-family:'Cabinet Grotesk',system-ui,sans-serif;font-weight:800;font-size:17px;color:var(--text)}
+.show-loc{font-size:13px;color:var(--muted)}
+.show-seg{margin-left:auto}.chev{color:var(--muted);transition:transform .15s}
+details.show[open] .chev{transform:rotate(90deg)}
+.show-body{border-top:1px solid var(--line);padding:18px 20px 20px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px}
+@media(max-width:820px){.fields{grid-template-columns:1fr}}
+.field h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.field p,.field ul{font-size:14.5px}.field ul{padding-left:18px}.field li{margin:4px 0}
+.wide{grid-column:1/-1}.contactline{font-size:13.5px;color:var(--soft)}
+section.playbook{background:rgba(0,0,0,.18);padding-bottom:44px;margin-top:44px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pb-card{border:1px solid var(--line);border-radius:8px;background:var(--surface2);padding:20px 22px}
+.pb-card h3{color:var(--green);font-size:17px;margin-bottom:8px}
+.pb-card p,.pb-card li{font-size:14.5px;color:var(--soft)}
+.pb-card ul{padding-left:18px}.pb-card li{margin:5px 0}
+footer{background:transparent!important;color:var(--muted)!important;padding:34px 0 44px!important;margin-top:20px!important;border-top:1px solid var(--line)}
+footer .wrap{display:block!important}
+footer span{color:var(--text)!important}
+@media print{nav.top,nav.tabs{display:none}section.tab{display:block!important}details.show{page-break-inside:avoid}details.show:not([open]) .show-body{display:block}}
+
+</style>
+</head>
+<body>
+<div class="gradbar"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Rev.io Summit 2026 · Transition Doc · Updated July 23, 2026</span>
+    <h1>Rev.io Summit<span class="tealdot">.</span> Everything.</h1>
+    <p class="lede">The complete operating picture of Rev.io's flagship annual event: September 1–3, 2026 at the Renaissance Atlanta Waverly. Every tab is a workstream. Start with "What is Summit," then use the tabs the way you'd use the event binder.</p>
+      <div class="source-note"><b>Revay library version.</b> Library-owned version of the Events transition handoff. Source facts are handoff-derived, not live-verified in this generation run. Source handoff updated July 23, 2026.</div>
+    <div class="statline">
+      <div class="stat"><div class="n">Sept 1–3</div><div class="l">Renaissance Waverly</div></div>
+      <div class="stat"><div class="n">93</div><div class="l">Registrants · Jul 23</div></div>
+      <div class="stat"><div class="n">16</div><div class="l">Sponsors signed</div></div>
+      <div class="stat"><div class="n">58</div><div class="l">Rev.io staff attending</div></div>
+      <div class="stat"><div class="n">$533.6K</div><div class="l">Budget</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Summit sections"><div class="wrap">
+  <button data-tab="what" class="active">What is Summit</button>
+  <button data-tab="faq">FAQ</button>
+  <button data-tab="links">Links</button>
+  <button data-tab="av">AV</button>
+  <button data-tab="networking">Networking Events</button>
+  <button data-tab="budget">Budget</button>
+  <button data-tab="staff">Internal Staff</button>
+  <button data-tab="graphics">Graphics</button>
+  <button data-tab="vfairs">Vfairs</button>
+  <button data-tab="sponsors">Sponsors</button>
+  <button data-tab="reg">Registration &amp; Comp Codes</button>
+  <button data-tab="print">Print</button>
+  <button data-tab="ros">Run of Show</button>
+  <button data-tab="contacts">Contacts</button>
+  <button data-tab="open">Outstanding Items</button>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ============ WHAT IS SUMMIT ============ -->
+<section class="tab active" id="tab-what">
+  <span class="sec-eyebrow">01 · Overview</span>
+  <h2>What is Summit</h2>
+  <p class="sec-intro">Rev.io Summit is the company's flagship annual customer conference: three days of general sessions, breakout tracks, an expo hall, and networking events for Rev.io customers and partners.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>The basics</h3>
+      <ul class="tight">
+        <li><b>When:</b> September 1–3, 2026 (Tue–Thu)</li>
+        <li><b>Where:</b> Renaissance Atlanta Waverly Hotel &amp; Convention Center, Atlanta, GA</li>
+        <li><b>Who attends:</b> Rev.io customers and partners: telecom/CSPs, MSPs, and field service integrators, from C-suite to billing ops. Roughly half of this year's registrants are first-timers</li>
+        <li><b>Dress code:</b> business casual</li>
+        <li><b>One ticket covers everything:</b> all sessions, all receptions (including Braves Stadium), and all meals</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Shape of the event</h3>
+      <ul class="tight">
+        <li><b>Day 1 (Tue):</b> sponsor load-in and room setup, registration 1:00–5:00p, Welcome Reception &amp; Expo 5:00–7:00p, VIP Dinner at C&amp;S Oyster House 7:30–9:00p (Premium tickets)</li>
+        <li><b>Day 2 (Wed):</b> the big day. General session morning (keynotes, industry panel, Jay McBain), breakout tracks A/B/C all afternoon, Revii Showcase, then the Networking Reception at Braves Stadium 6:30–10:00p</li>
+        <li><b>Day 3 (Thu):</b> awards, product roadmap, breakouts, closing at 3:15p with the 2027 sign-up push</li>
+        <li>Agenda was built on a 7-track framework reviewed by an eight-person executive committee; sessions run in General Session (GB 3&amp;4), Track A (GB 1), Track B (GB 2), and Track C (Wilton)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Who's in the room — July 23 registrants</h3>
+      <table class="t">
+        <tr><th>Segment</th><th>Count</th><th>Seniority</th><th>Count</th></tr>
+        <tr><td>Telecom / CSP</td><td>53</td><td>C-Level</td><td>34</td></tr>
+        <tr><td>MSP</td><td>22</td><td>Manager</td><td>24</td></tr>
+        <tr><td>Field Service Integrator</td><td>7</td><td>Director</td><td>15</td></tr>
+        <tr><td>Vendor / Software</td><td>5</td><td>VP-Level</td><td>9</td></tr>
+        <tr><td>Consulting</td><td>3</td><td>Non-Mgr / Other</td><td>8</td></tr>
+      </table>
+      <p style="font-size:13.5px;margin-top:8px;color:var(--muted)">Top states: FL 11 · NC 8 · MD 7 · GA 7 · TX 7. Reception RSVPs: Welcome 86, Braves 81.</p>
+    </div>
+    <div class="card">
+      <h3>How the machine runs</h3>
+      <p style="font-size:14.5px">Sponsorship sales run through package tiers with DocuSign contracts. Registration, the event app, agenda, and sponsor pages run on Vfairs. Production is Encore (AV), Event Printworks (venue branding), Minuteman (print collateral), plus photo/video, transportation, and offsite venue vendors. Each has a tab. Money lives on the Budget tab; people live on Contacts; loose ends live on Outstanding Items.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="tab" id="tab-faq">
+  <span class="sec-eyebrow">02 · Answers</span>
+  <h2>Frequently Asked Questions</h2>
+  <p class="sec-intro">Verified answers to the questions people actually ask. Code and pricing questions route to the Registration &amp; Comp Codes tab.</p>
+  <div class="card faq">
+    <h3>Event basics</h3>
+    <dt>When and where is Summit?</dt><dd>Sept 1–3, 2026 at the Renaissance Atlanta Waverly Hotel &amp; Convention Center, Atlanta.</dd>
+    <dt>Who is Summit for?</dt><dd>Rev.io customers and partners: telecom/CSPs, MSPs, and field service integrators, from C-suite to billing ops. About half of this year's registrants are first-timers.</dd>
+    <dt>What's included in my client/prospect's ticket?</dt><dd>Everything: all sessions, all receptions (including the Braves Stadium reception), and all meals.</dd>
+    <h3>Registration &amp; pricing</h3>
+    <dt>How do I register?</dt><dd>reviosummit.com/en/registration-form</dd>
+    <dt>How much are tickets?</dt><dd>Current price is $650 for a standard single pass.</dd>
+    <dt>Is the BOGO still running?</dt><dd>Extended through July 31: two tickets for $650.</dd>
+    <dt>Can I register someone else?</dt><dd>Yes, the form supports booking on behalf of another person.</dd>
+    <dt>I have a comp or discount code. How do I use it, and what does it cover?</dt><dd>Enter it at checkout on the registration form. Every code, what it covers, and who it's for is on the <b>Registration &amp; Comp Codes tab</b>.</dd>
+    <dt>My code didn't work / my payment failed. Who do I contact?</dt><dd><span class="tag open">CONTACT PENDING</span> Failed payments can be retried; codes are documented on the Registration &amp; Comp Codes tab.</dd>
+    <dt>What's the refund/cancellation policy?</dt><dd>Refunds are processed through Vfairs: click the registrant in the portal and follow the refund instructions.</dd>
+    <h3>Hotel &amp; travel</h3>
+    <dt>Where do I stay?</dt><dd>The Renaissance Atlanta Waverly, the same property as the event.</dd>
+    <dt>Where do I book my hotel room?</dt><dd>Through the discounted Summit room block: <a href="https://book.passkey.com/e/51170051" target="_blank" rel="noopener">book.passkey.com/e/51170051</a>. The link is also in every registration confirmation email. <b>Room block cut-off: <span class="dl">August 10</span></b>.</dd>
+    <dt>Do Rev.io employees book through that link?</dt><dd>No. Rev.io employee hotels are booked through email with Amanda Nguyen, amanda.nguyen@renhotels.com.</dd>
+    <h3>On site</h3>
+    <dt>What receptions are there?</dt><dd>Welcome Reception Tuesday Sept 1 (5–7p, expo hall) and the Networking Reception Wednesday Sept 2 at the Xfinity Club, Braves Stadium, open to all attendees.</dd>
+    <dt>Is there an event app?</dt><dd>Yes, Vfairs: agenda, sponsor pages, and push notifications. Attendees get access the week of August 15.</dd>
+    <dt>What about dietary restrictions?</dt><dd>Collected at registration and passed to catering. Late changes: Anthony Jackson, anthony.jackson@renhotels.com.</dd>
+    <dt>What's the dress code?</dt><dd>Business casual.</dd>
+    <dt>Do I get a t-shirt?</dt><dd>Yes, everyone. Sizes are collected at registration.</dd>
+    <h3>Referral contest</h3>
+    <dt>How does the referral contest work?</dt><dd>Name your referrer at registration. Monthly prizes (Rev.io Execute sneakers or a $150 Amazon gift card); the overall winner gets a VIP Suite at the Waverly, announced Aug 21.</dd>
+    <h3>Sponsors</h3>
+    <dt>How do I become a sponsor?</dt><dd>See the Sponsors tab for packages and contact.</dd>
+    <dt>I'm a sponsor. Where do I send materials and what are my deadlines?</dt><dd>See the Sponsors tab deliverables section.</dd>
+    <h3>Internal / Rev.io staff</h3>
+    <dt>When is the internal Rev.io team KBUG?</dt><dd>August 6.</dd>
+    <dt>I'm working the event. Where do I find my role and schedule?</dt><dd>Day-of roles (check-in, scanners, runners, F&amp;B monitors) are assigned in the volunteer schedule on the Run of Show tab.</dd>
+    <dt>Do Rev.io staff register like attendees?</dt><dd>Yes.</dd>
+    <dt>How do staff hotel rooms work?</dt><dd>Booked via the Rev.io room list submitted to the hotel, not the attendee block. Contact: Amanda Nguyen (see Internal Staff tab).</dd>
+    <dt>When do staff need to be onsite?</dt><dd>Tuesday, Sept 1 by 1:00 PM.</dd>
+    <dt>What do I do if an attendee asks me something I can't answer?</dt><dd>Direct them to Britt Koltay, britt.koltay@rev.io.</dd>
+    <dt>How many sponsors does Summit have?</dt><dd>16, across packages from Rookie to custom. Full list and status on the Sponsors tab.</dd>
+  </div>
+</section>
+
+<!-- ============ LINKS ============ -->
+<section class="tab" id="tab-links">
+  <span class="sec-eyebrow">03 · Where everything lives</span>
+  <h2>Links</h2>
+  <div class="card">
+    <table class="t">
+      <tr><th>What</th><th>Where</th><th>Notes</th></tr>
+      <tr><td>Registration form</td><td><a href="https://reviosummit.com/en/registration-form" target="_blank" rel="noopener">reviosummit.com/en/registration-form</a></td><td>Vfairs-powered</td></tr>
+      <tr><td>Hotel room block (attendees)</td><td><a href="https://book.passkey.com/e/51170051" target="_blank" rel="noopener">book.passkey.com/e/51170051</a></td><td>Cut-off <span class="dl">Aug 10</span></td></tr>
+      <tr><td>Summit Dashboard</td><td><a href="https://ambitious-coast-005f6010f.7.azurestaticapps.net" target="_blank" rel="noopener">ambitious-coast-005f6010f.7.azurestaticapps.net</a></td><td>Live status view</td></tr>
+      <tr><td>Budget workbook + invoices</td><td><a href="https://revio.sharepoint.com/sites/Marketing990/Shared%20Documents/Marketing%20Team/2026%20Projects/2026%20Rev.io%20Summit/BUDGET_invoices%20%26%20receipts" target="_blank" rel="noopener">SharePoint → 2026 Rev.io Summit → BUDGET_invoices &amp; receipts</a></td><td>Source of truth for money</td></tr>
+      <tr><td>Summit project folder</td><td><a href="https://revio.sharepoint.com/sites/Marketing990/Shared%20Documents/Marketing%20Team/2026%20Projects/2026%20Rev.io%20Summit" target="_blank" rel="noopener">SharePoint → Marketing Team → 2026 Projects → 2026 Rev.io Summit</a></td><td>Strategy, sponsors, employee resources</td></tr>
+      <tr><td>Vfairs admin portal</td><td>rev.vfairs.com backend</td><td>Registration, refunds, app, push notifications</td></tr>
+      <tr><td>Agenda grid + session descriptions</td><td>Session Descriptions &amp; Agenda Grid workbook</td><td>Color-coded: teal Rev.io-led, green sponsor, yellow open</td></tr>
+      <tr><td>Volunteer schedule</td><td>Summit2026_Volunteer_Schedule.xlsx</td><td>40 shifts / 76 slots; see Run of Show tab</td></tr>
+      <tr><td>Staff sign-up roster</td><td>Summit Rev.io Attendees — Team Sign-Up.xlsx</td><td>58 staff, hotel flags per person</td></tr>
+      <tr><td>Registration reports</td><td>Vfairs export (RegReport)</td><td>Pull fresh before quoting numbers</td></tr>
+      <tr><td>Sponsorship prospectus folder</td><td><a href="https://revio.sharepoint.com/sites/Marketing990/Shared%20Documents/Marketing%20Team/2026%20Projects/2026%20Rev.io%20Summit/SPONSORS/Sponsorship%20Prospectus" target="_blank" rel="noopener">SharePoint → SPONSORS → Sponsorship Prospectus</a></td><td>Package inclusions + pricing</td></tr>
+      <tr><td>Comp ticket scenario model</td><td><a href="https://revio.sharepoint.com/sites/Marketing990/Shared%20Documents/Marketing%20Team/2026%20Projects/2026%20Rev.io%20Summit/EMPLOYEE%20RESOURCES/Summit-CompTicket%20Scenario.xlsx" target="_blank" rel="noopener">EMPLOYEE RESOURCES → Summit-CompTicket Scenario.xlsx</a></td><td>Comp capacity vs paid revenue</td></tr>
+      <tr><td>Discount &amp; BOGO code summary</td><td><a href="https://revio.sharepoint.com/sites/Marketing990/Shared%20Documents/Marketing%20Team/2026%20Projects/2026%20Rev.io%20Summit/BUDGET_invoices%20%26%20receipts/Discount%20Ticket%20Summary-Summit2026.xlsx" target="_blank" rel="noopener">BUDGET folder → Discount Ticket Summary-Summit2026.xlsx</a></td><td>Code-by-code revenue impact</td></tr>
+      <tr><td>Summit 90-day action plan</td><td><a href="https://revio.sharepoint.com/sites/Marketing990/Shared%20Documents/Marketing%20Team/2026%20Projects/2026%20Rev.io%20Summit/STRATEGY/2026%20Action%20Plan_Summit.xlsx" target="_blank" rel="noopener">STRATEGY → 2026 Action Plan_Summit.xlsx</a></td><td>Category / owner / sprint view</td></tr>
+      <tr><td>Employee resources folder</td><td><a href="https://revio.sharepoint.com/sites/Marketing990/Shared%20Documents/Marketing%20Team/2026%20Projects/2026%20Rev.io%20Summit/EMPLOYEE%20RESOURCES" target="_blank" rel="noopener">SharePoint → EMPLOYEE RESOURCES</a></td><td>Sell sheets, talking points, comp models</td></tr>
+      <tr><td>Attendee profile edit</td><td><a href="https://reviosummit.com/en/editprofile" target="_blank" rel="noopener">reviosummit.com/en/editprofile</a></td><td>Sent in confirmation emails</td></tr>
+      <tr><td>Sponsorship prospectus (archive)</td><td>SharePoint → 2026 Rev.io Summit → SPONSORS → Sponsorship Prospectus</td><td>Pricing now maintained in Budget Forecast</td></tr>
+      <tr><td>Comp ticket scenario model</td><td>SharePoint → 2026 Rev.io Summit → EMPLOYEE RESOURCES → Summit-CompTicket Scenario.xlsx</td><td>Comp capacity vs paid revenue</td></tr>
+      <tr><td>Discount ticket summary</td><td>SharePoint → BUDGET_invoices &amp; receipts → Discount Ticket Summary-Summit2026.xlsx</td><td>BOGO + code usage analysis</td></tr>
+      <tr><td>Strategy &amp; action plan</td><td>SharePoint → 2026 Rev.io Summit → STRATEGY → 2026 Action Plan_Summit.xlsx</td><td>90-day plan, owners, KPIs</td></tr>
+      <tr><td>Banner pricing workbook</td><td>Venue banner pricing workbook (banner IDs, hotel fees, Printworks costs)</td><td>$18,822 grand total — see Graphics</td></tr>
+      <tr><td>2025 reference material</td><td>SharePoint → 2025 Projects → 2025 Client Summit</td><td>2025 handbook = print spec reference</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Known-stale sources</h3>
+    <p style="font-size:14.5px">The Notion sponsor outreach tracker stopped being updated around June 4 (shows 3 signed; reality is 16). Don't trust it. Current sponsor status lives in the working tracker; see Sponsors tab.</p>
+  </div>
+</section>
+
+<!-- ============ AV ============ -->
+<section class="tab" id="tab-av">
+  <span class="sec-eyebrow">04 · Production</span>
+  <h2>AV</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Vendor &amp; contract</h3>
+      <ul class="tight">
+        <li><b>Vendor:</b> Encore · Contact: <b>Sam Abel</b></li>
+        <li><b>Contract:</b> signed July 10, 2026 · quote <span class="mono">2127-5820</span> · ~$155.7K total</li>
+        <li><b>Scope:</b> lower level general session (Grand Ballroom 3&amp;4)</li>
+        <li><b>Design:</b> <span class="tag info">CONFIRMED</span> <b>no LED wall</b> in the general session room; the middle structure is <b>completely printed</b> instead</li>
+        <li>Stage backdrop (24ft W × 16ft H) is included in the AV quote, not the print budget</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Process before doors</h3>
+      <ul class="tight">
+        <li>A/V needs determined per room ahead of the show</li>
+        <li>BEO confirmations + pre-con walkthrough with Encore</li>
+        <li>All equipment tested onsite during setup day</li>
+        <li>Full dry-run of the general session before Day 2 doors</li>
+        <li>Onsite AV issues escalate to Encore via the room scanners/monitors</li>
+      </ul>
+    </div>
+    <div class="card" style="grid-column:1/-1">
+      <h3>Money note</h3>
+      <p style="font-size:14.5px"><span class="tag open">RECONCILE</span> The budget still carries A/V as a $150,000 category with a line labeled "LED Wall — $140,000." The signed contract is ~$155.7K and the scope is now the printed structure. Update the budget line label and amount so actuals land correctly. Details on the Budget tab.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NETWORKING ============ -->
+<section class="tab" id="tab-networking">
+  <span class="sec-eyebrow">05 · Offsites &amp; receptions</span>
+  <h2>Networking Events</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Welcome Reception — Tue Sept 1</h3>
+      <ul class="tight">
+        <li>5:00–7:00p in the GB 3&amp;4 Expo Hall, F&amp;B through the hotel</li>
+        <li>Registration runs 1:00–5:00p right before it; reception is the first all-attendee moment</li>
+        <li>Volunteer support: 2 floaters + 1 F&amp;B monitor</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>VIP Dinner — Tue Sept 1</h3>
+      <ul class="tight">
+        <li><b>C&amp;S Oyster House</b>, 7:30–9:00p · Premium ticket holders</li>
+        <li>Contract signed · $8,000 budget category</li>
+        <li>Headcount + run-of-evening logistics confirmed with the restaurant close to the date</li>
+        <li>Volunteer support: 2 people, 7:00–9:30p (check-in against the premium list, coordinate with restaurant and exec hosts)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Networking Reception — Wed Sept 2</h3>
+      <ul class="tight">
+        <li><b>Xfinity Club at Braves Stadium</b>, 6:30–10:00p · open to ALL attendees · contract signed</li>
+        <li><b>Sponsored by CCH Suretax</b></li>
+        <li>Coordination covers headcount, ticketing, F&amp;B, and the transportation connection with the venue</li>
+        <li>Shuttles load at the hotel motor court from 6:00p (2 load coordinators); 3 volunteers support the venue</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Transportation</h3>
+      <ul class="tight">
+        <li>Dedicated shuttle vendor: quotes reviewed, contract finalized</li>
+        <li>Shuttle schedule + attendee comms published pre-event; day-of logistics confirmed with the vendor</li>
+        <li>Primary job: hotel ↔ Braves Stadium on Wednesday night, including return waves</li>
+        <li>Networking Events budget category: $62,089 (line items live in the budget workbook)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BUDGET ============ -->
+<section class="tab" id="tab-budget">
+  <span class="sec-eyebrow">06 · Money</span>
+  <h2>Budget</h2>
+  <p class="sec-intro">Category-level snapshot as of <b>July 23, 2026</b>. This table goes stale; the live workbook in <a href="https://revio.sharepoint.com/sites/Marketing990/Shared%20Documents/Marketing%20Team/2026%20Projects/2026%20Rev.io%20Summit/BUDGET_invoices%20%26%20receipts" target="_blank" rel="noopener">BUDGET_invoices &amp; receipts</a> is the source of truth.</p>
+  <div class="card">
+    <table class="t">
+      <tr><th>Category</th><th>Budgeted</th><th>Actual</th><th>Variance</th><th>Notes</th></tr>
+      <tr><td>F&amp;B</td><td>$205,373</td><td>$0</td><td>$205,373</td><td>Hotel: receptions, breakfasts, lunches, all-day bev</td></tr>
+      <tr><td>A/V</td><td>$150,000</td><td>$0</td><td>$150,000</td><td><span class="tag open">RECONCILE</span> signed Encore contract ~$155.7K; line still labeled LED wall</td></tr>
+      <tr><td>Networking Events</td><td>$62,089</td><td>$0</td><td>$62,089</td><td>Line items not yet entered</td></tr>
+      <tr><td>Venue room + tax</td><td>$22,292</td><td>$0</td><td>$22,292</td><td>Line items not yet entered</td></tr>
+      <tr><td>Swag &amp; Apparel</td><td>$18,460</td><td>$0</td><td>$18,460</td><td>T-shirts $8K, koozies $1.5K, "cool item?" $2K, awards $500</td></tr>
+      <tr><td>Expert Bar and Lounge</td><td>$17,500</td><td>$0</td><td>$17,500</td><td>Rendering in progress</td></tr>
+      <tr><td>Venue Signage</td><td>$13,573</td><td>$0</td><td>$13,573</td><td>Fully itemized by banner ID — see Graphics tab</td></tr>
+      <tr><td>Photography &amp; Videography</td><td>$12,985</td><td>$0</td><td>$12,985</td><td><span class="tag open">VENDOR TBD</span> at $12K estimate</td></tr>
+      <tr><td>VIP Dinner</td><td>$8,000</td><td>$0</td><td>$8,000</td><td>C&amp;S Oyster House</td></tr>
+      <tr><td>Mobile App</td><td>$6,000</td><td>$6,000</td><td>$0</td><td><span class="tag done">PAID</span> Vfairs</td></tr>
+      <tr><td>Misc Hotel</td><td>$5,115</td><td>$150</td><td>$4,965</td><td>Fire marshal $150 logged</td></tr>
+      <tr><td>Speakers</td><td>$5,000</td><td>$15,000</td><td>−$10,000</td><td><span class="tag open">OVER</span> Jay McBain keynote via Omdia, locked</td></tr>
+      <tr><td>On-site support</td><td>$4,250</td><td>$0</td><td>$4,250</td><td>Line items not yet entered</td></tr>
+      <tr><td>Print Items</td><td>$3,000</td><td>$0</td><td>$3,000</td><td>Minuteman collateral — see Print tab</td></tr>
+      <tr class="total"><td>TOTAL</td><td>$533,637</td><td>$21,150</td><td>$512,487</td><td>~4% of spend logged as actuals</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Flags a successor should chase</h3>
+    <ul class="tight">
+      <li>Speakers is $10K over budget and locked; carry that into the total-picture math</li>
+      <li>A/V: update the category to match the signed ~$155.7K Encore contract and relabel the LED wall line (scope is the printed middle structure)</li>
+      <li>Four categories have budget dollars but empty line-item sheets: Networking Events, On-site support, Venue room + tax, Expert Bar</li>
+      <li>Photo &amp; Video vendor still TBD at $12K estimated, late July</li>
+      <li>Most actuals aren't logged yet; enter them as invoices land in the BUDGET_invoices &amp; receipts folder</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ INTERNAL STAFF ============ -->
+<section class="tab" id="tab-staff">
+  <span class="sec-eyebrow">07 · The team</span>
+  <h2>Internal Rev.io Staff</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Who's coming — 58 staff</h3>
+      <table class="t">
+        <tr><th>Department</th><th>Attending</th></tr>
+        <tr><td>Sales</td><td>17</td></tr>
+        <tr><td>Product</td><td>13</td></tr>
+        <tr><td>Client Success</td><td>8</td></tr>
+        <tr><td>Elevate (Engineering/IT)</td><td>7</td></tr>
+        <tr><td>Onboarding</td><td>5</td></tr>
+        <tr><td>G&amp;A (incl. CEO Brent Maropis, President Evan Rice)</td><td>4</td></tr>
+        <tr><td>Marketing</td><td>3</td></tr>
+        <tr><td>AI</td><td>1</td></tr>
+      </table>
+      <p style="font-size:13.5px;margin-top:8px;color:var(--muted)">Full roster with titles and hotel flags: Summit Rev.io Attendees — Team Sign-Up.xlsx (and the Roster tab of the volunteer schedule).</p>
+    </div>
+    <div class="card">
+      <h3>Staff rules of the road</h3>
+      <ul class="tight">
+        <li><b>Onsite by 1:00 PM Tuesday, Sept 1</b> for setup and registration shifts</li>
+        <li>Staff register like attendees (reviosummit.com form)</li>
+        <li><b>Hotels:</b> 45 of 58 need rooms, booked via the Rev.io room list, NOT the attendee block. Contact: <b>Amanda Nguyen</b>, amanda.nguyen@renhotels.com (Lauren Swygert: Tuesday night only)</li>
+        <li><b>Internal KBUG: August 6</b></li>
+        <li>Day-of roles live in the volunteer schedule (Run of Show tab): 76 slots across 58 people</li>
+        <li><b>Escalation onsite:</b> anything you can't answer goes to Britt Koltay, britt.koltay@rev.io</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GRAPHICS ============ -->
+<section class="tab" id="tab-graphics">
+  <span class="sec-eyebrow">08 · Brand in the building</span>
+  <h2>Graphics</h2>
+  <div class="card">
+    <h3>The one date that matters</h3>
+    <p style="font-size:15px">All graphics per the dimensions sheet are due to <b>Colby by <span class="dl">August 4</span></b>. Miss it and print/install timelines start slipping against Labor Day weekend.</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Venue branding map — $18,822 total</h3>
+      <ul class="tight">
+        <li><b>G1–G5 / H2:</b> Grand Staircase banners + bannister wrap</li>
+        <li><b>J1E / J2E:</b> Grand Staircase column wraps</li>
+        <li><b>K1W / K2W + L1N–L6E:</b> Garden Court column wraps</li>
+        <li><b>N4–N7:</b> Ballroom door covers (N4/N5 = General Session)</li>
+        <li><b>P1–P6:</b> Registration booth inserts</li>
+        <li><b>Q1:</b> Habersham Ballroom door cover</li>
+        <li>Total includes hotel display fees + Event Printworks print/install/remove; per-item pricing in the banner pricing workbook</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Vendors &amp; adjacent pieces</h3>
+      <ul class="tight">
+        <li><b>Venue branding:</b> Event Printworks · Steve Casey · work@eventprintworks.com · 404-985-9066 · proofs managed against design files, delivery to the Waverly confirmed</li>
+        <li><b>Stage backdrop (24×16 ft):</b> in the Encore AV quote, not the signage budget</li>
+        <li><b>Expert Bar:</b> rendering in progress · $17,500 budget category</li>
+        <li>Podium branding is in the signage plan but unpriced; confirm with Printworks</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VFAIRS ============ -->
+<section class="tab" id="tab-vfairs">
+  <span class="sec-eyebrow">09 · Platform</span>
+  <h2>Vfairs</h2>
+  <p class="sec-intro">Vfairs is the event platform: registration, payments, the mobile app, agenda, sponsor pages, and push notifications all run through it. $6,000, paid.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>What runs on it</h3>
+      <ul class="tight">
+        <li>Registration form + payment processing (reviosummit.com/en/registration-form)</li>
+        <li>Confirmation emails (include the hotel block link automatically)</li>
+        <li>Mobile event app: agenda, session details, sponsor booth pages</li>
+        <li>Push notifications during the event</li>
+        <li>Session scanning: volunteers scan attendees into breakouts via the Vfairs app</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Operating notes</h3>
+      <ul class="tight">
+        <li><b>Attendee app access: week of August 15</b></li>
+        <li><b>Refunds:</b> per-registrant in the portal; click the registrant and follow the refund flow</li>
+        <li><b>Sponsor pages</b> need each sponsor's contact info added before their page can go live</li>
+        <li>Pre-launch: app QA pass, staff training on the backend, push notification schedule + copy drafted</li>
+        <li>Registration reports export from the backend; pull fresh before quoting numbers anywhere</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPONSORS ============ -->
+<section class="tab" id="tab-sponsors">
+  <span class="sec-eyebrow">10 · Revenue side</span>
+  <h2>Sponsors</h2>
+  <div class="card">
+    <h3>State of play</h3>
+    <ul class="tight">
+      <li><b>16 sponsors signed</b>, across packages from Rookie to custom</li>
+      <li>Revenue as of mid-July: <b>$224K closed · $284K pipeline</b></li>
+      <li>Package family: Rookie, Silver, Emerald, Session, Lanyard, plus Diamond-tier keynote sponsors and custom builds (e.g., the custom $8K Avalara package)</li>
+      <li>Contracts execute via DocuSign after the sponsor picks a package</li>
+      <li>Sponsor speakers pick from 3 provided topics</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Sponsors visible on the agenda</h3>
+    <p style="font-size:14.5px">Pax8 (Diamond keynote), GreatAmerica (lunch keynote), CCH Suretax (session + Braves reception sponsor), Sangoma (panel), Cynomi (breakout), NinjaOne (breakout), Liongard (breakfast keynote), TaxConnex (panel), TaxTheta (panel).</p>
+  </div>
+  <div class="placeholder">
+    <b>Full sponsor list with packages: to be added.</b> The working tracker is being brought current; when it is, drop the 16-row table here (sponsor · package · amount · contract status · deliverables status). Do NOT source this from the Notion sponsor tracker — it's stale (frozen ~June 4, shows 3 signed).
+  </div>
+  <div class="card">
+    <h3>Deliverables machine</h3>
+    <ul class="tight">
+      <li>Each sponsor's page in the Vfairs app needs their contact info to go live</li>
+      <li>Welcome bag inserts: Platinum &amp; Diamond sponsors, August deadline</li>
+      <li>Print signage inclusion has a sponsor-commit deadline (July); late signers may miss printed materials</li>
+      <li>Sponsor KBUG: <span class="tag open">TO SCHEDULE</span> (internal team KBUG is Aug 6)</li>
+      <li>Sponsor Setup/Load-in: Tuesday Sept 1, 9:00a–4:00p, expo tables in GB 3&amp;4</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ REGISTRATION & COMP CODES ============ -->
+<section class="tab" id="tab-reg">
+  <span class="sec-eyebrow">11 · Tickets</span>
+  <h2>Registration &amp; Comp Codes</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Price ladder</h3>
+      <table class="t">
+        <tr><th>Package</th><th>Price</th><th>Window</th></tr>
+        <tr><td>Super Early Bird</td><td>$325</td><td>through 12/31/25</td></tr>
+        <tr><td>Early Bird</td><td>$475</td><td>through 5/31/26</td></tr>
+        <tr><td>Single ticket</td><td>$650</td><td>through 7/31/26</td></tr>
+        <tr><td>BOGO (2 tickets)</td><td>$650</td><td>extended through 7/31/26</td></tr>
+        <tr><td>Premium Summit Pass</td><td>$950</td><td>6/1–8/14/26</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Where we stand — July 23 report</h3>
+      <ul class="tight">
+        <li><b>93 registrants</b> (91 active) · 38 paid · <b>$15,825 collected</b></li>
+        <li>Hotel rooms needed: 79 yes / 14 no</li>
+        <li>First-timers 45 vs returning 48</li>
+        <li>Dietary on file: 3 shellfish, 1 nut, 1 pescatarian, 1 kosher (catering changes: Anthony Jackson)</li>
+        <li>Refunds: per-registrant in the Vfairs portal</li>
+        <li>Referral leaderboard: Justin Lee 8 · Ryan Burton 6 · Brook Lee 5 · Jamie Butler 4 · winner gets the VIP Suite, announced Aug 21</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <h3>T-shirt sizes on file — order sheet (91 active registrants)</h3>
+    <table class="t">
+      <tr><th>S</th><th>M</th><th>L</th><th>XL</th><th>2XL</th><th>3XL</th><th>4XL</th></tr>
+      <tr><td>5</td><td>11</td><td>19</td><td>31</td><td>18</td><td>6</td><td>1</td></tr>
+    </table>
+    <p style="font-size:13.5px;margin-top:8px;color:var(--muted)">Everyone gets a shirt; add the 58 staff sizes (sign-up workbook) and buffer before ordering against the $8K t-shirt line.</p>
+  </div>
+  <div class="card">
+    <h3>Comp &amp; discount codes — full list (16)</h3>
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:4px">All codes are Package-category codes in Vfairs. "Applies to" is the ticket the code attaches to at checkout.</p>
+    <table class="t">
+      <tr><th>Code</th><th>What it's for</th><th>Applies to</th><th>Discount</th><th>Started</th></tr>
+      <tr><td class="mono">2025SUMMITATTENDEE</td><td>2025 Summit attendees loyalty offer</td><td>Standard: Super Early Bird</td><td>$125 off</td><td>Oct 31, 2025</td></tr>
+      <tr><td class="mono">SUMMIT50EVENTS</td><td>Post-event trade show emails</td><td>Standard: Early Bird</td><td>$50 off</td><td>Mar 23, 2026</td></tr>
+      <tr><td class="mono">SUMMIT50EVENTS</td><td>Post-event trade show emails</td><td>Premium: Early Bird</td><td>$50 off</td><td>Mar 23, 2026</td></tr>
+      <tr><td class="mono">SUMMIT100VIIRTUE</td><td>Viirtue comp ×2 — at-risk account</td><td>Standard: Early Bird</td><td>100%</td><td>Mar 30, 2026</td></tr>
+      <tr><td class="mono">CAMREVSUMMIT</td><td>Comp ticket for clients — Sales</td><td>Standard: Early Bird</td><td>100%</td><td>Apr 30, 2026</td></tr>
+      <tr><td class="mono">REVFAN100</td><td>Raving Fans comp</td><td>Standard: BOGO</td><td>100%</td><td>May 17, 2026</td></tr>
+      <tr><td class="mono">REVGUEST-A</td><td>Full comp guest</td><td>Standard: Single ticket</td><td>100%</td><td>May 21, 2026</td></tr>
+      <tr><td class="mono">REVGUEST-B</td><td>Half comp guest</td><td>Standard: Single ticket</td><td>$325 off</td><td>Jun 1, 2026</td></tr>
+      <tr><td class="mono">SUMMIT50</td><td>50% discount</td><td>Standard: Single ticket</td><td>50%</td><td>May 21, 2026</td></tr>
+      <tr><td class="mono">CALLCAMPAIGN</td><td>Call campaign comp</td><td>Standard: BOGO</td><td>100%</td><td>Jun 22, 2026</td></tr>
+      <tr><td class="mono">SUMMITAM50</td><td>AM Team $50 off</td><td>Standard: BOGO</td><td>$50 off</td><td>Jun 19, 2026</td></tr>
+      <tr><td class="mono">2BLONDES</td><td>2BLONDES promo — BOGO</td><td>Standard: BOGO</td><td>50%</td><td>Jun 22, 2026</td></tr>
+      <tr><td class="mono">SUMMIT100</td><td>Comp coupon — BOGO (2)</td><td>Standard: BOGO</td><td>100%</td><td>Jun 29, 2026</td></tr>
+      <tr><td class="mono">VIP-REVGUEST</td><td>VIP Premium full comp</td><td>Premium: Summit Pass</td><td>100%</td><td>Jun 29, 2026</td></tr>
+      <tr><td class="mono">SUMMITSPONSOR</td><td>Sponsor registration passes</td><td>Standard: Single ticket</td><td>100%</td><td>Jul 1, 2026</td></tr>
+      <tr><td class="mono">2BLONDES</td><td>2BLONDES promo — single</td><td>Standard: Single ticket</td><td>100%</td><td>Jul 13, 2026</td></tr>
+    </table>
+    <p style="font-size:13.5px;color:var(--muted);margin-top:8px">Note: two code names are reused across ticket types (SUMMIT50EVENTS, 2BLONDES) — the ticket the registrant picks determines which rule fires. Code usage as of Jul 23: REVGUEST-A leads with 20 uses, then REVFAN100 (8) and SUMMITSPONSOR (6).</p>
+  </div>
+</section>
+
+<!-- ============ PRINT ============ -->
+<section class="tab" id="tab-print">
+  <span class="sec-eyebrow">12 · On paper</span>
+  <h2>Print</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Minuteman — collateral ($3,000 category)</h3>
+      <ul class="tight">
+        <li>CEO letter, attendee handbooks, table tents</li>
+        <li>Process: content handed off → production → proof review rounds → delivery direct to the hotel</li>
+        <li>The <b>2025 handbook is the spec reference</b> for this year's handbook</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Other print items</h3>
+      <ul class="tight">
+        <li>Welcome booklet · sponsor passport · foam core for breakout rooms · customer awards</li>
+        <li>Branded hotel key cards — distribution confirmed with the hotel front desk</li>
+        <li>Venue banners/signage are a separate $13,573 budget with Event Printworks — see Graphics tab</li>
+        <li>Badges, lanyards, and badge printing run under a separate signed vendor contract ($4,100)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RUN OF SHOW ============ -->
+<section class="tab" id="tab-ros">
+  <span class="sec-eyebrow">13 · Day-of</span>
+  <h2>Run of Show</h2>
+  <p class="sec-intro">The full agenda, all three days. Rooms: <b>GS</b> = General Session (Grand Ballroom 3&amp;4) · <b>Track A</b> = GB 1 · <b>Track B</b> = GB 2 · <b>Track C</b> = Wilton. Britt's minute-by-minute master cue sheet (walk-ons, AV cues, contact tree) links here when final.</p>
+
+  <div class="card">
+    <h3>Day 1 — Tuesday, September 1</h3>
+    <table class="t">
+      <tr><th>Time</th><th>Where</th><th>What</th></tr>
+      <tr><td class="dl">9:00a–4:00p</td><td>GS</td><td>Sponsor setup / load-in (expo tables)</td></tr>
+      <tr><td class="dl">10:00a–5:00p</td><td>Breakouts</td><td>Breakout room setup (classroom style)</td></tr>
+      <tr><td class="dl">1:00–5:00p</td><td>Registration</td><td>Registration open — all attendees (staff shifts 1–3 and 3–5)</td></tr>
+      <tr><td class="dl">5:00–7:00p</td><td>GS Expo Hall</td><td>Welcome Reception &amp; Expo</td></tr>
+      <tr><td class="dl">7:30–9:00p</td><td>C&amp;S Oyster House</td><td>VIP Dinner — Premium ticket holders (volunteer support 7:00–9:30)</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Day 2 — Wednesday, September 2</h3>
+    <table class="t">
+      <tr><th>Time</th><th>Where</th><th>What</th></tr>
+      <tr><td class="dl">8:00–9:00a</td><td>GS</td><td>Breakfast &amp; Expo</td></tr>
+      <tr><td class="dl">9:00–9:15a</td><td>GS</td><td>Welcome to Rev.io Summit — Brent intro</td></tr>
+      <tr><td class="dl">9:15–10:00a</td><td>GS</td><td>The Next Era of Service Providers: Operating Smarter with Rev.io (state of the union)</td></tr>
+      <tr><td class="dl">10:00–10:05a</td><td>GS</td><td>SPONSOR: Pax8 — Diamond Sponsor Keynote (5 min)</td></tr>
+      <tr><td class="dl">10:05–10:30a</td><td>GS</td><td>Coffee Break &amp; Expo</td></tr>
+      <tr><td class="dl">10:30–11:00a</td><td>GS</td><td>Industry shift panel — Pax8, GTIA, ELT</td></tr>
+      <tr><td class="dl">11:00–11:45a</td><td>GS</td><td>Jay McBain Keynote</td></tr>
+      <tr><td class="dl">11:45a–1:00p</td><td>GS</td><td>Lunch &amp; Expo — GreatAmerica Keynote</td></tr>
+      <tr><td class="dl">1:00–1:30p</td><td>A / B</td><td><b>A:</b> SPONSOR: CCH Suretax · <b>B:</b> SPONSOR PANEL: Sangoma</td></tr>
+      <tr><td class="dl">1:35–2:20p</td><td>A / B</td><td><b>A:</b> Billing Best Practices · <b>B:</b> AI-Ready &amp; Security-Ready (Cynomi)</td></tr>
+      <tr><td class="dl">2:30–3:15p</td><td>A / B / C</td><td><b>A:</b> NinjaOne: RMM-to-Ticket Automation · <b>B:</b> Modern Service Desk · <b>C:</b> CommerceHub in Practice</td></tr>
+      <tr><td class="dl">3:15–3:30p</td><td>GS</td><td>Break &amp; Expo</td></tr>
+      <tr><td class="dl">3:30–4:00p</td><td>A / B / C</td><td><b>A:</b> Service Provider KPI Playbook · <b>B:</b> Managing Complex Projects · <b>C:</b> Your QBR is Bullsh*t</td></tr>
+      <tr><td class="dl">4:10–4:50p</td><td>GS</td><td>Revii Showcase: Your AI-Powered Digital Workforce in Action</td></tr>
+      <tr><td class="dl">4:50–5:00p</td><td>GS</td><td>Day 1 Closing Remarks</td></tr>
+      <tr><td class="dl">5:00–6:30p</td><td>—</td><td>All-attendee break (no expo) · shuttles load from 6:00p at the motor court</td></tr>
+      <tr><td class="dl">6:30–10:00p</td><td>Braves Stadium</td><td>Networking Reception — Xfinity Club, CCH Suretax sponsored, all attendees</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Day 3 — Thursday, September 3</h3>
+    <table class="t">
+      <tr><th>Time</th><th>Where</th><th>What</th></tr>
+      <tr><td class="dl">8:00–9:00a</td><td>GS</td><td>Breakfast — SPONSOR Keynote Spotlight: Liongard</td></tr>
+      <tr><td class="dl">9:00–9:30a</td><td>GS</td><td>Day 2 Opening Remarks + Customer Awards</td></tr>
+      <tr><td class="dl">9:30–10:15a</td><td>GS</td><td>Rev.io Product Roadmap + Community</td></tr>
+      <tr><td class="dl">10:15–10:45a</td><td>GS</td><td>Billing for AI Monetization (break &amp; expo overlaps 10:15–10:30 on the source grid — confirm in the master ROS)</td></tr>
+      <tr><td class="dl">10:45–11:15a</td><td>GS</td><td>Onboarding Readiness Workshop</td></tr>
+      <tr><td class="dl">11:15–11:30a</td><td>GS</td><td>Break &amp; Expo</td></tr>
+      <tr><td class="dl">11:30a–12:00p</td><td>A / B</td><td><b>A:</b> Rev.io Rookies Roundtable · <b>B:</b> Field Service Without the Desk (Mobile App)</td></tr>
+      <tr><td class="dl">12:00–1:05p</td><td>GS</td><td>Lunch &amp; Expo</td></tr>
+      <tr><td class="dl">1:05–1:35p</td><td>A / B</td><td><b>A:</b> SPONSOR PANEL: TaxConnex · <b>B:</b> SPONSOR PANEL: TaxTheta</td></tr>
+      <tr><td class="dl">1:45–2:15p</td><td>A / B</td><td><b>A:</b> Sales Best Practices for Service Providers · <b>B:</b> Forge Showcase — Live Workshop</td></tr>
+      <tr><td class="dl">2:25–2:55p</td><td>A / B</td><td><b>A:</b> Business Insights in Rev.io · <b>B:</b> What Is a Modern Service Provider?</td></tr>
+      <tr><td class="dl">3:00–3:15p</td><td>GS</td><td>Closing Remarks, thank-you, 2027 sign-up push</td></tr>
+      <tr><td class="dl">3:15–5:00p</td><td>All rooms</td><td>Teardown &amp; pack-out (4-person crew)</td></tr>
+    </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Volunteer operation</h3>
+      <ul class="tight">
+        <li><b>Summit2026_Volunteer_Schedule.xlsx</b> · 40 shifts · 76 slots across 58 staff</li>
+        <li>Every breakout gets <b>2 scanners</b> (Vfairs app check-in, headcount, speaker timecards, AV escalation to Encore)</li>
+        <li>Registration in 2-hour shifts: Tue 1–3 / 3–5, Wed 8–10 / 10–12</li>
+        <li><b>Wednesday pinch:</b> 2:30–4:00 needs 6 scanners across 3 rooms; keep Sales working the expo instead</li>
+        <li>Roster tab auto-counts shifts per person</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Still to come from Britt</h3>
+      <ul class="tight">
+        <li>Master minute-by-minute cue sheet: speaker walk-ons, AV cues, room flip owners</li>
+        <li>Onsite contact tree + radio/phone assignments</li>
+        <li>Session speaker names per slot (Rev.io speakers TBD)</li>
+        <li>General session dry-run + full AV test happen before Day 2 doors</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACTS ============ -->
+<section class="tab" id="tab-contacts">
+  <span class="sec-eyebrow">14 · Who to call</span>
+  <h2>Points of Contact</h2>
+  <div class="card">
+    <h3>Internal</h3>
+    <table class="t">
+      <tr><th>Who</th><th>Role for Summit</th><th>Contact</th></tr>
+      <tr><td><b>Britt Koltay</b></td><td>Summit co-lead · onsite escalation point for anything staff can't answer</td><td class="mono">britt.koltay@rev.io</td></tr>
+      <tr><td><b>Colby</b></td><td>Graphics — all design files due to him Aug 4</td><td>Teams / see directory</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Hotel — Renaissance Atlanta Waverly</h3>
+    <table class="t">
+      <tr><th>Who</th><th>What they own</th><th>Contact</th></tr>
+      <tr><td><b>Amanda Nguyen</b></td><td>Rev.io staff hotel rooms (room list, not the attendee block)</td><td class="mono">amanda.nguyen@renhotels.com</td></tr>
+      <tr><td><b>Anthony Jackson</b></td><td>Catering · late dietary changes</td><td class="mono">anthony.jackson@renhotels.com</td></tr>
+      <tr><td><b>Amy Larsen</b></td><td>Hotel event contact · menu finalization, BEOs</td><td>See Outlook thread</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Vendors</h3>
+    <table class="t">
+      <tr><th>Who</th><th>Company · scope</th><th>Contact</th></tr>
+      <tr><td><b>Sam Abel</b></td><td>Encore — all AV, general session production (quote 2127-5820)</td><td class="mono">sam.abel@encoreglobal.com</td></tr>
+      <tr><td><b>Steve Casey</b></td><td>Event Printworks — venue banners, install/remove</td><td class="mono">work@eventprintworks.com · 404-985-9066</td></tr>
+      <tr><td><b>Kenya Powell</b></td><td>Minuteman Press — print collateral: CEO letter, handbooks, table tents</td><td class="mono">ga210@minutemanpress.com</td></tr>
+      <tr><td><b>Amy Hokkanen</b></td><td>On-site event support (On-site support budget category, $4,250)</td><td class="mono">amyhokkanen@gmail.com</td></tr>
+      <tr><td><b>Waqar Hassan</b></td><td>Vfairs — registration platform, app, support</td><td class="mono">s.waqar@vfairs.com</td></tr>
+      <tr><td>C&amp;S Oyster House</td><td>VIP Dinner venue, Tue Sept 1</td><td>See Outlook thread</td></tr>
+      <tr><td><b>Kayla Wilson</b></td><td>Xfinity Club / Braves — Networking Reception venue, Wed Sept 2</td><td class="mono">kayla.wilson@braves.com</td></tr>
+      <tr><td>Jay McBain</td><td>Keynote speaker, via Omdia ($15K, locked)</td><td>Via Omdia</td></tr>
+    </table>
+    <p style="font-size:13.5px;margin-top:8px;color:var(--muted)">"See Outlook thread" = the working email chain has the direct contact; fill these cells in as part of the master onsite contact list (a run-of-show task).</p>
+  </div>
+</section>
+
+<!-- ============ OUTSTANDING ITEMS ============ -->
+<section class="tab" id="tab-open">
+  <span class="sec-eyebrow">15 · The loose ends</span>
+  <h2>Outstanding Items</h2>
+  <p class="sec-intro">Open as of July 23, 2026. This is the do-not-drop list.</p>
+  <div class="card">
+    <table class="t">
+      <tr><th>Item</th><th>Detail</th><th>When</th></tr>
+      <tr><td><b>Graphics to Colby</b></td><td>All graphics per the dimensions sheet</td><td class="dl">Aug 4</td></tr>
+      <tr><td><b>Room block cut-off</b></td><td>Attendee comms push before Passkey block closes</td><td class="dl">Aug 10</td></tr>
+      <tr><td><b>Team hotel rooms</b></td><td>45 staff rooms via Rev.io room list to Amanda Nguyen</td><td>ASAP</td></tr>
+      <tr><td><b>Internal KBUG</b></td><td>Scheduled Aug 6; deck/content to prep</td><td class="dl">Aug 6</td></tr>
+      <tr><td><b>Sponsor KBUG</b></td><td>Not yet scheduled or created</td><td>Open</td></tr>
+      <tr><td><b>Rev.io speakers per session</b></td><td>Final speaker names per session TBD</td><td>Open</td></tr>
+      <tr><td><b>Agenda to website</b></td><td>Agenda finalized but not yet on reviosummit.com</td><td>Open</td></tr>
+      <tr><td><b>Sponsor list on this page</b></td><td>Add the 16-row sponsor/package table when the tracker is current; retire or update the stale Notion tracker</td><td>Open</td></tr>
+      <tr><td><b>Vfairs sponsor pages</b></td><td>Collect sponsor contacts so pages can go live before app launch (week of Aug 15)</td><td class="dl">Pre Aug 15</td></tr>
+      <tr><td><b>Budget reconciles</b></td><td>A/V category vs signed contract; Speakers $10K over; four empty line-item sheets; log actuals</td><td>Open</td></tr>
+      <tr><td><b>Photo &amp; Video vendor</b></td><td>Still TBD at ~$12K; sign contract + build shot list</td><td>Open</td></tr>
+      <tr><td><b>Master onsite contact list</b></td><td>Fill remaining Contacts tab gaps: C&amp;S Oyster House + Amy Larsen</td><td>Pre-event</td></tr>
+      <tr><td><b>Run of Show + sponsor table</b></td><td>Britt's master run-of-show and the full sponsor list land on their tabs when final</td><td>Open</td></tr>
+    </table>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div style="height:3px;background:var(--grad);border-radius:2px;margin-bottom:18px;max-width:140px"></div>
+    <p><b>Rev.io Summit 2026 Operations Handoff</b> · Revay Deck Library version · Source handoff updated July 23, 2026 · Internal use only</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btns = document.querySelectorAll('nav.tabs button');
+  var secs = document.querySelectorAll('section.tab');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){ x.classList.remove('active'); });
+      secs.forEach(function(s){ s.classList.remove('active'); });
+      b.classList.add('active');
+      var t = document.getElementById('tab-' + b.getAttribute('data-tab'));
+      if (t) t.classList.add('active');
+      window.scrollTo({top:0, behavior:'instant'});
+    });
+  });
+})();
+</script>
+</body>
+</html>

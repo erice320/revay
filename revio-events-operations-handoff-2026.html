@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rev.io Events Operations Handoff · Revay Deck Library</title>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#080E1A; --surface:rgba(15,33,56,.72); --surface2:#101D31; --line:rgba(255,255,255,.1);
+ --text:#F8FBFF; --muted:#A1B0CB; --soft:#D7E2F5; --cyan:#00BCD4; --cyan2:#00E5FF;
+ --green:#69F0AE; --amber:#FFB74D; --amberbg:rgba(255,183,77,.12); --okbg:rgba(105,240,174,.12);
+ --ok:#69F0AE; --night:#080E1A; --paper:var(--bg); --mist:rgba(255,255,255,.05); --ink:var(--text);
+ --grad:linear-gradient(135deg,var(--cyan2),#7B9FFF);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:'Satoshi',system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:
+ radial-gradient(900px 520px at 15% -10%,rgba(0,229,255,.13),transparent 55%),
+ radial-gradient(760px 460px at 96% 4%,rgba(105,240,174,.09),transparent 54%),
+ var(--bg);line-height:1.55;font-size:16px;min-height:100vh}
+h1,h2,h3,.display{font-family:'Cabinet Grotesk',system-ui,sans-serif;letter-spacing:0}
+.mono,.dl{font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
+a{color:var(--cyan2);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--green)}
+.gradbar{height:4px;background:var(--grad)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+:focus-visible{outline:2px solid var(--cyan2);outline-offset:3px}
+header.hero{padding:clamp(42px,7vw,72px) 0 28px;background:transparent;border-bottom:1px solid var(--line)}
+.eyebrow,.sec-eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan2);font-weight:800}
+header.hero h1{font-size:clamp(34px,5vw,64px);font-weight:800;line-height:1.04;margin:10px 0 14px}
+header.hero h1 .tealdot{color:var(--cyan2)}
+header.hero p.lede,.sec-intro{max-width:76ch;color:var(--muted);font-size:17px}
+.source-note{margin-top:18px;max-width:860px;border:1px solid rgba(0,229,255,.22);background:rgba(0,188,212,.08);border-radius:8px;padding:12px 14px;color:var(--soft);font-size:13px}
+.statline,.quicklinks{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.stat,.quicklinks a{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:12px 14px;text-decoration:none}
+.stat .n{font-family:'Cabinet Grotesk',system-ui,sans-serif;font-weight:800;font-size:24px;color:var(--cyan2)}
+.stat .l{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800}
+nav.tabs,nav.top{position:sticky;top:0;background:rgba(8,14,26,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);z-index:50}
+nav.tabs .wrap,nav.top .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px clamp(18px,4vw,40px);-webkit-overflow-scrolling:touch}
+nav.tabs button,nav.top a{appearance:none;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;font-size:13px;font-weight:800;text-decoration:none;padding:8px 12px;border-radius:999px}
+nav.tabs button:hover,nav.top a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+nav.tabs button.active{color:var(--cyan2);border-color:rgba(0,229,255,.28);background:rgba(0,229,255,.1)}
+section.tab,section{padding:38px 0 18px}
+section.tab{display:none}
+section.tab.active{display:block}
+section.tab h2,section>.wrap>h2{font-size:clamp(25px,3vw,34px);font-weight:800;margin:6px 0 8px}
+.card,.placeholder,.runway,details.show{border:1px solid var(--line);border-radius:8px;background:var(--surface);box-shadow:0 18px 48px -28px rgba(0,229,255,.22)}
+.card,.placeholder{padding:20px 22px;margin-bottom:16px}
+.card h3,.placeholder h3{font-size:18px;font-weight:800;margin-bottom:9px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+ul.tight{padding-left:20px;margin:7px 0}
+ul.tight li{margin:6px 0;font-size:14.5px;color:var(--soft)}
+p,li,td,dd{color:var(--soft)}
+.tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:3px 9px;border-radius:999px;vertical-align:middle}
+.tag.open{background:var(--amberbg);color:var(--amber)}
+.tag.done{background:var(--okbg);color:var(--ok)}
+.tag.info{background:rgba(0,229,255,.1);color:var(--cyan2)}
+.dl{font-size:13px;font-weight:800;color:var(--cyan2);white-space:nowrap}
+table.t,table.deadlines{width:100%;border-collapse:separate;border-spacing:0 8px;font-size:13.5px;margin-top:6px}
+table.t th,table.deadlines th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 10px 2px}
+table.t td,table.deadlines td{padding:10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.045);vertical-align:top}
+table.t td:first-child,table.deadlines td:first-child{border-left:1px solid var(--line);border-radius:8px 0 0 8px}
+table.t td:last-child,table.deadlines td:last-child{border-right:1px solid var(--line);border-radius:0 8px 8px 0}
+table.t tr.total td{font-weight:800;border-color:rgba(0,229,255,.28)}
+.faq dt{font-weight:800;font-size:15px;margin-top:14px;color:var(--text)}
+.faq dd{margin:4px 0 0;color:var(--soft);font-size:14.5px}
+.faq h3{margin-top:22px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan2)}
+.placeholder{border-style:dashed;color:var(--soft)}
+.runway{margin:34px 0 8px;overflow:hidden}
+.runway .rw-head{display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:16px 18px 0}
+.runway h2{font-size:17px;font-weight:800}
+.runway .rw-key{font-size:11.5px;color:var(--muted)}
+.rw-scroll{display:flex;gap:0;overflow-x:auto;padding:18px 12px 20px;-webkit-overflow-scrolling:touch}
+.rw-stop{position:relative;min-width:132px;padding:0 10px}
+.rw-stop::before{content:'';position:absolute;top:7px;left:0;right:0;height:2px;background:var(--line)}
+.rw-stop:first-child::before{left:50%}.rw-stop:last-child::before{right:50%}
+.rw-dot{position:relative;width:14px;height:14px;border-radius:50%;margin:0 auto 8px;border:3px solid var(--bg);box-shadow:0 0 0 1px var(--line)}
+.seg-msp .rw-dot{background:var(--cyan2)}.seg-sec .rw-dot{background:#7B9FFF}.seg-tel .rw-dot{background:var(--green)}.seg-av .rw-dot{background:#A1B0CB}
+.rw-stop a{display:block;text-align:center;text-decoration:none;color:var(--text)}
+.rw-date{display:block;font-size:11px;color:var(--muted)}
+.rw-name{display:block;font-size:12.5px;font-weight:800;line-height:1.25;margin-top:2px}
+details.show{margin-bottom:14px;overflow:hidden}
+details.show[open]{border-color:rgba(0,229,255,.22)}
+details.show>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:16px 20px}
+details.show>summary::-webkit-details-marker{display:none}
+details.show>summary:hover{background:rgba(255,255,255,.04)}
+.show-when{font-size:12.5px;font-weight:800;color:var(--cyan2);min-width:118px}
+.show-name{font-family:'Cabinet Grotesk',system-ui,sans-serif;font-weight:800;font-size:17px;color:var(--text)}
+.show-loc{font-size:13px;color:var(--muted)}
+.show-seg{margin-left:auto}.chev{color:var(--muted);transition:transform .15s}
+details.show[open] .chev{transform:rotate(90deg)}
+.show-body{border-top:1px solid var(--line);padding:18px 20px 20px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px}
+@media(max-width:820px){.fields{grid-template-columns:1fr}}
+.field h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.field p,.field ul{font-size:14.5px}.field ul{padding-left:18px}.field li{margin:4px 0}
+.wide{grid-column:1/-1}.contactline{font-size:13.5px;color:var(--soft)}
+section.playbook{background:rgba(0,0,0,.18);padding-bottom:44px;margin-top:44px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pb-card{border:1px solid var(--line);border-radius:8px;background:var(--surface2);padding:20px 22px}
+.pb-card h3{color:var(--green);font-size:17px;margin-bottom:8px}
+.pb-card p,.pb-card li{font-size:14.5px;color:var(--soft)}
+.pb-card ul{padding-left:18px}.pb-card li{margin:5px 0}
+footer{background:transparent!important;color:var(--muted)!important;padding:34px 0 44px!important;margin-top:20px!important;border-top:1px solid var(--line)}
+footer .wrap{display:block!important}
+footer span{color:var(--text)!important}
+@media print{nav.top,nav.tabs{display:none}section.tab{display:block!important}details.show{page-break-inside:avoid}details.show:not([open]) .show-body{display:block}}
+
+</style>
+</head>
+<body>
+<div class="gradbar"></div>
+<nav class="top" aria-label="Sections">
+  <div class="wrap">
+    <a href="#start">Start here</a>
+    <a href="#season">Season runway</a>
+    <a href="#tools">Tools &amp; systems</a>
+    <a href="#shows">Show-by-show</a>
+    <a href="#process">Recurring processes</a>
+    <a href="#playbook">Playbook</a>
+    <a href="#contacts">Contacts</a>
+    <a href="#open">Open items</a>
+  </div>
+</nav>
+
+<header class="hero" id="start">
+  <div class="wrap">
+    <span class="eyebrow">Rev.io Events · Transition Doc · Updated July 22, 2026</span>
+    <h1>Trade Show Operations<span class="tealdot">.</span><br>The Handoff</h1>
+    <p class="lede">Everything you need to run Rev.io's trade show program: how the season works, the systems behind it, and a per-show operations card for every upcoming event. Built for whoever takes this role next. Read "Start here" and the Playbook first, then work show cards in date order.</p>
+      <div class="source-note"><b>Revay library version.</b> Library-owned version of the Events transition handoff. Source facts are handoff-derived, not live-verified in this generation run. Source handoff updated July 22, 2026.</div>
+    <div class="quicklinks">
+      <a href="https://thankful-island-068035610.7.azurestaticapps.net" target="_blank" rel="noopener">Events Hub (who's going, goals)</a>
+      <a href="https://www.notion.so/321a59b7e7b280c68e14f9647fd43d69" target="_blank" rel="noopener">Notion: 2026 Trade Shows</a>
+      <a href="https://www.notion.so/399a59b7e7b28001b36df894a869d117" target="_blank" rel="noopener">Notion: Logistics Outreach</a>
+      <a href="https://revio.sharepoint.com/:x:/s/Marketing990/IQBrAqoQGnyVT72Ug-zAPyUGAbsa4eWAEnpYYz-tlU6SjdQ?e=XM7ekz" target="_blank" rel="noopener">Trade Show Contacts.xlsx</a>
+      <a href="https://duaassistantbot-glitch.github.io/revio-leads-dashboards/" target="_blank" rel="noopener">Live Leads Dashboard</a>
+    </div>
+
+    <div class="runway" id="season">
+      <div class="rw-head">
+        <h2>Fall season runway — August onward</h2>
+        <span class="rw-key">● MSP&nbsp;&nbsp;● Security&nbsp;&nbsp;● Telecom&nbsp;&nbsp;● A/V &nbsp;·&nbsp; tap a stop to jump to its card</span>
+      </div>
+      <div class="rw-scroll">
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#channelcon"><span class="rw-date">AUG 3–5</span><span class="rw-name">ChannelCon</span></a></div>
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#xchange"><span class="rw-date">AUG 10–11</span><span class="rw-name">XChange</span></a></div>
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#ascii-toronto"><span class="rw-date">AUG 26–27</span><span class="rw-name">ASCII Toronto</span></a></div>
+        <div class="rw-stop seg-av"><span class="rw-dot"></span><a href="#cedia"><span class="rw-date">SEP 1–4</span><span class="rw-name">CEDIA Expo</span></a></div>
+        <div class="rw-stop seg-tel"><span class="rw-dot"></span><a href="#navigate"><span class="rw-date">SEP 8–11</span><span class="rw-name">Alianza Navigate</span></a></div>
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#canitcon"><span class="rw-date">SEP 9–11</span><span class="rw-name">CANITCON</span></a></div>
+        <div class="rw-stop seg-sec"><span class="rw-dot"></span><a href="#gsx"><span class="rw-date">SEP 14–16</span><span class="rw-name">GSX</span></a></div>
+        <div class="rw-stop seg-sec"><span class="rw-dot"></span><a href="#ain"><span class="rw-date">SEP 22–25</span><span class="rw-name">AIN Exec Summit</span></a></div>
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#scalecon"><span class="rw-date">SEP 24–26</span><span class="rw-name">ScaleCon</span></a></div>
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#mspsummit"><span class="rw-date">SEP 28–30</span><span class="rw-name">MSP Summit</span></a></div>
+        <div class="rw-stop seg-tel"><span class="rw-dot"></span><a href="#later"><span class="rw-date">OCT 26–29</span><span class="rw-name">Crexendo UGM</span></a></div>
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#later"><span class="rw-date">OCT 27–29</span><span class="rw-name">NinjaOne MSPNXT</span></a></div>
+        <div class="rw-stop seg-sec"><span class="rw-dot"></span><a href="#later"><span class="rw-date">NOV 4–5</span><span class="rw-name">ISC East</span></a></div>
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#later"><span class="rw-date">NOV 4–6</span><span class="rw-name">IT Nation</span></a></div>
+        <div class="rw-stop seg-sec"><span class="rw-dot"></span><a href="#later"><span class="rw-date">NOV 12</span><span class="rw-name">OSFAA</span></a></div>
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#pax8-vancouver"><span class="rw-date">NOV 19</span><span class="rw-name">Pax8 Roadshow Vancouver</span></a></div>
+        <div class="rw-stop seg-tel"><span class="rw-dot"></span><a href="#later"><span class="rw-date">NOV TBD</span><span class="rw-name">Yeastar</span></a></div>
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#later"><span class="rw-date">DEC 7–8</span><span class="rw-name">WOTC East</span></a></div>
+        <div class="rw-stop seg-msp"><span class="rw-dot"></span><a href="#pax8-ftlauderdale"><span class="rw-date">DEC 15</span><span class="rw-name">Pax8 Roadshow Ft Lauderdale</span></a></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="role">
+  <div class="wrap">
+    <span class="sec-eyebrow">01 · Start here</span>
+    <h2>How this role works</h2>
+    <p class="sec-intro">Rev.io sponsors roughly 35 trade shows a year across four segments: MSP, Security, Telecom, and A/V. This role owns all of it end to end.</p>
+    <div class="grid2">
+      <div class="card">
+        <h3>What you own</h3>
+        <ul class="tight">
+          <li>Full logistics per show: contracts, booth ordering, shipping, electrical, lead retrieval, hotels, travel coordination</li>
+          <li>Pre- and post-event communication, internal (team briefs) and external (HubSpot lead emails)</li>
+          <li>Booth material design and ordering, team apparel, swag inventory</li>
+          <li>All sponsorship deliverables per show (logos, ads, passes, listings)</li>
+          <li>iCapture platform administration and lead flow into HubSpot</li>
+          <li>On-site booth setup at select shows</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>The annual rhythm</h3>
+        <ul class="tight">
+          <li><b>Contract season (winter):</b> sign next-year agreements, hold booths early for pricing (ISC East / ISC West pattern)</li>
+          <li><b>Per show, ~8 weeks out:</b> exhibitor kit lands, order services at advance pricing, book travel around published move-in/move-out</li>
+          <li><b>~4 weeks out:</b> ship freight to advance warehouse, prep iCapture, send team brief</li>
+          <li><b>Week of:</b> confirm freight arrival and power drop, run the show</li>
+          <li><b>Week after:</b> lead cleanup and routing, follow-up emails, team survey, debrief</li>
+        </ul>
+      </div>
+      <div class="card wide" style="grid-column:1/-1">
+        <h3>Support structure</h3>
+        <p>The events lead owns all logistics, including the show-contact outreach: emailing every show for exhibitor kits, deadlines, shipping, electric, and lead retrieval info, tracked in the <a href="https://www.notion.so/399a59b7e7b28001b36df894a869d117" target="_blank" rel="noopener">Notion outreach tracker</a> (outreach email template is on that page). Phoebe Fogerty Bell (Channel intern) assists with specific tasks as assigned and holds admin access to the ASCII Cvent profile and the MSP Summit Informa portal, but logistics is not her role. The tracker workflow itself is how kits and deadlines stop slipping through the cracks; whoever takes this role keeps running it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="wrap">
+    <span class="sec-eyebrow">02 · Systems</span>
+    <h2>Tools &amp; systems</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>iCapture by Cvent — lead capture</h3>
+        <ul class="tight">
+          <li><b>API shows:</b> badge scan works natively. <b>Non-API shows:</b> use the simplified lead form (fewer fields) to cut manual entry</li>
+          <li><b>ZoomInfo enrichment:</b> capture first name, last name, company; ZoomInfo auto-fills email, phone, title, department. Validated by Usman and Brook at ASCII</li>
+          <li>Capture flow is ordered to feel conversational, not transactional. Keep it that way</li>
+          <li><b>Before every show:</b> set up the form and QA the full flow before the team is on the floor</li>
+          <li>Known friction: the platform has caused recurring problems. A review was held; there is an internal champion dynamic, so frame future concerns as process improvement, not verdicts</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>HubSpot — email &amp; RSVPs</h3>
+        <ul class="tight">
+          <li>Pre-event "come see us" emails and post-event thank-you + <b>schedule a demo</b> CTA sequence, templated with bracketed placeholders per show</li>
+          <li>RSVP pulls: filter on <span class="mono">recent_conversion_event_name</span> AND <span class="mono">first_conversion_event_name</span> (dual filterGroups) to catch all registrants; direct list membership filtering needs a permission we don't have</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Notion — operations hub</h3>
+        <ul class="tight">
+          <li><a href="https://www.notion.so/321a59b7e7b280c68e14f9647fd43d69" target="_blank" rel="noopener">2026 Rev.io Trade Shows</a> is the hub; each event gets a page from the template (basics, links, expo schedule, staffing, assets, goals, lead capture, map)</li>
+          <li>The hub has an "Event Page Checklist" toggle listing everything a complete event page needs</li>
+          <li><a href="https://www.notion.so/399a59b7e7b28001b36df894a869d117" target="_blank" rel="noopener">Event Logistics Outreach</a> holds the show-contact database and Phoebe's outreach workflow</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Events Hub site — maintenance</h3>
+        <ul class="tight">
+          <li>The <a href="https://thankful-island-068035610.7.azurestaticapps.net" target="_blank" rel="noopener">Events Hub</a> is the sales-facing source of truth: staff per show (Person filter), booth numbers/sizes, speaking slots, lead and opp goals, 2025 benchmark results</li>
+          <li>Edit Mode on the page itself; changes sync to GitHub repo <span class="mono">christinaoudin5/rev-events-hub26</span> via a fine-grained personal access token (Contents: Read &amp; Write), stored in your browser</li>
+          <li>The <a href="https://duaassistantbot-glitch.github.io/revio-leads-dashboards/" target="_blank" rel="noopener">live leads dashboard</a> renders client-side; export data directly rather than scraping it</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="shows">
+  <div class="wrap">
+    <span class="sec-eyebrow">03 · Show-by-show operations</span>
+    <h2>Upcoming shows, August onward</h2>
+    <p class="sec-intro">One card per show: schedule, staff, expo hours, setup/breakdown, lead retrieval, booth materials &amp; shipping, electrical, contacts. Amber tags are live open items. Where staff isn't listed, use the Events Hub Person filter.</p>
+
+    <!-- CHANNELCON -->
+    <details class="show" id="channelcon" open>
+      <summary><span class="show-when">AUG 3–5</span><div><span class="show-name">CompTIA ChannelCon (GTIA)</span><br><span class="show-loc">Marriott Marquis San Diego · MSP · Booth 802 · 10x10 structure</span></div><span class="chev">›</span></summary>
+      <div class="show-body">
+        <div class="fields">
+          <div class="field"><h4>Event schedule</h4>
+            <ul><li><b>Day 1 (Aug 3):</b> registration 7:00a–6:30p, workshops + vendor education, welcome lunch 12–1, GTIA keynote 4:15, Welcome Reception in Tech Vendor Fair 5:30–7:30p</li>
+            <li><b>Day 2 (Aug 4):</b> breakfast 7:30a, keynote 8:30a, vendor education + community insights, reception in Vendor Fair 4:00–6:15p, ChannelCon Party 6:30–10:00p</li>
+            <li><b>Day 3 (Aug 5):</b> breakfast 8:30a, keynotes + insights, lunch in Vendor Fair 12:30–2:30p, closing 4–5p, vendor dinners 6–8p</li></ul></div>
+          <div class="field"><h4>Staff attending</h4>
+            <p><b>Final list (Jul 22):</b> Evan, Brent, Brook, Ardit, Bryan, Phoebe</p>
+            <p style="margin-top:6px"><b>Goals:</b> 30 leads / 18 opps · Speaking: TBD slot</p>
+            <p style="margin-top:6px"><span class="tag info">SIDE EVENT</span> After-hours party co-partnering with NinjaOne: <b>The Whiskey House</b>, 420 Third Ave, San Diego · <b>Mon Aug 3, 7:30p–12a</b> · <a href="https://act.rev.io/events/revio-san-diego-msp-leaders-reception" target="_blank" rel="noopener">RSVP landing page</a> · <a href="https://www.notion.so/ChannelCon-2026-MSP-Leaders-Reception-391a59b7e7b2813db345d68031da2b74" target="_blank" rel="noopener">RSVP tracker (Notion)</a></p></div>
+          <div class="field"><h4>Setup &amp; breakdown</h4>
+            <ul><li>Move-in/installation: <span class="dl">Mon Aug 3, 8:00a–4:00p</span>. All empty containers off the show floor by <b>3:00p</b></li>
+            <li>Vendor Fair hours: <b>Mon 5:30–7:30p · Tue 4:00–6:15p · Wed 12:30–2:30p</b></li>
+            <li>Move-out: <span class="dl">Wed Aug 5, 2:30–4:30p</span>. <b>Freight force 4:00p</b>; all carriers check in @ Marriott. Pre-book outbound via Viper Transportation order form if needed</li></ul></div>
+          <div class="field"><h4>Lead retrieval</h4>
+            <p>Cvent is the show's lead vendor (exhibitor kit pages 26–27). Run iCapture per standard flow.</p>
+            <p style="margin-top:6px"><b>iCapture install code:</b> <span class="mono">3FC6E3</span> (valid until Aug 12, 2026). Cvent iCapture app → Enter Install Code.</p></div>
+          <div class="field"><h4>Booth materials &amp; shipping</h4>
+            <ul><li><b>NEW tablecloth + 10x10 structure</b> shipping direct via UPS: <span class="mono">1Z31XA390397378029</span></li>
+            <li>Vinyl hardwood floors purchased for the booth through Viper Tradeshow Services</li>
+            <li>Advance warehouse: Viper Tradeshow Services, 6150 E. Tropical Parkway Suite 115, Las Vegas NV 89115. Receiving Jul 6–30; arrive by <span class="dl">Jul 27</span> to avoid late fees</li>
+            <li>Label: "2026 ChannelCon – Rev.io &amp; Booth #" plus carrier airbill. Consolidate into one shipment (material handling fees apply per shipment)</li>
+            <li>Share tracking with Krista for the Quick Bill payment link</li>
+            <li>8x10 booths include drape, 6' skirted table, 2 chairs, wastebasket, ID sign</li></ul></div>
+          <div class="field"><h4>Electrical &amp; internet</h4>
+            <ul><li>Electrical: <b>10 amp to back of booth</b> via Encore (EventNow). <span class="tag done">ORDERED</span> Questions: Eddie Avila, 619.962.4952, eddie.avila@encoreglobal.com</li>
+            <li>Internet: Marriott. Tom Ulrich, 410.649.7009, Tom.Ulrich@marriott.com</li></ul></div>
+          <div class="field wide"><h4>Contacts</h4>
+            <p class="contactline"><b>GSC:</b> Krista D'Amico, Viper Tradeshow Services · krista@vipertradeshow.com · 847.426.3100 · Exhibitor kit + shipping label + Viper transport form are attachments on her reminder emails</p></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- XCHANGE -->
+    <details class="show" id="xchange">
+      <summary><span class="show-when">AUG 10–11</span><div><span class="show-name">XChange</span><br><span class="show-loc">Gaylord National Resort &amp; Conv. Center, Oxon Hill MD · MSP · Booth 223 · 10x10</span></div><span class="chev">›</span></summary>
+      <div class="show-body">
+        <div class="fields">
+          <div class="field"><h4>Expo hours (may shift slightly as agenda finalizes)</h4>
+            <ul><li><b>Mon Aug 10:</b> 5:45–7:45p</li>
+            <li><b>Tue Aug 11:</b> 4:45–6:45p</li></ul></div>
+          <div class="field"><h4>Setup &amp; breakdown</h4>
+            <ul><li>Set-up: <span class="dl">Mon Aug 10, 10:00a–4:30p</span></li>
+            <li>Teardown: <span class="dl">Tue Aug 11, 6:45–8:00p</span> (right after close)</li></ul></div>
+          <div class="field"><h4>Electrical</h4>
+            <ul><li>Ordered direct through the venue: Gaylord National order <span class="mono">#33819</span>, Electrical Package B (20amp + power strip + extension cord), placed at back of booth. <span class="tag done">PAID $480.82 · JUL 20</span></li>
+            <li>Venue exhibits desk: GNExhibits@GaylordHotels.com · 301-965-3710</li></ul></div>
+          <div class="field"><h4>Booth materials &amp; shipping</h4>
+            <ul><li>10x10 setup. Carpet &amp; cabinet ordered. 1M cabinet graphic handled with Kayla Heifner (Freeman)</li>
+            <li>Exploring shipping new items straight from the warehouse (Brook copied on the email)</li>
+            <li><b>Move-out rule:</b> anything left in the booth at the end of published move-out that isn't boxed and labeled for outbound shipping is treated as trash</li></ul></div>
+          <div class="field"><h4>Lead retrieval</h4><p>iCapture event is set up and the <b>API is purchased</b>: badge scanning works natively, no manual-entry fallback needed.</p></div>
+          <div class="field"><h4>Staff &amp; registrations</h4>
+            <p>Brook Lee and Jamie Butler are registered. Sponsorship cost $11.5k. Update the hub's "Booth TBD" to <b>223</b>.</p></div>
+          <div class="field wide"><h4>Exhibitor portal login</h4>
+            <p class="contactline"><a href="https://channelco.meetmax.com/sched/event_137639/entity_login.html?event_id=137639&amp;username=XCHRevio&amp;confirmation_number=WVNRDB4X4NMV" target="_blank" rel="noopener">MeetMax login</a> · Username: <span class="mono">XCHRevio</span> · Confirmation code: <span class="mono">WVNRDB4X4NMV</span></p></div>
+          <div class="field wide"><h4>Contacts</h4>
+            <p class="contactline"><b>Show:</b> Robin Smith, The Channel Company · rsmith@thechannelcompany.com · badges and sponsor logistics · <b>Freeman:</b> Kayla Heifner · Kayla.Heifner@freeman.com</p></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- ASCII TORONTO -->
+    <details class="show" id="ascii-toronto">
+      <summary><span class="show-when">AUG 26–27</span><div><span class="show-name">ASCII Edge Toronto</span><br><span class="show-loc">Delta Marriott Conference Center Toronto · 655 Dixon Road, Toronto ON M9W 1J3 · MSP</span></div><span class="chev">›</span></summary>
+      <div class="show-body">
+        <div class="fields">
+          <div class="field"><h4>Event schedule</h4>
+            <ul><li><b>Preday:</b> Aug 26</li>
+            <li><b>Main day:</b> Aug 27</li>
+            <li><b>Setup:</b> Aug 27 morning</li></ul></div>
+          <div class="field"><h4>Staff attending</h4>
+            <p>Cam Sharpe and Brook Lee — both registered</p></div>
+          <div class="field"><h4>Booth materials &amp; shipping</h4>
+            <ul><li>Send: tablecloth, 2 popups, swag, sell sheets, lit rack</li>
+            <li>Ship-to label:<br><span class="mono">ATTN: [YOUR COMPANY NAME] / ASCII EDGE<br>HOTEL NAME<br>HOTEL ADDRESS</span></li></ul></div>
+          <div class="field"><h4>Hotel</h4>
+            <p><a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1763756381098&amp;key=GRP&amp;app=resvlink" target="_blank" rel="noopener">Hotel block reservation link (Marriott)</a></p></div>
+          <div class="field"><h4>Speaking</h4><p>Panel on Day 2</p></div>
+          <div class="field"><h4>To do</h4>
+            <p><span class="tag open">TO DO</span> Purchase badge kit · set up the iCapture event</p></div>
+          <div class="field wide"><h4>Contact</h4>
+            <p class="contactline"><b>Jessie Devine</b>, VP Channel Development, The ASCII Group · jdevine@ascii.com · 800-394-2724</p></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- CEDIA -->
+    <details class="show" id="cedia">
+      <summary><span class="show-when">SEP 1–4</span><div><span class="show-name">CEDIA Expo / CIX</span><br><span class="show-loc">Colorado Convention Center, 700 14th St, Denver · A/V · Booth 2744</span></div><span class="show-seg tag open">ELECTRICAL NOT ORDERED</span><span class="chev">›</span></summary>
+      <div class="show-body">
+        <div class="fields">
+          <div class="field"><h4>Expo hall hours</h4>
+            <ul><li><b>Wed Sep 2:</b> 9:00a–5:00p</li>
+            <li><b>Thu Sep 3:</b> 9:00a–5:00p</li>
+            <li><b>Fri Sep 4:</b> 9:00a–3:00p</li></ul></div>
+          <div class="field"><h4>Setup &amp; breakdown</h4>
+            <ul><li>Set-up: <span class="dl">Tue Sep 1, 8:00a–8:00p</span> (all day)</li>
+            <li>Take-down: <span class="dl">Fri Sep 4, 3:00p</span>, right at expo close</li></ul></div>
+          <div class="field"><h4>Links</h4>
+            <ul><li><a href="https://cediaexpo.com/wp-content/uploads/2026/07/CEDIA-2026-Emerald-ESM-7.7.pdf" target="_blank" rel="noopener">Exhibitor Services Manual (PDF)</a></li>
+            <li><a href="https://cedia.a2zinc.net/CEDIA2026/Public/eventmap.aspx" target="_blank" rel="noopener">Floor plan</a></li>
+            <li><a href="https://cediaexpo.com/hotel-travel/book-your-hotel/" target="_blank" rel="noopener">Hotel booking</a></li></ul></div>
+          <div class="field"><h4>To do</h4>
+            <p><span class="tag open">TO DO</span> Order furnishings (Freeman) · order electrical (venue; advance ends Aug 11) · arrange shipments</p></div>
+          <div class="field"><h4>Electrical <span class="tag open">OPEN</span></h4>
+            <ul><li><b>Not included with booth space.</b> Order direct through the venue (not the GSC) at the CCC exhibitor services portal</li>
+            <li>Advance pricing deadline <span class="dl">Aug 11</span>; rates increase Aug 12 and again <span class="dl">Aug 25</span> (+20% onsite)</li>
+            <li>Submit a floor plan (booth orientation, outlet placement, dimensions) at least <b>2 weeks before move-in</b> or installation is delayed</li>
+            <li>Do not touch venue floor ports or wall outlets: $200 onsite fine</li>
+            <li>No order was on file as of Jul 13 — this is the most urgent item on this card</li></ul></div>
+          <div class="field"><h4>Staff attending</h4>
+            <p>Bryan Bettiol, Patrick Davies, Jaylin Johnson (Sales), Jake Mitchell (Channel)</p>
+            <p style="margin-top:6px"><b>Goals:</b> 80 leads / 48 opps · 10x10 booth · Bar at booth</p></div>
+          <div class="field"><h4>Booth &amp; attendees</h4>
+            <ul><li>Exhibitor dashboard + AV-iQ listings via Levy Lira</li>
+            <li>Free Expo-Only passes available to invite customers (exhibitor bulletin program)</li></ul></div>
+          <div class="field wide"><h4>Contacts</h4>
+            <p class="contactline"><b>Electrical:</b> Hunter Downing, CCC Exhibitor Services · hdowning@denverconvention.com · 303.228.8027 · <b>Sales/booth:</b> cediasales@emeraldeex.com · <b>Dashboard/AV-iQ:</b> Levy Lira · Levy.Lira@emeraldX.com</p></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- NAVIGATE -->
+    <details class="show" id="navigate">
+      <summary><span class="show-when">SEP 8–11</span><div><span class="show-name">Alianza Navigate</span><br><span class="show-loc">Fairmont Scottsdale Princess, Princess Ballroom · 7575 E Princess Dr, Scottsdale AZ · Telecom · Turnkey · Split with Suretax</span></div><span class="show-seg tag open">GRAPHICS DEADLINE IN KIT</span><span class="chev">›</span></summary>
+      <div class="show-body">
+        <div class="fields">
+          <div class="field"><h4>Registration</h4>
+            <ul><li>Register attendees with code <span class="mono">REVIO2026</span> (Navigator sponsors: 2 regs; Captain: 4). Hotel booking link appears after registration</li>
+            <li>Customer/prospect code <span class="mono">REVIO-100</span> saves them $100 on registration — use in outreach</li></ul></div>
+          <div class="field"><h4>Exhibit hall schedule</h4>
+            <ul><li>Move-in: <span class="dl">Tue Sep 8, 12:00–5:00p</span></li>
+            <li>Hall hours <b>Wed Sep 9:</b> 12:00–1:00p and 5:00–6:15p</li>
+            <li>Hall hours <b>Thu Sep 10:</b> 12:00–1:15p and 5:00–6:00p</li>
+            <li>Move-out: <span class="dl">Thu Sep 10, 6:00–11:59p</span> (hall wraps Thursday night)</li></ul></div>
+          <div class="field"><h4>Shipping — advance warehouse</h4>
+            <ul><li>Deadline <span class="dl">Sep 4</span>; advance shipments strongly encouraged</li>
+            <li>Ship to:<br><span class="mono">Company Name &amp; Booth Number<br>Navigate Summit 2026<br>c/o Convention Solutions + Innovation<br>3701 W. Cambridge Avenue<br>Phoenix, AZ 85009</span></li></ul></div>
+          <div class="field"><h4>Electric ordering</h4>
+            <p><a href="https://eventnow.encoreglobal.com/myevents/result/index/show_id/f4c000c3-6d6a-f111-ab0b-7ced8ddbc213/" target="_blank" rel="noopener">Encore EventNow ordering link</a></p></div>
+          <div class="field"><h4>Staff attending</h4>
+            <p>Jamie Butler (Sales), Usman Zahoor (Channel)</p>
+            <p style="margin-top:6px"><b>Goals:</b> 30 leads / 18 opps · Speaking: TBD + Connects Dinner</p></div>
+          <div class="field"><h4>Booth materials</h4>
+            <ul><li>Turnkey booth; graphics support needed. The <b>Exhibitor Kit (v7.15)</b> has the full timeline. <b>Miss the graphics deadline and the booth prints with a generic Navigate logo</b></li>
+            <li>Booth location: email Scott with preferred spot after sponsorship payment (first come, by availability)</li>
+            <li>Logos due to Scott: black/white + full color, .png or .eps</li></ul></div>
+          <div class="field wide"><h4>Contacts</h4>
+            <p class="contactline"><b>Show:</b> Scott Wilson, Director of Partnerships, Alianza · scott.wilson@alianza.com · 801-735-5895 · <b>Exhibitor questions, logistics, graphics:</b> Molly Bitton, Navigate Summit Exhibitor Services · (801) 690-1736 (call or text) · molly@hymevents.com · Agreement signed 4/29</p></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- CANITCON -->
+    <details class="show" id="canitcon">
+      <summary><span class="show-when">SEP 9–11</span><div><span class="show-name">CANITCON</span><br><span class="show-loc">Calgary TELUS Convention Centre · MSP · Booth 0325</span></div><span class="chev">›</span></summary>
+      <div class="show-body">
+        <div class="fields">
+          <div class="field"><h4>Booth ordering</h4>
+            <ul><li>GSC: Global Convention Services · portal <span class="mono">order.globalconvention.ca</span></li>
+            <li>Advance price deadline <span class="dl">Aug 20</span> · final order deadline <span class="dl">Sep 3</span> · all orders paid in full before services are provided</li>
+            <li>Only the main booth contact has portal access; email Exhibitor Services to add teammates</li></ul></div>
+          <div class="field"><h4>Staff attending</h4>
+            <p>Brook Lee (Channel)</p>
+            <p style="margin-top:6px"><b>Goals:</b> 25 leads / 15 opps · Table (Emerging tier) · Speaking: 60-sec fast pitch</p></div>
+          <div class="field"><h4>Lead retrieval &amp; platform</h4>
+            <ul><li>Event platform is <b>Whova</b>: company profile setup required, exhibitor lead capture runs through it</li>
+            <li>Trevor's shared folder has the exhibitor kit + vendor resources</li></ul></div>
+          <div class="field"><h4>Hotel</h4>
+            <p>Room block update sent Jul 21 (block filling). <b>Scam warning on file:</b> someone impersonated the CanITCon team about hotel bookings in May. Book only through official links from Trevor/Whova.</p></div>
+          <div class="field"><h4>Shipping (cross-border)</h4>
+            <p>Canadian show: build in customs time for freight, same as Toronto. Coordinate with Global Convention Services on advance receiving.</p></div>
+          <div class="field wide"><h4>Contacts</h4>
+            <p class="contactline"><b>Show:</b> Trevor, The CanIT Collective · Trevor@thecanitcollective.ca · <b>GSC:</b> Devisha Singh, Global Convention Services · dsingh@globalconvention.ca · 403-218-7893</p></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- GSX -->
+    <details class="show" id="gsx">
+      <summary><span class="show-when">SEP 14–16</span><div><span class="show-name">GSX (ASIS)</span><br><span class="show-loc">Georgia World Congress Center, Atlanta · Security · Home turf</span></div><span class="show-seg tag open">DEADLINE-DENSE</span><span class="chev">›</span></summary>
+      <div class="show-body">
+        <div class="fields">
+          <div class="field wide"><h4>Deadline stack — work top to bottom</h4>
+            <table class="deadlines">
+              <tr><th>Date</th><th>Item</th><th>Through</th></tr>
+              <tr><td class="dl">AUG 5</td><td>Booth design approval (booths 400+ sq ft)</td><td>Exhibitor Resource Center</td></tr>
+              <tr><td class="dl">AUG 12</td><td>Rigging · in-booth labor · service kit early bird</td><td>GWCC / Freeman</td></tr>
+              <tr><td class="dl">AUG 14</td><td>Exhibitor-Appointed Contractor forms (if using an EAC)</td><td>ERC / Smartsheet</td></tr>
+              <tr><td class="dl">AUG 17</td><td>Lead retrieval advance pricing</td><td>MCI</td></tr>
+              <tr><td class="dl">AUG 24</td><td>Booth electric</td><td>Venue</td></tr>
+              <tr><td class="dl">AUG 26</td><td>In-booth catering</td><td>Sodexo</td></tr>
+              <tr><td class="dl">SEP 2</td><td>Advance warehouse shipping</td><td>Freeman</td></tr>
+            </table></div>
+          <div class="field"><h4>Setup &amp; breakdown — plan flights around this</h4>
+            <ul><li>All booths set by <span class="dl">5:00p Sun Sep 13</span>. <b>No setup Monday Sep 14</b></li>
+            <li><b>No breakdown before 2:00p Wed Sep 16.</b> ASIS makes no exceptions for travel schedules</li></ul></div>
+          <div class="field"><h4>Compliance &amp; badges</h4>
+            <ul><li>Certificate of Insurance required, in force <b>Sep 9–18</b>, ASIS International + GWCCA listed as additional insured, verified through the Rainprotection portal</li>
+            <li>Register staff booth badges via the "Housing, Registration, and Lead Retrieval" ERC tile; My Show Planner launched late July</li>
+            <li>Glean-In invite codes: free Exhibit Hall passes or $100 off All Access for customers; you get the list of who registered with your code</li></ul></div>
+          <div class="field"><h4>Staff attending</h4>
+            <p>Bryan Bettiol, Jake Borah, Patrick Davies (Sales), Jake Mitchell (Channel), Matt V. (Elevate)</p>
+            <p style="margin-top:6px"><b>Goals:</b> 40 leads / 24 opps · 10x10</p>
+            <p style="margin-top:6px"><span class="tag open">HUB FIX</span> The Events Hub lists GSX as San Antonio, Sep 21–23. ASIS emails confirm GWCC Atlanta, Sep 14–16. Correct the hub entry.</p></div>
+          <div class="field wide"><h4>Contacts</h4>
+            <p class="contactline"><b>Exhibits:</b> exhibits@asisonline.org · <b>Directory listing:</b> P. Heaps, Map Your Show · PHeaps@MapYourShow.com · <b>Sponsorship/ads:</b> Cleo Chitester, ASIS · cleo.chitester@asisonline.org · <b>Catering:</b> Z. Turnipseed, GWCC · zturnipseed@gwcc.com</p></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- AIN -->
+    <details class="show" id="ain">
+      <summary><span class="show-when">SEP 22–25</span><div><span class="show-name">AIN Executive Summit</span><br><span class="show-loc">The Don CeSar, St. Pete Beach FL · Security · Tabletop</span></div><span class="chev">›</span></summary>
+      <div class="show-body">
+        <div class="fields">
+          <div class="field"><h4>Event schedule</h4>
+            <ul><li><b>Arrival, Tue Sep 22:</b> plan to be onsite Tuesday; registration 10:00a–5:00p</li>
+            <li><b>Wed &amp; Thu mornings:</b> Partner Showcases 8:00–10:00a, Educational Tracks after</li>
+            <li><b>Thu Sep 24:</b> Outdoor Dinner Reception 6:00–8:00p; plan to stay through Thursday night</li>
+            <li><b>Departure, Fri Sep 25:</b> buses leave Synergy for the airport at <b>noon</b>; book afternoon flights out</li></ul></div>
+          <div class="field"><h4>Staff attending</h4><p><b>Final:</b> Jake Mitchell and Daniel Gomez. Hotel block via the Passkey link in Sandy's emails. Cost &amp; table: get with Jake.</p></div>
+          <div class="field"><h4>How AIN runs</h4>
+            <ul><li>Sandy Cobb sends "housekeeping" emails with everything as the show nears (raffle item ask is standard — plan a raffle item)</li>
+            <li>Power/booth layout is managed by the show, not a separate exhibitor order; confirm your table's power in Sandy's layout</li>
+            <li>Registration runs on Cvent; lead retrieval licenses purchased through the show (chase the license email if it doesn't arrive; sender may need whitelisting)</li></ul></div>
+          <div class="field"><h4>Setup</h4><p>Tablecloth &amp; popups, swag, etc. Table power comes via the show's layout; confirm with Sandy.</p></div>
+          <div class="field wide"><h4>Contacts</h4>
+            <p class="contactline"><b>Sandy Cobb</b>, AiN Group · Sandy.Cobb@aingroup.com · main show contact · Evan Cornelissen (evan.cornelissen@aingroup.com) for registration/lead license issues</p></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- SCALECON -->
+    <details class="show" id="scalecon">
+      <summary><span class="show-when">SEP 24–26</span><div><span class="show-name">ScaleCon</span><br><span class="show-loc">San Diego · MSP</span></div><span class="show-seg tag open">INVOICE OVERDUE</span><span class="chev">›</span></summary>
+      <div class="show-body">
+        <div class="fields">
+          <div class="field"><h4>Money first <span class="tag open">OPEN</span></h4>
+            <p>Invoice <span class="mono">INV-0097</span> for <b>$13,000</b> (Tech Tribe Operations LLC dba ScaleCon) has been overdue since <span class="dl">Jul 2</span>; Xero reminders arrive weekly. Sponsorship agreement was signed via Adobe Sign on Jul 10. Get the invoice paid through AP before the show.</p></div>
+          <div class="field"><h4>Booth &amp; lead retrieval</h4>
+            <ul><li>Runs on the <b>Cvent exhibitor portal</b> ("Welcome to ScaleCon26" email, Jul 21): purchase and manage services after logging in</li>
+            <li>Sponsor FAQ answers most logistics questions: <span class="mono">scalecon.com/sponsors-faqs</span></li>
+            <li>Phoebe is on the sponsor email sequence for ongoing info</li></ul></div>
+          <div class="field"><h4>Staff attending</h4>
+            <p>Usman Zahoor, Brook Lee (Channel)</p>
+            <p style="margin-top:6px"><b>Goals:</b> 25 leads / 15 opps · 10x10 Bronze</p>
+            <p style="margin-top:6px"><span class="tag open">HUB FIX</span> The Events Hub lists ScaleCon as New Orleans, Sep 15–17; the exhibitor reference doc says San Diego, Sep 24–26. Confirm against the signed agreement and fix whichever is wrong.</p></div>
+          <div class="field wide"><h4>Contacts</h4>
+            <p class="contactline"><b>Sponsorship:</b> Taher Hamid · Taher@msp-camp.com · <b>Contracts &amp; invoices:</b> Genesis Rosado · Genesis@msp-camp.com</p></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- MSP SUMMIT -->
+    <details class="show" id="mspsummit">
+      <summary><span class="show-when">SEP 28–30</span><div><span class="show-name">MSP Summit (Fall)</span><br><span class="show-loc">Orlando FL · MSP · Informa</span></div><span class="chev">›</span></summary>
+      <div class="show-body">
+        <div class="fields">
+          <div class="field"><h4>Portal &amp; team</h4>
+            <ul><li>Everything runs through the Informa exhibitor portal; add team members from the main portal page after login. Phoebe has access</li>
+            <li>Ops contact: CPCustomerSuccess@informa.com</li></ul></div>
+          <div class="field"><h4>Staff attending</h4>
+            <p>Connor Flynn, Tony Mehner (Sales), Brook Lee, Jake Mitchell (Channel), Josh Owen (CAIO)</p>
+            <p style="margin-top:6px"><b>Goals:</b> 35 leads / 21 opps · 10x10</p></div>
+          <div class="field"><h4>Hotels</h4>
+            <p>Book via Passkey: <span class="mono">book.passkey.com/go/MSPSummit2026</span>. Housing questions: Nikki, Convention Housing Partners · nikki@chphousing.com</p></div>
+          <div class="field wide"><h4>Contacts</h4>
+            <p class="contactline"><b>Sponsor marketing (PAC competition, video features):</b> Gia Harrison, Informa · Gia.Harrison@informa.com · Contract signed 1/23 via Informa (Justin Norman)</p></div>
+        </div>
+      </div>
+    </details>
+
+    <h2 id="later" style="font-size:20px;margin:26px 0 4px">Later season: October – December</h2>
+    <p class="sec-intro">Hub data (staff, goals, notes). Exhibitor kits for these haven't landed yet; keep working the outreach tracker to fill in logistics as they publish.</p>
+
+    <details class="show" id="crexendo">
+      <summary><span class="show-when">OCT 26–29</span><div><span class="show-name">Crexendo UGM</span><br><span class="show-loc">Austin, TX · Telecom · Table (Silver)</span></div><span class="chev">›</span></summary>
+      <div class="show-body"><div class="fields">
+        <div class="field"><h4>Staff attending</h4><p>Ryan Koontz, Cam Sharpe, Jamie Butler (Sales), Will Steiner (CS), Evan Rice (Exec)</p></div>
+        <div class="field"><h4>Goals &amp; speaking</h4><p>25 leads / 15 opps · 3-min Fast Pitch + Connects Dinner</p></div>
+        <div class="field wide"><h4>Note</h4><p>Same city and dates as NinjaOne MSPNXT — staff is shared between the two; Crexendo keeps the larger crew.</p></div>
+      </div></div>
+    </details>
+
+    <details class="show" id="ninjaone">
+      <summary><span class="show-when">OCT 27–29</span><div><span class="show-name">NinjaOne MSPNXT</span><br><span class="show-loc">Austin, TX · MSP · Turnkey</span></div><span class="chev">›</span></summary>
+      <div class="show-body"><div class="fields">
+        <div class="field"><h4>Deal shape</h4><p>~$25k including a speaking spot + turnkey booth. Speaking slot TBD.</p></div>
+        <div class="field"><h4>Staffing &amp; booth</h4><p>Shares staff with Crexendo UGM (same dates, same city); taking fewer people. Bring the normal booth here since the turnkey is at Ninja. Discussed with Ryan and Usman.</p></div>
+      </div></div>
+    </details>
+
+    <details class="show" id="iscest">
+      <summary><span class="show-when">NOV 4–5</span><div><span class="show-name">ISC East 2026</span><br><span class="show-loc">New York, NY · Security · 10x10</span></div><span class="chev">›</span></summary>
+      <div class="show-body"><div class="fields">
+        <div class="field"><h4>Staff attending</h4><p>Jay Sapirman, Bryan Bettiol, Tony Mehner (Sales), Jake Mitchell (Channel)</p></div>
+        <div class="field"><h4>Goals &amp; speaking</h4><p>55 leads / 33 opps · TBD speaking / booth activation</p></div>
+        <div class="field wide"><h4>Precedent</h4><p>2025 ran a 10x20 at booth 838; lead retrieval was in the ISC East app; setup took 2 people (8a–5p the day before). Contract was locked early with the CMO looped in on booth hold timing and pricing — repeat that pattern for 2027.</p></div>
+      </div></div>
+    </details>
+
+    <details class="show" id="itnation">
+      <summary><span class="show-when">NOV 4–6</span><div><span class="show-name">IT Nation Connect</span><br><span class="show-loc">Orlando, FL · MSP · 16' booth (upgraded, +$30k)</span></div><span class="chev">›</span></summary>
+      <div class="show-body"><div class="fields">
+        <div class="field"><h4>Staff attending</h4><p>Ryan Koontz, Cam Sharpe, Jamie Butler (Sales), Usman Zahoor, Brook Lee (Channel), Brent Maropis (CEO), Evan Rice, Ray Bargas (Exec), Blaine (CS), Josh Owen (CAIO), Megan Evitts, Jennifer Hopkins (Marketing)</p></div>
+        <div class="field"><h4>Goals &amp; activation</h4><p>85 leads / 51 opps · Pub Crawl activation · Biggest booth of the fall; upgraded from 8x8 to 16'</p></div>
+      </div></div>
+    </details>
+
+    <details class="show" id="osfaa">
+      <summary><span class="show-when">NOV 12</span><div><span class="show-name">OSFAA — Ohio Security Association</span><br><span class="show-loc">Ohio · Security · Table</span></div><span class="chev">›</span></summary>
+      <div class="show-body"><div class="fields">
+        <div class="field"><h4>Staff attending</h4><p>Jake Mitchell (Channel)</p></div>
+        <div class="field"><h4>Goals</h4><p>5 leads / 3 opps</p></div>
+      </div></div>
+    </details>
+
+    <details class="show" id="pax8-vancouver">
+      <summary><span class="show-when">NOV 19</span><div><span class="show-name">Pax8 Roadshow — Vancouver</span><br><span class="show-loc">Vancouver, Canada · MSP</span></div><span class="show-seg tag info">NEW — NO INFO YET</span><span class="chev">›</span></summary>
+      <div class="show-body"><div class="fields">
+        <div class="field wide"><h4>Status</h4><p>Newly added to the calendar (Jul 22). No details yet — watch for the Pax8 exhibitor info and fill in schedule, staff, and logistics when it lands. Cross-border show, so build in customs time for any freight. Reminder: per the Pax8 contract (Section 3.1), "Pax8" event names can't headline non-Pax8 marketing materials.</p></div>
+      </div></div>
+    </details>
+
+    <details class="show" id="yeastar">
+      <summary><span class="show-when">NOV TBD</span><div><span class="show-name">Yeastar</span><br><span class="show-loc">Frisco, TX · Telecom · Table TBD</span></div><span class="chev">›</span></summary>
+      <div class="show-body"><div class="fields">
+        <div class="field"><h4>Staff attending</h4><p>Usman Zahoor, Brook Lee (Channel)</p></div>
+        <div class="field"><h4>Status</h4><p>15 leads / 9 opps goal. Q3/Q4 timing unknown; Nov 24–26 is a placeholder in the hub. Speaking TBD.</p></div>
+      </div></div>
+    </details>
+
+    <details class="show" id="wotc">
+      <summary><span class="show-when">DEC 7–8</span><div><span class="show-name">Women of the Channel Leadership Summit East</span><br><span class="show-loc">New York, NY · MSP · Table</span></div><span class="chev">›</span></summary>
+      <div class="show-body"><div class="fields">
+        <div class="field"><h4>Staff attending</h4><p>Brook Lee (Channel)</p></div>
+        <div class="field"><h4>Speaking</h4><p>TBD speaking slot</p></div>
+      </div></div>
+    </details>
+
+    <details class="show" id="pax8-ftlauderdale">
+      <summary><span class="show-when">DEC 15</span><div><span class="show-name">Pax8 Roadshow — Ft Lauderdale</span><br><span class="show-loc">Ft Lauderdale, FL · MSP</span></div><span class="show-seg tag info">NEW — NO INFO YET</span><span class="chev">›</span></summary>
+      <div class="show-body"><div class="fields">
+        <div class="field wide"><h4>Status</h4><p>Newly added to the calendar (Jul 22). No details yet — watch for the Pax8 exhibitor info and fill in schedule, staff, and logistics when it lands. Same Pax8 naming rule applies (Section 3.1).</p></div>
+      </div></div>
+    </details>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <span class="sec-eyebrow">04 · Recurring processes</span>
+    <h2>The processes behind every show</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>Shipping &amp; freight</h3>
+        <ul class="tight">
+          <li>Freeman is the contractor at ~25 shows (shipping, furnishings, labor), roughly $4,000/show. Booth ships on its own MHA to the Freeman advance warehouse; a separate inventory warehouse holds Rev.io stock</li>
+          <li><b>Non-negotiable after the Kaseya Connect misroute:</b> confirm carrier, destination, and arrival before every show. The booth once got routed to the inventory warehouse instead of Vegas and never made the show</li>
+          <li>Consolidate freight into one shipment per show (material handling fees apply per shipment)</li>
+          <li>Direct-ship show-specific pieces (backdrop, tablecloth); pull evergreen items from inventory</li>
+          <li>At move-out: box it, label it, or lose it — unlabeled items left in the booth are trash by contractor policy</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Electrical ordering — three models</h3>
+        <ul class="tight">
+          <li><b>Through the GSC's partner</b> (ChannelCon → Encore EventNow)</li>
+          <li><b>Direct through the venue</b> (Gaylord National, Colorado Convention Center, GWCC). Watch venue-specific advance deadlines and floor plan requirements</li>
+          <li><b>Included / show-managed</b> (turnkey shows like Navigate; relationship shows like AIN where the show handles power)</li>
+          <li><b>Always, all models:</b> physically confirm power is dropped at the booth the day before hours start. At XChange Security the drop was missing 2 hours before open and needed an urgent venue escalation</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Lead flow, end to end</h3>
+        <ul class="tight">
+          <li><b>Pre-show:</b> configure iCapture form, QA the full capture flow, purchase the show's scanner/licenses (Cvent, MCI, Whova, varies by show), confirm license emails arrived</li>
+          <li><b>At the booth:</b> badge scan at API shows; simplified form + ZoomInfo enrichment at non-API shows</li>
+          <li><b>Post-show:</b> clean the export (title-case names, dedupe, split internal vs external), route to HubSpot, launch thank-you + demo-CTA sequence, then the follow-up nudge</li>
+          <li>events@rev.io is copied on all pre/post event Calendly bookings — keep it on shared calendars for team visibility</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Comms cadence per show</h3>
+        <ul class="tight">
+          <li><b>Team brief (pre-show):</b> logistics, hotel, booth duties/schedule, lead capture instructions, goals</li>
+          <li><b>External pre-show:</b> HubSpot "come find us" email to leads/attendee lists</li>
+          <li><b>External post-show:</b> thank-you + schedule-a-demo sequence (2 emails), from templates with bracketed placeholders</li>
+          <li><b>Internal post-show:</b> team survey + debrief; log results against lead/opp goals in the Events Hub</li>
+          <li><b>Early and loud:</b> communicate move-in/move-out staffing assignments as soon as dates publish; late assignment comms has burned the team before</li>
+        </ul>
+      </div>
+      <div class="card wide" style="grid-column:1/-1">
+        <h3>Apparel, swag &amp; booth kit</h3>
+        <p>Collect sizes early, order per show, track delivery to the show or to inventory. Standard booth kit travels with every show: banner stand backdrop, tablecloth + runner, retractable banners, swag, MSP/Security sell sheets, iPad holder (Bouncepad), and the supplies kit (tape, scissors, zip ties, Sharpies, extension cord, Velcro dots). Confirm the final asset list per show before shipping.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="playbook" id="playbook">
+  <div class="wrap">
+    <span class="sec-eyebrow">05 · Playbook</span>
+    <h2>How Christina does things</h2>
+    <p class="sec-intro">The judgment layer. These are the patterns that made the program work; steal them.</p>
+    <div class="grid2">
+      <div class="pb-card">
+        <h3>Escalations that get answered</h3>
+        <ul>
+          <li>Lead with facts and dollars, not emotion: "<span class="mono">$45K</span> to exhibit, <span class="mono">~$100K</span> annual spend across 25 shows" reframed a lost-booth claim from a freight ticket to an account-level conversation</li>
+          <li>Separate the formal claim (team works it) from the relationship conversation (you own it)</li>
+          <li>Ask for the right person, not just a fix: "I'd like to set up a conversation with the right person on your side"</li>
+          <li>For urgent on-site issues, short and specific beats a template: booth #, what's missing, when hours start</li>
+        </ul>
+      </div>
+      <div class="pb-card">
+        <h3>Vendor &amp; sponsor negotiation style</h3>
+        <ul>
+          <li>Warm and conversational, centered on the other side's goals. Never "ROI," "investment," or "make this a yes" in sponsor-facing copy</li>
+          <li>Don't hand a counterparty a cheaper exit: decide which package you're pitching before you email</li>
+          <li>Tiers that include speaking slots are non-discountable; sweeten with add-ons (passes, ads, meal sponsorships) instead of cutting price</li>
+          <li>Hold booths early for next-year pricing before rates move (ISC East / ISC West pattern)</li>
+        </ul>
+      </div>
+      <div class="pb-card">
+        <h3>Keep these, don't delegate</h3>
+        <ul>
+          <li>Sponsor pricing and negotiation</li>
+          <li>Anything going to Evan or other execs</li>
+          <li>Final booth design sign-off</li>
+          <li>Budget approvals</li>
+        </ul>
+        <p style="margin-top:8px">Phoebe (or a successor's support) can prep and draft into all of these; the events lead stays the decision-maker.</p>
+      </div>
+      <div class="pb-card">
+        <h3>Lessons paid for in full</h3>
+        <ul>
+          <li>Confirm power is physically dropped the day before booth hours (XChange Security, Jul '26)</li>
+          <li>Confirm carrier + destination + arrival for every shipment (Kaseya Connect misroute, Apr '26)</li>
+          <li>Box and label everything at move-out or it's trash (Freeman policy, every show)</li>
+          <li>Chase lead-license emails a week out; whitelist show senders (AIN, Jan '26)</li>
+          <li>Verify hotel outreach is really from the show; scammers target sponsor lists (CANITCON, May '26)</li>
+          <li>Track invoices against signed agreements; signed ≠ paid (ScaleCon INV-0097)</li>
+          <li>Contract fine print matters: "Pax8 Beyond" can't appear in headline positions on non-Pax8 materials (Section 3.1); use "Salt Lake City" instead. Read every co-marketing clause</li>
+          <li>Product name is <b>Revii</b>, not Revy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacts">
+  <div class="wrap">
+    <span class="sec-eyebrow">06 · Directory</span>
+    <h2>Show contacts</h2>
+    <p class="sec-intro">Mirror of the Notion Trade Show Contact Outreach database + contractor contacts surfaced from email. Full spreadsheet: Trade Show Contacts.xlsx on SharePoint.</p>
+    <div class="card">
+      <table class="deadlines">
+        <tr><th>Show</th><th>Contact</th><th>Email</th><th>Covers</th></tr>
+        <tr><td>ChannelCon</td><td>Krista D'Amico (Viper)</td><td class="mono">krista@vipertradeshow.com</td><td>GSC: shipping, kit, orders</td></tr>
+        <tr><td>XChange</td><td>Robin Smith (The Channel Co.)</td><td class="mono">rsmith@thechannelcompany.com</td><td>Badges, sponsor logistics</td></tr>
+        <tr><td>ASCII</td><td>Jessie Devine</td><td class="mono">jdevine@ascii.com</td><td>Contracts, invoicing, logistics</td></tr>
+        <tr><td>CEDIA</td><td>CEDIA sales / Levy Lira / Hunter Downing</td><td class="mono">cediasales@emeraldeex.com</td><td>Booth · dashboard · venue electrical</td></tr>
+        <tr><td>Navigate</td><td>Scott Wilson (Alianza) / Molly (HYM)</td><td class="mono">scott.wilson@alianza.com</td><td>Sponsorship · booth liaison</td></tr>
+        <tr><td>CANITCON</td><td>Trevor / Devisha Singh (GCS)</td><td class="mono">Trevor@thecanitcollective.ca</td><td>Show mgmt · booth ordering</td></tr>
+        <tr><td>GSX</td><td>ASIS exhibits / P. Heaps / Cleo Chitester / Z. Turnipseed</td><td class="mono">exhibits@asisonline.org</td><td>Exhibits · directory · sponsorship · catering</td></tr>
+        <tr><td>AIN</td><td>Sandy Cobb</td><td class="mono">Sandy.Cobb@aingroup.com</td><td>Everything (housekeeping emails)</td></tr>
+        <tr><td>ScaleCon</td><td>Taher Hamid / Genesis Rosado</td><td class="mono">Taher@msp-camp.com</td><td>Sponsorship · contracts &amp; invoices</td></tr>
+        <tr><td>MSP Summit</td><td>Gia Harrison / CP Customer Success / Nikki (CHP)</td><td class="mono">Gia.Harrison@informa.com</td><td>Marketing · portal · hotels</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="open">
+  <div class="wrap">
+    <span class="sec-eyebrow">07 · As of July 22, 2026</span>
+    <h2>Open items to inherit</h2>
+    <div class="card">
+      <ul class="tight">
+        <li><span class="tag open">CEDIA</span> No electrical order on file. Advance pricing ends <span class="dl">Aug 11</span>; floor plan due 2 weeks before move-in</li>
+        <li><span class="tag open">SCALECON</span> Invoice INV-0097 ($13,000) overdue since Jul 2; route to AP</li>
+        <li><span class="tag open">GSX</span> Aug deadline stack starts <span class="dl">Aug 5</span> (booth design if 400+ sq ft); register staff badges; submit COI via Rainprotection</li>
+        <li><span class="tag open">NAVIGATE</span> Graphics deadline in Exhibitor Kit v7.15; missing it means a generic-logo booth. Needs design support (turnkey)</li>
+        <li><span class="tag open">AIN</span> Staff final: Jake Mitchell and Daniel Gomez (update the hub). Watch for Sandy's housekeeping emails; plan a raffle item</li>
+        <li><span class="tag open">ASCII TORONTO</span> Purchase the badge kit and set up the iCapture event before Aug 26</li>
+        <li><span class="tag open">EVENTS HUB</span> Data cleanup needed: GSX shows San Antonio Sep 21–23 (should be GWCC Atlanta Sep 14–16 per ASIS); ScaleCon shows New Orleans Sep 15–17 vs San Diego Sep 24–26 in the reference doc (confirm against the signed agreement); AIN shows Aug 18–21 (correct: Sep 22–25); XChange booth is 223 (hub shows TBD); ChannelCon booth (802) and final staff list (Evan, Brent, Brook, Ardit, Bryan, Phoebe) confirmed Jul 22 — push to the hub</li>
+        <li><span class="tag done">NOTION</span> Aug/Sep event pages are created for every show and restructured to the lean Show Info format; AIN dates corrected. Note: an ASCII Chicago page was created Jul 22 but Chicago is not on the schedule — delete that Notion page</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div style="height:3px;background:var(--grad);border-radius:2px;margin-bottom:18px;max-width:140px"></div>
+    <p><b>Rev.io Events Operations Handoff</b> · Revay Deck Library version · Source handoff updated July 22, 2026 · Internal use only</p>
+  </div>
+</footer>
+</body>
+</html>
