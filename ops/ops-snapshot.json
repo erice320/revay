@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-08-10T11:30:53.522Z",
+    "generated": "2026-08-10T17:03:08.160Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js v2"
   },
@@ -82,47 +82,18 @@
       }
     ],
     "meetingCount": 7,
-    "vipEmails": [
-      {
-        "id": "AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQBGAAAAAAB7BxZzyObQS5BPlulIHKvaBwBDG-nuoAhAT5VcpIn2kt1aAAAAAAEMAABDG-nuoAhAT5VcpIn2kt1aAAwrif1rAAA=",
-        "subject": "Accepted: Finalize Summit Agenda and Content",
-        "from": {
-          "emailAddress": {
-            "name": "Ryan Koontz",
-            "address": "ryank@rev.io"
-          }
-        },
-        "bodyPreview": "",
-        "importance": "normal",
-        "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQBGAAAAAAB7BxZzyObQS5BPlulIHKvaBwBDG%2FnuoAhAT5VcpIn2kt1aAAAAAAEMAABDG%2FnuoAhAT5VcpIn2kt1aAAwrif1rAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-        "_category": "fyi"
-      },
-      {
-        "id": "AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQBGAAAAAAB7BxZzyObQS5BPlulIHKvaBwBDG-nuoAhAT5VcpIn2kt1aAAAAAAEMAABDG-nuoAhAT5VcpIn2kt1aAAwrif1yAAA=",
-        "subject": "📋 MSP Competitor Intelligence — Monday, August 10, 2026",
-        "from": {
-          "emailAddress": {
-            "name": "Revay AI",
-            "address": "Revay.ai@rev.io"
-          }
-        },
-        "bodyPreview": "Rev.io Intelligence\r\n\r\n📋 MSP Competitor Intelligence — Monday, August 10, 2026\r\n\r\nBig 3: ConnectWise · Kaseya · HaloPSA | Also: SuperOps · Syncro\r\n\r\n12 curated items — all URLs verified this run\r\n\r\n________________________________\r\n\r\n📰 Industry News",
-        "importance": "normal",
-        "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQBGAAAAAAB7BxZzyObQS5BPlulIHKvaBwBDG%2FnuoAhAT5VcpIn2kt1aAAAAAAEMAABDG%2FnuoAhAT5VcpIn2kt1aAAwrif1yAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
-        "_category": "fyi"
-      }
-    ],
-    "generatedAt": "2026-08-10T11:30:53.930Z",
-    "lastUpdated": "2026-08-10T11:30:53.930Z"
+    "vipEmails": [],
+    "generatedAt": "2026-08-10T17:03:08.898Z",
+    "lastUpdated": "2026-08-10T17:03:08.898Z"
   },
   "pipeline": {
-    "openPipelineMrr": 244545,
+    "openPipelineMrr": 243845,
     "openDeals": 118,
-    "weightedMrr": 110045,
+    "weightedMrr": 109730,
     "closingThisMonth": 107,
-    "closingThisMonthMrr": 238848,
-    "avgDealMrr": 2072,
-    "winRateMtd": 0.125,
+    "closingThisMonthMrr": 238148,
+    "avgDealMrr": 2066,
+    "winRateMtd": 0.10344827586206896,
     "stageBreakdown": [
       {
         "stage": "3 - Initial Product Demo",
@@ -131,13 +102,13 @@
       },
       {
         "stage": "1- Discovery Scheduled",
-        "count": 50,
-        "mrr": 49155
+        "count": 48,
+        "mrr": 47405
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 36,
-        "mrr": 34841
+        "count": 37,
+        "mrr": 35841
       },
       {
         "stage": "4 - Proposal Sent",
@@ -151,8 +122,8 @@
       },
       {
         "stage": "6 - Verbal Commit",
-        "count": 2,
-        "mrr": 100
+        "count": 3,
+        "mrr": 150
       }
     ],
     "bookingsPacing": {
@@ -163,7 +134,7 @@
       "daysRemaining": 21,
       "requiredDailyRunRate": 3551,
       "wonCount": 3,
-      "lastUpdated": "2026-08-10T11:30:54.908Z"
+      "lastUpdated": "2026-08-10T17:03:09.630Z"
     },
     "recentWins": [
       {
@@ -246,11 +217,11 @@
         "winRate": null
       }
     ],
-    "lastUpdated": "2026-08-10T11:30:54.908Z"
+    "lastUpdated": "2026-08-10T17:03:09.630Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
-    "callsYesterday": 0,
+    "callsYesterday": 100,
     "lastRunProcessed": 10,
     "flaggedFollowUps": 0,
     "topThemes": [
@@ -261,67 +232,67 @@
     ],
     "recentCalls": [
       {
-        "title": "Ingrid Beard - Rebecca Bodemann",
-        "date": "2026-08-07",
+        "title": "Andy Whisenant - Mike Walling",
+        "date": "2026-08-10",
         "durationMin": 1,
         "state": "ENDED"
       },
       {
-        "title": "Ingrid Beard - Doug Catania",
-        "date": "2026-08-07",
-        "durationMin": 1,
+        "title": "Andy Whisenant - George Patino",
+        "date": "2026-08-10",
+        "durationMin": 0,
         "state": "ENDED"
       },
       {
-        "title": "Ingrid Beard - Mike Maccani",
-        "date": "2026-08-07",
-        "durationMin": 1,
+        "title": "Andy Whisenant - Chad Odom",
+        "date": "2026-08-10",
+        "durationMin": 0,
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-08-10T11:30:57.892Z"
+    "lastUpdated": "2026-08-10T17:03:12.578Z"
   },
   "newBusiness": {
-    "newDealsOpenedMtd": 44,
+    "newDealsOpenedMtd": 50,
     "sequencesActive": 35,
-    "newEnrollmentsThisWeek": 7422,
-    "repliesThisWeek": 190,
-    "meetingsBookedMtd": 49,
+    "newEnrollmentsThisWeek": 7433,
+    "repliesThisWeek": 191,
+    "meetingsBookedMtd": 56,
     "topSequences": [
       {
-        "name": "Paid Media MQL Q1'26 Template",
-        "enrolled": 99,
-        "openRate": 0.573,
-        "replyRate": 0.015
+        "name": "Q3 MSP Static Sequence ",
+        "enrolled": 327,
+        "openRate": 0.366,
+        "replyRate": 0.004
       },
       {
-        "name": "Q3 2026 Integrator AI Sequence",
-        "enrolled": 49,
-        "openRate": 0.667,
+        "name": "InfoComm Sequence",
+        "enrolled": 759,
+        "openRate": 0.553,
+        "replyRate": 0.006
+      },
+      {
+        "name": "Expiring Competitor Contract",
+        "enrolled": 9,
+        "openRate": 0.778,
         "replyRate": 0
-      },
-      {
-        "name": "Q3 UCaaS / VoIP AI Sequence ",
-        "enrolled": 330,
-        "openRate": 0.424,
-        "replyRate": 0.014
       }
     ],
-    "lastUpdated": "2026-08-10T11:30:58.310Z"
+    "lastUpdated": "2026-08-10T17:03:13.117Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
-    "zendeskOpenTickets": 559,
-    "zendeskEscalated": 15,
+    "zendeskOpenTickets": 567,
+    "zendeskEscalated": 17,
     "psaOpenLast30": 0,
     "psaHighPriority": 0,
     "psaTotalLast30": 0,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-08-10T11:31:03.038Z"
+    "lastUpdated": "2026-08-10T17:03:31.454Z"
   },
   "agentHealth": {
     "cronJobsTotal": 0,
@@ -335,7 +306,7 @@
     "errorJobs": [],
     "allJobs": [],
     "byCategory": {},
-    "lastUpdated": "2026-08-10T11:31:03.039Z"
+    "lastUpdated": "2026-08-10T17:03:31.454Z"
   },
   "competitorIntel": {
     "topCompetitors": [
@@ -430,17 +401,17 @@
     "lossCount": 174,
     "totalTier1": 602,
     "generatedAt": "2026-08-07T19:03:14.166Z",
-    "lastUpdated": "2026-08-10T11:31:03.039Z"
+    "lastUpdated": "2026-08-10T17:03:31.454Z"
   },
   "dealBriefs": {
-    "lastPsaRun": "2026-08-08T02:15:21.930Z",
+    "lastPsaRun": "2026-08-10T13:15:35.436Z",
     "lastPsaCount": 1,
-    "lastBillingRun": "2026-08-08T02:20:22.458Z",
+    "lastBillingRun": "2026-08-10T13:21:45.514Z",
     "totalPsaProcessed": 80,
     "totalBillingProcessed": 12,
-    "psaStatus": "stale",
-    "billingStatus": "stale",
-    "lastUpdated": "2026-08-10T11:31:03.039Z"
+    "psaStatus": "fresh",
+    "billingStatus": "fresh",
+    "lastUpdated": "2026-08-10T17:03:31.454Z"
   },
   "marketProduct": {
     "mspLastRun": "2026-08-10T11:01:26.369Z",
@@ -452,6 +423,6 @@
       "topCompetitor": "QuickBooks",
       "topCompetitorCount": 409
     },
-    "lastUpdated": "2026-08-10T11:31:03.040Z"
+    "lastUpdated": "2026-08-10T17:03:31.455Z"
   }
 }
