@@ -107,6 +107,11 @@
     .unified-label { display:block; color: var(--muted); text-transform:uppercase; letter-spacing:.8px; font-size:10px; font-weight:800; margin-bottom:4px; }
     .unified-value { color: var(--text); font-size:13px; line-height:1.35; overflow-wrap:anywhere; }
     .unified-value.muted { color: var(--muted); }
+    .unified-editable-field { display:block; }
+    .unified-inline-input { width:100%; border:1px solid color-mix(in srgb, var(--border) 78%, white); border-radius:8px; background:rgba(0,0,0,.18); color:var(--text); padding:8px 9px; font:inherit; font-size:13px; line-height:1.35; outline:none; box-sizing:border-box; }
+    .unified-inline-input:focus { border-color:var(--accent); box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent); }
+    .unified-inline-input::placeholder { color:var(--muted); }
+    .unified-inline-textarea { min-height:74px; resize:vertical; }
     .gap-summary { border-left:3px solid var(--warn); }
     .gap-metrics { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px; margin:12px 0; }
     .gap-metric { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px; }
@@ -172,22 +177,22 @@
     <div class="unified-top-card">
       <div class="unified-kicker">Section 01 · Sales-Owned Handoff Essentials</div>
       <div class="unified-mini-grid">
-        <div class="unified-field"><span class="unified-label">Company Name</span><div class="unified-value">IMC Jax</div></div>
-        <div class="unified-field"><span class="unified-label">Close Date</span><div class="unified-value">2026-07-31</div></div>
-        <div class="unified-field"><span class="unified-label">MRR / Contract Value</span><div class="unified-value">$450/mo</div></div>
-        <div class="unified-field"><span class="unified-label">Contract Term</span><div class="unified-value">Month-to-Month</div></div>
-        <div class="unified-field"><span class="unified-label">Sales Rep</span><div class="unified-value">Connor Flynn</div></div>
-        <div class="unified-field missing"><span class="unified-label">CSA / CSM Rep</span><div class="unified-value muted">Missing</div></div>
-        <div class="unified-field"><span class="unified-label">Primary Contact Name &amp; Title</span><div class="unified-value">Bobby Hall — President</div></div>
-        <div class="unified-field"><span class="unified-label">Primary Contact Email</span><div class="unified-value">bobby@imcjax.com</div></div>
-        <div class="unified-field"><span class="unified-label">Primary Contact Phone</span><div class="unified-value">+19044007300</div></div>
-        <div class="unified-field"><span class="unified-label">Business Vertical</span><div class="unified-value">MSP - No Voice</div></div>
-        <div class="unified-field"><span class="unified-label">Kickoff Target Date</span><div class="unified-value">2026-08-01</div></div>
-        <div class="unified-field"><span class="unified-label">Kickoff Target Time</span><div class="unified-value">Morning preferred — confirm with client</div></div>
-        <div class="unified-field"><span class="unified-label">Go-Live Target Date</span><div class="unified-value">2026-08-30</div></div>
-        <div class="unified-field"><span class="unified-label">Go-Live Hard Deadline?</span><div class="unified-value">No — target only</div></div>
-        <div class="unified-field missing"><span class="unified-label">Key Context / Commitments</span><div class="unified-value muted">Missing</div></div>
-        <div class="unified-field"><span class="unified-label">Red Flags / Risk Notes</span><div class="unified-value">Salesforce contact hygiene: attach/mark a main contact for this Closed Won deal with BOTH Phone and Mobile Phone populated. At least one main onboarding contact needs both numbers.; Who handles billing/finance on their side? (needed for migration and payments setup)</div></div>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Company Name</span><input class="unified-inline-input" type="text" name="unified_company_name" value="IMC Jax" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Close Date</span><input class="unified-inline-input" type="date" name="unified_close_date" value="2026-07-31" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">MRR / Contract Value</span><input class="unified-inline-input" type="text" name="unified_mrr_contract_value" value="$450/mo" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Contract Term</span><input class="unified-inline-input" type="text" name="unified_contract_term" value="Month-to-Month" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Sales Rep</span><input class="unified-inline-input" type="text" name="unified_sales_rep" value="Connor Flynn" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field missing"><span class="unified-label">CSA / CSM Rep</span><input class="unified-inline-input" type="text" name="unified_csa_csm_rep" value="" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Primary Contact Name &amp; Title</span><input class="unified-inline-input" type="text" name="unified_primary_contact_name_title" value="Bobby Hall — President" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Primary Contact Email</span><input class="unified-inline-input" type="text" name="unified_primary_contact_email" value="bobby@imcjax.com" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Primary Contact Phone</span><input class="unified-inline-input" type="text" name="unified_primary_contact_phone" value="+19044007300" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Business Vertical</span><input class="unified-inline-input" type="text" name="unified_business_vertical" value="MSP - No Voice" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Kickoff Target Date</span><input class="unified-inline-input" type="date" name="unified_kickoff_target_date" value="2026-08-01" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Kickoff Target Time</span><input class="unified-inline-input" type="text" name="unified_kickoff_target_time" value="Morning preferred — confirm with client" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Go-Live Target Date</span><input class="unified-inline-input" type="date" name="unified_go_live_target_date" value="2026-08-30" /></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Go-Live Hard Deadline?</span><input class="unified-inline-input" type="text" name="unified_go_live_hard_deadline" value="No — target only" placeholder="Sales to complete" /></label>
+        <label class="unified-field unified-editable-field missing"><span class="unified-label">Key Context / Commitments</span><textarea class="unified-inline-input unified-inline-textarea" name="unified_key_context_commitments" placeholder="Sales to complete"></textarea></label>
+        <label class="unified-field unified-editable-field"><span class="unified-label">Red Flags / Risk Notes</span><textarea class="unified-inline-input unified-inline-textarea" name="unified_red_flags_risk_notes" placeholder="Sales to complete">Salesforce contact hygiene: attach/mark a main contact for this Closed Won deal with BOTH Phone and Mobile Phone populated. At least one main onboarding contact needs both numbers.; Who handles billing/finance on their side? (needed for migration and payments setup)</textarea></label>
       </div>
     </div>
 
