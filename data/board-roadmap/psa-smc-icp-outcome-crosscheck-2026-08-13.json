@@ -1,0 +1,1329 @@
+{
+  "sourceFiles": [
+    "/home/openclaw/.openclaw/workspace/data/board-roadmap/psa-smc-post-unlock-reengagement-lost-2025-07-01-to-2026-08-11-window-2026-06-01.json",
+    "/home/openclaw/.openclaw/workspace/data/board-roadmap/psa-smc-post-unlock-reengagement-lost-2025-07-01-to-2026-08-11-window-2026-06-01-min800.json"
+  ],
+  "dataIntegrity": {
+    "source": "Salesforce via source JSON/script",
+    "httpStatus": 200,
+    "allRecordCount": 259,
+    "min800RecordCount": 116
+  },
+  "allPsa2Smc": {
+    "accounts": 234,
+    "originalLostOpps": 259,
+    "originalLostMrr": 271591.0,
+    "minOrigAmount": 0.0,
+    "medianOrigAmount": 755.0,
+    "postUnlockPsaOpps": 29,
+    "postWonOpps": 2,
+    "postOpenOpps": 11,
+    "postLostOpps": 16,
+    "wonAccounts": 2,
+    "openAccounts": 11,
+    "reopenedAccounts": 27,
+    "accountWinRateVsAll": 0.0085,
+    "accountOpenOrWonRateVsAll": 0.0556,
+    "winRateOfReopenedAccounts": 0.0741,
+    "byStatus": {
+      "Post-unlock PSA opp lost \u2014 other reason": 14,
+      "Post-unlock light/unclear activity, no PSA opp": 45,
+      "Post-unlock prospecting/touches, no PSA opp": 62,
+      "Post-unlock engaged activity, no PSA opp": 80,
+      "Post-unlock PSA opp open": 11,
+      "No post-unlock SF activity": 20,
+      "Post-unlock PSA opp won": 2
+    },
+    "mrrByStatus": {
+      "Post-unlock PSA opp lost \u2014 other reason": 26485,
+      "Post-unlock light/unclear activity, no PSA opp": 46797,
+      "Post-unlock prospecting/touches, no PSA opp": 74112,
+      "Post-unlock engaged activity, no PSA opp": 93730,
+      "Post-unlock PSA opp open": 12113,
+      "No post-unlock SF activity": 16714,
+      "Post-unlock PSA opp won": 1640
+    },
+    "wonDeals": [
+      {
+        "account": "Copper Clad Systems",
+        "originalLostMrr": 975,
+        "postOpp": {
+          "id": "006PX00000brXdFYAU",
+          "name": "Copper Clad Systems",
+          "created": "2026-06-08",
+          "close": "2026-06-23",
+          "stage": "Closed Won",
+          "isWon": true,
+          "isClosed": true,
+          "amount": 575,
+          "owner": "Patrick Davies",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Next Step Communications",
+        "originalLostMrr": 665,
+        "postOpp": {
+          "id": "006PX00000cefbFYAQ",
+          "name": "Next Step Communications",
+          "created": "2026-06-24",
+          "close": "2026-06-30",
+          "stage": "Closed Won",
+          "isWon": true,
+          "isClosed": true,
+          "amount": 620,
+          "owner": "Jake Borah",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      }
+    ],
+    "openDeals": [
+      {
+        "account": "Premises Control",
+        "originalLostMrr": 2600,
+        "postOpp": {
+          "id": "006PX00000eg1v7YAA",
+          "name": "Premises Control",
+          "created": "2026-08-12",
+          "close": "2026-08-31",
+          "stage": "3 - Initial Product Demo",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Jaylin Bender",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "CTI Communications Tech",
+        "originalLostMrr": 2415,
+        "postOpp": {
+          "id": "006PX00000dk4rlYAA",
+          "name": "CTI Communications Tech",
+          "created": "2026-07-21",
+          "close": "2026-08-31",
+          "stage": "3 - Initial Product Demo",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1995,
+          "owner": "Andy Whisenant",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Main Line Sound & Video",
+        "originalLostMrr": 1770,
+        "postOpp": {
+          "id": "006PX00000e6dKbYAI",
+          "name": "Main Line Sound",
+          "created": "2026-07-29",
+          "close": "2026-08-31",
+          "stage": "3 - Initial Product Demo",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 2280,
+          "owner": "Abbey McIntosh",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Sound Advice & Video",
+        "originalLostMrr": 933,
+        "postOpp": {
+          "id": "006PX00000dlO5FYAU",
+          "name": "Sound Advice & Video",
+          "created": "2026-07-21",
+          "close": "2026-09-30",
+          "stage": "2 - Discovery Completed",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1100,
+          "owner": "Abbey McIntosh",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Unique HD Audio Video Designs",
+        "originalLostMrr": 930,
+        "postOpp": {
+          "id": "006PX00000e6VrhYAE",
+          "name": "Unique HD Audio Video Designs",
+          "created": "2026-07-29",
+          "close": "2026-08-31",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Jake Borah",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Simplicity VoIP",
+        "originalLostMrr": 770,
+        "postOpp": {
+          "id": "006PX00000eUq5NYAS",
+          "name": "Simplicity VoIP",
+          "created": "2026-08-07",
+          "close": "2026-08-31",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Connor Flynn",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Grey Matter Technologies",
+        "originalLostMrr": 720,
+        "postOpp": {
+          "id": "006PX00000d0JYrYAM",
+          "name": "Grey Matter Technologies",
+          "created": "2026-07-02",
+          "close": "2026-09-30",
+          "stage": "3 - Initial Product Demo",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Jamie Butler",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "SeaGlass Technology",
+        "originalLostMrr": 575,
+        "postOpp": {
+          "id": "006PX00000dzeOfYAI",
+          "name": "SeaGlass Technology",
+          "created": "2026-07-27",
+          "close": "2026-09-30",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Jamie Butler",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Tecflow Technology",
+        "originalLostMrr": 500,
+        "postOpp": {
+          "id": "006PX00000efO2XYAU",
+          "name": "Tecflow Technology",
+          "created": "2026-08-12",
+          "close": "2026-08-31",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Connor Flynn",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Atlantech Online",
+        "originalLostMrr": 500,
+        "postOpp": {
+          "id": "006PX00000egJqQYAU",
+          "name": "Atlantech Online (PSA)",
+          "created": "2026-08-12",
+          "close": "2026-09-30",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Jamie Butler",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Crown Networks Llc",
+        "originalLostMrr": 400,
+        "postOpp": {
+          "id": "006PX00000efG9pYAE",
+          "name": "Crown Networks",
+          "created": "2026-08-12",
+          "close": "2026-08-31",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Andy Whisenant",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      }
+    ],
+    "lostDeals": [
+      {
+        "account": "Acoustic Design Systems",
+        "originalLostMrr": 7620,
+        "postOpp": {
+          "id": "006PX00000bZ3k6YAC",
+          "name": "Acoustic Design Systems",
+          "created": "2026-06-02",
+          "close": "2026-06-22",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 2025,
+          "owner": "Jake Borah",
+          "lossReason": "Not the Right Time",
+          "lossDetail": "\"After discussing it with my executive team, we've decided to hold off on switching software for now. It's not off the table completely, but it's not something we're ready to take on at this time\"",
+          "missing": null
+        }
+      },
+      {
+        "account": "Hawkeye Electronic Security",
+        "originalLostMrr": 7120,
+        "postOpp": {
+          "id": "006PX00000brPqzYAE",
+          "name": "Hawkeye Electronic Security",
+          "created": "2026-06-08",
+          "close": "2026-06-22",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 2000,
+          "owner": "Jaylin Bender",
+          "lossReason": "Discovery No Show",
+          "lossDetail": "Need to reschedule",
+          "missing": null
+        }
+      },
+      {
+        "account": "Premises Control",
+        "originalLostMrr": 2600,
+        "postOpp": {
+          "id": "006PX00000cb66zYAA",
+          "name": "Premises Control 3",
+          "created": "2026-06-23",
+          "close": "2026-06-24",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 2000,
+          "owner": "Jaylin Bender",
+          "lossReason": "Not the Right Time",
+          "lossDetail": "The company is splitting and Mike Is going to be running the Ohio location so he cant sign anything until Sept 1st",
+          "missing": null
+        }
+      },
+      {
+        "account": "Forbel Alarms",
+        "originalLostMrr": 1550,
+        "postOpp": {
+          "id": "006PX00000dT4kvYAC",
+          "name": "Forbel Alarms",
+          "created": "2026-07-14",
+          "close": "2026-07-22",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1100,
+          "owner": "Abbey McIntosh",
+          "lossReason": "Discovery No Show",
+          "lossDetail": "No showed disco 7/14, can't get back ahold of him to reschedule",
+          "missing": null
+        }
+      },
+      {
+        "account": "Interactive Security Systems",
+        "originalLostMrr": 1480,
+        "postOpp": {
+          "id": "006PX00000cODz7YAG",
+          "name": "Interactive Security Systems",
+          "created": "2026-06-18",
+          "close": "2026-07-24",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1350,
+          "owner": "Jaylin Bender",
+          "lossReason": "Lack of Decision Maker Involvement",
+          "lossDetail": "At this time, I don't see enough value to justify changing from our current provider, so we'll be staying with our existing arrangement. If that changes in the future, we'll reach out.",
+          "missing": null
+        }
+      },
+      {
+        "account": "LAE Solutions",
+        "originalLostMrr": 1310,
+        "postOpp": {
+          "id": "006PX00000ciGsnYAE",
+          "name": "LAE Solutions",
+          "created": "2026-06-25",
+          "close": "2026-07-28",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1310,
+          "owner": "Patrick Davies",
+          "lossReason": "Lost to Competitor",
+          "lossDetail": "Alex is still unresponsive again. Said it was down to Rev.io and fully migrating everything to Zoho. Assuming he is moving forward with Zoho",
+          "missing": null
+        }
+      },
+      {
+        "account": "MGi Systems",
+        "originalLostMrr": 1135,
+        "postOpp": {
+          "id": "006PX00000d8o2nYAA",
+          "name": "MGi Systems",
+          "created": "2026-07-06",
+          "close": "2026-07-21",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1100,
+          "owner": "Abbey McIntosh",
+          "lossReason": "Price",
+          "lossDetail": "Emailed me to cancel FU demo - \"Thank you for your time with this rev.io product. Mike and I discussed it and the software is not a good fit for us. It's a combination of difficulty of adoption, our scale of business and cost. Please cancel our meeting for tomorrow.\"",
+          "missing": null
+        }
+      },
+      {
+        "account": "W. O'Donnell Consulting",
+        "originalLostMrr": 1100,
+        "postOpp": {
+          "id": "006PX00000cKuJXYA0",
+          "name": "W. O'Donnell Consulting",
+          "created": "2026-06-17",
+          "close": "2026-06-25",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1000,
+          "owner": "Jamie Butler",
+          "lossReason": "In existing contract",
+          "lossDetail": "They still don't have plans to do this until early next year due to already doing a QBO migration right now, and are in a service contract with ConnectWise until September. But since they are on prem, they're license agreement is month to month.",
+          "missing": null
+        }
+      },
+      {
+        "account": "CMB Systems",
+        "originalLostMrr": 990,
+        "postOpp": {
+          "id": "006PX00000bqw4EYAQ",
+          "name": "CMB Systems 3",
+          "created": "2026-06-08",
+          "close": "2026-06-09",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 990,
+          "owner": "Jaylin Bender",
+          "lossReason": "Not Right Customer Type",
+          "lossDetail": "Has his own software he made, said it wouldnt make sense to talk to him unless we can manage his storefroont and install side at the same time",
+          "missing": null
+        }
+      },
+      {
+        "account": "RingAlfa",
+        "originalLostMrr": 880,
+        "postOpp": {
+          "id": "006PX00000dRsU5YAK",
+          "name": "RingAlfa",
+          "created": "2026-07-14",
+          "close": "2026-07-28",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1000,
+          "owner": "Patrick Davies",
+          "lossReason": "Not the Right Time",
+          "lossDetail": "Software missing capabilities, does not have a drop down for managed print requirements. Reconvening in October",
+          "missing": null
+        }
+      },
+      {
+        "account": "Zuvid Surveillance",
+        "originalLostMrr": 770,
+        "postOpp": {
+          "id": "006PX00000bsEWvYAM",
+          "name": "Zuvid Surveillance",
+          "created": "2026-06-08",
+          "close": "2026-06-30",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1025,
+          "owner": "Jake Borah",
+          "lossReason": "Discovery No Show",
+          "lossDetail": "no show",
+          "missing": null
+        }
+      },
+      {
+        "account": "Clever Tech Pros",
+        "originalLostMrr": 770,
+        "postOpp": {
+          "id": "006PX00000dzDOTYA2",
+          "name": "Clover Tech Pros",
+          "created": "2026-07-27",
+          "close": "2026-07-27",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1000,
+          "owner": "Jamie Butler",
+          "lossReason": "Price",
+          "lossDetail": "Only has 3 users on Halo at this point, and thought we still had a 5 user minimum so was okay with that, but not the $1,000 minimum. His max budget was $475 a month.",
+          "missing": null
+        }
+      },
+      {
+        "account": "Masterpiece Audio Video",
+        "originalLostMrr": 725,
+        "postOpp": {
+          "id": "006PX00000cjoZ3YAI",
+          "name": "Masterpiece Audio Video",
+          "created": "2026-06-26",
+          "close": "2026-07-21",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1000,
+          "owner": "Patrick Davies",
+          "lossReason": "Not the Right Time",
+          "lossDetail": "Adam is extremely difficult and wants buy in from his whole team but they are not receptive. He says this will take more time to decide on and implement and he's going on vacation soon. Closing out for now",
+          "missing": null
+        }
+      },
+      {
+        "account": "Grey Matter Technologies",
+        "originalLostMrr": 720,
+        "postOpp": {
+          "id": "006PX00000bXfTiYAK",
+          "name": "Grey Matter Technologies",
+          "created": "2026-06-02",
+          "close": "2026-06-12",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": null,
+          "owner": "Jamie Butler",
+          "lossReason": "No Business Issue",
+          "lossDetail": "Mix of no BI and in an existing contract. Just finished a super exhausting onboarding with a Halo consultant that took them a year, so although they think we have a cool platform, he doesn't have the appetite for a switch yet.",
+          "missing": null
+        }
+      },
+      {
+        "account": "Epic Systems",
+        "originalLostMrr": 635,
+        "postOpp": {
+          "id": "006PX00000c22B7YAI",
+          "name": "Epic Systems",
+          "created": "2026-06-11",
+          "close": "2026-06-11",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 890,
+          "owner": "Husam Zalmiyar",
+          "lossReason": "Discovery No Show",
+          "lossDetail": "No show, said restructuring company and needs to hold off",
+          "missing": null
+        }
+      },
+      {
+        "account": "Real Tech",
+        "originalLostMrr": 400,
+        "postOpp": {
+          "id": "006PX00000c5T8MYAU",
+          "name": "Real Tech",
+          "created": "2026-06-12",
+          "close": "2026-07-02",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1000,
+          "owner": "Jaylin Bender",
+          "lossReason": "Discovery No Show",
+          "lossDetail": "No showed",
+          "missing": null
+        }
+      }
+    ]
+  },
+  "icpAnyAccount800": {
+    "accounts": 103,
+    "originalLostOpps": 120,
+    "originalLostMrr": 196383.0,
+    "minOrigAmount": 400.0,
+    "medianOrigAmount": 1242.5,
+    "postUnlockPsaOpps": 14,
+    "postWonOpps": 0,
+    "postOpenOpps": 5,
+    "postLostOpps": 9,
+    "wonAccounts": 0,
+    "openAccounts": 5,
+    "reopenedAccounts": 13,
+    "accountWinRateVsAll": 0.0,
+    "accountOpenOrWonRateVsAll": 0.0485,
+    "winRateOfReopenedAccounts": 0.0,
+    "byStatus": {
+      "Post-unlock PSA opp lost \u2014 other reason": 8,
+      "Post-unlock light/unclear activity, no PSA opp": 12,
+      "Post-unlock prospecting/touches, no PSA opp": 26,
+      "Post-unlock engaged activity, no PSA opp": 41,
+      "Post-unlock PSA opp open": 5,
+      "No post-unlock SF activity": 11
+    },
+    "mrrByStatus": {
+      "Post-unlock PSA opp lost \u2014 other reason": 22050,
+      "Post-unlock light/unclear activity, no PSA opp": 28429,
+      "Post-unlock prospecting/touches, no PSA opp": 51534,
+      "Post-unlock engaged activity, no PSA opp": 73747,
+      "Post-unlock PSA opp open": 8648,
+      "No post-unlock SF activity": 11975
+    },
+    "wonDeals": [],
+    "openDeals": [
+      {
+        "account": "Premises Control",
+        "originalLostMrr": 2600,
+        "postOpp": {
+          "id": "006PX00000eg1v7YAA",
+          "name": "Premises Control",
+          "created": "2026-08-12",
+          "close": "2026-08-31",
+          "stage": "3 - Initial Product Demo",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Jaylin Bender",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "CTI Communications Tech",
+        "originalLostMrr": 2415,
+        "postOpp": {
+          "id": "006PX00000dk4rlYAA",
+          "name": "CTI Communications Tech",
+          "created": "2026-07-21",
+          "close": "2026-08-31",
+          "stage": "3 - Initial Product Demo",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1995,
+          "owner": "Andy Whisenant",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Main Line Sound & Video",
+        "originalLostMrr": 1770,
+        "postOpp": {
+          "id": "006PX00000e6dKbYAI",
+          "name": "Main Line Sound",
+          "created": "2026-07-29",
+          "close": "2026-08-31",
+          "stage": "3 - Initial Product Demo",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 2280,
+          "owner": "Abbey McIntosh",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Sound Advice & Video",
+        "originalLostMrr": 933,
+        "postOpp": {
+          "id": "006PX00000dlO5FYAU",
+          "name": "Sound Advice & Video",
+          "created": "2026-07-21",
+          "close": "2026-09-30",
+          "stage": "2 - Discovery Completed",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1100,
+          "owner": "Abbey McIntosh",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Unique HD Audio Video Designs",
+        "originalLostMrr": 930,
+        "postOpp": {
+          "id": "006PX00000e6VrhYAE",
+          "name": "Unique HD Audio Video Designs",
+          "created": "2026-07-29",
+          "close": "2026-08-31",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Jake Borah",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      }
+    ],
+    "lostDeals": [
+      {
+        "account": "Acoustic Design Systems",
+        "originalLostMrr": 7620,
+        "postOpp": {
+          "id": "006PX00000bZ3k6YAC",
+          "name": "Acoustic Design Systems",
+          "created": "2026-06-02",
+          "close": "2026-06-22",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 2025,
+          "owner": "Jake Borah",
+          "lossReason": "Not the Right Time",
+          "lossDetail": "\"After discussing it with my executive team, we've decided to hold off on switching software for now. It's not off the table completely, but it's not something we're ready to take on at this time\"",
+          "missing": null
+        }
+      },
+      {
+        "account": "Hawkeye Electronic Security",
+        "originalLostMrr": 7120,
+        "postOpp": {
+          "id": "006PX00000brPqzYAE",
+          "name": "Hawkeye Electronic Security",
+          "created": "2026-06-08",
+          "close": "2026-06-22",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 2000,
+          "owner": "Jaylin Bender",
+          "lossReason": "Discovery No Show",
+          "lossDetail": "Need to reschedule",
+          "missing": null
+        }
+      },
+      {
+        "account": "Premises Control",
+        "originalLostMrr": 2600,
+        "postOpp": {
+          "id": "006PX00000cb66zYAA",
+          "name": "Premises Control 3",
+          "created": "2026-06-23",
+          "close": "2026-06-24",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 2000,
+          "owner": "Jaylin Bender",
+          "lossReason": "Not the Right Time",
+          "lossDetail": "The company is splitting and Mike Is going to be running the Ohio location so he cant sign anything until Sept 1st",
+          "missing": null
+        }
+      },
+      {
+        "account": "Forbel Alarms",
+        "originalLostMrr": 1550,
+        "postOpp": {
+          "id": "006PX00000dT4kvYAC",
+          "name": "Forbel Alarms",
+          "created": "2026-07-14",
+          "close": "2026-07-22",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1100,
+          "owner": "Abbey McIntosh",
+          "lossReason": "Discovery No Show",
+          "lossDetail": "No showed disco 7/14, can't get back ahold of him to reschedule",
+          "missing": null
+        }
+      },
+      {
+        "account": "Interactive Security Systems",
+        "originalLostMrr": 1480,
+        "postOpp": {
+          "id": "006PX00000cODz7YAG",
+          "name": "Interactive Security Systems",
+          "created": "2026-06-18",
+          "close": "2026-07-24",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1350,
+          "owner": "Jaylin Bender",
+          "lossReason": "Lack of Decision Maker Involvement",
+          "lossDetail": "At this time, I don't see enough value to justify changing from our current provider, so we'll be staying with our existing arrangement. If that changes in the future, we'll reach out.",
+          "missing": null
+        }
+      },
+      {
+        "account": "LAE Solutions",
+        "originalLostMrr": 1310,
+        "postOpp": {
+          "id": "006PX00000ciGsnYAE",
+          "name": "LAE Solutions",
+          "created": "2026-06-25",
+          "close": "2026-07-28",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1310,
+          "owner": "Patrick Davies",
+          "lossReason": "Lost to Competitor",
+          "lossDetail": "Alex is still unresponsive again. Said it was down to Rev.io and fully migrating everything to Zoho. Assuming he is moving forward with Zoho",
+          "missing": null
+        }
+      },
+      {
+        "account": "W. O'Donnell Consulting",
+        "originalLostMrr": 1100,
+        "postOpp": {
+          "id": "006PX00000cKuJXYA0",
+          "name": "W. O'Donnell Consulting",
+          "created": "2026-06-17",
+          "close": "2026-06-25",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1000,
+          "owner": "Jamie Butler",
+          "lossReason": "In existing contract",
+          "lossDetail": "They still don't have plans to do this until early next year due to already doing a QBO migration right now, and are in a service contract with ConnectWise until September. But since they are on prem, they're license agreement is month to month.",
+          "missing": null
+        }
+      },
+      {
+        "account": "CMB Systems",
+        "originalLostMrr": 990,
+        "postOpp": {
+          "id": "006PX00000bqw4EYAQ",
+          "name": "CMB Systems 3",
+          "created": "2026-06-08",
+          "close": "2026-06-09",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 990,
+          "owner": "Jaylin Bender",
+          "lossReason": "Not Right Customer Type",
+          "lossDetail": "Has his own software he made, said it wouldnt make sense to talk to him unless we can manage his storefroont and install side at the same time",
+          "missing": null
+        }
+      },
+      {
+        "account": "RingAlfa",
+        "originalLostMrr": 880,
+        "postOpp": {
+          "id": "006PX00000dRsU5YAK",
+          "name": "RingAlfa",
+          "created": "2026-07-14",
+          "close": "2026-07-28",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1000,
+          "owner": "Patrick Davies",
+          "lossReason": "Not the Right Time",
+          "lossDetail": "Software missing capabilities, does not have a drop down for managed print requirements. Reconvening in October",
+          "missing": null
+        }
+      }
+    ]
+  },
+  "outsideIcpAllOriginalUnder800": {
+    "accounts": 131,
+    "originalLostOpps": 139,
+    "originalLostMrr": 75208.0,
+    "minOrigAmount": 0.0,
+    "medianOrigAmount": 575.0,
+    "postUnlockPsaOpps": 15,
+    "postWonOpps": 2,
+    "postOpenOpps": 6,
+    "postLostOpps": 7,
+    "wonAccounts": 2,
+    "openAccounts": 6,
+    "reopenedAccounts": 14,
+    "accountWinRateVsAll": 0.0153,
+    "accountOpenOrWonRateVsAll": 0.0611,
+    "winRateOfReopenedAccounts": 0.1429,
+    "byStatus": {
+      "Post-unlock prospecting/touches, no PSA opp": 36,
+      "No post-unlock SF activity": 9,
+      "Post-unlock light/unclear activity, no PSA opp": 33,
+      "Post-unlock PSA opp lost \u2014 other reason": 6,
+      "Post-unlock PSA opp won": 2,
+      "Post-unlock engaged activity, no PSA opp": 39,
+      "Post-unlock PSA opp open": 6
+    },
+    "mrrByStatus": {
+      "Post-unlock prospecting/touches, no PSA opp": 22578,
+      "No post-unlock SF activity": 4739,
+      "Post-unlock light/unclear activity, no PSA opp": 18368,
+      "Post-unlock PSA opp lost \u2014 other reason": 4435,
+      "Post-unlock PSA opp won": 1640,
+      "Post-unlock engaged activity, no PSA opp": 19983,
+      "Post-unlock PSA opp open": 3465
+    },
+    "wonDeals": [
+      {
+        "account": "Copper Clad Systems",
+        "originalLostMrr": 975,
+        "postOpp": {
+          "id": "006PX00000brXdFYAU",
+          "name": "Copper Clad Systems",
+          "created": "2026-06-08",
+          "close": "2026-06-23",
+          "stage": "Closed Won",
+          "isWon": true,
+          "isClosed": true,
+          "amount": 575,
+          "owner": "Patrick Davies",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Next Step Communications",
+        "originalLostMrr": 665,
+        "postOpp": {
+          "id": "006PX00000cefbFYAQ",
+          "name": "Next Step Communications",
+          "created": "2026-06-24",
+          "close": "2026-06-30",
+          "stage": "Closed Won",
+          "isWon": true,
+          "isClosed": true,
+          "amount": 620,
+          "owner": "Jake Borah",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      }
+    ],
+    "openDeals": [
+      {
+        "account": "Simplicity VoIP",
+        "originalLostMrr": 770,
+        "postOpp": {
+          "id": "006PX00000eUq5NYAS",
+          "name": "Simplicity VoIP",
+          "created": "2026-08-07",
+          "close": "2026-08-31",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Connor Flynn",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Grey Matter Technologies",
+        "originalLostMrr": 720,
+        "postOpp": {
+          "id": "006PX00000d0JYrYAM",
+          "name": "Grey Matter Technologies",
+          "created": "2026-07-02",
+          "close": "2026-09-30",
+          "stage": "3 - Initial Product Demo",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Jamie Butler",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "SeaGlass Technology",
+        "originalLostMrr": 575,
+        "postOpp": {
+          "id": "006PX00000dzeOfYAI",
+          "name": "SeaGlass Technology",
+          "created": "2026-07-27",
+          "close": "2026-09-30",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Jamie Butler",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Tecflow Technology",
+        "originalLostMrr": 500,
+        "postOpp": {
+          "id": "006PX00000efO2XYAU",
+          "name": "Tecflow Technology",
+          "created": "2026-08-12",
+          "close": "2026-08-31",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Connor Flynn",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Atlantech Online",
+        "originalLostMrr": 500,
+        "postOpp": {
+          "id": "006PX00000egJqQYAU",
+          "name": "Atlantech Online (PSA)",
+          "created": "2026-08-12",
+          "close": "2026-09-30",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Jamie Butler",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      },
+      {
+        "account": "Crown Networks Llc",
+        "originalLostMrr": 400,
+        "postOpp": {
+          "id": "006PX00000efG9pYAE",
+          "name": "Crown Networks",
+          "created": "2026-08-12",
+          "close": "2026-08-31",
+          "stage": "1- Discovery Scheduled",
+          "isWon": false,
+          "isClosed": false,
+          "amount": 1000,
+          "owner": "Andy Whisenant",
+          "lossReason": null,
+          "lossDetail": null,
+          "missing": null
+        }
+      }
+    ],
+    "lostDeals": [
+      {
+        "account": "MGi Systems",
+        "originalLostMrr": 1135,
+        "postOpp": {
+          "id": "006PX00000d8o2nYAA",
+          "name": "MGi Systems",
+          "created": "2026-07-06",
+          "close": "2026-07-21",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1100,
+          "owner": "Abbey McIntosh",
+          "lossReason": "Price",
+          "lossDetail": "Emailed me to cancel FU demo - \"Thank you for your time with this rev.io product. Mike and I discussed it and the software is not a good fit for us. It's a combination of difficulty of adoption, our scale of business and cost. Please cancel our meeting for tomorrow.\"",
+          "missing": null
+        }
+      },
+      {
+        "account": "Zuvid Surveillance",
+        "originalLostMrr": 770,
+        "postOpp": {
+          "id": "006PX00000bsEWvYAM",
+          "name": "Zuvid Surveillance",
+          "created": "2026-06-08",
+          "close": "2026-06-30",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1025,
+          "owner": "Jake Borah",
+          "lossReason": "Discovery No Show",
+          "lossDetail": "no show",
+          "missing": null
+        }
+      },
+      {
+        "account": "Clever Tech Pros",
+        "originalLostMrr": 770,
+        "postOpp": {
+          "id": "006PX00000dzDOTYA2",
+          "name": "Clover Tech Pros",
+          "created": "2026-07-27",
+          "close": "2026-07-27",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1000,
+          "owner": "Jamie Butler",
+          "lossReason": "Price",
+          "lossDetail": "Only has 3 users on Halo at this point, and thought we still had a 5 user minimum so was okay with that, but not the $1,000 minimum. His max budget was $475 a month.",
+          "missing": null
+        }
+      },
+      {
+        "account": "Masterpiece Audio Video",
+        "originalLostMrr": 725,
+        "postOpp": {
+          "id": "006PX00000cjoZ3YAI",
+          "name": "Masterpiece Audio Video",
+          "created": "2026-06-26",
+          "close": "2026-07-21",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1000,
+          "owner": "Patrick Davies",
+          "lossReason": "Not the Right Time",
+          "lossDetail": "Adam is extremely difficult and wants buy in from his whole team but they are not receptive. He says this will take more time to decide on and implement and he's going on vacation soon. Closing out for now",
+          "missing": null
+        }
+      },
+      {
+        "account": "Grey Matter Technologies",
+        "originalLostMrr": 720,
+        "postOpp": {
+          "id": "006PX00000bXfTiYAK",
+          "name": "Grey Matter Technologies",
+          "created": "2026-06-02",
+          "close": "2026-06-12",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": null,
+          "owner": "Jamie Butler",
+          "lossReason": "No Business Issue",
+          "lossDetail": "Mix of no BI and in an existing contract. Just finished a super exhausting onboarding with a Halo consultant that took them a year, so although they think we have a cool platform, he doesn't have the appetite for a switch yet.",
+          "missing": null
+        }
+      },
+      {
+        "account": "Epic Systems",
+        "originalLostMrr": 635,
+        "postOpp": {
+          "id": "006PX00000c22B7YAI",
+          "name": "Epic Systems",
+          "created": "2026-06-11",
+          "close": "2026-06-11",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 890,
+          "owner": "Husam Zalmiyar",
+          "lossReason": "Discovery No Show",
+          "lossDetail": "No show, said restructuring company and needs to hold off",
+          "missing": null
+        }
+      },
+      {
+        "account": "Real Tech",
+        "originalLostMrr": 400,
+        "postOpp": {
+          "id": "006PX00000c5T8MYAU",
+          "name": "Real Tech",
+          "created": "2026-06-12",
+          "close": "2026-07-02",
+          "stage": "Closed Lost",
+          "isWon": false,
+          "isClosed": true,
+          "amount": 1000,
+          "owner": "Jaylin Bender",
+          "lossReason": "Discovery No Show",
+          "lossDetail": "No showed",
+          "missing": null
+        }
+      }
+    ]
+  },
+  "min800StrictOppRun": {
+    "counts": {
+      "lostOpps": 116,
+      "historicAccounts": 103,
+      "postUnlockActivities": 1910,
+      "postUnlockRelatedOpps": 31,
+      "auditedAccounts": 103
+    },
+    "byStatus": {
+      "Post-unlock PSA opp lost \u2014 other reason": {
+        "accounts": 8,
+        "mrr": 22050
+      },
+      "Post-unlock light/unclear activity, no PSA opp": {
+        "accounts": 12,
+        "mrr": 28554
+      },
+      "Post-unlock prospecting/touches, no PSA opp": {
+        "accounts": 27,
+        "mrr": 52409
+      },
+      "Post-unlock engaged activity, no PSA opp": {
+        "accounts": 40,
+        "mrr": 70342
+      },
+      "Post-unlock PSA opp open": {
+        "accounts": 5,
+        "mrr": 8648
+      },
+      "No post-unlock SF activity": {
+        "accounts": 11,
+        "mrr": 11975
+      }
+    },
+    "byFeature": {
+      "Project Management": {
+        "accounts": 46,
+        "mrr": 99896,
+        "statuses": {
+          "Post-unlock PSA opp lost \u2014 other reason": 4,
+          "Post-unlock light/unclear activity, no PSA opp": 5,
+          "Post-unlock prospecting/touches, no PSA opp": 11,
+          "Post-unlock engaged activity, no PSA opp": 23,
+          "Post-unlock PSA opp open": 1,
+          "No post-unlock SF activity": 2
+        }
+      },
+      "Integrations / RMM / DTools": {
+        "accounts": 46,
+        "mrr": 95365,
+        "statuses": {
+          "Post-unlock PSA opp lost \u2014 other reason": 5,
+          "Post-unlock light/unclear activity, no PSA opp": 4,
+          "Post-unlock prospecting/touches, no PSA opp": 11,
+          "Post-unlock engaged activity, no PSA opp": 15,
+          "Post-unlock PSA opp open": 4,
+          "No post-unlock SF activity": 7
+        }
+      },
+      "Portal / Customer": {
+        "accounts": 13,
+        "mrr": 26013,
+        "statuses": {
+          "Post-unlock PSA opp lost \u2014 other reason": 2,
+          "Post-unlock light/unclear activity, no PSA opp": 3,
+          "Post-unlock engaged activity, no PSA opp": 3,
+          "Post-unlock prospecting/touches, no PSA opp": 2,
+          "Post-unlock PSA opp open": 2,
+          "No post-unlock SF activity": 1
+        }
+      },
+      "QuickBooks / Accounting": {
+        "accounts": 8,
+        "mrr": 22566,
+        "statuses": {
+          "Post-unlock PSA opp lost \u2014 other reason": 1,
+          "Post-unlock engaged activity, no PSA opp": 1,
+          "Post-unlock PSA opp open": 1,
+          "Post-unlock prospecting/touches, no PSA opp": 4,
+          "No post-unlock SF activity": 1
+        }
+      },
+      "Reporting / Custom Fields": {
+        "accounts": 19,
+        "mrr": 50072,
+        "statuses": {
+          "Post-unlock PSA opp lost \u2014 other reason": 1,
+          "Post-unlock light/unclear activity, no PSA opp": 4,
+          "Post-unlock prospecting/touches, no PSA opp": 4,
+          "Post-unlock engaged activity, no PSA opp": 9,
+          "No post-unlock SF activity": 1
+        }
+      },
+      "CPQ / Quoting": {
+        "accounts": 30,
+        "mrr": 66176,
+        "statuses": {
+          "Post-unlock PSA opp lost \u2014 other reason": 3,
+          "Post-unlock light/unclear activity, no PSA opp": 5,
+          "Post-unlock prospecting/touches, no PSA opp": 6,
+          "Post-unlock engaged activity, no PSA opp": 12,
+          "Post-unlock PSA opp open": 1,
+          "No post-unlock SF activity": 3
+        }
+      },
+      "Mobile / GPS / Field": {
+        "accounts": 30,
+        "mrr": 65949,
+        "statuses": {
+          "Post-unlock light/unclear activity, no PSA opp": 4,
+          "Post-unlock prospecting/touches, no PSA opp": 10,
+          "Post-unlock engaged activity, no PSA opp": 15,
+          "No post-unlock SF activity": 1
+        }
+      },
+      "Contracts / Agreements": {
+        "accounts": 17,
+        "mrr": 31901,
+        "statuses": {
+          "Post-unlock prospecting/touches, no PSA opp": 1,
+          "Post-unlock engaged activity, no PSA opp": 11,
+          "Post-unlock light/unclear activity, no PSA opp": 1,
+          "No post-unlock SF activity": 4
+        }
+      },
+      "Inventory / PO / Assets": {
+        "accounts": 14,
+        "mrr": 26544,
+        "statuses": {
+          "Post-unlock prospecting/touches, no PSA opp": 3,
+          "Post-unlock light/unclear activity, no PSA opp": 2,
+          "Post-unlock engaged activity, no PSA opp": 8,
+          "Post-unlock PSA opp lost \u2014 other reason": 1
+        }
+      },
+      "Knowledgebase": {
+        "accounts": 6,
+        "mrr": 10055,
+        "statuses": {
+          "Post-unlock engaged activity, no PSA opp": 4,
+          "Post-unlock prospecting/touches, no PSA opp": 2
+        }
+      },
+      "Uncategorized": {
+        "accounts": 3,
+        "mrr": 3950,
+        "statuses": {
+          "Post-unlock light/unclear activity, no PSA opp": 2,
+          "Post-unlock prospecting/touches, no PSA opp": 1
+        }
+      }
+    }
+  }
+}
