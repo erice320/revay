@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-08-20T11:35:13.719Z",
+    "generated": "2026-08-20T17:00:15.701Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js v2"
   },
@@ -21,7 +21,7 @@
         "subject": "Rev.io SEO & Content Check-In",
         "startTime": "2026-08-20T14:00:00.0000000",
         "endTime": "2026-08-20T15:00:00.0000000",
-        "attendeeCount": 7,
+        "attendeeCount": 9,
         "attendees": [
           "Erynn Hart",
           "Ardit Berdyna",
@@ -70,17 +70,6 @@
         "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQFRAAgI3v5N%2BmRAAEYAAAAAewcWc8jm0EuQT5bpSByr2gcAQxv57qAIQE%2BVXKSJ9pLdWgAAAAABDQAAQxv57qAIQE%2BVXKSJ9pLdWgAHuTrkzwAAEA%3D%3D&exvsurl=1&path=/calendar/item"
       },
       {
-        "subject": "AI Security Agents: The Next Layer of Physical Security",
-        "startTime": "2026-08-20T19:30:00.0000000",
-        "endTime": "2026-08-20T19:45:00.0000000",
-        "attendeeCount": 2,
-        "attendees": [
-          "Melody Juarez",
-          "Evan Rice"
-        ],
-        "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQBGAAAAAAB7BxZzyObQS5BPlulIHKvaBwBDG%2FnuoAhAT5VcpIn2kt1aAAAAAAENAABDG%2FnuoAhAT5VcpIn2kt1aAAxikNX3AAA%3D&exvsurl=1&path=/calendar/item"
-      },
-      {
         "subject": "Leave for Airport",
         "startTime": "2026-08-20T20:00:00.0000000",
         "endTime": "2026-08-20T20:30:00.0000000",
@@ -105,6 +94,14 @@
         "attendeeCount": 0,
         "attendees": [],
         "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQBGAAAAAAB7BxZzyObQS5BPlulIHKvaBwBDG%2FnuoAhAT5VcpIn2kt1aAAAAAAENAABDG%2FnuoAhAT5VcpIn2kt1aAAsvIwNyAAA%3D&exvsurl=1&path=/calendar/item"
+      },
+      {
+        "subject": "American Airlines flight 1322 to Denver (KMSAKR)",
+        "startTime": "2026-08-20T21:33:00.0000000",
+        "endTime": "2026-08-20T23:37:00.0000000",
+        "attendeeCount": 0,
+        "attendees": [],
+        "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQBGAAAAAAB7BxZzyObQS5BPlulIHKvaBwBDG%2FnuoAhAT5VcpIn2kt1aAAAAAAENAABDG%2FnuoAhAT5VcpIn2kt1aAAsvIwN0AAA%3D&exvsurl=1&path=/calendar/item"
       }
     ],
     "meetingCount": 10,
@@ -124,27 +121,27 @@
         "_category": "fyi"
       }
     ],
-    "generatedAt": "2026-08-20T11:35:14.337Z",
-    "lastUpdated": "2026-08-20T11:35:14.337Z"
+    "generatedAt": "2026-08-20T17:00:16.191Z",
+    "lastUpdated": "2026-08-20T17:00:16.191Z"
   },
   "pipeline": {
-    "openPipelineMrr": 265046,
-    "openDeals": 127,
-    "weightedMrr": 119271,
-    "closingThisMonth": 116,
-    "closingThisMonthMrr": 259349,
-    "avgDealMrr": 2087,
-    "winRateMtd": 0.1388888888888889,
+    "openPipelineMrr": 264455,
+    "openDeals": 125,
+    "weightedMrr": 119005,
+    "closingThisMonth": 114,
+    "closingThisMonthMrr": 258758,
+    "avgDealMrr": 2116,
+    "winRateMtd": 0.14666666666666667,
     "stageBreakdown": [
       {
         "stage": "3 - Initial Product Demo",
         "count": 31,
-        "mrr": 178113
+        "mrr": 177915
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 41,
-        "mrr": 40195
+        "count": 39,
+        "mrr": 39145
       },
       {
         "stage": "1- Discovery Scheduled",
@@ -153,13 +150,13 @@
       },
       {
         "stage": "4 - Proposal Sent",
-        "count": 13,
-        "mrr": 8076
+        "count": 14,
+        "mrr": 9274
       },
       {
         "stage": "5 - Product / Contract Validated",
-        "count": 3,
-        "mrr": 780
+        "count": 2,
+        "mrr": 239
       },
       {
         "stage": "6 - Verbal Commit",
@@ -168,16 +165,23 @@
       }
     ],
     "bookingsPacing": {
-      "actualMrr": 2917,
+      "actualMrr": 2967,
       "targetMrr": 75000,
       "pacePct": 4,
       "daysIntoMonth": 20,
       "daysRemaining": 11,
-      "requiredDailyRunRate": 6553,
-      "wonCount": 10,
-      "lastUpdated": "2026-08-20T11:35:15.516Z"
+      "requiredDailyRunRate": 6548,
+      "wonCount": 11,
+      "lastUpdated": "2026-08-20T17:00:17.100Z"
     },
     "recentWins": [
+      {
+        "id": "006PX00000doHFJYA2",
+        "name": "Womack Technology - Payments (Portal)",
+        "amount": 50,
+        "accountName": "Womack Technologies",
+        "closeDate": "2026-08-20"
+      },
       {
         "id": "006PX00000eyh7tYAA",
         "name": "GymPhone - AR Payments (Fitcomm Group)",
@@ -205,13 +209,6 @@
         "amount": 1000,
         "accountName": "NAS Wireless",
         "closeDate": "2026-08-13"
-      },
-      {
-        "id": "006PX00000dGXBFYA4",
-        "name": "AVSS - AR Payments",
-        "amount": 50,
-        "accountName": "AVSS",
-        "closeDate": "2026-08-12"
       }
     ],
     "monthlyTrends": [
@@ -258,7 +255,7 @@
         "winRate": null
       }
     ],
-    "lastUpdated": "2026-08-20T11:35:15.516Z"
+    "lastUpdated": "2026-08-20T17:00:17.100Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
@@ -273,67 +270,67 @@
     ],
     "recentCalls": [
       {
-        "title": "+13256909500 - Ingrid Beard",
-        "date": "2026-08-19",
+        "title": "Patrick Davies - Noah Kamrat",
+        "date": "2026-08-20",
         "durationMin": 0,
         "state": "ENDED"
       },
       {
-        "title": "Justin Lee - Eric Brackett",
-        "date": "2026-08-19",
+        "title": "Patrick Davies - Grant Goodnight",
+        "date": "2026-08-20",
         "durationMin": 0,
         "state": "ENDED"
       },
       {
-        "title": "Abbey McIntosh - Frank Breen",
-        "date": "2026-08-19",
-        "durationMin": 0,
+        "title": "Patrick Davies - Dominic Deangelis",
+        "date": "2026-08-20",
+        "durationMin": 1,
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-08-20T11:35:18.533Z"
+    "lastUpdated": "2026-08-20T17:00:20.174Z"
   },
   "newBusiness": {
-    "newDealsOpenedMtd": 86,
+    "newDealsOpenedMtd": 85,
     "sequencesActive": 36,
-    "newEnrollmentsThisWeek": 8522,
+    "newEnrollmentsThisWeek": 8531,
     "repliesThisWeek": 208,
-    "meetingsBookedMtd": 113,
+    "meetingsBookedMtd": 114,
     "topSequences": [
       {
-        "name": "Q3 2026 Integrator AI Sequence",
-        "enrolled": 81,
-        "openRate": 0.542,
-        "replyRate": 0
-      },
-      {
         "name": "Q3 UCaaS / VoIP AI Sequence ",
-        "enrolled": 425,
+        "enrolled": 428,
         "openRate": 0.422,
         "replyRate": 0.011
       },
       {
-        "name": "Q3'26 Security Integrator Sequence",
-        "enrolled": 1478,
-        "openRate": 0.526,
+        "name": "Q3 MSP Static Sequence ",
+        "enrolled": 772,
+        "openRate": 0.352,
+        "replyRate": 0.003
+      },
+      {
+        "name": "MSP Sequence 2026",
+        "enrolled": 7,
+        "openRate": 0.232,
         "replyRate": 0
       }
     ],
-    "lastUpdated": "2026-08-20T11:35:19.042Z"
+    "lastUpdated": "2026-08-20T17:00:20.911Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
-    "zendeskOpenTickets": 488,
-    "zendeskEscalated": 9,
+    "zendeskOpenTickets": 510,
+    "zendeskEscalated": 10,
     "psaOpenLast30": 0,
     "psaHighPriority": 0,
     "psaTotalLast30": 0,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-08-20T11:35:24.387Z"
+    "lastUpdated": "2026-08-20T17:00:25.014Z"
   },
   "agentHealth": {
     "cronJobsTotal": 0,
@@ -347,7 +344,7 @@
     "errorJobs": [],
     "allJobs": [],
     "byCategory": {},
-    "lastUpdated": "2026-08-20T11:35:24.388Z"
+    "lastUpdated": "2026-08-20T17:00:25.015Z"
   },
   "competitorIntel": {
     "topCompetitors": [
@@ -442,17 +439,17 @@
     "lossCount": 174,
     "totalTier1": 602,
     "generatedAt": "2026-08-19T19:07:28.679Z",
-    "lastUpdated": "2026-08-20T11:35:24.388Z"
+    "lastUpdated": "2026-08-20T17:00:25.015Z"
   },
   "dealBriefs": {
-    "lastPsaRun": "2026-08-20T02:15:13.223Z",
+    "lastPsaRun": "2026-08-20T13:15:14.442Z",
     "lastPsaCount": 1,
-    "lastBillingRun": "2026-08-20T02:20:13.776Z",
+    "lastBillingRun": "2026-08-20T13:25:02.741Z",
     "totalPsaProcessed": 82,
     "totalBillingProcessed": 12,
-    "psaStatus": "ok",
-    "billingStatus": "ok",
-    "lastUpdated": "2026-08-20T11:35:24.388Z"
+    "psaStatus": "fresh",
+    "billingStatus": "fresh",
+    "lastUpdated": "2026-08-20T17:00:25.015Z"
   },
   "marketProduct": {
     "mspLastRun": "2026-08-19T11:00:52.448Z",
@@ -464,6 +461,6 @@
       "topCompetitor": "QuickBooks",
       "topCompetitorCount": 409
     },
-    "lastUpdated": "2026-08-20T11:35:24.388Z"
+    "lastUpdated": "2026-08-20T17:00:25.015Z"
   }
 }
