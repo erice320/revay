@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-08-21T11:35:18.351Z",
+    "generated": "2026-08-21T17:00:24.017Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js v2"
   },
@@ -48,8 +48,8 @@
     ],
     "meetingCount": 4,
     "vipEmails": [],
-    "generatedAt": "2026-08-21T11:35:18.671Z",
-    "lastUpdated": "2026-08-21T11:35:18.671Z"
+    "generatedAt": "2026-08-21T17:00:24.493Z",
+    "lastUpdated": "2026-08-21T17:00:24.493Z"
   },
   "pipeline": {
     "openPipelineMrr": 264055,
@@ -67,13 +67,13 @@
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 39,
-        "mrr": 34711
+        "count": 41,
+        "mrr": 36711
       },
       {
         "stage": "1- Discovery Scheduled",
-        "count": 32,
-        "mrr": 32782
+        "count": 30,
+        "mrr": 30782
       },
       {
         "stage": "4 - Proposal Sent",
@@ -99,7 +99,7 @@
       "daysRemaining": 10,
       "requiredDailyRunRate": 7203,
       "wonCount": 11,
-      "lastUpdated": "2026-08-21T11:35:19.763Z"
+      "lastUpdated": "2026-08-21T17:00:25.886Z"
     },
     "recentWins": [
       {
@@ -182,7 +182,7 @@
         "winRate": null
       }
     ],
-    "lastUpdated": "2026-08-21T11:35:19.763Z"
+    "lastUpdated": "2026-08-21T17:00:25.886Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
@@ -197,67 +197,67 @@
     ],
     "recentCalls": [
       {
-        "title": "Christopher Defina - Sarah McGovern",
-        "date": "2026-08-20",
+        "title": "Ptah Robinson - Rod Maitland",
+        "date": "2026-08-21",
         "durationMin": 0,
         "state": "ENDED"
       },
       {
-        "title": "Emily Petraglia - David Giffard",
-        "date": "2026-08-20",
+        "title": "Ptah Robinson - Doug Allen",
+        "date": "2026-08-21",
         "durationMin": 0,
         "state": "ENDED"
       },
       {
-        "title": "Emily Petraglia - Adam Goldstein",
-        "date": "2026-08-20",
-        "durationMin": 1,
+        "title": "Ptah Robinson - Wilhelm Zimerman",
+        "date": "2026-08-21",
+        "durationMin": 0,
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-08-21T11:35:24.851Z"
+    "lastUpdated": "2026-08-21T17:00:28.904Z"
   },
   "newBusiness": {
-    "newDealsOpenedMtd": 84,
+    "newDealsOpenedMtd": 82,
     "sequencesActive": 36,
-    "newEnrollmentsThisWeek": 8582,
-    "repliesThisWeek": 209,
+    "newEnrollmentsThisWeek": 8653,
+    "repliesThisWeek": 211,
     "meetingsBookedMtd": 114,
     "topSequences": [
       {
-        "name": "Q3 2026 Integrator AI Sequence",
-        "enrolled": 81,
-        "openRate": 0.551,
+        "name": "Q3'26 Security Integrator Sequence",
+        "enrolled": 1494,
+        "openRate": 0.526,
         "replyRate": 0
       },
       {
         "name": "Q3 UCaaS / VoIP AI Sequence ",
-        "enrolled": 428,
-        "openRate": 0.422,
+        "enrolled": 439,
+        "openRate": 0.42,
         "replyRate": 0.011
       },
       {
-        "name": "Q3'26\" AV Integrator Sequence",
-        "enrolled": 479,
-        "openRate": 0.5,
-        "replyRate": 0.001
+        "name": "Tigerpaw Migration",
+        "enrolled": 28,
+        "openRate": 0.083,
+        "replyRate": 0
       }
     ],
-    "lastUpdated": "2026-08-21T11:35:25.558Z"
+    "lastUpdated": "2026-08-21T17:00:29.407Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
-    "zendeskOpenTickets": 505,
-    "zendeskEscalated": 7,
+    "zendeskOpenTickets": 498,
+    "zendeskEscalated": 10,
     "psaOpenLast30": 0,
     "psaHighPriority": 0,
     "psaTotalLast30": 0,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-08-21T11:35:29.433Z"
+    "lastUpdated": "2026-08-21T17:00:33.154Z"
   },
   "agentHealth": {
     "cronJobsTotal": 0,
@@ -271,7 +271,7 @@
     "errorJobs": [],
     "allJobs": [],
     "byCategory": {},
-    "lastUpdated": "2026-08-21T11:35:29.433Z"
+    "lastUpdated": "2026-08-21T17:00:33.155Z"
   },
   "competitorIntel": {
     "topCompetitors": [
@@ -366,17 +366,17 @@
     "lossCount": 174,
     "totalTier1": 602,
     "generatedAt": "2026-08-20T19:07:31.124Z",
-    "lastUpdated": "2026-08-21T11:35:29.433Z"
+    "lastUpdated": "2026-08-21T17:00:33.155Z"
   },
   "dealBriefs": {
-    "lastPsaRun": "2026-08-21T02:15:14.681Z",
+    "lastPsaRun": "2026-08-21T13:15:17.085Z",
     "lastPsaCount": 1,
-    "lastBillingRun": "2026-08-21T02:20:12.520Z",
+    "lastBillingRun": "2026-08-21T13:26:55.453Z",
     "totalPsaProcessed": 82,
     "totalBillingProcessed": 12,
-    "psaStatus": "ok",
-    "billingStatus": "ok",
-    "lastUpdated": "2026-08-21T11:35:29.433Z"
+    "psaStatus": "fresh",
+    "billingStatus": "fresh",
+    "lastUpdated": "2026-08-21T17:00:33.155Z"
   },
   "marketProduct": {
     "mspLastRun": "2026-08-21T11:01:05.009Z",
@@ -388,6 +388,6 @@
       "topCompetitor": "QuickBooks",
       "topCompetitorCount": 409
     },
-    "lastUpdated": "2026-08-21T11:35:29.434Z"
+    "lastUpdated": "2026-08-21T17:00:33.155Z"
   }
 }
