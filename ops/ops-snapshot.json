@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-08-24T11:35:19.616Z",
+    "generated": "2026-08-24T17:00:22.523Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js v2"
   },
@@ -25,18 +25,6 @@
           "Josh Owen"
         ],
         "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQFRAAgI3vZyUkLAAEYAAAAAewcWc8jm0EuQT5bpSByr2gcAQxv57qAIQE%2BVXKSJ9pLdWgAAAAABDQAAQxv57qAIQE%2BVXKSJ9pLdWgAHe%2FTNkQAAEA%3D%3D&exvsurl=1&path=/calendar/item"
-      },
-      {
-        "subject": "Grow Team VP Meeting",
-        "startTime": "2026-08-24T14:30:00.0000000",
-        "endTime": "2026-08-24T15:00:00.0000000",
-        "attendeeCount": 7,
-        "attendees": [
-          "Ryan Koontz",
-          "Usman Zahoor",
-          "Jennifer Hopkins"
-        ],
-        "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQFRAAgI3wFypAtAAEYAAAAAewcWc8jm0EuQT5bpSByr2gcAQxv57qAIQE%2BVXKSJ9pLdWgAAAAABDQAAQxv57qAIQE%2BVXKSJ9pLdWgAFmZzXzwAAEA%3D%3D&exvsurl=1&path=/calendar/item"
       },
       {
         "subject": "ELT/ SLT Weekly Meeting",
@@ -95,34 +83,34 @@
         "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQFRAAgI3vZyUkLAAEYAAAAAewcWc8jm0EuQT5bpSByr2gcAQxv57qAIQE%2BVXKSJ9pLdWgAAAAABDQAAQxv57qAIQE%2BVXKSJ9pLdWgAHe%2FTNkgAAEA%3D%3D&exvsurl=1&path=/calendar/item"
       }
     ],
-    "meetingCount": 8,
+    "meetingCount": 7,
     "vipEmails": [],
-    "generatedAt": "2026-08-24T11:35:19.959Z",
-    "lastUpdated": "2026-08-24T11:35:19.959Z"
+    "generatedAt": "2026-08-24T17:00:23.266Z",
+    "lastUpdated": "2026-08-24T17:00:23.266Z"
   },
   "pipeline": {
-    "openPipelineMrr": 260873,
-    "openDeals": 120,
-    "weightedMrr": 117393,
-    "closingThisMonth": 109,
-    "closingThisMonthMrr": 255176,
-    "avgDealMrr": 2174,
-    "winRateMtd": 0.14634146341463414,
+    "openPipelineMrr": 192873,
+    "openDeals": 121,
+    "weightedMrr": 86793,
+    "closingThisMonth": 110,
+    "closingThisMonthMrr": 187176,
+    "avgDealMrr": 1594,
+    "winRateMtd": 0.14457831325301204,
     "stageBreakdown": [
       {
         "stage": "3 - Initial Product Demo",
-        "count": 35,
-        "mrr": 185683
+        "count": 34,
+        "mrr": 115683
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 39,
-        "mrr": 34711
+        "count": 40,
+        "mrr": 35711
       },
       {
         "stage": "1- Discovery Scheduled",
-        "count": 27,
-        "mrr": 27782
+        "count": 28,
+        "mrr": 28782
       },
       {
         "stage": "4 - Proposal Sent",
@@ -148,7 +136,7 @@
       "daysRemaining": 7,
       "requiredDailyRunRate": 10148,
       "wonCount": 12,
-      "lastUpdated": "2026-08-24T11:35:21.173Z"
+      "lastUpdated": "2026-08-24T17:00:24.459Z"
     },
     "recentWins": [
       {
@@ -231,11 +219,11 @@
         "winRate": null
       }
     ],
-    "lastUpdated": "2026-08-24T11:35:21.174Z"
+    "lastUpdated": "2026-08-24T17:00:24.459Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
-    "callsYesterday": 0,
+    "callsYesterday": 100,
     "lastRunProcessed": 10,
     "flaggedFollowUps": 0,
     "topThemes": [
@@ -246,67 +234,67 @@
     ],
     "recentCalls": [
       {
-        "title": "Meeting with Cam Sharpe",
-        "date": "2026-08-21",
-        "durationMin": 8,
-        "state": "ENDED"
-      },
-      {
-        "title": "Patrick Davies - Brock Walters",
-        "date": "2026-08-21",
+        "title": "Justin Lee - Ron Anderson",
+        "date": "2026-08-24",
         "durationMin": 1,
         "state": "ENDED"
       },
       {
-        "title": "Max Coopman - Michael Valentine",
-        "date": "2026-08-21",
-        "durationMin": 1,
+        "title": "Justin Lee - Bobby Hall",
+        "date": "2026-08-24",
+        "durationMin": 0,
+        "state": "ENDED"
+      },
+      {
+        "title": "Justin Lee - Fred Graffam",
+        "date": "2026-08-24",
+        "durationMin": 0,
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-08-24T11:35:23.997Z"
+    "lastUpdated": "2026-08-24T17:00:27.357Z"
   },
   "newBusiness": {
-    "newDealsOpenedMtd": 81,
+    "newDealsOpenedMtd": 83,
     "sequencesActive": 37,
-    "newEnrollmentsThisWeek": 8855,
+    "newEnrollmentsThisWeek": 8866,
     "repliesThisWeek": 213,
-    "meetingsBookedMtd": 117,
+    "meetingsBookedMtd": 119,
     "topSequences": [
       {
-        "name": "Payments",
-        "enrolled": 0,
-        "openRate": null,
-        "replyRate": null
-      },
-      {
-        "name": "Summit 2026",
-        "enrolled": 46,
-        "openRate": 0.609,
-        "replyRate": 0
+        "name": "CBR Sequence - Q3'26",
+        "enrolled": 226,
+        "openRate": 0.538,
+        "replyRate": 0.107
       },
       {
         "name": "Q3 MSP Static Sequence ",
-        "enrolled": 861,
-        "openRate": 0.371,
-        "replyRate": 0.003
+        "enrolled": 862,
+        "openRate": 0.382,
+        "replyRate": 0.002
+      },
+      {
+        "name": "Q3'26\" Generic Integrator Sequence",
+        "enrolled": 472,
+        "openRate": 0.428,
+        "replyRate": 0.002
       }
     ],
-    "lastUpdated": "2026-08-24T11:35:24.445Z"
+    "lastUpdated": "2026-08-24T17:00:27.783Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
-    "zendeskOpenTickets": 487,
-    "zendeskEscalated": 12,
+    "zendeskOpenTickets": 481,
+    "zendeskEscalated": 10,
     "psaOpenLast30": 0,
     "psaHighPriority": 0,
     "psaTotalLast30": 0,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-08-24T11:35:28.325Z"
+    "lastUpdated": "2026-08-24T17:00:37.623Z"
   },
   "agentHealth": {
     "cronJobsTotal": 0,
@@ -320,7 +308,7 @@
     "errorJobs": [],
     "allJobs": [],
     "byCategory": {},
-    "lastUpdated": "2026-08-24T11:35:28.325Z"
+    "lastUpdated": "2026-08-24T17:00:37.623Z"
   },
   "competitorIntel": {
     "topCompetitors": [
@@ -415,17 +403,17 @@
     "lossCount": 174,
     "totalTier1": 602,
     "generatedAt": "2026-08-21T19:07:33.391Z",
-    "lastUpdated": "2026-08-24T11:35:28.326Z"
+    "lastUpdated": "2026-08-24T17:00:37.623Z"
   },
   "dealBriefs": {
-    "lastPsaRun": "2026-08-22T02:15:18.426Z",
+    "lastPsaRun": "2026-08-24T13:15:20.017Z",
     "lastPsaCount": 1,
-    "lastBillingRun": "2026-08-22T02:20:18.731Z",
+    "lastBillingRun": "2026-08-24T13:20:39.310Z",
     "totalPsaProcessed": 83,
     "totalBillingProcessed": 12,
-    "psaStatus": "stale",
-    "billingStatus": "stale",
-    "lastUpdated": "2026-08-24T11:35:28.326Z"
+    "psaStatus": "fresh",
+    "billingStatus": "fresh",
+    "lastUpdated": "2026-08-24T17:00:37.624Z"
   },
   "marketProduct": {
     "mspLastRun": "2026-08-24T11:01:00.180Z",
@@ -437,6 +425,6 @@
       "topCompetitor": "QuickBooks",
       "topCompetitorCount": 409
     },
-    "lastUpdated": "2026-08-24T11:35:28.326Z"
+    "lastUpdated": "2026-08-24T17:00:37.624Z"
   }
 }
