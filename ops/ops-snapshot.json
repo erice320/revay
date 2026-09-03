@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-09-03T13:40:07.551Z",
+    "generated": "2026-09-03T13:41:21.150Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js v2"
   },
@@ -52,8 +52,8 @@
     ],
     "meetingCount": 5,
     "vipEmails": [],
-    "generatedAt": "2026-09-03T13:40:08.098Z",
-    "lastUpdated": "2026-09-03T13:40:08.098Z"
+    "generatedAt": "2026-09-03T13:41:21.421Z",
+    "lastUpdated": "2026-09-03T13:41:21.421Z"
   },
   "pipeline": {
     "openPipelineMrr": 186115,
@@ -103,7 +103,7 @@
       "daysRemaining": 27,
       "requiredDailyRunRate": 2741,
       "wonCount": 1,
-      "lastUpdated": "2026-09-03T13:40:10.003Z"
+      "lastUpdated": "2026-09-03T13:41:22.339Z"
     },
     "recentWins": [
       {
@@ -186,7 +186,7 @@
         "winRate": null
       }
     ],
-    "lastUpdated": "2026-09-03T13:40:10.004Z"
+    "lastUpdated": "2026-09-03T13:41:22.339Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
@@ -219,7 +219,7 @@
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-09-03T13:40:14.449Z"
+    "lastUpdated": "2026-09-03T13:41:25.513Z"
   },
   "newBusiness": {
     "newDealsOpenedMtd": 2,
@@ -247,7 +247,7 @@
         "replyRate": 0
       }
     ],
-    "lastUpdated": "2026-09-03T13:40:15.059Z"
+    "lastUpdated": "2026-09-03T13:41:26.100Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
@@ -261,22 +261,28 @@
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-09-03T13:40:19.039Z"
+    "lastUpdated": "2026-09-03T13:41:29.597Z"
   },
   "agentHealth": {
     "cronJobsTotal": 47,
     "cronJobsEnabled": 47,
-    "cronJobsHealthy": 42,
-    "cronJobsError": 5,
+    "cronJobsHealthy": 40,
+    "cronJobsError": 7,
     "lastKaiaRun": null,
     "lastKaiaStatus": "unknown",
     "lastOnboardingRun": null,
     "lastOnboardingStatus": "unknown",
     "errorJobs": [
       {
-        "name": "Nightly Git Backup",
-        "id": "c12c38b0",
-        "lastError": "ERROR:\n{\n  \"ok\": false,\n  \"checkedAt\": \"2026-09-02T09:00:22.735Z\",\n  \"trackedFiles\": 5858,\n  \"stagedFiles\": 0,\n  \"untrackedFiles\": 0,\n  \"trackedRiskPathCount\": 3409,\n  \"trackedRiskPathSamples\": [\n    \".config/higgsfield/credentials.json\",\n    \".npm/_cacache/content-v2/sha512/24/68/87d79fe1be3fa96e0023510d4c849183bd933f3330b877e5d363624b8306419cf92f06b83b0cdee97565984eff767a36984354fde68f0835ad171c3f9761\",\n    \".npm/_cacache/content-v2/sha512/29/9c/58a350549160f64d514baf4310a0cf2f5148a0583dcb943f376bfef906a0bee2a1341dbd55a39bf516071f68d5ef7d7cebfb912143a8a783f09a0628d397\",\n    \".npm/_cacache/content-v2/sha512/30/53/bf433bed00e9896e484e6824ef6c670537d2fd6fe26e9c8b03c1a2a58d239d70b31e6b7349d64f54b33feb8dd7d25d3ab875fcdf792ed6e29e1838000778\",\n    \".npm/_cacache/content-v2/sha512/5e/17/4274085aaee820f7ff858fa0b953d59245990cee33543a1422f73a3701c0665531ea9b7b901cca3bf1c6648071e165e088b0db520d0863372a305a437ddc\",\n    \".npm/_cacache/content-v2/sha512/62/0b/d44dfc2ac9ced45d532b07e4889ac5584a64d2f17fed4abb5d35930898cfa7efe413ae2457c978a6d2606b4d735eab3545d0a5868073de8b2562145acd0f\",\n    \".npm/_cacache/content-v2/sha512/67/3d/5a84b8257fb3266f24fe8705e083067e6d10306f0fb4e0b69da7ba94d650a26b66ecf014888fee1f29178aecae637fd9b80c3462cb75671191062ed11bc1\",\n    \".npm/_cacache/content-v2/sha512/70/78/8b8f06446b0585bee748a9e78c665bd96b24cb6d1a2ec9d31b6e5cab762c87ed92dba94ad2ac412bf9383e5f6eb98b3b5195532cc8e611c290f927106cbe\",\n    \".npm/_cacache/content-v2/sha512/7e/4b/fbc6844d3d224d901a2aae88dbb0bba5348e9b9f34e54f9a0054d2bda477d72836a2913e75502a7b87e50984478de3a5a1ea79fb88d767b027d0c91db6fe\",\n    \".npm/_cacache/content-v2/sha512/7f/41/56302d3227ca3ae66b07298281a1c434b43fac2002cdc506a52b0b47c3f2b2d143e4294d960588b517b5d89f53d62ba76cd608a8a8287506f0481bfc4d11\"\n  ],\n  \"trackedCriticalPathCount\": 1,\n  \"trackedCriticalPathSamples\": [\n    \".config/higgsfield/credentials.json\"\n  ],\n  \"maxBytes\": 99614720,\n  \"blocked\": [],\n  \"note\": \"Blocks risky staged/untracked additions and any tracked crede…",
+        "name": "Onboarding Brief Coverage Guard",
+        "id": "6af65023",
+        "lastError": "message_delivery_failure",
+        "since": "2026-09-01"
+      },
+      {
+        "name": "Daily Cron Health Check",
+        "id": "9e362558",
+        "lastError": "message_delivery_failure",
         "since": "2026-09-01"
       },
       {
@@ -290,6 +296,12 @@
         "id": "f38a183a",
         "lastError": "FailoverError: The AI service returned an internal error. Please try again in a moment.",
         "since": "2026-09-01"
+      },
+      {
+        "name": "Weekend Email Summary",
+        "id": "46b52d7f",
+        "lastError": "message_delivery_failure",
+        "since": "2026-08-30"
       },
       {
         "name": "Weekly PSA Onboarding Snapshot Ledger + Deck",
@@ -309,7 +321,7 @@
         "id": "6af65023",
         "name": "Onboarding Brief Coverage Guard",
         "enabled": true,
-        "status": "ok",
+        "status": "message_delivery_failure",
         "lastRunAt": "2026-09-01T23:35:00.035Z",
         "lastError": null,
         "schedule": "35 8,13,18,21 * * 1-5",
@@ -359,9 +371,9 @@
         "id": "c12c38b0",
         "name": "Nightly Git Backup",
         "enabled": true,
-        "status": "false_green_diagnostic_failure",
+        "status": "ok",
         "lastRunAt": "2026-09-01T09:00:00.030Z",
-        "lastError": "ERROR:\n{\n  \"ok\": false,\n  \"checkedAt\": \"2026-09-02T09:00:22.735Z\",\n  \"trackedFiles\": 5858,\n  \"stagedFiles\": 0,\n  \"untrackedFiles\": 0,\n  \"trackedRiskPathCount\": 3409,\n  \"trackedRiskPathSamples\": [\n    \".config/higgsfield/credentials.json\",\n    \".npm/_cacache/content-v2/sha512/24/68/87d79fe1be3fa96e0023510d4c849183bd933f3330b877e5d363624b8306419cf92f06b83b0cdee97565984eff767a36984354fde68f0835ad171c3f9761\",\n    \".npm/_cacache/content-v2/sha512/29/9c/58a350549160f64d514baf4310a0cf2f5148a0583dcb943f376bfef906a0bee2a1341dbd55a39bf516071f68d5ef7d7cebfb912143a8a783f09a0628d397\",\n    \".npm/_cacache/content-v2/sha512/30/53/bf433bed00e9896e484e6824ef6c670537d2fd6fe26e9c8b03c1a2a58d239d70b31e6b7349d64f54b33feb8dd7d25d3ab875fcdf792ed6e29e1838000778\",\n    \".npm/_cacache/content-v2/sha512/5e/17/4274085aaee820f7ff858fa0b953d59245990cee33543a1422f73a3701c0665531ea9b7b901cca3bf1c6648071e165e088b0db520d0863372a305a437ddc\",\n    \".npm/_cacache/content-v2/sha512/62/0b/d44dfc2ac9ced45d532b07e4889ac5584a64d2f17fed4abb5d35930898cfa7efe413ae2457c978a6d2606b4d735eab3545d0a5868073de8b2562145acd0f\",\n    \".npm/_cacache/content-v2/sha512/67/3d/5a84b8257fb3266f24fe8705e083067e6d10306f0fb4e0b69da7ba94d650a26b66ecf014888fee1f29178aecae637fd9b80c3462cb75671191062ed11bc1\",\n    \".npm/_cacache/content-v2/sha512/70/78/8b8f06446b0585bee748a9e78c665bd96b24cb6d1a2ec9d31b6e5cab762c87ed92dba94ad2ac412bf9383e5f6eb98b3b5195532cc8e611c290f927106cbe\",\n    \".npm/_cacache/content-v2/sha512/7e/4b/fbc6844d3d224d901a2aae88dbb0bba5348e9b9f34e54f9a0054d2bda477d72836a2913e75502a7b87e50984478de3a5a1ea79fb88d767b027d0c91db6fe\",\n    \".npm/_cacache/content-v2/sha512/7f/41/56302d3227ca3ae66b07298281a1c434b43fac2002cdc506a52b0b47c3f2b2d143e4294d960588b517b5d89f53d62ba76cd608a8a8287506f0481bfc4d11\"\n  ],\n  \"trackedCriticalPathCount\": 1,\n  \"trackedCriticalPathSamples\": [\n    \".config/higgsfield/credentials.json\"\n  ],\n  \"maxBytes\": 99614720,\n  \"blocked\": [],\n  \"note\": \"Blocks risky staged/untracked additions and any tracked crede…",
+        "lastError": null,
         "schedule": "0 4 * * *",
         "category": "Infrastructure"
       },
@@ -391,7 +403,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-08-31T11:00:00.123Z",
-        "lastError": "Email brief sent to the full distribution list. ConnectWise expanded x360Recover into Australia, including SIEM-linked Attack-to-Recovery integration. <https://www.channelinsider.com/security/resiliency-backup-and-recovery/connectwise-x360recover-australian-data-center/> SuperOps and Guardz launched a bundled partnership as MSP demand grows for integrated AI-ready workflows. <https://www.channelpronetwork.com/2026/09/01/msp-trends-quick-bytes/> Syncro is targeting Datto uncertainty around SaaS Defense’s end-of-life and Cyber Resiliency Platform re-platforming. <https://syncrosecure.com/blog/datto-alternatives/>",
+        "lastError": null,
         "schedule": "0 6 * * 1,3,5",
         "category": "Intelligence"
       },
@@ -439,7 +451,7 @@
         "id": "9e362558",
         "name": "Daily Cron Health Check",
         "enabled": true,
-        "status": "ok",
+        "status": "message_delivery_failure",
         "lastRunAt": "2026-09-01T13:12:00.035Z",
         "lastError": null,
         "schedule": "12 8 * * 1-5",
@@ -451,7 +463,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-09-02T02:15:52.257Z",
-        "lastError": "NO_REPLY",
+        "lastError": null,
         "schedule": "15 8,13,18,21 * * 1-5",
         "category": "Delivery"
       },
@@ -491,7 +503,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-09-01T13:27:00.022Z",
-        "lastError": "Cleanup run started but timed out after 120 seconds and exited gracefully on SIGTERM. State was saved with 500 processed IDs preserved. One call was handled/skipped as already logged; another failed during Codex analysis.",
+        "lastError": null,
         "schedule": "27 8 * * 1-5",
         "category": "Intelligence"
       },
@@ -501,7 +513,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-09-01T14:00:00.027Z",
-        "lastError": "Cleanup pass completed successfully: 8 calls processed, 0 analysis errors, Discord suppressed.",
+        "lastError": null,
         "schedule": "0 9 * * 1-5",
         "category": "Intelligence"
       },
@@ -531,7 +543,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-09-01T18:00:00.023Z",
-        "lastError": "DONE",
+        "lastError": null,
         "schedule": "0 13 * * 1-5",
         "category": "Intelligence"
       },
@@ -551,7 +563,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-09-01T18:36:00.022Z",
-        "lastError": "HEALTHY",
+        "lastError": null,
         "schedule": "36 13 * * 1-5",
         "category": "System"
       },
@@ -561,7 +573,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-09-01T18:42:00.027Z",
-        "lastError": "Intelligence deck rebuilt and deployed successfully.\n\nLive: <https://erice320.github.io/revay/revio-intelligence-deck.html>  \nVerified redirect to the protected Revay Decks login.",
+        "lastError": null,
         "schedule": "42 13 * * 1-5",
         "category": "Intelligence"
       },
@@ -581,7 +593,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-09-01T19:07:00.028Z",
-        "lastError": "DONE",
+        "lastError": null,
         "schedule": "7 14 * * 1-5",
         "category": "Intelligence"
       },
@@ -679,7 +691,7 @@
         "id": "46b52d7f",
         "name": "Weekend Email Summary",
         "enabled": true,
-        "status": "ok",
+        "status": "message_delivery_failure",
         "lastRunAt": "2026-08-30T22:00:00.023Z",
         "lastError": null,
         "schedule": "0 17 * * 0,6",
@@ -711,7 +723,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-08-31T12:00:00.030Z",
-        "lastError": "Kaia pipeline succeeded (`exit 0`, `DONE`).\n\n- Analyzed: 4 T1 + 6 T2\n- Notion rows: 10 written, 0 failed\n- Analysis: 10 succeeded, 0 failed\n- Discord: Product ✓ | GTM ✓",
+        "lastError": null,
         "schedule": "0 7 * * 1",
         "category": "Intelligence"
       },
@@ -782,7 +794,7 @@
           "id": "6af65023",
           "name": "Onboarding Brief Coverage Guard",
           "enabled": true,
-          "status": "ok",
+          "status": "message_delivery_failure",
           "lastRunAt": "2026-09-01T23:35:00.035Z",
           "lastError": null,
           "schedule": "35 8,13,18,21 * * 1-5",
@@ -852,7 +864,7 @@
           "id": "9e362558",
           "name": "Daily Cron Health Check",
           "enabled": true,
-          "status": "ok",
+          "status": "message_delivery_failure",
           "lastRunAt": "2026-09-01T13:12:00.035Z",
           "lastError": null,
           "schedule": "12 8 * * 1-5",
@@ -894,7 +906,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-09-01T18:36:00.022Z",
-          "lastError": "HEALTHY",
+          "lastError": null,
           "schedule": "36 13 * * 1-5",
           "category": "System"
         },
@@ -984,9 +996,9 @@
           "id": "c12c38b0",
           "name": "Nightly Git Backup",
           "enabled": true,
-          "status": "false_green_diagnostic_failure",
+          "status": "ok",
           "lastRunAt": "2026-09-01T09:00:00.030Z",
-          "lastError": "ERROR:\n{\n  \"ok\": false,\n  \"checkedAt\": \"2026-09-02T09:00:22.735Z\",\n  \"trackedFiles\": 5858,\n  \"stagedFiles\": 0,\n  \"untrackedFiles\": 0,\n  \"trackedRiskPathCount\": 3409,\n  \"trackedRiskPathSamples\": [\n    \".config/higgsfield/credentials.json\",\n    \".npm/_cacache/content-v2/sha512/24/68/87d79fe1be3fa96e0023510d4c849183bd933f3330b877e5d363624b8306419cf92f06b83b0cdee97565984eff767a36984354fde68f0835ad171c3f9761\",\n    \".npm/_cacache/content-v2/sha512/29/9c/58a350549160f64d514baf4310a0cf2f5148a0583dcb943f376bfef906a0bee2a1341dbd55a39bf516071f68d5ef7d7cebfb912143a8a783f09a0628d397\",\n    \".npm/_cacache/content-v2/sha512/30/53/bf433bed00e9896e484e6824ef6c670537d2fd6fe26e9c8b03c1a2a58d239d70b31e6b7349d64f54b33feb8dd7d25d3ab875fcdf792ed6e29e1838000778\",\n    \".npm/_cacache/content-v2/sha512/5e/17/4274085aaee820f7ff858fa0b953d59245990cee33543a1422f73a3701c0665531ea9b7b901cca3bf1c6648071e165e088b0db520d0863372a305a437ddc\",\n    \".npm/_cacache/content-v2/sha512/62/0b/d44dfc2ac9ced45d532b07e4889ac5584a64d2f17fed4abb5d35930898cfa7efe413ae2457c978a6d2606b4d735eab3545d0a5868073de8b2562145acd0f\",\n    \".npm/_cacache/content-v2/sha512/67/3d/5a84b8257fb3266f24fe8705e083067e6d10306f0fb4e0b69da7ba94d650a26b66ecf014888fee1f29178aecae637fd9b80c3462cb75671191062ed11bc1\",\n    \".npm/_cacache/content-v2/sha512/70/78/8b8f06446b0585bee748a9e78c665bd96b24cb6d1a2ec9d31b6e5cab762c87ed92dba94ad2ac412bf9383e5f6eb98b3b5195532cc8e611c290f927106cbe\",\n    \".npm/_cacache/content-v2/sha512/7e/4b/fbc6844d3d224d901a2aae88dbb0bba5348e9b9f34e54f9a0054d2bda477d72836a2913e75502a7b87e50984478de3a5a1ea79fb88d767b027d0c91db6fe\",\n    \".npm/_cacache/content-v2/sha512/7f/41/56302d3227ca3ae66b07298281a1c434b43fac2002cdc506a52b0b47c3f2b2d143e4294d960588b517b5d89f53d62ba76cd608a8a8287506f0481bfc4d11\"\n  ],\n  \"trackedCriticalPathCount\": 1,\n  \"trackedCriticalPathSamples\": [\n    \".config/higgsfield/credentials.json\"\n  ],\n  \"maxBytes\": 99614720,\n  \"blocked\": [],\n  \"note\": \"Blocks risky staged/untracked additions and any tracked crede…",
+          "lastError": null,
           "schedule": "0 4 * * *",
           "category": "Infrastructure"
         },
@@ -1018,7 +1030,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-08-31T11:00:00.123Z",
-          "lastError": "Email brief sent to the full distribution list. ConnectWise expanded x360Recover into Australia, including SIEM-linked Attack-to-Recovery integration. <https://www.channelinsider.com/security/resiliency-backup-and-recovery/connectwise-x360recover-australian-data-center/> SuperOps and Guardz launched a bundled partnership as MSP demand grows for integrated AI-ready workflows. <https://www.channelpronetwork.com/2026/09/01/msp-trends-quick-bytes/> Syncro is targeting Datto uncertainty around SaaS Defense’s end-of-life and Cyber Resiliency Platform re-platforming. <https://syncrosecure.com/blog/datto-alternatives/>",
+          "lastError": null,
           "schedule": "0 6 * * 1,3,5",
           "category": "Intelligence"
         },
@@ -1048,7 +1060,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-09-01T13:27:00.022Z",
-          "lastError": "Cleanup run started but timed out after 120 seconds and exited gracefully on SIGTERM. State was saved with 500 processed IDs preserved. One call was handled/skipped as already logged; another failed during Codex analysis.",
+          "lastError": null,
           "schedule": "27 8 * * 1-5",
           "category": "Intelligence"
         },
@@ -1058,7 +1070,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-09-01T14:00:00.027Z",
-          "lastError": "Cleanup pass completed successfully: 8 calls processed, 0 analysis errors, Discord suppressed.",
+          "lastError": null,
           "schedule": "0 9 * * 1-5",
           "category": "Intelligence"
         },
@@ -1068,7 +1080,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-09-01T18:00:00.023Z",
-          "lastError": "DONE",
+          "lastError": null,
           "schedule": "0 13 * * 1-5",
           "category": "Intelligence"
         },
@@ -1078,7 +1090,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-09-01T18:42:00.027Z",
-          "lastError": "Intelligence deck rebuilt and deployed successfully.\n\nLive: <https://erice320.github.io/revay/revio-intelligence-deck.html>  \nVerified redirect to the protected Revay Decks login.",
+          "lastError": null,
           "schedule": "42 13 * * 1-5",
           "category": "Intelligence"
         },
@@ -1088,7 +1100,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-09-01T19:07:00.028Z",
-          "lastError": "DONE",
+          "lastError": null,
           "schedule": "7 14 * * 1-5",
           "category": "Intelligence"
         },
@@ -1128,7 +1140,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-08-31T12:00:00.030Z",
-          "lastError": "Kaia pipeline succeeded (`exit 0`, `DONE`).\n\n- Analyzed: 4 T1 + 6 T2\n- Notion rows: 10 written, 0 failed\n- Analysis: 10 succeeded, 0 failed\n- Discord: Product ✓ | GTM ✓",
+          "lastError": null,
           "schedule": "0 7 * * 1",
           "category": "Intelligence"
         },
@@ -1160,7 +1172,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-09-02T02:15:52.257Z",
-          "lastError": "NO_REPLY",
+          "lastError": null,
           "schedule": "15 8,13,18,21 * * 1-5",
           "category": "Delivery"
         },
@@ -1238,7 +1250,7 @@
           "id": "46b52d7f",
           "name": "Weekend Email Summary",
           "enabled": true,
-          "status": "ok",
+          "status": "message_delivery_failure",
           "lastRunAt": "2026-08-30T22:00:00.023Z",
           "lastError": null,
           "schedule": "0 17 * * 0,6",
@@ -1256,7 +1268,7 @@
         }
       ]
     },
-    "lastUpdated": "2026-09-03T13:40:20.401Z"
+    "lastUpdated": "2026-09-03T13:41:31.103Z"
   },
   "competitorIntel": {
     "topCompetitors": [
@@ -1351,7 +1363,7 @@
     "lossCount": 174,
     "totalTier1": 602,
     "generatedAt": "2026-09-01T19:07:22.411Z",
-    "lastUpdated": "2026-09-03T13:40:20.402Z"
+    "lastUpdated": "2026-09-03T13:41:31.103Z"
   },
   "dealBriefs": {
     "lastPsaRun": "2026-09-02T13:15:09.327Z",
@@ -1361,10 +1373,10 @@
     "totalBillingProcessed": 14,
     "psaStatus": "stale",
     "billingStatus": "stale",
-    "lastUpdated": "2026-09-03T13:40:20.402Z"
+    "lastUpdated": "2026-09-03T13:41:31.104Z"
   },
   "marketProduct": {
-    "mspLastRun": "2026-09-02T11:00:52.220Z",
+    "mspLastRun": "2026-09-03T13:40:42.803Z",
     "mspStatus": "active",
     "competitorSummary": {
       "winPct": 60,
@@ -1373,6 +1385,6 @@
       "topCompetitor": "QuickBooks",
       "topCompetitorCount": 409
     },
-    "lastUpdated": "2026-09-03T13:40:20.402Z"
+    "lastUpdated": "2026-09-03T13:41:31.104Z"
   }
 }
