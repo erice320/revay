@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-09-14T11:45:04.624Z",
+    "generated": "2026-09-14T17:07:04.569Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js v2"
   },
@@ -18,11 +18,11 @@
         "subject": "Grow Team VP Meeting",
         "startTime": "2026-09-14T14:30:00.0000000",
         "endTime": "2026-09-14T15:00:00.0000000",
-        "attendeeCount": 7,
+        "attendeeCount": 4,
         "attendees": [
           "Ryan Koontz",
-          "Usman Zahoor",
-          "Jennifer Hopkins"
+          "Will Steiner",
+          "William Collins"
         ],
         "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQFRAAgI3xHzHrgAAEYAAAAAewcWc8jm0EuQT5bpSByr2gcAQxv57qAIQE%2BVXKSJ9pLdWgAAAAABDQAAQxv57qAIQE%2BVXKSJ9pLdWgAFmZzXzwAAEA%3D%3D&exvsurl=1&path=/calendar/item"
       },
@@ -73,17 +73,17 @@
     ],
     "meetingCount": 6,
     "vipEmails": [],
-    "generatedAt": "2026-09-14T11:45:05.057Z",
-    "lastUpdated": "2026-09-14T11:45:05.057Z"
+    "generatedAt": "2026-09-14T17:07:05.222Z",
+    "lastUpdated": "2026-09-14T17:07:05.222Z"
   },
   "pipeline": {
-    "openPipelineMrr": 188819,
-    "openDeals": 118,
-    "weightedMrr": 84969,
-    "closingThisMonth": 107,
-    "closingThisMonthMrr": 183122,
-    "avgDealMrr": 1600,
-    "winRateMtd": 0.12195121951219512,
+    "openPipelineMrr": 187559,
+    "openDeals": 115,
+    "weightedMrr": 84402,
+    "closingThisMonth": 104,
+    "closingThisMonthMrr": 181862,
+    "avgDealMrr": 1631,
+    "winRateMtd": 0.10869565217391304,
     "stageBreakdown": [
       {
         "stage": "3 - Initial Product Demo",
@@ -92,8 +92,8 @@
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 33,
-        "mrr": 36945
+        "count": 31,
+        "mrr": 35895
       },
       {
         "stage": "1- Discovery Scheduled",
@@ -102,8 +102,8 @@
       },
       {
         "stage": "4 - Proposal Sent",
-        "count": 8,
-        "mrr": 6978
+        "count": 7,
+        "mrr": 6768
       },
       {
         "stage": "6 - Verbal Commit",
@@ -124,7 +124,7 @@
       "daysRemaining": 16,
       "requiredDailyRunRate": 4568,
       "wonCount": 5,
-      "lastUpdated": "2026-09-14T11:45:06.653Z"
+      "lastUpdated": "2026-09-14T17:07:06.607Z"
     },
     "recentWins": [
       {
@@ -207,11 +207,11 @@
         "winRate": null
       }
     ],
-    "lastUpdated": "2026-09-14T11:45:06.654Z"
+    "lastUpdated": "2026-09-14T17:07:06.607Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
-    "callsYesterday": 0,
+    "callsYesterday": 100,
     "lastRunProcessed": 10,
     "flaggedFollowUps": 0,
     "topThemes": [
@@ -222,294 +222,92 @@
     ],
     "recentCalls": [
       {
-        "title": "Justin Lee - Scott Lennon",
-        "date": "2026-09-11",
-        "durationMin": 1,
+        "title": "Ptah Robinson - Tyler Schey",
+        "date": "2026-09-14",
+        "durationMin": 0,
         "state": "ENDED"
       },
       {
-        "title": "Justin Lee - Brian Smith",
-        "date": "2026-09-11",
-        "durationMin": 1,
+        "title": "Joseph Abarno - +18702088000",
+        "date": "2026-09-14",
+        "durationMin": 0,
         "state": "ENDED"
       },
       {
-        "title": "Justin Lee - Krysta Beesley",
-        "date": "2026-09-11",
+        "title": "Ptah Robinson - Danny Campbell",
+        "date": "2026-09-14",
         "durationMin": 0,
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-09-14T11:45:09.562Z"
+    "lastUpdated": "2026-09-14T17:07:09.508Z"
   },
   "newBusiness": {
-    "newDealsOpenedMtd": 55,
-    "sequencesActive": 41,
-    "newEnrollmentsThisWeek": 10647,
-    "repliesThisWeek": 220,
-    "meetingsBookedMtd": 62,
+    "newDealsOpenedMtd": 56,
+    "sequencesActive": 40,
+    "newEnrollmentsThisWeek": 10666,
+    "repliesThisWeek": 218,
+    "meetingsBookedMtd": 64,
     "topSequences": [
       {
-        "name": "Q3 UCaaS / VoIP AI Sequence ",
-        "enrolled": 514,
-        "openRate": 0.41,
-        "replyRate": 0.012
+        "name": "Q3 MSP Static Sequence ",
+        "enrolled": 1543,
+        "openRate": 0.408,
+        "replyRate": 0.002
       },
       {
-        "name": "Billing Clients",
-        "enrolled": 0,
-        "openRate": null,
-        "replyRate": null
+        "name": "Q3'26\" Generic Integrator Sequence",
+        "enrolled": 619,
+        "openRate": 0.414,
+        "replyRate": 0.002
       },
       {
-        "name": "Tigerpaw Migration",
-        "enrolled": 44,
-        "openRate": 0.489,
-        "replyRate": 0.022
+        "name": "CBR Sequence - Q3'26",
+        "enrolled": 283,
+        "openRate": 0.526,
+        "replyRate": 0.101
       }
     ],
-    "lastUpdated": "2026-09-14T11:45:10.109Z"
+    "lastUpdated": "2026-09-14T17:07:10.038Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
-    "zendeskOpenTickets": 450,
-    "zendeskEscalated": 13,
+    "zendeskOpenTickets": 453,
+    "zendeskEscalated": 9,
     "psaOpenLast30": 11,
     "psaHighPriority": 0,
     "psaTotalLast30": 11,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-09-14T11:45:13.843Z"
+    "lastUpdated": "2026-09-14T17:07:14.473Z"
   },
   "agentHealth": {
     "cronJobsTotal": 47,
     "cronJobsEnabled": 47,
-    "cronJobsHealthy": 43,
-    "cronJobsError": 4,
+    "cronJobsHealthy": 45,
+    "cronJobsError": 2,
     "lastKaiaRun": null,
     "lastKaiaStatus": "unknown",
     "lastOnboardingRun": null,
     "lastOnboardingStatus": "unknown",
     "errorJobs": [
       {
-        "name": "Local Infrastructure Watchdog — hourly fallback",
-        "id": "8bd20462",
-        "lastError": "Exit code: 7\n\n```text\n2026-09-14T07:53:36Z cloudflared RESTARTED\n2026-09-14T07:53:36Z org-chart RESTARTED\n```",
-        "since": "2026-09-14"
-      },
-      {
-        "name": "Weekly PSA Onboarding Snapshot Ledger + Deck",
-        "id": "2b945e1f",
-        "lastError": "⚠️ 🛠️ Exec failed: `search \"https://[^\"' <>]+' reports/psa-onboarding-weekly-snapshot.html scripts/psa-onboarding-weekly-snapshot.js | sort -u\"` (agent)",
-        "since": "2026-09-07"
-      },
-      {
-        "name": "Nightly Self-Improvement — Work Phase",
-        "id": "6ce2e805",
-        "lastError": "The model did not produce a response before the model idle timeout. Please try again, or increase `models.providers.<id>.timeoutSeconds` for slow local or self-hosted providers. If `agents.defaults.timeoutSeconds` or a run-specific timeout is lower, raise that ceiling too; provider timeouts cannot extend the whole agent run.",
-        "since": "2026-09-14"
-      },
-      {
         "name": "Weekend Email Summary",
         "id": "46b52d7f",
         "lastError": "OutboundDeliveryError: Unknown Channel",
         "since": "2026-09-13"
+      },
+      {
+        "name": "Weekly PSA Onboarding Snapshot Ledger + Deck",
+        "id": "2b945e1f",
+        "lastError": "⚠️ 🛠️ Exec failed: `search \"https://[^\"' <>]+' reports/psa-onboarding-weekly-snapshot.html scripts/psa-onboarding-weekly-snapshot.js | sort -u\"` (agent)",
+        "since": "2026-09-14"
       }
     ],
     "allJobs": [
-      {
-        "id": "b31d4f94",
-        "name": "Ops Command Center Morning Refresh",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-11T11:45:00.020Z",
-        "lastError": null,
-        "schedule": "45 6 * * 1-5",
-        "category": "Delivery"
-      },
-      {
-        "id": "8bd20462",
-        "name": "Local Infrastructure Watchdog — hourly fallback",
-        "enabled": true,
-        "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-09-14T10:53:31.147Z",
-        "lastError": "Exit code: 7\n\n```text\n2026-09-14T07:53:36Z cloudflared RESTARTED\n2026-09-14T07:53:36Z org-chart RESTARTED\n```",
-        "schedule": "every",
-        "category": "System"
-      },
-      {
-        "id": "de15ed4b",
-        "name": "Outreach Token Auto-Refresh",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-14T11:03:13.426Z",
-        "lastError": null,
-        "schedule": "every",
-        "category": "Infrastructure"
-      },
-      {
-        "id": "cc85c724",
-        "name": "Monday Week Ahead Brief",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-07T12:05:00.018Z",
-        "lastError": null,
-        "schedule": "5 7 * * 1",
-        "category": "Delivery"
-      },
-      {
-        "id": "13e36df8",
-        "name": "Kaia Intelligence Pipeline (Monday — 3-day window)",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-07T12:21:00.019Z",
-        "lastError": "Kaia pipeline completed successfully (`DONE`, exit code 0).\n\n- 4 T1 + 6 T2 calls processed\n- 10 Notion rows written\n- Analysis: 10 succeeded, 0 failed\n- Discord posts: Product ✓ GTM ✓",
-        "schedule": "21 7 * * 1",
-        "category": "Intelligence"
-      },
-      {
-        "id": "848dd2e6",
-        "name": "Kaia Pipeline Health Check",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-11T12:30:00.018Z",
-        "lastError": null,
-        "schedule": "30 7 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "e31a2ae9",
-        "name": "PSA minimum transition response watcher",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-12T01:30:08.574Z",
-        "lastError": null,
-        "schedule": "*/30 8-20 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "9e362558",
-        "name": "Daily Cron Health Check",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-11T13:12:00.024Z",
-        "lastError": null,
-        "schedule": "12 8 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "46e77f37",
-        "name": "PSA Auto-Brief Generator",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-12T02:15:00.017Z",
-        "lastError": "NO_REPLY",
-        "schedule": "15 8,13,18,21 * * 1-5",
-        "category": "Delivery"
-      },
-      {
-        "id": "a01af2fe",
-        "name": "Council Vault Watcher — Revay Requests",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-12T01:17:00.016Z",
-        "lastError": null,
-        "schedule": "17 8-20 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "2b945e1f",
-        "name": "Weekly PSA Onboarding Snapshot Ledger + Deck",
-        "enabled": true,
-        "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-09-07T13:20:00.019Z",
-        "lastError": "⚠️ 🛠️ Exec failed: `search \"https://[^\"' <>]+' reports/psa-onboarding-weekly-snapshot.html scripts/psa-onboarding-weekly-snapshot.js | sort -u\"` (agent)",
-        "schedule": "20 8 * * 1",
-        "category": "System"
-      },
-      {
-        "id": "c763deb2",
-        "name": "Billing Auto-Brief Generator",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-12T02:20:00.016Z",
-        "lastError": null,
-        "schedule": "20 8,13,18,21 * * 1-5",
-        "category": "Delivery"
-      },
-      {
-        "id": "35fc94ad",
-        "name": "Weekly Roadmap Digest",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-07T13:25:00.082Z",
-        "lastError": null,
-        "schedule": "25 8 * * 1",
-        "category": "Intelligence"
-      },
-      {
-        "id": "9d2ae0bc",
-        "name": "Claudio soul retrofit Glass contribution watcher",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-12T01:55:00.015Z",
-        "lastError": null,
-        "schedule": "25,55 8-20 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "afc5c57b",
-        "name": "Onboarding Digest Cleanup Run",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-11T13:27:00.020Z",
-        "lastError": "Processed 8 calls. Analysis errors: 0.",
-        "schedule": "27 8 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "6af65023",
-        "name": "Onboarding Brief Coverage Guard",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-12T02:35:00.019Z",
-        "lastError": null,
-        "schedule": "35 8,13,18,21 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "f1a646d6",
-        "name": "Cloudflare Weekly Seat Cleanup",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-07T13:40:00.018Z",
-        "lastError": null,
-        "schedule": "40 8 * * 1",
-        "category": "System"
-      },
-      {
-        "id": "782903ab",
-        "name": "Onboarding Digest Cleanup Run 2",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-11T14:23:00.017Z",
-        "lastError": "Processed: 8 calls. Analysis errors: 0.",
-        "schedule": "23 9 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "694a91b3",
-        "name": "Bookings Pacing Refresh",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-09-11T23:35:10.850Z",
-        "lastError": null,
-        "schedule": "33 14,19,23 * * 1-5",
-        "category": "Delivery"
-      },
       {
         "id": "12f0d64a",
         "name": "Ops Command Center — Daily Snapshot",
@@ -518,6 +316,76 @@
         "lastRunAt": "2026-09-11T17:07:00.015Z",
         "lastError": null,
         "schedule": "7 12 * * 1-5",
+        "category": "Delivery"
+      },
+      {
+        "id": "a01af2fe",
+        "name": "Council Vault Watcher — Revay Requests",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T16:17:00.019Z",
+        "lastError": null,
+        "schedule": "17 8-20 * * 1-5",
+        "category": "System"
+      },
+      {
+        "id": "9d2ae0bc",
+        "name": "Claudio soul retrofit Glass contribution watcher",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T16:55:00.016Z",
+        "lastError": null,
+        "schedule": "25,55 8-20 * * 1-5",
+        "category": "System"
+      },
+      {
+        "id": "e31a2ae9",
+        "name": "PSA minimum transition response watcher",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T17:00:08.560Z",
+        "lastError": null,
+        "schedule": "*/30 8-20 * * 1-5",
+        "category": "System"
+      },
+      {
+        "id": "8bd20462",
+        "name": "Local Infrastructure Watchdog — hourly fallback",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T16:53:33.263Z",
+        "lastError": null,
+        "schedule": "every",
+        "category": "System"
+      },
+      {
+        "id": "de15ed4b",
+        "name": "Outreach Token Auto-Refresh",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T17:03:13.557Z",
+        "lastError": null,
+        "schedule": "every",
+        "category": "Infrastructure"
+      },
+      {
+        "id": "46e77f37",
+        "name": "PSA Auto-Brief Generator",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T13:15:00.019Z",
+        "lastError": "NO_REPLY",
+        "schedule": "15 8,13,18,21 * * 1-5",
+        "category": "Delivery"
+      },
+      {
+        "id": "c763deb2",
+        "name": "Billing Auto-Brief Generator",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T13:20:00.023Z",
+        "lastError": null,
+        "schedule": "20 8,13,18,21 * * 1-5",
         "category": "Delivery"
       },
       {
@@ -538,6 +406,16 @@
         "lastRunAt": "2026-09-11T18:32:00.016Z",
         "lastError": null,
         "schedule": "32 13 * * 1-5",
+        "category": "System"
+      },
+      {
+        "id": "6af65023",
+        "name": "Onboarding Brief Coverage Guard",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T13:35:00.021Z",
+        "lastError": null,
+        "schedule": "35 8,13,18,21 * * 1-5",
         "category": "System"
       },
       {
@@ -591,6 +469,16 @@
         "category": "Infrastructure"
       },
       {
+        "id": "694a91b3",
+        "name": "Bookings Pacing Refresh",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T14:35:08.012Z",
+        "lastError": null,
+        "schedule": "33 14,19,23 * * 1-5",
+        "category": "Delivery"
+      },
+      {
         "id": "3ccf6f14",
         "name": "Win Card Generator",
         "enabled": true,
@@ -634,9 +522,9 @@
         "id": "6ce2e805",
         "name": "Nightly Self-Improvement — Work Phase",
         "enabled": true,
-        "status": "error",
+        "status": "ok",
         "lastRunAt": "2026-09-14T08:08:03.775Z",
-        "lastError": "The model did not produce a response before the model idle timeout. Please try again, or increase `models.providers.<id>.timeoutSeconds` for slow local or self-hosted providers. If `agents.defaults.timeoutSeconds` or a run-specific timeout is lower, raise that ceiling too; provider timeouts cannot extend the whole agent run.",
+        "lastError": null,
         "schedule": "4 3 * * *",
         "category": "System"
       },
@@ -691,6 +579,56 @@
         "category": "Intelligence"
       },
       {
+        "id": "b31d4f94",
+        "name": "Ops Command Center Morning Refresh",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T11:45:00.020Z",
+        "lastError": null,
+        "schedule": "45 6 * * 1-5",
+        "category": "Delivery"
+      },
+      {
+        "id": "848dd2e6",
+        "name": "Kaia Pipeline Health Check",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T12:30:00.021Z",
+        "lastError": null,
+        "schedule": "30 7 * * 1-5",
+        "category": "Intelligence"
+      },
+      {
+        "id": "9e362558",
+        "name": "Daily Cron Health Check",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T13:12:00.029Z",
+        "lastError": null,
+        "schedule": "12 8 * * 1-5",
+        "category": "System"
+      },
+      {
+        "id": "afc5c57b",
+        "name": "Onboarding Digest Cleanup Run",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T13:27:00.037Z",
+        "lastError": "Processed 8 calls. Analysis errors: 0.",
+        "schedule": "27 8 * * 1-5",
+        "category": "Intelligence"
+      },
+      {
+        "id": "782903ab",
+        "name": "Onboarding Digest Cleanup Run 2",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T14:23:00.017Z",
+        "lastError": "Processed: 8 calls. Analysis errors: 0.",
+        "schedule": "23 9 * * 1-5",
+        "category": "Intelligence"
+      },
+      {
         "id": "975c5f7e",
         "name": "Weekly PSA onboarding forecast brief",
         "enabled": true,
@@ -706,7 +644,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-09-14T11:18:00.021Z",
-        "lastError": "Kaseya is the clearest mover: Datto RMM is adding FIPS 140-3 cryptography and native Apple MDM, while Kaseya is hiring a VP of Growth & Product Strategy. ConnectWise disclosed a ScreenConnect file-transfer security flaw affecting cloud and on-prem deployments. The broader signal: MSP clients increasingly expect strategic business guidance, not just IT support. <https://www.itpro.com/security/data-protection/kaseya-announces-new-compliance-and-apple-device-management-tools-for-datto-rmm> <https://cybersecuritynews.com/connectwise-screenconnect-remote-access-flaw/>",
+        "lastError": "Full 12-item brief emailed. Key signals: Kaseya is expanding VSA 10 security workflows and hiring a global procurement leader, while ConnectWise is recruiting a Principal ML Engineer. SuperOps’ shift to per-endpoint pricing sharpens Syncro/Atera’s flat-cost positioning, and ConnectWise Manage pricing is cited at $85–$110 per user monthly. <https://aimultiple.com/rmm-software> <https://www.flamingo.run/blog/connectwise-alternatives>",
         "schedule": "18 6 * * 1,3,5",
         "category": "Intelligence"
       },
@@ -781,6 +719,56 @@
         "category": "Infrastructure"
       },
       {
+        "id": "cc85c724",
+        "name": "Monday Week Ahead Brief",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T12:05:00.018Z",
+        "lastError": null,
+        "schedule": "5 7 * * 1",
+        "category": "Delivery"
+      },
+      {
+        "id": "13e36df8",
+        "name": "Kaia Intelligence Pipeline (Monday — 3-day window)",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T12:21:00.022Z",
+        "lastError": "Kaia intelligence pipeline completed successfully (`exit 0`, `DONE`).\n\n- Calls analyzed: 4 T1 + 6 T2\n- Analysis: 10 succeeded, 0 failed\n- Notion: 10 rows written\n- Discord: Product ✓ GTM ✓",
+        "schedule": "21 7 * * 1",
+        "category": "Intelligence"
+      },
+      {
+        "id": "2b945e1f",
+        "name": "Weekly PSA Onboarding Snapshot Ledger + Deck",
+        "enabled": true,
+        "status": "false_green_diagnostic_failure",
+        "lastRunAt": "2026-09-14T13:20:00.019Z",
+        "lastError": "⚠️ 🛠️ Exec failed: `search \"https://[^\"' <>]+' reports/psa-onboarding-weekly-snapshot.html scripts/psa-onboarding-weekly-snapshot.js | sort -u\"` (agent)",
+        "schedule": "20 8 * * 1",
+        "category": "System"
+      },
+      {
+        "id": "35fc94ad",
+        "name": "Weekly Roadmap Digest",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T13:25:00.019Z",
+        "lastError": null,
+        "schedule": "25 8 * * 1",
+        "category": "Intelligence"
+      },
+      {
+        "id": "f1a646d6",
+        "name": "Cloudflare Weekly Seat Cleanup",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-09-14T13:40:00.019Z",
+        "lastError": null,
+        "schedule": "40 8 * * 1",
+        "category": "System"
+      },
+      {
         "id": "b2019386",
         "name": "Monthly Trends Lock + Deck Rebuild",
         "enabled": true,
@@ -794,56 +782,6 @@
     "byCategory": {
       "Delivery": [
         {
-          "id": "b31d4f94",
-          "name": "Ops Command Center Morning Refresh",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-11T11:45:00.020Z",
-          "lastError": null,
-          "schedule": "45 6 * * 1-5",
-          "category": "Delivery"
-        },
-        {
-          "id": "cc85c724",
-          "name": "Monday Week Ahead Brief",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-07T12:05:00.018Z",
-          "lastError": null,
-          "schedule": "5 7 * * 1",
-          "category": "Delivery"
-        },
-        {
-          "id": "46e77f37",
-          "name": "PSA Auto-Brief Generator",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-12T02:15:00.017Z",
-          "lastError": "NO_REPLY",
-          "schedule": "15 8,13,18,21 * * 1-5",
-          "category": "Delivery"
-        },
-        {
-          "id": "c763deb2",
-          "name": "Billing Auto-Brief Generator",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-12T02:20:00.016Z",
-          "lastError": null,
-          "schedule": "20 8,13,18,21 * * 1-5",
-          "category": "Delivery"
-        },
-        {
-          "id": "694a91b3",
-          "name": "Bookings Pacing Refresh",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-11T23:35:10.850Z",
-          "lastError": null,
-          "schedule": "33 14,19,23 * * 1-5",
-          "category": "Delivery"
-        },
-        {
           "id": "12f0d64a",
           "name": "Ops Command Center — Daily Snapshot",
           "enabled": true,
@@ -854,6 +792,26 @@
           "category": "Delivery"
         },
         {
+          "id": "46e77f37",
+          "name": "PSA Auto-Brief Generator",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T13:15:00.019Z",
+          "lastError": "NO_REPLY",
+          "schedule": "15 8,13,18,21 * * 1-5",
+          "category": "Delivery"
+        },
+        {
+          "id": "c763deb2",
+          "name": "Billing Auto-Brief Generator",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T13:20:00.023Z",
+          "lastError": null,
+          "schedule": "20 8,13,18,21 * * 1-5",
+          "category": "Delivery"
+        },
+        {
           "id": "82b4e119",
           "name": "daily-sales-snapshot",
           "enabled": true,
@@ -861,6 +819,26 @@
           "lastRunAt": "2026-09-11T19:02:00.016Z",
           "lastError": null,
           "schedule": "2 14 * * 1-5",
+          "category": "Delivery"
+        },
+        {
+          "id": "694a91b3",
+          "name": "Bookings Pacing Refresh",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T14:35:08.012Z",
+          "lastError": null,
+          "schedule": "33 14,19,23 * * 1-5",
+          "category": "Delivery"
+        },
+        {
+          "id": "b31d4f94",
+          "name": "Ops Command Center Morning Refresh",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T11:45:00.020Z",
+          "lastError": null,
+          "schedule": "45 6 * * 1-5",
           "category": "Delivery"
         },
         {
@@ -902,57 +880,27 @@
           "lastError": "OutboundDeliveryError: Unknown Channel",
           "schedule": "56 17 * * 0,6",
           "category": "Delivery"
+        },
+        {
+          "id": "cc85c724",
+          "name": "Monday Week Ahead Brief",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T12:05:00.018Z",
+          "lastError": null,
+          "schedule": "5 7 * * 1",
+          "category": "Delivery"
         }
       ],
       "System": [
-        {
-          "id": "8bd20462",
-          "name": "Local Infrastructure Watchdog — hourly fallback",
-          "enabled": true,
-          "status": "false_green_diagnostic_failure",
-          "lastRunAt": "2026-09-14T10:53:31.147Z",
-          "lastError": "Exit code: 7\n\n```text\n2026-09-14T07:53:36Z cloudflared RESTARTED\n2026-09-14T07:53:36Z org-chart RESTARTED\n```",
-          "schedule": "every",
-          "category": "System"
-        },
-        {
-          "id": "e31a2ae9",
-          "name": "PSA minimum transition response watcher",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-12T01:30:08.574Z",
-          "lastError": null,
-          "schedule": "*/30 8-20 * * 1-5",
-          "category": "System"
-        },
-        {
-          "id": "9e362558",
-          "name": "Daily Cron Health Check",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-11T13:12:00.024Z",
-          "lastError": null,
-          "schedule": "12 8 * * 1-5",
-          "category": "System"
-        },
         {
           "id": "a01af2fe",
           "name": "Council Vault Watcher — Revay Requests",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-09-12T01:17:00.016Z",
+          "lastRunAt": "2026-09-14T16:17:00.019Z",
           "lastError": null,
           "schedule": "17 8-20 * * 1-5",
-          "category": "System"
-        },
-        {
-          "id": "2b945e1f",
-          "name": "Weekly PSA Onboarding Snapshot Ledger + Deck",
-          "enabled": true,
-          "status": "false_green_diagnostic_failure",
-          "lastRunAt": "2026-09-07T13:20:00.019Z",
-          "lastError": "⚠️ 🛠️ Exec failed: `search \"https://[^\"' <>]+' reports/psa-onboarding-weekly-snapshot.html scripts/psa-onboarding-weekly-snapshot.js | sort -u\"` (agent)",
-          "schedule": "20 8 * * 1",
           "category": "System"
         },
         {
@@ -960,29 +908,29 @@
           "name": "Claudio soul retrofit Glass contribution watcher",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-09-12T01:55:00.015Z",
+          "lastRunAt": "2026-09-14T16:55:00.016Z",
           "lastError": null,
           "schedule": "25,55 8-20 * * 1-5",
           "category": "System"
         },
         {
-          "id": "6af65023",
-          "name": "Onboarding Brief Coverage Guard",
+          "id": "e31a2ae9",
+          "name": "PSA minimum transition response watcher",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-09-12T02:35:00.019Z",
+          "lastRunAt": "2026-09-14T17:00:08.560Z",
           "lastError": null,
-          "schedule": "35 8,13,18,21 * * 1-5",
+          "schedule": "*/30 8-20 * * 1-5",
           "category": "System"
         },
         {
-          "id": "f1a646d6",
-          "name": "Cloudflare Weekly Seat Cleanup",
+          "id": "8bd20462",
+          "name": "Local Infrastructure Watchdog — hourly fallback",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-09-07T13:40:00.018Z",
+          "lastRunAt": "2026-09-14T16:53:33.263Z",
           "lastError": null,
-          "schedule": "40 8 * * 1",
+          "schedule": "every",
           "category": "System"
         },
         {
@@ -993,6 +941,16 @@
           "lastRunAt": "2026-09-11T18:32:00.016Z",
           "lastError": null,
           "schedule": "32 13 * * 1-5",
+          "category": "System"
+        },
+        {
+          "id": "6af65023",
+          "name": "Onboarding Brief Coverage Guard",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T13:35:00.021Z",
+          "lastError": null,
+          "schedule": "35 8,13,18,21 * * 1-5",
           "category": "System"
         },
         {
@@ -1039,9 +997,9 @@
           "id": "6ce2e805",
           "name": "Nightly Self-Improvement — Work Phase",
           "enabled": true,
-          "status": "error",
+          "status": "ok",
           "lastRunAt": "2026-09-14T08:08:03.775Z",
-          "lastError": "The model did not produce a response before the model idle timeout. Please try again, or increase `models.providers.<id>.timeoutSeconds` for slow local or self-hosted providers. If `agents.defaults.timeoutSeconds` or a run-specific timeout is lower, raise that ceiling too; provider timeouts cannot extend the whole agent run.",
+          "lastError": null,
           "schedule": "4 3 * * *",
           "category": "System"
         },
@@ -1076,6 +1034,16 @@
           "category": "System"
         },
         {
+          "id": "9e362558",
+          "name": "Daily Cron Health Check",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T13:12:00.029Z",
+          "lastError": null,
+          "schedule": "12 8 * * 1-5",
+          "category": "System"
+        },
+        {
           "id": "975c5f7e",
           "name": "Weekly PSA onboarding forecast brief",
           "enabled": true,
@@ -1083,6 +1051,26 @@
           "lastRunAt": "2026-09-08T17:29:00.017Z",
           "lastError": null,
           "schedule": "29 12 * * 2",
+          "category": "System"
+        },
+        {
+          "id": "2b945e1f",
+          "name": "Weekly PSA Onboarding Snapshot Ledger + Deck",
+          "enabled": true,
+          "status": "false_green_diagnostic_failure",
+          "lastRunAt": "2026-09-14T13:20:00.019Z",
+          "lastError": "⚠️ 🛠️ Exec failed: `search \"https://[^\"' <>]+' reports/psa-onboarding-weekly-snapshot.html scripts/psa-onboarding-weekly-snapshot.js | sort -u\"` (agent)",
+          "schedule": "20 8 * * 1",
+          "category": "System"
+        },
+        {
+          "id": "f1a646d6",
+          "name": "Cloudflare Weekly Seat Cleanup",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T13:40:00.019Z",
+          "lastError": null,
+          "schedule": "40 8 * * 1",
           "category": "System"
         },
         {
@@ -1102,7 +1090,7 @@
           "name": "Outreach Token Auto-Refresh",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-09-14T11:03:13.426Z",
+          "lastRunAt": "2026-09-14T17:03:13.557Z",
           "lastError": null,
           "schedule": "every",
           "category": "Infrastructure"
@@ -1139,56 +1127,6 @@
         }
       ],
       "Intelligence": [
-        {
-          "id": "13e36df8",
-          "name": "Kaia Intelligence Pipeline (Monday — 3-day window)",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-07T12:21:00.019Z",
-          "lastError": "Kaia pipeline completed successfully (`DONE`, exit code 0).\n\n- 4 T1 + 6 T2 calls processed\n- 10 Notion rows written\n- Analysis: 10 succeeded, 0 failed\n- Discord posts: Product ✓ GTM ✓",
-          "schedule": "21 7 * * 1",
-          "category": "Intelligence"
-        },
-        {
-          "id": "848dd2e6",
-          "name": "Kaia Pipeline Health Check",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-11T12:30:00.018Z",
-          "lastError": null,
-          "schedule": "30 7 * * 1-5",
-          "category": "Intelligence"
-        },
-        {
-          "id": "35fc94ad",
-          "name": "Weekly Roadmap Digest",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-07T13:25:00.082Z",
-          "lastError": null,
-          "schedule": "25 8 * * 1",
-          "category": "Intelligence"
-        },
-        {
-          "id": "afc5c57b",
-          "name": "Onboarding Digest Cleanup Run",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-11T13:27:00.020Z",
-          "lastError": "Processed 8 calls. Analysis errors: 0.",
-          "schedule": "27 8 * * 1-5",
-          "category": "Intelligence"
-        },
-        {
-          "id": "782903ab",
-          "name": "Onboarding Digest Cleanup Run 2",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-09-11T14:23:00.017Z",
-          "lastError": "Processed: 8 calls. Analysis errors: 0.",
-          "schedule": "23 9 * * 1-5",
-          "category": "Intelligence"
-        },
         {
           "id": "4e1d90e2",
           "name": "Prospecting Call Analyzer",
@@ -1240,12 +1178,42 @@
           "category": "Intelligence"
         },
         {
+          "id": "848dd2e6",
+          "name": "Kaia Pipeline Health Check",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T12:30:00.021Z",
+          "lastError": null,
+          "schedule": "30 7 * * 1-5",
+          "category": "Intelligence"
+        },
+        {
+          "id": "afc5c57b",
+          "name": "Onboarding Digest Cleanup Run",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T13:27:00.037Z",
+          "lastError": "Processed 8 calls. Analysis errors: 0.",
+          "schedule": "27 8 * * 1-5",
+          "category": "Intelligence"
+        },
+        {
+          "id": "782903ab",
+          "name": "Onboarding Digest Cleanup Run 2",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T14:23:00.017Z",
+          "lastError": "Processed: 8 calls. Analysis errors: 0.",
+          "schedule": "23 9 * * 1-5",
+          "category": "Intelligence"
+        },
+        {
           "id": "c8d20948",
           "name": "MSP Competitor Intelligence Brief",
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-09-14T11:18:00.021Z",
-          "lastError": "Kaseya is the clearest mover: Datto RMM is adding FIPS 140-3 cryptography and native Apple MDM, while Kaseya is hiring a VP of Growth & Product Strategy. ConnectWise disclosed a ScreenConnect file-transfer security flaw affecting cloud and on-prem deployments. The broader signal: MSP clients increasingly expect strategic business guidance, not just IT support. <https://www.itpro.com/security/data-protection/kaseya-announces-new-compliance-and-apple-device-management-tools-for-datto-rmm> <https://cybersecuritynews.com/connectwise-screenconnect-remote-access-flaw/>",
+          "lastError": "Full 12-item brief emailed. Key signals: Kaseya is expanding VSA 10 security workflows and hiring a global procurement leader, while ConnectWise is recruiting a Principal ML Engineer. SuperOps’ shift to per-endpoint pricing sharpens Syncro/Atera’s flat-cost positioning, and ConnectWise Manage pricing is cited at $85–$110 per user monthly. <https://aimultiple.com/rmm-software> <https://www.flamingo.run/blog/connectwise-alternatives>",
           "schedule": "18 6 * * 1,3,5",
           "category": "Intelligence"
         },
@@ -1268,10 +1236,30 @@
           "lastError": null,
           "schedule": "11 3 * * 0",
           "category": "Intelligence"
+        },
+        {
+          "id": "13e36df8",
+          "name": "Kaia Intelligence Pipeline (Monday — 3-day window)",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T12:21:00.022Z",
+          "lastError": "Kaia intelligence pipeline completed successfully (`exit 0`, `DONE`).\n\n- Calls analyzed: 4 T1 + 6 T2\n- Analysis: 10 succeeded, 0 failed\n- Notion: 10 rows written\n- Discord: Product ✓ GTM ✓",
+          "schedule": "21 7 * * 1",
+          "category": "Intelligence"
+        },
+        {
+          "id": "35fc94ad",
+          "name": "Weekly Roadmap Digest",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-09-14T13:25:00.019Z",
+          "lastError": null,
+          "schedule": "25 8 * * 1",
+          "category": "Intelligence"
         }
       ]
     },
-    "lastUpdated": "2026-09-14T11:45:15.190Z"
+    "lastUpdated": "2026-09-14T17:07:15.851Z"
   },
   "competitorIntel": {
     "topCompetitors": [
@@ -1366,17 +1354,17 @@
     "lossCount": 174,
     "totalTier1": 602,
     "generatedAt": "2026-09-11T19:07:21.789Z",
-    "lastUpdated": "2026-09-14T11:45:15.191Z"
+    "lastUpdated": "2026-09-14T17:07:15.851Z"
   },
   "dealBriefs": {
-    "lastPsaRun": "2026-09-12T02:15:05.824Z",
+    "lastPsaRun": "2026-09-14T13:15:25.656Z",
     "lastPsaCount": 1,
-    "lastBillingRun": "2026-09-12T02:20:05.258Z",
+    "lastBillingRun": "2026-09-14T13:20:06.189Z",
     "totalPsaProcessed": 92,
     "totalBillingProcessed": 14,
-    "psaStatus": "stale",
-    "billingStatus": "stale",
-    "lastUpdated": "2026-09-14T11:45:15.191Z"
+    "psaStatus": "fresh",
+    "billingStatus": "fresh",
+    "lastUpdated": "2026-09-14T17:07:15.851Z"
   },
   "marketProduct": {
     "mspLastRun": "2026-09-14T11:18:42.303Z",
@@ -1388,6 +1376,6 @@
       "topCompetitor": "QuickBooks",
       "topCompetitorCount": 409
     },
-    "lastUpdated": "2026-09-14T11:45:15.191Z"
+    "lastUpdated": "2026-09-14T17:07:15.852Z"
   }
 }
