@@ -957,7 +957,7 @@ function renderNewBiz(d) {
         <div class="card-body">
           <div class="metric-row">
             <div class="metric">
-              <div class="metric-label">PSA Briefs</div>
+              <div class="metric-label">New Rev.io Briefs</div>
               <div class="metric-value newbiz">${db.totalPsaProcessed || 0}</div>
               <div class="metric-sub">total generated</div>
             </div>
@@ -970,7 +970,7 @@ function renderNewBiz(d) {
           <div class="section-label">Brief Generator Status</div>
           <div class="brief-status-row">
             <div>
-              <div class="brief-status-name">PSA Auto-Brief</div>
+              <div class="brief-status-name">New Rev.io Auto-Brief</div>
               <div class="brief-status-detail">Last run: ${db.lastPsaRun ? fmt.date(db.lastPsaRun) : 'Never'} · ${db.lastPsaCount || 0} briefs</div>
             </div>
             ${freshnessBadge(db.psaStatus || 'unknown')}
@@ -1041,7 +1041,7 @@ function renderHealth(d) {
               <div class="metric-value ${(h.zendeskEscalated||0) > 0 ? 'danger' : 'success'}">${h.zendeskEscalated || 0}</div>
             </div>
           </div>
-          <div class="section-label">PSA Support (Last 30 Days)</div>
+          <div class="section-label">New Rev.io Support (Last 30 Days)</div>
           <div class="metric-row">
             <div class="metric">
               <div class="metric-label">Open</div>
