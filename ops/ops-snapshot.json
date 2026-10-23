@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-10-23T11:45:04.330Z",
+    "generated": "2026-10-23T17:07:04.086Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js v2"
   },
@@ -65,17 +65,17 @@
     ],
     "meetingCount": 5,
     "vipEmails": [],
-    "generatedAt": "2026-10-23T11:45:04.640Z",
-    "lastUpdated": "2026-10-23T11:45:04.640Z"
+    "generatedAt": "2026-10-23T17:07:04.611Z",
+    "lastUpdated": "2026-10-23T17:07:04.611Z"
   },
   "pipeline": {
-    "openPipelineMrr": 257082,
-    "openDeals": 125,
-    "weightedMrr": 115687,
-    "closingThisMonth": 113,
-    "closingThisMonthMrr": 250385,
-    "avgDealMrr": 2057,
-    "winRateMtd": 0.125,
+    "openPipelineMrr": 256082,
+    "openDeals": 124,
+    "weightedMrr": 115237,
+    "closingThisMonth": 112,
+    "closingThisMonthMrr": 249385,
+    "avgDealMrr": 2065,
+    "winRateMtd": 0.12380952380952381,
     "stageBreakdown": [
       {
         "stage": "3 - Initial Product Demo",
@@ -84,13 +84,13 @@
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 29,
-        "mrr": 89323
+        "count": 30,
+        "mrr": 90323
       },
       {
         "stage": "1- Discovery Scheduled",
-        "count": 46,
-        "mrr": 49803
+        "count": 44,
+        "mrr": 47803
       },
       {
         "stage": "6 - Verbal Commit",
@@ -116,7 +116,7 @@
       "daysRemaining": 8,
       "requiredDailyRunRate": 8929,
       "wonCount": 13,
-      "lastUpdated": "2026-10-23T11:45:05.871Z"
+      "lastUpdated": "2026-10-23T17:07:05.803Z"
     },
     "recentWins": [
       {
@@ -199,7 +199,7 @@
         "winRate": null
       }
     ],
-    "lastUpdated": "2026-10-23T11:45:05.872Z"
+    "lastUpdated": "2026-10-23T17:07:05.803Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
@@ -214,84 +214,78 @@
     ],
     "recentCalls": [
       {
-        "title": "Ingrid Beard - Doug Halkett",
-        "date": "2026-10-22",
-        "durationMin": 2,
+        "title": "Cam Sharpe - Aaron Atkinson",
+        "date": "2026-10-23",
+        "durationMin": 1,
         "state": "ENDED"
       },
       {
-        "title": "Jake Borah - Scott Elmer",
-        "date": "2026-10-22",
-        "durationMin": 0,
+        "title": "Cam Sharpe - Denise Stoppenhagen",
+        "date": "2026-10-23",
+        "durationMin": 1,
         "state": "ENDED"
       },
       {
-        "title": "Jake Borah - Dave Douma",
-        "date": "2026-10-22",
+        "title": "Connor Flynn - Laura Hooker",
+        "date": "2026-10-23",
         "durationMin": 0,
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-10-23T11:45:09.485Z"
+    "lastUpdated": "2026-10-23T17:07:09.124Z"
   },
   "newBusiness": {
-    "newDealsOpenedMtd": 93,
+    "newDealsOpenedMtd": 92,
     "sequencesActive": 36,
-    "newEnrollmentsThisWeek": 6015,
-    "repliesThisWeek": 198,
+    "newEnrollmentsThisWeek": 6075,
+    "repliesThisWeek": 201,
     "meetingsBookedMtd": 138,
     "topSequences": [
       {
-        "name": "The Rev.io Client Connection: Fall Edition",
-        "enrolled": 58,
-        "openRate": 0.328,
-        "replyRate": 0
-      },
-      {
-        "name": "Q3 UCaaS / VoIP AI Sequence ",
-        "enrolled": 617,
-        "openRate": 0.431,
-        "replyRate": 0.01
-      },
-      {
         "name": "MSP Sequence Q4'26",
-        "enrolled": 1081,
-        "openRate": 0.465,
+        "enrolled": 1112,
+        "openRate": 0.457,
         "replyRate": 0.002
+      },
+      {
+        "name": "Channel Prospects",
+        "enrolled": 418,
+        "openRate": 0.417,
+        "replyRate": 0.036
+      },
+      {
+        "name": "Q4'26\" Integrator Sequence",
+        "enrolled": 1172,
+        "openRate": 0.271,
+        "replyRate": 0
       }
     ],
-    "lastUpdated": "2026-10-23T11:45:09.938Z"
+    "lastUpdated": "2026-10-23T17:07:09.521Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
     "onboardingAtRisk": 0,
     "onboardingOverdue": 0,
-    "zendeskOpenTickets": 46,
-    "zendeskEscalated": 1,
+    "zendeskOpenTickets": 48,
+    "zendeskEscalated": 2,
     "psaOpenLast30": 0,
     "psaHighPriority": 0,
     "psaTotalLast30": 0,
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-10-23T11:45:15.405Z"
+    "lastUpdated": "2026-10-23T17:07:14.689Z"
   },
   "agentHealth": {
     "cronJobsTotal": 45,
     "cronJobsEnabled": 45,
-    "cronJobsHealthy": 43,
-    "cronJobsError": 2,
+    "cronJobsHealthy": 44,
+    "cronJobsError": 1,
     "lastKaiaRun": null,
     "lastKaiaStatus": "unknown",
     "lastOnboardingRun": null,
     "lastOnboardingStatus": "unknown",
     "errorJobs": [
-      {
-        "name": "Onboarding Digest Cleanup Run",
-        "id": "afc5c57b",
-        "lastError": "[Onboarding Analyzer] Starting — looking back 24h | alert-only=false | digest=false | dry-run=false\nFetching recent Fireflies transcripts...\nFound 22 transcripts in selected range\nOnboarding calls: 15 total, 15 new\n  Capping at 8 calls this run — 7 will be picked up by cleanup cron\n\nAnalyzing: RE: Meeting this Week (01M5DC5FW6F6V1HQ9P303C312T)\n  SF: no match found\n  → PWR Technologies LLC | Score: 76 | Risk: Medium | Stage: Configuration\n[psa] Loaded 183 customers into cache\n[psa] No customer found for: PWR Technologies LLC\n  PSA: no customer match found\n[notion-onboarding] Loaded 316 clients\n[notion-onboarding] Matched: PWR Technologies (score: 1.00, health: At Risk)\n  Notion: At Risk | 41% milestones | SA: JD Caulkins\n  ✓ Written to Notion\n  ✓ Product Intelligence signals written (0 requests, 2 issues, 1 pains)\n\nAnalyzing: Netwolves Requirements Discussion (01M5APED96B1EQH7SQX5D7WV7X)\n  SF: no match found\n  → Skipping non-onboarding call: Netwolves\n\nAnalyzing: AVIT/Rev.io API Discussion (01M49EPFVR6SBPK17EHQNDGFP8)\n  SF: no match found\n  → AVIT Partners | Score: 69 | Risk: Medium | Stage: Configuration\n[psa] No customer found for: AVIT Partners\n  PSA: no customer match found\n[notion-onboarding] Matched: AVIT (score: 0.90, health: At Risk)\n\n⚠️  Received SIGTERM — saving state and exiting gracefully\n✓ State saved (500 processed IDs preserved)\n\nProcess exited with code 143.",
-        "since": "2026-10-22"
-      },
       {
         "name": "Daily Full 💿 Backup Sweep",
         "id": "6fa32a0c",
@@ -301,63 +295,43 @@
     ],
     "allJobs": [
       {
-        "id": "b31d4f94",
-        "name": "Ops Command Center Morning Refresh",
+        "id": "12f0d64a",
+        "name": "Ops Command Center — Daily Snapshot",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-10-22T11:45:00.015Z",
+        "lastRunAt": "2026-10-22T17:07:00.020Z",
         "lastError": null,
-        "schedule": "45 6 * * 1-5",
+        "schedule": "7 12 * * 1-5",
         "category": "Delivery"
-      },
-      {
-        "id": "8bd20462",
-        "name": "Local Infrastructure Watchdog — hourly fallback",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-10-23T10:49:03.288Z",
-        "lastError": null,
-        "schedule": "every",
-        "category": "System"
       },
       {
         "id": "de15ed4b",
         "name": "Outreach Token Auto-Refresh",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-10-23T11:08:37.842Z",
+        "lastRunAt": "2026-10-23T16:08:37.945Z",
         "lastError": null,
         "schedule": "every",
         "category": "Infrastructure"
-      },
-      {
-        "id": "848dd2e6",
-        "name": "Kaia Pipeline Health Check",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-10-22T12:30:00.015Z",
-        "lastError": null,
-        "schedule": "30 7 * * 1-5",
-        "category": "Intelligence"
       },
       {
         "id": "e31a2ae9",
         "name": "New Rev.io minimum transition response watcher",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-10-23T01:30:08.558Z",
+        "lastRunAt": "2026-10-23T17:00:08.561Z",
         "lastError": null,
         "schedule": "*/30 8-20 * * 1-5",
         "category": "System"
       },
       {
-        "id": "9e362558",
-        "name": "Daily Cron Health Check",
+        "id": "8bd20462",
+        "name": "Local Infrastructure Watchdog — hourly fallback",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-10-22T13:12:00.016Z",
+        "lastRunAt": "2026-10-23T16:49:03.391Z",
         "lastError": null,
-        "schedule": "12 8 * * 1-5",
+        "schedule": "every",
         "category": "System"
       },
       {
@@ -365,7 +339,7 @@
         "name": "New Rev.io Auto-Brief Generator",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-10-23T02:15:00.018Z",
+        "lastRunAt": "2026-10-23T13:15:00.016Z",
         "lastError": "NO_REPLY",
         "schedule": "15 8,13,18,21 * * 1-5",
         "category": "System"
@@ -375,59 +349,9 @@
         "name": "Billing Auto-Brief Generator",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-10-23T02:20:00.015Z",
+        "lastRunAt": "2026-10-23T13:20:00.017Z",
         "lastError": null,
         "schedule": "20 8,13,18,21 * * 1-5",
-        "category": "Delivery"
-      },
-      {
-        "id": "afc5c57b",
-        "name": "Onboarding Digest Cleanup Run",
-        "enabled": true,
-        "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-10-22T13:27:00.017Z",
-        "lastError": "[Onboarding Analyzer] Starting — looking back 24h | alert-only=false | digest=false | dry-run=false\nFetching recent Fireflies transcripts...\nFound 22 transcripts in selected range\nOnboarding calls: 15 total, 15 new\n  Capping at 8 calls this run — 7 will be picked up by cleanup cron\n\nAnalyzing: RE: Meeting this Week (01M5DC5FW6F6V1HQ9P303C312T)\n  SF: no match found\n  → PWR Technologies LLC | Score: 76 | Risk: Medium | Stage: Configuration\n[psa] Loaded 183 customers into cache\n[psa] No customer found for: PWR Technologies LLC\n  PSA: no customer match found\n[notion-onboarding] Loaded 316 clients\n[notion-onboarding] Matched: PWR Technologies (score: 1.00, health: At Risk)\n  Notion: At Risk | 41% milestones | SA: JD Caulkins\n  ✓ Written to Notion\n  ✓ Product Intelligence signals written (0 requests, 2 issues, 1 pains)\n\nAnalyzing: Netwolves Requirements Discussion (01M5APED96B1EQH7SQX5D7WV7X)\n  SF: no match found\n  → Skipping non-onboarding call: Netwolves\n\nAnalyzing: AVIT/Rev.io API Discussion (01M49EPFVR6SBPK17EHQNDGFP8)\n  SF: no match found\n  → AVIT Partners | Score: 69 | Risk: Medium | Stage: Configuration\n[psa] No customer found for: AVIT Partners\n  PSA: no customer match found\n[notion-onboarding] Matched: AVIT (score: 0.90, health: At Risk)\n\n⚠️  Received SIGTERM — saving state and exiting gracefully\n✓ State saved (500 processed IDs preserved)\n\nProcess exited with code 143.",
-        "schedule": "27 8 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "6af65023",
-        "name": "Onboarding Brief Coverage Guard",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-10-23T02:35:00.015Z",
-        "lastError": null,
-        "schedule": "35 8,13,18,21 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "782903ab",
-        "name": "Onboarding Digest Cleanup Run 2",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-10-22T14:23:00.017Z",
-        "lastError": "SUCCESS — raw exit code: **0**\n\nExact final counts:\n- Calls analyzed: **3**\n- Clients: **3**\n- Average score: **70/100**\n- Logged to Notion: **3**\n- Risk: **0 Critical, 0 High, 2 Medium, 1 Low**\n- Analysis errors: **0**\n- Non-onboarding calls skipped: **1**\n- New onboarding calls remaining for cleanup: **7**",
-        "schedule": "23 9 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "694a91b3",
-        "name": "Bookings Pacing Refresh",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-10-22T23:35:10.362Z",
-        "lastError": null,
-        "schedule": "33 14,19,23 * * 1-5",
-        "category": "Delivery"
-      },
-      {
-        "id": "12f0d64a",
-        "name": "Ops Command Center — Daily Snapshot",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-10-22T17:07:00.020Z",
-        "lastError": null,
-        "schedule": "7 12 * * 1-5",
         "category": "Delivery"
       },
       {
@@ -451,6 +375,16 @@
         "category": "System"
       },
       {
+        "id": "6af65023",
+        "name": "Onboarding Brief Coverage Guard",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-10-23T13:35:00.015Z",
+        "lastError": null,
+        "schedule": "35 8,13,18,21 * * 1-5",
+        "category": "System"
+      },
+      {
         "id": "6216fa3b",
         "name": "Prospecting Pipeline Health Check",
         "enabled": true,
@@ -466,7 +400,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-10-22T18:42:00.019Z",
-        "lastError": "✅ Intelligence deck rebuilt and deployed successfully.\n\nLive: <https://erice320.github.io/revay/revio-intelligence-deck.html>\n\nHealth check returned HTTP 301; GitHub Pages may still be propagating.",
+        "lastError": "Intelligence deck rebuilt and deployed successfully. Verified live with HTTP 200:\n\n<https://erice320.github.io/revay/revio-intelligence-deck.html>",
         "schedule": "42 13 * * 1-5",
         "category": "Intelligence"
       },
@@ -499,6 +433,16 @@
         "lastError": null,
         "schedule": "12 14 * * 1-5",
         "category": "Infrastructure"
+      },
+      {
+        "id": "694a91b3",
+        "name": "Bookings Pacing Refresh",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-10-23T14:35:08.010Z",
+        "lastError": null,
+        "schedule": "33 14,19,23 * * 1-5",
+        "category": "Delivery"
       },
       {
         "id": "3ccf6f14",
@@ -666,7 +610,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-10-23T11:18:00.015Z",
-        "lastError": "Today’s 11-item brief shows MSP AI adoption at 32%, but only 12% can demonstrate returns. ConnectWise disabled seven application identities on October 17 following technical guidance: <https://www.connectwise.com/company/trust/advisories>. Kaseya reports MSPs struggling to hire skilled technicians rose from 9% to 16%, while it is also recruiting a VP of Sales Development. HaloPSA gained tighter ticket synchronization and device context through an updated LogMeIn Resolve integration.",
+        "lastError": "The 14-item brief is emailed. Biggest signal: ConnectWise suspended cloud services after unauthorized Microsoft 365 access and disabled seven application identities. Syncro added cloud backup, an MCP server, and AI-assisted service delivery, while HaloPSA still requires separate RMM tooling. <https://status.connectwise.com/> <https://www.kaseya.com/blog/n-able-alternatives/>",
         "schedule": "18 6 * * 1,3,5",
         "category": "Intelligence"
       },
@@ -679,6 +623,16 @@
         "lastError": null,
         "schedule": "30 6 * * 1-5",
         "category": "Intelligence"
+      },
+      {
+        "id": "b31d4f94",
+        "name": "Ops Command Center Morning Refresh",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-10-23T11:45:00.015Z",
+        "lastError": null,
+        "schedule": "45 6 * * 1-5",
+        "category": "Delivery"
       },
       {
         "id": "cc85c724",
@@ -701,6 +655,26 @@
         "category": "Intelligence"
       },
       {
+        "id": "848dd2e6",
+        "name": "Kaia Pipeline Health Check",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-10-23T12:30:00.017Z",
+        "lastError": null,
+        "schedule": "30 7 * * 1-5",
+        "category": "Intelligence"
+      },
+      {
+        "id": "9e362558",
+        "name": "Daily Cron Health Check",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-10-23T13:12:00.016Z",
+        "lastError": null,
+        "schedule": "12 8 * * 1-5",
+        "category": "System"
+      },
+      {
         "id": "2b945e1f",
         "name": "Weekly New Rev.io Onboarding Snapshot Ledger + Deck",
         "enabled": true,
@@ -721,6 +695,16 @@
         "category": "Intelligence"
       },
       {
+        "id": "afc5c57b",
+        "name": "Onboarding Digest Cleanup Run",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-10-23T13:27:00.017Z",
+        "lastError": "SUCCESS — raw exit code: **0**\n\nExact final counts:\n- Transcripts found: **34**\n- Onboarding calls: **20 total, 16 new**\n- Processed: **4 calls / 4 clients**\n- Deferred: **12**\n- Analysis errors: **0**\n- Logged to Notion: **4**\n- Risk: **0 Critical, 2 High, 2 Medium, 0 Low**\n- Average score: **69/100**",
+        "schedule": "27 8 * * 1-5",
+        "category": "Intelligence"
+      },
+      {
         "id": "f1a646d6",
         "name": "Cloudflare Weekly Seat Cleanup",
         "enabled": true,
@@ -729,6 +713,16 @@
         "lastError": null,
         "schedule": "40 8 * * 1",
         "category": "System"
+      },
+      {
+        "id": "782903ab",
+        "name": "Onboarding Digest Cleanup Run 2",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-10-23T14:23:00.020Z",
+        "lastError": "SUCCESS — raw exit code: **0**\n\nExact final counts:\n- **Processed:** 3 calls\n- **Clients:** 3\n- **Logged to Notion:** 3\n- **Analysis errors:** 0\n- **Risk:** 0 Critical · 0 High · 3 Medium · 0 Low\n- **Average score:** 67/100",
+        "schedule": "23 9 * * 1-5",
+        "category": "Intelligence"
       },
       {
         "id": "975c5f7e",
@@ -754,36 +748,6 @@
     "byCategory": {
       "Delivery": [
         {
-          "id": "b31d4f94",
-          "name": "Ops Command Center Morning Refresh",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-10-22T11:45:00.015Z",
-          "lastError": null,
-          "schedule": "45 6 * * 1-5",
-          "category": "Delivery"
-        },
-        {
-          "id": "c763deb2",
-          "name": "Billing Auto-Brief Generator",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-10-23T02:20:00.015Z",
-          "lastError": null,
-          "schedule": "20 8,13,18,21 * * 1-5",
-          "category": "Delivery"
-        },
-        {
-          "id": "694a91b3",
-          "name": "Bookings Pacing Refresh",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-10-22T23:35:10.362Z",
-          "lastError": null,
-          "schedule": "33 14,19,23 * * 1-5",
-          "category": "Delivery"
-        },
-        {
           "id": "12f0d64a",
           "name": "Ops Command Center — Daily Snapshot",
           "enabled": true,
@@ -794,6 +758,16 @@
           "category": "Delivery"
         },
         {
+          "id": "c763deb2",
+          "name": "Billing Auto-Brief Generator",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-23T13:20:00.017Z",
+          "lastError": null,
+          "schedule": "20 8,13,18,21 * * 1-5",
+          "category": "Delivery"
+        },
+        {
           "id": "82b4e119",
           "name": "daily-sales-snapshot",
           "enabled": true,
@@ -801,6 +775,16 @@
           "lastRunAt": "2026-10-22T19:02:00.014Z",
           "lastError": null,
           "schedule": "2 14 * * 1-5",
+          "category": "Delivery"
+        },
+        {
+          "id": "694a91b3",
+          "name": "Bookings Pacing Refresh",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-23T14:35:08.010Z",
+          "lastError": null,
+          "schedule": "33 14,19,23 * * 1-5",
           "category": "Delivery"
         },
         {
@@ -844,6 +828,16 @@
           "category": "Delivery"
         },
         {
+          "id": "b31d4f94",
+          "name": "Ops Command Center Morning Refresh",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-23T11:45:00.015Z",
+          "lastError": null,
+          "schedule": "45 6 * * 1-5",
+          "category": "Delivery"
+        },
+        {
           "id": "cc85c724",
           "name": "Monday Week Ahead Brief",
           "enabled": true,
@@ -854,35 +848,67 @@
           "category": "Delivery"
         }
       ],
-      "System": [
+      "Infrastructure": [
         {
-          "id": "8bd20462",
-          "name": "Local Infrastructure Watchdog — hourly fallback",
+          "id": "de15ed4b",
+          "name": "Outreach Token Auto-Refresh",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-10-23T10:49:03.288Z",
+          "lastRunAt": "2026-10-23T16:08:37.945Z",
           "lastError": null,
           "schedule": "every",
-          "category": "System"
+          "category": "Infrastructure"
         },
+        {
+          "id": "e9496695",
+          "name": "Microsoft Graph Auth Health Check",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-22T19:12:00.014Z",
+          "lastError": null,
+          "schedule": "12 14 * * 1-5",
+          "category": "Infrastructure"
+        },
+        {
+          "id": "c12c38b0",
+          "name": "Nightly Git Backup",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-23T09:09:00.016Z",
+          "lastError": "DONE",
+          "schedule": "9 4 * * *",
+          "category": "Infrastructure"
+        },
+        {
+          "id": "25658eb9",
+          "name": "AzCopy Log Cleanup",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-18T09:16:00.018Z",
+          "lastError": null,
+          "schedule": "16 4 * * 0",
+          "category": "Infrastructure"
+        }
+      ],
+      "System": [
         {
           "id": "e31a2ae9",
           "name": "New Rev.io minimum transition response watcher",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-10-23T01:30:08.558Z",
+          "lastRunAt": "2026-10-23T17:00:08.561Z",
           "lastError": null,
           "schedule": "*/30 8-20 * * 1-5",
           "category": "System"
         },
         {
-          "id": "9e362558",
-          "name": "Daily Cron Health Check",
+          "id": "8bd20462",
+          "name": "Local Infrastructure Watchdog — hourly fallback",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-10-22T13:12:00.016Z",
+          "lastRunAt": "2026-10-23T16:49:03.391Z",
           "lastError": null,
-          "schedule": "12 8 * * 1-5",
+          "schedule": "every",
           "category": "System"
         },
         {
@@ -890,19 +916,9 @@
           "name": "New Rev.io Auto-Brief Generator",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-10-23T02:15:00.018Z",
+          "lastRunAt": "2026-10-23T13:15:00.016Z",
           "lastError": "NO_REPLY",
           "schedule": "15 8,13,18,21 * * 1-5",
-          "category": "System"
-        },
-        {
-          "id": "6af65023",
-          "name": "Onboarding Brief Coverage Guard",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-10-23T02:35:00.015Z",
-          "lastError": null,
-          "schedule": "35 8,13,18,21 * * 1-5",
           "category": "System"
         },
         {
@@ -913,6 +929,16 @@
           "lastRunAt": "2026-10-22T18:32:00.014Z",
           "lastError": null,
           "schedule": "32 13 * * 1-5",
+          "category": "System"
+        },
+        {
+          "id": "6af65023",
+          "name": "Onboarding Brief Coverage Guard",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-23T13:35:00.015Z",
+          "lastError": null,
+          "schedule": "35 8,13,18,21 * * 1-5",
           "category": "System"
         },
         {
@@ -996,6 +1022,16 @@
           "category": "System"
         },
         {
+          "id": "9e362558",
+          "name": "Daily Cron Health Check",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-23T13:12:00.016Z",
+          "lastError": null,
+          "schedule": "12 8 * * 1-5",
+          "category": "System"
+        },
+        {
           "id": "2b945e1f",
           "name": "Weekly New Rev.io Onboarding Snapshot Ledger + Deck",
           "enabled": true,
@@ -1036,79 +1072,7 @@
           "category": "System"
         }
       ],
-      "Infrastructure": [
-        {
-          "id": "de15ed4b",
-          "name": "Outreach Token Auto-Refresh",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-10-23T11:08:37.842Z",
-          "lastError": null,
-          "schedule": "every",
-          "category": "Infrastructure"
-        },
-        {
-          "id": "e9496695",
-          "name": "Microsoft Graph Auth Health Check",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-10-22T19:12:00.014Z",
-          "lastError": null,
-          "schedule": "12 14 * * 1-5",
-          "category": "Infrastructure"
-        },
-        {
-          "id": "c12c38b0",
-          "name": "Nightly Git Backup",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-10-23T09:09:00.016Z",
-          "lastError": "DONE",
-          "schedule": "9 4 * * *",
-          "category": "Infrastructure"
-        },
-        {
-          "id": "25658eb9",
-          "name": "AzCopy Log Cleanup",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-10-18T09:16:00.018Z",
-          "lastError": null,
-          "schedule": "16 4 * * 0",
-          "category": "Infrastructure"
-        }
-      ],
       "Intelligence": [
-        {
-          "id": "848dd2e6",
-          "name": "Kaia Pipeline Health Check",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-10-22T12:30:00.015Z",
-          "lastError": null,
-          "schedule": "30 7 * * 1-5",
-          "category": "Intelligence"
-        },
-        {
-          "id": "afc5c57b",
-          "name": "Onboarding Digest Cleanup Run",
-          "enabled": true,
-          "status": "false_green_diagnostic_failure",
-          "lastRunAt": "2026-10-22T13:27:00.017Z",
-          "lastError": "[Onboarding Analyzer] Starting — looking back 24h | alert-only=false | digest=false | dry-run=false\nFetching recent Fireflies transcripts...\nFound 22 transcripts in selected range\nOnboarding calls: 15 total, 15 new\n  Capping at 8 calls this run — 7 will be picked up by cleanup cron\n\nAnalyzing: RE: Meeting this Week (01M5DC5FW6F6V1HQ9P303C312T)\n  SF: no match found\n  → PWR Technologies LLC | Score: 76 | Risk: Medium | Stage: Configuration\n[psa] Loaded 183 customers into cache\n[psa] No customer found for: PWR Technologies LLC\n  PSA: no customer match found\n[notion-onboarding] Loaded 316 clients\n[notion-onboarding] Matched: PWR Technologies (score: 1.00, health: At Risk)\n  Notion: At Risk | 41% milestones | SA: JD Caulkins\n  ✓ Written to Notion\n  ✓ Product Intelligence signals written (0 requests, 2 issues, 1 pains)\n\nAnalyzing: Netwolves Requirements Discussion (01M5APED96B1EQH7SQX5D7WV7X)\n  SF: no match found\n  → Skipping non-onboarding call: Netwolves\n\nAnalyzing: AVIT/Rev.io API Discussion (01M49EPFVR6SBPK17EHQNDGFP8)\n  SF: no match found\n  → AVIT Partners | Score: 69 | Risk: Medium | Stage: Configuration\n[psa] No customer found for: AVIT Partners\n  PSA: no customer match found\n[notion-onboarding] Matched: AVIT (score: 0.90, health: At Risk)\n\n⚠️  Received SIGTERM — saving state and exiting gracefully\n✓ State saved (500 processed IDs preserved)\n\nProcess exited with code 143.",
-          "schedule": "27 8 * * 1-5",
-          "category": "Intelligence"
-        },
-        {
-          "id": "782903ab",
-          "name": "Onboarding Digest Cleanup Run 2",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-10-22T14:23:00.017Z",
-          "lastError": "SUCCESS — raw exit code: **0**\n\nExact final counts:\n- Calls analyzed: **3**\n- Clients: **3**\n- Average score: **70/100**\n- Logged to Notion: **3**\n- Risk: **0 Critical, 0 High, 2 Medium, 1 Low**\n- Analysis errors: **0**\n- Non-onboarding calls skipped: **1**\n- New onboarding calls remaining for cleanup: **7**",
-          "schedule": "23 9 * * 1-5",
-          "category": "Intelligence"
-        },
         {
           "id": "4e1d90e2",
           "name": "Prospecting Call Analyzer",
@@ -1125,7 +1089,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-10-22T18:42:00.019Z",
-          "lastError": "✅ Intelligence deck rebuilt and deployed successfully.\n\nLive: <https://erice320.github.io/revay/revio-intelligence-deck.html>\n\nHealth check returned HTTP 301; GitHub Pages may still be propagating.",
+          "lastError": "Intelligence deck rebuilt and deployed successfully. Verified live with HTTP 200:\n\n<https://erice320.github.io/revay/revio-intelligence-deck.html>",
           "schedule": "42 13 * * 1-5",
           "category": "Intelligence"
         },
@@ -1175,7 +1139,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-10-23T11:18:00.015Z",
-          "lastError": "Today’s 11-item brief shows MSP AI adoption at 32%, but only 12% can demonstrate returns. ConnectWise disabled seven application identities on October 17 following technical guidance: <https://www.connectwise.com/company/trust/advisories>. Kaseya reports MSPs struggling to hire skilled technicians rose from 9% to 16%, while it is also recruiting a VP of Sales Development. HaloPSA gained tighter ticket synchronization and device context through an updated LogMeIn Resolve integration.",
+          "lastError": "The 14-item brief is emailed. Biggest signal: ConnectWise suspended cloud services after unauthorized Microsoft 365 access and disabled seven application identities. Syncro added cloud backup, an MCP server, and AI-assisted service delivery, while HaloPSA still requires separate RMM tooling. <https://status.connectwise.com/> <https://www.kaseya.com/blog/n-able-alternatives/>",
           "schedule": "18 6 * * 1,3,5",
           "category": "Intelligence"
         },
@@ -1200,6 +1164,16 @@
           "category": "Intelligence"
         },
         {
+          "id": "848dd2e6",
+          "name": "Kaia Pipeline Health Check",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-23T12:30:00.017Z",
+          "lastError": null,
+          "schedule": "30 7 * * 1-5",
+          "category": "Intelligence"
+        },
+        {
           "id": "35fc94ad",
           "name": "Weekly Roadmap Digest",
           "enabled": true,
@@ -1208,10 +1182,30 @@
           "lastError": null,
           "schedule": "25 8 * * 1",
           "category": "Intelligence"
+        },
+        {
+          "id": "afc5c57b",
+          "name": "Onboarding Digest Cleanup Run",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-23T13:27:00.017Z",
+          "lastError": "SUCCESS — raw exit code: **0**\n\nExact final counts:\n- Transcripts found: **34**\n- Onboarding calls: **20 total, 16 new**\n- Processed: **4 calls / 4 clients**\n- Deferred: **12**\n- Analysis errors: **0**\n- Logged to Notion: **4**\n- Risk: **0 Critical, 2 High, 2 Medium, 0 Low**\n- Average score: **69/100**",
+          "schedule": "27 8 * * 1-5",
+          "category": "Intelligence"
+        },
+        {
+          "id": "782903ab",
+          "name": "Onboarding Digest Cleanup Run 2",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-10-23T14:23:00.020Z",
+          "lastError": "SUCCESS — raw exit code: **0**\n\nExact final counts:\n- **Processed:** 3 calls\n- **Clients:** 3\n- **Logged to Notion:** 3\n- **Analysis errors:** 0\n- **Risk:** 0 Critical · 0 High · 3 Medium · 0 Low\n- **Average score:** 67/100",
+          "schedule": "23 9 * * 1-5",
+          "category": "Intelligence"
         }
       ]
     },
-    "lastUpdated": "2026-10-23T11:45:16.764Z"
+    "lastUpdated": "2026-10-23T17:07:16.059Z"
   },
   "competitorIntel": {
     "topCompetitors": [
@@ -1306,17 +1300,17 @@
     "lossCount": 174,
     "totalTier1": 602,
     "generatedAt": "2026-10-22T19:07:13.600Z",
-    "lastUpdated": "2026-10-23T11:45:16.764Z"
+    "lastUpdated": "2026-10-23T17:07:16.059Z"
   },
   "dealBriefs": {
-    "lastPsaRun": "2026-10-23T02:15:03.696Z",
+    "lastPsaRun": "2026-10-23T13:15:03.147Z",
     "lastPsaCount": 1,
-    "lastBillingRun": "2026-10-23T02:20:04.891Z",
+    "lastBillingRun": "2026-10-23T13:20:05.495Z",
     "totalPsaProcessed": 105,
     "totalBillingProcessed": 15,
-    "psaStatus": "ok",
-    "billingStatus": "ok",
-    "lastUpdated": "2026-10-23T11:45:16.764Z"
+    "psaStatus": "fresh",
+    "billingStatus": "fresh",
+    "lastUpdated": "2026-10-23T17:07:16.060Z"
   },
   "marketProduct": {
     "mspLastRun": "2026-10-23T11:18:51.296Z",
@@ -1328,6 +1322,6 @@
       "topCompetitor": "QuickBooks",
       "topCompetitorCount": 409
     },
-    "lastUpdated": "2026-10-23T11:45:16.765Z"
+    "lastUpdated": "2026-10-23T17:07:16.060Z"
   }
 }
