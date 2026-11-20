@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-11-20T12:45:12.025Z",
+    "generated": "2026-11-20T18:07:10.733Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js v2"
   },
@@ -16,8 +16,8 @@
       },
       {
         "subject": "Quick Touchbase",
-        "startTime": "2026-11-20T17:00:00.0000000",
-        "endTime": "2026-11-20T17:30:00.0000000",
+        "startTime": "2026-11-20T17:30:00.0000000",
+        "endTime": "2026-11-20T18:00:00.0000000",
         "attendeeCount": 2,
         "attendees": [
           "William Collins",
@@ -78,42 +78,42 @@
     ],
     "meetingCount": 7,
     "vipEmails": [],
-    "generatedAt": "2026-11-20T12:45:12.310Z",
-    "lastUpdated": "2026-11-20T12:45:12.310Z"
+    "generatedAt": "2026-11-20T18:07:11.213Z",
+    "lastUpdated": "2026-11-20T18:07:11.213Z"
   },
   "pipeline": {
-    "openPipelineMrr": 187611,
-    "openDeals": 79,
-    "weightedMrr": 84425,
-    "closingThisMonth": 79,
-    "closingThisMonthMrr": 187611,
-    "avgDealMrr": 2375,
-    "winRateMtd": 0.14285714285714285,
+    "openPipelineMrr": 186690,
+    "openDeals": 80,
+    "weightedMrr": 84011,
+    "closingThisMonth": 80,
+    "closingThisMonthMrr": 186690,
+    "avgDealMrr": 2334,
+    "winRateMtd": 0.14492753623188406,
     "stageBreakdown": [
       {
         "stage": "3 - Initial Product Demo",
-        "count": 28,
-        "mrr": 89921
+        "count": 27,
+        "mrr": 77150
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 27,
-        "mrr": 63633
+        "count": 28,
+        "mrr": 63683
       },
       {
         "stage": "1- Discovery Scheduled",
-        "count": 13,
-        "mrr": 25020
+        "count": 12,
+        "mrr": 24020
       },
       {
         "stage": "4 - Proposal Sent",
-        "count": 7,
-        "mrr": 6989
+        "count": 8,
+        "mrr": 18239
       },
       {
         "stage": "6 - Verbal Commit",
-        "count": 3,
-        "mrr": 1500
+        "count": 4,
+        "mrr": 3050
       },
       {
         "stage": "5 - Product / Contract Validated",
@@ -129,7 +129,7 @@
       "daysRemaining": 10,
       "requiredDailyRunRate": 6959,
       "wonCount": 10,
-      "lastUpdated": "2026-11-20T12:45:13.452Z"
+      "lastUpdated": "2026-11-20T18:07:12.490Z"
     },
     "recentWins": [
       {
@@ -212,7 +212,7 @@
         "winRate": null
       }
     ],
-    "lastUpdated": "2026-11-20T12:45:13.452Z"
+    "lastUpdated": "2026-11-20T18:07:12.490Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
@@ -227,53 +227,53 @@
     ],
     "recentCalls": [
       {
-        "title": "Cam Sharpe - Mike Shackelford",
-        "date": "2026-11-19",
-        "durationMin": 2,
-        "state": "ENDED"
-      },
-      {
-        "title": "Jake Borah - Dan Fulton",
-        "date": "2026-11-19",
+        "title": "Joseph Abarno - Jason Gilbert",
+        "date": "2026-11-20",
         "durationMin": 0,
         "state": "ENDED"
       },
       {
-        "title": "Cam Sharpe - Mike Johnson",
-        "date": "2026-11-19",
-        "durationMin": 1,
+        "title": "Blake Boatright - Joe Kondor",
+        "date": "2026-11-20",
+        "durationMin": 0,
+        "state": "ENDED"
+      },
+      {
+        "title": "Blake Boatright - Myriam Lorenzana",
+        "date": "2026-11-20",
+        "durationMin": 0,
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-11-20T12:45:14.410Z"
+    "lastUpdated": "2026-11-20T18:07:12.893Z"
   },
   "newBusiness": {
-    "newDealsOpenedMtd": 61,
+    "newDealsOpenedMtd": 62,
     "sequencesActive": 37,
-    "newEnrollmentsThisWeek": 9035,
-    "repliesThisWeek": 243,
+    "newEnrollmentsThisWeek": 8946,
+    "repliesThisWeek": 241,
     "meetingsBookedMtd": 75,
     "topSequences": [
       {
-        "name": "Kaseya Connect After Party ",
-        "enrolled": 60,
-        "openRate": 0.533,
+        "name": "MSP Sequence Q4'26",
+        "enrolled": 3575,
+        "openRate": 0.465,
+        "replyRate": 0.001
+      },
+      {
+        "name": "Follow-up",
+        "enrolled": 27,
+        "openRate": 0.233,
         "replyRate": 0
       },
       {
         "name": "Telecom Sequence Q4'26",
-        "enrolled": 218,
-        "openRate": 0.433,
+        "enrolled": 220,
+        "openRate": 0.432,
         "replyRate": 0
-      },
-      {
-        "name": "MSP Sequence Q4'26",
-        "enrolled": 3491,
-        "openRate": 0.469,
-        "replyRate": 0.001
       }
     ],
-    "lastUpdated": "2026-11-20T12:45:14.981Z"
+    "lastUpdated": "2026-11-20T18:07:13.475Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
@@ -287,90 +287,94 @@
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-11-20T12:45:18.993Z"
+    "lastUpdated": "2026-11-20T18:07:17.466Z"
   },
   "agentHealth": {
     "cronJobsTotal": 49,
     "cronJobsEnabled": 49,
-    "cronJobsHealthy": 40,
-    "cronJobsError": 9,
+    "cronJobsHealthy": 41,
+    "cronJobsError": 8,
     "lastKaiaRun": null,
     "lastKaiaStatus": "unknown",
     "lastOnboardingRun": null,
     "lastOnboardingStatus": "unknown",
     "errorJobs": [
       {
-        "name": "Ops Command Center Morning Refresh",
-        "id": "b31d4f94",
-        "lastError": "Ops snapshot build failed during GitHub push (exit code 1): authentication token/username was rejected.\n\nAll snapshot sections built successfully. One non-critical Zendesk lookup returned 404 because `rev-io.zendesk.com` is unavailable. The scheduler can retry after GitHub credentials are repaired.",
-        "since": "2026-11-19"
-      },
-      {
         "name": "heartbeat-main",
         "id": "371b6292",
-        "lastError": "heartbeat skipped: quiet-hours",
+        "lastError": "heartbeat skipped: empty-heartbeat-file",
+        "since": "2026-11-20"
+      },
+      {
+        "name": "New Rev.io Auto-Brief Generator",
+        "id": "46e77f37",
+        "lastError": "FAILURE — script exited with code 1; no final success summary.\n\nNew New Rev.io deals: **1**\n\n**Slice Wireless Solutions**\n- HTML brief: Generated successfully\n- Notion: Existing record reused successfully\n- HTML-to-Notion link: Successful\n- GitHub delivery: **Failed** — invalid username/token; authentication rejected\n- Discord delivery: Suppressed as requested\n\nAlso reported: 4 qualifying wins; 2 monthly/minimum-increase deals excluded.",
         "since": "2026-11-20"
       },
       {
         "name": "Bookings Pacing Refresh",
         "id": "694a91b3",
-        "lastError": "Error: refresh built successfully and created local commit `09d998f`, but GitHub push failed due to an invalid/expired username or token. Exit code 1.",
+        "lastError": "Error: dashboard refreshed locally and commit `425d6c6` was created, but GitHub push failed due to invalid/expired authentication token. Command exited with code 1.",
+        "since": "2026-11-20"
+      },
+      {
+        "name": "Intel Deck Auto-Update",
+        "id": "a3b55161",
+        "lastError": "ERROR:   Total: 2771 rows\n  Tier 1: 602 · Win: 361 · Loss: 174\n  Top feature: Enhanced Customer Portal (402)\n  Top competitor: QuickBooks (409)\n  ✅ Deck written: /tmp/revay/revio-intelligence-deck.html (18346 bytes)\n  ❌ Deploy failed: Command failed: cd /tmp/revay && git add revio-intelligence-deck.html && git commit -m \"Intel deck auto-update November 19, 2026\" && git push\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay.git/'\n\n(Command exited with code 1)",
         "since": "2026-11-19"
       },
       {
         "name": "Twice-Daily Consolidated Operations Digest",
         "id": "4530a7d8",
-        "lastError": "⚡ **Operations Health — Nov 18, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 42/49 latest runs healthy · 7 actionable failures\n**Attention:**\n• **Bookings Pacing Refresh:** Built and committed locally; GitHub push rejected invalid username/token.\n• **Daily Full Backup Sweep:** Commit succeeded; GitHub authentication rejected the push.\n• **Nightly Git Backup:** GitHub push failed with invalid username/token (exit 128).\n• **Ops Command Center Morning Refresh:** GitHub publication failed authentication; Zendesk also returned non-critical 404.\n• **Ops Command Center — Daily Snapshot:** Snapshot built; GitHub authentication failed. Zendesk returned non-critical 404.\n• **Intel Deck Builder:** Deck built locally; GitHub push, CLI, and SSH deployment paths failed authentication/unavailability.\n• **Intel Deck Auto-Update:** Updated 2,763-row deck built; deployment push failed GitHub authentication.\n\n**Key takeaways:**\n• Prospecting analyzed 8 calls from 24 contacts; one meeting set and four buying signals.\n• Onboarding analyzed 8 calls: 4 medium/4 low risk, no alert-worthy cases.\n• Prospecting pipeline health reported **HEALTHY**.\n• MSP intelligence produced 11 items with no errors; highlighted ConnectWise extension risk and Kaseya’s agentic platform expansion.\n• No fresh Kaia trace was present.\n\n**Since last digest:** Three new publication failures appeared: Daily Snapshot and both Intel Deck jobs. The prior four GitHub-authentication failures continue. Per-job run retrieval was attempted but blocked by automation scope; causes above are the health script’s latest captured run summaries.",
-        "since": "2026-11-19"
-      },
-      {
-        "name": "Ops Command Center — Daily Snapshot",
-        "id": "12f0d64a",
-        "lastError": "FATAL — ops snapshot built successfully, but GitHub push failed (exit code 1):\n\n- **Failed:** Authentication for `https://github.com/erice320/revay.git/` — invalid username/token.\n- **Non-critical section error:** Zendesk customer health returned HTTP 404 (“help desk … no longer available”).\n- All other sections completed successfully.",
-        "since": "2026-11-19"
-      },
-      {
-        "name": "Intel Deck Builder",
-        "id": "81402d2e",
-        "lastError": "Intelligence deck rebuild failed during deployment.\n\n- Deck generated locally: `reports/revio-intelligence-deck.html`\n- GitHub push failed: `Invalid username or token`\n- Also checked GitHub CLI and SSH; CLI is unavailable and SSH authentication failed.\n- Existing live URL (not updated): <https://erice320.github.io/revay/revio-intelligence-deck.html>",
-        "since": "2026-11-19"
-      },
-      {
-        "name": "Intel Deck Auto-Update",
-        "id": "a3b55161",
-        "lastError": "ERROR:   ...2000 rows\n  → 2176 rows\n  Total: 2763 rows\n  Tier 1: 602 · Win: 361 · Loss: 174\n  Top feature: Enhanced Customer Portal (402)\n  Top competitor: QuickBooks (409)\n  ✅ Deck written: /tmp/revay/revio-intelligence-deck.html (18346 bytes)\n  ❌ Deploy failed: Command failed: cd /tmp/revay && git add revio-intelligence-deck.html && git commit -m \"Intel deck auto-update November 18, 2026\" && git push\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay.git/'",
-        "since": "2026-11-19"
+        "lastError": "⚡ **Operations Health — Nov 19, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 43/49 latest runs healthy · 6 actionable failures\n**Attention:**\n• **Bookings Pacing Refresh:** Local commit `2988510` succeeded; GitHub push failed—invalid username/token (exit 1).\n• **Daily Full 💿 Backup Sweep:** Commit `b3c36ce8` succeeded; push failed—invalid username/token.\n• **Nightly Git Backup:** Commit `e058335d` succeeded; push failed authentication (exit 128); remote verification and heartbeat updates were not performed.\n• **Ops Command Center Morning Refresh:** Snapshot built; GitHub authentication was rejected. Zendesk also returned a non-critical 404.\n• **Intel Deck Builder:** Deck generated locally; GitHub deployment failed authentication, and `gh` was unavailable.\n• **Intel Deck Auto-Update:** 2,771-row deck built; deployment push failed—invalid username/token.\n\n**Key takeaways:**\n• Prospecting analyzed 8 calls from 26 contact calls; 0 meetings set and one renewal-timing buying signal.\n• Two onboarding cleanup runs processed and logged 8 calls with 0 analysis errors: 6 Medium risk, 2 Low; 9 remain deferred.\n• Latest MSP brief contained 11 items, highlighting ScreenConnect extension risk, Kaseya’s agentic platform expansion, and AI-governance barriers.\n• Fleet scan found no scheduler-status errors, delivery failures, overdue jobs, gateway restarts, or run-history lookup failures.\n• No fresh Kaia pipeline trace was present.\n\n**Since last digest:** Ops Command Center Daily Snapshot recovered. No new problems; the other six GitHub-authentication-related failures continue. Direct per-job run retrieval remained automation-scope restricted; causes are from the live health script’s latest captured summaries.",
+        "since": "2026-11-20"
       },
       {
         "name": "Daily Full 💿 Backup Sweep",
         "id": "6fa32a0c",
-        "lastError": "FULL_BACKUP_SWEEP_FAILED — git commit `b3c36ce8` succeeded, but push failed: `remote: Invalid username or token. Password authentication is not supported for Git operations. fatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/'`",
+        "lastError": "FULL_BACKUP_SWEEP_FAILED — git push failed (exit 128): remote: Invalid username or token. Password authentication is not supported for Git operations. fatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/' Commit b6abede0 succeeded locally; Notion sync was not run per required stop condition.",
         "since": "2026-11-20"
       },
       {
         "name": "Nightly Git Backup",
         "id": "c12c38b0",
-        "lastError": "ERROR: git push failed.\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/'\n=== GIT PUSH EXIT CODE: 128 ===\n\nPreflight passed and commit e058335d was created. Remote verification and heartbeat-state updates were not performed.",
+        "lastError": "ERROR:\n[master 7c95f68e] Nightly workspace backup: 2026-11-20\n 45 files changed, 1136 insertions(+), 114 deletions(-)\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/'\n__BACKUP_RESULT__=ERROR stage=git_push rc=128",
+        "since": "2026-11-20"
+      },
+      {
+        "name": "Ops Command Center Morning Refresh",
+        "id": "b31d4f94",
+        "lastError": "FAILED: Ops snapshot built successfully, but GitHub push failed (exit 1) due to an invalid/expired username or token. Also observed a non-critical Zendesk 404 because the configured help desk is unavailable. Scheduler can retry after GitHub credentials are fixed.",
         "since": "2026-11-20"
       }
     ],
     "allJobs": [
       {
-        "id": "b31d4f94",
-        "name": "Ops Command Center Morning Refresh",
+        "id": "12f0d64a",
+        "name": "Ops Command Center — Daily Snapshot",
         "enabled": true,
-        "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-11-19T12:45:00.017Z",
-        "lastError": "Ops snapshot build failed during GitHub push (exit code 1): authentication token/username was rejected.\n\nAll snapshot sections built successfully. One non-critical Zendesk lookup returned 404 because `rev-io.zendesk.com` is unavailable. The scheduler can retry after GitHub credentials are repaired.",
-        "schedule": "45 6 * * 1-5",
+        "status": "ok",
+        "lastRunAt": "2026-11-19T18:07:00.014Z",
+        "lastError": null,
+        "schedule": "7 12 * * 1-5",
         "category": "Delivery"
+      },
+      {
+        "id": "e31a2ae9",
+        "name": "New Rev.io minimum transition response watcher",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-20T18:00:08.563Z",
+        "lastError": null,
+        "schedule": "*/30 8-20 * * 1-5",
+        "category": "System"
       },
       {
         "id": "8bd20462",
         "name": "Local Infrastructure Watchdog — hourly fallback",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-11-20T11:55:09.782Z",
+        "lastRunAt": "2026-11-20T17:55:09.875Z",
         "lastError": null,
         "schedule": "every",
         "category": "System"
@@ -380,7 +384,7 @@
         "name": "Outreach Token Auto-Refresh",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-11-20T11:55:30.830Z",
+        "lastRunAt": "2026-11-20T17:55:30.916Z",
         "lastError": null,
         "schedule": "every",
         "category": "Infrastructure"
@@ -390,48 +394,18 @@
         "name": "heartbeat-main",
         "enabled": true,
         "status": "skipped",
-        "lastRunAt": "2026-11-20T11:55:46.368Z",
-        "lastError": "heartbeat skipped: quiet-hours",
+        "lastRunAt": "2026-11-20T17:55:46.455Z",
+        "lastError": "heartbeat skipped: empty-heartbeat-file",
         "schedule": "every",
-        "category": "System"
-      },
-      {
-        "id": "848dd2e6",
-        "name": "Kaia Pipeline Health Check",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-19T13:30:00.018Z",
-        "lastError": null,
-        "schedule": "30 7 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "e31a2ae9",
-        "name": "New Rev.io minimum transition response watcher",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-20T02:30:08.562Z",
-        "lastError": null,
-        "schedule": "*/30 8-20 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "9e362558",
-        "name": "Daily Cron Health Check",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-19T14:12:00.017Z",
-        "lastError": null,
-        "schedule": "12 8 * * 1-5",
         "category": "System"
       },
       {
         "id": "46e77f37",
         "name": "New Rev.io Auto-Brief Generator",
         "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-20T03:15:00.017Z",
-        "lastError": "NO_REPLY",
+        "status": "false_green_diagnostic_failure",
+        "lastRunAt": "2026-11-20T14:15:00.016Z",
+        "lastError": "FAILURE — script exited with code 1; no final success summary.\n\nNew New Rev.io deals: **1**\n\n**Slice Wireless Solutions**\n- HTML brief: Generated successfully\n- Notion: Existing record reused successfully\n- HTML-to-Notion link: Successful\n- GitHub delivery: **Failed** — invalid username/token; authentication rejected\n- Discord delivery: Suppressed as requested\n\nAlso reported: 4 qualifying wins; 2 monthly/minimum-increase deals excluded.",
         "schedule": "15 8,13,18,21 * * 1-5",
         "category": "System"
       },
@@ -440,69 +414,9 @@
         "name": "Billing Auto-Brief Generator",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-11-20T03:20:00.015Z",
+        "lastRunAt": "2026-11-20T14:20:00.015Z",
         "lastError": null,
         "schedule": "20 8,13,18,21 * * 1-5",
-        "category": "Delivery"
-      },
-      {
-        "id": "afc5c57b",
-        "name": "Onboarding Digest Cleanup Run",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-19T14:27:00.017Z",
-        "lastError": "Raw exit code: 0\n\nFinal counts:\n- Processed: 4 calls\n- Analysis errors: 0\n- Clients: 4\n- Logged to Notion: 4\n- Risk: 0 Critical, 0 High, 3 Medium, 1 Low\n- Remaining for cleanup cron: 15 calls\n- Average score: 80/100",
-        "schedule": "27 8 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "6af65023",
-        "name": "Onboarding Brief Coverage Guard",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-20T03:35:00.015Z",
-        "lastError": null,
-        "schedule": "35 8,13,18,21 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "694a91b3",
-        "name": "Bookings Pacing Refresh",
-        "enabled": true,
-        "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-11-19T23:35:08.005Z",
-        "lastError": "Error: refresh built successfully and created local commit `09d998f`, but GitHub push failed due to an invalid/expired username or token. Exit code 1.",
-        "schedule": "33 14,19,23 * * 1-5",
-        "category": "Delivery"
-      },
-      {
-        "id": "4530a7d8",
-        "name": "Twice-Daily Consolidated Operations Digest",
-        "enabled": true,
-        "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-11-19T23:00:00.018Z",
-        "lastError": "⚡ **Operations Health — Nov 18, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 42/49 latest runs healthy · 7 actionable failures\n**Attention:**\n• **Bookings Pacing Refresh:** Built and committed locally; GitHub push rejected invalid username/token.\n• **Daily Full Backup Sweep:** Commit succeeded; GitHub authentication rejected the push.\n• **Nightly Git Backup:** GitHub push failed with invalid username/token (exit 128).\n• **Ops Command Center Morning Refresh:** GitHub publication failed authentication; Zendesk also returned non-critical 404.\n• **Ops Command Center — Daily Snapshot:** Snapshot built; GitHub authentication failed. Zendesk returned non-critical 404.\n• **Intel Deck Builder:** Deck built locally; GitHub push, CLI, and SSH deployment paths failed authentication/unavailability.\n• **Intel Deck Auto-Update:** Updated 2,763-row deck built; deployment push failed GitHub authentication.\n\n**Key takeaways:**\n• Prospecting analyzed 8 calls from 24 contacts; one meeting set and four buying signals.\n• Onboarding analyzed 8 calls: 4 medium/4 low risk, no alert-worthy cases.\n• Prospecting pipeline health reported **HEALTHY**.\n• MSP intelligence produced 11 items with no errors; highlighted ConnectWise extension risk and Kaseya’s agentic platform expansion.\n• No fresh Kaia trace was present.\n\n**Since last digest:** Three new publication failures appeared: Daily Snapshot and both Intel Deck jobs. The prior four GitHub-authentication failures continue. Per-job run retrieval was attempted but blocked by automation scope; causes above are the health script’s latest captured run summaries.",
-        "schedule": "0 9,17 * * *",
-        "category": "System"
-      },
-      {
-        "id": "782903ab",
-        "name": "Onboarding Digest Cleanup Run 2",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-19T15:23:00.016Z",
-        "lastError": "Exit code: 0\n\nFinal counts:\n- Calls processed: 4\n- Clients: 4\n- Logged to Notion: 4\n- Analysis errors: 0\n- Risk: 0 Critical, 0 High, 1 Medium, 3 Low\n- Average score: 79/100\n- Deferred to cleanup cron: 8 calls",
-        "schedule": "23 9 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "12f0d64a",
-        "name": "Ops Command Center — Daily Snapshot",
-        "enabled": true,
-        "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-11-19T18:07:00.014Z",
-        "lastError": "FATAL — ops snapshot built successfully, but GitHub push failed (exit code 1):\n\n- **Failed:** Authentication for `https://github.com/erice320/revay.git/` — invalid username/token.\n- **Non-critical section error:** Zendesk customer health returned HTTP 404 (“help desk … no longer available”).\n- All other sections completed successfully.",
-        "schedule": "7 12 * * 1-5",
         "category": "Delivery"
       },
       {
@@ -526,6 +440,26 @@
         "category": "System"
       },
       {
+        "id": "6af65023",
+        "name": "Onboarding Brief Coverage Guard",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-20T14:35:00.015Z",
+        "lastError": null,
+        "schedule": "35 8,13,18,21 * * 1-5",
+        "category": "System"
+      },
+      {
+        "id": "694a91b3",
+        "name": "Bookings Pacing Refresh",
+        "enabled": true,
+        "status": "false_green_diagnostic_failure",
+        "lastRunAt": "2026-11-20T14:35:08.071Z",
+        "lastError": "Error: dashboard refreshed locally and commit `425d6c6` was created, but GitHub push failed due to invalid/expired authentication token. Command exited with code 1.",
+        "schedule": "33 14,19,23 * * 1-5",
+        "category": "Delivery"
+      },
+      {
         "id": "6216fa3b",
         "name": "Prospecting Pipeline Health Check",
         "enabled": true,
@@ -539,9 +473,9 @@
         "id": "81402d2e",
         "name": "Intel Deck Builder",
         "enabled": true,
-        "status": "false_green_diagnostic_failure",
+        "status": "ok",
         "lastRunAt": "2026-11-19T19:42:00.015Z",
-        "lastError": "Intelligence deck rebuild failed during deployment.\n\n- Deck generated locally: `reports/revio-intelligence-deck.html`\n- GitHub push failed: `Invalid username or token`\n- Also checked GitHub CLI and SSH; CLI is unavailable and SSH authentication failed.\n- Existing live URL (not updated): <https://erice320.github.io/revay/revio-intelligence-deck.html>",
+        "lastError": "Intel deck rebuilt locally, but deployment failed.\n\n- Generated: `reports/revio-intelligence-deck.html`\n- Deploy error: GitHub rejected the configured credentials (`Invalid username or token`)\n- Also checked for GitHub CLI recovery, but `gh` is unavailable.\n- Live URL was **not updated**.",
         "schedule": "42 13 * * 1-5",
         "category": "Intelligence"
       },
@@ -561,7 +495,7 @@
         "enabled": true,
         "status": "false_green_diagnostic_failure",
         "lastRunAt": "2026-11-19T20:07:00.015Z",
-        "lastError": "ERROR:   ...2000 rows\n  → 2176 rows\n  Total: 2763 rows\n  Tier 1: 602 · Win: 361 · Loss: 174\n  Top feature: Enhanced Customer Portal (402)\n  Top competitor: QuickBooks (409)\n  ✅ Deck written: /tmp/revay/revio-intelligence-deck.html (18346 bytes)\n  ❌ Deploy failed: Command failed: cd /tmp/revay && git add revio-intelligence-deck.html && git commit -m \"Intel deck auto-update November 18, 2026\" && git push\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay.git/'",
+        "lastError": "ERROR:   Total: 2771 rows\n  Tier 1: 602 · Win: 361 · Loss: 174\n  Top feature: Enhanced Customer Portal (402)\n  Top competitor: QuickBooks (409)\n  ✅ Deck written: /tmp/revay/revio-intelligence-deck.html (18346 bytes)\n  ❌ Deploy failed: Command failed: cd /tmp/revay && git add revio-intelligence-deck.html && git commit -m \"Intel deck auto-update November 19, 2026\" && git push\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay.git/'\n\n(Command exited with code 1)",
         "schedule": "7 14 * * 1-5",
         "category": "Intelligence"
       },
@@ -584,6 +518,16 @@
         "lastError": null,
         "schedule": "38 15 * * 1-5",
         "category": "Intelligence"
+      },
+      {
+        "id": "4530a7d8",
+        "name": "Twice-Daily Consolidated Operations Digest",
+        "enabled": true,
+        "status": "false_green_diagnostic_failure",
+        "lastRunAt": "2026-11-20T15:00:00.016Z",
+        "lastError": "⚡ **Operations Health — Nov 19, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 43/49 latest runs healthy · 6 actionable failures\n**Attention:**\n• **Bookings Pacing Refresh:** Local commit `2988510` succeeded; GitHub push failed—invalid username/token (exit 1).\n• **Daily Full 💿 Backup Sweep:** Commit `b3c36ce8` succeeded; push failed—invalid username/token.\n• **Nightly Git Backup:** Commit `e058335d` succeeded; push failed authentication (exit 128); remote verification and heartbeat updates were not performed.\n• **Ops Command Center Morning Refresh:** Snapshot built; GitHub authentication was rejected. Zendesk also returned a non-critical 404.\n• **Intel Deck Builder:** Deck generated locally; GitHub deployment failed authentication, and `gh` was unavailable.\n• **Intel Deck Auto-Update:** 2,771-row deck built; deployment push failed—invalid username/token.\n\n**Key takeaways:**\n• Prospecting analyzed 8 calls from 26 contact calls; 0 meetings set and one renewal-timing buying signal.\n• Two onboarding cleanup runs processed and logged 8 calls with 0 analysis errors: 6 Medium risk, 2 Low; 9 remain deferred.\n• Latest MSP brief contained 11 items, highlighting ScreenConnect extension risk, Kaseya’s agentic platform expansion, and AI-governance barriers.\n• Fleet scan found no scheduler-status errors, delivery failures, overdue jobs, gateway restarts, or run-history lookup failures.\n• No fresh Kaia pipeline trace was present.\n\n**Since last digest:** Ops Command Center Daily Snapshot recovered. No new problems; the other six GitHub-authentication-related failures continue. Direct per-job run retrieval remained automation-scope restricted; causes are from the live health script’s latest captured summaries.",
+        "schedule": "0 9,17 * * *",
+        "category": "System"
       },
       {
         "id": "14e6f507",
@@ -641,7 +585,7 @@
         "enabled": true,
         "status": "false_green_diagnostic_failure",
         "lastRunAt": "2026-11-20T03:30:00.016Z",
-        "lastError": "FULL_BACKUP_SWEEP_FAILED — git commit `b3c36ce8` succeeded, but push failed: `remote: Invalid username or token. Password authentication is not supported for Git operations. fatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/'`",
+        "lastError": "FULL_BACKUP_SWEEP_FAILED — git push failed (exit 128): remote: Invalid username or token. Password authentication is not supported for Git operations. fatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/' Commit b6abede0 succeeded locally; Notion sync was not run per required stop condition.",
         "schedule": "30 21 * * *",
         "category": "System"
       },
@@ -681,7 +625,7 @@
         "enabled": true,
         "status": "false_green_diagnostic_failure",
         "lastRunAt": "2026-11-20T10:09:00.017Z",
-        "lastError": "ERROR: git push failed.\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/'\n=== GIT PUSH EXIT CODE: 128 ===\n\nPreflight passed and commit e058335d was created. Remote verification and heartbeat-state updates were not performed.",
+        "lastError": "ERROR:\n[master 7c95f68e] Nightly workspace backup: 2026-11-20\n 45 files changed, 1136 insertions(+), 114 deletions(-)\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/'\n__BACKUP_RESULT__=ERROR stage=git_push rc=128",
         "schedule": "9 4 * * *",
         "category": "Infrastructure"
       },
@@ -751,7 +695,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-11-20T12:18:00.015Z",
-        "lastError": "The full 11-item brief was emailed. ConnectWise is probing malicious third-party ScreenConnect extensions capable of remote command execution: <https://www.channeldive.com/news/connectwise-msp-platform-cyberattack-screenconnect/874526/>. Kaseya expanded its agentic platform with first-party MCP servers, pre-built skills, and a unified cyber-resilience portal: <https://www.kaseya.com/press-release/kaseya-expands-its-agentic-it-management-platform-with-first-party-mcp-servers-pre-built-skills-and-a-unified-cyber-resilience-portal/>. Microsoft reports 51% of MSPs identify governance and compliance as the leading barrier to customers scaling AI: <https://techcommunity.microsoft.com/blog/partnernews/whats-new-for-msps-november-2026/4565944>.",
+        "lastError": "18 new intelligence items surfaced. ConnectWise ScreenConnect faces an actively exploited critical flaw targeting MSP technician workstations: <https://www.cybersecuritydive.com/news/critical-flaw-screenconnect-malicious-files-msp/874900/>. Kaseya expanded its agentic platform with first-party MCP servers, pre-built skills, and a unified cyber-resilience portal: <https://www.prnewswire.com/news-releases/kaseya-expands-its-agentic-it-management-platform-with-first-party-mcp-servers-pre-built-skills-and-a-unified-cyber-resilience-portal-302941700.html>. Meanwhile, 61% of surveyed Top 250 MSSPs reported 11%–50% annual revenue growth: <https://www.msspalert.com/news/mssp-alert-unveils-2026-top-250-mssps-new-prestige-lists-and-industry-research-report>.",
         "schedule": "18 6 * * 1,3,5",
         "category": "Intelligence"
       },
@@ -764,6 +708,16 @@
         "lastError": null,
         "schedule": "30 6 * * 1-5",
         "category": "Intelligence"
+      },
+      {
+        "id": "b31d4f94",
+        "name": "Ops Command Center Morning Refresh",
+        "enabled": true,
+        "status": "false_green_diagnostic_failure",
+        "lastRunAt": "2026-11-20T12:45:00.016Z",
+        "lastError": "FAILED: Ops snapshot built successfully, but GitHub push failed (exit 1) due to an invalid/expired username or token. Also observed a non-critical Zendesk 404 because the configured help desk is unavailable. Scheduler can retry after GitHub credentials are fixed.",
+        "schedule": "45 6 * * 1-5",
+        "category": "Delivery"
       },
       {
         "id": "cc85c724",
@@ -786,6 +740,26 @@
         "category": "Intelligence"
       },
       {
+        "id": "848dd2e6",
+        "name": "Kaia Pipeline Health Check",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-20T13:30:00.018Z",
+        "lastError": null,
+        "schedule": "30 7 * * 1-5",
+        "category": "Intelligence"
+      },
+      {
+        "id": "9e362558",
+        "name": "Daily Cron Health Check",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-20T14:12:00.016Z",
+        "lastError": null,
+        "schedule": "12 8 * * 1-5",
+        "category": "System"
+      },
+      {
         "id": "2b945e1f",
         "name": "Weekly New Rev.io Onboarding Snapshot Ledger + Deck",
         "enabled": true,
@@ -806,6 +780,16 @@
         "category": "Intelligence"
       },
       {
+        "id": "afc5c57b",
+        "name": "Onboarding Digest Cleanup Run",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-20T14:27:00.018Z",
+        "lastError": "Exit code: 0\n\nFinal counts:\n- Processed: 4 calls\n- Analysis errors: 0\n- Clients: 4\n- Logged to Notion: 4\n- Risk: 0 Critical, 0 High, 3 Medium, 1 Low\n- Remaining for cleanup cron: 16",
+        "schedule": "27 8 * * 1-5",
+        "category": "Intelligence"
+      },
+      {
         "id": "f1a646d6",
         "name": "Cloudflare Weekly Seat Cleanup",
         "enabled": true,
@@ -814,6 +798,16 @@
         "lastError": null,
         "schedule": "40 8 * * 1",
         "category": "System"
+      },
+      {
+        "id": "782903ab",
+        "name": "Onboarding Digest Cleanup Run 2",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-20T15:23:00.036Z",
+        "lastError": "Exit code: 0\n\nFinal counts:\n- Calls analyzed/processed: 4\n- Clients: 4\n- Logged to Notion: 4\n- Analysis errors: 0\n- Risk: 0 Critical, 0 High, 3 Medium, 1 Low\n- Average score: 75/100\n- Remaining deferred calls: 9",
+        "schedule": "23 9 * * 1-5",
+        "category": "Intelligence"
       },
       {
         "id": "975c5f7e",
@@ -849,13 +843,13 @@
     "byCategory": {
       "Delivery": [
         {
-          "id": "b31d4f94",
-          "name": "Ops Command Center Morning Refresh",
+          "id": "12f0d64a",
+          "name": "Ops Command Center — Daily Snapshot",
           "enabled": true,
-          "status": "false_green_diagnostic_failure",
-          "lastRunAt": "2026-11-19T12:45:00.017Z",
-          "lastError": "Ops snapshot build failed during GitHub push (exit code 1): authentication token/username was rejected.\n\nAll snapshot sections built successfully. One non-critical Zendesk lookup returned 404 because `rev-io.zendesk.com` is unavailable. The scheduler can retry after GitHub credentials are repaired.",
-          "schedule": "45 6 * * 1-5",
+          "status": "ok",
+          "lastRunAt": "2026-11-19T18:07:00.014Z",
+          "lastError": null,
+          "schedule": "7 12 * * 1-5",
           "category": "Delivery"
         },
         {
@@ -863,7 +857,7 @@
           "name": "Billing Auto-Brief Generator",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-11-20T03:20:00.015Z",
+          "lastRunAt": "2026-11-20T14:20:00.015Z",
           "lastError": null,
           "schedule": "20 8,13,18,21 * * 1-5",
           "category": "Delivery"
@@ -873,19 +867,9 @@
           "name": "Bookings Pacing Refresh",
           "enabled": true,
           "status": "false_green_diagnostic_failure",
-          "lastRunAt": "2026-11-19T23:35:08.005Z",
-          "lastError": "Error: refresh built successfully and created local commit `09d998f`, but GitHub push failed due to an invalid/expired username or token. Exit code 1.",
+          "lastRunAt": "2026-11-20T14:35:08.071Z",
+          "lastError": "Error: dashboard refreshed locally and commit `425d6c6` was created, but GitHub push failed due to invalid/expired authentication token. Command exited with code 1.",
           "schedule": "33 14,19,23 * * 1-5",
-          "category": "Delivery"
-        },
-        {
-          "id": "12f0d64a",
-          "name": "Ops Command Center — Daily Snapshot",
-          "enabled": true,
-          "status": "false_green_diagnostic_failure",
-          "lastRunAt": "2026-11-19T18:07:00.014Z",
-          "lastError": "FATAL — ops snapshot built successfully, but GitHub push failed (exit code 1):\n\n- **Failed:** Authentication for `https://github.com/erice320/revay.git/` — invalid username/token.\n- **Non-critical section error:** Zendesk customer health returned HTTP 404 (“help desk … no longer available”).\n- All other sections completed successfully.",
-          "schedule": "7 12 * * 1-5",
           "category": "Delivery"
         },
         {
@@ -939,6 +923,16 @@
           "category": "Delivery"
         },
         {
+          "id": "b31d4f94",
+          "name": "Ops Command Center Morning Refresh",
+          "enabled": true,
+          "status": "false_green_diagnostic_failure",
+          "lastRunAt": "2026-11-20T12:45:00.016Z",
+          "lastError": "FAILED: Ops snapshot built successfully, but GitHub push failed (exit 1) due to an invalid/expired username or token. Also observed a non-critical Zendesk 404 because the configured help desk is unavailable. Scheduler can retry after GitHub credentials are fixed.",
+          "schedule": "45 6 * * 1-5",
+          "category": "Delivery"
+        },
+        {
           "id": "cc85c724",
           "name": "Monday Week Ahead Brief",
           "enabled": true,
@@ -951,11 +945,21 @@
       ],
       "System": [
         {
+          "id": "e31a2ae9",
+          "name": "New Rev.io minimum transition response watcher",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-20T18:00:08.563Z",
+          "lastError": null,
+          "schedule": "*/30 8-20 * * 1-5",
+          "category": "System"
+        },
+        {
           "id": "8bd20462",
           "name": "Local Infrastructure Watchdog — hourly fallback",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-11-20T11:55:09.782Z",
+          "lastRunAt": "2026-11-20T17:55:09.875Z",
           "lastError": null,
           "schedule": "every",
           "category": "System"
@@ -965,59 +969,19 @@
           "name": "heartbeat-main",
           "enabled": true,
           "status": "skipped",
-          "lastRunAt": "2026-11-20T11:55:46.368Z",
-          "lastError": "heartbeat skipped: quiet-hours",
+          "lastRunAt": "2026-11-20T17:55:46.455Z",
+          "lastError": "heartbeat skipped: empty-heartbeat-file",
           "schedule": "every",
-          "category": "System"
-        },
-        {
-          "id": "e31a2ae9",
-          "name": "New Rev.io minimum transition response watcher",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-20T02:30:08.562Z",
-          "lastError": null,
-          "schedule": "*/30 8-20 * * 1-5",
-          "category": "System"
-        },
-        {
-          "id": "9e362558",
-          "name": "Daily Cron Health Check",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-19T14:12:00.017Z",
-          "lastError": null,
-          "schedule": "12 8 * * 1-5",
           "category": "System"
         },
         {
           "id": "46e77f37",
           "name": "New Rev.io Auto-Brief Generator",
           "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-20T03:15:00.017Z",
-          "lastError": "NO_REPLY",
-          "schedule": "15 8,13,18,21 * * 1-5",
-          "category": "System"
-        },
-        {
-          "id": "6af65023",
-          "name": "Onboarding Brief Coverage Guard",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-20T03:35:00.015Z",
-          "lastError": null,
-          "schedule": "35 8,13,18,21 * * 1-5",
-          "category": "System"
-        },
-        {
-          "id": "4530a7d8",
-          "name": "Twice-Daily Consolidated Operations Digest",
-          "enabled": true,
           "status": "false_green_diagnostic_failure",
-          "lastRunAt": "2026-11-19T23:00:00.018Z",
-          "lastError": "⚡ **Operations Health — Nov 18, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 42/49 latest runs healthy · 7 actionable failures\n**Attention:**\n• **Bookings Pacing Refresh:** Built and committed locally; GitHub push rejected invalid username/token.\n• **Daily Full Backup Sweep:** Commit succeeded; GitHub authentication rejected the push.\n• **Nightly Git Backup:** GitHub push failed with invalid username/token (exit 128).\n• **Ops Command Center Morning Refresh:** GitHub publication failed authentication; Zendesk also returned non-critical 404.\n• **Ops Command Center — Daily Snapshot:** Snapshot built; GitHub authentication failed. Zendesk returned non-critical 404.\n• **Intel Deck Builder:** Deck built locally; GitHub push, CLI, and SSH deployment paths failed authentication/unavailability.\n• **Intel Deck Auto-Update:** Updated 2,763-row deck built; deployment push failed GitHub authentication.\n\n**Key takeaways:**\n• Prospecting analyzed 8 calls from 24 contacts; one meeting set and four buying signals.\n• Onboarding analyzed 8 calls: 4 medium/4 low risk, no alert-worthy cases.\n• Prospecting pipeline health reported **HEALTHY**.\n• MSP intelligence produced 11 items with no errors; highlighted ConnectWise extension risk and Kaseya’s agentic platform expansion.\n• No fresh Kaia trace was present.\n\n**Since last digest:** Three new publication failures appeared: Daily Snapshot and both Intel Deck jobs. The prior four GitHub-authentication failures continue. Per-job run retrieval was attempted but blocked by automation scope; causes above are the health script’s latest captured run summaries.",
-          "schedule": "0 9,17 * * *",
+          "lastRunAt": "2026-11-20T14:15:00.016Z",
+          "lastError": "FAILURE — script exited with code 1; no final success summary.\n\nNew New Rev.io deals: **1**\n\n**Slice Wireless Solutions**\n- HTML brief: Generated successfully\n- Notion: Existing record reused successfully\n- HTML-to-Notion link: Successful\n- GitHub delivery: **Failed** — invalid username/token; authentication rejected\n- Discord delivery: Suppressed as requested\n\nAlso reported: 4 qualifying wins; 2 monthly/minimum-increase deals excluded.",
+          "schedule": "15 8,13,18,21 * * 1-5",
           "category": "System"
         },
         {
@@ -1031,6 +995,16 @@
           "category": "System"
         },
         {
+          "id": "6af65023",
+          "name": "Onboarding Brief Coverage Guard",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-20T14:35:00.015Z",
+          "lastError": null,
+          "schedule": "35 8,13,18,21 * * 1-5",
+          "category": "System"
+        },
+        {
           "id": "6216fa3b",
           "name": "Prospecting Pipeline Health Check",
           "enabled": true,
@@ -1038,6 +1012,16 @@
           "lastRunAt": "2026-11-19T19:36:00.016Z",
           "lastError": "HEALTHY",
           "schedule": "36 13 * * 1-5",
+          "category": "System"
+        },
+        {
+          "id": "4530a7d8",
+          "name": "Twice-Daily Consolidated Operations Digest",
+          "enabled": true,
+          "status": "false_green_diagnostic_failure",
+          "lastRunAt": "2026-11-20T15:00:00.016Z",
+          "lastError": "⚡ **Operations Health — Nov 19, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 43/49 latest runs healthy · 6 actionable failures\n**Attention:**\n• **Bookings Pacing Refresh:** Local commit `2988510` succeeded; GitHub push failed—invalid username/token (exit 1).\n• **Daily Full 💿 Backup Sweep:** Commit `b3c36ce8` succeeded; push failed—invalid username/token.\n• **Nightly Git Backup:** Commit `e058335d` succeeded; push failed authentication (exit 128); remote verification and heartbeat updates were not performed.\n• **Ops Command Center Morning Refresh:** Snapshot built; GitHub authentication was rejected. Zendesk also returned a non-critical 404.\n• **Intel Deck Builder:** Deck generated locally; GitHub deployment failed authentication, and `gh` was unavailable.\n• **Intel Deck Auto-Update:** 2,771-row deck built; deployment push failed—invalid username/token.\n\n**Key takeaways:**\n• Prospecting analyzed 8 calls from 26 contact calls; 0 meetings set and one renewal-timing buying signal.\n• Two onboarding cleanup runs processed and logged 8 calls with 0 analysis errors: 6 Medium risk, 2 Low; 9 remain deferred.\n• Latest MSP brief contained 11 items, highlighting ScreenConnect extension risk, Kaseya’s agentic platform expansion, and AI-governance barriers.\n• Fleet scan found no scheduler-status errors, delivery failures, overdue jobs, gateway restarts, or run-history lookup failures.\n• No fresh Kaia pipeline trace was present.\n\n**Since last digest:** Ops Command Center Daily Snapshot recovered. No new problems; the other six GitHub-authentication-related failures continue. Direct per-job run retrieval remained automation-scope restricted; causes are from the live health script’s latest captured summaries.",
+          "schedule": "0 9,17 * * *",
           "category": "System"
         },
         {
@@ -1076,7 +1060,7 @@
           "enabled": true,
           "status": "false_green_diagnostic_failure",
           "lastRunAt": "2026-11-20T03:30:00.016Z",
-          "lastError": "FULL_BACKUP_SWEEP_FAILED — git commit `b3c36ce8` succeeded, but push failed: `remote: Invalid username or token. Password authentication is not supported for Git operations. fatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/'`",
+          "lastError": "FULL_BACKUP_SWEEP_FAILED — git push failed (exit 128): remote: Invalid username or token. Password authentication is not supported for Git operations. fatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/' Commit b6abede0 succeeded locally; Notion sync was not run per required stop condition.",
           "schedule": "30 21 * * *",
           "category": "System"
         },
@@ -1118,6 +1102,16 @@
           "lastRunAt": "2026-11-20T11:30:00.017Z",
           "lastError": null,
           "schedule": "30 5 * * *",
+          "category": "System"
+        },
+        {
+          "id": "9e362558",
+          "name": "Daily Cron Health Check",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-20T14:12:00.016Z",
+          "lastError": null,
+          "schedule": "12 8 * * 1-5",
           "category": "System"
         },
         {
@@ -1177,7 +1171,7 @@
           "name": "Outreach Token Auto-Refresh",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-11-20T11:55:30.830Z",
+          "lastRunAt": "2026-11-20T17:55:30.916Z",
           "lastError": null,
           "schedule": "every",
           "category": "Infrastructure"
@@ -1198,7 +1192,7 @@
           "enabled": true,
           "status": "false_green_diagnostic_failure",
           "lastRunAt": "2026-11-20T10:09:00.017Z",
-          "lastError": "ERROR: git push failed.\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/'\n=== GIT PUSH EXIT CODE: 128 ===\n\nPreflight passed and commit e058335d was created. Remote verification and heartbeat-state updates were not performed.",
+          "lastError": "ERROR:\n[master 7c95f68e] Nightly workspace backup: 2026-11-20\n 45 files changed, 1136 insertions(+), 114 deletions(-)\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay-workspace.git/'\n__BACKUP_RESULT__=ERROR stage=git_push rc=128",
           "schedule": "9 4 * * *",
           "category": "Infrastructure"
         },
@@ -1215,36 +1209,6 @@
       ],
       "Intelligence": [
         {
-          "id": "848dd2e6",
-          "name": "Kaia Pipeline Health Check",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-19T13:30:00.018Z",
-          "lastError": null,
-          "schedule": "30 7 * * 1-5",
-          "category": "Intelligence"
-        },
-        {
-          "id": "afc5c57b",
-          "name": "Onboarding Digest Cleanup Run",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-19T14:27:00.017Z",
-          "lastError": "Raw exit code: 0\n\nFinal counts:\n- Processed: 4 calls\n- Analysis errors: 0\n- Clients: 4\n- Logged to Notion: 4\n- Risk: 0 Critical, 0 High, 3 Medium, 1 Low\n- Remaining for cleanup cron: 15 calls\n- Average score: 80/100",
-          "schedule": "27 8 * * 1-5",
-          "category": "Intelligence"
-        },
-        {
-          "id": "782903ab",
-          "name": "Onboarding Digest Cleanup Run 2",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-19T15:23:00.016Z",
-          "lastError": "Exit code: 0\n\nFinal counts:\n- Calls processed: 4\n- Clients: 4\n- Logged to Notion: 4\n- Analysis errors: 0\n- Risk: 0 Critical, 0 High, 1 Medium, 3 Low\n- Average score: 79/100\n- Deferred to cleanup cron: 8 calls",
-          "schedule": "23 9 * * 1-5",
-          "category": "Intelligence"
-        },
-        {
           "id": "4e1d90e2",
           "name": "Prospecting Call Analyzer",
           "enabled": true,
@@ -1258,9 +1222,9 @@
           "id": "81402d2e",
           "name": "Intel Deck Builder",
           "enabled": true,
-          "status": "false_green_diagnostic_failure",
+          "status": "ok",
           "lastRunAt": "2026-11-19T19:42:00.015Z",
-          "lastError": "Intelligence deck rebuild failed during deployment.\n\n- Deck generated locally: `reports/revio-intelligence-deck.html`\n- GitHub push failed: `Invalid username or token`\n- Also checked GitHub CLI and SSH; CLI is unavailable and SSH authentication failed.\n- Existing live URL (not updated): <https://erice320.github.io/revay/revio-intelligence-deck.html>",
+          "lastError": "Intel deck rebuilt locally, but deployment failed.\n\n- Generated: `reports/revio-intelligence-deck.html`\n- Deploy error: GitHub rejected the configured credentials (`Invalid username or token`)\n- Also checked for GitHub CLI recovery, but `gh` is unavailable.\n- Live URL was **not updated**.",
           "schedule": "42 13 * * 1-5",
           "category": "Intelligence"
         },
@@ -1270,7 +1234,7 @@
           "enabled": true,
           "status": "false_green_diagnostic_failure",
           "lastRunAt": "2026-11-19T20:07:00.015Z",
-          "lastError": "ERROR:   ...2000 rows\n  → 2176 rows\n  Total: 2763 rows\n  Tier 1: 602 · Win: 361 · Loss: 174\n  Top feature: Enhanced Customer Portal (402)\n  Top competitor: QuickBooks (409)\n  ✅ Deck written: /tmp/revay/revio-intelligence-deck.html (18346 bytes)\n  ❌ Deploy failed: Command failed: cd /tmp/revay && git add revio-intelligence-deck.html && git commit -m \"Intel deck auto-update November 18, 2026\" && git push\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay.git/'",
+          "lastError": "ERROR:   Total: 2771 rows\n  Tier 1: 602 · Win: 361 · Loss: 174\n  Top feature: Enhanced Customer Portal (402)\n  Top competitor: QuickBooks (409)\n  ✅ Deck written: /tmp/revay/revio-intelligence-deck.html (18346 bytes)\n  ❌ Deploy failed: Command failed: cd /tmp/revay && git add revio-intelligence-deck.html && git commit -m \"Intel deck auto-update November 19, 2026\" && git push\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/erice320/revay.git/'\n\n(Command exited with code 1)",
           "schedule": "7 14 * * 1-5",
           "category": "Intelligence"
         },
@@ -1310,7 +1274,7 @@
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-11-20T12:18:00.015Z",
-          "lastError": "The full 11-item brief was emailed. ConnectWise is probing malicious third-party ScreenConnect extensions capable of remote command execution: <https://www.channeldive.com/news/connectwise-msp-platform-cyberattack-screenconnect/874526/>. Kaseya expanded its agentic platform with first-party MCP servers, pre-built skills, and a unified cyber-resilience portal: <https://www.kaseya.com/press-release/kaseya-expands-its-agentic-it-management-platform-with-first-party-mcp-servers-pre-built-skills-and-a-unified-cyber-resilience-portal/>. Microsoft reports 51% of MSPs identify governance and compliance as the leading barrier to customers scaling AI: <https://techcommunity.microsoft.com/blog/partnernews/whats-new-for-msps-november-2026/4565944>.",
+          "lastError": "18 new intelligence items surfaced. ConnectWise ScreenConnect faces an actively exploited critical flaw targeting MSP technician workstations: <https://www.cybersecuritydive.com/news/critical-flaw-screenconnect-malicious-files-msp/874900/>. Kaseya expanded its agentic platform with first-party MCP servers, pre-built skills, and a unified cyber-resilience portal: <https://www.prnewswire.com/news-releases/kaseya-expands-its-agentic-it-management-platform-with-first-party-mcp-servers-pre-built-skills-and-a-unified-cyber-resilience-portal-302941700.html>. Meanwhile, 61% of surveyed Top 250 MSSPs reported 11%–50% annual revenue growth: <https://www.msspalert.com/news/mssp-alert-unveils-2026-top-250-mssps-new-prestige-lists-and-industry-research-report>.",
           "schedule": "18 6 * * 1,3,5",
           "category": "Intelligence"
         },
@@ -1335,6 +1299,16 @@
           "category": "Intelligence"
         },
         {
+          "id": "848dd2e6",
+          "name": "Kaia Pipeline Health Check",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-20T13:30:00.018Z",
+          "lastError": null,
+          "schedule": "30 7 * * 1-5",
+          "category": "Intelligence"
+        },
+        {
           "id": "35fc94ad",
           "name": "Weekly Roadmap Digest",
           "enabled": true,
@@ -1343,10 +1317,30 @@
           "lastError": null,
           "schedule": "25 8 * * 1",
           "category": "Intelligence"
+        },
+        {
+          "id": "afc5c57b",
+          "name": "Onboarding Digest Cleanup Run",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-20T14:27:00.018Z",
+          "lastError": "Exit code: 0\n\nFinal counts:\n- Processed: 4 calls\n- Analysis errors: 0\n- Clients: 4\n- Logged to Notion: 4\n- Risk: 0 Critical, 0 High, 3 Medium, 1 Low\n- Remaining for cleanup cron: 16",
+          "schedule": "27 8 * * 1-5",
+          "category": "Intelligence"
+        },
+        {
+          "id": "782903ab",
+          "name": "Onboarding Digest Cleanup Run 2",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-20T15:23:00.036Z",
+          "lastError": "Exit code: 0\n\nFinal counts:\n- Calls analyzed/processed: 4\n- Clients: 4\n- Logged to Notion: 4\n- Analysis errors: 0\n- Risk: 0 Critical, 0 High, 3 Medium, 1 Low\n- Average score: 75/100\n- Remaining deferred calls: 9",
+          "schedule": "23 9 * * 1-5",
+          "category": "Intelligence"
         }
       ]
     },
-    "lastUpdated": "2026-11-20T12:45:19.917Z"
+    "lastUpdated": "2026-11-20T18:07:18.387Z"
   },
   "competitorIntel": {
     "topCompetitors": [
@@ -1441,17 +1435,17 @@
     "lossCount": 174,
     "totalTier1": 602,
     "generatedAt": "2026-11-19T20:07:19.503Z",
-    "lastUpdated": "2026-11-20T12:45:19.918Z"
+    "lastUpdated": "2026-11-20T18:07:18.388Z"
   },
   "dealBriefs": {
     "lastPsaRun": "2026-11-19T19:15:08.970Z",
     "lastPsaCount": 1,
-    "lastBillingRun": "2026-11-20T03:20:12.203Z",
+    "lastBillingRun": "2026-11-20T14:20:07.594Z",
     "totalPsaProcessed": 111,
     "totalBillingProcessed": 15,
     "psaStatus": "ok",
-    "billingStatus": "ok",
-    "lastUpdated": "2026-11-20T12:45:19.918Z"
+    "billingStatus": "fresh",
+    "lastUpdated": "2026-11-20T18:07:18.388Z"
   },
   "marketProduct": {
     "mspLastRun": "2026-11-20T12:18:59.478Z",
@@ -1463,6 +1457,6 @@
       "topCompetitor": "QuickBooks",
       "topCompetitorCount": 409
     },
-    "lastUpdated": "2026-11-20T12:45:19.918Z"
+    "lastUpdated": "2026-11-20T18:07:18.388Z"
   }
 }
