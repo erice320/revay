@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-11-23T12:45:09.100Z",
+    "generated": "2026-11-23T18:07:11.367Z",
     "status": "LIVE",
     "builder": "ops-snapshot-builder.js v2"
   },
@@ -47,14 +47,6 @@
         "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQFRAAgI30j0t6KAAEYAAAAAewcWc8jm0EuQT5bpSByr2gcAQxv57qAIQE%2BVXKSJ9pLdWgAAAAABDQAAQxv57qAIQE%2BVXKSJ9pLdWgAHuTrkzwAAEA%3D%3D&exvsurl=1&path=/calendar/item"
       },
       {
-        "subject": "Discovery Call Jaylin",
-        "startTime": "2026-11-23T18:00:00.0000000",
-        "endTime": "2026-11-23T19:00:00.0000000",
-        "attendeeCount": 0,
-        "attendees": [],
-        "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQBGAAAAAAB7BxZzyObQS5BPlulIHKvaBwBDG%2FnuoAhAT5VcpIn2kt1aAAAAAAENAABDG%2FnuoAhAT5VcpIn2kt1aAA5AMCFIAAA%3D&exvsurl=1&path=/calendar/item"
-      },
-      {
         "subject": "Canceled: Retention Analysis Meeting",
         "startTime": "2026-11-23T18:00:00.0000000",
         "endTime": "2026-11-23T19:00:00.0000000",
@@ -90,62 +82,69 @@
         "webLink": "https://outlook.office365.com/owa/?itemid=AAMkAGFiMzhmZDhiLWJiYmEtNGMxMy05MDhkLTYzNWQwN2E3NzhiOQFRAAgI3zh0PPXAAEYAAAAAewcWc8jm0EuQT5bpSByr2gcAQxv57qAIQE%2BVXKSJ9pLdWgAAAAABDQAAQxv57qAIQE%2BVXKSJ9pLdWgAHe%2FTNkgAAEA%3D%3D&exvsurl=1&path=/calendar/item"
       }
     ],
-    "meetingCount": 8,
+    "meetingCount": 7,
     "vipEmails": [],
-    "generatedAt": "2026-11-23T12:45:09.433Z",
-    "lastUpdated": "2026-11-23T12:45:09.433Z"
+    "generatedAt": "2026-11-23T18:07:11.919Z",
+    "lastUpdated": "2026-11-23T18:07:11.919Z"
   },
   "pipeline": {
-    "openPipelineMrr": 184280,
-    "openDeals": 78,
-    "weightedMrr": 82926,
-    "closingThisMonth": 78,
-    "closingThisMonthMrr": 184280,
-    "avgDealMrr": 2363,
-    "winRateMtd": 0.17647058823529413,
+    "openPipelineMrr": 180861,
+    "openDeals": 75,
+    "weightedMrr": 81387,
+    "closingThisMonth": 75,
+    "closingThisMonthMrr": 180861,
+    "avgDealMrr": 2411,
+    "winRateMtd": 0.1780821917808219,
     "stageBreakdown": [
       {
         "stage": "3 - Initial Product Demo",
-        "count": 27,
-        "mrr": 79360
+        "count": 25,
+        "mrr": 78666
       },
       {
         "stage": "2 - Discovery Completed",
-        "count": 28,
-        "mrr": 60723
+        "count": 26,
+        "mrr": 56723
       },
       {
         "stage": "1- Discovery Scheduled",
-        "count": 11,
-        "mrr": 23020
+        "count": 12,
+        "mrr": 24020
       },
       {
         "stage": "4 - Proposal Sent",
-        "count": 9,
-        "mrr": 19479
+        "count": 8,
+        "mrr": 18514
+      },
+      {
+        "stage": "5 - Product / Contract Validated",
+        "count": 2,
+        "mrr": 1788
       },
       {
         "stage": "6 - Verbal Commit",
         "count": 2,
         "mrr": 1150
-      },
-      {
-        "stage": "5 - Product / Contract Validated",
-        "count": 1,
-        "mrr": 548
       }
     ],
     "bookingsPacing": {
-      "actualMrr": 7315,
+      "actualMrr": 7680,
       "targetMrr": 75000,
       "pacePct": 10,
       "daysIntoMonth": 23,
       "daysRemaining": 7,
-      "requiredDailyRunRate": 9669,
-      "wonCount": 12,
-      "lastUpdated": "2026-11-23T12:45:10.521Z"
+      "requiredDailyRunRate": 9617,
+      "wonCount": 13,
+      "lastUpdated": "2026-11-23T18:07:13.087Z"
     },
     "recentWins": [
+      {
+        "id": "006PX00000iqQUvYAM",
+        "name": "AV Innovations-Monthly Min Increase",
+        "amount": 365,
+        "accountName": "AV Innovations",
+        "closeDate": "2026-11-23"
+      },
       {
         "id": "006PX00000imlMfYAI",
         "name": "Ideal Tech Solutions - Monthly Minimum Increase",
@@ -173,13 +172,6 @@
         "amount": 147,
         "accountName": "Delta Telephone & Cabling",
         "closeDate": "2026-11-19"
-      },
-      {
-        "id": "006PX00000iqpOTYAY",
-        "name": "Innovative IOT",
-        "amount": 100,
-        "accountName": "Innovative IOT",
-        "closeDate": "2026-11-18"
       }
     ],
     "monthlyTrends": [
@@ -226,11 +218,11 @@
         "winRate": null
       }
     ],
-    "lastUpdated": "2026-11-23T12:45:10.521Z"
+    "lastUpdated": "2026-11-23T18:07:13.087Z"
   },
   "callIntelligence": {
     "callsThisWeek": 100,
-    "callsYesterday": 0,
+    "callsYesterday": 100,
     "lastRunProcessed": 10,
     "flaggedFollowUps": 0,
     "topThemes": [
@@ -241,53 +233,53 @@
     ],
     "recentCalls": [
       {
-        "title": "Joseph Abarno - Svetlana Mccully",
-        "date": "2026-11-20",
-        "durationMin": 1,
-        "state": "ENDED"
-      },
-      {
-        "title": "Justin Lee - Chad Brownfield",
-        "date": "2026-11-20",
+        "title": "Joseph Abarno - Damion Martin",
+        "date": "2026-11-23",
         "durationMin": 0,
         "state": "ENDED"
       },
       {
-        "title": "Justin Lee - Chadd Smith",
-        "date": "2026-11-20",
+        "title": "Ingrid Beard - James Doneghy",
+        "date": "2026-11-23",
         "durationMin": 0,
+        "state": "ENDED"
+      },
+      {
+        "title": "Joseph Abarno - Val King",
+        "date": "2026-11-23",
+        "durationMin": 11,
         "state": "ENDED"
       }
     ],
-    "lastUpdated": "2026-11-23T12:45:11.089Z"
+    "lastUpdated": "2026-11-23T18:07:13.663Z"
   },
   "newBusiness": {
-    "newDealsOpenedMtd": 58,
+    "newDealsOpenedMtd": 57,
     "sequencesActive": 37,
-    "newEnrollmentsThisWeek": 9156,
+    "newEnrollmentsThisWeek": 9211,
     "repliesThisWeek": 242,
-    "meetingsBookedMtd": 74,
+    "meetingsBookedMtd": 76,
     "topSequences": [
       {
-        "name": "Telecom Sequence Q4'26",
-        "enrolled": 220,
-        "openRate": 0.433,
-        "replyRate": 0
-      },
-      {
-        "name": "CBR Sequence - Q4'26",
-        "enrolled": 124,
-        "openRate": 0.526,
-        "replyRate": 0.112
-      },
-      {
         "name": "MSP Sequence Q4'26",
-        "enrolled": 3760,
-        "openRate": 0.472,
+        "enrolled": 3815,
+        "openRate": 0.468,
         "replyRate": 0.001
+      },
+      {
+        "name": "TP --> New Rev.io Migration ",
+        "enrolled": 127,
+        "openRate": 0.404,
+        "replyRate": 0.059
+      },
+      {
+        "name": "Expiring Competitor Contract",
+        "enrolled": 29,
+        "openRate": 0.617,
+        "replyRate": 0.043
       }
     ],
-    "lastUpdated": "2026-11-23T12:45:11.643Z"
+    "lastUpdated": "2026-11-23T18:07:14.171Z"
   },
   "customerHealth": {
     "onboardingActive": 0,
@@ -301,7 +293,7 @@
     "communityNewPosts": 0,
     "communityUnanswered": 0,
     "atRiskAccounts": [],
-    "lastUpdated": "2026-11-23T12:45:18.581Z"
+    "lastUpdated": "2026-11-23T18:07:20.777Z"
   },
   "agentHealth": {
     "cronJobsTotal": 49,
@@ -314,53 +306,63 @@
     "lastOnboardingStatus": "unknown",
     "errorJobs": [
       {
-        "name": "Ops Command Center Morning Refresh",
-        "id": "b31d4f94",
-        "lastError": "FAILED: Ops snapshot built successfully, but GitHub push failed (exit 1) due to an invalid/expired username or token. Also observed a non-critical Zendesk 404 because the configured help desk is unavailable. Scheduler can retry after GitHub credentials are fixed.",
+        "name": "Ops Command Center — Daily Snapshot",
+        "id": "12f0d64a",
+        "lastError": "**FATAL — snapshot build failed during GitHub push.**\n\n- All snapshot sections built successfully.\n- Non-critical section error: Zendesk returned HTTP 404 (“help desk … no longer available”).\n- Final push failed: GitHub rejected the repository credentials (`Invalid username or token`).\n- Process exited with code 1.",
         "since": "2026-11-20"
       },
       {
         "name": "heartbeat-main",
         "id": "371b6292",
-        "lastError": "heartbeat skipped: quiet-hours",
+        "lastError": "heartbeat skipped: empty-heartbeat-file",
         "since": "2026-11-23"
       },
       {
         "name": "New Rev.io Auto-Brief Generator",
         "id": "46e77f37",
         "lastError": "FAILURE — script exited with code 1; no final success summary.\n\n**New Rev.io deals: 2**\n- **Nored Telcom:** HTML brief generated; Notion record reused/updated and linked successfully.\n- **Slice Wireless Solutions:** HTML brief generated; Notion record reused/updated and linked successfully.\n\n**GitHub delivery:** Failed for both briefs — invalid username/token; authentication failed pushing to `erice320/revay.git`.",
-        "since": "2026-11-21"
+        "since": "2026-11-23"
       },
       {
         "name": "Twice-Daily Consolidated Operations Digest",
         "id": "4530a7d8",
         "lastError": "⚡ **Operations Health — Nov 22, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 46/49 latest runs healthy · 3 actionable failures\n\n**Attention:**\n• **New Rev.io Auto-Brief Generator:** Nored Telcom and Slice Wireless Solutions briefs and Notion links succeeded, but GitHub rejected the username/token for both pushes; exit 1.\n• **Ops Command Center Morning Refresh:** Snapshot built, but GitHub authentication failed due to an invalid/expired username or token; exit 1. Zendesk also returned a non-critical 404.\n• **Ops Command Center — Daily Snapshot:** All sections built, but GitHub rejected the repository credentials (`Invalid username or token`); exit 1. Zendesk returned the same non-critical 404.\n\n**Key takeaways:**\n• Nightly Git Backup completed successfully today at 4:09 AM CT.\n• No scheduler errors, delivery failures, overdue jobs, disabled jobs, gateway restarts, or run-history lookup failures were found.\n• Three 5:55 PM CT infrastructure jobs share a minute but have staggered start times.\n• No fresh prospecting, Kaia, MSP-intelligence, or onboarding structured output was available.\n\n**Since last digest:** No new actionable problems; the same three GitHub credential failures continue. Direct per-job run lookups were scope-restricted, so causes above come from the live health script’s latest-run summaries.",
-        "since": "2026-11-22"
+        "since": "2026-11-23"
       },
       {
-        "name": "Ops Command Center — Daily Snapshot",
-        "id": "12f0d64a",
-        "lastError": "**FATAL — snapshot build failed during GitHub push.**\n\n- All snapshot sections built successfully.\n- Non-critical section error: Zendesk returned HTTP 404 (“help desk … no longer available”).\n- Final push failed: GitHub rejected the repository credentials (`Invalid username or token`).\n- Process exited with code 1.",
-        "since": "2026-11-20"
+        "name": "Ops Command Center Morning Refresh",
+        "id": "b31d4f94",
+        "lastError": "Ops snapshot build completed locally, but the GitHub push failed (exit code 1): authentication token/username was invalid. A non-critical Zendesk 404 also occurred because the configured help desk is unavailable. Scheduler should retry after GitHub credentials are restored.",
+        "since": "2026-11-23"
       }
     ],
     "allJobs": [
       {
-        "id": "b31d4f94",
-        "name": "Ops Command Center Morning Refresh",
+        "id": "12f0d64a",
+        "name": "Ops Command Center — Daily Snapshot",
         "enabled": true,
         "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-11-20T12:45:00.016Z",
-        "lastError": "FAILED: Ops snapshot built successfully, but GitHub push failed (exit 1) due to an invalid/expired username or token. Also observed a non-critical Zendesk 404 because the configured help desk is unavailable. Scheduler can retry after GitHub credentials are fixed.",
-        "schedule": "45 6 * * 1-5",
+        "lastRunAt": "2026-11-20T18:07:00.015Z",
+        "lastError": "**FATAL — snapshot build failed during GitHub push.**\n\n- All snapshot sections built successfully.\n- Non-critical section error: Zendesk returned HTTP 404 (“help desk … no longer available”).\n- Final push failed: GitHub rejected the repository credentials (`Invalid username or token`).\n- Process exited with code 1.",
+        "schedule": "7 12 * * 1-5",
         "category": "Delivery"
+      },
+      {
+        "id": "e31a2ae9",
+        "name": "New Rev.io minimum transition response watcher",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T18:00:08.562Z",
+        "lastError": null,
+        "schedule": "*/30 8-20 * * 1-5",
+        "category": "System"
       },
       {
         "id": "8bd20462",
         "name": "Local Infrastructure Watchdog — hourly fallback",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-11-23T11:55:10.992Z",
+        "lastRunAt": "2026-11-23T17:55:11.081Z",
         "lastError": null,
         "schedule": "every",
         "category": "System"
@@ -370,7 +372,7 @@
         "name": "Outreach Token Auto-Refresh",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-11-23T11:55:34.134Z",
+        "lastRunAt": "2026-11-23T17:55:34.216Z",
         "lastError": null,
         "schedule": "every",
         "category": "Infrastructure"
@@ -380,59 +382,9 @@
         "name": "heartbeat-main",
         "enabled": true,
         "status": "skipped",
-        "lastRunAt": "2026-11-23T11:55:52.259Z",
-        "lastError": "heartbeat skipped: quiet-hours",
+        "lastRunAt": "2026-11-23T17:55:52.347Z",
+        "lastError": "heartbeat skipped: empty-heartbeat-file",
         "schedule": "every",
-        "category": "System"
-      },
-      {
-        "id": "cc85c724",
-        "name": "Monday Week Ahead Brief",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-16T13:05:00.016Z",
-        "lastError": null,
-        "schedule": "5 7 * * 1",
-        "category": "Delivery"
-      },
-      {
-        "id": "13e36df8",
-        "name": "Kaia Intelligence Pipeline (Monday — 3-day window)",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-16T13:21:00.018Z",
-        "lastError": "Kaia intelligence pipeline succeeded (`DONE`, exit 0).\n\n- Calls analyzed: 4 T1 + 6 T2\n- Analysis: 10 successful, 0 failed\n- Notion rows: 10 written\n- Discord posts: Product ✓ | GTM ✓",
-        "schedule": "21 7 * * 1",
-        "category": "Intelligence"
-      },
-      {
-        "id": "848dd2e6",
-        "name": "Kaia Pipeline Health Check",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-20T13:30:00.018Z",
-        "lastError": null,
-        "schedule": "30 7 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "e31a2ae9",
-        "name": "New Rev.io minimum transition response watcher",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-21T02:30:08.565Z",
-        "lastError": null,
-        "schedule": "*/30 8-20 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "9e362558",
-        "name": "Daily Cron Health Check",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-20T14:12:00.016Z",
-        "lastError": null,
-        "schedule": "12 8 * * 1-5",
         "category": "System"
       },
       {
@@ -440,19 +392,9 @@
         "name": "New Rev.io Auto-Brief Generator",
         "enabled": true,
         "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-11-21T03:15:00.014Z",
+        "lastRunAt": "2026-11-23T14:15:00.015Z",
         "lastError": "FAILURE — script exited with code 1; no final success summary.\n\n**New Rev.io deals: 2**\n- **Nored Telcom:** HTML brief generated; Notion record reused/updated and linked successfully.\n- **Slice Wireless Solutions:** HTML brief generated; Notion record reused/updated and linked successfully.\n\n**GitHub delivery:** Failed for both briefs — invalid username/token; authentication failed pushing to `erice320/revay.git`.",
         "schedule": "15 8,13,18,21 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "2b945e1f",
-        "name": "Weekly New Rev.io Onboarding Snapshot Ledger + Deck",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-16T14:20:00.016Z",
-        "lastError": null,
-        "schedule": "20 8 * * 1",
         "category": "System"
       },
       {
@@ -460,89 +402,9 @@
         "name": "Billing Auto-Brief Generator",
         "enabled": true,
         "status": "ok",
-        "lastRunAt": "2026-11-21T03:20:00.015Z",
+        "lastRunAt": "2026-11-23T14:20:00.023Z",
         "lastError": null,
         "schedule": "20 8,13,18,21 * * 1-5",
-        "category": "Delivery"
-      },
-      {
-        "id": "35fc94ad",
-        "name": "Weekly Roadmap Digest",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-16T14:25:00.016Z",
-        "lastError": null,
-        "schedule": "25 8 * * 1",
-        "category": "Intelligence"
-      },
-      {
-        "id": "afc5c57b",
-        "name": "Onboarding Digest Cleanup Run",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-20T14:27:00.018Z",
-        "lastError": "Raw exit code: **0**\n\nFinal counts:\n- Calls processed: **4**\n- Clients: **3**\n- Logged to Notion: **4**\n- Analysis errors: **0**\n- Risk: **0 Critical, 0 High, 4 Medium, 0 Low**\n- Average score: **71/100**\n- Eligible onboarding calls: **27 total, 27 new**\n- Deferred by cap: **23**",
-        "schedule": "27 8 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "6af65023",
-        "name": "Onboarding Brief Coverage Guard",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-21T03:35:00.015Z",
-        "lastError": null,
-        "schedule": "35 8,13,18,21 * * 1-5",
-        "category": "System"
-      },
-      {
-        "id": "694a91b3",
-        "name": "Bookings Pacing Refresh",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-20T23:35:08.004Z",
-        "lastError": null,
-        "schedule": "33 14,19,23 * * 1-5",
-        "category": "Delivery"
-      },
-      {
-        "id": "f1a646d6",
-        "name": "Cloudflare Weekly Seat Cleanup",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-16T14:40:00.014Z",
-        "lastError": null,
-        "schedule": "40 8 * * 1",
-        "category": "System"
-      },
-      {
-        "id": "4530a7d8",
-        "name": "Twice-Daily Consolidated Operations Digest",
-        "enabled": true,
-        "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-11-22T23:00:00.015Z",
-        "lastError": "⚡ **Operations Health — Nov 22, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 46/49 latest runs healthy · 3 actionable failures\n\n**Attention:**\n• **New Rev.io Auto-Brief Generator:** Nored Telcom and Slice Wireless Solutions briefs and Notion links succeeded, but GitHub rejected the username/token for both pushes; exit 1.\n• **Ops Command Center Morning Refresh:** Snapshot built, but GitHub authentication failed due to an invalid/expired username or token; exit 1. Zendesk also returned a non-critical 404.\n• **Ops Command Center — Daily Snapshot:** All sections built, but GitHub rejected the repository credentials (`Invalid username or token`); exit 1. Zendesk returned the same non-critical 404.\n\n**Key takeaways:**\n• Nightly Git Backup completed successfully today at 4:09 AM CT.\n• No scheduler errors, delivery failures, overdue jobs, disabled jobs, gateway restarts, or run-history lookup failures were found.\n• Three 5:55 PM CT infrastructure jobs share a minute but have staggered start times.\n• No fresh prospecting, Kaia, MSP-intelligence, or onboarding structured output was available.\n\n**Since last digest:** No new actionable problems; the same three GitHub credential failures continue. Direct per-job run lookups were scope-restricted, so causes above come from the live health script’s latest-run summaries.",
-        "schedule": "0 9,17 * * *",
-        "category": "System"
-      },
-      {
-        "id": "782903ab",
-        "name": "Onboarding Digest Cleanup Run 2",
-        "enabled": true,
-        "status": "ok",
-        "lastRunAt": "2026-11-20T15:23:00.036Z",
-        "lastError": "Exit code: 0\n\nFinal counts:\n- Transcripts found: 37\n- Onboarding calls: 26 total, 22 new\n- Processed: 4 calls\n- Remaining for cleanup cron: 18\n- Clients: 4\n- Logged to Notion: 4\n- Analysis errors: 0\n- Risk: 0 Critical, 0 High, 4 Medium, 0 Low\n- Average score: 70/100",
-        "schedule": "23 9 * * 1-5",
-        "category": "Intelligence"
-      },
-      {
-        "id": "12f0d64a",
-        "name": "Ops Command Center — Daily Snapshot",
-        "enabled": true,
-        "status": "false_green_diagnostic_failure",
-        "lastRunAt": "2026-11-20T18:07:00.015Z",
-        "lastError": "**FATAL — snapshot build failed during GitHub push.**\n\n- All snapshot sections built successfully.\n- Non-critical section error: Zendesk returned HTTP 404 (“help desk … no longer available”).\n- Final push failed: GitHub rejected the repository credentials (`Invalid username or token`).\n- Process exited with code 1.",
-        "schedule": "7 12 * * 1-5",
         "category": "Delivery"
       },
       {
@@ -564,6 +426,26 @@
         "lastError": null,
         "schedule": "32 13 * * 1-5",
         "category": "System"
+      },
+      {
+        "id": "6af65023",
+        "name": "Onboarding Brief Coverage Guard",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T14:35:00.015Z",
+        "lastError": null,
+        "schedule": "35 8,13,18,21 * * 1-5",
+        "category": "System"
+      },
+      {
+        "id": "694a91b3",
+        "name": "Bookings Pacing Refresh",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T14:35:08.071Z",
+        "lastError": null,
+        "schedule": "33 14,19,23 * * 1-5",
+        "category": "Delivery"
       },
       {
         "id": "6216fa3b",
@@ -624,6 +506,16 @@
         "lastError": null,
         "schedule": "38 15 * * 1-5",
         "category": "Intelligence"
+      },
+      {
+        "id": "4530a7d8",
+        "name": "Twice-Daily Consolidated Operations Digest",
+        "enabled": true,
+        "status": "false_green_diagnostic_failure",
+        "lastRunAt": "2026-11-23T15:00:00.019Z",
+        "lastError": "⚡ **Operations Health — Nov 22, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 46/49 latest runs healthy · 3 actionable failures\n\n**Attention:**\n• **New Rev.io Auto-Brief Generator:** Nored Telcom and Slice Wireless Solutions briefs and Notion links succeeded, but GitHub rejected the username/token for both pushes; exit 1.\n• **Ops Command Center Morning Refresh:** Snapshot built, but GitHub authentication failed due to an invalid/expired username or token; exit 1. Zendesk also returned a non-critical 404.\n• **Ops Command Center — Daily Snapshot:** All sections built, but GitHub rejected the repository credentials (`Invalid username or token`); exit 1. Zendesk returned the same non-critical 404.\n\n**Key takeaways:**\n• Nightly Git Backup completed successfully today at 4:09 AM CT.\n• No scheduler errors, delivery failures, overdue jobs, disabled jobs, gateway restarts, or run-history lookup failures were found.\n• Three 5:55 PM CT infrastructure jobs share a minute but have staggered start times.\n• No fresh prospecting, Kaia, MSP-intelligence, or onboarding structured output was available.\n\n**Since last digest:** No new actionable problems; the same three GitHub credential failures continue. Direct per-job run lookups were scope-restricted, so causes above come from the live health script’s latest-run summaries.",
+        "schedule": "0 9,17 * * *",
+        "category": "System"
       },
       {
         "id": "f38a183a",
@@ -726,6 +618,56 @@
         "category": "Intelligence"
       },
       {
+        "id": "b31d4f94",
+        "name": "Ops Command Center Morning Refresh",
+        "enabled": true,
+        "status": "false_green_diagnostic_failure",
+        "lastRunAt": "2026-11-23T12:45:00.015Z",
+        "lastError": "Ops snapshot build completed locally, but the GitHub push failed (exit code 1): authentication token/username was invalid. A non-critical Zendesk 404 also occurred because the configured help desk is unavailable. Scheduler should retry after GitHub credentials are restored.",
+        "schedule": "45 6 * * 1-5",
+        "category": "Delivery"
+      },
+      {
+        "id": "848dd2e6",
+        "name": "Kaia Pipeline Health Check",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T13:30:00.013Z",
+        "lastError": null,
+        "schedule": "30 7 * * 1-5",
+        "category": "Intelligence"
+      },
+      {
+        "id": "9e362558",
+        "name": "Daily Cron Health Check",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T14:12:00.016Z",
+        "lastError": null,
+        "schedule": "12 8 * * 1-5",
+        "category": "System"
+      },
+      {
+        "id": "afc5c57b",
+        "name": "Onboarding Digest Cleanup Run",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T14:27:00.015Z",
+        "lastError": "Raw exit code: **0**\n\nFinal counts:\n- Calls processed: **4**\n- Clients: **3**\n- Logged to Notion: **4**\n- Analysis errors: **0**\n- Risk: **0 Critical, 0 High, 4 Medium, 0 Low**\n- Average score: **71/100**\n- Eligible onboarding calls: **27 total, 27 new**\n- Deferred by cap: **23**",
+        "schedule": "27 8 * * 1-5",
+        "category": "Intelligence"
+      },
+      {
+        "id": "782903ab",
+        "name": "Onboarding Digest Cleanup Run 2",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T15:23:00.017Z",
+        "lastError": "Exit code: 0\n\nFinal counts:\n- Transcripts found: 37\n- Onboarding calls: 26 total, 22 new\n- Processed: 4 calls\n- Remaining for cleanup cron: 18\n- Clients: 4\n- Logged to Notion: 4\n- Analysis errors: 0\n- Risk: 0 Critical, 0 High, 4 Medium, 0 Low\n- Average score: 70/100",
+        "schedule": "23 9 * * 1-5",
+        "category": "Intelligence"
+      },
+      {
         "id": "975c5f7e",
         "name": "Weekly New Rev.io onboarding forecast brief",
         "enabled": true,
@@ -741,7 +683,7 @@
         "enabled": true,
         "status": "ok",
         "lastRunAt": "2026-11-23T12:18:00.017Z",
-        "lastError": "18 new intelligence items surfaced. ConnectWise ScreenConnect faces an actively exploited critical flaw targeting MSP technician workstations: <https://www.cybersecuritydive.com/news/critical-flaw-screenconnect-malicious-files-msp/874900/>. Kaseya expanded its agentic platform with first-party MCP servers, pre-built skills, and a unified cyber-resilience portal: <https://www.prnewswire.com/news-releases/kaseya-expands-its-agentic-it-management-platform-with-first-party-mcp-servers-pre-built-skills-and-a-unified-cyber-resilience-portal-302941700.html>. Meanwhile, 61% of surveyed Top 250 MSSPs reported 11%–50% annual revenue growth: <https://www.msspalert.com/news/mssp-alert-unveils-2026-top-250-mssps-new-prestige-lists-and-industry-research-report>.",
+        "lastError": "Full 14-item brief emailed. Key moves: Kaseya launched MCP servers for Autotask, Datto RMM, and IT Glue plus 17 AI skills <https://www.crn.com/news/ai/2026/kaseya-expands-agentic-it-platform-with-mcp-servers-ai-skills>. ConnectWise disabled five ScreenConnect extensions across 400 partner environments amid ongoing attacks <https://atlabyte.com/en/news/connectwise-disables-five-screenconnect-extensions-across-400-partner-environments-amid-ongoing-attacks>. SuperOps’ agentic features remain in beta, while Syncro added an MCP server, QBR skill, and workflow forms.",
         "schedule": "18 6 * * 1,3,5",
         "category": "Intelligence"
       },
@@ -826,6 +768,56 @@
         "category": "Infrastructure"
       },
       {
+        "id": "cc85c724",
+        "name": "Monday Week Ahead Brief",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T13:05:00.015Z",
+        "lastError": null,
+        "schedule": "5 7 * * 1",
+        "category": "Delivery"
+      },
+      {
+        "id": "13e36df8",
+        "name": "Kaia Intelligence Pipeline (Monday — 3-day window)",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T13:21:00.019Z",
+        "lastError": "Kaia intelligence pipeline succeeded (`DONE`, exit code 0).\n\n- Calls analyzed: 4 T1 + 6 T2\n- Notion rows: 10\n- Analysis: 10 succeeded, 0 failed\n- Discord posts: Product ✓ | GTM ✓",
+        "schedule": "21 7 * * 1",
+        "category": "Intelligence"
+      },
+      {
+        "id": "2b945e1f",
+        "name": "Weekly New Rev.io Onboarding Snapshot Ledger + Deck",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T14:20:00.016Z",
+        "lastError": null,
+        "schedule": "20 8 * * 1",
+        "category": "System"
+      },
+      {
+        "id": "35fc94ad",
+        "name": "Weekly Roadmap Digest",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T14:25:00.015Z",
+        "lastError": null,
+        "schedule": "25 8 * * 1",
+        "category": "Intelligence"
+      },
+      {
+        "id": "f1a646d6",
+        "name": "Cloudflare Weekly Seat Cleanup",
+        "enabled": true,
+        "status": "ok",
+        "lastRunAt": "2026-11-23T14:40:00.015Z",
+        "lastError": null,
+        "schedule": "40 8 * * 1",
+        "category": "System"
+      },
+      {
         "id": "b2019386",
         "name": "Monthly Trends Lock + Deck Rebuild",
         "enabled": true,
@@ -839,46 +831,6 @@
     "byCategory": {
       "Delivery": [
         {
-          "id": "b31d4f94",
-          "name": "Ops Command Center Morning Refresh",
-          "enabled": true,
-          "status": "false_green_diagnostic_failure",
-          "lastRunAt": "2026-11-20T12:45:00.016Z",
-          "lastError": "FAILED: Ops snapshot built successfully, but GitHub push failed (exit 1) due to an invalid/expired username or token. Also observed a non-critical Zendesk 404 because the configured help desk is unavailable. Scheduler can retry after GitHub credentials are fixed.",
-          "schedule": "45 6 * * 1-5",
-          "category": "Delivery"
-        },
-        {
-          "id": "cc85c724",
-          "name": "Monday Week Ahead Brief",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-16T13:05:00.016Z",
-          "lastError": null,
-          "schedule": "5 7 * * 1",
-          "category": "Delivery"
-        },
-        {
-          "id": "c763deb2",
-          "name": "Billing Auto-Brief Generator",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-21T03:20:00.015Z",
-          "lastError": null,
-          "schedule": "20 8,13,18,21 * * 1-5",
-          "category": "Delivery"
-        },
-        {
-          "id": "694a91b3",
-          "name": "Bookings Pacing Refresh",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-20T23:35:08.004Z",
-          "lastError": null,
-          "schedule": "33 14,19,23 * * 1-5",
-          "category": "Delivery"
-        },
-        {
           "id": "12f0d64a",
           "name": "Ops Command Center — Daily Snapshot",
           "enabled": true,
@@ -889,6 +841,26 @@
           "category": "Delivery"
         },
         {
+          "id": "c763deb2",
+          "name": "Billing Auto-Brief Generator",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T14:20:00.023Z",
+          "lastError": null,
+          "schedule": "20 8,13,18,21 * * 1-5",
+          "category": "Delivery"
+        },
+        {
+          "id": "694a91b3",
+          "name": "Bookings Pacing Refresh",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T14:35:08.071Z",
+          "lastError": null,
+          "schedule": "33 14,19,23 * * 1-5",
+          "category": "Delivery"
+        },
+        {
           "id": "82b4e119",
           "name": "daily-sales-snapshot",
           "enabled": true,
@@ -896,6 +868,16 @@
           "lastRunAt": "2026-11-20T20:02:00.015Z",
           "lastError": null,
           "schedule": "2 14 * * 1-5",
+          "category": "Delivery"
+        },
+        {
+          "id": "b31d4f94",
+          "name": "Ops Command Center Morning Refresh",
+          "enabled": true,
+          "status": "false_green_diagnostic_failure",
+          "lastRunAt": "2026-11-23T12:45:00.015Z",
+          "lastError": "Ops snapshot build completed locally, but the GitHub push failed (exit code 1): authentication token/username was invalid. A non-critical Zendesk 404 also occurred because the configured help desk is unavailable. Scheduler should retry after GitHub credentials are restored.",
+          "schedule": "45 6 * * 1-5",
           "category": "Delivery"
         },
         {
@@ -937,15 +919,35 @@
           "lastError": null,
           "schedule": "56 17 * * 0,6",
           "category": "Delivery"
+        },
+        {
+          "id": "cc85c724",
+          "name": "Monday Week Ahead Brief",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T13:05:00.015Z",
+          "lastError": null,
+          "schedule": "5 7 * * 1",
+          "category": "Delivery"
         }
       ],
       "System": [
+        {
+          "id": "e31a2ae9",
+          "name": "New Rev.io minimum transition response watcher",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T18:00:08.562Z",
+          "lastError": null,
+          "schedule": "*/30 8-20 * * 1-5",
+          "category": "System"
+        },
         {
           "id": "8bd20462",
           "name": "Local Infrastructure Watchdog — hourly fallback",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-11-23T11:55:10.992Z",
+          "lastRunAt": "2026-11-23T17:55:11.081Z",
           "lastError": null,
           "schedule": "every",
           "category": "System"
@@ -955,29 +957,9 @@
           "name": "heartbeat-main",
           "enabled": true,
           "status": "skipped",
-          "lastRunAt": "2026-11-23T11:55:52.259Z",
-          "lastError": "heartbeat skipped: quiet-hours",
+          "lastRunAt": "2026-11-23T17:55:52.347Z",
+          "lastError": "heartbeat skipped: empty-heartbeat-file",
           "schedule": "every",
-          "category": "System"
-        },
-        {
-          "id": "e31a2ae9",
-          "name": "New Rev.io minimum transition response watcher",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-21T02:30:08.565Z",
-          "lastError": null,
-          "schedule": "*/30 8-20 * * 1-5",
-          "category": "System"
-        },
-        {
-          "id": "9e362558",
-          "name": "Daily Cron Health Check",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-20T14:12:00.016Z",
-          "lastError": null,
-          "schedule": "12 8 * * 1-5",
           "category": "System"
         },
         {
@@ -985,49 +967,9 @@
           "name": "New Rev.io Auto-Brief Generator",
           "enabled": true,
           "status": "false_green_diagnostic_failure",
-          "lastRunAt": "2026-11-21T03:15:00.014Z",
+          "lastRunAt": "2026-11-23T14:15:00.015Z",
           "lastError": "FAILURE — script exited with code 1; no final success summary.\n\n**New Rev.io deals: 2**\n- **Nored Telcom:** HTML brief generated; Notion record reused/updated and linked successfully.\n- **Slice Wireless Solutions:** HTML brief generated; Notion record reused/updated and linked successfully.\n\n**GitHub delivery:** Failed for both briefs — invalid username/token; authentication failed pushing to `erice320/revay.git`.",
           "schedule": "15 8,13,18,21 * * 1-5",
-          "category": "System"
-        },
-        {
-          "id": "2b945e1f",
-          "name": "Weekly New Rev.io Onboarding Snapshot Ledger + Deck",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-16T14:20:00.016Z",
-          "lastError": null,
-          "schedule": "20 8 * * 1",
-          "category": "System"
-        },
-        {
-          "id": "6af65023",
-          "name": "Onboarding Brief Coverage Guard",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-21T03:35:00.015Z",
-          "lastError": null,
-          "schedule": "35 8,13,18,21 * * 1-5",
-          "category": "System"
-        },
-        {
-          "id": "f1a646d6",
-          "name": "Cloudflare Weekly Seat Cleanup",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-16T14:40:00.014Z",
-          "lastError": null,
-          "schedule": "40 8 * * 1",
-          "category": "System"
-        },
-        {
-          "id": "4530a7d8",
-          "name": "Twice-Daily Consolidated Operations Digest",
-          "enabled": true,
-          "status": "false_green_diagnostic_failure",
-          "lastRunAt": "2026-11-22T23:00:00.015Z",
-          "lastError": "⚡ **Operations Health — Nov 22, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 46/49 latest runs healthy · 3 actionable failures\n\n**Attention:**\n• **New Rev.io Auto-Brief Generator:** Nored Telcom and Slice Wireless Solutions briefs and Notion links succeeded, but GitHub rejected the username/token for both pushes; exit 1.\n• **Ops Command Center Morning Refresh:** Snapshot built, but GitHub authentication failed due to an invalid/expired username or token; exit 1. Zendesk also returned a non-critical 404.\n• **Ops Command Center — Daily Snapshot:** All sections built, but GitHub rejected the repository credentials (`Invalid username or token`); exit 1. Zendesk returned the same non-critical 404.\n\n**Key takeaways:**\n• Nightly Git Backup completed successfully today at 4:09 AM CT.\n• No scheduler errors, delivery failures, overdue jobs, disabled jobs, gateway restarts, or run-history lookup failures were found.\n• Three 5:55 PM CT infrastructure jobs share a minute but have staggered start times.\n• No fresh prospecting, Kaia, MSP-intelligence, or onboarding structured output was available.\n\n**Since last digest:** No new actionable problems; the same three GitHub credential failures continue. Direct per-job run lookups were scope-restricted, so causes above come from the live health script’s latest-run summaries.",
-          "schedule": "0 9,17 * * *",
           "category": "System"
         },
         {
@@ -1041,6 +983,16 @@
           "category": "System"
         },
         {
+          "id": "6af65023",
+          "name": "Onboarding Brief Coverage Guard",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T14:35:00.015Z",
+          "lastError": null,
+          "schedule": "35 8,13,18,21 * * 1-5",
+          "category": "System"
+        },
+        {
           "id": "6216fa3b",
           "name": "Prospecting Pipeline Health Check",
           "enabled": true,
@@ -1048,6 +1000,16 @@
           "lastRunAt": "2026-11-20T19:36:00.013Z",
           "lastError": "HEALTHY",
           "schedule": "36 13 * * 1-5",
+          "category": "System"
+        },
+        {
+          "id": "4530a7d8",
+          "name": "Twice-Daily Consolidated Operations Digest",
+          "enabled": true,
+          "status": "false_green_diagnostic_failure",
+          "lastRunAt": "2026-11-23T15:00:00.019Z",
+          "lastError": "⚡ **Operations Health — Nov 22, 2026, 5:01 PM CT**\n**Jobs:** 49/49 enabled · 46/49 latest runs healthy · 3 actionable failures\n\n**Attention:**\n• **New Rev.io Auto-Brief Generator:** Nored Telcom and Slice Wireless Solutions briefs and Notion links succeeded, but GitHub rejected the username/token for both pushes; exit 1.\n• **Ops Command Center Morning Refresh:** Snapshot built, but GitHub authentication failed due to an invalid/expired username or token; exit 1. Zendesk also returned a non-critical 404.\n• **Ops Command Center — Daily Snapshot:** All sections built, but GitHub rejected the repository credentials (`Invalid username or token`); exit 1. Zendesk returned the same non-critical 404.\n\n**Key takeaways:**\n• Nightly Git Backup completed successfully today at 4:09 AM CT.\n• No scheduler errors, delivery failures, overdue jobs, disabled jobs, gateway restarts, or run-history lookup failures were found.\n• Three 5:55 PM CT infrastructure jobs share a minute but have staggered start times.\n• No fresh prospecting, Kaia, MSP-intelligence, or onboarding structured output was available.\n\n**Since last digest:** No new actionable problems; the same three GitHub credential failures continue. Direct per-job run lookups were scope-restricted, so causes above come from the live health script’s latest-run summaries.",
+          "schedule": "0 9,17 * * *",
           "category": "System"
         },
         {
@@ -1131,6 +1093,16 @@
           "category": "System"
         },
         {
+          "id": "9e362558",
+          "name": "Daily Cron Health Check",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T14:12:00.016Z",
+          "lastError": null,
+          "schedule": "12 8 * * 1-5",
+          "category": "System"
+        },
+        {
           "id": "975c5f7e",
           "name": "Weekly New Rev.io onboarding forecast brief",
           "enabled": true,
@@ -1151,6 +1123,26 @@
           "category": "System"
         },
         {
+          "id": "2b945e1f",
+          "name": "Weekly New Rev.io Onboarding Snapshot Ledger + Deck",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T14:20:00.016Z",
+          "lastError": null,
+          "schedule": "20 8 * * 1",
+          "category": "System"
+        },
+        {
+          "id": "f1a646d6",
+          "name": "Cloudflare Weekly Seat Cleanup",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T14:40:00.015Z",
+          "lastError": null,
+          "schedule": "40 8 * * 1",
+          "category": "System"
+        },
+        {
           "id": "b2019386",
           "name": "Monthly Trends Lock + Deck Rebuild",
           "enabled": true,
@@ -1167,7 +1159,7 @@
           "name": "Outreach Token Auto-Refresh",
           "enabled": true,
           "status": "ok",
-          "lastRunAt": "2026-11-23T11:55:34.134Z",
+          "lastRunAt": "2026-11-23T17:55:34.216Z",
           "lastError": null,
           "schedule": "every",
           "category": "Infrastructure"
@@ -1204,56 +1196,6 @@
         }
       ],
       "Intelligence": [
-        {
-          "id": "13e36df8",
-          "name": "Kaia Intelligence Pipeline (Monday — 3-day window)",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-16T13:21:00.018Z",
-          "lastError": "Kaia intelligence pipeline succeeded (`DONE`, exit 0).\n\n- Calls analyzed: 4 T1 + 6 T2\n- Analysis: 10 successful, 0 failed\n- Notion rows: 10 written\n- Discord posts: Product ✓ | GTM ✓",
-          "schedule": "21 7 * * 1",
-          "category": "Intelligence"
-        },
-        {
-          "id": "848dd2e6",
-          "name": "Kaia Pipeline Health Check",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-20T13:30:00.018Z",
-          "lastError": null,
-          "schedule": "30 7 * * 1-5",
-          "category": "Intelligence"
-        },
-        {
-          "id": "35fc94ad",
-          "name": "Weekly Roadmap Digest",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-16T14:25:00.016Z",
-          "lastError": null,
-          "schedule": "25 8 * * 1",
-          "category": "Intelligence"
-        },
-        {
-          "id": "afc5c57b",
-          "name": "Onboarding Digest Cleanup Run",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-20T14:27:00.018Z",
-          "lastError": "Raw exit code: **0**\n\nFinal counts:\n- Calls processed: **4**\n- Clients: **3**\n- Logged to Notion: **4**\n- Analysis errors: **0**\n- Risk: **0 Critical, 0 High, 4 Medium, 0 Low**\n- Average score: **71/100**\n- Eligible onboarding calls: **27 total, 27 new**\n- Deferred by cap: **23**",
-          "schedule": "27 8 * * 1-5",
-          "category": "Intelligence"
-        },
-        {
-          "id": "782903ab",
-          "name": "Onboarding Digest Cleanup Run 2",
-          "enabled": true,
-          "status": "ok",
-          "lastRunAt": "2026-11-20T15:23:00.036Z",
-          "lastError": "Exit code: 0\n\nFinal counts:\n- Transcripts found: 37\n- Onboarding calls: 26 total, 22 new\n- Processed: 4 calls\n- Remaining for cleanup cron: 18\n- Clients: 4\n- Logged to Notion: 4\n- Analysis errors: 0\n- Risk: 0 Critical, 0 High, 4 Medium, 0 Low\n- Average score: 70/100",
-          "schedule": "23 9 * * 1-5",
-          "category": "Intelligence"
-        },
         {
           "id": "4e1d90e2",
           "name": "Prospecting Call Analyzer",
@@ -1305,12 +1247,42 @@
           "category": "Intelligence"
         },
         {
+          "id": "848dd2e6",
+          "name": "Kaia Pipeline Health Check",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T13:30:00.013Z",
+          "lastError": null,
+          "schedule": "30 7 * * 1-5",
+          "category": "Intelligence"
+        },
+        {
+          "id": "afc5c57b",
+          "name": "Onboarding Digest Cleanup Run",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T14:27:00.015Z",
+          "lastError": "Raw exit code: **0**\n\nFinal counts:\n- Calls processed: **4**\n- Clients: **3**\n- Logged to Notion: **4**\n- Analysis errors: **0**\n- Risk: **0 Critical, 0 High, 4 Medium, 0 Low**\n- Average score: **71/100**\n- Eligible onboarding calls: **27 total, 27 new**\n- Deferred by cap: **23**",
+          "schedule": "27 8 * * 1-5",
+          "category": "Intelligence"
+        },
+        {
+          "id": "782903ab",
+          "name": "Onboarding Digest Cleanup Run 2",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T15:23:00.017Z",
+          "lastError": "Exit code: 0\n\nFinal counts:\n- Transcripts found: 37\n- Onboarding calls: 26 total, 22 new\n- Processed: 4 calls\n- Remaining for cleanup cron: 18\n- Clients: 4\n- Logged to Notion: 4\n- Analysis errors: 0\n- Risk: 0 Critical, 0 High, 4 Medium, 0 Low\n- Average score: 70/100",
+          "schedule": "23 9 * * 1-5",
+          "category": "Intelligence"
+        },
+        {
           "id": "c8d20948",
           "name": "MSP Competitor Intelligence Brief",
           "enabled": true,
           "status": "ok",
           "lastRunAt": "2026-11-23T12:18:00.017Z",
-          "lastError": "18 new intelligence items surfaced. ConnectWise ScreenConnect faces an actively exploited critical flaw targeting MSP technician workstations: <https://www.cybersecuritydive.com/news/critical-flaw-screenconnect-malicious-files-msp/874900/>. Kaseya expanded its agentic platform with first-party MCP servers, pre-built skills, and a unified cyber-resilience portal: <https://www.prnewswire.com/news-releases/kaseya-expands-its-agentic-it-management-platform-with-first-party-mcp-servers-pre-built-skills-and-a-unified-cyber-resilience-portal-302941700.html>. Meanwhile, 61% of surveyed Top 250 MSSPs reported 11%–50% annual revenue growth: <https://www.msspalert.com/news/mssp-alert-unveils-2026-top-250-mssps-new-prestige-lists-and-industry-research-report>.",
+          "lastError": "Full 14-item brief emailed. Key moves: Kaseya launched MCP servers for Autotask, Datto RMM, and IT Glue plus 17 AI skills <https://www.crn.com/news/ai/2026/kaseya-expands-agentic-it-platform-with-mcp-servers-ai-skills>. ConnectWise disabled five ScreenConnect extensions across 400 partner environments amid ongoing attacks <https://atlabyte.com/en/news/connectwise-disables-five-screenconnect-extensions-across-400-partner-environments-amid-ongoing-attacks>. SuperOps’ agentic features remain in beta, while Syncro added an MCP server, QBR skill, and workflow forms.",
           "schedule": "18 6 * * 1,3,5",
           "category": "Intelligence"
         },
@@ -1333,10 +1305,30 @@
           "lastError": null,
           "schedule": "11 3 * * 0",
           "category": "Intelligence"
+        },
+        {
+          "id": "13e36df8",
+          "name": "Kaia Intelligence Pipeline (Monday — 3-day window)",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T13:21:00.019Z",
+          "lastError": "Kaia intelligence pipeline succeeded (`DONE`, exit code 0).\n\n- Calls analyzed: 4 T1 + 6 T2\n- Notion rows: 10\n- Analysis: 10 succeeded, 0 failed\n- Discord posts: Product ✓ | GTM ✓",
+          "schedule": "21 7 * * 1",
+          "category": "Intelligence"
+        },
+        {
+          "id": "35fc94ad",
+          "name": "Weekly Roadmap Digest",
+          "enabled": true,
+          "status": "ok",
+          "lastRunAt": "2026-11-23T14:25:00.015Z",
+          "lastError": null,
+          "schedule": "25 8 * * 1",
+          "category": "Intelligence"
         }
       ]
     },
-    "lastUpdated": "2026-11-23T12:45:19.520Z"
+    "lastUpdated": "2026-11-23T18:07:21.689Z"
   },
   "competitorIntel": {
     "topCompetitors": [
@@ -1431,17 +1423,17 @@
     "lossCount": 174,
     "totalTier1": 602,
     "generatedAt": "2026-11-20T20:07:18.519Z",
-    "lastUpdated": "2026-11-23T12:45:19.520Z"
+    "lastUpdated": "2026-11-23T18:07:21.690Z"
   },
   "dealBriefs": {
     "lastPsaRun": "2026-11-19T19:15:08.970Z",
     "lastPsaCount": 1,
-    "lastBillingRun": "2026-11-21T03:20:07.594Z",
+    "lastBillingRun": "2026-11-23T14:20:04.998Z",
     "totalPsaProcessed": 111,
     "totalBillingProcessed": 15,
     "psaStatus": "stale",
-    "billingStatus": "stale",
-    "lastUpdated": "2026-11-23T12:45:19.521Z"
+    "billingStatus": "fresh",
+    "lastUpdated": "2026-11-23T18:07:21.690Z"
   },
   "marketProduct": {
     "mspLastRun": "2026-11-23T12:18:50.395Z",
@@ -1453,6 +1445,6 @@
       "topCompetitor": "QuickBooks",
       "topCompetitorCount": 409
     },
-    "lastUpdated": "2026-11-23T12:45:19.521Z"
+    "lastUpdated": "2026-11-23T18:07:21.691Z"
   }
 }
