@@ -132,7 +132,7 @@ footer{text-align:center;padding:18px 40px;border-top:1px solid var(--border);co
       <h1>2026 <span>Bookings Pacing</span></h1>
       <p>Actuals vs. budget ramp · YTD &amp; quarterly · Rev.io Grow Team</p>
     </div>
-    <div class="as-of">📅 Day 328/365 · <strong>Refreshed Nov 24, 2026, 11:14 AM CT</strong></div>
+    <div class="as-of">📅 Day 328/365 · <strong>Refreshed Nov 24, 2026, 11:17 AM CT</strong></div>
   </div>
 </div>
 
@@ -303,7 +303,7 @@ footer{text-align:center;padding:18px 40px;border-top:1px solid var(--border);co
   </div>
 </div>
 
-<footer>⚡ Revay AI · Salesforce live data · Last refresh: Nov 24, 2026, 11:14 AM CT</footer>
+<footer>⚡ Revay AI · Salesforce live data · Last refresh: Nov 24, 2026, 11:17 AM CT</footer>
 
 <script>
 Chart.defaults.color='#7b82a8';Chart.defaults.borderColor='#252a3d';
@@ -490,6 +490,9 @@ function renderDetailSection(qi) {
         +'<span style="font-size:11px;color:'+(m.deals>0?mColor:'#3a3e55')+';min-width:50px;text-align:right">'+m.deals+' deal'+(m.deals!==1?'s':'')+'</span>'
         +'</div>'+bar;
     }).join('');
+    // Surface the most recent close without requiring a card flip.
+    const latestDeal=(pd.dealList||[])[0];
+    const latestDealHtml=latestDeal ? '<div style="margin-top:8px;padding:7px 8px;border:1px solid '+colors[pi]+'55;border-radius:6px;background:'+colors[pi]+'0d;font-size:11px;line-height:1.35"><span style="color:#7b82a8">Latest close</span><br><span style="color:#e8eaf6;font-weight:600">'+latestDeal.n+'</span> <span style="color:'+colors[pi]+'">'+fmt2(latestDeal.a)+'</span><span style="color:#7b82a8"> · '+latestDeal.d+'</span></div>' : '';
     // Deal list for back of card
     const dealRowsHtml=(pd.dealList||[]).length===0
       ? '<div style="color:#3a3e55;font-size:12px;padding:8px 0">No deals this quarter</div>'
@@ -512,6 +515,7 @@ function renderDetailSection(qi) {
           +gapHtml
         +'</div>'
         +'<div style="padding:4px 0 8px;margin-top:6px">'+monthRowsHtml+'</div>'
+        +latestDealHtml
         +'<div class="mini-chart"><canvas id="dmc'+pi+'"></canvas></div>'
         +'<div style="text-align:right;font-size:10px;color:#3a3e55;margin-top:6px">tap to see deals ›</div>'
       +'</div>'
